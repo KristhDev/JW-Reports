@@ -7,6 +7,8 @@ module.exports = {
     'prettier/prettier': 0,
     'eol-last': 0,
     'semi': 0,
+    'comma-dangle': 0,
+    'react-native/no-inline-styles': 0
   },
   overrides: [
     {
