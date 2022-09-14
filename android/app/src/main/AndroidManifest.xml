@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-  package="com.jwreports">
+  package="com.kristhdev.jwreports">
 
     <uses-permission android:name="android.permission.INTERNET" />
 
