@@ -1,6 +1,8 @@
 import React from 'react';
 import { CardStyleInterpolators, createStackNavigator } from '@react-navigation/stack';
 
+import { StatusBarLayout } from '../layouts';
+
 import { Login, Register } from '../screens/auth';
 
 import { useTheme } from '../hooks';
@@ -9,6 +11,18 @@ const Stack = createStackNavigator();
 
 const AuthNavigation = () => {
     const { state: { colors } } = useTheme();
+
+    const LoginScreen = () => (
+        <StatusBarLayout backgroundColor={ colors.contentHeader }>
+            <Login />
+        </StatusBarLayout>
+    );
+
+    const RegisterScreen = () => (
+        <StatusBarLayout backgroundColor={ colors.contentHeader }>
+            <Register />
+        </StatusBarLayout>
+    );
 
     return (
         <Stack.Navigator
@@ -22,12 +36,12 @@ const AuthNavigation = () => {
         >
             <Stack.Screen
                 name="LoginScreen"
-                component={ Login }
+                component={ LoginScreen }
             />
 
             <Stack.Screen
                 name="RegisterScreen"
-                component={ Register }
+                component={ RegisterScreen }
             />
         </Stack.Navigator>
     );
