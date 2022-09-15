@@ -46,7 +46,7 @@ export const FormField: FC<Props> = ({ icon, label, style, controlStyle, inputSt
                     selection={ selection }
                     selectionColor={ colors.linkText }
                     style={[
-                        { ...styles.formInput, color: colors.text },
+                        { ...styles.formInput, color: colors.inputText },
                         inputStyle
                     ]}
                     value={ field.value }

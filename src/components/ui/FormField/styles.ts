@@ -14,10 +14,10 @@ const styles = StyleSheet.create({
     },
 
     formControl: {
-        borderWidth: 1,
-        borderRadius: 5,
-        flexDirection: 'row',
         alignItems: 'center',
+        borderRadius: 5,
+        borderWidth: 0.5,
+        flexDirection: 'row'
     },
 
     formInput: {

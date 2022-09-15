@@ -17,6 +17,7 @@ export interface Colors {
     linkText: string;
     text: string;
     titleText: string;
+    inputText: string;
 }
 
 export type SetThemePayload = {

@@ -3,6 +3,7 @@ import { Appearance } from 'react-native';
 import { createStackNavigator } from '@react-navigation/stack';
 
 import AuthNavigation from './AuthNavigation';
+import PreachingNavigation from './PreachingNavigation';
 
 import { useTheme } from '../hooks';
 
@@ -31,6 +32,11 @@ const Navigation = () => {
                 headerShown: false,
             }}
         >
+            <Stack.Screen
+                name="PreachingNavigation"
+                component={ PreachingNavigation }
+            />
+
             <Stack.Screen
                 name="AuthNavigation"
                 component={ AuthNavigation }
