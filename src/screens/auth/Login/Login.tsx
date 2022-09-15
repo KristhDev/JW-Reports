@@ -1,11 +1,24 @@
 import React from 'react';
-import { View, Text } from 'react-native';
+import { View } from 'react-native';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+
+import { LoginForm } from '../../../components/auth';
+import { Title } from '../../../components/ui';
 
 const Login = () => {
     return (
-        <View style={{ flex: 1 }}>
-            <Text style={{ color: '#000' }}>Login</Text>
-        </View>
+        <KeyboardAwareScrollView
+            contentContainerStyle={{ flexGrow: 1 }}
+            overScrollMode="never"
+        >
+            <View style={{ flex: 1, alignItems: 'center' }}>
+                <Title
+                    text="Ingresar"
+                />
+
+                <LoginForm />
+            </View>
+        </KeyboardAwareScrollView>
     );
 }
 
