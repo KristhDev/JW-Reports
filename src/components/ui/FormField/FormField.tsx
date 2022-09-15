@@ -45,7 +45,10 @@ export const FormField: FC<Props> = ({ icon, label, style, controlStyle, inputSt
                     placeholderTextColor={ colors.icon }
                     selection={ selection }
                     selectionColor={ colors.linkText }
-                    style={[ styles.formInput, inputStyle ]}
+                    style={[
+                        { ...styles.formInput, color: colors.text },
+                        inputStyle
+                    ]}
                     value={ field.value }
                     { ...rest }
                     onBlur={ (e) => {

@@ -1,7 +1,7 @@
 import React from 'react';
-import { createStackNavigator } from '@react-navigation/stack';
+import { CardStyleInterpolators, createStackNavigator } from '@react-navigation/stack';
 
-import { Login } from '../screens/auth';
+import { Login, Register } from '../screens/auth';
 
 import { useTheme } from '../hooks';
 
@@ -16,12 +16,18 @@ const AuthNavigation = () => {
                 cardStyle: {
                     backgroundColor: colors.contentHeader
                 },
+                cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
                 headerShown: false
             }}
         >
             <Stack.Screen
                 name="LoginScreen"
                 component={ Login }
+            />
+
+            <Stack.Screen
+                name="RegisterScreen"
+                component={ Register }
             />
         </Stack.Navigator>
     );
