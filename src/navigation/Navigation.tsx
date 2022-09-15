@@ -5,11 +5,12 @@ import { createStackNavigator } from '@react-navigation/stack';
 import AuthNavigation from './AuthNavigation';
 import PreachingNavigation from './PreachingNavigation';
 
-import { useTheme } from '../hooks';
+import { useAuth, useTheme } from '../hooks';
 
 const Stack = createStackNavigator();
 
 const Navigation = () => {
+    const { state: { isAuthenticated } } = useAuth();
     const { setDefaultTheme } = useTheme();
 
     useEffect(() => {
@@ -32,15 +33,19 @@ const Navigation = () => {
                 headerShown: false,
             }}
         >
-            <Stack.Screen
-                name="PreachingNavigation"
-                component={ PreachingNavigation }
-            />
-
-            <Stack.Screen
-                name="AuthNavigation"
-                component={ AuthNavigation }
-            />
+            {
+                (isAuthenticated) ? (
+                    <Stack.Screen
+                        name="PreachingNavigation"
+                        component={ PreachingNavigation }
+                    />
+                ) : (
+                    <Stack.Screen
+                        name="AuthNavigation"
+                        component={ AuthNavigation }
+                    />
+                )
+            }
         </Stack.Navigator>
     );
 }

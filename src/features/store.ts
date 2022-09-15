@@ -4,9 +4,11 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { combineReducers } from 'redux';
 import { useDispatch } from 'react-redux';
 
+import { authReducer } from './auth';
 import { themeReducer } from './theme';
 
 const reducers = combineReducers({
+    auth: authReducer,
     theme: themeReducer,
 });
 
