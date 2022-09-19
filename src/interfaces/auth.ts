@@ -14,6 +14,13 @@ export interface User {
     updatedAt: Date;
 }
 
+export interface Register {
+    name: string;
+    surname: string;
+    email: string;
+    password: string;
+}
+
 export type SetUserPayload = {
     user: User;
     token: string;

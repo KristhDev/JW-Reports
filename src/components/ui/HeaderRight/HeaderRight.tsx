@@ -1,15 +1,13 @@
 import React from 'react';
 import { View } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/Ionicons';
 
 import { Fab } from '../Fab';
 
-import { useTheme } from '../../../hooks';
+import { useAuth, useTheme } from '../../../hooks';
 
 export const HeaderRight = () => {
-    const { navigate } = useNavigation();
-
+    const { logout } = useAuth();
     const { state: { colors, theme } } = useTheme();
 
     return (
@@ -25,7 +23,7 @@ export const HeaderRight = () => {
                     />
                 }
                 style={{ marginRight: -2 }}
-                onPress={ () => navigate('AuthNavigation' as never) }
+                onPress={ logout }
                 touchColor={ (theme === 'dark') ? 'rgba(255, 255, 255, 0.15)' : 'rgba(0, 0, 0, 0.15)'  }
             />
 
