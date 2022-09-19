@@ -2,11 +2,12 @@ import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, useWindowDimensions } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { Formik } from 'formik';
+import { object, string } from 'yup';
 import Icon from 'react-native-vector-icons/Ionicons';
 
 import { Button, EyeBtn, FormField } from '../../ui';
 
-import { useTheme } from '../../../hooks';
+import { useAuth, useStatus, useTheme } from '../../../hooks';
 
 import styles from './styles';
 
@@ -16,7 +17,18 @@ export const LoginForm = () => {
     const { navigate } = useNavigation();
     const { width } = useWindowDimensions();
 
+    const { login } = useAuth();
+    const { setErrorForm } = useStatus();
     const { state: { colors } } = useTheme();
+
+    const loginFormSchema = object().shape({
+        email: string()
+            .email('Correo electrónico inválido')
+            .required('El correo electrónico es requerido'),
+        password: string()
+            .min(6, 'La contraseña debe tener al menos 6 caracteres')
+            .required('La contraseña es requerida')
+    });
 
     return (
         <Formik
@@ -24,9 +36,11 @@ export const LoginForm = () => {
                 email: '',
                 password: ''
             }}
-            onSubmit={ () => {} }
+            onSubmit={ login }
+            validationSchema={ loginFormSchema }
+            validateOnMount
         >
-            { ({ handleSubmit }) => (
+            { ({ handleSubmit, isValid, errors }) => (
                 <View style={ styles.loginForm }>
                     <FormField
                         autoCapitalize="none"
@@ -58,7 +72,7 @@ export const LoginForm = () => {
                     />
 
                     <Button
-                        onPress={ handleSubmit }
+                        onPress={ (isValid) ? handleSubmit : () => setErrorForm(errors)  }
                         text="Ingresar"
                         touchableStyle={{ paddingHorizontal: 20, marginTop: 30 }}
                     />

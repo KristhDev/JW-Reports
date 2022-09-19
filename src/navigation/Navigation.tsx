@@ -5,16 +5,19 @@ import { createStackNavigator } from '@react-navigation/stack';
 import AuthNavigation from './AuthNavigation';
 import PreachingNavigation from './PreachingNavigation';
 
-import { useAuth, useTheme } from '../hooks';
+import { useAuth, useStatus, useTheme } from '../hooks';
 
 const Stack = createStackNavigator();
 
 const Navigation = () => {
-    const { state: { isAuthenticated } } = useAuth();
+    const { state: { isAuthenticated }, renew } = useAuth();
+    const { clearStatus } = useStatus();
     const { setDefaultTheme } = useTheme();
 
     useEffect(() => {
+        clearStatus();
         setDefaultTheme();
+        renew();
     }, []);
 
     useEffect(() => {

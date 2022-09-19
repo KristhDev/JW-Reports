@@ -6,7 +6,7 @@ import Icon from 'react-native-vector-icons/Ionicons';
 
 import { Button, EyeBtn, FormField } from '../../ui';
 
-import { useTheme } from '../../../hooks';
+import { useAuth, useTheme } from '../../../hooks';
 
 import styles from './styles';
 
@@ -17,6 +17,7 @@ export const RegisterForm = () => {
     const { navigate } = useNavigation();
     const { width } = useWindowDimensions();
 
+    const { register } = useAuth();
     const { state: { colors } } = useTheme();
 
     return (
@@ -28,7 +29,7 @@ export const RegisterForm = () => {
                 password: '',
                 confirmPassword: ''
             }}
-            onSubmit={ () => {} }
+            onSubmit={ (values) => register({ ...values }) }
         >
             { ({ handleSubmit }) => (
                 <View style={ styles.registerForm }>
