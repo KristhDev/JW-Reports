@@ -3,8 +3,6 @@ import { StyleSheet } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Icon from 'react-native-vector-icons/Ionicons';
 
-import { StatusBarLayout } from '../layouts';
-
 import { Home, Revisits, Search } from '../screens/preaching';
 
 import { HeaderRight } from '../components/ui';
@@ -34,23 +32,9 @@ const PreachingNavigation = () => {
         }
     });
 
-    const HomeScreen = () => (
-        <StatusBarLayout backgroundColor={ colors.header }>
-            <Home />
-        </StatusBarLayout>
-    );
-
-    const SearchScreen = () => (
-        <StatusBarLayout backgroundColor={ colors.header }>
-            <Search />
-        </StatusBarLayout>
-    );
-
-    const RevisitsScreen = () => (
-        <StatusBarLayout backgroundColor={ colors.header }>
-            <Revisits />
-        </StatusBarLayout>
-    );
+    const HomeScreen = () => <Home />;
+    const SearchScreen = () => <Search />;
+    const RevisitsScreen = () => <Revisits />;
 
     return (
         <Tabs.Navigator

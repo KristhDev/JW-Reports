@@ -6,12 +6,10 @@ import { useDispatch } from 'react-redux';
 
 import { authReducer } from './auth';
 import { statusReducer } from './status';
-import { themeReducer } from './theme';
 
 const reducers = combineReducers({
     auth: authReducer,
-    status: statusReducer,
-    theme: themeReducer,
+    status: statusReducer
 });
 
 const persistConfig = {

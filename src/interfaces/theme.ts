@@ -14,10 +14,11 @@ export interface Colors {
     header: string;
     headerText: string;
     icon: string;
+    inputText: string;
     linkText: string;
+    modalText: string;
     text: string;
     titleText: string;
-    inputText: string;
 }
 
 export type SetThemePayload = {

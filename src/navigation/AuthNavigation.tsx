@@ -1,7 +1,6 @@
 import React from 'react';
 import { CardStyleInterpolators, createStackNavigator } from '@react-navigation/stack';
-
-import { StatusBarLayout } from '../layouts';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { Login, Register } from '../screens/auth';
 
@@ -10,27 +9,21 @@ import { useTheme } from '../hooks';
 const Stack = createStackNavigator();
 
 const AuthNavigation = () => {
+    const { top } = useSafeAreaInsets();
+
     const { state: { colors } } = useTheme();
 
-    const LoginScreen = () => (
-        <StatusBarLayout backgroundColor={ colors.contentHeader }>
-            <Login />
-        </StatusBarLayout>
-    );
-
-    const RegisterScreen = () => (
-        <StatusBarLayout backgroundColor={ colors.contentHeader }>
-            <Register />
-        </StatusBarLayout>
-    );
+    const LoginScreen = () => <Login />;
+    const RegisterScreen = () => <Register />;
 
     return (
         <Stack.Navigator
             screenOptions={{
-                cardStyle: {
-                    backgroundColor: colors.contentHeader
-                },
                 cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
+                cardStyle: {
+                    backgroundColor: colors.contentHeader,
+                    paddingTop: top
+                },
                 headerShown: false
             }}
         >

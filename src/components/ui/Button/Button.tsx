@@ -7,7 +7,7 @@ import { Props } from './interfaces';
 
 import styles from './styles';
 
-export const Button: FC<Props> = ({ onPress, text, icon, containerStyle, textStyle, touchableStyle, disabled }) => {
+export const Button: FC<Props> = ({ onPress, text, icon, containerStyle, textStyle, touchableStyle, disabled, underlayColor }) => {
     const { state: { colors } } = useTheme();
 
     return (
@@ -18,7 +18,7 @@ export const Button: FC<Props> = ({ onPress, text, icon, containerStyle, textSty
                 { ...styles.buttonTouchable, backgroundColor: colors.button },
                 touchableStyle
             ]}
-            underlayColor={ colors.buttonDark }
+            underlayColor={ underlayColor || colors.buttonDark }
         >
             <View style={[ styles.buttonContainer, containerStyle ]}>
                 <Text
