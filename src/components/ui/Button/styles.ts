@@ -2,7 +2,7 @@ import { StyleSheet } from 'react-native';
 
 const styles = StyleSheet.create({
     buttonTouchable: {
-        borderRadius: 50,
+        borderRadius: 10,
     },
 
     buttonContainer: {

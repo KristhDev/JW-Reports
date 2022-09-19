@@ -6,6 +6,7 @@ export interface Props {
     text: string;
     icon?: ReactNode;
     disabled?: boolean;
+    underlayColor?: string;
     touchableStyle?: StyleProp<ViewStyle>;
     containerStyle?: StyleProp<ViewStyle>;
     textStyle?: StyleProp<TextStyle>;

@@ -59,7 +59,7 @@ const useAuth = () => {
     }
 
     const renew = async () => {
-        if (state.token.trim().length <= 0) return;
+        if (state.token?.trim().length <= 0) return;
         const { user, error } = await supabase.auth.api.getUser(state.token);
 
         if (error) {

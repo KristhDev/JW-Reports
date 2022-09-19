@@ -8,7 +8,7 @@ import { Title } from '../../../components/ui';
 const Register = () => {
     return (
         <KeyboardAwareScrollView
-            contentContainerStyle={{ flexGrow: 1, paddingBottom: 30 }}
+            contentContainerStyle={{ flexGrow: 1, paddingBottom: 25 }}
             extraHeight={ 50 }
             overScrollMode="never"
         >

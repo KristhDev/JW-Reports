@@ -7,15 +7,19 @@ import store, { persistor } from './src/features/store';
 
 import Navigation from './src/navigation/Navigation';
 
+import { ThemeProvider } from './src/theme/context';
+
 const App = () => {
   return (
-    <Provider store={ store }>
-      <PersistGate loading={ null } persistor={ persistor }>
-        <NavigationContainer>
-          <Navigation />
-        </NavigationContainer>
-      </PersistGate>
-    </Provider>
+    <ThemeProvider>
+      <Provider store={ store }>
+        <PersistGate loading={ null } persistor={ persistor }>
+            <NavigationContainer>
+              <Navigation />
+            </NavigationContainer>
+        </PersistGate>
+      </Provider>
+    </ThemeProvider>
   );
 }
 

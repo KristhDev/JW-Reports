@@ -3,7 +3,7 @@ import { View } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 import { LoginForm } from '../../../components/auth';
-import { Title } from '../../../components/ui';
+import { ThemeBtn, Title } from '../../../components/ui';
 
 const Login = () => {
     return (
@@ -15,6 +15,8 @@ const Login = () => {
                 <Title
                     text="Ingresar"
                 />
+
+                <ThemeBtn />
 
                 <LoginForm />
             </View>
