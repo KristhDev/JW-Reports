@@ -8,8 +8,8 @@ const INITIAL_STATE: AuthState = {
         name: '',
         surname: '',
         email: '',
-        createdAt: new Date(),
-        updatedAt: new Date()
+        createdAt: Date.now().toString(),
+        updatedAt: Date.now().toString(),
     },
     isAuthenticated: false,
     isAuthLoading: false,
