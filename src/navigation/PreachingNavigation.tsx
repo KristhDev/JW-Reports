@@ -28,7 +28,7 @@ const PreachingNavigation = () => {
             marginBottom: -7
         },
         tabBarLabelStyle: {
-            fontSize: 14
+            fontSize: 14,
         }
     });
 
@@ -45,6 +45,7 @@ const PreachingNavigation = () => {
                 headerStyle: tabsStyles.headerStyle,
                 headerTintColor: colors.headerText,
                 tabBarActiveTintColor: colors.button,
+                tabBarInactiveTintColor: colors.icon,
                 tabBarIconStyle: tabsStyles.tabBarIconStyle,
                 tabBarLabelStyle: tabsStyles.tabBarLabelStyle,
                 tabBarStyle: tabsStyles.tabBarStyle
