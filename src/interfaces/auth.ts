@@ -10,8 +10,8 @@ export interface User {
     name: string;
     surname: string;
     email: string;
-    createdAt: Date;
-    updatedAt: Date;
+    createdAt: string;
+    updatedAt: string;
 }
 
 export interface Register {

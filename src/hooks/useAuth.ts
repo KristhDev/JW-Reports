@@ -1,4 +1,5 @@
 import { useSelector } from 'react-redux';
+import { AuthResponse } from '@supabase/supabase-js';
 
 import { supabase } from '../supabase/config';
 
@@ -15,56 +16,7 @@ const useAuth = () => {
 
     const state = useSelector<RootState, AuthState>(store => store.auth);
 
-    const register = async ({ name, surname, email, password }: Register) => {
-        const credentails = { email, password }
-        const userData = { name, surname, createdAt: new Date(), updatedAt: new Date() }
-
-        const { data: { session, user }, error } = await supabase.auth.signUp(credentails);
-        await supabase.auth.updateUser({ data: userData });
-
-        if (error) {
-            console.log(error);
-            setStatus({ code: 400, msg: error.message });
-
-            return;
-        }
-
-        dispatch(setUserAction({
-            token: session?.refresh_token!,
-            user: {
-                ...userData,
-                id: user?.id!,
-                email,
-            }
-        }));
-    }
-
-    const login = async ({ email, password }: { email: string, password: string }) => {
-        const { data: { session, user }, error } = await supabase.auth.signInWithPassword({ email, password });
-
-        if (error) {
-            console.log(error);
-            setStatus({ code: 400, msg: error.message });
-
-            return;
-        }
-
-        console.log(user);
-
-        dispatch(setUserAction({
-            token: session?.refresh_token!,
-            user: {
-                ...user?.user_metadata,
-                id: user?.id!,
-                email,
-            } as User
-        }));
-    }
-
-    const renew = async () => {
-        if (state.token?.trim().length <= 0) return;
-        const { data: { user, session }, error } = await supabase.auth.refreshSession({ refresh_token: state.token });
-
+    const setUser = ({ data: { user, session }, error }: AuthResponse) => {
         if (error) {
             console.log(error);
             dispatch(clearAuthAction());
@@ -77,9 +29,39 @@ const useAuth = () => {
             token: session?.refresh_token!,
             user: {
                 ...user?.user_metadata,
-                id: user?.id!
+                id: user?.id!,
+                createdAt: user?.created_at!,
+                updatedAt: user?.updated_at!,
+                email: user?.email,
             } as User
         }));
+    }
+
+    const register = async ({ name, surname, email, password }: Register) => {
+        const result = await supabase.auth.signUp({ email, password });
+
+        if (result?.data?.user !== null) {
+            result.data.user.user_metadata = {
+                ...result.data.user!.user_metadata,
+                name,
+                surname
+            }
+
+            await supabase.auth.updateUser({ data: { name, surname } });
+        }
+
+        setUser(result);
+    }
+
+    const login = async ({ email, password }: { email: string, password: string }) => {
+        const result = await supabase.auth.signInWithPassword({ email, password });
+        setUser(result);
+    }
+
+    const renew = async () => {
+        if (state.token?.trim().length <= 0) return;
+        const result = await supabase.auth.refreshSession({ refresh_token: state.token });
+        setUser(result);
     }
 
     const logout = async () => {
