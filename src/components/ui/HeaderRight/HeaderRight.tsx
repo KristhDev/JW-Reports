@@ -32,6 +32,21 @@ export const HeaderRight = () => {
                 icon={
                     <Icon
                         color={ colors.button }
+                        name="calendar-sharp"
+                        size={ 28 }
+                        style={{ marginLeft: 0.5 }}
+                    />
+                }
+                onPress={ () => {} }
+                style={{ marginRight: -2 }}
+                touchColor={ (theme === 'dark') ? 'rgba(255, 255, 255, 0.15)' : 'rgba(0, 0, 0, 0.15)'  }
+            />
+
+            <Fab
+                color={ 'transparent' }
+                icon={
+                    <Icon
+                        color={ colors.button }
                         name="settings-outline"
                         size={ 28 }
                         style={{ marginLeft: 1 }}

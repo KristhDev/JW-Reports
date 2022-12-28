@@ -19,17 +19,18 @@ const useAuth = () => {
         const credentails = { email, password }
         const userData = { name, surname, createdAt: new Date(), updatedAt: new Date() }
 
-        const { user, session, error } = await supabase.auth.signUp(credentails, { data: userData });
+        const { data: { session, user }, error } = await supabase.auth.signUp(credentails);
+        await supabase.auth.updateUser({ data: userData });
 
         if (error) {
             console.log(error);
-            setStatus({ code: error.status, msg: error.message });
+            setStatus({ code: 400, msg: error.message });
 
             return;
         }
 
         dispatch(setUserAction({
-            token: session?.access_token!,
+            token: session?.refresh_token!,
             user: {
                 ...userData,
                 id: user?.id!,
@@ -39,17 +40,19 @@ const useAuth = () => {
     }
 
     const login = async ({ email, password }: { email: string, password: string }) => {
-        const { user, session, error } = await supabase.auth.signIn({ email, password });
+        const { data: { session, user }, error } = await supabase.auth.signInWithPassword({ email, password });
 
         if (error) {
             console.log(error);
-            setStatus({ code: error.status, msg: error.message });
+            setStatus({ code: 400, msg: error.message });
 
             return;
         }
 
+        console.log(user);
+
         dispatch(setUserAction({
-            token: session?.access_token!,
+            token: session?.refresh_token!,
             user: {
                 ...user?.user_metadata,
                 id: user?.id!,
@@ -60,18 +63,18 @@ const useAuth = () => {
 
     const renew = async () => {
         if (state.token?.trim().length <= 0) return;
-        const { user, error } = await supabase.auth.api.getUser(state.token);
+        const { data: { user, session }, error } = await supabase.auth.refreshSession({ refresh_token: state.token });
 
         if (error) {
             console.log(error);
             dispatch(clearAuthAction());
-            setStatus({ code: error.status, msg: error.message });
+            setStatus({ code: 400, msg: error.message });
 
             return;
         }
 
         dispatch(setUserAction({
-            token: supabase.auth.session()?.access_token!,
+            token: session?.refresh_token!,
             user: {
                 ...user?.user_metadata,
                 id: user?.id!
@@ -85,7 +88,7 @@ const useAuth = () => {
 
         if (error) {
             console.log(error);
-            setStatus({ code: error.status, msg: error.message });
+            setStatus({ code: 400, msg: error.message });
 
             return;
         }
