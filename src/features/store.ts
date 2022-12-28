@@ -13,7 +13,7 @@ const reducers = combineReducers({
 });
 
 const persistConfig = {
-    key: 'mini-wass-root',
+    key: 'jw-reports-root',
     storage: AsyncStorage,
 }
 
