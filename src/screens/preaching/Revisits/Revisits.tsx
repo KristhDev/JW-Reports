@@ -9,7 +9,7 @@ import styles from './styles';
 const Revisits = () => {
     return (
         <ScrollView
-            contentContainerStyle={{ paddingHorizontal: 5 }}
+            contentContainerStyle={{ paddingHorizontal: 10 }}
             overScrollMode="never"
             style={{ flex: 1 }}
         >

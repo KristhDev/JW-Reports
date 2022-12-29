@@ -1,7 +1,7 @@
 import { StyleSheet } from 'react-native';
 
 const styles = StyleSheet.create({
-    formField: {
+    datetimeField: {
         display: 'flex',
         padding: 10
     },
@@ -13,6 +13,7 @@ const styles = StyleSheet.create({
     },
 
     formControl: {
+        flex: 1,
         alignItems: 'center',
         borderRadius: 5,
         borderWidth: 0.5,
@@ -22,8 +23,7 @@ const styles = StyleSheet.create({
     formInput: {
         fontSize: 17,
         marginBottom: 1,
-        paddingLeft: 10,
-        width: '87%'
+        paddingLeft: 10
     },
 });
 

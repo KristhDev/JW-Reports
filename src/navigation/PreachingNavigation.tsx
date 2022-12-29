@@ -3,7 +3,9 @@ import { StyleSheet } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Icon from 'react-native-vector-icons/Ionicons';
 
-import { Home, Revisits, Search } from '../screens/preaching';
+import HomeNavigation from './HomeNavigation';
+
+import { Revisits, Search } from '../screens/preaching';
 
 import { HeaderRight } from '../components/ui';
 
@@ -32,7 +34,6 @@ const PreachingNavigation = () => {
         }
     });
 
-    const HomeScreen = () => <Home />;
     const SearchScreen = () => <Search />;
     const RevisitsScreen = () => <Revisits />;
 
@@ -45,15 +46,16 @@ const PreachingNavigation = () => {
                 headerStyle: tabsStyles.headerStyle,
                 headerTintColor: colors.headerText,
                 tabBarActiveTintColor: colors.button,
-                tabBarInactiveTintColor: colors.icon,
+                tabBarHideOnKeyboard: true,
                 tabBarIconStyle: tabsStyles.tabBarIconStyle,
+                tabBarInactiveTintColor: colors.icon,
                 tabBarLabelStyle: tabsStyles.tabBarLabelStyle,
                 tabBarStyle: tabsStyles.tabBarStyle
             }}
         >
             <Tabs.Screen
-                component={ HomeScreen }
-                name="HomeScreen"
+                component={ HomeNavigation }
+                name="HomeNavigation"
                 options={{
                     headerRight: () => <HeaderRight />,
                     tabBarIcon: ({ color, size }) => (

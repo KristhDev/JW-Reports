@@ -2,7 +2,7 @@ import { StyleSheet } from 'react-native';
 
 const styles = StyleSheet.create({
     touchable: {
-        marginVertical: 5,
+        marginVertical: 10,
         maxHeight: 200,
         width: '100%'
     },
