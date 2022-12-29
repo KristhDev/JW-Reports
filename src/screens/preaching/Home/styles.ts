@@ -12,7 +12,15 @@ const styles = StyleSheet.create({
         position: 'absolute',
         right: 10,
         width: 60,
-    }
+    },
+
+    container: {
+        borderRadius: 10,
+        justifyContent: 'space-between',
+        minHeight: 120,
+        padding: 15,
+        width: '90%'
+    },
 });
 
 export default styles;

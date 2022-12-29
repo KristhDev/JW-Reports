@@ -5,86 +5,98 @@ import styles from './styles';
 
 const tableHeaders = [
     'Día',
-    'Horas',
+    'H/I',
+    'H/F',
     'Pub',
-    'Videos',
+    'Vid',
     'Rev'
 ];
 
 const tableContent = [
     {
         day: 1,
-        hours: 5,
+        init_hour: 5,
+        final_hour: 10,
         pub: 10,
         videos: 4,
         rev: 4
     },
     {
         day: 2,
-        hours: 5,
+        init_hour: 5,
+        final_hour: 10,
         pub: 10,
         videos: 4,
         rev: 4
     },
     {
         day: 3,
-        hours: 5,
+        init_hour: 5,
+        final_hour: 10,
         pub: 10,
         videos: 4,
         rev: 4
     },
     {
         day: 4,
-        hours: 5,
+        init_hour: 5,
+        final_hour: 10,
         pub: 10,
         videos: 4,
         rev: 4
     },
     {
         day: 5,
-        hours: 5,
+        init_hour: 5,
+        final_hour: 10,
         pub: 10,
         videos: 4,
         rev: 4
     },
     {
         day: 6,
-        hours: 5,
+        init_hour: 5,
+        final_hour: 10,
         pub: 10,
         videos: 4,
         rev: 4
     },
     {
         day: 9,
-        hours: 5,
+        init_hour: 5,
+        final_hour: 10,
         pub: 10,
         videos: 4,
         rev: 4
     },
     {
         day: 10,
-        hours: 5,
+        init_hour: 5,
+        final_hour: 10,
         pub: 10,
         videos: 4,
         rev: 4
     },
     {
         day: 12,
-        hours: 5,
+        init_hour: 5,
+        final_hour: 10,
         pub: 10,
         videos: 4,
         rev: 4
     },
     {
         day: 15,
-        hours: 5,
+        init_hour: 5,
+        final_hour: 10,
         pub: 10,
         videos: 4,
         rev: 4
     },
     {
         day: 18,
-        hours: 5,
+        init_hour: 5,
+        final_hour: 10,
         pub: 10,
         videos: 4,
         rev: 4
@@ -112,7 +124,11 @@ export const PreachingTable = () => {
                         </View>
 
                         <View style={{ ...styles.tableBox, backgroundColor: '#746C84' }}>
-                            <Text style={ styles.tableBoxText }>{ content.hours }</Text>
+                            <Text style={ styles.tableBoxText }>{ content.init_hour }</Text>
+                        </View>
+
+                        <View style={{ ...styles.tableBox, backgroundColor: '#746C84' }}>
+                            <Text style={ styles.tableBoxText }>{ content.final_hour }</Text>
                         </View>
 
                         <View style={{ ...styles.tableBox, backgroundColor: '#746C84' }}>

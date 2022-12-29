@@ -1,5 +1,6 @@
 import React from 'react';
 import { ScrollView } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/Ionicons';
 
 import { PreachingTable } from '../../../components/preaching';
@@ -10,6 +11,7 @@ import { useTheme } from '../../../hooks';
 import styles from './styles';
 
 const Home = () => {
+    const { navigate } = useNavigation();
     const { state: { colors } } = useTheme();
 
     return (
@@ -35,10 +37,10 @@ const Home = () => {
                         color={ colors.contentHeader }
                         name="add-circle-outline"
                         size={ 40 }
-                        style={{ marginLeft: 4 }}
+                        style={{ marginLeft: 3 }}
                     />
                 }
-                onPress={ () => {} }
+                onPress={ () => navigate('AddPreachingScreen' as never) }
                 style={ styles.fab }
                 touchColor={ colors.buttonDark }
             />
