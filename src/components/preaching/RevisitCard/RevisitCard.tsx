@@ -11,7 +11,7 @@ import styles from './styles';
 export const RevisitCard = () => {
     const { state: { colors, theme } } = useTheme();
 
-    const desc = 'Nemo maxime vero vel non eos. Provident reprehenderit sit. Labore ea qui ab. Aut reiciendis consequatur aliquam est aut quod. Pariatur reprehenderit est fugit quia. Quasi et delectus consequatur ex dolorum pariatur autem rem.';
+    const desc = 'Nemo maxime vero vel non eos. Provident reprehenderit sit. Labore ea qui ab. Aut reiciendis consequatur aliquam est aut quod. Pariatur reprehenderit est fugit quia. Quasi et delectus consequatur ex dolorum pariatur autem rem. Nemo maxime vero vel non eos. Provident reprehenderit sit. Labore ea qui ab. Aut reiciendis consequatur aliquam est aut quod. Pariatur reprehenderit est fugit quia. Quasi et delectus consequatur ex dolorum pariatur autem rem.';
 
     return (
         <TouchableHighlight
