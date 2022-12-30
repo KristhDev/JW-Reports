@@ -5,10 +5,12 @@ import { combineReducers } from 'redux';
 import { useDispatch } from 'react-redux';
 
 import { authReducer } from './auth';
+import { preachingReducer } from './preaching';
 import { statusReducer } from './status';
 
 const reducers = combineReducers({
     auth: authReducer,
+    preaching: preachingReducer,
     status: statusReducer
 });
 

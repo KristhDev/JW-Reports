@@ -1,0 +1,1 @@
+export { default as preachingReducer, addPreaching, setSelectedDate, setIsPreachingsLoading, setPreachings, clearPreaching } from './slice';

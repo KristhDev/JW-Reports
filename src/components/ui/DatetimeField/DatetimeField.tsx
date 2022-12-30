@@ -77,6 +77,8 @@ export const DatetimeField: FC<Props> = ({ icon, modalTitle, label, inputDateFor
             </View>
 
             <DatePicker
+                cancelText="Cancelar"
+                confirmText="Confirmar"
                 date={ field.value }
                 modal
                 mode={ mode }
