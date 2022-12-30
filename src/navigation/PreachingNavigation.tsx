@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { StyleSheet } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -9,11 +9,12 @@ import { Revisits, Search } from '../screens/preaching';
 
 import { HeaderRight } from '../components/ui';
 
-import { useTheme } from '../hooks';
+import { usePreaching, useTheme } from '../hooks';
 
 const Tabs = createBottomTabNavigator();
 
 const PreachingNavigation = () => {
+    const { loadPreachings, setSelectedDate, state: { selectedDate } } = usePreaching();
     const { state: { colors } } = useTheme();
 
     const tabsStyles = StyleSheet.create({
@@ -36,6 +37,14 @@ const PreachingNavigation = () => {
 
     const SearchScreen = () => <Search />;
     const RevisitsScreen = () => <Revisits />;
+
+    useEffect(() => {
+        setSelectedDate(new Date());
+    }, []);
+
+    useEffect(() => {
+        loadPreachings(selectedDate);
+    } ,[ selectedDate ]);
 
     return (
         <Tabs.Navigator

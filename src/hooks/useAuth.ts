@@ -5,6 +5,7 @@ import { supabase } from '../supabase/config';
 
 import { RootState, useAppDispatch } from '../features/store';
 import { setUser as setUserAction, clearAuth as clearAuthAction } from '../features/auth';
+import { clearPreaching } from '../features/preaching';
 
 import { useStatus } from './';
 
@@ -12,6 +13,7 @@ import { AuthState, Register, User } from '../interfaces/auth';
 
 const useAuth = () => {
     const dispatch = useAppDispatch();
+
     const { setStatus } = useStatus();
 
     const state = useSelector<RootState, AuthState>(store => store.auth);
@@ -75,6 +77,7 @@ const useAuth = () => {
             return;
         }
 
+        dispatch(clearPreaching());
         dispatch(clearAuthAction());
     }
 

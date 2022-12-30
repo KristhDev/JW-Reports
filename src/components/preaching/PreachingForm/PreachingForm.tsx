@@ -2,13 +2,15 @@ import React from 'react';
 import { View } from 'react-native';
 import { Formik } from 'formik';
 import { object, date, number } from 'yup';
+import dayjs from 'dayjs';
 import Icon from 'react-native-vector-icons/Ionicons';
 
-import { useStatus, useTheme } from '../../../hooks';
+import { usePreaching, useStatus, useTheme } from '../../../hooks';
 
 import { Button, DatetimeField, FormField } from '../../ui';
 
 export const PreachingForm = () => {
+    const { savePreaching } = usePreaching();
     const { setErrorForm } = useStatus();
     const { state: { colors } } = useTheme();
 
@@ -16,7 +18,10 @@ export const PreachingForm = () => {
         day: date()
             .required('El día no puede estar vacío'),
         init_hour: date()
-            .required('La hora inicial no puede estar vacía'),
+            .required('La hora inicial no puede estar vacía')
+            .test('date-min', 'La hora inicial no puede ser mayor que la hora final', (value, { parent }) => {
+                return dayjs(value).isBefore(dayjs(parent.final_hour));
+            }),
         final_hour: date()
             .required('La hora final no puede estar vacía'),
         posts: number()
@@ -37,7 +42,7 @@ export const PreachingForm = () => {
                 videos: 0,
                 revisits: 0
             }}
-            onSubmit={ () => {} }
+            onSubmit={ (values) => {savePreaching(values)} }
             validationSchema={ preachingFormSchema }
             validateOnMount
         >
@@ -105,7 +110,7 @@ export const PreachingForm = () => {
                         icon={
                             <Icon
                                 color={ colors.contentHeader }
-                                name="calendar-outline"
+                                name="time-outline"
                                 size={ 25 }
                             />
                         }
@@ -121,7 +126,7 @@ export const PreachingForm = () => {
                         icon={
                             <Icon
                                 color={ colors.contentHeader }
-                                name="calendar-outline"
+                                name="time-outline"
                                 size={ 25 }
                             />
                         }
