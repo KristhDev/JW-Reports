@@ -49,7 +49,7 @@ export const FormField: FC<Props> = ({ icon, label, style, controlStyle, inputSt
                         { ...styles.formInput, color: colors.inputText },
                         inputStyle
                     ]}
-                    value={ field.value }
+                    value={ String(field.value) }
                     { ...rest }
                     onBlur={ (e) => {
                         rest.onBlur && rest.onBlur(e);

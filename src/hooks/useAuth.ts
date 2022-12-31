@@ -4,7 +4,11 @@ import { AuthResponse } from '@supabase/supabase-js';
 import { supabase } from '../supabase/config';
 
 import { RootState, useAppDispatch } from '../features/store';
-import { setUser as setUserAction, clearAuth as clearAuthAction } from '../features/auth';
+import {
+    setUser as setUserAction,
+    clearAuth as clearAuthAction,
+    setIsAuthLoading
+} from '../features/auth';
 import { clearPreaching } from '../features/preaching';
 
 import { useStatus } from './';
@@ -40,6 +44,8 @@ const useAuth = () => {
     }
 
     const register = async ({ name, surname, email, password }: Register) => {
+        dispatch(setIsAuthLoading({ isLoading: true }));
+
         const result = await supabase.auth.signUp({ email, password });
 
         if (result?.data?.user !== null) {
@@ -56,6 +62,8 @@ const useAuth = () => {
     }
 
     const login = async ({ email, password }: { email: string, password: string }) => {
+        dispatch(setIsAuthLoading({ isLoading: true }));
+
         const result = await supabase.auth.signInWithPassword({ email, password });
         setUser(result);
     }
@@ -83,9 +91,11 @@ const useAuth = () => {
 
     return {
         state,
-        register,
+
+        // Functions
         login,
         logout,
+        register,
         renew
     }
 }

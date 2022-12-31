@@ -8,14 +8,17 @@ import { RootState, useAppDispatch } from '../features/store';
 import {
     clearPreaching as clearPreachingAction,
     setIsPreachingsLoading as setIsPreachingsLoadingAction,
+    setIsPreachingLoading,
     setPreachings,
+    setSelectedPreaching as setSelectedPreachingAction,
     addPreaching,
-    setSelectedDate as setSelectedDateAction
+    setSelectedDate as setSelectedDateAction,
+    updatePreaching as updatePreachingAction
 } from '../features/preaching';
 
 import { useAuth, useStatus } from './';
 
-import { PreachingState } from '../interfaces/preaching';
+import { Preaching, PreachingState } from '../interfaces/preaching';
 import { PreachingFormValues } from '../components/preaching/PreachingForm/interfaces';
 
 const usePreaching = () => {
@@ -30,10 +33,10 @@ const usePreaching = () => {
     const clearPreaching = () => dispatch(clearPreachingAction());
     const setIsPreachingsLoading = (isLoading: boolean) => dispatch(setIsPreachingsLoadingAction({ isLoading }));
     const setSelectedDate = (date: Date) => dispatch(setSelectedDateAction({ selectedDate: date }));
+    const setSelectedPreaching = (preaching: Preaching) => dispatch(setSelectedPreachingAction({ preaching }));
 
     const loadPreachings = async (date: Date) => {
         setIsPreachingsLoading(true);
-        console.log('here');
 
         const init_date = dayjs(date).startOf('month').format('YYYY-MM-DD HH:mm');
         const final_date = dayjs(date).endOf('month').format('YYYY-MM-DD HH:mm');
@@ -43,7 +46,8 @@ const usePreaching = () => {
             .eq('user_id', user.id)
             .gte('day', init_date)
             .lte('day', final_date)
-            .order('day', { ascending: true });
+            .order('day', { ascending: true })
+            .order('init_hour', { ascending: true });
 
         if (error) {
             console.log(error);
@@ -58,6 +62,8 @@ const usePreaching = () => {
     }
 
     const savePreaching = async (preachingValues: PreachingFormValues) => {
+        dispatch(setIsPreachingLoading({ isLoading: true }));
+
         const { data, error } = await supabase.from('preachings')
             .insert({
                 ...preachingValues,
@@ -70,6 +76,7 @@ const usePreaching = () => {
 
         if (error) {
             console.log(error);
+            dispatch(setIsPreachingLoading({ isLoading: false }));
             setStatus({ code: 400, msg: error.message });
 
             return;
@@ -87,14 +94,50 @@ const usePreaching = () => {
         navigate('HomeScreen' as never);
     }
 
+    const updatePreaching = async (preachingValues: PreachingFormValues) => {
+        dispatch(setIsPreachingLoading({ isLoading: true }));
+
+        const { data, error } = await supabase.from('preachings')
+            .update({
+                ...preachingValues,
+                day: dayjs(preachingValues.day).format('YYYY-MM-DD'),
+                init_hour: dayjs(preachingValues.init_hour).format('YYYY-MM-DD HH:mm'),
+                final_hour: dayjs(preachingValues.final_hour).format('YYYY-MM-DD HH:mm')
+            })
+            .eq('id', state.seletedPreaching.id)
+            .select();
+
+        if (error) {
+            console.log(error);
+            dispatch(setIsPreachingLoading({ isLoading: false }));
+            setStatus({ code: 400, msg: error.message });
+
+            return;
+        }
+
+        dispatch(updatePreachingAction({ preaching: data[0] }));
+
+        setStatus({
+            code: 201,
+            msg: 'Haz actualizado tu día de predicación correctamente'
+        });
+
+        navigate('HomeScreen' as never);
+    }
+
     return {
         state,
+
+        // Actions
         clearPreaching,
         setIsPreachingsLoading,
-        setPreachings,
-        loadPreachings,
+        setSelectedDate,
+        setSelectedPreaching,
+
+        // Functions
         savePreaching,
-        setSelectedDate
+        loadPreachings,
+        updatePreaching
     }
 }
 

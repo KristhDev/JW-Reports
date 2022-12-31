@@ -21,6 +21,10 @@ export interface Register {
     password: string;
 }
 
+export type SetIsAuthLoading = {
+    isLoading: boolean;
+}
+
 export type SetUserPayload = {
     user: User;
     token: string;

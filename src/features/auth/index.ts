@@ -1,1 +1,1 @@
-export { default as authReducer, setUser, clearAuth } from './slice';
+export { default as authReducer, setUser, clearAuth, setIsAuthLoading } from './slice';

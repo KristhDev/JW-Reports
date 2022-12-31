@@ -1,1 +1,11 @@
-export { default as preachingReducer, addPreaching, setSelectedDate, setIsPreachingsLoading, setPreachings, clearPreaching } from './slice';
+export {
+    default as preachingReducer,
+    addPreaching,
+    clearPreaching,
+    setIsPreachingLoading,
+    setIsPreachingsLoading,
+    setPreachings,
+    setSelectedDate,
+    setSelectedPreaching,
+    updatePreaching
+} from './slice';

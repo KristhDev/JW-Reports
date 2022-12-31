@@ -11,14 +11,14 @@ const statusSlice = createSlice({
     name: 'status',
     initialState: INITIAL_STATE,
     reducers: {
-        setStatus: (state, action: PayloadAction<SetStatusPayload>) => {
-            state.code = action.payload.code;
-            state.msg = action.payload.msg;
-        },
-
         clearStatus: (state) => {
             state.code = INITIAL_STATE.code;
             state.msg = INITIAL_STATE.msg;
+        },
+
+        setStatus: (state, action: PayloadAction<SetStatusPayload>) => {
+            state.code = action.payload.code;
+            state.msg = action.payload.msg;
         }
     }
 });
