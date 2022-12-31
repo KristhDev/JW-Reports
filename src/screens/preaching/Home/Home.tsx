@@ -14,11 +14,28 @@ import styles from './styles';
 const Home = () => {
     const { navigate } = useNavigation();
 
-    const { state: { selectedDate } } = usePreaching();
+    const { state: { selectedDate }, setSelectedPreaching } = usePreaching();
     const { state: { colors } } = useTheme();
 
     const month = dayjs(selectedDate).format('MMMM').toUpperCase();
     const year = dayjs(selectedDate).get('year');
+
+    const handleNavigate = () => {
+        setSelectedPreaching({
+            id: '',
+            user_id: '',
+            day: new Date().toString(),
+            init_hour: new Date().toString(),
+            final_hour: new Date().toString(),
+            posts: 0,
+            videos: 0,
+            revisits: 0,
+            created_at: new Date().toString(),
+            updated_at: new Date().toString()
+        });
+
+        navigate('AddOrEditPreachingScreen' as never);
+    }
 
     return (
         <>
@@ -46,7 +63,7 @@ const Home = () => {
                         style={{ marginLeft: 3 }}
                     />
                 }
-                onPress={ () => navigate('AddOrEditPreachingScreen' as never) }
+                onPress={ handleNavigate }
                 style={ styles.fab }
                 touchColor={ colors.buttonDark }
             />

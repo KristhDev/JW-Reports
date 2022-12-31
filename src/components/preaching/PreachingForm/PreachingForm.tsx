@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { ActivityIndicator, View } from 'react-native';
 import { Formik } from 'formik';
 import { object, date, number } from 'yup';
@@ -18,7 +18,6 @@ export const PreachingForm = () => {
             seletedPreaching
         },
         savePreaching,
-        setSelectedPreaching,
         updatePreaching
     } = usePreaching();
     const { setErrorForm } = useStatus();
@@ -47,23 +46,6 @@ export const PreachingForm = () => {
             ? savePreaching(formValues)
             : updatePreaching(formValues);
     }
-
-    useEffect(() => {
-        return () => {
-            setSelectedPreaching({
-                id: '',
-                user_id: '',
-                day: new Date().toString(),
-                init_hour: new Date().toString(),
-                final_hour: new Date().toString(),
-                posts: 0,
-                videos: 0,
-                revisits: 0,
-                created_at: new Date().toString(),
-                updated_at: new Date().toString()
-            });
-        }
-    }, []);
 
     return (
         <Formik
