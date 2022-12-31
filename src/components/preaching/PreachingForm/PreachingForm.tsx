@@ -1,16 +1,26 @@
-import React from 'react';
-import { View } from 'react-native';
+import React, { useEffect } from 'react';
+import { ActivityIndicator, View } from 'react-native';
 import { Formik } from 'formik';
 import { object, date, number } from 'yup';
 import dayjs from 'dayjs';
 import Icon from 'react-native-vector-icons/Ionicons';
 
-import { usePreaching, useStatus, useTheme } from '../../../hooks';
-
 import { Button, DatetimeField, FormField } from '../../ui';
 
+import { usePreaching, useStatus, useTheme } from '../../../hooks';
+
+import { PreachingFormValues } from './interfaces';
+
 export const PreachingForm = () => {
-    const { savePreaching } = usePreaching();
+    const {
+        state: {
+            isPreachingLoading,
+            seletedPreaching
+        },
+        savePreaching,
+        setSelectedPreaching,
+        updatePreaching
+    } = usePreaching();
     const { setErrorForm } = useStatus();
     const { state: { colors } } = useTheme();
 
@@ -32,17 +42,40 @@ export const PreachingForm = () => {
             .min(0, 'El número de revisitas no puede ser negativo'),
     });
 
+    const handleSaveOrUpdate = (formValues: PreachingFormValues) => {
+        (seletedPreaching.id === '')
+            ? savePreaching(formValues)
+            : updatePreaching(formValues);
+    }
+
+    useEffect(() => {
+        return () => {
+            setSelectedPreaching({
+                id: '',
+                user_id: '',
+                day: new Date().toString(),
+                init_hour: new Date().toString(),
+                final_hour: new Date().toString(),
+                posts: 0,
+                videos: 0,
+                revisits: 0,
+                created_at: new Date().toString(),
+                updated_at: new Date().toString()
+            });
+        }
+    }, []);
+
     return (
         <Formik
             initialValues={{
-                day: new Date(),
-                init_hour: new Date(),
-                final_hour: new Date(),
-                posts: 0,
-                videos: 0,
-                revisits: 0
+                day: new Date(seletedPreaching.day),
+                init_hour: new Date(seletedPreaching.init_hour),
+                final_hour: new Date(seletedPreaching.final_hour),
+                posts: seletedPreaching.posts,
+                videos: seletedPreaching.videos,
+                revisits: seletedPreaching.revisits
             }}
-            onSubmit={ (values) => {savePreaching(values)} }
+            onSubmit={ handleSaveOrUpdate }
             validationSchema={ preachingFormSchema }
             validateOnMount
         >
@@ -139,8 +172,18 @@ export const PreachingForm = () => {
                     />
 
                     <Button
-                        text="Guardar"
+                        disabled={ isPreachingLoading }
+                        icon={
+                            (isPreachingLoading) && (
+                                <ActivityIndicator
+                                    color={ colors.contentHeader }
+                                    size="large"
+                                    style={{ marginLeft: 20, height: 15, width: 15 }}
+                                />
+                            )
+                        }
                         onPress={ (isValid) ? handleSubmit : () => setErrorForm(errors) }
+                        text={ (seletedPreaching.id !== '') ? 'Actualizar' : 'Guardar' }
                         touchableStyle={{ marginTop: 30 }}
                     />
                 </View>

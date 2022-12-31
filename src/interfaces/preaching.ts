@@ -1,7 +1,9 @@
 export interface PreachingState {
+    isPreachingLoading: boolean;
     isPreachingsLoading: boolean;
     preachings: Preaching[];
     selectedDate: Date;
+    seletedPreaching: Preaching;
 }
 
 export interface Preaching {
@@ -21,7 +23,15 @@ export type AddPreachingPayload = {
     preaching: Preaching
 }
 
+export type UpdatePreachingPayload = {
+    preaching: Preaching
+}
+
 export type SetIsPreachingsLoadingPayload = {
+    isLoading: boolean;
+}
+
+export type SetIsPreachingLoadingPayload = {
     isLoading: boolean;
 }
 
@@ -31,4 +41,8 @@ export type SetSelectedDatePayload = {
 
 export type SetPreachingsPayload = {
     preachings: Preaching[];
+}
+
+export type SetSelectedPreachingPayload = {
+    preaching: Preaching;
 }

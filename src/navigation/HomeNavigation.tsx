@@ -1,7 +1,7 @@
 import React from 'react';
 import { CardStyleInterpolators, createStackNavigator } from '@react-navigation/stack';
 
-import { AddPreaching, Home } from '../screens/preaching';
+import { AddOrEditPreaching, Home } from '../screens/preaching';
 
 import { useTheme } from '../hooks';
 
@@ -10,7 +10,7 @@ const Stack = createStackNavigator();
 const HomeNavigation = () => {
     const { state: { colors } } = useTheme();
 
-    const AddPreachingScreen = () => <AddPreaching />;
+    const AddOrEditPreachingScreen = () => <AddOrEditPreaching />;
     const HomeScreen = () => <Home />;
 
     return (
@@ -29,8 +29,8 @@ const HomeNavigation = () => {
             />
 
             <Stack.Screen
-                name="AddPreachingScreen"
-                component={ AddPreachingScreen }
+                name="AddOrEditPreachingScreen"
+                component={ AddOrEditPreachingScreen }
             />
         </Stack.Navigator>
     );

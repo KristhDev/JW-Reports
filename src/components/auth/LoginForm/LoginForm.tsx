@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, TouchableOpacity, useWindowDimensions } from 'react-native';
+import { View, Text, TouchableOpacity, useWindowDimensions, ActivityIndicator } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { Formik } from 'formik';
 import { object, string } from 'yup';
@@ -17,7 +17,7 @@ export const LoginForm = () => {
     const { navigate } = useNavigation();
     const { width } = useWindowDimensions();
 
-    const { login } = useAuth();
+    const { state: { isAuthLoading }, login } = useAuth();
     const { setErrorForm } = useStatus();
     const { state: { colors } } = useTheme();
 
@@ -72,6 +72,16 @@ export const LoginForm = () => {
                     />
 
                     <Button
+                        disabled={ isAuthLoading }
+                        icon={
+                            (isAuthLoading) && (
+                                <ActivityIndicator
+                                    color={ colors.contentHeader }
+                                    size="large"
+                                    style={{ marginLeft: 20, height: 15, width: 15 }}
+                                />
+                            )
+                        }
                         onPress={ (isValid) ? handleSubmit : () => setErrorForm(errors)  }
                         text="Ingresar"
                         touchableStyle={{ paddingHorizontal: 20, marginTop: 30 }}

@@ -46,7 +46,7 @@ const Home = () => {
                         style={{ marginLeft: 3 }}
                     />
                 }
-                onPress={ () => navigate('AddPreachingScreen' as never) }
+                onPress={ () => navigate('AddOrEditPreachingScreen' as never) }
                 style={ styles.fab }
                 touchColor={ colors.buttonDark }
             />

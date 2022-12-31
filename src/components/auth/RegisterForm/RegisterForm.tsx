@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, TouchableOpacity, useWindowDimensions } from 'react-native';
+import { View, Text, TouchableOpacity, useWindowDimensions, ActivityIndicator } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { Formik } from 'formik';
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -17,7 +17,7 @@ export const RegisterForm = () => {
     const { navigate } = useNavigation();
     const { width } = useWindowDimensions();
 
-    const { register } = useAuth();
+    const { state: { isAuthLoading }, register } = useAuth();
     const { state: { colors } } = useTheme();
 
     return (
@@ -105,35 +105,45 @@ export const RegisterForm = () => {
                     />
 
                     <Button
+                        disabled={ isAuthLoading }
+                        icon={
+                            (isAuthLoading) && (
+                                <ActivityIndicator
+                                    color={ colors.contentHeader }
+                                    size="large"
+                                    style={{ marginLeft: 20, height: 15, width: 15 }}
+                                />
+                            )
+                        }
                         onPress={ handleSubmit }
                         text="Crear cuenta"
                         touchableStyle={{ marginTop: 30 }}
                     />
 
                     <View style={{ ...styles.btnLink, width: width * 0.9 }}>
+                        <Text
+                            style={{
+                                ...styles.formText,
+                                color: colors.titleText
+                            }}
+                        >
+                            ¿Ya tienes cuenta?
+                        </Text>
+
+                        <TouchableOpacity
+                            activeOpacity={ 0.75 }
+                            onPress={ () => navigate('LoginScreen' as never) }
+                        >
                             <Text
                                 style={{
-                                    ...styles.formText,
-                                    color: colors.titleText
+                                    ...styles.formLink,
+                                    color: colors.linkText
                                 }}
                             >
-                                ¿Ya tienes cuenta?
+                                Ingresa aquí
                             </Text>
-
-                            <TouchableOpacity
-                                activeOpacity={ 0.75 }
-                                onPress={ () => navigate('LoginScreen' as never) }
-                            >
-                                <Text
-                                    style={{
-                                        ...styles.formLink,
-                                        color: colors.linkText
-                                    }}
-                                >
-                                    Ingresa aquí
-                                </Text>
-                            </TouchableOpacity>
-                        </View>
+                        </TouchableOpacity>
+                    </View>
                 </View>
             ) }
         </Formik>
