@@ -73,7 +73,8 @@ const preachingSlice = createSlice({
                 (preaching.id === action.payload.preaching.id)
                     ? action.payload.preaching
                     : preaching
-            )
+            );
+            state.isPreachingLoading = false;
         }
     }
 });
