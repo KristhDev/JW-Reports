@@ -4,7 +4,7 @@ const styles = StyleSheet.create({
     reportModal: {
         borderRadius: 10,
         padding: 15,
-        width: '90%'
+        width: '87%'
     },
 
     reportModalInfo: {

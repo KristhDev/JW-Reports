@@ -8,7 +8,7 @@ import { Button } from '../../../components/ui';
 
 import { useAuth, usePreaching, useTheme } from '../../../hooks';
 
-import { sumHours, sumNumbers } from '../../../utils';
+import { sumHours, sumNumbers, getRestMins } from '../../../utils';
 
 import { ReportModalProps } from './interfaces';
 
@@ -24,6 +24,7 @@ const ReportModal: FC<ReportModalProps> = ({ isOpen, month, onClose }) => {
     const totalVideos = sumNumbers(preachings.map(p => p.videos));
     const totalHours = sumHours(preachings.map(p => ({ init: p.init_hour, finish: p.final_hour })));
     const totalRevisits = sumNumbers(preachings.map(p => p.revisits));
+    const restMins = getRestMins(preachings.map(p => ({ init: p.init_hour, finish: p.final_hour })));
 
     const buttonColor = hexToRgba('#5A3D86', 0.25);
 
@@ -93,6 +94,14 @@ const ReportModal: FC<ReportModalProps> = ({ isOpen, month, onClose }) => {
                         <Text style={{ ...styles.reportText, color: colors.modalText }}>Ninguno</Text>
                     </View>
                 </View>
+
+                {
+                    (restMins > 0) && (
+                        <Text style={{ color: colors.modalText, fontSize: 16, padding: 10 }}>
+                            Para este mes te sobraron { restMins } minutos, guardalos para el siguiente mes.
+                        </Text>
+                    )
+                }
 
                 <View style={{ flexDirection: 'row', justifyContent: 'flex-end', marginTop: 20 }}>
                     <Button

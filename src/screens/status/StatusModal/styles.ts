@@ -6,7 +6,7 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
         minHeight: 120,
         padding: 15,
-        width: '90%'
+        width: '87%'
     },
 
     statusContainer: {
