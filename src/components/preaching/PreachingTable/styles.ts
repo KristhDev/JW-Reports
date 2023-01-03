@@ -1,31 +1,16 @@
 import { StyleSheet } from 'react-native';
 
 const styles = StyleSheet.create({
+    table: {
+        alignItems: 'center',
+        borderWidth: 1,
+        margin: 20,
+    },
+
     tableRow: {
         alignItems: 'center',
         flexDirection: 'row',
         width: '100%'
-    },
-
-    tableBox: {
-        backgroundColor: '#3C3547',
-        borderWidth: 1,
-        flex: 1,
-        height: 50,
-        justifyContent: 'center'
-    },
-
-    tableBoxTotal: {
-        alignItems: 'center',
-        flex: 3.08,
-        flexDirection: 'row',
-        justifyContent: 'space-between'
-    },
-
-    tableBoxText: {
-        color: '#FFFFFF',
-        fontSize: 16,
-        marginLeft: 10
     }
 });
 

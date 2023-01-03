@@ -1,11 +1,11 @@
 import React from 'react';
-import { ScrollView, View } from 'react-native';
+import { ScrollView } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import dayjs from 'dayjs';
 
 import { PreachingTable } from '../../../components/preaching';
-import { Button, Title } from '../../../components/ui';
+import { Fab, Title } from '../../../components/ui';
 
 import { usePreaching, useTheme } from '../../../hooks';
 
@@ -38,50 +38,50 @@ const Home = () => {
     }
 
     return (
-        <ScrollView
-            contentContainerStyle={{ alignItems: 'center' }}
-            style={{ flex: 1 }}
-            overScrollMode="never"
-        >
-            <Title
-                containerStyle={ styles.titleContainerStyle }
-                text={ `INFORME DE ${ month } ${ year }` }
-                textStyle={{ fontSize: 24 }}
+        <>
+            <ScrollView
+                contentContainerStyle={{ alignItems: 'center', paddingBottom: 100 }}
+                style={{ flex: 1 }}
+                overScrollMode="never"
+            >
+                <Title
+                    containerStyle={ styles.titleContainerStyle }
+                    text={ `INFORME DE ${ month } ${ year }` }
+                    textStyle={{ fontSize: 24 }}
+                />
+
+                <PreachingTable />
+            </ScrollView>
+
+            <Fab
+                color={ colors.button }
+                icon={
+                    <Icon
+                        color={ colors.contentHeader }
+                        name="reader-outline"
+                        size={ 40 }
+                    />
+                }
+                onPress={ handleNavigate }
+                style={{ ...styles.fab, right: 80 }}
+                touchColor={ colors.buttonDark }
             />
 
-            <View style={ styles.actionsContainer }>
-                <Button
-                    containerStyle={{ paddingHorizontal: 10, paddingVertical: 5 }}
-                    icon={
-                        <Icon
-                            color={ colors.contentHeader }
-                            name="add-circle-outline"
-                            size={ 30 }
-                            style={{ marginLeft: 3 }}
-                        />
-                    }
-                    onPress={ handleNavigate }
-                    text="Agregar Día"
-                    touchableStyle={{ marginRight: 10 }}
-                />
-
-                <Button
-                    containerStyle={{ paddingHorizontal: 10, paddingVertical: 8 }}
-                    icon={
-                        <Icon
-                            color={ colors.contentHeader }
-                            name="reader-outline"
-                            size={ 25 }
-                            style={{ marginLeft: 3 }}
-                        />
-                    }
-                    onPress={ () => {} }
-                    text="Entregar Informe"
-                />
-            </View>
-
-            <PreachingTable />
-        </ScrollView>
+            <Fab
+                color={ colors.button }
+                icon={
+                    <Icon
+                        color={ colors.contentHeader }
+                        name="add-circle-outline"
+                        size={ 40 }
+                        style={{ marginLeft: 3 }}
+                    />
+                }
+                onPress={ handleNavigate }
+                style={ styles.fab }
+                touchColor={ colors.buttonDark }
+            />
+        </>
     );
 }
 

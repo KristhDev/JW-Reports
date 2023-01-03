@@ -1,7 +1,9 @@
 import React, { Children } from 'react';
-import { Text, TouchableHighlight, View } from 'react-native';
+import { TouchableHighlight, View, useWindowDimensions } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import dayjs from 'dayjs';
+
+import { TableCell } from '../../ui';
 
 import { usePreaching, useTheme } from '../../../hooks';
 
@@ -22,6 +24,8 @@ const tableHeaders = [
 
 export const PreachingTable = () => {
     const { navigate } = useNavigation();
+    const { width } = useWindowDimensions();
+
     const { state: { preachings }, setSelectedPreaching } = usePreaching();
     const { state: { theme, colors } } = useTheme();
 
@@ -31,77 +35,84 @@ export const PreachingTable = () => {
     }
 
     return (
-        <View style={{ flex: 1, margin: 20, borderWidth: 2, borderColor: colors.background }}>
+        <View style={{ ...styles.table, borderColor: colors.background }}>
             <View style={ styles.tableRow }>
                 {
                     Children.toArray(tableHeaders.map(head => (
-                        <View style={ styles.tableBox }>
-                            <Text style={ styles.tableBoxText }>{ head }</Text>
-                        </View>
+                        <TableCell
+                            text={ head }
+                            style={{ width: width * 0.15 }}
+                        />
                     )))
                 }
             </View>
 
             {
-                Children.toArray(preachings.map(preaching => (
+                Children.toArray(preachings.map((preaching) => (
                     <TouchableHighlight
                         onPress={ () => handleGoToEditPreaching(preaching) }
                         underlayColor={ (theme === 'dark') ? 'rgba(255, 255, 255, 0.15)' : 'rgba(0, 0, 0, 0.15)' }
                     >
-                        <View style={ styles.tableRow }>
-                            <View style={{ ...styles.tableBox, backgroundColor: '#746C84', borderColor: colors.background }}>
-                                <Text style={ styles.tableBoxText }>{ dayjs(preaching.day).format('DD') }</Text>
-                            </View>
+                        <View style={{ ...styles.tableRow }}>
+                            <TableCell
+                                text={ dayjs(preaching.day).format('DD') }
+                                style={{ backgroundColor: '#746C84', width: width * 0.15 }}
+                            />
 
-                            <View style={{ ...styles.tableBox, backgroundColor: '#746C84', borderColor: colors.background }}>
-                                <Text style={ styles.tableBoxText }>{ dayjs(preaching.init_hour).format('HH:mm') }</Text>
-                            </View>
+                            <TableCell
+                                text={ dayjs(preaching.init_hour).format('HH:mm') }
+                                style={{ backgroundColor: '#746C84', width: width * 0.15 }}
+                            />
 
-                            <View style={{ ...styles.tableBox, backgroundColor: '#746C84', borderColor: colors.background }}>
-                                <Text style={ styles.tableBoxText }>{ dayjs(preaching.final_hour).format('HH:mm') }</Text>
-                            </View>
+                            <TableCell
+                                text={ dayjs(preaching.final_hour).format('HH:mm') }
+                                style={{ backgroundColor: '#746C84', width: width * 0.15 }}
+                            />
 
-                            <View style={{ ...styles.tableBox, backgroundColor: '#746C84', borderColor: colors.background }}>
-                                <Text style={ styles.tableBoxText }>{ preaching.posts }</Text>
-                            </View>
+                            <TableCell
+                                text={ preaching.posts }
+                                style={{ backgroundColor: '#746C84', width: width * 0.15 }}
+                            />
 
-                            <View style={{ ...styles.tableBox, backgroundColor: '#746C84', borderColor: colors.background }}>
-                                <Text style={ styles.tableBoxText }>{ preaching.videos }</Text>
-                            </View>
+                            <TableCell
+                                text={ preaching.videos }
+                                style={{ backgroundColor: '#746C84', width: width * 0.15 }}
+                            />
 
-                            <View style={{ ...styles.tableBox, backgroundColor: '#746C84', borderColor: colors.background }}>
-                                <Text style={ styles.tableBoxText }>{ preaching.revisits }</Text>
-                            </View>
+                            <TableCell
+                                text={ preaching.revisits }
+                                style={{ backgroundColor: '#746C84', width: width * 0.15 }}
+                            />
                         </View>
                     </TouchableHighlight>
                 )))
             }
 
             <View style={ styles.tableRow }>
-                <View style={{ ...styles.tableBox, ...styles.tableBoxTotal, backgroundColor: '#544C63', borderColor: colors.background }}>
-                    <Text style={ styles.tableBoxText }>Total</Text>
-                    <Text style={{ ...styles.tableBoxText, marginLeft: 0, marginRight: 10 }}>
-                        { sumHours(preachings.map(p => ({ init: p.init_hour, finish: p.final_hour }))) }H
-                    </Text>
-                </View>
+                <TableCell
+                    text="Total"
+                    style={{ backgroundColor: '#544C63', width: width * 0.15 }}
+                />
 
-                <View style={{ ...styles.tableBox, backgroundColor: '#544C63', borderColor: colors.background }}>
-                    <Text style={ styles.tableBoxText }>
-                        { sumNumbers(preachings.map(p => p.posts)) }
-                    </Text>
-                </View>
+                <TableCell
+                    text={ `${ sumHours(preachings.map(p => ({ init: p.init_hour, finish: p.final_hour }))) }H` }
+                    style={{ backgroundColor: '#544C63', width: width * 0.30 }}
+                />
 
-                <View style={{ ...styles.tableBox, backgroundColor: '#544C63', borderColor: colors.background }}>
-                    <Text style={ styles.tableBoxText }>
-                        { sumNumbers(preachings.map(p => p.videos)) }
-                    </Text>
-                </View>
+                <TableCell
+                    text={ sumNumbers(preachings.map(p => p.posts)) }
+                    style={{ backgroundColor: '#544C63', width: width * 0.15 }}
+                />
 
-                <View style={{ ...styles.tableBox, backgroundColor: '#544C63', borderColor: colors.background }}>
-                    <Text style={ styles.tableBoxText }>
-                        { sumNumbers(preachings.map(p => p.revisits)) }
-                    </Text>
-                </View>
+                <TableCell
+                    text={ sumNumbers(preachings.map(p => p.videos)) }
+                    style={{ backgroundColor: '#544C63', width: width * 0.15 }}
+                />
+
+                <TableCell
+                    text={ sumNumbers(preachings.map(p => p.revisits)) }
+                    style={{ backgroundColor: '#544C63', width: width * 0.15 }}
+                />
             </View>
         </View>
     );
