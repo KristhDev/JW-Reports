@@ -14,13 +14,10 @@ export const HeaderRight = () => {
     const { setSelectedDate, state: { selectedDate } } = usePreaching();
     const { state: { colors, theme } } = useTheme();
 
-    const [ month, setMonth ] = useState<Date>(new Date(selectedDate));
-
     const handleOnChange = (date: Date) => {
         setShowMonthPicker(false);
 
         if (date) {
-            setMonth(date);
             setSelectedDate(date);
         }
     }
@@ -78,10 +75,11 @@ export const HeaderRight = () => {
                 (showMonthPicker) && (
                     <MonthPicker
                         cancelButton="Cancelar"
+                        locale="es"
                         mode="short"
                         okButton="Seleccionar"
                         onChange={ (_, date) => handleOnChange(date) }
-                        value={ month }
+                        value={ selectedDate }
                     />
                 )
             }

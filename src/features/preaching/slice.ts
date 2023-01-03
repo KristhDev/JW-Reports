@@ -61,11 +61,11 @@ const preachingSlice = createSlice({
 
         setSelectedDate: (state, action: PayloadAction<SetSelectedDatePayload>) => {
             state.selectedDate = action.payload.selectedDate;
-            state.isPreachingLoading = false;
         },
 
         setSelectedPreaching: (state, action: PayloadAction<SetSelectedPreachingPayload>) => {
             state.seletedPreaching = action.payload.preaching;
+            state.isPreachingLoading = false;
         },
 
         updatePreaching: (state, action: PayloadAction<UpdatePreachingPayload>) => {
