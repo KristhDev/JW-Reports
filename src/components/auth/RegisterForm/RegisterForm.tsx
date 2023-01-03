@@ -2,11 +2,12 @@ import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, useWindowDimensions, ActivityIndicator } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { Formik } from 'formik';
+import { object, ref, string } from 'yup';
 import Icon from 'react-native-vector-icons/Ionicons';
 
 import { Button, EyeBtn, FormField } from '../../ui';
 
-import { useAuth, useTheme } from '../../../hooks';
+import { useAuth, useStatus, useTheme } from '../../../hooks';
 
 import styles from './styles';
 
@@ -18,7 +19,26 @@ export const RegisterForm = () => {
     const { width } = useWindowDimensions();
 
     const { state: { isAuthLoading }, register } = useAuth();
+    const { setErrorForm } = useStatus();
     const { state: { colors } } = useTheme();
+
+    const registerFormSchema = object().shape({
+        name: string()
+            .min(2, 'El nombre debe tener al menos 2 caracteres.')
+            .required('El nombre es requerido.'),
+        surnames: string()
+            .min(2, 'Los apellidos deben tener al menos 2 caracteres.')
+            .required('Los apellidos son requeridos.'),
+        email: string()
+            .email('Correo electrónico inválido.')
+            .required('El correo electrónico es requerido.'),
+        password: string()
+            .min(6, 'La contraseña debe tener al menos 6 caracteres.')
+            .required('La contraseña es requerida.'),
+        confirmPassword: string()
+            .oneOf([ ref('password'), null ], 'Las contraseñas no coinciden.')
+            .required('La confirmación de la contraseña es requerida.'),
+    });
 
     return (
         <Formik
@@ -30,8 +50,10 @@ export const RegisterForm = () => {
                 confirmPassword: ''
             }}
             onSubmit={ (values) => register({ ...values }) }
+            validateOnMount
+            validationSchema={ registerFormSchema }
         >
-            { ({ handleSubmit }) => (
+            { ({ handleSubmit, isValid, errors }) => (
                 <View style={ styles.registerForm }>
                     <FormField
                         autoCapitalize="none"
@@ -56,7 +78,7 @@ export const RegisterForm = () => {
                                 size={ 25 }
                             />
                         }
-                        label="Apellido:"
+                        label="Apellidos:"
                         name="surname"
                         placeholder="Ingrese su apellido"
                     />
@@ -110,12 +132,12 @@ export const RegisterForm = () => {
                             (isAuthLoading) && (
                                 <ActivityIndicator
                                     color={ colors.contentHeader }
-                                    size="large"
-                                    style={{ marginLeft: 20, height: 15, width: 15 }}
+                                    size="small"
+                                    style={{ marginLeft: 10 }}
                                 />
                             )
                         }
-                        onPress={ handleSubmit }
+                        onPress={ (isValid) ? handleSubmit : () => setErrorForm(errors) }
                         text="Crear cuenta"
                         touchableStyle={{ marginTop: 30 }}
                     />
