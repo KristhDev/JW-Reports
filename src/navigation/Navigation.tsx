@@ -3,7 +3,7 @@ import { Appearance, StatusBar } from 'react-native';
 import { createStackNavigator } from '@react-navigation/stack';
 
 import AuthNavigation from './AuthNavigation';
-import PreachingNavigation from './PreachingNavigation';
+import MainNavigation from './MainNavigation';
 
 import { StatusModal } from '../screens/status';
 
@@ -51,8 +51,8 @@ const Navigation = () => {
                 {
                     (isAuthenticated) ? (
                         <Stack.Screen
-                            name="PreachingNavigation"
-                            component={ PreachingNavigation }
+                            name="MainNavigation"
+                            component={ MainNavigation }
                         />
                     ) : (
                         <Stack.Screen

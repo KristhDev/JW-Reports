@@ -5,7 +5,15 @@ const styles = StyleSheet.create({
         paddingBottom: 60,
         paddingHorizontal: 10,
         paddingTop: 30
-    }
+    },
+
+    fab: {
+        bottom: 5,
+        height: 60,
+        position: 'absolute',
+        right: 10,
+        width: 60,
+    },
 });
 
 export default styles;
