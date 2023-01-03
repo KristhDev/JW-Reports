@@ -1,5 +1,6 @@
 import React, { FC } from 'react';
 import { View, Text, Share } from 'react-native';
+import hexToRgba from 'hex-to-rgba';
 
 import { Modal } from '../../ui';
 
@@ -23,6 +24,8 @@ const ReportModal: FC<ReportModalProps> = ({ isOpen, month, onClose }) => {
     const totalVideos = sumNumbers(preachings.map(p => p.videos));
     const totalHours = sumHours(preachings.map(p => ({ init: p.init_hour, finish: p.final_hour })));
     const totalRevisits = sumNumbers(preachings.map(p => p.revisits));
+
+    const buttonColor = hexToRgba('#5A3D86', 0.25);
 
     const handleDeliver = () => {
         onClose();
@@ -93,14 +96,19 @@ const ReportModal: FC<ReportModalProps> = ({ isOpen, month, onClose }) => {
 
                 <View style={{ flexDirection: 'row', justifyContent: 'flex-end', marginTop: 20 }}>
                     <Button
-                        text="Entregar"
                         onPress={ handleDeliver }
-                        touchableStyle={{ marginRight: 10 }}
+                        text="Entregar"
+                        textStyle={{ color: colors.button }}
+                        touchableStyle={{ marginRight: 10, backgroundColor: 'transparent' }}
+                        underlayColor={ buttonColor }
                     />
 
                     <Button
-                        text="Cancelar"
                         onPress={ onClose }
+                        text="Cancelar"
+                        textStyle={{ color: colors.button }}
+                        touchableStyle={{ backgroundColor: 'transparent' }}
+                        underlayColor={ buttonColor }
                     />
                 </View>
             </View>
