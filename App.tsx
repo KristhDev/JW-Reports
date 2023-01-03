@@ -2,6 +2,7 @@ import React from 'react';
 import { Provider } from 'react-redux';
 import { PersistGate } from 'reduxjs-toolkit-persist/lib/integration/react';
 import { NavigationContainer } from '@react-navigation/native';
+import { MenuProvider } from 'react-native-popup-menu';
 import dayjs from 'dayjs';
 import 'dayjs/locale/es';
 
@@ -15,15 +16,17 @@ dayjs.locale('es');
 
 const App = () => {
   return (
-    <ThemeProvider>
-      <Provider store={ store }>
-        <PersistGate loading={ null } persistor={ persistor }>
-            <NavigationContainer>
-              <Navigation />
-            </NavigationContainer>
-        </PersistGate>
-      </Provider>
-    </ThemeProvider>
+    <MenuProvider>
+      <ThemeProvider>
+        <Provider store={ store }>
+          <PersistGate loading={ null } persistor={ persistor }>
+              <NavigationContainer>
+                <Navigation />
+              </NavigationContainer>
+          </PersistGate>
+        </Provider>
+      </ThemeProvider>
+    </MenuProvider>
   );
 }
 

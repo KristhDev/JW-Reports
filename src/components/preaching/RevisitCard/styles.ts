@@ -32,6 +32,18 @@ const styles = StyleSheet.create({
         top: 5,
         height: 35,
         width: 35,
+    },
+
+    menuPosition: {
+        position: 'absolute',
+        right: 20,
+        top: 30,
+    },
+
+    textMenuOpt: {
+        fontSize: 18,
+        paddingHorizontal: 5,
+        paddingVertical: 2.5
     }
 });
 

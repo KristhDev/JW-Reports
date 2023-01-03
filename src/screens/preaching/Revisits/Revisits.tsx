@@ -20,12 +20,6 @@ const Revisits = () => {
             />
 
             <RevisitCard />
-
-            <RevisitCard />
-
-            <RevisitCard />
-
-            <RevisitCard />
         </ScrollView>
     );
 }

@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Text, View, TouchableHighlight } from 'react-native';
+import { Menu, MenuOption, MenuOptions, MenuTrigger } from 'react-native-popup-menu';
 import Icon from 'react-native-vector-icons/Ionicons';
 
 import { Fab } from '../../ui';
@@ -9,6 +10,7 @@ import { useTheme } from '../../../hooks';
 import styles from './styles';
 
 export const RevisitCard = () => {
+    const [ isOpen, setIsOpen ] = useState<boolean>(false);
     const { state: { colors, theme } } = useTheme();
 
     const desc = 'Nemo maxime vero vel non eos. Provident reprehenderit sit. Labore ea qui ab. Aut reiciendis consequatur aliquam est aut quod. Pariatur reprehenderit est fugit quia. Quasi et delectus consequatur ex dolorum pariatur autem rem. Nemo maxime vero vel non eos. Provident reprehenderit sit. Labore ea qui ab. Aut reiciendis consequatur aliquam est aut quod. Pariatur reprehenderit est fugit quia. Quasi et delectus consequatur ex dolorum pariatur autem rem.';
@@ -41,10 +43,53 @@ export const RevisitCard = () => {
                             style={{ marginLeft: 2 }}
                         />
                     }
-                    onPress={ () => console.log('fab') }
+                    onPress={ () => setIsOpen(true) }
                     style={ styles.fab }
                     touchColor={ (theme === 'dark') ? 'rgba(255, 255, 255, 0.15)' : 'rgba(0, 0, 0, 0.15)'  }
                 />
+
+                <Menu
+                    onBackdropPress={ () => setIsOpen(false) }
+                    opened={ isOpen }
+                    style={ styles.menuPosition }
+                >
+                    <MenuTrigger text="" />
+
+                    <MenuOptions optionsContainerStyle={{ backgroundColor: colors.bottom, borderRadius: 5 }}>
+                        <MenuOption>
+                            <Text
+                                style={{
+                                    color: colors.text,
+                                    ...styles.textMenuOpt
+                                }}
+                            >
+                                Editar
+                            </Text>
+                        </MenuOption>
+
+                        <MenuOption>
+                            <Text
+                                style={{
+                                    color: colors.text,
+                                    ...styles.textMenuOpt
+                                }}
+                            >
+                                Compartir
+                            </Text>
+                        </MenuOption>
+
+                        <MenuOption>
+                            <Text
+                                style={{
+                                    color: colors.text,
+                                    ...styles.textMenuOpt
+                                }}
+                            >
+                                Eliminar
+                            </Text>
+                        </MenuOption>
+                    </MenuOptions>
+                </Menu>
             </View>
         </TouchableHighlight>
     );
