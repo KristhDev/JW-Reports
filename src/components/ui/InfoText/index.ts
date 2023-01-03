@@ -1,0 +1,1 @@
+export { InfoText } from './InfoText';

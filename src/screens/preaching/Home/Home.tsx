@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ScrollView } from 'react-native';
+import { ScrollView, ActivityIndicator, useWindowDimensions } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import dayjs from 'dayjs';
@@ -7,7 +7,7 @@ import dayjs from 'dayjs';
 import { ReportModal } from '../ReportModal';
 
 import { PreachingTable } from '../../../components/preaching';
-import { Fab, Title } from '../../../components/ui';
+import { Fab, InfoText, Title } from '../../../components/ui';
 
 import { usePreaching, useTheme } from '../../../hooks';
 
@@ -16,8 +16,9 @@ import styles from './styles';
 const Home = () => {
     const [ showModal, setShowModal ] = useState<boolean>(false);
     const { navigate } = useNavigation();
+    const { height } = useWindowDimensions();
 
-    const { state: { selectedDate }, setSelectedPreaching } = usePreaching();
+    const { state: { selectedDate, preachings, isPreachingsLoading }, setSelectedPreaching } = usePreaching();
     const { state: { colors } } = useTheme();
 
     const month = dayjs(selectedDate).format('MMMM').toUpperCase();
@@ -53,7 +54,30 @@ const Home = () => {
                     textStyle={{ fontSize: 24 }}
                 />
 
-                <PreachingTable />
+                {
+                    (isPreachingsLoading) && (
+                        <ActivityIndicator
+                            color={ colors.button }
+                            size="large"
+                            style={{ marginTop: height * 0.32 }}
+                        />
+                    )
+                }
+
+                {
+                    (!isPreachingsLoading && preachings.length > 0) && (
+                        <PreachingTable />
+                    )
+                }
+
+                {
+                    (!isPreachingsLoading && preachings.length === 0) && (
+                        <InfoText
+                            containerStyle={{ marginTop: height * 0.30 }}
+                            text="No haz agregado ningún día de predicación para el informe de este mes."
+                        />
+                    )
+                }
             </ScrollView>
 
             <Fab

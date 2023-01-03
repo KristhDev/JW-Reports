@@ -17,7 +17,7 @@ const CoursesNavigation = () => {
             screenOptions={{
                 cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
                 cardStyle: {
-                    backgroundColor: colors.background,
+                    backgroundColor: colors.contentHeader,
                 },
                 headerShown: false
             }}
