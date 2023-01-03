@@ -23,11 +23,11 @@ export const LoginForm = () => {
 
     const loginFormSchema = object().shape({
         email: string()
-            .email('Correo electrónico inválido')
-            .required('El correo electrónico es requerido'),
+            .email('Correo electrónico inválido.')
+            .required('El correo electrónico es requerido.'),
         password: string()
-            .min(6, 'La contraseña debe tener al menos 6 caracteres')
-            .required('La contraseña es requerida')
+            .min(6, 'La contraseña debe tener al menos 6 caracteres.')
+            .required('La contraseña es requerida.')
     });
 
     return (
@@ -77,8 +77,8 @@ export const LoginForm = () => {
                             (isAuthLoading) && (
                                 <ActivityIndicator
                                     color={ colors.contentHeader }
-                                    size="large"
-                                    style={{ marginLeft: 20, height: 15, width: 15 }}
+                                    size="small"
+                                    style={{ marginLeft: 10 }}
                                 />
                             )
                         }

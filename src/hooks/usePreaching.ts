@@ -88,7 +88,7 @@ const usePreaching = () => {
 
         setStatus({
             code: 201,
-            msg: 'Haz agregado tu día de predicación correctamente'
+            msg: 'Haz agregado tu día de predicación correctamente.'
         });
 
         navigate('HomeScreen' as never);
@@ -119,7 +119,7 @@ const usePreaching = () => {
 
         setStatus({
             code: 201,
-            msg: 'Haz actualizado tu día de predicación correctamente'
+            msg: 'Haz actualizado tu día de predicación correctamente.'
         });
 
         navigate('HomeScreen' as never);

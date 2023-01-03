@@ -159,8 +159,8 @@ export const PreachingForm = () => {
                             (isPreachingLoading) && (
                                 <ActivityIndicator
                                     color={ colors.contentHeader }
-                                    size="large"
-                                    style={{ marginLeft: 20, height: 15, width: 15 }}
+                                    size="small"
+                                    style={{ marginLeft: 10 }}
                                 />
                             )
                         }

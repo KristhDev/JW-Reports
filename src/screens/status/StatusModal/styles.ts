@@ -19,7 +19,6 @@ const styles = StyleSheet.create({
         fontSize: 19,
         marginBottom: 10,
         marginTop: 5,
-        textAlign: 'justify',
         width: '90%'
     }
 });
