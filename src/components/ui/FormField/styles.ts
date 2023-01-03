@@ -16,14 +16,16 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         borderRadius: 5,
         borderWidth: 0.5,
-        flexDirection: 'row'
+        flexDirection: 'row',
+        paddingRight: 10
     },
 
     formInput: {
+        flex: 1,
         fontSize: 17,
         marginBottom: 1,
         paddingLeft: 10,
-        width: '87%'
+        paddingRight: 5
     },
 });
 
