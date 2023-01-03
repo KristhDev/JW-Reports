@@ -6,6 +6,15 @@ const styles = StyleSheet.create({
         paddingTop: 30
     },
 
+    actionsContainer: {
+        alignItems: 'center',
+        flexDirection: 'row',
+        justifyContent: 'flex-start',
+        marginTop: 50,
+        paddingLeft: 20,
+        width: '100%'
+    },
+
     fab: {
         bottom: 5,
         height: 60,
