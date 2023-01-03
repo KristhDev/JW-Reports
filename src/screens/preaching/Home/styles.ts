@@ -20,7 +20,7 @@ const styles = StyleSheet.create({
         minHeight: 120,
         padding: 15,
         width: '90%'
-    },
+    }
 });
 
 export default styles;

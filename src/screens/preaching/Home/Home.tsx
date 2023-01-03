@@ -1,8 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { ScrollView } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import dayjs from 'dayjs';
+
+import { ReportModal } from '../ReportModal';
 
 import { PreachingTable } from '../../../components/preaching';
 import { Fab, Title } from '../../../components/ui';
@@ -12,6 +14,7 @@ import { usePreaching, useTheme } from '../../../hooks';
 import styles from './styles';
 
 const Home = () => {
+    const [ showModal, setShowModal ] = useState<boolean>(false);
     const { navigate } = useNavigation();
 
     const { state: { selectedDate }, setSelectedPreaching } = usePreaching();
@@ -62,7 +65,7 @@ const Home = () => {
                         size={ 40 }
                     />
                 }
-                onPress={ handleNavigate }
+                onPress={ () => setShowModal(true) }
                 style={{ ...styles.fab, right: 80 }}
                 touchColor={ colors.buttonDark }
             />
@@ -80,6 +83,12 @@ const Home = () => {
                 onPress={ handleNavigate }
                 style={ styles.fab }
                 touchColor={ colors.buttonDark }
+            />
+
+            <ReportModal
+                isOpen={ showModal }
+                month={ month.toLowerCase() }
+                onClose={ () => setShowModal(false) }
             />
         </>
     );
