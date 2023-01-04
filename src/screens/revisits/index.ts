@@ -1,1 +1,1 @@
-export * from './Revisits';
+export { Revisits } from './Revisits';

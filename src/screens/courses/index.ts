@@ -1,1 +1,1 @@
-export * from './Courses';
+export { Courses } from './Courses';

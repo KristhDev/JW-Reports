@@ -15,7 +15,7 @@ const Revisits = () => {
     return (
         <>
             <ScrollView
-                contentContainerStyle={{ paddingHorizontal: 10 }}
+                contentContainerStyle={{ alignItems: 'center', paddingBottom: 100 }}
                 overScrollMode="never"
                 style={{ flex: 1 }}
             >
@@ -25,6 +25,9 @@ const Revisits = () => {
                     textStyle={{ fontSize: 24 }}
                 />
 
+                <RevisitCard />
+                <RevisitCard />
+                <RevisitCard />
                 <RevisitCard />
             </ScrollView>
 

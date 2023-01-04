@@ -4,7 +4,7 @@ const styles = StyleSheet.create({
     touchable: {
         marginVertical: 10,
         maxHeight: 220,
-        width: '100%'
+        width: '95%'
     },
 
     container: {
