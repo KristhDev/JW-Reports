@@ -3,6 +3,7 @@ import { persistReducer, persistStore } from 'reduxjs-toolkit-persist';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { combineReducers } from 'redux';
 import { useDispatch } from 'react-redux';
+import reduxFlipper from 'redux-flipper';
 
 import { authReducer } from './auth';
 import { preachingReducer } from './preaching';
@@ -24,9 +25,17 @@ const reducer = persistReducer(persistConfig, reducers);
 const store = configureStore({
     reducer,
     devTools: false,
-    middleware: (getDefaultMiddleware) => getDefaultMiddleware({
-        serializableCheck: false
-    })
+    middleware: (getDefaultMiddleware) => {
+        const middleware = getDefaultMiddleware({
+            serializableCheck: false
+        });
+
+        if (__DEV__) {
+            middleware.push(reduxFlipper());
+        }
+
+        return middleware;
+    }
 });
 
 export const persistor = persistStore(store);
