@@ -3,9 +3,7 @@ import { StyleSheet } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Icon from 'react-native-vector-icons/Ionicons';
 
-import CoursesNavigation from './CoursesNavigation';
-import PreachingNavigation from './PreachingNavigation';
-import RevisitsNavigation from './RevisitsNavigation';
+import { CoursesNavigation, PreachingNavigation, RevisitsNavigation } from './'
 
 import { Search } from '../screens/ui';
 

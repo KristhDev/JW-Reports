@@ -9,9 +9,9 @@ import 'dayjs/locale/es';
 
 import store, { persistor } from './src/features/store';
 
-import Navigation from './src/navigation/Navigation';
-
 import { ThemeProvider } from './src/theme/context';
+
+import { Navigation } from './src/navigation';
 
 dayjs.locale('es');
 

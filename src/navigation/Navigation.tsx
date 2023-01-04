@@ -2,8 +2,7 @@ import React, { useEffect } from 'react';
 import { Appearance, StatusBar } from 'react-native';
 import { createStackNavigator } from '@react-navigation/stack';
 
-import AuthNavigation from './AuthNavigation';
-import MainNavigation from './MainNavigation';
+import { AuthNavigation, MainNavigation } from './';
 
 import { StatusModal } from '../screens/status';
 
