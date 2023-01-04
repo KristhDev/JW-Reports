@@ -1,3 +1,3 @@
-export { AddOrEditPreaching } from './AddOrEditPreaching';
-export { Home } from './Home';
-export { ReportModal } from './ReportModal';
+export * from './AddOrEditPreaching';
+export * from './Home';
+export * from './ReportModal';

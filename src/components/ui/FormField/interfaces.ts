@@ -2,7 +2,7 @@
 import { ReactNode } from 'react';
 import { StyleProp, ViewStyle, TextStyle, TextInputProps } from 'react-native';
 
-export interface Props extends TextInputProps {
+export interface FormFieldProps extends TextInputProps {
     name: string;
     label: string;
     icon?: ReactNode;

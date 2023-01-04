@@ -1,11 +1,11 @@
-import React from 'react';
+import React, { FC } from 'react';
 import { Modal as ModalRN, View } from 'react-native';
 
-import { Props } from './interfaces';
+import { ModalProps } from './interfaces';
 
 import styles from './styles';
 
-const Modal = ({ children, isOpen }: Props) => {
+const Modal: FC<ModalProps> = ({ children, isOpen }) => {
     return (
         <ModalRN
             animationType="fade"

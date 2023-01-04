@@ -1,2 +1,2 @@
-export { Modal } from './Modal';
-export { Search } from './Search';
+export * from './Modal';
+export * from './Search';

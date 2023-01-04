@@ -3,11 +3,11 @@ import { View, Text } from 'react-native';
 
 import { useTheme } from '../../../hooks';
 
-import { Props } from './interfaces';
+import { TitleProps } from './interfaces';
 
 import styles from './styles';
 
-export const Title: FC<Props> = ({ text, containerStyle, textStyle }) => {
+export const Title: FC<TitleProps> = ({ text, containerStyle, textStyle }) => {
     const { state: { colors } } = useTheme();
 
     return (

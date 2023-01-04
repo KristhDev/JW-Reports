@@ -1,6 +1,6 @@
 import { StyleProp, ViewStyle, TextStyle } from 'react-native';
 
-export interface Props {
+export interface TitleProps {
     containerStyle?: StyleProp<ViewStyle>;
     text: string;
     textStyle?: StyleProp<TextStyle>;

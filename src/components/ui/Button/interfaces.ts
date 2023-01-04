@@ -1,7 +1,7 @@
 import { ReactNode } from 'react';
 import { StyleProp, TextStyle, ViewStyle } from 'react-native';
 
-export interface Props {
+export interface ButtonProps {
     onPress: () => void;
     text: string;
     icon?: ReactNode;

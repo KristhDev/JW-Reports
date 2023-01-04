@@ -1,1 +1,1 @@
-export { StatusModal } from './StatusModal';
+export * from './StatusModal';

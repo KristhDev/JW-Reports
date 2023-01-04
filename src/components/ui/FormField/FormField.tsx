@@ -4,11 +4,11 @@ import { useField } from 'formik';
 
 import { useTheme } from '../../../hooks';
 
-import { Props } from './interfaces';
+import { FormFieldProps } from './interfaces';
 
 import styles from './styles';
 
-export const FormField: FC<Props> = ({ icon, label, style, controlStyle, inputStyle, labelStyle, name, ...rest }) => {
+export const FormField: FC<FormFieldProps> = ({ icon, label, style, controlStyle, inputStyle, labelStyle, name, ...rest }) => {
     const { width } = useWindowDimensions();
 
     const [ selection, setSelection ] = useState({ start: 0, end: 0 });

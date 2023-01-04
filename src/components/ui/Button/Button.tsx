@@ -3,11 +3,11 @@ import { Text, TouchableHighlight, View } from 'react-native';
 
 import { useTheme } from '../../../hooks';
 
-import { Props } from './interfaces';
+import { ButtonProps } from './interfaces';
 
 import styles from './styles';
 
-export const Button: FC<Props> = ({ onPress, text, icon, containerStyle, textStyle, touchableStyle, disabled, underlayColor }) => {
+export const Button: FC<ButtonProps> = ({ onPress, text, icon, containerStyle, textStyle, touchableStyle, disabled, underlayColor }) => {
     const { state: { colors } } = useTheme();
 
     return (

@@ -2,12 +2,12 @@ import { createContext } from 'react';
 
 import { Theme, ThemeState } from '../../interfaces/theme';
 
-interface ContextProps {
+interface ThemeContextProps {
     state: ThemeState;
     setTheme: (theme: Theme) => void;
     setDefaultTheme: () => void;
 }
 
-const Context = createContext<ContextProps>({} as ContextProps);
+const Context = createContext<ThemeContextProps>({} as ThemeContextProps);
 
 export default Context;

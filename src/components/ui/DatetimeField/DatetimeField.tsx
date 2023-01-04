@@ -8,11 +8,11 @@ import { useTheme } from '../../../hooks';
 
 import { Button } from '../Button';
 
-import { Props } from './interfaces';
+import { DatetimeFieldProps } from './interfaces';
 
 import styles from './styles';
 
-export const DatetimeField: FC<Props> = ({ icon, modalTitle, label, inputDateFormat, mode, style, controlStyle, inputStyle, labelStyle, name, ...rest }) => {
+export const DatetimeField: FC<DatetimeFieldProps> = ({ icon, modalTitle, label, inputDateFormat, mode, style, controlStyle, inputStyle, labelStyle, name, ...rest }) => {
     const [ open, setOpen ] = useState(false);
     const { width } = useWindowDimensions();
 

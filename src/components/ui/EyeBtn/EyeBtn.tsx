@@ -4,9 +4,9 @@ import Icon from 'react-native-vector-icons/Ionicons';
 
 import { useTheme } from '../../../hooks';
 
-import { Props } from './interfaces';
+import { EyeBtnProps } from './interfaces';
 
-export const EyeBtn: FC<Props> = ({ onToggle, value }) => {
+export const EyeBtn: FC<EyeBtnProps> = ({ onToggle, value }) => {
     const { state: { colors } } = useTheme();
 
     return (

@@ -1,11 +1,11 @@
 import React, { FC } from 'react';
 import { TouchableHighlight } from 'react-native';
 
-import { Props } from './interfaces';
+import { FabProps } from './interfaces';
 
 import styles from './styles';
 
-export const Fab: FC<Props> = ({ color, icon, onPress, touchColor, style }) => {
+export const Fab: FC<FabProps> = ({ color, icon, onPress, touchColor, style }) => {
     return (
         <TouchableHighlight
             activeOpacity={ 1 }

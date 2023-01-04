@@ -2,7 +2,7 @@
 import { ReactNode } from 'react';
 import { StyleProp, ViewStyle, TextStyle, TextInputProps } from 'react-native';
 
-export interface Props extends TextInputProps {
+export interface DatetimeFieldProps extends TextInputProps {
     controlStyle?: StyleProp<ViewStyle>;
     icon?: ReactNode;
     inputDateFormat?: string;
