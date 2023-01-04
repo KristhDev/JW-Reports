@@ -6,7 +6,7 @@ import { Fab, Title } from '../../../components/ui';
 
 import { useTheme } from '../../../hooks';
 
-import styles from './styles';
+import themeStyles from '../../../theme/styles';
 
 const Courses = () => {
     const { state: { colors } } = useTheme();
@@ -14,12 +14,12 @@ const Courses = () => {
     return (
         <>
             <ScrollView
-                contentContainerStyle={{ paddingHorizontal: 10 }}
+                contentContainerStyle={{ alignItems: 'center', paddingBottom: 100 }}
                 overScrollMode="never"
                 style={{ flex: 1 }}
             >
                 <Title
-                    containerStyle={ styles.titleContainerStyle }
+                    containerStyle={ themeStyles.titleContainerSpacingVertical }
                     text="CURSOS QUE DIRIGES"
                     textStyle={{ fontSize: 24 }}
                 />
@@ -36,7 +36,7 @@ const Courses = () => {
                     />
                 }
                 onPress={ () => {} }
-                style={ styles.fab }
+                style={ themeStyles.fabBottomRight }
                 touchColor={ colors.buttonDark }
             />
         </>

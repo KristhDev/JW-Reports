@@ -9,18 +9,9 @@ import { usePreaching, useTheme } from '../../../hooks';
 
 import { Preaching } from '../../../interfaces/preaching';
 
-import { sumHours, sumNumbers } from '../../../utils';
+import { sumHours, sumNumbers, TABLE_PREACHING_HEADERS } from '../../../utils';
 
 import styles from './styles';
-
-const tableHeaders = [
-    'Día',
-    'H/I',
-    'H/F',
-    'Pub',
-    'Vid',
-    'Rev'
-];
 
 export const PreachingTable = () => {
     const { navigate } = useNavigation();
@@ -38,7 +29,7 @@ export const PreachingTable = () => {
         <View style={{ ...styles.table, borderColor: colors.background }}>
             <View style={ styles.tableRow }>
                 {
-                    Children.toArray(tableHeaders.map(head => (
+                    Children.toArray(TABLE_PREACHING_HEADERS.map(head => (
                         <TableCell
                             text={ head }
                             style={{ width: width * 0.15 }}

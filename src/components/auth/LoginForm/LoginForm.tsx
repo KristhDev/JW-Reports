@@ -9,7 +9,7 @@ import { Button, EyeBtn, FormField } from '../../ui';
 
 import { useAuth, useStatus, useTheme } from '../../../hooks';
 
-import styles from './styles';
+import themeStyles from '../../../theme/styles';
 
 export const LoginForm = () => {
     const [ showPassword, setShowPassword ] = useState<boolean>(false);
@@ -41,7 +41,7 @@ export const LoginForm = () => {
             validateOnMount
         >
             { ({ handleSubmit, isValid, errors }) => (
-                <View style={ styles.loginForm }>
+                <View style={ themeStyles.formContainer }>
                     <FormField
                         autoCapitalize="none"
                         icon={
@@ -87,10 +87,10 @@ export const LoginForm = () => {
                         touchableStyle={{ paddingHorizontal: 20, marginTop: 30 }}
                     />
 
-                    <View style={{ ...styles.btnLink, width: width * 0.9 }}>
+                    <View style={{ ...themeStyles.btnLink, width: width * 0.9 }}>
                             <Text
                                 style={{
-                                    ...styles.formText,
+                                    ...themeStyles.formText,
                                     color: colors.titleText
                                 }}
                             >
@@ -103,7 +103,7 @@ export const LoginForm = () => {
                             >
                                 <Text
                                     style={{
-                                        ...styles.formLink,
+                                        ...themeStyles.formLink,
                                         color: colors.linkText
                                     }}
                                 >

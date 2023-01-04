@@ -9,7 +9,7 @@ import { Button, EyeBtn, FormField } from '../../ui';
 
 import { useAuth, useStatus, useTheme } from '../../../hooks';
 
-import styles from './styles';
+import themeStyles from '../../../theme/styles';
 
 export const RegisterForm = () => {
     const [ showPassword, setShowPassword ] = useState<boolean>(false);
@@ -26,7 +26,7 @@ export const RegisterForm = () => {
         name: string()
             .min(2, 'El nombre debe tener al menos 2 caracteres.')
             .required('El nombre es requerido.'),
-        surnames: string()
+        surname: string()
             .min(2, 'Los apellidos deben tener al menos 2 caracteres.')
             .required('Los apellidos son requeridos.'),
         email: string()
@@ -54,7 +54,7 @@ export const RegisterForm = () => {
             validationSchema={ registerFormSchema }
         >
             { ({ handleSubmit, isValid, errors }) => (
-                <View style={ styles.registerForm }>
+                <View style={ themeStyles.formContainer }>
                     <FormField
                         autoCapitalize="none"
                         icon={
@@ -123,7 +123,7 @@ export const RegisterForm = () => {
                         label="Confirmar contraseña:"
                         name="confirmPassword"
                         placeholder="Confirme su contraseña"
-                        secureTextEntry={ !showPassword }
+                        secureTextEntry={ !showConfirmPassword }
                     />
 
                     <Button
@@ -142,10 +142,10 @@ export const RegisterForm = () => {
                         touchableStyle={{ marginTop: 30 }}
                     />
 
-                    <View style={{ ...styles.btnLink, width: width * 0.9 }}>
+                    <View style={{ ...themeStyles.btnLink, width: width * 0.9 }}>
                         <Text
                             style={{
-                                ...styles.formText,
+                                ...themeStyles.formText,
                                 color: colors.titleText
                             }}
                         >
@@ -158,7 +158,7 @@ export const RegisterForm = () => {
                         >
                             <Text
                                 style={{
-                                    ...styles.formLink,
+                                    ...themeStyles.formLink,
                                     color: colors.linkText
                                 }}
                             >

@@ -53,11 +53,11 @@ const StatusModal = () => {
                 >
                     <Button
                         containerStyle={{ paddingHorizontal: 14, paddingVertical: 7 }}
-                        touchableStyle={{ backgroundColor: 'transparent' }}
-                        textStyle={{ color: colors.button }}
-                        underlayColor={ buttonColor }
                         onPress={ handleClose }
                         text={ btnText }
+                        textStyle={{ color: colors.button }}
+                        touchableStyle={{ backgroundColor: 'transparent' }}
+                        underlayColor={ buttonColor }
                     />
 
                     {
@@ -66,7 +66,9 @@ const StatusModal = () => {
                                 containerStyle={{ paddingHorizontal: 14, paddingVertical: 7 }}
                                 onPress={ clearStatus }
                                 text="Cancelar"
-                                touchableStyle={{ marginLeft: 10 }}
+                                textStyle={{ color: colors.button }}
+                                touchableStyle={{ backgroundColor: 'transparent', marginLeft: 10 }}
+                                underlayColor={ buttonColor }
                             />
                         )
                     }

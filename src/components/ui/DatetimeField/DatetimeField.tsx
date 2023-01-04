@@ -4,15 +4,27 @@ import DatePicker from 'react-native-date-picker';
 import { useField } from 'formik';
 import dayjs from 'dayjs';
 
-import { useTheme } from '../../../hooks';
-
 import { Button } from '../Button';
+
+import { useTheme } from '../../../hooks';
 
 import { DatetimeFieldProps } from './interfaces';
 
-import styles from './styles';
+import themeStyles from '../../../theme/styles';
 
-export const DatetimeField: FC<DatetimeFieldProps> = ({ icon, modalTitle, label, inputDateFormat, mode, style, controlStyle, inputStyle, labelStyle, name, ...rest }) => {
+export const DatetimeField: FC<DatetimeFieldProps> = ({
+    controlStyle,
+    icon,
+    inputDateFormat,
+    inputStyle,
+    label,
+    labelStyle,
+    modalTitle,
+    mode,
+    name,
+    style,
+    ...rest
+}) => {
     const [ open, setOpen ] = useState(false);
     const { width } = useWindowDimensions();
 
@@ -32,14 +44,14 @@ export const DatetimeField: FC<DatetimeFieldProps> = ({ icon, modalTitle, label,
     return (
         <View
             style={{
-                ...styles.datetimeField,
+                ...themeStyles.formField,
                 width: width * 0.9,
                 ...style as any
             }}
         >
             <Text
                 style={[
-                    { ...styles.formLabel, color: colors.titleText },
+                    { ...themeStyles.formLabel, color: colors.titleText },
                     labelStyle
                 ]}
             >
@@ -49,7 +61,7 @@ export const DatetimeField: FC<DatetimeFieldProps> = ({ icon, modalTitle, label,
             <View style={{ flexDirection: 'row', width: '100%', alignItems: 'center' }}>
                 <View
                     style={[
-                        { ...styles.formControl, borderColor: colors.text },
+                        { ...themeStyles.formControl, borderColor: colors.text, flex: 1 },
                         controlStyle
                     ]}
                 >
@@ -58,7 +70,7 @@ export const DatetimeField: FC<DatetimeFieldProps> = ({ icon, modalTitle, label,
                         placeholderTextColor={ colors.icon }
                         selectionColor={ colors.linkText }
                         style={[
-                            { ...styles.formInput, color: colors.inputText },
+                            { ...themeStyles.formInput, color: colors.inputText },
                             inputStyle
                         ]}
                         value={ dayjs(field.value).format(inputDateFormat) }

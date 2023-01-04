@@ -7,7 +7,16 @@ import { ButtonProps } from './interfaces';
 
 import styles from './styles';
 
-export const Button: FC<ButtonProps> = ({ onPress, text, icon, containerStyle, textStyle, touchableStyle, disabled, underlayColor }) => {
+export const Button: FC<ButtonProps> = ({
+    containerStyle,
+    disabled,
+    icon,
+    onPress,
+    text,
+    textStyle,
+    touchableStyle,
+    underlayColor
+}) => {
     const { state: { colors } } = useTheme();
 
     return (

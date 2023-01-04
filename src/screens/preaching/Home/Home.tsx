@@ -11,7 +11,7 @@ import { Fab, InfoText, Title } from '../../../components/ui';
 
 import { usePreaching, useTheme } from '../../../hooks';
 
-import styles from './styles';
+import themeStyles from '../../../theme/styles';
 
 const Home = () => {
     const [ showModal, setShowModal ] = useState<boolean>(false);
@@ -49,7 +49,7 @@ const Home = () => {
                 overScrollMode="never"
             >
                 <Title
-                    containerStyle={ styles.titleContainerStyle }
+                    containerStyle={ themeStyles.titleContainer }
                     text={ `INFORME DE ${ month } ${ year }` }
                     textStyle={{ fontSize: 24 }}
                 />
@@ -90,7 +90,7 @@ const Home = () => {
                     />
                 }
                 onPress={ () => setShowModal(true) }
-                style={{ ...styles.fab, right: 80 }}
+                style={{ ...themeStyles.fabBottomRight, right: 80 }}
                 touchColor={ colors.buttonDark }
             />
 
@@ -105,7 +105,7 @@ const Home = () => {
                     />
                 }
                 onPress={ handleNavigate }
-                style={ styles.fab }
+                style={ themeStyles.fabBottomRight }
                 touchColor={ colors.buttonDark }
             />
 

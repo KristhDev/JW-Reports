@@ -6,7 +6,7 @@ import { useTheme } from '../../../hooks';
 
 import { FormFieldProps } from './interfaces';
 
-import styles from './styles';
+import themeStyles from '../../../theme/styles';
 
 export const FormField: FC<FormFieldProps> = ({ icon, label, style, controlStyle, inputStyle, labelStyle, name, ...rest }) => {
     const { width } = useWindowDimensions();
@@ -19,14 +19,14 @@ export const FormField: FC<FormFieldProps> = ({ icon, label, style, controlStyle
     return (
         <View
             style={{
-                ...styles.formField,
+                ...themeStyles.formField,
                 width: width * 0.9,
                 ...style as any
             }}
         >
             <Text
                 style={[
-                    { ...styles.formLabel, color: colors.titleText },
+                    { ...themeStyles.formLabel, color: colors.titleText },
                     labelStyle ]}
                 >
                     { label }
@@ -34,7 +34,7 @@ export const FormField: FC<FormFieldProps> = ({ icon, label, style, controlStyle
 
             <View
                 style={[
-                    { ...styles.formControl, borderColor: colors.text },
+                    { ...themeStyles.formControl, borderColor: colors.text, paddingRight: 10 },
                     controlStyle
                 ]}
             >
@@ -46,7 +46,7 @@ export const FormField: FC<FormFieldProps> = ({ icon, label, style, controlStyle
                     selection={ selection }
                     selectionColor={ colors.linkText }
                     style={[
-                        { ...styles.formInput, color: colors.inputText },
+                        { ...themeStyles.formInput, color: colors.inputText, flex: 1, paddingRight: 5 },
                         inputStyle
                     ]}
                     value={ String(field.value) }

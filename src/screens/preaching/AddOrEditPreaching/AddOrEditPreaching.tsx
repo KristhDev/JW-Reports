@@ -7,7 +7,7 @@ import { Title } from '../../../components/ui';
 
 import { usePreaching } from '../../../hooks';
 
-import styles from './styles';
+import themeStyles from '../../../theme/styles';
 
 const AddOrEditPreaching = () => {
     const { state: { seletedPreaching } } = usePreaching();
@@ -19,7 +19,7 @@ const AddOrEditPreaching = () => {
         >
             <View style={{ flex: 1, alignItems: 'center' }}>
                 <Title
-                    containerStyle={ styles.titleContainerStyle }
+                    containerStyle={ themeStyles.titleContainer }
                     textStyle={{ fontSize: 24 }}
                     text={ `${ (seletedPreaching.id === '') ? 'Agregar' : 'Editar' } día de predicación` }
                 />

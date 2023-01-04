@@ -7,7 +7,7 @@ import { Fab, Title } from '../../../components/ui';
 
 import { useTheme } from '../../../hooks';
 
-import styles from './styles';
+import themeStyles from '../../../theme/styles';
 
 const Revisits = () => {
     const { state: { colors } } = useTheme();
@@ -20,7 +20,7 @@ const Revisits = () => {
                 style={{ flex: 1 }}
             >
                 <Title
-                    containerStyle={ styles.titleContainerStyle }
+                    containerStyle={ themeStyles.titleContainerSpacingVertical }
                     text="ÚLTIMAS REVISITAS"
                     textStyle={{ fontSize: 24 }}
                 />
@@ -42,7 +42,7 @@ const Revisits = () => {
                     />
                 }
                 onPress={ () => {} }
-                style={ styles.fab }
+                style={ themeStyles.fabBottomRight }
                 touchColor={ colors.buttonDark }
             />
         </>
