@@ -3,6 +3,7 @@ import { CardStyleInterpolators, createStackNavigator } from '@react-navigation/
 
 import { AddOrEditPreaching, Home } from '../screens/preaching';
 
+import { PreachingHeader } from '../components/preaching';
 import { BackButton, HomeHeader } from '../components/ui';
 
 import { usePreaching, useTheme } from '../hooks';
@@ -44,6 +45,11 @@ const PreachingNavigation = () => {
                 name="AddOrEditPreachingScreen"
                 options={{
                     headerLeft: ({ onPress }) => <BackButton onPress={ onPress } />,
+                    headerRight: () => (
+                        <PreachingHeader
+                            deleteButton={ seletedPreaching.id !== '' }
+                        />
+                    ),
                     title: `${ seletedPreaching.id !== '' ? 'Editar' : 'Agregar' } predicación`
                 }}
             />

@@ -1,0 +1,1 @@
+export { PreachingHeader } from './PreachingHeader';
