@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ScrollView, ActivityIndicator, useWindowDimensions } from 'react-native';
+import { ScrollView, ActivityIndicator, useWindowDimensions, RefreshControl } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import dayjs from 'dayjs';
@@ -14,11 +14,12 @@ import { usePreaching, useTheme } from '../../../hooks';
 import themeStyles from '../../../theme/styles';
 
 const Home = () => {
+    const [ isRefreshing, setIsRefreshing ] = useState<boolean>(false);
     const [ showModal, setShowModal ] = useState<boolean>(false);
     const { navigate } = useNavigation();
     const { height } = useWindowDimensions();
 
-    const { state: { selectedDate, preachings, isPreachingsLoading }, setSelectedPreaching } = usePreaching();
+    const { state: { selectedDate, preachings, isPreachingsLoading }, setSelectedPreaching, loadPreachings } = usePreaching();
     const { state: { colors } } = useTheme();
 
     const month = dayjs(selectedDate).format('MMMM').toUpperCase();
@@ -41,12 +42,24 @@ const Home = () => {
         navigate('AddOrEditPreachingScreen' as never);
     }
 
+    const handleRefreshing = () => {
+        loadPreachings(selectedDate);
+        setIsRefreshing(false);
+    }
+
     return (
         <>
             <ScrollView
                 contentContainerStyle={{ alignItems: 'center', paddingBottom: 100 }}
-                style={{ flex: 1 }}
                 overScrollMode="never"
+                refreshControl={
+                    <RefreshControl
+                        colors={[ '#000' ]}
+                        onRefresh={ handleRefreshing }
+                        refreshing={ isRefreshing }
+                    />
+                }
+                style={{ flex: 1 }}
             >
                 <Title
                     containerStyle={ themeStyles.titleContainer }
