@@ -1,4 +1,5 @@
 export interface PreachingState {
+    isPreachingDeleting: boolean;
     isPreachingLoading: boolean;
     isPreachingsLoading: boolean;
     preachings: Preaching[];
@@ -23,8 +24,12 @@ export type AddPreachingPayload = {
     preaching: Preaching
 }
 
-export type UpdatePreachingPayload = {
-    preaching: Preaching
+export type RemovePreachingPayload = {
+    id: string;
+}
+
+export type SetIsPreachingDeletingPayload = {
+    isDeleting: boolean;
 }
 
 export type SetIsPreachingsLoadingPayload = {
@@ -45,4 +50,8 @@ export type SetPreachingsPayload = {
 
 export type SetSelectedPreachingPayload = {
     preaching: Preaching;
+}
+
+export type UpdatePreachingPayload = {
+    preaching: Preaching
 }

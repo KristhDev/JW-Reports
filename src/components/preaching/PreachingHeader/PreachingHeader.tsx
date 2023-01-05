@@ -6,14 +6,20 @@ import { DeleteModal } from '../../../screens/ui';
 
 import { Fab } from '../../ui';
 
-import { useTheme } from '../../../hooks';
+import { usePreaching, useTheme } from '../../../hooks';
 
 import { PreachingHeaderProps } from './interfaces';
 
 export const PreachingHeader: FC<PreachingHeaderProps> = ({ deleteButton = false }) => {
     const [ showModal, setShowModal ] = useState<boolean>(false);
 
+    const { state: { isPreachingDeleting }, deletePreaching } = usePreaching();
     const { state: { colors, theme } } = useTheme();
+
+    const handleConfirm = () => {
+        deletePreaching();
+        setShowModal(false);
+    }
 
     return (
         <>
@@ -39,9 +45,10 @@ export const PreachingHeader: FC<PreachingHeaderProps> = ({ deleteButton = false
             </View>
 
             <DeleteModal
+                isLoading={ isPreachingDeleting }
                 isOpen={ showModal }
                 onClose={ () => setShowModal(false) }
-                onConfirm={ () => setShowModal(false) }
+                onConfirm={ handleConfirm }
                 text="¿Estás seguro de eliminar este día de predicación?"
             />
         </>

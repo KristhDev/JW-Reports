@@ -6,14 +6,16 @@ import { supabase } from '../supabase/config';
 
 import { RootState, useAppDispatch } from '../features/store';
 import {
-    clearPreaching as clearPreachingAction,
-    setIsPreachingsLoading as setIsPreachingsLoadingAction,
-    setIsPreachingLoading,
-    setPreachings,
-    setSelectedPreaching as setSelectedPreachingAction,
     addPreaching,
+    clearPreaching as clearPreachingAction,
+    removePreaching,
+    setIsPreachingDeleting,
+    setIsPreachingLoading,
+    setIsPreachingsLoading as setIsPreachingsLoadingAction,
+    setPreachings,
     setSelectedDate as setSelectedDateAction,
-    updatePreaching as updatePreachingAction
+    setSelectedPreaching as setSelectedPreachingAction,
+    updatePreaching as updatePreachingAction,
 } from '../features/preaching';
 
 import { useAuth, useStatus } from './';
@@ -82,7 +84,7 @@ const usePreaching = () => {
             return;
         }
 
-        if (dayjs(data[0].day).format('MMMM') === dayjs().format('MMMM')) {
+        if (dayjs(data[0].day).format('MMMM') === dayjs(state.selectedDate).format('MMMM')) {
             dispatch(addPreaching({ preaching: data[0] }));
         }
 
@@ -125,6 +127,55 @@ const usePreaching = () => {
         navigate('HomeScreen' as never);
     }
 
+    const deletePreaching = async () => {
+        dispatch(setIsPreachingDeleting({ isDeleting: true }));
+
+        if (state.seletedPreaching.id === '') {
+            dispatch(setIsPreachingDeleting({ isDeleting: false }));
+
+            setStatus({
+                code: 400,
+                msg: 'No hay un día de predicación seleccionado para eliminar.'
+            });
+
+            return;
+        }
+
+        const { error } = await supabase.from('preachings')
+            .delete()
+            .eq('id', state.seletedPreaching.id)
+            .eq('user_id', user.id);
+
+        if (error) {
+            console.log(error);
+            dispatch(setIsPreachingDeleting({ isDeleting: false }));
+            setStatus({ code: 400, msg: error.message });
+
+            return;
+        }
+
+        dispatch(removePreaching({ id: state.seletedPreaching.id }));
+        navigate('HomeScreen' as never);
+
+        setSelectedPreaching({
+            id: '',
+            user_id: '',
+            day: new Date().toString(),
+            init_hour: new Date().toString(),
+            final_hour: new Date().toString(),
+            posts: 0,
+            videos: 0,
+            revisits: 0,
+            created_at: new Date().toString(),
+            updated_at: new Date().toString()
+        });
+
+        setStatus({
+            code: 201,
+            msg: 'Haz eliminado tu día de predicación correctamente.'
+        });
+    }
+
     return {
         state,
 
@@ -135,8 +186,9 @@ const usePreaching = () => {
         setSelectedPreaching,
 
         // Functions
-        savePreaching,
+        deletePreaching,
         loadPreachings,
+        savePreaching,
         updatePreaching
     }
 }

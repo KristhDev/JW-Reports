@@ -3,6 +3,8 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import {
     AddPreachingPayload,
     PreachingState,
+    RemovePreachingPayload,
+    SetIsPreachingDeletingPayload,
     SetIsPreachingLoadingPayload,
     SetIsPreachingsLoadingPayload,
     SetPreachingsPayload,
@@ -12,6 +14,7 @@ import {
 } from '../../interfaces/preaching';
 
 const INITIAL_STATE: PreachingState = {
+    isPreachingDeleting: false,
     isPreachingsLoading: false,
     isPreachingLoading: false,
     preachings: [],
@@ -41,9 +44,32 @@ const preachingSlice = createSlice({
         },
 
         clearPreaching: (state) => {
+            state.isPreachingDeleting = false;
+            state.isPreachingLoading = false;
             state.isPreachingsLoading = false;
             state.preachings = [];
             state.selectedDate = new Date();
+            state.seletedPreaching = {
+                id: '',
+                user_id: '',
+                day: new Date().toString(),
+                init_hour: new Date().toString(),
+                final_hour: new Date().toString(),
+                posts: 0,
+                videos: 0,
+                revisits: 0,
+                created_at: new Date().toString(),
+                updated_at: new Date().toString()
+            }
+        },
+
+        removePreaching: (state, action: PayloadAction<RemovePreachingPayload>) => {
+            state.preachings = state.preachings.filter(p => p.id !== action.payload.id);
+            state.isPreachingDeleting = false;
+        },
+
+        setIsPreachingDeleting: (state, action: PayloadAction<SetIsPreachingDeletingPayload>) => {
+            state.isPreachingDeleting = action.payload.isDeleting;
         },
 
         setIsPreachingsLoading: (state, action: PayloadAction<SetIsPreachingsLoadingPayload>) => {
@@ -82,6 +108,8 @@ const preachingSlice = createSlice({
 export const {
     addPreaching,
     clearPreaching,
+    removePreaching,
+    setIsPreachingDeleting,
     setIsPreachingLoading,
     setIsPreachingsLoading,
     setPreachings,
