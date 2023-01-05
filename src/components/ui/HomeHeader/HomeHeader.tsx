@@ -7,7 +7,7 @@ import { Fab } from '../Fab';
 
 import { useAuth, usePreaching, useTheme } from '../../../hooks';
 
-export const HeaderRight = () => {
+export const HomeHeader = () => {
     const [ showMonthPicker, setShowMonthPicker ] = useState<boolean>(false);
 
     const { logout } = useAuth();
@@ -16,10 +16,7 @@ export const HeaderRight = () => {
 
     const handleOnChange = (date: Date) => {
         setShowMonthPicker(false);
-
-        if (date) {
-            setSelectedDate(date);
-        }
+        if (date) setSelectedDate(date);
     }
 
     return (

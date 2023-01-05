@@ -3,11 +3,14 @@ import { CardStyleInterpolators, createStackNavigator } from '@react-navigation/
 
 import { AddOrEditPreaching, Home } from '../screens/preaching';
 
-import { useTheme } from '../hooks';
+import { BackButton, HomeHeader } from '../components/ui';
+
+import { usePreaching, useTheme } from '../hooks';
 
 const Stack = createStackNavigator();
 
 const PreachingNavigation = () => {
+    const { state: { seletedPreaching } } = usePreaching();
     const { state: { colors } } = useTheme();
 
     const AddOrEditPreachingScreen = () => <AddOrEditPreaching />;
@@ -20,17 +23,29 @@ const PreachingNavigation = () => {
                 cardStyle: {
                     backgroundColor: colors.background,
                 },
-                headerShown: false
+                headerStyle: {
+                    backgroundColor: colors.header
+                },
+                headerTintColor: colors.headerText,
+                headerShadowVisible: false
             }}
         >
             <Stack.Screen
-                name="HomeScreen"
                 component={ HomeScreen }
+                name="HomeScreen"
+                options={{
+                    headerRight: HomeHeader,
+                    title: 'Inicio'
+                }}
             />
 
             <Stack.Screen
-                name="AddOrEditPreachingScreen"
                 component={ AddOrEditPreachingScreen }
+                name="AddOrEditPreachingScreen"
+                options={{
+                    headerLeft: ({ onPress }) => <BackButton onPress={ onPress } />,
+                    title: `${ seletedPreaching.id !== '' ? 'Editar' : 'Agregar' } predicación`
+                }}
             />
         </Stack.Navigator>
     );

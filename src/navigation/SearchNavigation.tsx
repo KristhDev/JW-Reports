@@ -1,23 +1,23 @@
 import React from 'react';
 import { CardStyleInterpolators, createStackNavigator } from '@react-navigation/stack';
 
-import { Courses } from '../screens/courses';
+import { Search } from '../screens/ui';
 
 import { useTheme } from '../hooks';
 
 const Stack = createStackNavigator();
 
-const CoursesNavigation = () => {
+const SearchNavigation = () => {
     const { state: { colors } } = useTheme();
 
-    const CoursesScreen = () => <Courses />;
+    const SearchScreen = () => <Search />;
 
     return (
         <Stack.Navigator
             screenOptions={{
                 cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
                 cardStyle: {
-                    backgroundColor: colors.contentHeader,
+                    backgroundColor: colors.background,
                 },
                 headerStyle: {
                     backgroundColor: colors.header
@@ -27,12 +27,14 @@ const CoursesNavigation = () => {
             }}
         >
             <Stack.Screen
-                component={ CoursesScreen }
-                name="CoursesScreen"
-                options={{ title: 'Cursos' }}
+                component={ SearchScreen }
+                name="SearchScreen"
+                options={{
+                    title: 'Buscar'
+                }}
             />
         </Stack.Navigator>
     );
 }
 
-export default CoursesNavigation;
+export default SearchNavigation;

@@ -4,3 +4,4 @@ export { default as MainNavigation } from './MainNavigation';
 export { default as Navigation } from './Navigation';
 export { default as PreachingNavigation } from './PreachingNavigation';
 export { default as RevisitsNavigation } from './RevisitsNavigation';
+export { default as SearchNavigation } from './SearchNavigation';

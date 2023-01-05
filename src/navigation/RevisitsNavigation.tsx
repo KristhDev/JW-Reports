@@ -19,12 +19,17 @@ const RevisitsNavigation = () => {
                 cardStyle: {
                     backgroundColor: colors.contentHeader,
                 },
-                headerShown: false
+                headerStyle: {
+                    backgroundColor: colors.header
+                },
+                headerTintColor: colors.headerText,
+                headerShadowVisible: false
             }}
         >
             <Stack.Screen
-                name="RevisitsScreen"
                 component={ RevisitsScreen }
+                name="RevisitsScreen"
+                options={{ title: 'Revisitas' }}
             />
         </Stack.Navigator>
     );

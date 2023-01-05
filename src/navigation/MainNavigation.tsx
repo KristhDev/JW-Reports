@@ -3,11 +3,7 @@ import { StyleSheet } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Icon from 'react-native-vector-icons/Ionicons';
 
-import { CoursesNavigation, PreachingNavigation, RevisitsNavigation } from './'
-
-import { Search } from '../screens/ui';
-
-import { HeaderRight } from '../components/ui';
+import { CoursesNavigation, PreachingNavigation, RevisitsNavigation, SearchNavigation } from './'
 
 import { usePreaching, useTheme } from '../hooks';
 
@@ -18,9 +14,6 @@ const MainNavigation = () => {
     const { state: { colors } } = useTheme();
 
     const tabsStyles = StyleSheet.create({
-        headerStyle: {
-            backgroundColor: colors.header
-        },
         tabBarStyle: {
             backgroundColor: colors.bottom,
             borderTopWidth: 0,
@@ -34,8 +27,6 @@ const MainNavigation = () => {
             fontSize: 13,
         }
     });
-
-    const SearchScreen = () => <Search />;
 
     useEffect(() => {
         setSelectedDate(new Date());
@@ -51,8 +42,7 @@ const MainNavigation = () => {
                 backgroundColor: colors.background
             }}
             screenOptions={{
-                headerStyle: tabsStyles.headerStyle,
-                headerTintColor: colors.headerText,
+                headerShown: false,
                 tabBarActiveTintColor: colors.button,
                 tabBarHideOnKeyboard: true,
                 tabBarIconStyle: tabsStyles.tabBarIconStyle,
@@ -65,7 +55,6 @@ const MainNavigation = () => {
                 component={ PreachingNavigation }
                 name="PreachingNavigation"
                 options={{
-                    headerRight: () => <HeaderRight />,
                     tabBarIcon: ({ color, size }) => (
                         <Icon
                             color={ color }
@@ -78,8 +67,8 @@ const MainNavigation = () => {
             />
 
             <Tabs.Screen
-                component={ SearchScreen }
-                name="SearchScreen"
+                component={ SearchNavigation }
+                name="SearchNavigation"
                 options={{
                     tabBarIcon: ({ color, size }) => (
                         <Icon
@@ -88,7 +77,7 @@ const MainNavigation = () => {
                             size={ size }
                         />
                     ),
-                    title: 'Busqueda'
+                    title: 'Buscar'
                 }}
             />
 
