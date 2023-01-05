@@ -1,12 +1,13 @@
 import React from 'react';
 import { Linking, Text, View } from 'react-native';
-import hexToRgba from 'hex-to-rgba';
 
 import { Modal } from '../../ui';
 
 import { Button } from '../../../components/ui';
 
 import { useStatus, useTheme } from '../../../hooks';
+
+import { BUTTON_TRANSLUCENT_COLOR } from '../../../utils';
 
 import styles from './styles';
 
@@ -24,8 +25,6 @@ const StatusModal = () => {
         clearStatus();
         if (msg === configMsg) Linking.openSettings();
     }
-
-    const buttonColor = hexToRgba('#5A3D86', 0.25);
 
     return (
         <Modal isOpen={ !!msg }>
@@ -57,7 +56,7 @@ const StatusModal = () => {
                         text={ btnText }
                         textStyle={{ color: colors.button }}
                         touchableStyle={{ backgroundColor: 'transparent' }}
-                        underlayColor={ buttonColor }
+                        underlayColor={ BUTTON_TRANSLUCENT_COLOR }
                     />
 
                     {
@@ -68,7 +67,7 @@ const StatusModal = () => {
                                 text="Cancelar"
                                 textStyle={{ color: colors.button }}
                                 touchableStyle={{ backgroundColor: 'transparent', marginLeft: 10 }}
-                                underlayColor={ buttonColor }
+                                underlayColor={ BUTTON_TRANSLUCENT_COLOR }
                             />
                         )
                     }

@@ -1,6 +1,5 @@
 import React, { FC } from 'react';
 import { View, Text, Share } from 'react-native';
-import hexToRgba from 'hex-to-rgba';
 
 import { Modal } from '../../ui';
 
@@ -8,7 +7,7 @@ import { Button } from '../../../components/ui';
 
 import { useAuth, usePreaching, useTheme } from '../../../hooks';
 
-import { sumHours, sumNumbers, getRestMins } from '../../../utils';
+import { sumHours, sumNumbers, getRestMins, BUTTON_TRANSLUCENT_COLOR } from '../../../utils';
 
 import { ReportModalProps } from './interfaces';
 
@@ -25,8 +24,6 @@ const ReportModal: FC<ReportModalProps> = ({ isOpen, month, onClose }) => {
     const totalHours = sumHours(preachings.map(p => ({ init: p.init_hour, finish: p.final_hour })));
     const totalRevisits = sumNumbers(preachings.map(p => p.revisits));
     const restMins = getRestMins(preachings.map(p => ({ init: p.init_hour, finish: p.final_hour })));
-
-    const buttonColor = hexToRgba('#5A3D86', 0.25);
 
     const handleDeliver = () => {
         onClose();
@@ -109,7 +106,7 @@ const ReportModal: FC<ReportModalProps> = ({ isOpen, month, onClose }) => {
                         text="Entregar"
                         textStyle={{ color: colors.button }}
                         touchableStyle={{ marginRight: 10, backgroundColor: 'transparent' }}
-                        underlayColor={ buttonColor }
+                        underlayColor={ BUTTON_TRANSLUCENT_COLOR }
                     />
 
                     <Button
@@ -117,7 +114,7 @@ const ReportModal: FC<ReportModalProps> = ({ isOpen, month, onClose }) => {
                         text="Cancelar"
                         textStyle={{ color: colors.button }}
                         touchableStyle={{ backgroundColor: 'transparent' }}
-                        underlayColor={ buttonColor }
+                        underlayColor={ BUTTON_TRANSLUCENT_COLOR }
                     />
                 </View>
             </View>

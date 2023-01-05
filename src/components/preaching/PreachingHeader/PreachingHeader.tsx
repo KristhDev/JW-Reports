@@ -1,6 +1,8 @@
-import React, { FC } from 'react';
+import React, { FC, useState } from 'react';
 import { View } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
+
+import { DeleteModal } from '../../../screens/ui';
 
 import { Fab } from '../../ui';
 
@@ -9,6 +11,8 @@ import { useTheme } from '../../../hooks';
 import { PreachingHeaderProps } from './interfaces';
 
 export const PreachingHeader: FC<PreachingHeaderProps> = ({ deleteButton = false }) => {
+    const [ showModal, setShowModal ] = useState<boolean>(false);
+
     const { state: { colors, theme } } = useTheme();
 
     return (
@@ -26,13 +30,20 @@ export const PreachingHeader: FC<PreachingHeaderProps> = ({ deleteButton = false
                                     style={{ marginLeft: 2 }}
                                 />
                             }
-                            onPress={ () => {} }
+                            onPress={ () => setShowModal(true) }
                             style={{ marginRight: 6 }}
                             touchColor={ (theme === 'dark') ? 'rgba(255, 255, 255, 0.15)' : 'rgba(0, 0, 0, 0.15)'  }
                         />
                     )
                 }
             </View>
+
+            <DeleteModal
+                isOpen={ showModal }
+                onClose={ () => setShowModal(false) }
+                onConfirm={ () => setShowModal(false) }
+                text="¿Estás seguro de eliminar este día de predicación?"
+            />
         </>
     );
 }
