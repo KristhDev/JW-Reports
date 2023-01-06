@@ -7,13 +7,11 @@ import { Button } from '../../../components/ui';
 
 import { useStatus, useTheme } from '../../../hooks';
 
-import { BUTTON_TRANSLUCENT_COLOR } from '../../../utils';
-
 import styles from './styles';
 
 const StatusModal = () => {
     const { state: { msg }, clearStatus } = useStatus();
-    const { state: { colors } } = useTheme();
+    const { state: { colors }, BUTTON_TRANSLUCENT_COLOR } = useTheme();
 
     const configMsg = 'Para realizar está acción necesitas permisos del dispositivo, por favor abra la configuración de su dispositivo y active los permisos de la aplicación';
 

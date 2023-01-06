@@ -1,6 +1,6 @@
 import React, { useState, FC } from 'react';
 import { View, Text, TextInput, useWindowDimensions } from 'react-native';
-import DatePicker from 'react-native-date-picker';
+import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import { useField } from 'formik';
 import dayjs from 'dayjs';
 
@@ -19,21 +19,20 @@ export const DatetimeField: FC<DatetimeFieldProps> = ({
     inputStyle,
     label,
     labelStyle,
-    modalTitle,
     mode,
     name,
     style,
     ...rest
 }) => {
-    const [ open, setOpen ] = useState(false);
+    const [ open, setOpen ] = useState<boolean>(false);
     const { width } = useWindowDimensions();
 
     const [ field, meta, helpers ] = useField({ name });
     const { state: { colors } } = useTheme();
 
     const handleConfirm = (date: Date) => {
-        helpers.setValue(date);
         setOpen(false);
+        helpers.setValue(date);
     }
 
     const handleCancel = () => {
@@ -88,16 +87,15 @@ export const DatetimeField: FC<DatetimeFieldProps> = ({
                 />
             </View>
 
-            <DatePicker
-                cancelText="Cancelar"
-                confirmText="Confirmar"
+            <DateTimePickerModal
+                accentColor={ colors.button }
                 date={ field.value }
-                modal
+                isVisible={ open }
                 mode={ mode }
+                negativeButton={{ textColor: colors.button, label: 'Cancelar' }}
                 onCancel={ handleCancel }
                 onConfirm={ handleConfirm }
-                open={ open }
-                title={ modalTitle }
+                positiveButton={{ textColor: colors.button, label: 'Seleccionar' }}
             />
         </View>
     );

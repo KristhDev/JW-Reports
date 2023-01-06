@@ -23,7 +23,7 @@ export const RevisitCard = () => {
             underlayColor={ (theme === 'dark') ? 'rgba(255, 255, 255, 0.50)' : 'rgba(0, 0, 0, 0.70)' }
         >
             <View
-                style={{ ...styles.container, backgroundColor: colors.bottom }}
+                style={{ ...styles.container, backgroundColor: colors.card }}
             >
                 <Text style={{ ...styles.textDate, color: colors.icon }}>03-marzo</Text>
 
@@ -55,7 +55,7 @@ export const RevisitCard = () => {
                 >
                     <MenuTrigger text="" />
 
-                    <MenuOptions optionsContainerStyle={{ backgroundColor: colors.bottom, borderRadius: 5 }}>
+                    <MenuOptions optionsContainerStyle={{ backgroundColor: colors.card, borderRadius: 5 }}>
                         <MenuOption>
                             <Text
                                 style={{

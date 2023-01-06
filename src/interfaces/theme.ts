@@ -10,6 +10,7 @@ export interface Colors {
     bottom: string;
     button: string;
     buttonDark: string;
+    card: string;
     contentHeader: string;
     header: string;
     headerText: string;

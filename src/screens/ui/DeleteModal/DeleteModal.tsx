@@ -9,12 +9,10 @@ import { useTheme } from '../../../hooks';
 
 import { DeleteModalProps } from './interfaces';
 
-import { BUTTON_TRANSLUCENT_COLOR } from '../../../utils';
-
 import styles from './styles';
 
 const DeleteModal: FC<DeleteModalProps> = ({ text, isLoading, isOpen, onClose, onConfirm }) => {
-    const { state: { colors } } = useTheme();
+    const { state: { colors }, BUTTON_TRANSLUCENT_COLOR } = useTheme();
 
     return (
         <Modal isOpen={ isOpen || isLoading }>

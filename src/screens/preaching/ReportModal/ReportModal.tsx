@@ -7,7 +7,7 @@ import { Button } from '../../../components/ui';
 
 import { useAuth, usePreaching, useTheme } from '../../../hooks';
 
-import { sumHours, sumNumbers, getRestMins, BUTTON_TRANSLUCENT_COLOR } from '../../../utils';
+import { sumHours, sumNumbers, getRestMins } from '../../../utils';
 
 import { ReportModalProps } from './interfaces';
 
@@ -16,7 +16,7 @@ import styles from './styles';
 const ReportModal: FC<ReportModalProps> = ({ isOpen, month, onClose }) => {
     const { state: { user } } = useAuth();
     const { state: { preachings } } = usePreaching();
-    const { state: { colors } } = useTheme();
+    const { state: { colors }, BUTTON_TRANSLUCENT_COLOR } = useTheme();
 
     const username = `${ user.name } ${ user.surname }`;
     const totalPosts = sumNumbers(preachings.map(p => p.posts));
