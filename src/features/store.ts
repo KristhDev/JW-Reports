@@ -7,11 +7,13 @@ import reduxFlipper from 'redux-flipper';
 
 import { authReducer } from './auth';
 import { preachingReducer } from './preaching';
+import { revisitsReducer } from './revisits';
 import { statusReducer } from './status';
 
 const reducers = combineReducers({
     auth: authReducer,
     preaching: preachingReducer,
+    revisits: revisitsReducer,
     status: statusReducer
 });
 

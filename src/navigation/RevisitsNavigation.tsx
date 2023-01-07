@@ -1,19 +1,24 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { CardStyleInterpolators, createStackNavigator } from '@react-navigation/stack';
 
 import { AddOrEditRevisit, Revisits } from '../screens/revisits';
 
 import { BackButton } from '../components/ui';
 
-import { useTheme } from '../hooks';
+import { useRevisits, useTheme } from '../hooks';
 
 const Stack = createStackNavigator();
 
 const RevisitsNavigation = () => {
+    const { loadRevisits } = useRevisits();
     const { state: { colors } } = useTheme();
 
     const RevisitsScreen = () => <Revisits />;
     const AddOrEditRevisitScreen = () => <AddOrEditRevisit />
+
+    useEffect(() => {
+        loadRevisits();
+    }, []);
 
     return (
         <Stack.Navigator

@@ -5,19 +5,20 @@ import Icon from 'react-native-vector-icons/Ionicons';
 
 import { Button, DatetimeField, FormField } from '../../ui';
 
-import { useStatus, useTheme } from '../../../hooks';
+import { useRevisits, useStatus, useTheme } from '../../../hooks';
 
 export const RevisitForm = () => {
+    const { state: { seletedRevisit } } = useRevisits();
     const { setErrorForm } = useStatus();
     const { state: { colors } } = useTheme();
 
     return (
         <Formik
             initialValues={{
-                person_name: '',
-                about: '',
-                direction: '',
-                next_visit: new Date()
+                person_name: seletedRevisit.person_name,
+                about: seletedRevisit.about,
+                direction: seletedRevisit.direction,
+                next_visit: new Date(seletedRevisit.next_visit)
             }}
             onSubmit={ () => {} }
             validateOnMount

@@ -48,7 +48,7 @@ const Navigation = () => {
                 }}
             >
                 {
-                    (isAuthenticated) ? (
+                    (!isAuthenticated) ? (
                         <Stack.Screen
                             name="MainNavigation"
                             component={ MainNavigation }
