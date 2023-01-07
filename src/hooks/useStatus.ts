@@ -6,7 +6,7 @@ import { clearStatus as clearStatusAction, setStatus as setStatusAction } from '
 
 import { SetStatusPayload, StatusState } from '../interfaces/status';
 
-const useTheme = () => {
+const useStatus = () => {
     const dispatch = useAppDispatch();
     const state = useSelector<RootState, StatusState>(store => store.status);
 
@@ -31,4 +31,4 @@ const useTheme = () => {
     }
 }
 
-export default useTheme;
+export default useStatus;
