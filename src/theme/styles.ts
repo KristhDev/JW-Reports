@@ -35,7 +35,6 @@ const styles = StyleSheet.create({
 
     formInput: {
         fontSize: 17,
-        marginBottom: 1,
         paddingLeft: 10
     },
 

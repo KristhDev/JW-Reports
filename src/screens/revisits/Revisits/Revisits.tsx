@@ -1,8 +1,9 @@
 import React from 'react';
 import { ScrollView } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/Ionicons';
 
-import { RevisitCard } from '../../../components/preaching';
+import { RevisitCard } from '../../../components/revisits';
 import { Fab, Title } from '../../../components/ui';
 
 import { useTheme } from '../../../hooks';
@@ -10,6 +11,8 @@ import { useTheme } from '../../../hooks';
 import themeStyles from '../../../theme/styles';
 
 const Revisits = () => {
+    const { navigate } = useNavigation();
+
     const { state: { colors } } = useTheme();
 
     return (
@@ -41,7 +44,7 @@ const Revisits = () => {
                         style={{ marginLeft: 3 }}
                     />
                 }
-                onPress={ () => {} }
+                onPress={ () => navigate('AddOrEditRevisitScreen' as never) }
                 style={ themeStyles.fabBottomRight }
                 touchColor={ colors.buttonDark }
             />

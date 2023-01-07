@@ -40,13 +40,20 @@ export const FormField: FC<FormFieldProps> = ({ icon, label, style, controlStyle
             >
                 <TextInput
                     autoCorrect={ false }
+                    cursorColor={ colors.button }
                     onChangeText={ helpers.setValue }
                     onSelectionChange={ ({ nativeEvent }) => setSelection(nativeEvent.selection) }
                     placeholderTextColor={ colors.icon }
                     selection={ selection }
                     selectionColor={ colors.linkText }
                     style={[
-                        { ...themeStyles.formInput, color: colors.inputText, flex: 1, paddingRight: 5 },
+                        {
+                            ...themeStyles.formInput,
+                            color: colors.inputText,
+                            flex: 1,
+                            paddingRight: 5,
+                            textAlignVertical: (rest.multiline) ? 'top' : 'center',
+                        },
                         inputStyle
                     ]}
                     value={ String(field.value) }
