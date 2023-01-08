@@ -11,6 +11,8 @@ import { usePreaching, useStatus, useTheme } from '../../../hooks';
 
 import { PreachingFormValues } from './interfaces';
 
+import themeStyles from '../../../theme/styles';
+
 export const PreachingForm = () => {
     const {
         state: {
@@ -63,7 +65,7 @@ export const PreachingForm = () => {
             validateOnMount
         >
             { ({ handleSubmit, errors, isValid }) => (
-                <View style={{ alignItems: 'center', paddingTop: 30, paddingBottom: 40 }}>
+                <View style={{ ...themeStyles.formContainer, paddingTop: 30, paddingBottom: 40 }}>
                     <DatetimeField
                         icon={
                             <Icon

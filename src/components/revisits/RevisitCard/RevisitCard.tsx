@@ -1,19 +1,20 @@
-import React, { useState } from 'react';
+import React, { FC, useState } from 'react';
 import { Text, View, TouchableHighlight } from 'react-native';
 import { Menu, MenuOption, MenuOptions, MenuTrigger } from 'react-native-popup-menu';
 import Icon from 'react-native-vector-icons/Ionicons';
+import dayjs from 'dayjs';
 
 import { Fab } from '../../ui';
 
 import { useTheme } from '../../../hooks';
 
+import { RevisitCardProps } from './interfaces';
+
 import styles from './styles';
 
-export const RevisitCard = () => {
+export const RevisitCard: FC<RevisitCardProps> = ({ revisit }) => {
     const [ isOpen, setIsOpen ] = useState<boolean>(false);
     const { state: { colors, theme } } = useTheme();
-
-    const desc = 'Nemo maxime vero vel non eos. Provident reprehenderit sit. Labore ea qui ab. Aut reiciendis consequatur aliquam est aut quod. Pariatur reprehenderit est fugit quia. Quasi et delectus consequatur ex dolorum pariatur autem rem. Nemo maxime vero vel non eos. Provident reprehenderit sit. Labore ea qui ab. Aut reiciendis consequatur aliquam est aut quod. Pariatur reprehenderit est fugit quia. Quasi et delectus consequatur ex dolorum pariatur autem rem.';
 
     return (
         <TouchableHighlight
@@ -25,12 +26,14 @@ export const RevisitCard = () => {
             <View
                 style={{ ...styles.container, backgroundColor: colors.card }}
             >
-                <Text style={{ ...styles.textDate, color: colors.icon }}>03-marzo</Text>
+                <Text style={{ ...styles.textDate, color: colors.icon }}>
+                    { `${ dayjs(revisit.next_visit).format('DD') }-${ dayjs(revisit.next_visit).format('MMMM') }`  }
+                </Text>
 
-                <Text style={{ ...styles.textName, color: colors.text }}>Nombre de la persona</Text>
+                <Text style={{ ...styles.textName, color: colors.text }}>{ revisit.person_name }</Text>
 
                 <Text style={{ ...styles.textDescription, color: colors.text }}>
-                    { (desc.length > 200) ? desc.substring(0, 200) + '...' : desc }
+                    { (revisit.about.length > 200) ? revisit.about.substring(0, 200) + '...' : revisit.about }
                 </Text>
 
                 <Fab
@@ -74,7 +77,7 @@ export const RevisitCard = () => {
                                     ...styles.textMenuOpt
                                 }}
                             >
-                                Compartir
+                                Completar
                             </Text>
                         </MenuOption>
 

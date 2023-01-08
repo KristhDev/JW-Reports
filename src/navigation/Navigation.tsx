@@ -6,17 +6,19 @@ import { AuthNavigation, MainNavigation } from './';
 
 import { StatusModal } from '../screens/status';
 
-import { useAuth, useStatus, useTheme } from '../hooks';
+import { useAuth, useRevisits, useStatus, useTheme } from '../hooks';
 
 const Stack = createStackNavigator();
 
 const Navigation = () => {
     const { state: { isAuthenticated }, renew } = useAuth();
+    const { clearRevisits } = useRevisits();
     const { clearStatus } = useStatus();
     const { state: { theme }, setDefaultTheme } = useTheme();
 
     useEffect(() => {
         clearStatus();
+        clearRevisits();
         setDefaultTheme();
         renew();
     }, []);
@@ -36,8 +38,8 @@ const Navigation = () => {
             <StatusBar
                 animated
                 backgroundColor="transparent"
-                translucent
                 barStyle={ (theme === 'dark') ? 'light-content' : 'dark-content' }
+                translucent
             />
 
             <StatusModal />
@@ -48,15 +50,15 @@ const Navigation = () => {
                 }}
             >
                 {
-                    (!isAuthenticated) ? (
+                    (isAuthenticated) ? (
                         <Stack.Screen
-                            name="MainNavigation"
                             component={ MainNavigation }
+                            name="MainNavigation"
                         />
                     ) : (
                         <Stack.Screen
-                            name="AuthNavigation"
                             component={ AuthNavigation }
+                            name="AuthNavigation"
                         />
                     )
                 }

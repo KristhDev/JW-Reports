@@ -10,7 +10,7 @@ import { useRevisits, useTheme } from '../hooks';
 const Stack = createStackNavigator();
 
 const RevisitsNavigation = () => {
-    const { loadRevisits } = useRevisits();
+    const { state: { seletedRevisit }, loadRevisits } = useRevisits();
     const { state: { colors } } = useTheme();
 
     const RevisitsScreen = () => <Revisits />;
@@ -45,8 +45,7 @@ const RevisitsNavigation = () => {
                 name="AddOrEditRevisitScreen"
                 options={{
                     headerLeft: ({ onPress }) => <BackButton onPress={ onPress } />,
-                    title: 'Agregar revisita',
-                    // title: `${ seletedRevisit.id !== '' ? 'Editar' : 'Agregar' } revisita`
+                    title: `${ seletedRevisit.id !== '' ? 'Editar' : 'Agregar' } revisita`
                 }}
             />
         </Stack.Navigator>

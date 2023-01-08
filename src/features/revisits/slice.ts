@@ -11,7 +11,7 @@ const INITIAL_STATE: RevisitsState = {
         user_id: '',
         person_name: '',
         about: '',
-        direction: '',
+        address: '',
         next_visit: new Date().toString(),
         done: false,
         created_at: new Date().toString(),
@@ -38,7 +38,7 @@ const revisitsSlice = createSlice({
                 user_id: '',
                 person_name: '',
                 about: '',
-                direction: '',
+                address: '',
                 next_visit: new Date().toString(),
                 done: false,
                 created_at: new Date().toString(),
@@ -56,11 +56,11 @@ const revisitsSlice = createSlice({
         },
 
         setIsRevisitLoading: (state, action: PayloadAction<SetIsRevisitLoadingPayload>) => {
-            state.isRevisitDeleting = action.payload.isLoading;
+            state.isRevisitLoading = action.payload.isLoading;
         },
 
         setIsRevisitsLoading: (state, action: PayloadAction<SetIsRevisitsLoadingPayload>) => {
-            state.isRevisitDeleting = action.payload.isLoading;
+            state.isRevisitsLoading = action.payload.isLoading;
         },
 
         setRevisits: (state, action: PayloadAction<SetRevisitsPayload>) => {

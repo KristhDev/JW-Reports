@@ -1,18 +1,20 @@
-import React from 'react';
-import { ScrollView } from 'react-native';
+import React, { Children } from 'react';
+import { ActivityIndicator, ScrollView, useWindowDimensions } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/Ionicons';
 
 import { RevisitCard } from '../../../components/revisits';
-import { Fab, Title } from '../../../components/ui';
+import { Fab, InfoText, Title } from '../../../components/ui';
 
-import { useTheme } from '../../../hooks';
+import { useRevisits, useTheme } from '../../../hooks';
 
 import themeStyles from '../../../theme/styles';
 
 const Revisits = () => {
     const { navigate } = useNavigation();
+    const { height } = useWindowDimensions();
 
+    const { state: { revisits, isRevisitsLoading } } = useRevisits();
     const { state: { colors } } = useTheme();
 
     return (
@@ -28,10 +30,36 @@ const Revisits = () => {
                     textStyle={{ fontSize: 24 }}
                 />
 
-                <RevisitCard />
-                <RevisitCard />
-                <RevisitCard />
-                <RevisitCard />
+                {
+                    (isRevisitsLoading) && (
+                        <ActivityIndicator
+                            color={ colors.button }
+                            size="large"
+                            style={{ marginTop: height * 0.22 }}
+                        />
+                    )
+                }
+
+                {
+                    (!isRevisitsLoading && revisits.length > 0) && (
+                        <>
+                            {
+                                Children.toArray(revisits.map(revisit => (
+                                    <RevisitCard revisit={ revisit } />
+                                )))
+                            }
+                        </>
+                    )
+                }
+
+                {
+                    (!isRevisitsLoading && revisits.length === 0) && (
+                        <InfoText
+                            containerStyle={{ marginTop: height * 0.22 }}
+                            text="No haz agregado ninguna revisita."
+                        />
+                    )
+                }
             </ScrollView>
 
             <Fab

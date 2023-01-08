@@ -11,7 +11,7 @@ export interface Revisit {
     user_id: string;
     person_name: string;
     about: string;
-    direction: string;
+    address: string;
     photo?: string;
     next_visit: string;
     done: boolean;
