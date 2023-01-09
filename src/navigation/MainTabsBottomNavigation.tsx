@@ -6,9 +6,11 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import { CoursesStackNavigation, PreachingStackNavigation, SearchStackNavigation } from '.'
 import { RevistsStackNavigation } from './revisits';
 
+import { MainTabsBottomParamsList } from '../interfaces/ui';
+
 import { useTheme } from '../hooks';
 
-const Tabs = createBottomTabNavigator();
+const Tabs = createBottomTabNavigator<MainTabsBottomParamsList>();
 
 const MainTabsBottomNavigation = () => {
     const { state: { colors } } = useTheme();

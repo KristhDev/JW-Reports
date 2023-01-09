@@ -6,7 +6,9 @@ import { Login, Register } from '../screens/auth';
 
 import { useTheme } from '../hooks';
 
-const Stack = createStackNavigator();
+import { AuthStackParamsList } from '../interfaces/auth';
+
+const Stack = createStackNavigator<AuthStackParamsList>();
 
 const AuthStackNavigation = () => {
     const { top } = useSafeAreaInsets();

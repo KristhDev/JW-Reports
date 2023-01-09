@@ -1,3 +1,8 @@
+export type RevisitsStackParamsList = {
+    RevisitsTopTabsNavigation: undefined;
+    AddOrEditRevisitScreen: undefined;
+}
+
 export type RevistsTopTabsParamsList = {
     RevisitsScreen: {
         emptyMessage: string,

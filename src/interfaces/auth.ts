@@ -1,3 +1,8 @@
+export type AuthStackParamsList = {
+    LoginScreen: undefined,
+    RegisterScreen: undefined
+}
+
 export interface AuthState {
     user: User;
     token: string;

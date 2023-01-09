@@ -9,7 +9,9 @@ import { BackButton } from '../../components/ui';
 
 import { useRevisits, useTheme } from '../../hooks';
 
-const Stack = createStackNavigator();
+import { RevisitsStackParamsList } from '../../interfaces/revisits';
+
+const Stack = createStackNavigator<RevisitsStackParamsList>();
 
 const RevisitsStackNavigation = () => {
     const { state: { seletedRevisit } } = useRevisits();

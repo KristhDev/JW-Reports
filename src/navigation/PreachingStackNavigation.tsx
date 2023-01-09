@@ -8,7 +8,9 @@ import { BackButton, HomeHeader } from '../components/ui';
 
 import { usePreaching, useTheme } from '../hooks';
 
-const Stack = createStackNavigator();
+import { PreachingStackParamsList } from '../interfaces/preaching';
+
+const Stack = createStackNavigator<PreachingStackParamsList>();
 
 const PreachingStackNavigation = () => {
     const { state: { seletedPreaching, selectedDate }, setSelectedDate, loadPreachings } = usePreaching();

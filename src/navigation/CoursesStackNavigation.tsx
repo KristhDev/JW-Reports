@@ -5,7 +5,9 @@ import { Courses } from '../screens/courses';
 
 import { useTheme } from '../hooks';
 
-const Stack = createStackNavigator();
+import { CoursesStackParamsList } from '../interfaces/courses';
+
+const Stack = createStackNavigator<CoursesStackParamsList>();
 
 const CoursesStackNavigation = () => {
     const { state: { colors } } = useTheme();

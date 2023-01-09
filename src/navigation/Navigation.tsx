@@ -8,7 +8,9 @@ import { StatusModal } from '../screens/status';
 
 import { useAuth, useRevisits, useStatus, useTheme } from '../hooks';
 
-const Stack = createStackNavigator();
+import { NavigationParamsList } from '../interfaces/ui';
+
+const Stack = createStackNavigator<NavigationParamsList>();
 
 const Navigation = () => {
     const { state: { isAuthenticated }, renew } = useAuth();

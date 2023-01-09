@@ -1,3 +1,8 @@
+export type PreachingStackParamsList = {
+    HomeScreen: undefined;
+    AddOrEditPreachingScreen: undefined;
+}
+
 export interface PreachingState {
     isPreachingDeleting: boolean;
     isPreachingLoading: boolean;
