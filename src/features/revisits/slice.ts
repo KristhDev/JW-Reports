@@ -1,11 +1,28 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { AddRevisitPayload, RemoveRevisitPayload, RevisitsState, SetIsRevisitDeletingPayload, SetIsRevisitLoadingPayload, SetIsRevisitsLoadingPayload, SetRevisitsPayload, SetSelectedRevisitPayload, UpdateRevisitPayload } from '../../interfaces/revisits';
+import {
+    AddRevisitPayload,
+    RemoveRevisitPayload,
+    RevisitsState,
+    SetHasMoreRevisitsPayload,
+    SetIsRevisitDeletingPayload,
+    SetIsRevisitLoadingPayload,
+    SetIsRevisitsLoadingPayload,
+    SetRevisitsPayload,
+    SetRevisitsPaginationPayload,
+    SetSelectedRevisitPayload,
+    UpdateRevisitPayload
+} from '../../interfaces/revisits';
 
 const INITIAL_STATE: RevisitsState = {
+    hasMoreRevisits: true,
     isRevisitDeleting: false,
     isRevisitLoading: false,
     isRevisitsLoading: false,
     revisits: [],
+    revisitsPagination: {
+        from: 0,
+        to: 9
+    },
     seletedRevisit: {
         id: '',
         user_id: '',
@@ -30,9 +47,14 @@ const revisitsSlice = createSlice({
         },
 
         clearRevisits: (state) => {
+            state.hasMoreRevisits = true;
             state.isRevisitLoading = false;
             state.isRevisitsLoading = false;
             state.revisits = [];
+            state.revisitsPagination = {
+                from: 0,
+                to: 9
+            }
             state.seletedRevisit = {
                 id: '',
                 user_id: '',
@@ -51,6 +73,14 @@ const revisitsSlice = createSlice({
             state.isRevisitDeleting = false;
         },
 
+        removeRevisits: (state) => {
+            state.revisits = [];
+        },
+
+        setHasMoreRevisits: (state, action: PayloadAction<SetHasMoreRevisitsPayload>) => {
+            state.hasMoreRevisits = action.payload.hasMore;
+        },
+
         setIsRevisitDeleting: (state, action: PayloadAction<SetIsRevisitDeletingPayload>) => {
             state.isRevisitDeleting = action.payload.isDeleting;
         },
@@ -64,8 +94,12 @@ const revisitsSlice = createSlice({
         },
 
         setRevisits: (state, action: PayloadAction<SetRevisitsPayload>) => {
-            state.revisits = action.payload.revisits;
+            state.revisits = [ ...state.revisits, ...action.payload.revisits ];
             state.isRevisitsLoading = false;
+        },
+
+        setRevisitsPagination: (state, action: PayloadAction<SetRevisitsPaginationPayload>) => {
+            state.revisitsPagination = action.payload.pagination;
         },
 
         setSelectedRevisit: (state, action: PayloadAction<SetSelectedRevisitPayload>) => {
@@ -88,10 +122,13 @@ export const {
     addRevisit,
     clearRevisits,
     removeRevisit,
+    removeRevisits,
+    setHasMoreRevisits,
     setIsRevisitDeleting,
     setIsRevisitLoading,
     setIsRevisitsLoading,
     setRevisits,
+    setRevisitsPagination,
     setSelectedRevisit,
     updateRevisit
 } = revisitsSlice.actions;

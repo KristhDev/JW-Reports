@@ -13,9 +13,6 @@ const RevisitsNavigation = () => {
     const { state: { seletedRevisit }, loadRevisits } = useRevisits();
     const { state: { colors } } = useTheme();
 
-    const RevisitsScreen = () => <Revisits />;
-    const AddOrEditRevisitScreen = () => <AddOrEditRevisit />
-
     useEffect(() => {
         loadRevisits();
     }, []);
@@ -35,13 +32,13 @@ const RevisitsNavigation = () => {
             }}
         >
             <Stack.Screen
-                component={ RevisitsScreen }
+                component={ Revisits }
                 name="RevisitsScreen"
                 options={{ title: 'Revisitas' }}
             />
 
             <Stack.Screen
-                component={ AddOrEditRevisitScreen }
+                component={ AddOrEditRevisit }
                 name="AddOrEditRevisitScreen"
                 options={{
                     headerLeft: ({ onPress }) => <BackButton onPress={ onPress } />,

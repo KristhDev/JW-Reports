@@ -17,6 +17,7 @@ export interface Colors {
     icon: string;
     inputText: string;
     linkText: string;
+    modal: string;
     modalText: string;
     text: string;
     titleText: string;

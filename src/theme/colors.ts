@@ -12,6 +12,7 @@ export const lightColors: Colors = {
     icon: '#4F4F4F',
     inputText: '#4A4A4A',
     linkText: '#496DA7',
+    modal: '#F1F1F1',
     modalText: '#000000',
     text: '#000000',
     titleText: '#292929'
@@ -29,6 +30,7 @@ export const darkColors: Colors = {
     icon: '#BFBFBF',
     inputText: '#FFFFFF',
     linkText: '#A0B9E2',
+    modal: '#292929',
     modalText: '#B4B4B4',
     text: '#FFFFFF',
     titleText: '#FFFFFF',

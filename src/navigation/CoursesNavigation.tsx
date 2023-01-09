@@ -10,8 +10,6 @@ const Stack = createStackNavigator();
 const CoursesNavigation = () => {
     const { state: { colors } } = useTheme();
 
-    const CoursesScreen = () => <Courses />;
-
     return (
         <Stack.Navigator
             screenOptions={{
@@ -27,7 +25,7 @@ const CoursesNavigation = () => {
             }}
         >
             <Stack.Screen
-                component={ CoursesScreen }
+                component={ Courses }
                 name="CoursesScreen"
                 options={{ title: 'Cursos' }}
             />

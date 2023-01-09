@@ -45,7 +45,7 @@ const ReportModal: FC<ReportModalProps> = ({ isOpen, month, onClose }) => {
 
     return (
         <Modal isOpen={ isOpen }>
-            <View style={{ ...styles.reportModal, backgroundColor: colors.contentHeader }}>
+            <View style={{ ...styles.reportModal, backgroundColor: colors.modal }}>
                 <Text style={{ ...styles.reportModalInfo, color: colors.modalText }}>Estás a punto de entregar tu informe predicación, por favor revisalo.</Text>
 
                 <View style={{ padding: 10, marginTop: 20 }}>

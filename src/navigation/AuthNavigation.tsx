@@ -13,9 +13,6 @@ const AuthNavigation = () => {
 
     const { state: { colors } } = useTheme();
 
-    const LoginScreen = () => <Login />;
-    const RegisterScreen = () => <Register />;
-
     return (
         <Stack.Navigator
             screenOptions={{
@@ -29,12 +26,12 @@ const AuthNavigation = () => {
         >
             <Stack.Screen
                 name="LoginScreen"
-                component={ LoginScreen }
+                component={ Login }
             />
 
             <Stack.Screen
                 name="RegisterScreen"
-                component={ RegisterScreen }
+                component={ Register }
             />
         </Stack.Navigator>
     );

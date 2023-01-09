@@ -8,14 +8,17 @@ import { RootState, useAppDispatch } from '../features/store';
 import {
     addRevisit,
     clearRevisits as clearRevisitsAction,
+    removeRevisits as removeRevisitsAction,
+    setHasMoreRevisits,
     setIsRevisitLoading,
     setIsRevisitsLoading as setIsRevisitsLoadingAction,
-    setRevisits
+    setRevisits as setRevisitsAction,
+    setRevisitsPagination as setRevisitsPaginationAction
 } from '../features/revisits';
 
 import { useAuth, useStatus } from './';
 
-import { RevisitsState } from '../interfaces/revisits';
+import { Revisit, RevisitsState } from '../interfaces/revisits';
 import { RevisitFormValues } from '../components/revisits/RevisitForm/interfaces';
 
 const useRevisits = () => {
@@ -28,9 +31,12 @@ const useRevisits = () => {
     const state = useSelector<RootState, RevisitsState>(store => store.revisits);
 
     const clearRevisits = () => dispatch(clearRevisitsAction());
+    const removeRevisits = () => dispatch(removeRevisitsAction());
     const setIsRevisitsLoading = (isLoading: boolean) => dispatch(setIsRevisitsLoadingAction({ isLoading }));
+    const setRevisits = (revisits: Revisit[]) => dispatch(setRevisitsAction({ revisits }));
+    const setRevisitsPagination = (pagination: { from: number, to: number }) => dispatch(setRevisitsPaginationAction({ pagination }));
 
-    const loadRevisits = async () => {
+    const loadRevisits = async (refresh: boolean = false) => {
         setIsRevisitsLoading(true);
 
         const { data, error } = await supabase.from('revisits')
@@ -38,7 +44,10 @@ const useRevisits = () => {
             .eq('user_id', user.id)
             .order('next_visit', { ascending: false })
             .order('created_at', { ascending: false })
-            .range(0, 10)
+            .range(
+                (refresh) ? 0 : state.revisitsPagination.from,
+                (refresh) ? 9 : state.revisitsPagination.to
+            )
 
         if (error) {
             console.log(error);
@@ -49,7 +58,15 @@ const useRevisits = () => {
             return;
         }
 
-        dispatch(setRevisits({ revisits: data }));
+        if (data.length >= 10) {
+            setRevisitsPagination({
+                from: (refresh) ? 10 : state.revisitsPagination.from + 10,
+                to: (refresh) ? 19 : state.revisitsPagination.to + 10
+            });
+        }
+
+        dispatch(setHasMoreRevisits({ hasMore: (data.length >= 10) }));
+        setRevisits(data);
     }
 
     const saveRevisit = async (revisitValues: RevisitFormValues) => {
@@ -86,10 +103,12 @@ const useRevisits = () => {
 
         // Actions
         clearRevisits,
+        removeRevisits,
+        setRevisitsPagination,
 
         // Functions
         loadRevisits,
-        saveRevisit,
+        saveRevisit
     }
 }
 

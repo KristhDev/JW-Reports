@@ -1,8 +1,13 @@
 export interface RevisitsState {
+    hasMoreRevisits: boolean;
     isRevisitDeleting: boolean;
     isRevisitLoading: boolean;
     isRevisitsLoading: boolean;
     revisits: Revisit[];
+    revisitsPagination: {
+        from: number;
+        to: number;
+    }
     seletedRevisit: Revisit;
 }
 
@@ -23,6 +28,10 @@ export type AddRevisitPayload = {
     revisit: Revisit;
 }
 
+export type SetHasMoreRevisitsPayload = {
+    hasMore: boolean;
+}
+
 export type SetIsRevisitsLoading = {
     isLoading: boolean;
 }
@@ -33,6 +42,13 @@ export type SetIsRevisitLoading = {
 
 export type SetRevisitsPayload = {
     revisits: Revisit[];
+}
+
+export type SetRevisitsPaginationPayload = {
+    pagination: {
+        to: number;
+        from: number;
+    }
 }
 
 export type SetSelectedRevisitPayload = {

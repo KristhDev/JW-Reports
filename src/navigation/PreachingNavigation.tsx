@@ -14,9 +14,6 @@ const PreachingNavigation = () => {
     const { state: { seletedPreaching } } = usePreaching();
     const { state: { colors } } = useTheme();
 
-    const AddOrEditPreachingScreen = () => <AddOrEditPreaching />;
-    const HomeScreen = () => <Home />;
-
     return (
         <Stack.Navigator
             screenOptions={{
@@ -32,7 +29,7 @@ const PreachingNavigation = () => {
             }}
         >
             <Stack.Screen
-                component={ HomeScreen }
+                component={ Home }
                 name="HomeScreen"
                 options={{
                     headerRight: HomeHeader,
@@ -41,7 +38,7 @@ const PreachingNavigation = () => {
             />
 
             <Stack.Screen
-                component={ AddOrEditPreachingScreen }
+                component={ AddOrEditPreaching }
                 name="AddOrEditPreachingScreen"
                 options={{
                     headerLeft: ({ onPress }) => <BackButton onPress={ onPress } />,

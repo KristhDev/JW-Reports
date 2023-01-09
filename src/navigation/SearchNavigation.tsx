@@ -10,8 +10,6 @@ const Stack = createStackNavigator();
 const SearchNavigation = () => {
     const { state: { colors } } = useTheme();
 
-    const SearchScreen = () => <Search />;
-
     return (
         <Stack.Navigator
             screenOptions={{
@@ -27,7 +25,7 @@ const SearchNavigation = () => {
             }}
         >
             <Stack.Screen
-                component={ SearchScreen }
+                component={ Search }
                 name="SearchScreen"
                 options={{
                     title: 'Buscar'

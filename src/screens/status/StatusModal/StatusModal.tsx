@@ -29,7 +29,7 @@ const StatusModal = () => {
             <View
                 style={{
                     ...styles.container,
-                    backgroundColor: colors.header,
+                    backgroundColor: colors.modal,
                 }}
             >
                 <View style={{ marginBottom: 20, alignItems: 'center' }}>

@@ -22,7 +22,7 @@ const DeleteModal: FC<DeleteModalProps> = ({ text, isLoading, isOpen, onClose, o
                         <View
                             style={{
                                 ...styles.deleteModal,
-                                backgroundColor: colors.contentHeader
+                                backgroundColor: colors.modal
                             }}
                         >
                             <Text
