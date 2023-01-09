@@ -1,12 +1,13 @@
 import React, { FC, useState } from 'react';
 import { Text, View, TouchableHighlight } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 import { Menu, MenuOption, MenuOptions, MenuTrigger } from 'react-native-popup-menu';
 import Icon from 'react-native-vector-icons/Ionicons';
 import dayjs from 'dayjs';
 
 import { Fab } from '../../ui';
 
-import { useTheme } from '../../../hooks';
+import { useRevisits, useTheme } from '../../../hooks';
 
 import { RevisitCardProps } from './interfaces';
 
@@ -14,7 +15,16 @@ import styles from './styles';
 
 export const RevisitCard: FC<RevisitCardProps> = ({ revisit }) => {
     const [ isOpen, setIsOpen ] = useState<boolean>(false);
+    const { navigate } = useNavigation();
+
+    const { setSelectedRevisit } = useRevisits();
     const { state: { colors, theme } } = useTheme();
+
+    const handleEdit = () => {
+        setIsOpen(false);
+        setSelectedRevisit(revisit);
+        navigate('AddOrEditRevisitScreen' as never);
+    }
 
     return (
         <TouchableHighlight
@@ -59,7 +69,7 @@ export const RevisitCard: FC<RevisitCardProps> = ({ revisit }) => {
                     <MenuTrigger text="" />
 
                     <MenuOptions optionsContainerStyle={{ backgroundColor: colors.card, borderRadius: 5 }}>
-                        <MenuOption>
+                        <MenuOption onSelect={ handleEdit }>
                             <Text
                                 style={{
                                     color: colors.text,

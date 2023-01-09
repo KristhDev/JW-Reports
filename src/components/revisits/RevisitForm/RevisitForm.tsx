@@ -13,14 +13,14 @@ import { RevisitFormValues } from './interfaces';
 import themeStyles from '../../../theme/styles';
 
 export const RevisitForm = () => {
-    const { state: { seletedRevisit, isRevisitLoading }, saveRevisit } = useRevisits();
+    const { state: { seletedRevisit, isRevisitLoading }, saveRevisit, updateRevisit } = useRevisits();
     const { setErrorForm } = useStatus();
     const { state: { colors } } = useTheme();
 
     const handleSaveOrUpdate = (formValues: RevisitFormValues) => {
         (seletedRevisit.id === '')
             ? saveRevisit(formValues)
-            : () => { }
+            : updateRevisit(formValues);
     }
 
     const revisitFormSchema = object().shape({

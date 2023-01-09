@@ -127,6 +127,7 @@ const revisitsSlice = createSlice({
                     ? action.payload.revisit
                     : revisit
             );
+            state.revisits = state.revisits.sort((a, b) => new Date(b.next_visit).getTime() - new Date(a.next_visit).getTime());
             state.isRevisitLoading = false;
         }
     }

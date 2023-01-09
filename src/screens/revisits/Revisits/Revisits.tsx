@@ -39,20 +39,24 @@ const Revisits: FC<RevisitsProps> = ({ route }) => {
                 emptyMessage={ route.params.emptyMessage }
             />
 
-            <Fab
-                color={ colors.button }
-                icon={
-                    <Icon
-                        color={ colors.contentHeader }
-                        name="add-circle-outline"
-                        size={ 40 }
-                        style={{ marginLeft: 3 }}
+            {
+                (route.name === 'RevisitsScreen') && (
+                    <Fab
+                        color={ colors.button }
+                        icon={
+                            <Icon
+                                color={ colors.contentHeader }
+                                name="add-circle-outline"
+                                size={ 40 }
+                                style={{ marginLeft: 3 }}
+                            />
+                        }
+                        onPress={ () => navigate('AddOrEditRevisitScreen' as never) }
+                        style={ themeStyles.fabBottomRight }
+                        touchColor={ colors.buttonDark }
                     />
-                }
-                onPress={ () => navigate('AddOrEditRevisitScreen' as never) }
-                style={ themeStyles.fabBottomRight }
-                touchColor={ colors.buttonDark }
-            />
+                )
+            }
         </>
     );
 }

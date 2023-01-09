@@ -25,7 +25,7 @@ import { PreachingFormValues } from '../components/preaching/PreachingForm/inter
 
 const usePreaching = () => {
     const dispatch = useAppDispatch();
-    const { navigate } = useNavigation();
+    const { goBack } = useNavigation();
 
     const { state: { user } } = useAuth();
     const { setStatus } = useStatus();
@@ -93,7 +93,7 @@ const usePreaching = () => {
             msg: 'Haz agregado tu día de predicación correctamente.'
         });
 
-        navigate('HomeScreen' as never);
+        goBack();
     }
 
     const updatePreaching = async (preachingValues: PreachingFormValues) => {
@@ -107,6 +107,7 @@ const usePreaching = () => {
                 final_hour: dayjs(preachingValues.final_hour).format('YYYY-MM-DD HH:mm')
             })
             .eq('id', state.seletedPreaching.id)
+            .eq('user_id', user.id)
             .select();
 
         if (error) {
@@ -124,7 +125,7 @@ const usePreaching = () => {
             msg: 'Haz actualizado tu día de predicación correctamente.'
         });
 
-        navigate('HomeScreen' as never);
+        goBack();
     }
 
     const deletePreaching = async () => {
@@ -155,7 +156,7 @@ const usePreaching = () => {
         }
 
         dispatch(removePreaching({ id: state.seletedPreaching.id }));
-        navigate('HomeScreen' as never);
+        goBack();
 
         setSelectedPreaching({
             id: '',

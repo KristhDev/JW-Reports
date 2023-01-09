@@ -100,6 +100,7 @@ const preachingSlice = createSlice({
                     ? action.payload.preaching
                     : preaching
             );
+            state.preachings = state.preachings.sort((a, b) => new Date(a.day).getTime() - new Date(b.day).getTime());
             state.isPreachingLoading = false;
         }
     }

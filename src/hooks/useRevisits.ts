@@ -15,7 +15,9 @@ import {
     setIsRevisitsLoading as setIsRevisitsLoadingAction,
     setRevisits as setRevisitsAction,
     setRevisitsPagination as setRevisitsPaginationAction,
-    setRevisitsScreenHistory as setRevisitsScreenHistoryAction
+    setRevisitsScreenHistory as setRevisitsScreenHistoryAction,
+    setSelectedRevisit as setSelectedRevisitAction,
+    updateRevisit as updateRevisitAction
 } from '../features/revisits';
 
 import { useAuth, useStatus } from './';
@@ -25,7 +27,7 @@ import { RevisitFormValues } from '../components/revisits/RevisitForm/interfaces
 
 const useRevisits = () => {
     const dispatch = useAppDispatch();
-    const { navigate } = useNavigation();
+    const { goBack } = useNavigation();
 
     const { state: { user } } = useAuth();
     const { setStatus } = useStatus();
@@ -39,6 +41,7 @@ const useRevisits = () => {
     const setRevisits = (revisits: Revisit[]) => dispatch(setRevisitsAction({ revisits }));
     const setRevisitsScreenHistory = (newScreen: string) => dispatch(setRevisitsScreenHistoryAction({ newScreen }));
     const setRevisitsPagination = (pagination: { from: number, to: number }) => dispatch(setRevisitsPaginationAction({ pagination }));
+    const setSelectedRevisit = (revisit: Revisit) => dispatch(setSelectedRevisitAction({ revisit }));
 
     const loadRevisits = async (filter: 'all' | 'visited' | 'unvisited',  refresh: boolean = false) => {
         setIsRevisitsLoading(true);
@@ -107,7 +110,38 @@ const useRevisits = () => {
             msg: 'Haz agregado tu revisita correctamente.'
         });
 
-        navigate('RevistsStackNavigation' as never);
+        goBack();
+    }
+
+    const updateRevisit = async (revisitValues: RevisitFormValues) => {
+        dispatch(setIsRevisitLoading({ isLoading: true }));
+
+        const { data, error } = await supabase.from('revisits')
+            .update({
+                ...revisitValues,
+                next_visit: dayjs(revisitValues.next_visit).format('YYYY-MM-DD HH:mm'),
+                updated_at:dayjs().format('YYYY-MM-DD HH:mm')
+            })
+            .eq('id', state.seletedRevisit.id)
+            .eq('user_id', user.id)
+            .select();
+
+        if (error) {
+            console.log(error);
+            dispatch(setIsRevisitLoading({ isLoading: false }));
+            setStatus({ code: 400, msg: error.message });
+
+            return;
+        }
+
+        dispatch(updateRevisitAction({ revisit: data[0] }));
+
+        setStatus({
+            code: 200,
+            msg: 'Haz actualizado tu revisita correctamente.'
+        });
+
+        goBack();
     }
 
     return {
@@ -119,10 +153,12 @@ const useRevisits = () => {
         setRefreshRevisits,
         setRevisitsPagination,
         setRevisitsScreenHistory,
+        setSelectedRevisit,
 
         // Functions
         loadRevisits,
-        saveRevisit
+        saveRevisit,
+        updateRevisit
     }
 }
 
