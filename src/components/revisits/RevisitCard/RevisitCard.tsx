@@ -13,7 +13,7 @@ import { RevisitCardProps } from './interfaces';
 
 import styles from './styles';
 
-export const RevisitCard: FC<RevisitCardProps> = ({ revisit }) => {
+export const RevisitCard: FC<RevisitCardProps> = ({ onDelete, revisit }) => {
     const [ isOpen, setIsOpen ] = useState<boolean>(false);
     const { navigate } = useNavigation();
 
@@ -24,6 +24,11 @@ export const RevisitCard: FC<RevisitCardProps> = ({ revisit }) => {
         setIsOpen(false);
         setSelectedRevisit(revisit);
         navigate('AddOrEditRevisitScreen' as never);
+    }
+
+    const handleDelete = () => {
+        setIsOpen(false);
+        onDelete();
     }
 
     return (
@@ -91,7 +96,7 @@ export const RevisitCard: FC<RevisitCardProps> = ({ revisit }) => {
                             </Text>
                         </MenuOption>
 
-                        <MenuOption>
+                        <MenuOption onSelect={ handleDelete }>
                             <Text
                                 style={{
                                     color: colors.text,

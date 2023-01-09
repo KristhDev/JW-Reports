@@ -17,8 +17,25 @@ type RevisitsProps = MaterialTopTabScreenProps<RevistsTopTabsParamsList>;
 const Revisits: FC<RevisitsProps> = ({ route }) => {
     const { navigate, addListener, removeListener, getState } = useNavigation();
 
-    const { setRevisitsScreenHistory } = useRevisits();
+    const { setSelectedRevisit, setRevisitsScreenHistory } = useRevisits();
     const { state: { colors } } = useTheme();
+
+    const handleNavigate = () => {
+        setSelectedRevisit({
+            id: '',
+            user_id: '',
+            person_name: '',
+            about: '',
+            address: '',
+            photo: '',
+            next_visit: new Date().toString(),
+            done: false,
+            created_at: new Date().toString(),
+            updated_at: new Date().toString()
+        });
+
+        navigate('AddOrEditRevisitScreen' as never);
+    }
 
     useEffect(() => {
         addListener('focus', () => {
@@ -51,7 +68,7 @@ const Revisits: FC<RevisitsProps> = ({ route }) => {
                                 style={{ marginLeft: 3 }}
                             />
                         }
-                        onPress={ () => navigate('AddOrEditRevisitScreen' as never) }
+                        onPress={ handleNavigate }
                         style={ themeStyles.fabBottomRight }
                         touchColor={ colors.buttonDark }
                     />

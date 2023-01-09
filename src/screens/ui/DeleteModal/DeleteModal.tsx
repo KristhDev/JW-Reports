@@ -15,7 +15,7 @@ const DeleteModal: FC<DeleteModalProps> = ({ text, isLoading, isOpen, onClose, o
     const { state: { colors }, BUTTON_TRANSLUCENT_COLOR } = useTheme();
 
     return (
-        <Modal isOpen={ isOpen || isLoading }>
+        <Modal isOpen={ isOpen }>
             {
                 (!isLoading)
                     ? (

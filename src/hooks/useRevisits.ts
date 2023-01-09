@@ -11,13 +11,15 @@ import {
     removeRevisits as removeRevisitsAction,
     setHasMoreRevisits,
     setRefreshRevisits as setRefreshRevisitsAction,
+    setIsRevisitDeleting,
     setIsRevisitLoading,
     setIsRevisitsLoading as setIsRevisitsLoadingAction,
     setRevisits as setRevisitsAction,
     setRevisitsPagination as setRevisitsPaginationAction,
     setRevisitsScreenHistory as setRevisitsScreenHistoryAction,
     setSelectedRevisit as setSelectedRevisitAction,
-    updateRevisit as updateRevisitAction
+    updateRevisit as updateRevisitAction,
+    removeRevisit
 } from '../features/revisits';
 
 import { useAuth, useStatus } from './';
@@ -144,6 +146,57 @@ const useRevisits = () => {
         goBack();
     }
 
+    const deleteRevisit = async (onFinish?: () => void) => {
+        dispatch(setIsRevisitDeleting({ isDeleting: true }));
+
+        if (state.seletedRevisit.id === '') {
+            onFinish && onFinish();
+            dispatch(setIsRevisitDeleting({ isDeleting: false }));
+
+            setStatus({
+                code: 400,
+                msg: 'No hay una revisita seleccionada para eliminar.'
+            });
+
+            return;
+        }
+
+        const { error } = await supabase.from('revisits')
+            .delete()
+            .eq('id', state.seletedRevisit.id)
+            .eq('user_id', user.id);
+
+        if (error) {
+            console.log(error);
+            onFinish && onFinish();
+            dispatch(setIsRevisitDeleting({ isDeleting: false }));
+            setStatus({ code: 400, msg: error.message });
+
+            return;
+        }
+
+        dispatch(removeRevisit({ id: state.seletedRevisit.id }));
+        onFinish && onFinish();
+
+        setSelectedRevisit({
+            id: '',
+            user_id: '',
+            person_name: '',
+            about: '',
+            address: '',
+            photo: '',
+            next_visit: new Date().toString(),
+            done: false,
+            created_at: new Date().toString(),
+            updated_at: new Date().toString()
+        });
+
+        setStatus({
+            code: 200,
+            msg: 'Haz eliminado tu revisita correctamente.'
+        });
+    }
+
     return {
         state,
 
@@ -156,9 +209,10 @@ const useRevisits = () => {
         setSelectedRevisit,
 
         // Functions
+        deleteRevisit,
         loadRevisits,
         saveRevisit,
-        updateRevisit
+        updateRevisit,
     }
 }
 

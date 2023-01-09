@@ -17,8 +17,7 @@ export const PreachingHeader: FC<PreachingHeaderProps> = ({ deleteButton = false
     const { state: { colors, theme } } = useTheme();
 
     const handleConfirm = () => {
-        deletePreaching();
-        setShowModal(false);
+        deletePreaching(() => setShowModal(false));
     }
 
     return (

@@ -128,10 +128,11 @@ const usePreaching = () => {
         goBack();
     }
 
-    const deletePreaching = async () => {
+    const deletePreaching = async (onFinish?: () => void) => {
         dispatch(setIsPreachingDeleting({ isDeleting: true }));
 
         if (state.seletedPreaching.id === '') {
+            onFinish && onFinish();
             dispatch(setIsPreachingDeleting({ isDeleting: false }));
 
             setStatus({
@@ -149,6 +150,7 @@ const usePreaching = () => {
 
         if (error) {
             console.log(error);
+            onFinish && onFinish();
             dispatch(setIsPreachingDeleting({ isDeleting: false }));
             setStatus({ code: 400, msg: error.message });
 
@@ -156,6 +158,7 @@ const usePreaching = () => {
         }
 
         dispatch(removePreaching({ id: state.seletedPreaching.id }));
+        onFinish && onFinish();
         goBack();
 
         setSelectedPreaching({
@@ -172,7 +175,7 @@ const usePreaching = () => {
         });
 
         setStatus({
-            code: 201,
+            code: 200,
             msg: 'Haz eliminado tu día de predicación correctamente.'
         });
     }
