@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { CardStyleInterpolators, createStackNavigator } from '@react-navigation/stack';
 
 import { AddOrEditPreaching, Home } from '../screens/preaching';
@@ -10,9 +10,17 @@ import { usePreaching, useTheme } from '../hooks';
 
 const Stack = createStackNavigator();
 
-const PreachingNavigation = () => {
-    const { state: { seletedPreaching } } = usePreaching();
+const PreachingStackNavigation = () => {
+    const { state: { seletedPreaching, selectedDate }, setSelectedDate, loadPreachings } = usePreaching();
     const { state: { colors } } = useTheme();
+
+    useEffect(() => {
+        setSelectedDate(new Date());
+    }, []);
+
+    useEffect(() => {
+        loadPreachings(selectedDate);
+    } ,[ selectedDate ]);
 
     return (
         <Stack.Navigator
@@ -54,4 +62,4 @@ const PreachingNavigation = () => {
     );
 }
 
-export default PreachingNavigation;
+export default PreachingStackNavigation;

@@ -1,16 +1,13 @@
 import React from 'react';
 import { CardStyleInterpolators, createStackNavigator } from '@react-navigation/stack';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
-import { Login, Register } from '../screens/auth';
+import { Courses } from '../screens/courses';
 
 import { useTheme } from '../hooks';
 
 const Stack = createStackNavigator();
 
-const AuthNavigation = () => {
-    const { top } = useSafeAreaInsets();
-
+const CoursesStackNavigation = () => {
     const { state: { colors } } = useTheme();
 
     return (
@@ -19,22 +16,21 @@ const AuthNavigation = () => {
                 cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
                 cardStyle: {
                     backgroundColor: colors.contentHeader,
-                    paddingTop: top
                 },
-                headerShown: false
+                headerStyle: {
+                    backgroundColor: colors.header
+                },
+                headerTintColor: colors.headerText,
+                headerShadowVisible: false
             }}
         >
             <Stack.Screen
-                name="LoginScreen"
-                component={ Login }
-            />
-
-            <Stack.Screen
-                name="RegisterScreen"
-                component={ Register }
+                component={ Courses }
+                name="CoursesScreen"
+                options={{ title: 'Cursos' }}
             />
         </Stack.Navigator>
     );
 }
 
-export default AuthNavigation;
+export default CoursesStackNavigation;

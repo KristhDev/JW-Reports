@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { Appearance, StatusBar } from 'react-native';
 import { createStackNavigator } from '@react-navigation/stack';
 
-import { AuthNavigation, MainNavigation } from './';
+import { AuthStackNavigation, MainTabsBottomNavigation } from './';
 
 import { StatusModal } from '../screens/status';
 
@@ -52,13 +52,13 @@ const Navigation = () => {
                 {
                     (isAuthenticated) ? (
                         <Stack.Screen
-                            component={ MainNavigation }
-                            name="MainNavigation"
+                            component={ MainTabsBottomNavigation }
+                            name="MainTabsBottomNavigation"
                         />
                     ) : (
                         <Stack.Screen
-                            component={ AuthNavigation }
-                            name="AuthNavigation"
+                            component={ AuthStackNavigation }
+                            name="AuthStackNavigation"
                         />
                     )
                 }

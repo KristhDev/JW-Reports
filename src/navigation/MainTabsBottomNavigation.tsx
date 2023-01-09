@@ -1,16 +1,16 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { StyleSheet } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Icon from 'react-native-vector-icons/Ionicons';
 
-import { CoursesNavigation, PreachingNavigation, RevisitsNavigation, SearchNavigation } from './'
+import { CoursesStackNavigation, PreachingStackNavigation, SearchStackNavigation } from '.'
+import { RevistsStackNavigation } from './revisits';
 
-import { usePreaching, useTheme } from '../hooks';
+import { useTheme } from '../hooks';
 
 const Tabs = createBottomTabNavigator();
 
-const MainNavigation = () => {
-    const { loadPreachings, setSelectedDate, state: { selectedDate } } = usePreaching();
+const MainTabsBottomNavigation = () => {
     const { state: { colors } } = useTheme();
 
     const tabsStyles = StyleSheet.create({
@@ -28,14 +28,6 @@ const MainNavigation = () => {
         }
     });
 
-    useEffect(() => {
-        setSelectedDate(new Date());
-    }, []);
-
-    useEffect(() => {
-        loadPreachings(selectedDate);
-    } ,[ selectedDate ]);
-
     return (
         <Tabs.Navigator
             sceneContainerStyle={{
@@ -52,8 +44,8 @@ const MainNavigation = () => {
             }}
         >
             <Tabs.Screen
-                component={ PreachingNavigation }
-                name="PreachingNavigation"
+                component={ PreachingStackNavigation }
+                name="PreachingStackNavigation"
                 options={{
                     tabBarIcon: ({ color, size }) => (
                         <Icon
@@ -67,8 +59,8 @@ const MainNavigation = () => {
             />
 
             <Tabs.Screen
-                component={ SearchNavigation }
-                name="SearchNavigation"
+                component={ SearchStackNavigation }
+                name="SearchStackNavigation"
                 options={{
                     tabBarIcon: ({ color, size }) => (
                         <Icon
@@ -82,8 +74,8 @@ const MainNavigation = () => {
             />
 
             <Tabs.Screen
-                component={ RevisitsNavigation }
-                name="RevisitsNavigation"
+                component={ RevistsStackNavigation }
+                name="RevistsStackNavigation"
                 options={{
                     tabBarIcon: ({ color, size }) => (
                         <Icon
@@ -97,8 +89,8 @@ const MainNavigation = () => {
             />
 
             <Tabs.Screen
-                component={ CoursesNavigation }
-                name="CoursesNavigation"
+                component={ CoursesStackNavigation }
+                name="CoursesStackNavigation"
                 options={{
                     tabBarIcon: ({ color, size }) => (
                         <Icon
@@ -114,4 +106,4 @@ const MainNavigation = () => {
     );
 }
 
-export default MainNavigation;
+export default MainTabsBottomNavigation;

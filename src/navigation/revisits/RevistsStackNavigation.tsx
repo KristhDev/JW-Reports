@@ -1,21 +1,19 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { CardStyleInterpolators, createStackNavigator } from '@react-navigation/stack';
 
-import { AddOrEditRevisit, Revisits } from '../screens/revisits';
+import RevisitsTopTabsNavigation from './RevisitsTopTabsNavigation';
 
-import { BackButton } from '../components/ui';
+import { AddOrEditRevisit } from '../../screens/revisits';
 
-import { useRevisits, useTheme } from '../hooks';
+import { BackButton } from '../../components/ui';
+
+import { useRevisits, useTheme } from '../../hooks';
 
 const Stack = createStackNavigator();
 
-const RevisitsNavigation = () => {
-    const { state: { seletedRevisit }, loadRevisits } = useRevisits();
+const RevisitsStackNavigation = () => {
+    const { state: { seletedRevisit } } = useRevisits();
     const { state: { colors } } = useTheme();
-
-    useEffect(() => {
-        loadRevisits();
-    }, []);
 
     return (
         <Stack.Navigator
@@ -32,8 +30,8 @@ const RevisitsNavigation = () => {
             }}
         >
             <Stack.Screen
-                component={ Revisits }
-                name="RevisitsScreen"
+                component={ RevisitsTopTabsNavigation }
+                name="RevisitsTopTabsNavigation"
                 options={{ title: 'Revisitas' }}
             />
 
@@ -49,4 +47,4 @@ const RevisitsNavigation = () => {
     );
 }
 
-export default RevisitsNavigation;
+export default RevisitsStackNavigation;

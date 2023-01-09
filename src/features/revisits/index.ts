@@ -8,8 +8,10 @@ export {
     setIsRevisitDeleting,
     setIsRevisitLoading,
     setIsRevisitsLoading,
+    setRefreshRevisits,
     setRevisits,
     setRevisitsPagination,
+    setRevisitsScreenHistory,
     setSelectedRevisit,
     updateRevisit
 } from './slice';

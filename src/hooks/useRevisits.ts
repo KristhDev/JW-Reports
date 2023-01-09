@@ -10,10 +10,12 @@ import {
     clearRevisits as clearRevisitsAction,
     removeRevisits as removeRevisitsAction,
     setHasMoreRevisits,
+    setRefreshRevisits as setRefreshRevisitsAction,
     setIsRevisitLoading,
     setIsRevisitsLoading as setIsRevisitsLoadingAction,
     setRevisits as setRevisitsAction,
-    setRevisitsPagination as setRevisitsPaginationAction
+    setRevisitsPagination as setRevisitsPaginationAction,
+    setRevisitsScreenHistory as setRevisitsScreenHistoryAction
 } from '../features/revisits';
 
 import { useAuth, useStatus } from './';
@@ -33,27 +35,37 @@ const useRevisits = () => {
     const clearRevisits = () => dispatch(clearRevisitsAction());
     const removeRevisits = () => dispatch(removeRevisitsAction());
     const setIsRevisitsLoading = (isLoading: boolean) => dispatch(setIsRevisitsLoadingAction({ isLoading }));
+    const setRefreshRevisits = (refresh: boolean) => dispatch(setRefreshRevisitsAction({ refresh }));
     const setRevisits = (revisits: Revisit[]) => dispatch(setRevisitsAction({ revisits }));
+    const setRevisitsScreenHistory = (newScreen: string) => dispatch(setRevisitsScreenHistoryAction({ newScreen }));
     const setRevisitsPagination = (pagination: { from: number, to: number }) => dispatch(setRevisitsPaginationAction({ pagination }));
 
-    const loadRevisits = async (refresh: boolean = false) => {
+    const loadRevisits = async (filter: 'all' | 'visited' | 'unvisited',  refresh: boolean = false) => {
         setIsRevisitsLoading(true);
 
-        const { data, error } = await supabase.from('revisits')
-            .select()
-            .eq('user_id', user.id)
-            .order('next_visit', { ascending: false })
+        const revisitsPromise = supabase.from('revisits').select().eq('user_id', user.id);
+
+        if (filter === 'visited') {
+            revisitsPromise.eq('done', true);
+        }
+        else if (filter === 'unvisited') {
+            revisitsPromise.eq('done', false);
+        }
+
+        revisitsPromise.order('next_visit', { ascending: false })
             .order('created_at', { ascending: false })
             .range(
                 (refresh) ? 0 : state.revisitsPagination.from,
                 (refresh) ? 9 : state.revisitsPagination.to
             )
 
+        const { data, error, status } = await revisitsPromise;
+
         if (error) {
             console.log(error);
 
             setIsRevisitsLoading(false);
-            setStatus({ code: 400, msg: error.message });
+            setStatus({ code: status, msg: error.message });
 
             return;
         }
@@ -95,7 +107,7 @@ const useRevisits = () => {
             msg: 'Haz agregado tu revisita correctamente.'
         });
 
-        navigate('RevisitsScreen' as never);
+        navigate('RevistsStackNavigation' as never);
     }
 
     return {
@@ -104,7 +116,9 @@ const useRevisits = () => {
         // Actions
         clearRevisits,
         removeRevisits,
+        setRefreshRevisits,
         setRevisitsPagination,
+        setRevisitsScreenHistory,
 
         // Functions
         loadRevisits,

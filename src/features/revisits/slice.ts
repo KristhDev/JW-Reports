@@ -8,9 +8,11 @@ import {
     SetIsRevisitLoadingPayload,
     SetIsRevisitsLoadingPayload,
     SetRevisitsPayload,
+    SetRevisitsHistoryPayload,
     SetRevisitsPaginationPayload,
     SetSelectedRevisitPayload,
-    UpdateRevisitPayload
+    UpdateRevisitPayload,
+    SetRefreshRevisitsPayload
 } from '../../interfaces/revisits';
 
 const INITIAL_STATE: RevisitsState = {
@@ -18,7 +20,9 @@ const INITIAL_STATE: RevisitsState = {
     isRevisitDeleting: false,
     isRevisitLoading: false,
     isRevisitsLoading: false,
+    refreshRevisits: false,
     revisits: [],
+    revisitsScreenHistory: [],
     revisitsPagination: {
         from: 0,
         to: 9
@@ -48,9 +52,11 @@ const revisitsSlice = createSlice({
 
         clearRevisits: (state) => {
             state.hasMoreRevisits = true;
+            state.refreshRevisits = false;
             state.isRevisitLoading = false;
             state.isRevisitsLoading = false;
             state.revisits = [];
+            state.revisitsScreenHistory = [];
             state.revisitsPagination = {
                 from: 0,
                 to: 9
@@ -93,6 +99,10 @@ const revisitsSlice = createSlice({
             state.isRevisitsLoading = action.payload.isLoading;
         },
 
+        setRefreshRevisits: (state, action: PayloadAction<SetRefreshRevisitsPayload>) => {
+            state.refreshRevisits = action.payload.refresh;
+        },
+
         setRevisits: (state, action: PayloadAction<SetRevisitsPayload>) => {
             state.revisits = [ ...state.revisits, ...action.payload.revisits ];
             state.isRevisitsLoading = false;
@@ -100,6 +110,10 @@ const revisitsSlice = createSlice({
 
         setRevisitsPagination: (state, action: PayloadAction<SetRevisitsPaginationPayload>) => {
             state.revisitsPagination = action.payload.pagination;
+        },
+
+        setRevisitsScreenHistory: (state, action: PayloadAction<SetRevisitsHistoryPayload>) => {
+            state.revisitsScreenHistory = [ ...state.revisitsScreenHistory, action.payload.newScreen ]
         },
 
         setSelectedRevisit: (state, action: PayloadAction<SetSelectedRevisitPayload>) => {
@@ -127,7 +141,9 @@ export const {
     setIsRevisitDeleting,
     setIsRevisitLoading,
     setIsRevisitsLoading,
+    setRefreshRevisits,
     setRevisits,
+    setRevisitsScreenHistory,
     setRevisitsPagination,
     setSelectedRevisit,
     updateRevisit

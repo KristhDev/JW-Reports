@@ -7,7 +7,7 @@ import { useTheme } from '../hooks';
 
 const Stack = createStackNavigator();
 
-const SearchNavigation = () => {
+const SearchStackNavigation = () => {
     const { state: { colors } } = useTheme();
 
     return (
@@ -35,4 +35,4 @@ const SearchNavigation = () => {
     );
 }
 
-export default SearchNavigation;
+export default SearchStackNavigation;
