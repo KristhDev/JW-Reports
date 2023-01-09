@@ -20,24 +20,8 @@ export interface Preaching {
     updated_at: string;
 }
 
-export type AddPreachingPayload = {
+export type PreachingPayload = {
     preaching: Preaching
-}
-
-export type RemovePreachingPayload = {
-    id: string;
-}
-
-export type SetIsPreachingDeletingPayload = {
-    isDeleting: boolean;
-}
-
-export type SetIsPreachingsLoadingPayload = {
-    isLoading: boolean;
-}
-
-export type SetIsPreachingLoadingPayload = {
-    isLoading: boolean;
 }
 
 export type SetSelectedDatePayload = {
@@ -46,12 +30,4 @@ export type SetSelectedDatePayload = {
 
 export type SetPreachingsPayload = {
     preachings: Preaching[];
-}
-
-export type SetSelectedPreachingPayload = {
-    preaching: Preaching;
-}
-
-export type UpdatePreachingPayload = {
-    preaching: Preaching
 }

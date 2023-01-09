@@ -46,20 +46,12 @@ export interface Revisit {
 
 export type RevisitFilter = 'all' | 'visited' | 'unvisited';
 
-export type AddRevisitPayload = {
+export type RevisitPayload = {
     revisit: Revisit;
 }
 
 export type SetHasMoreRevisitsPayload = {
     hasMore: boolean;
-}
-
-export type SetIsRevisitsLoading = {
-    isLoading: boolean;
-}
-
-export type SetIsRevisitLoading = {
-    isLoading: boolean;
 }
 
 export type SetRefreshRevisitsPayload = {
@@ -79,28 +71,4 @@ export type SetRevisitsPaginationPayload = {
         to: number;
         from: number;
     }
-}
-
-export type SetSelectedRevisitPayload = {
-    revisit: Revisit;
-}
-
-export type SetIsRevisitDeletingPayload = {
-    isDeleting: boolean;
-}
-
-export type SetIsRevisitLoadingPayload = {
-    isLoading: boolean;
-}
-
-export type SetIsRevisitsLoadingPayload = {
-    isLoading: boolean;
-}
-
-export type RemoveRevisitPayload = {
-    id: string;
-}
-
-export type UpdateRevisitPayload = {
-    revisit: Revisit;
 }

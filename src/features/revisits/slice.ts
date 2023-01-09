@@ -1,19 +1,14 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import {
-    AddRevisitPayload,
-    RemoveRevisitPayload,
+    RevisitPayload,
     RevisitsState,
     SetHasMoreRevisitsPayload,
-    SetIsRevisitDeletingPayload,
-    SetIsRevisitLoadingPayload,
-    SetIsRevisitsLoadingPayload,
     SetRevisitsPayload,
     SetRevisitsHistoryPayload,
     SetRevisitsPaginationPayload,
-    SetSelectedRevisitPayload,
-    UpdateRevisitPayload,
     SetRefreshRevisitsPayload
 } from '../../interfaces/revisits';
+import { RemoveResourcePayload, SetIsDeletingPayload, SetIsLoadingPayload } from '../../interfaces/features';
 
 const INITIAL_STATE: RevisitsState = {
     hasMoreRevisits: true,
@@ -44,7 +39,7 @@ const revisitsSlice = createSlice({
     name: 'revisits',
     initialState: INITIAL_STATE,
     reducers: {
-        addRevisit: (state, action: PayloadAction<AddRevisitPayload>) => {
+        addRevisit: (state, action: PayloadAction<RevisitPayload>) => {
             state.revisits = [ action.payload.revisit, ...state.revisits ];
             state.revisits = state.revisits.sort((a, b) => new Date(b.next_visit).getTime() - new Date(a.next_visit).getTime());
             state.isRevisitLoading = false;
@@ -74,7 +69,7 @@ const revisitsSlice = createSlice({
             }
         },
 
-        removeRevisit: (state, action: PayloadAction<RemoveRevisitPayload>) => {
+        removeRevisit: (state, action: PayloadAction<RemoveResourcePayload>) => {
             state.revisits = state.revisits.filter(r => r.id !== action.payload.id);
             state.isRevisitDeleting = false;
         },
@@ -87,15 +82,15 @@ const revisitsSlice = createSlice({
             state.hasMoreRevisits = action.payload.hasMore;
         },
 
-        setIsRevisitDeleting: (state, action: PayloadAction<SetIsRevisitDeletingPayload>) => {
+        setIsRevisitDeleting: (state, action: PayloadAction<SetIsDeletingPayload>) => {
             state.isRevisitDeleting = action.payload.isDeleting;
         },
 
-        setIsRevisitLoading: (state, action: PayloadAction<SetIsRevisitLoadingPayload>) => {
+        setIsRevisitLoading: (state, action: PayloadAction<SetIsLoadingPayload>) => {
             state.isRevisitLoading = action.payload.isLoading;
         },
 
-        setIsRevisitsLoading: (state, action: PayloadAction<SetIsRevisitsLoadingPayload>) => {
+        setIsRevisitsLoading: (state, action: PayloadAction<SetIsLoadingPayload>) => {
             state.isRevisitsLoading = action.payload.isLoading;
         },
 
@@ -116,12 +111,12 @@ const revisitsSlice = createSlice({
             state.revisitsScreenHistory = [ ...state.revisitsScreenHistory, action.payload.newScreen ]
         },
 
-        setSelectedRevisit: (state, action: PayloadAction<SetSelectedRevisitPayload>) => {
+        setSelectedRevisit: (state, action: PayloadAction<RevisitPayload>) => {
             state.seletedRevisit = action.payload.revisit;
             state.isRevisitLoading = false;
         },
 
-        updateRevisit: (state, action: PayloadAction<UpdateRevisitPayload>) => {
+        updateRevisit: (state, action: PayloadAction<RevisitPayload>) => {
             state.revisits = state.revisits.map(revisit =>
                 (revisit.id === action.payload.revisit.id)
                     ? action.payload.revisit

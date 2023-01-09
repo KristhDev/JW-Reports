@@ -1,17 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-import {
-    AddPreachingPayload,
-    PreachingState,
-    RemovePreachingPayload,
-    SetIsPreachingDeletingPayload,
-    SetIsPreachingLoadingPayload,
-    SetIsPreachingsLoadingPayload,
-    SetPreachingsPayload,
-    SetSelectedDatePayload,
-    SetSelectedPreachingPayload,
-    UpdatePreachingPayload
-} from '../../interfaces/preaching';
+import { PreachingPayload, PreachingState, SetPreachingsPayload, SetSelectedDatePayload } from '../../interfaces/preaching';
+import { RemoveResourcePayload, SetIsDeletingPayload, SetIsLoadingPayload } from '../../interfaces/features';
 
 const INITIAL_STATE: PreachingState = {
     isPreachingDeleting: false,
@@ -37,7 +27,7 @@ const preachingSlice = createSlice({
     name: 'preaching',
     initialState: INITIAL_STATE,
     reducers: {
-        addPreaching: (state, action: PayloadAction<AddPreachingPayload>) => {
+        addPreaching: (state, action: PayloadAction<PreachingPayload>) => {
             state.preachings = [ ...state.preachings, action.payload.preaching ];
             state.preachings = state.preachings.sort((a, b) => new Date(a.day).getTime() - new Date(b.day).getTime());
             state.isPreachingLoading = false;
@@ -63,20 +53,20 @@ const preachingSlice = createSlice({
             }
         },
 
-        removePreaching: (state, action: PayloadAction<RemovePreachingPayload>) => {
+        removePreaching: (state, action: PayloadAction<RemoveResourcePayload>) => {
             state.preachings = state.preachings.filter(p => p.id !== action.payload.id);
             state.isPreachingDeleting = false;
         },
 
-        setIsPreachingDeleting: (state, action: PayloadAction<SetIsPreachingDeletingPayload>) => {
+        setIsPreachingDeleting: (state, action: PayloadAction<SetIsDeletingPayload>) => {
             state.isPreachingDeleting = action.payload.isDeleting;
         },
 
-        setIsPreachingsLoading: (state, action: PayloadAction<SetIsPreachingsLoadingPayload>) => {
+        setIsPreachingsLoading: (state, action: PayloadAction<SetIsLoadingPayload>) => {
             state.isPreachingsLoading = action.payload.isLoading;
         },
 
-        setIsPreachingLoading: (state, action: PayloadAction<SetIsPreachingLoadingPayload>) => {
+        setIsPreachingLoading: (state, action: PayloadAction<SetIsLoadingPayload>) => {
             state.isPreachingLoading = action.payload.isLoading;
         },
 
@@ -89,12 +79,12 @@ const preachingSlice = createSlice({
             state.selectedDate = action.payload.selectedDate;
         },
 
-        setSelectedPreaching: (state, action: PayloadAction<SetSelectedPreachingPayload>) => {
+        setSelectedPreaching: (state, action: PayloadAction<PreachingPayload>) => {
             state.seletedPreaching = action.payload.preaching;
             state.isPreachingLoading = false;
         },
 
-        updatePreaching: (state, action: PayloadAction<UpdatePreachingPayload>) => {
+        updatePreaching: (state, action: PayloadAction<PreachingPayload>) => {
             state.preachings = state.preachings.map(preaching =>
                 (preaching.id === action.payload.preaching.id)
                     ? action.payload.preaching

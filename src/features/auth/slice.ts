@@ -1,6 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-import { AuthState, SetUserPayload, SetIsAuthLoading, User } from '../../interfaces/auth';
+import { AuthState, SetUserPayload, User } from '../../interfaces/auth';
+import { SetIsLoadingPayload } from '../../interfaces/features';
 
 const INITIAL_STATE: AuthState = {
     user: {
@@ -34,7 +35,7 @@ const authSlice = createSlice({
             state.isAuthLoading = false;
         },
 
-        setIsAuthLoading: (state, action: PayloadAction<SetIsAuthLoading>) => {
+        setIsAuthLoading: (state, action: PayloadAction<SetIsLoadingPayload>) => {
             state.isAuthLoading = action.payload.isLoading;
         }
     }
