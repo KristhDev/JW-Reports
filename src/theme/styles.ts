@@ -53,6 +53,26 @@ const styles = StyleSheet.create({
         marginRight: 10,
     },
 
+    modalActions: {
+        flexDirection: 'row',
+        justifyContent: 'flex-end',
+        marginTop: 20
+    },
+
+    modalContainer: {
+        borderRadius: 10,
+        justifyContent: 'space-between',
+        padding: 15,
+        width: '87%'
+    },
+
+    modalText: {
+        fontSize: 19,
+        marginBottom: 10,
+        marginTop: 5,
+        width: '90%'
+    },
+
     titleContainer: {
         paddingBottom: 0,
         paddingTop: 30

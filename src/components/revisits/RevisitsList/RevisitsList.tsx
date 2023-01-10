@@ -2,6 +2,7 @@ import React, { FC, useEffect, useState } from 'react';
 import { FlatList } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
+import { RevisitModal } from '../../../screens/revisits';
 import { DeleteModal } from '../../../screens/ui';
 
 import { ListEmptyComponent } from './ListEmptyComponent';
@@ -18,7 +19,9 @@ import themeStyles from '../../../theme/styles';
 
 export const RevisitsList: FC<RevisitsListProps> = ({ filter, title, emptyMessage }) => {
     const [ isRefreshing, setIsRefreshing ] = useState<boolean>(false);
-    const [ showModal, setShowModal ] = useState<boolean>(false);
+    const [ showDeleteModal, setShowDeleteModal ] = useState<boolean>(false);
+    const [ showRevisitModal, setShowRevisitModal ] = useState<boolean>(false);
+
     const { getState, isFocused } = useNavigation();
     const { index, routeNames } = getState();
 
@@ -51,13 +54,28 @@ export const RevisitsList: FC<RevisitsListProps> = ({ filter, title, emptyMessag
         loadRevisits(filter);
     }
 
-    const handleShowModal = (revisit: Revisit) => {
+    const handleShowModal = (revisit: Revisit, setShowModal: (value: boolean) => void) => {
         setSelectedRevisit(revisit);
         setShowModal(true);
     }
 
-    const handleConfirm = () => {
-        deleteRevisit(() => setShowModal(false));
+    const handleHideModal = (setShowModal: (value: boolean) => void) => {
+        setShowModal(false);
+        setSelectedRevisit({
+            id: '',
+            user_id: '',
+            person_name: '',
+            about: '',
+            address: '',
+            next_visit: new Date().toString(),
+            done: false,
+            created_at: new Date().toString(),
+            updated_at: new Date().toString()
+        });
+    }
+
+    const handleDeleteConfirm = () => {
+        deleteRevisit(() => setShowDeleteModal(false));
     }
 
     useEffect(() => {
@@ -100,16 +118,22 @@ export const RevisitsList: FC<RevisitsListProps> = ({ filter, title, emptyMessag
                 renderItem={ ({ item }) => (
                     <RevisitCard
                         revisit={ item }
-                        onDelete={ () => handleShowModal(item) }
+                        onDelete={ () => handleShowModal(item, setShowDeleteModal) }
+                        onRevisit={ () => handleShowModal(item, setShowRevisitModal) }
                     />
                 ) }
             />
 
+            <RevisitModal
+                isOpen={ showRevisitModal }
+                onClose={ () => handleHideModal(setShowRevisitModal) }
+            />
+
             <DeleteModal
                 isLoading={ isRevisitDeleting }
-                isOpen={ showModal }
-                onClose={ () => setShowModal(false) }
-                onConfirm={ handleConfirm }
+                isOpen={ showDeleteModal }
+                onClose={ () => handleHideModal(setShowDeleteModal) }
+                onConfirm={ handleDeleteConfirm }
                 text="¿Estás seguro de eliminar está revisita?"
             />
         </>

@@ -86,7 +86,7 @@ const useRevisits = () => {
         setRevisits(data);
     }
 
-    const saveRevisit = async (revisitValues: RevisitFormValues) => {
+    const saveRevisit = async (revisitValues: RevisitFormValues, back: boolean = true, onFinish?: () => void) => {
         dispatch(setIsRevisitLoading({ isLoading: true }));
 
         const { data, error } = await supabase.from('revisits')
@@ -100,19 +100,22 @@ const useRevisits = () => {
         if (error) {
             console.log(error);
             dispatch(setIsRevisitLoading({ isLoading: false }));
+            onFinish && onFinish();
             setStatus({ code: 400, msg: error.message });
 
             return;
         }
 
         dispatch(addRevisit({ revisit: data[0] }));
+        onFinish && onFinish();
 
-        setStatus({
-            code: 201,
-            msg: 'Haz agregado tu revisita correctamente.'
-        });
+        const successMsg = (back)
+            ? 'Haz agregado tu revisita correctamente.'
+            : `Haz agregado correctamente a ${ data[0].person_name } para volverla a visitar.`
 
-        goBack();
+        setStatus({ code: 201, msg: successMsg });
+
+        back && goBack();
     }
 
     const updateRevisit = async (revisitValues: RevisitFormValues) => {
@@ -197,6 +200,45 @@ const useRevisits = () => {
         });
     }
 
+    const completeRevisit = async (onFailFinish?: () => void) => {
+        dispatch(setIsRevisitLoading({ isLoading: true }));
+
+        if (state.seletedRevisit.id === '') {
+            onFailFinish && onFailFinish();
+            dispatch(setIsRevisitDeleting({ isDeleting: false }));
+
+            setStatus({
+                code: 400,
+                msg: 'No hay una revisita seleccionada para completar.'
+            });
+
+            return '';
+        }
+
+        const { data, error } = await supabase.from('revisits')
+            .update({
+                done: true,
+                updated_at:dayjs().format('YYYY-MM-DD HH:mm')
+            })
+            .eq('id', state.seletedRevisit.id)
+            .eq('user_id', user.id)
+            .select();
+
+        if (error) {
+            console.log(error);
+            onFailFinish && onFailFinish();
+            dispatch(setIsRevisitDeleting({ isDeleting: false }));
+            setStatus({ code: 400, msg: error.message });
+
+            return '';
+        }
+
+        dispatch(updateRevisitAction({ revisit: data[0] }));
+        setSelectedRevisit(data[0]);
+
+        return 'Haz marcado como completa tu revista correctamente.';
+    }
+
     return {
         state,
 
@@ -213,6 +255,7 @@ const useRevisits = () => {
         loadRevisits,
         saveRevisit,
         updateRevisit,
+        completeRevisit
     }
 }
 

@@ -7,7 +7,7 @@ import { Button } from '../../../components/ui';
 
 import { useStatus, useTheme } from '../../../hooks';
 
-import styles from './styles';
+import themeStyles from '../../../theme/styles';
 
 const StatusModal = () => {
     const { state: { msg }, clearStatus } = useStatus();
@@ -28,26 +28,22 @@ const StatusModal = () => {
         <Modal isOpen={ !!msg }>
             <View
                 style={{
-                    ...styles.container,
+                    ...themeStyles.modalContainer,
                     backgroundColor: colors.modal,
+                    minHeight: 120,
                 }}
             >
-                <View style={{ marginBottom: 20, alignItems: 'center' }}>
+                <View style={{ alignItems: 'center' }}>
                     <Text
                         style={{
-                            ...styles.statusMsg,
-                            color: colors.modalText
+                            ...themeStyles.modalText,
+                            color: colors.modalText,
                         }}>
                             { msg }
                     </Text>
                 </View>
 
-                <View
-                    style={{
-                        flexDirection: 'row',
-                        justifyContent: 'flex-end'
-                    }}
-                >
+                <View style={ themeStyles.modalActions }>
                     <Button
                         containerStyle={{ paddingHorizontal: 14, paddingVertical: 7 }}
                         onPress={ handleClose }
