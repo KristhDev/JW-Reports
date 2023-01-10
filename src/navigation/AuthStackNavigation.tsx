@@ -1,10 +1,10 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { CardStyleInterpolators, createStackNavigator } from '@react-navigation/stack';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { Login, Register } from '../screens/auth';
 
-import { useTheme } from '../hooks';
+import { useAuth, useTheme } from '../hooks';
 
 import { AuthStackParamsList } from '../interfaces/auth';
 
@@ -13,7 +13,12 @@ const Stack = createStackNavigator<AuthStackParamsList>();
 const AuthStackNavigation = () => {
     const { top } = useSafeAreaInsets();
 
+    const { clearAuth } = useAuth();
     const { state: { colors } } = useTheme();
+
+    useEffect(() => {
+        clearAuth();
+    }, []);
 
     return (
         <Stack.Navigator

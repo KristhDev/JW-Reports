@@ -23,6 +23,8 @@ const useAuth = () => {
 
     const state = useSelector<RootState, AuthState>(store => store.auth);
 
+    const clearAuth = () => dispatch(clearAuthAction());
+
     const setUser = ({ data: { user, session }, error }: AuthResponse) => {
         if (error) {
             console.log(error);
@@ -93,6 +95,9 @@ const useAuth = () => {
 
     return {
         state,
+
+        // Actions
+        clearAuth,
 
         // Functions
         login,
