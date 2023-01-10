@@ -10,6 +10,7 @@ import {
     setIsAuthLoading
 } from '../features/auth';
 import { clearPreaching } from '../features/preaching';
+import { clearRevisits } from '../features/revisits';
 
 import { useStatus } from './';
 
@@ -86,6 +87,7 @@ const useAuth = () => {
         }
 
         dispatch(clearPreaching());
+        dispatch(clearRevisits());
         dispatch(clearAuthAction());
     }
 
