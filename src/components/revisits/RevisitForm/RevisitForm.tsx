@@ -65,18 +65,20 @@ export const RevisitForm = () => {
                     />
 
                     <FormField
-                        multiline
-                        numberOfLines={ 10 }
+                        inputStyle={{ maxHeight: 225 }}
                         label="Información de la persona:"
+                        multiline
                         name="about"
+                        numberOfLines={ 10 }
                         placeholder="Ingrese datos sobre la persona, tema de conversación, aspectos importantes, etc..."
                     />
 
                     <FormField
-                        multiline
-                        numberOfLines={ 4 }
+                        inputStyle={{ maxHeight: 105 }}
                         label="Dirección:"
+                        multiline
                         name="address"
+                        numberOfLines={ 4 }
                         placeholder="Ingrese la dirección"
                     />
 
