@@ -10,9 +10,14 @@ const useTheme = () => {
         (Appearance.getColorScheme() === 'dark') ? 0.25 : 0.50
     );
 
+    const BUTTON_TRANSPARENT_COLOR = (Appearance.getColorScheme() === 'dark')
+        ? 'rgba(255, 255, 255, 0.15)'
+        : 'rgba(0, 0, 0, 0.15)';
+
     return {
         ...useContext(ThemeContext),
-        BUTTON_TRANSLUCENT_COLOR
+        BUTTON_TRANSLUCENT_COLOR,
+        BUTTON_TRANSPARENT_COLOR
     }
 };
 

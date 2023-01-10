@@ -10,7 +10,7 @@ import { RevistsTopTabsParamsList } from '../../interfaces/revisits';
 const Tabs = createMaterialTopTabNavigator<RevistsTopTabsParamsList>();
 
 const RevisitsTopTabsNavigation = () => {
-    const { state: { colors } } = useTheme();
+    const { state: { colors }, BUTTON_TRANSLUCENT_COLOR, BUTTON_TRANSPARENT_COLOR } = useTheme();
 
     return (
         <Tabs.Navigator
@@ -18,25 +18,35 @@ const RevisitsTopTabsNavigation = () => {
             sceneContainerStyle={{
                 backgroundColor: colors.contentHeader,
             }}
-            screenOptions={{
-                tabBarActiveTintColor: colors.button,
-                tabBarStyle: {
-                    backgroundColor: colors.contentHeader,
-                    borderBottomWidth: 1,
-                    borderBottomColor: colors.header
-                },
-                tabBarInactiveTintColor: colors.headerText,
-                tabBarIndicatorStyle: {
-                    backgroundColor: colors.button,
+            screenOptions={ ({ navigation }) => {
+                const { isFocused } = navigation;
+                const pressColor = (isFocused()) ? BUTTON_TRANSLUCENT_COLOR : BUTTON_TRANSPARENT_COLOR;
+
+                return {
+                    tabBarActiveTintColor: colors.button,
+                    tabBarPressColor: pressColor,
+                    tabBarStyle: {
+                        backgroundColor: colors.contentHeader,
+                        borderBottomWidth: 1,
+                        borderBottomColor: colors.header
+                    },
+                    tabBarLabelStyle: {
+                        fontWeight: (isFocused()) ? 'bold' : 'normal'
+                    },
+                    tabBarInactiveTintColor: colors.headerText,
+                    tabBarIndicatorStyle: {
+                        backgroundColor: colors.button,
+                        height: 3
+                    }
                 }
-            }}
+            } }
         >
             <Tabs.Screen
                 component={ Revisits }
                 initialParams={{
                     emptyMessage: 'No haz agregado ninguna revisita.',
                     filter: 'all',
-                    title: 'TODAS MIS REVISTAS',
+                    title: 'TODAS MIS REVISITAS',
                 }}
                 name="RevisitsScreen"
                 options={{ title: 'Todas' }}
@@ -47,7 +57,7 @@ const RevisitsTopTabsNavigation = () => {
                 initialParams={{
                     emptyMessage: 'No haz realizado ninguna revisita.',
                     filter: 'visited',
-                    title: 'REVISTAS REALIZADAS'
+                    title: 'REVISITAS REALIZADAS'
                 }}
                 name="VisitedRevisitsScreen"
                 options={{title: 'Visitadas' }}
@@ -58,7 +68,7 @@ const RevisitsTopTabsNavigation = () => {
                 initialParams={{
                     emptyMessage: 'No tienes ninguna revista por hacer.',
                     filter: 'unvisited',
-                    title: 'REVISTAS POR HACER'
+                    title: 'REVISITAS POR HACER'
                 }}
                 name="UnvisitedRevisitsScreen"
                 options={{ title: 'Por Visitar' }}
