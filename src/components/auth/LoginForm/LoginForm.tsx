@@ -88,29 +88,29 @@ export const LoginForm = () => {
                     />
 
                     <View style={{ ...themeStyles.btnLink, width: width * 0.9 }}>
+                        <Text
+                            style={{
+                                ...themeStyles.formText,
+                                color: colors.titleText
+                            }}
+                        >
+                            ¿No tienes cuenta?
+                        </Text>
+
+                        <TouchableOpacity
+                            activeOpacity={ 0.75 }
+                            onPress={ () => navigate('RegisterScreen' as never) }
+                        >
                             <Text
                                 style={{
-                                    ...themeStyles.formText,
-                                    color: colors.titleText
+                                    ...themeStyles.formLink,
+                                    color: colors.linkText
                                 }}
                             >
-                                ¿No tienes cuenta?
+                                Crea una aquí
                             </Text>
-
-                            <TouchableOpacity
-                                activeOpacity={ 0.75 }
-                                onPress={ () => navigate('RegisterScreen' as never) }
-                            >
-                                <Text
-                                    style={{
-                                        ...themeStyles.formLink,
-                                        color: colors.linkText
-                                    }}
-                                >
-                                    Crea una aquí
-                                </Text>
-                            </TouchableOpacity>
-                        </View>
+                        </TouchableOpacity>
+                    </View>
                 </View>
             ) }
         </Formik>

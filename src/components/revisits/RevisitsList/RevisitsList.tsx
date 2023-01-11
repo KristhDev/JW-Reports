@@ -75,7 +75,7 @@ export const RevisitsList: FC<RevisitsListProps> = ({ filter, title, emptyMessag
     }
 
     const handleDeleteConfirm = () => {
-        deleteRevisit(() => setShowDeleteModal(false));
+        deleteRevisit(false, () => setShowDeleteModal(false));
     }
 
     useEffect(() => {

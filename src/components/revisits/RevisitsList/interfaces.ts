@@ -3,3 +3,7 @@ export interface RevisitsListProps {
     filter: 'all' | 'visited' | 'unvisited';
     title: string;
 }
+
+export interface ListEmptyComponentProps {
+    msg: string;
+}

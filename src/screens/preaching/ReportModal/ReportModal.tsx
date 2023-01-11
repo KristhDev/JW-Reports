@@ -102,16 +102,16 @@ const ReportModal: FC<ReportModalProps> = ({ isOpen, month, onClose }) => {
 
                 <View style={{ flexDirection: 'row', justifyContent: 'flex-end', marginTop: 20 }}>
                     <Button
-                        onPress={ handleDeliver }
-                        text="Entregar"
+                        onPress={ onClose }
+                        text="Cancelar"
                         textStyle={{ color: colors.button }}
-                        touchableStyle={{ marginRight: 10, backgroundColor: 'transparent' }}
+                        touchableStyle={{ backgroundColor: 'transparent', marginRight: 10 }}
                         underlayColor={ BUTTON_TRANSLUCENT_COLOR }
                     />
 
                     <Button
-                        onPress={ onClose }
-                        text="Cancelar"
+                        onPress={ handleDeliver }
+                        text="Entregar"
                         textStyle={{ color: colors.button }}
                         touchableStyle={{ backgroundColor: 'transparent' }}
                         underlayColor={ BUTTON_TRANSLUCENT_COLOR }

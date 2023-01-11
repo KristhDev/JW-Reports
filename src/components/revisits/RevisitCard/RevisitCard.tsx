@@ -20,6 +20,11 @@ export const RevisitCard: FC<RevisitCardProps> = ({ onDelete, onRevisit, revisit
     const { setSelectedRevisit } = useRevisits();
     const { state: { colors, theme } } = useTheme();
 
+    const handleRevisitDetail = () => {
+        setSelectedRevisit(revisit);
+        navigate('RevisitDetailScreen' as never);
+    }
+
     const handleEdit = () => {
         setIsOpen(false);
         setSelectedRevisit(revisit);
@@ -38,9 +43,9 @@ export const RevisitCard: FC<RevisitCardProps> = ({ onDelete, onRevisit, revisit
 
     return (
         <TouchableHighlight
-            style={ styles.touchable }
-            onPress={ () => console.log('card') }
             activeOpacity={ 0.9 }
+            onPress={ handleRevisitDetail }
+            style={ styles.touchable }
             underlayColor={ (theme === 'dark') ? 'rgba(255, 255, 255, 0.50)' : 'rgba(0, 0, 0, 0.70)' }
         >
             <View

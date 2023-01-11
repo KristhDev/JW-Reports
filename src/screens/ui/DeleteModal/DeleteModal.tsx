@@ -36,8 +36,8 @@ const DeleteModal: FC<DeleteModalProps> = ({ text, isLoading, isOpen, onClose, o
                         <View style={ themeStyles.modalActions }>
                             <Button
                                 containerStyle={{ paddingHorizontal: 14, paddingVertical: 7 }}
-                                onPress={ onConfirm }
-                                text="Eliminar"
+                                onPress={ onClose }
+                                text="Cancelar"
                                 textStyle={{ color: colors.button }}
                                 touchableStyle={{ backgroundColor: 'transparent', marginRight: 10 }}
                                 underlayColor={ BUTTON_TRANSLUCENT_COLOR }
@@ -45,8 +45,8 @@ const DeleteModal: FC<DeleteModalProps> = ({ text, isLoading, isOpen, onClose, o
 
                             <Button
                                 containerStyle={{ paddingHorizontal: 14, paddingVertical: 7 }}
-                                onPress={ onClose }
-                                text="Cancelar"
+                                onPress={ onConfirm }
+                                text="Eliminar"
                                 textStyle={{ color: colors.button }}
                                 touchableStyle={{ backgroundColor: 'transparent' }}
                                 underlayColor={ BUTTON_TRANSLUCENT_COLOR }

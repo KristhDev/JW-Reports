@@ -1,5 +1,6 @@
 export type RevisitsStackParamsList = {
     RevisitsTopTabsNavigation: undefined;
+    RevisitDetailScreen: undefined;
     AddOrEditRevisitScreen: undefined;
 }
 

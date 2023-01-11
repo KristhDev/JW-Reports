@@ -44,6 +44,19 @@ const StatusModal = () => {
                 </View>
 
                 <View style={ themeStyles.modalActions }>
+                    {
+                        (msg === configMsg) && (
+                            <Button
+                                containerStyle={{ paddingHorizontal: 14, paddingVertical: 7 }}
+                                onPress={ clearStatus }
+                                text="Cancelar"
+                                textStyle={{ color: colors.button }}
+                                touchableStyle={{ backgroundColor: 'transparent', marginRight: 10 }}
+                                underlayColor={ BUTTON_TRANSLUCENT_COLOR }
+                            />
+                        )
+                    }
+
                     <Button
                         containerStyle={{ paddingHorizontal: 14, paddingVertical: 7 }}
                         onPress={ handleClose }
@@ -52,19 +65,6 @@ const StatusModal = () => {
                         touchableStyle={{ backgroundColor: 'transparent' }}
                         underlayColor={ BUTTON_TRANSLUCENT_COLOR }
                     />
-
-                    {
-                        (msg === configMsg) && (
-                            <Button
-                                containerStyle={{ paddingHorizontal: 14, paddingVertical: 7 }}
-                                onPress={ clearStatus }
-                                text="Cancelar"
-                                textStyle={{ color: colors.button }}
-                                touchableStyle={{ backgroundColor: 'transparent', marginLeft: 10 }}
-                                underlayColor={ BUTTON_TRANSLUCENT_COLOR }
-                            />
-                        )
-                    }
                 </View>
             </View>
         </Modal>

@@ -3,8 +3,9 @@ import { CardStyleInterpolators, createStackNavigator } from '@react-navigation/
 
 import RevisitsTopTabsNavigation from './RevisitsTopTabsNavigation';
 
-import { AddOrEditRevisit } from '../../screens/revisits';
+import { AddOrEditRevisit, RevisitDetail } from '../../screens/revisits';
 
+import { RevisitHeader } from '../../components/revisits';
 import { BackButton } from '../../components/ui';
 
 import { useRevisits, useTheme } from '../../hooks';
@@ -38,10 +39,31 @@ const RevisitsStackNavigation = () => {
             />
 
             <Stack.Screen
+                component={ RevisitDetail }
+                name="RevisitDetailScreen"
+                options={{
+                    headerLeft: ({ onPress }) => <BackButton onPress={ onPress } />,
+                    headerRight: () => (
+                        <RevisitHeader
+                            deleteButton={ true }
+                            editButton={ true }
+                        />
+                    ),
+                    title: `Revisita ${ seletedRevisit.person_name }`
+                }}
+            />
+
+            <Stack.Screen
                 component={ AddOrEditRevisit }
                 name="AddOrEditRevisitScreen"
                 options={{
                     headerLeft: ({ onPress }) => <BackButton onPress={ onPress } />,
+                    headerRight: () => (
+                        <RevisitHeader
+                            deleteButton={ seletedRevisit.id !== '' }
+                            editButton={ false }
+                        />
+                    ),
                     title: `${ seletedRevisit.id !== '' ? 'Editar' : 'Agregar' } revisita`
                 }}
             />

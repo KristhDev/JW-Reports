@@ -149,7 +149,7 @@ const useRevisits = () => {
         goBack();
     }
 
-    const deleteRevisit = async (onFinish?: () => void) => {
+    const deleteRevisit = async (back: boolean = false, onFinish?: () => void) => {
         dispatch(setIsRevisitDeleting({ isDeleting: true }));
 
         if (state.seletedRevisit.id === '') {
@@ -180,6 +180,7 @@ const useRevisits = () => {
 
         dispatch(removeRevisit({ id: state.seletedRevisit.id }));
         onFinish && onFinish();
+        back && goBack();
 
         setSelectedRevisit({
             id: '',
