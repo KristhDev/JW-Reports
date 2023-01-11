@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ScrollView, ActivityIndicator, useWindowDimensions, RefreshControl } from 'react-native';
+import { ActivityIndicator, ScrollView, useWindowDimensions, RefreshControl } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import dayjs from 'dayjs';
@@ -71,7 +71,7 @@ const Home = () => {
                     (isPreachingsLoading) && (
                         <ActivityIndicator
                             color={ colors.button }
-                            size="large"
+                            size={ 50 }
                             style={{ marginTop: height * 0.32 }}
                         />
                     )
@@ -104,7 +104,7 @@ const Home = () => {
                 }
                 onPress={ () => setShowModal(true) }
                 style={{ ...themeStyles.fabBottomRight, right: 80 }}
-                touchColor={ colors.buttonDark }
+                touchColor="rgba(0, 0, 0, 0.15)"
             />
 
             <Fab
@@ -119,7 +119,7 @@ const Home = () => {
                 }
                 onPress={ handleNavigate }
                 style={ themeStyles.fabBottomRight }
-                touchColor={ colors.buttonDark }
+                touchColor="rgba(0, 0, 0, 0.15)"
             />
 
             <ReportModal

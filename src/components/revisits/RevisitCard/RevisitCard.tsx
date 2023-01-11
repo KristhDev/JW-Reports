@@ -1,5 +1,6 @@
 import React, { FC, useState } from 'react';
-import { Text, View, TouchableHighlight } from 'react-native';
+import { Text, View } from 'react-native';
+import { TouchableRipple } from 'react-native-paper';
 import { useNavigation } from '@react-navigation/native';
 import { Menu, MenuOption, MenuOptions, MenuTrigger } from 'react-native-popup-menu';
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -18,7 +19,7 @@ export const RevisitCard: FC<RevisitCardProps> = ({ onDelete, onRevisit, revisit
     const { navigate } = useNavigation();
 
     const { setSelectedRevisit } = useRevisits();
-    const { state: { colors, theme } } = useTheme();
+    const { state: { colors }, BUTTON_TRANSPARENT_COLOR } = useTheme();
 
     const handleRevisitDetail = () => {
         setSelectedRevisit(revisit);
@@ -42,11 +43,11 @@ export const RevisitCard: FC<RevisitCardProps> = ({ onDelete, onRevisit, revisit
     }
 
     return (
-        <TouchableHighlight
-            activeOpacity={ 0.9 }
+        <TouchableRipple
+            borderless
             onPress={ handleRevisitDetail }
+            rippleColor={ BUTTON_TRANSPARENT_COLOR  }
             style={ styles.touchable }
-            underlayColor={ (theme === 'dark') ? 'rgba(255, 255, 255, 0.50)' : 'rgba(0, 0, 0, 0.70)' }
         >
             <View
                 style={{ ...styles.container, backgroundColor: colors.card }}
@@ -73,7 +74,7 @@ export const RevisitCard: FC<RevisitCardProps> = ({ onDelete, onRevisit, revisit
                     }
                     onPress={ () => setIsOpen(true) }
                     style={ styles.fab }
-                    touchColor={ (theme === 'dark') ? 'rgba(255, 255, 255, 0.15)' : 'rgba(0, 0, 0, 0.15)'  }
+                    touchColor={ BUTTON_TRANSPARENT_COLOR }
                 />
 
                 <Menu
@@ -119,6 +120,6 @@ export const RevisitCard: FC<RevisitCardProps> = ({ onDelete, onRevisit, revisit
                     </MenuOptions>
                 </Menu>
             </View>
-        </TouchableHighlight>
+        </TouchableRipple>
     );
 }

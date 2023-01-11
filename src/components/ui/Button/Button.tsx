@@ -1,5 +1,6 @@
 import React, { FC } from 'react';
-import { Text, TouchableHighlight, View } from 'react-native';
+import { View } from 'react-native';
+import { TouchableRipple, Text } from 'react-native-paper';
 
 import { useTheme } from '../../../hooks';
 
@@ -20,14 +21,15 @@ export const Button: FC<ButtonProps> = ({
     const { state: { colors } } = useTheme();
 
     return (
-        <TouchableHighlight
+        <TouchableRipple
+            borderless
             disabled={ disabled }
             onPress={ onPress }
+            rippleColor={ underlayColor || 'rgba(0, 0, 0, 0.30)' }
             style={[
                 { ...styles.buttonTouchable, backgroundColor: colors.button },
                 touchableStyle
             ]}
-            underlayColor={ underlayColor || colors.buttonDark }
         >
             <View style={[ styles.buttonContainer, containerStyle ]}>
                 <Text
@@ -41,6 +43,6 @@ export const Button: FC<ButtonProps> = ({
 
                 { icon }
             </View>
-        </TouchableHighlight>
+        </TouchableRipple>
     );
 }

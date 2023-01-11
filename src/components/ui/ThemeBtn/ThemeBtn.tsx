@@ -21,7 +21,7 @@ export const ThemeBtn = () => {
             }
             onPress={ () => setTheme((theme === 'dark') ? 'light' : 'dark') }
             style={{ top: 20, right: 20, position: 'absolute' }}
-            touchColor={ colors.buttonDark }
+            touchColor="rgba(0, 0, 0, 0.15)"
         />
     );
 }

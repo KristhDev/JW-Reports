@@ -7,6 +7,8 @@ import { useRevisits, useTheme } from '../../../hooks';
 
 import { ModalActionProps } from './interfaces';
 
+import { waitToCall } from '../../../utils';
+
 import themeStyles from '../../../theme/styles';
 
 export const ModalActions: FC<ModalActionProps> = ({ onClose, onConfirm, revisitPerson }) => {
@@ -23,7 +25,7 @@ export const ModalActions: FC<ModalActionProps> = ({ onClose, onConfirm, revisit
         <View style={{ ...themeStyles.modalActions, alignSelf: 'flex-end' }}>
             <Button
                 containerStyle={{ paddingHorizontal: 14, paddingVertical: 7 }}
-                onPress={ onClose }
+                onPress={ () => waitToCall(onClose) }
                 text="Cancelar"
                 textStyle={{ color: colors.button }}
                 touchableStyle={{ backgroundColor: 'transparent', marginRight: 10 }}
@@ -32,7 +34,7 @@ export const ModalActions: FC<ModalActionProps> = ({ onClose, onConfirm, revisit
 
             <Button
                 containerStyle={{ paddingHorizontal: 14, paddingVertical: 7 }}
-                onPress={ onConfirm }
+                onPress={ () => waitToCall(onConfirm) }
                 text={ confirmTextButton }
                 textStyle={{ color: colors.button }}
                 touchableStyle={{ backgroundColor: 'transparent' }}

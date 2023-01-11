@@ -12,7 +12,7 @@ export const HomeHeader = () => {
 
     const { logout } = useAuth();
     const { setSelectedDate, state: { selectedDate } } = usePreaching();
-    const { state: { colors, theme } } = useTheme();
+    const { state: { colors }, BUTTON_TRANSPARENT_COLOR } = useTheme();
 
     const handleOnChange = (date: Date) => {
         setShowMonthPicker(false);
@@ -34,7 +34,7 @@ export const HomeHeader = () => {
                     }
                     style={{ marginRight: -2 }}
                     onPress={ logout }
-                    touchColor={ (theme === 'dark') ? 'rgba(255, 255, 255, 0.15)' : 'rgba(0, 0, 0, 0.15)'  }
+                    touchColor={ BUTTON_TRANSPARENT_COLOR }
                 />
 
                 <Fab
@@ -49,7 +49,7 @@ export const HomeHeader = () => {
                     }
                     onPress={ () => setShowMonthPicker(true) }
                     style={{ marginRight: -2 }}
-                    touchColor={ (theme === 'dark') ? 'rgba(255, 255, 255, 0.15)' : 'rgba(0, 0, 0, 0.15)'  }
+                    touchColor={ BUTTON_TRANSPARENT_COLOR }
                 />
 
                 <Fab
@@ -64,7 +64,7 @@ export const HomeHeader = () => {
                     }
                     onPress={ () => {} }
                     style={{ marginRight: 7 }}
-                    touchColor={ (theme === 'dark') ? 'rgba(255, 255, 255, 0.15)' : 'rgba(0, 0, 0, 0.15)'  }
+                    touchColor={ BUTTON_TRANSPARENT_COLOR }
                 />
             </View>
 

@@ -7,6 +7,8 @@ import { Button } from '../../../components/ui';
 
 import { useStatus, useTheme } from '../../../hooks';
 
+import { waitToCall } from '../../../utils';
+
 import themeStyles from '../../../theme/styles';
 
 const StatusModal = () => {
@@ -59,7 +61,7 @@ const StatusModal = () => {
 
                     <Button
                         containerStyle={{ paddingHorizontal: 14, paddingVertical: 7 }}
-                        onPress={ handleClose }
+                        onPress={ () => waitToCall(handleClose) }
                         text={ btnText }
                         textStyle={{ color: colors.button }}
                         touchableStyle={{ backgroundColor: 'transparent' }}

@@ -14,7 +14,7 @@ export const PreachingHeader: FC<PreachingHeaderProps> = ({ deleteButton = false
     const [ showModal, setShowModal ] = useState<boolean>(false);
 
     const { state: { isPreachingDeleting }, deletePreaching } = usePreaching();
-    const { state: { colors, theme } } = useTheme();
+    const { state: { colors }, BUTTON_TRANSPARENT_COLOR } = useTheme();
 
     const handleConfirm = () => {
         deletePreaching(() => setShowModal(false));
@@ -37,7 +37,7 @@ export const PreachingHeader: FC<PreachingHeaderProps> = ({ deleteButton = false
                             }
                             onPress={ () => setShowModal(true) }
                             style={{ marginRight: 6 }}
-                            touchColor={ (theme === 'dark') ? 'rgba(255, 255, 255, 0.15)' : 'rgba(0, 0, 0, 0.15)'  }
+                            touchColor={ BUTTON_TRANSPARENT_COLOR }
                         />
                     )
                 }

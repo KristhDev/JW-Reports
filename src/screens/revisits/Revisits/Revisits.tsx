@@ -70,7 +70,7 @@ const Revisits: FC<RevisitsProps> = ({ route }) => {
                         }
                         onPress={ handleNavigate }
                         style={ themeStyles.fabBottomRight }
-                        touchColor={ colors.buttonDark }
+                        touchColor="rgba(0, 0, 0, 0.15)"
                     />
                 )
             }

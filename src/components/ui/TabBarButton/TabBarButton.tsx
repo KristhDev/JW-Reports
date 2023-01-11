@@ -15,17 +15,17 @@ export const TabBarButton: FC<TabBarButtonProps> = ({ active, color, iconName, o
     useEffect(() => {
         const timeout = setTimeout(() => {
             setPressColor((active) ? BUTTON_TRANSLUCENT_COLOR : BUTTON_TRANSPARENT_COLOR);
-        }, 200);
+        }, 700);
 
         return () => clearTimeout(timeout);
     }, [ active, theme ]);
 
     return (
         <TouchableRipple
-            style={ styles.touchable }
+            borderless
             onPress={ onPress }
             rippleColor={ pressColor }
-            borderless
+            style={ styles.touchable }
         >
             <>
                 <Icon

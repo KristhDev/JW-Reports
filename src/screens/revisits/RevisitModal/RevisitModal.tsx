@@ -139,7 +139,7 @@ const RevisitModal: FC<RevisitModalProps> = ({ isOpen, onClose }) => {
                 ) : (
                     <ActivityIndicator
                         color={ colors.button }
-                        size="large"
+                        size={ 50 }
                     />
                 )
             }
