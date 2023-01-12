@@ -6,12 +6,14 @@ import { useDispatch } from 'react-redux';
 import reduxFlipper from 'redux-flipper';
 
 import { authReducer } from './auth';
+import { permissionsReducer } from './permissions';
 import { preachingReducer } from './preaching';
 import { revisitsReducer } from './revisits';
 import { statusReducer } from './status';
 
 const reducers = combineReducers({
     auth: authReducer,
+    permissions: permissionsReducer,
     preaching: preachingReducer,
     revisits: revisitsReducer,
     status: statusReducer

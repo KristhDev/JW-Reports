@@ -1,12 +1,12 @@
 import React, { useEffect } from 'react';
-import { Appearance, StatusBar } from 'react-native';
+import { Appearance, AppState, StatusBar } from 'react-native';
 import { createStackNavigator } from '@react-navigation/stack';
 
 import { AuthStackNavigation, MainTabsBottomNavigation } from './';
 
 import { StatusModal } from '../screens/status';
 
-import { useAuth, useRevisits, useStatus, useTheme } from '../hooks';
+import { useAuth, usePermissions, useRevisits, useStatus, useTheme } from '../hooks';
 
 import { NavigationParamsList } from '../interfaces/ui';
 
@@ -14,15 +14,28 @@ const Stack = createStackNavigator<NavigationParamsList>();
 
 const Navigation = () => {
     const { state: { isAuthenticated }, renew } = useAuth();
+    const { checkPermissions } = usePermissions();
     const { clearRevisits } = useRevisits();
     const { clearStatus } = useStatus();
     const { state: { theme }, setDefaultTheme } = useTheme();
 
     useEffect(() => {
+        checkPermissions();
         clearStatus();
         clearRevisits();
         setDefaultTheme();
         renew();
+    }, []);
+
+    useEffect(() => {
+        const unSubscribreAppState = AppState.addEventListener('change', async (state) => {
+            if (state !== 'active') return;
+            checkPermissions();
+        });
+
+        return () => {
+            unSubscribreAppState.remove();
+        }
     }, []);
 
     useEffect(() => {
