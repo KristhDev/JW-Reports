@@ -7,7 +7,7 @@ import { Button } from '../../../components/ui';
 
 import { useAuth, usePreaching, useTheme } from '../../../hooks';
 
-import { sumHours, sumNumbers, getRestMins, waitToCall } from '../../../utils';
+import { sumHours, sumNumbers, getRestMins } from '../../../utils';
 
 import { ReportModalProps } from './interfaces';
 
@@ -102,7 +102,7 @@ const ReportModal: FC<ReportModalProps> = ({ isOpen, month, onClose }) => {
 
                 <View style={{ flexDirection: 'row', justifyContent: 'flex-end', marginTop: 20 }}>
                     <Button
-                        onPress={ () => waitToCall(onClose) }
+                        onPress={ onClose }
                         text="Cancelar"
                         textStyle={{ color: colors.button }}
                         touchableStyle={{ backgroundColor: 'transparent', marginRight: 10 }}
@@ -110,7 +110,7 @@ const ReportModal: FC<ReportModalProps> = ({ isOpen, month, onClose }) => {
                     />
 
                     <Button
-                        onPress={ () => waitToCall(handleDeliver) }
+                        onPress={ handleDeliver }
                         text="Entregar"
                         textStyle={{ color: colors.button }}
                         touchableStyle={{ backgroundColor: 'transparent' }}

@@ -5,8 +5,6 @@ import { Fab } from '../Fab';
 
 import { useTheme } from '../../../hooks';
 
-import { waitToCall } from '../../../utils';
-
 export const BackButton: FC<{ onPress?: () => void }> = ({ onPress }) => {
     const { state: { colors }, BUTTON_TRANSPARENT_COLOR } = useTheme();
 
@@ -21,7 +19,7 @@ export const BackButton: FC<{ onPress?: () => void }> = ({ onPress }) => {
                     size={ 28 }
                 />
             }
-            onPress={ () => waitToCall(() => onPress && onPress()) }
+            onPress={ () => onPress && onPress() }
             touchColor={ BUTTON_TRANSPARENT_COLOR }
         />
     );
