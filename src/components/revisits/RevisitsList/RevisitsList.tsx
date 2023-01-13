@@ -51,7 +51,7 @@ export const RevisitsList: FC<RevisitsListProps> = ({ filter, title, emptyMessag
 
     const handleEndReach = () => {
         if (!hasMoreRevisits || isRevisitsLoading) return;
-        loadRevisits(filter);
+        loadRevisits(filter, false, true);
     }
 
     const handleShowModal = (revisit: Revisit, setShowModal: (value: boolean) => void) => {

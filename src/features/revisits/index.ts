@@ -1,6 +1,7 @@
 export {
     default as revisitsReducer,
     addRevisit,
+    addRevisits,
     clearRevisits,
     removeRevisit,
     removeRevisits,

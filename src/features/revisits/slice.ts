@@ -45,6 +45,11 @@ const revisitsSlice = createSlice({
             state.isRevisitLoading = false;
         },
 
+        addRevisits: (state, action: PayloadAction<SetRevisitsPayload>) => {
+            state.revisits = [ ...state.revisits, ...action.payload.revisits ];
+            state.isRevisitsLoading = false;
+        },
+
         clearRevisits: (state) => {
             state.hasMoreRevisits = true;
             state.refreshRevisits = false;
@@ -99,7 +104,7 @@ const revisitsSlice = createSlice({
         },
 
         setRevisits: (state, action: PayloadAction<SetRevisitsPayload>) => {
-            state.revisits = [ ...state.revisits, ...action.payload.revisits ];
+            state.revisits = [ ...action.payload.revisits ];
             state.isRevisitsLoading = false;
         },
 
@@ -130,6 +135,7 @@ const revisitsSlice = createSlice({
 
 export const {
     addRevisit,
+    addRevisits,
     clearRevisits,
     removeRevisit,
     removeRevisits,

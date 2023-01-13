@@ -7,6 +7,7 @@ import { supabase } from '../supabase/config';
 import { RootState, useAppDispatch } from '../features/store';
 import {
     addRevisit,
+    addRevisits as addRevisitsAction,
     clearRevisits as clearRevisitsAction,
     removeRevisits as removeRevisitsAction,
     setHasMoreRevisits,
@@ -36,6 +37,7 @@ const useRevisits = () => {
 
     const state = useSelector<RootState, RevisitsState>(store => store.revisits);
 
+    const addRevisits = (revisits: Revisit[]) => dispatch(addRevisitsAction({ revisits }));
     const clearRevisits = () => dispatch(clearRevisitsAction());
     const removeRevisits = () => dispatch(removeRevisitsAction());
     const setIsRevisitsLoading = (isLoading: boolean) => dispatch(setIsRevisitsLoadingAction({ isLoading }));
@@ -45,7 +47,7 @@ const useRevisits = () => {
     const setRevisitsPagination = (pagination: { from: number, to: number }) => dispatch(setRevisitsPaginationAction({ pagination }));
     const setSelectedRevisit = (revisit: Revisit) => dispatch(setSelectedRevisitAction({ revisit }));
 
-    const loadRevisits = async (filter: 'all' | 'visited' | 'unvisited',  refresh: boolean = false) => {
+    const loadRevisits = async (filter: 'all' | 'visited' | 'unvisited', refresh: boolean = false, loadMore: boolean = false) => {
         setIsRevisitsLoading(true);
 
         const revisitsPromise = supabase.from('revisits').select().eq('user_id', user.id);
@@ -83,7 +85,7 @@ const useRevisits = () => {
         }
 
         dispatch(setHasMoreRevisits({ hasMore: (data.length >= 10) }));
-        setRevisits(data);
+        (loadMore) ? addRevisits(data) : setRevisits(data);
     }
 
     const saveRevisit = async (revisitValues: RevisitFormValues, back: boolean = true, onFinish?: () => void) => {
