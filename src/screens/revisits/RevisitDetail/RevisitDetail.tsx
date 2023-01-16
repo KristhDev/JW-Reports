@@ -12,8 +12,6 @@ import { useRevisits, useTheme } from '../../../hooks';
 import themeStyles from '../../../theme/styles';
 import styles from './styles';
 
-const imageUri = 'https://images.pexels.com/photos/1757363/pexels-photo-1757363.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1';
-
 const RevisitDetail = () => {
     const [ imageHeight, setImageHeight ] = useState<number>(0);
     const [ showModal, setShowModal ] = useState<boolean>(false);
@@ -24,11 +22,13 @@ const RevisitDetail = () => {
     const { state: { colors } } = useTheme();
 
     useEffect(() => {
-        Image.getSize(imageUri, (width, height) => {
-            const h = windowWidth / width * height;
-            setImageHeight(h);
-        });
-    }, []);
+        if (seletedRevisit.photo) {
+            Image.getSize(seletedRevisit.photo, (width, height) => {
+                const h = windowWidth / width * height;
+                setImageHeight(h);
+            });
+        }
+    }, [ seletedRevisit.photo ]);
 
     useEffect(() => {
         addListener('blur', () => {
@@ -144,25 +144,29 @@ const RevisitDetail = () => {
                     </Text>
                 </View>
 
-                <View style={ styles.sectionStyle }>
-                    <Text
-                        style={{
-                            ...styles.sectionSubTitle,
-                            color: colors.text,
-                        }}
-                    >
-                        Foto:
-                    </Text>
+                {
+                    seletedRevisit.photo && (
+                        <View style={ styles.sectionStyle }>
+                            <Text
+                                style={{
+                                    ...styles.sectionSubTitle,
+                                    color: colors.text,
+                                }}
+                            >
+                                Foto:
+                            </Text>
 
-                    <Image
-                        style={{ height: imageHeight, width: '100%' }}
-                        source={{ uri: imageUri }}
-                    />
+                            <Image
+                                style={{ height: imageHeight, width: '100%' }}
+                                source={{ uri: seletedRevisit.photo }}
+                            />
 
-                    <Text style={{ ...styles.imageText, color: colors.modalText }}>
-                        La foto es para ayudarte a recordar el lugar de residencia de { seletedRevisit.person_name }
-                    </Text>
-                </View>
+                            <Text style={{ ...styles.imageText, color: colors.modalText }}>
+                                La foto es para ayudarte a recordar el lugar de residencia de { seletedRevisit.person_name }
+                            </Text>
+                        </View>
+                    )
+                }
 
                 <Text style={{ ...styles.dateCreatedText, color: colors.modalText }}>
                     { dayjs(seletedRevisit.created_at).format('DD/MM/YYYY') }

@@ -6,7 +6,7 @@ import Icon from 'react-native-vector-icons/Ionicons';
 
 import { Button, DatetimeField, FormField } from '../../ui';
 
-import { useImagePicker, useRevisits, useStatus, useTheme } from '../../../hooks';
+import { useImage, useRevisits, useStatus, useTheme } from '../../../hooks';
 
 import { RevisitFormValues } from './interfaces';
 
@@ -19,15 +19,15 @@ export const RevisitForm = () => {
     const [ imageUri, setImageUri ] = useState<string>('https://local-image.com/images.jpg');
     const { width: windowWidth } = useWindowDimensions();
 
-    const { image, takeImageToGallery, takePhoto } = useImagePicker();
+    const { image, takeImageToGallery, takePhoto } = useImage();
     const { state: { seletedRevisit, isRevisitLoading }, saveRevisit, updateRevisit } = useRevisits();
     const { setErrorForm } = useStatus();
     const { state: { colors } } = useTheme();
 
     const handleSaveOrUpdate = (formValues: RevisitFormValues) => {
         (seletedRevisit.id === '')
-            ? saveRevisit(formValues)
-            : updateRevisit(formValues);
+            ? saveRevisit(formValues, undefined, isChangeImage() ? image : undefined)
+            : updateRevisit(formValues, isChangeImage() ? image : undefined);
     }
 
     const revisitFormSchema = object().shape({
@@ -43,6 +43,16 @@ export const RevisitForm = () => {
         next_visit: date()
             .required('La fecha de la próxima visita no puede estar vacía'),
     });
+
+    const isChangeImage = () => {
+        if (seletedRevisit?.photo) {
+            return seletedRevisit.photo !== imageUri;
+        }
+        else {
+            const { uri } = Image.resolveAssetSource(defaultRevisit);
+            return uri !== imageUri;
+        }
+    }
 
     useEffect(() => {
         if (!seletedRevisit?.photo) {

@@ -28,7 +28,7 @@ const usePreaching = () => {
     const { goBack } = useNavigation();
 
     const { state: { user } } = useAuth();
-    const { setStatus } = useStatus();
+    const { setStatus, setSupabaseError } = useStatus();
 
     const state = useSelector<RootState, PreachingState>(store => store.preaching);
 
@@ -51,16 +51,10 @@ const usePreaching = () => {
             .order('day', { ascending: true })
             .order('init_hour', { ascending: true });
 
-        if (error) {
-            console.log(error);
+        const next = setSupabaseError(error, () => setIsPreachingsLoading(false));
+        if (next) return;
 
-            setIsPreachingsLoading(false);
-            setStatus({ code: 400, msg: error.message });
-
-            return;
-        }
-
-        dispatch(setPreachings({ preachings: data }));
+        dispatch(setPreachings({ preachings: data! }));
     }
 
     const savePreaching = async (preachingValues: PreachingFormValues) => {
@@ -76,16 +70,11 @@ const usePreaching = () => {
             })
             .select();
 
-        if (error) {
-            console.log(error);
-            dispatch(setIsPreachingLoading({ isLoading: false }));
-            setStatus({ code: 400, msg: error.message });
+        const next = setSupabaseError(error, () => dispatch(setIsPreachingLoading({ isLoading: false })));
+        if (next) return;
 
-            return;
-        }
-
-        if (dayjs(data[0].day).format('MMMM') === dayjs(state.selectedDate).format('MMMM')) {
-            dispatch(addPreaching({ preaching: data[0] }));
+        if (dayjs(data![0].day).format('MMMM') === dayjs(state.selectedDate).format('MMMM')) {
+            dispatch(addPreaching({ preaching: data![0] }));
         }
 
         setStatus({
@@ -104,21 +93,17 @@ const usePreaching = () => {
                 ...preachingValues,
                 day: dayjs(preachingValues.day).format('YYYY-MM-DD'),
                 init_hour: dayjs(preachingValues.init_hour).format('YYYY-MM-DD HH:mm'),
-                final_hour: dayjs(preachingValues.final_hour).format('YYYY-MM-DD HH:mm')
+                final_hour: dayjs(preachingValues.final_hour).format('YYYY-MM-DD HH:mm'),
+                updated_at:dayjs().format('YYYY-MM-DD HH:mm')
             })
             .eq('id', state.seletedPreaching.id)
             .eq('user_id', user.id)
             .select();
 
-        if (error) {
-            console.log(error);
-            dispatch(setIsPreachingLoading({ isLoading: false }));
-            setStatus({ code: 400, msg: error.message });
+        const next = setSupabaseError(error, () => dispatch(setIsPreachingLoading({ isLoading: false })));
+        if (next) return;
 
-            return;
-        }
-
-        dispatch(updatePreachingAction({ preaching: data[0] }));
+        dispatch(updatePreachingAction({ preaching: data![0] }));
 
         setStatus({
             code: 201,
@@ -148,14 +133,12 @@ const usePreaching = () => {
             .eq('id', state.seletedPreaching.id)
             .eq('user_id', user.id);
 
-        if (error) {
-            console.log(error);
+        const next = setSupabaseError(error, () => {
             onFinish && onFinish();
             dispatch(setIsPreachingDeleting({ isDeleting: false }));
-            setStatus({ code: 400, msg: error.message });
+        });
 
-            return;
-        }
+        if (next) return;
 
         dispatch(removePreaching({ id: state.seletedPreaching.id }));
         onFinish && onFinish();

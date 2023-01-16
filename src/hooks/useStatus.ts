@@ -1,10 +1,17 @@
 import { useSelector } from 'react-redux';
+import { AuthError, PostgrestError } from '@supabase/supabase-js';
 
 import { RootState, useAppDispatch } from '../features/store';
 
 import { clearStatus as clearStatusAction, setStatus as setStatusAction } from '../features/status';
 
 import { SetStatusPayload, StatusState } from '../interfaces/status';
+
+interface StorageError {
+    message: string;
+    name: string;
+    stack?: string;
+}
 
 const useStatus = () => {
     const dispatch = useAppDispatch();
@@ -22,10 +29,24 @@ const useStatus = () => {
         });
     }
 
+    const setSupabaseError = (error: AuthError | PostgrestError | StorageError |  null, onDispatch?: () => void) => {
+        if (error) {
+            console.log(error);
+
+            onDispatch && onDispatch();
+            setStatus({ code: 400, msg: error.message });
+
+            return true;
+        }
+
+        return false;
+    }
+
 
     return {
         state,
         clearStatus,
+        setSupabaseError,
         setErrorForm,
         setStatus
     }

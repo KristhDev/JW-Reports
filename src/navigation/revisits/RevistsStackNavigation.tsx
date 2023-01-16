@@ -18,6 +18,9 @@ const RevisitsStackNavigation = () => {
     const { state: { seletedRevisit } } = useRevisits();
     const { state: { colors } } = useTheme();
 
+
+    const revisitDetailTitle = `Revisita ${ seletedRevisit.person_name }`;
+
     return (
         <Stack.Navigator
             screenOptions={{
@@ -49,7 +52,7 @@ const RevisitsStackNavigation = () => {
                             editButton={ true }
                         />
                     ),
-                    title: `Revisita ${ seletedRevisit.person_name }`
+                    title: (revisitDetailTitle.length >= 22) ? revisitDetailTitle.slice(0, 22) + '...' : revisitDetailTitle
                 }}
             />
 

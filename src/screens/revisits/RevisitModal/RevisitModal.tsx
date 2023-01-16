@@ -40,7 +40,7 @@ const RevisitModal: FC<RevisitModalProps> = ({ isOpen, onClose }) => {
                 about: seletedRevisit.about,
                 address: seletedRevisit.address,
                 person_name: seletedRevisit.person_name
-            }, false, onClose);
+            }, seletedRevisit.photo, undefined, false, onClose);
         }
     }
 

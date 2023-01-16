@@ -1,11 +1,13 @@
 import { useState } from 'react';
 import { openPicker, openCamera, Image } from 'react-native-image-crop-picker';
+import { decode } from 'base64-arraybuffer';
 
-import usePermissions from './usePermissions';
-import useStatus from './useStatus';
-import useTheme from './useTheme';
+import { SUPABASE_BUCKET, SUPABASE_REVISITS_FOLDER } from '@env';
+import { supabase } from '../supabase/config';
 
-const useImagePicker = () => {
+import { usePermissions, useStatus, useTheme } from './';
+
+const useImage = () => {
     const { state: { permissions }, askPermission } = usePermissions();
     const { setStatus } = useStatus();
     const { state: { colors } } = useTheme();
@@ -77,12 +79,46 @@ const useImagePicker = () => {
         }
     }
 
+    const uploadImage = async (photo: Image) => {
+        const file = photo.path.split('/')[photo.path.split('/').length - 1];
+        const [ fileName, fileExt ] = file.split('.');
+
+        const result = await supabase.storage
+            .from(SUPABASE_BUCKET)
+            .upload(`${ SUPABASE_REVISITS_FOLDER }/${ fileName }.${ fileExt }`, decode(photo.data!), {
+                contentType: photo.mime
+            });
+
+        if (result.error) return result;
+
+        const { data } = await supabase.storage
+            .from(SUPABASE_BUCKET)
+            .getPublicUrl(result.data.path);
+
+        return {
+            data,
+            error: null
+        }
+    }
+
+    const deleteImage = async (uri: string) => {
+        const imageId = uri.split('/')[uri.split('/').length - 1];
+
+        const result = await supabase.storage
+            .from('jw-reports')
+            .remove([ `revisits/${ imageId }` ]);
+
+        return result;
+    }
+
     return {
         image,
         setImage,
         takeImageToGallery,
-        takePhoto
+        takePhoto,
+        uploadImage,
+        deleteImage
     }
 }
 
-export default useImagePicker;
+export default useImage;

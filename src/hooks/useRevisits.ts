@@ -1,5 +1,6 @@
 import { useSelector } from 'react-redux';
 import { useNavigation } from '@react-navigation/native';
+import { Image } from 'react-native-image-crop-picker';
 import dayjs from 'dayjs';
 
 import { supabase } from '../supabase/config';
@@ -23,7 +24,7 @@ import {
     removeRevisit
 } from '../features/revisits';
 
-import { useAuth, useStatus } from './';
+import { useAuth, useImage, useStatus } from './';
 
 import { Revisit, RevisitsState } from '../interfaces/revisits';
 import { RevisitFormValues } from '../components/revisits/RevisitForm/interfaces';
@@ -33,7 +34,8 @@ const useRevisits = () => {
     const { goBack } = useNavigation();
 
     const { state: { user } } = useAuth();
-    const { setStatus } = useStatus();
+    const { uploadImage, deleteImage } = useImage();
+    const { setStatus, setSupabaseError } = useStatus();
 
     const state = useSelector<RootState, RevisitsState>(store => store.revisits);
 
@@ -66,66 +68,93 @@ const useRevisits = () => {
                 (refresh) ? 9 : state.revisitsPagination.to
             )
 
-        const { data, error, status } = await revisitsPromise;
+        const { data, error } = await revisitsPromise;
 
-        if (error) {
-            console.log(error);
+        const next = setSupabaseError(error, () => setIsRevisitsLoading(false));
+        if (next) return;
 
-            setIsRevisitsLoading(false);
-            setStatus({ code: status, msg: error.message });
-
-            return;
-        }
-
-        if (data.length >= 10) {
+        if (data!.length >= 10) {
             setRevisitsPagination({
                 from: (refresh) ? 10 : state.revisitsPagination.from + 10,
                 to: (refresh) ? 19 : state.revisitsPagination.to + 10
             });
         }
 
-        dispatch(setHasMoreRevisits({ hasMore: (data.length >= 10) }));
-        (loadMore) ? addRevisits(data) : setRevisits(data);
+        dispatch(setHasMoreRevisits({ hasMore: (data!.length >= 10) }));
+        (loadMore) ? addRevisits(data!) : setRevisits(data!);
     }
 
-    const saveRevisit = async (revisitValues: RevisitFormValues, back: boolean = true, onFinish?: () => void) => {
+    const saveRevisit = async (revisitValues: RevisitFormValues, imageUri?: string, image?: Image, back: boolean = true, onFinish?: () => void) => {
         dispatch(setIsRevisitLoading({ isLoading: true }));
+
+        let photo = imageUri || null;
+
+        if (image) {
+            const { data, error } = await uploadImage(image);
+
+            const next = setSupabaseError(error, () => {
+                dispatch(setIsRevisitLoading({ isLoading: false }));
+                onFinish && onFinish();
+            });
+
+            if (next) return;
+
+            photo = data!.publicUrl;
+        }
 
         const { data, error } = await supabase.from('revisits')
             .insert({
                 ...revisitValues,
+                photo,
                 next_visit: dayjs(revisitValues.next_visit).format('YYYY-MM-DD HH:mm'),
                 user_id: user.id
             })
             .select();
 
-        if (error) {
-            console.log(error);
+        const next = setSupabaseError(error, () => {
             dispatch(setIsRevisitLoading({ isLoading: false }));
             onFinish && onFinish();
-            setStatus({ code: 400, msg: error.message });
+        });
 
-            return;
-        }
+        if (next) return;
 
-        dispatch(addRevisit({ revisit: data[0] }));
+        dispatch(addRevisit({ revisit: data![0] }));
         onFinish && onFinish();
 
         const successMsg = (back)
             ? 'Haz agregado tu revisita correctamente.'
-            : `Haz agregado correctamente a ${ data[0].person_name } para volverla a visitar.`
+            : `Haz agregado correctamente a ${ data![0].person_name } para volverla a visitar.`
 
         setStatus({ code: 201, msg: successMsg });
 
         back && goBack();
     }
 
-    const updateRevisit = async (revisitValues: RevisitFormValues) => {
+    const updateRevisit = async (revisitValues: RevisitFormValues, image?: Image) => {
         dispatch(setIsRevisitLoading({ isLoading: true }));
+
+        let photo = state.seletedRevisit.photo;
+
+        if (image) {
+            if (photo) {
+                const { error: errorDelete } = await deleteImage(photo);
+
+                const next = setSupabaseError(errorDelete, () => dispatch(setIsRevisitLoading({ isLoading: false })));
+                if (next) return;
+            }
+
+            const { data: dataImage, error: errorImage } = await uploadImage(image);
+
+            const next = setSupabaseError(errorImage, () => dispatch(setIsRevisitLoading({ isLoading: false })));
+            if (next) return;
+
+            photo = dataImage!.publicUrl;
+        }
 
         const { data, error } = await supabase.from('revisits')
             .update({
                 ...revisitValues,
+                photo,
                 next_visit: dayjs(revisitValues.next_visit).format('YYYY-MM-DD HH:mm'),
                 updated_at:dayjs().format('YYYY-MM-DD HH:mm')
             })
@@ -133,15 +162,10 @@ const useRevisits = () => {
             .eq('user_id', user.id)
             .select();
 
-        if (error) {
-            console.log(error);
-            dispatch(setIsRevisitLoading({ isLoading: false }));
-            setStatus({ code: 400, msg: error.message });
+        const next = setSupabaseError(error, () => dispatch(setIsRevisitLoading({ isLoading: false })));
+        if (next) return;
 
-            return;
-        }
-
-        dispatch(updateRevisitAction({ revisit: data[0] }));
+        dispatch(updateRevisitAction({ revisit: data![0] }));
 
         setStatus({
             code: 200,
@@ -166,19 +190,28 @@ const useRevisits = () => {
             return;
         }
 
+        if (state.seletedRevisit.photo) {
+            const { error: errorDelete } = await deleteImage(state.seletedRevisit.photo);
+
+            const next = setSupabaseError(errorDelete, () => {
+                onFinish && onFinish();
+                dispatch(setIsRevisitDeleting({ isDeleting: false }));
+            });
+
+            if (next) return;
+        }
+
         const { error } = await supabase.from('revisits')
             .delete()
             .eq('id', state.seletedRevisit.id)
             .eq('user_id', user.id);
 
-        if (error) {
-            console.log(error);
+        const next = setSupabaseError(error, () => {
             onFinish && onFinish();
             dispatch(setIsRevisitDeleting({ isDeleting: false }));
-            setStatus({ code: 400, msg: error.message });
+        });
 
-            return;
-        }
+        if (next) return;
 
         dispatch(removeRevisit({ id: state.seletedRevisit.id }));
         onFinish && onFinish();
