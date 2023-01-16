@@ -5,8 +5,11 @@ import { supabase } from '../supabase/config';
 import { RootState, useAppDispatch } from '../features/store';
 import {
     addCourses as addCoursesAction,
+    removeCourses as removeCoursesAction,
     setIsCoursesLoading as setIsCoursesLoadingAction,
     setCourses as setCoursesAction,
+    setRefreshCourses as setRefreshCoursesAction,
+    setCoursesScreenHistory as setCoursesScreenHistoryAction,
     setCoursesPagination as setCoursesPaginationAction,
     setHasMoreCourses,
 } from '../features/courses';
@@ -25,20 +28,23 @@ const useCourses = () => {
     const { setSupabaseError } = useStatus();
 
     const addCourses = (courses: Course[]) => dispatch(addCoursesAction({ courses }));
-    const setIsCoursesLoading = (isLoading: boolean) => dispatch(setIsCoursesLoadingAction({ isLoading }));
+    const removeCourses = () => dispatch(removeCoursesAction());
     const setCourses = (courses: Course[]) => dispatch(setCoursesAction({ courses }));
     const setCoursesPagination = (pagination: Pagination) => dispatch(setCoursesPaginationAction({ pagination }));
+    const setCoursesScreenHistory = (newScreen: string) => dispatch(setCoursesScreenHistoryAction({ newScreen }));
+    const setIsCoursesLoading = (isLoading: boolean) => dispatch(setIsCoursesLoadingAction({ isLoading }));
+    const setRefreshCourses = (refresh: boolean) => dispatch(setRefreshCoursesAction({ refresh }));
 
     const loadCourses = async (filter: CourseFilter, refresh: boolean = false, loadMore: boolean = false) => {
         setIsCoursesLoading(true);
 
         const coursesPromise = supabase.from('courses').select().eq('user_id', user.id);
 
-        if (filter === 'continued') {
-            coursesPromise.eq('discontinued', true);
+        if (filter === 'active') {
+            coursesPromise.eq('suspended', true);
         }
-        else if (filter === 'discontinued') {
-            coursesPromise.eq('discontinued', false);
+        else if (filter === 'suspended') {
+            coursesPromise.eq('suspended', false);
         }
 
         coursesPromise.order('created_at', { ascending: false })
@@ -66,8 +72,14 @@ const useCourses = () => {
     return {
         state,
 
+        // Actions
+        removeCourses,
+        setCoursesPagination,
+        setCoursesScreenHistory,
+        setRefreshCourses,
+
         // Functions
-        loadCourses
+        loadCourses,
     }
 }
 

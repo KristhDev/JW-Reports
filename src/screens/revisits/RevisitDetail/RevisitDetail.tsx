@@ -21,6 +21,8 @@ const RevisitDetail = () => {
     const { state: { seletedRevisit }, setSelectedRevisit } = useRevisits();
     const { state: { colors } } = useTheme();
 
+    const nextVist = dayjs(seletedRevisit.next_visit);
+
     useEffect(() => {
         if (seletedRevisit.photo) {
             Image.getSize(seletedRevisit.photo, (width, height) => {
@@ -83,8 +85,8 @@ const RevisitDetail = () => {
                                 </Text>
 
                                 <Text style={{ color: colors.text, fontSize: 19 }}>
-                                    { ` ${ dayjs(seletedRevisit.next_visit).format('DD') } de ${ dayjs(seletedRevisit.next_visit).format('MMMM') }` }
-                                </Text>
+                                    { ` ${ nextVist.format('DD') } de ${ nextVist.format('MMMM') } del ${ nextVist.format('YYYY') }` }
+                                </Text >
                             </View>
 
                             <TouchableOpacity

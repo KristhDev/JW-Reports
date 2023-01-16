@@ -12,7 +12,7 @@ const styles = StyleSheet.create({
     },
 
     textDate: {
-        fontSize: 15,
+        fontSize: 14,
         marginBottom: 15
     },
 

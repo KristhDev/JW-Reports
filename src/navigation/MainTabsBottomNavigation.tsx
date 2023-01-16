@@ -1,7 +1,8 @@
 import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
-import { CoursesStackNavigation, PreachingStackNavigation, SearchStackNavigation } from '.'
+import { PreachingStackNavigation, SearchStackNavigation } from './';
+import { CoursesStackNavigation } from './courses';
 import { RevistsStackNavigation } from './revisits';
 
 import { TabBar } from '../components/ui';

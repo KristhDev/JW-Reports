@@ -1,7 +1,25 @@
 import { Pagination } from './ui';
 
 export type CoursesStackParamsList = {
-    CoursesScreen: undefined;
+    CoursesTopTabsNavigation: undefined;
+}
+
+export type CoursesTopTabsParamsList = {
+    CoursesScreen: {
+        emptyMessage: string,
+        filter: CourseFilter,
+        title: string
+    },
+    ActiveCoursesScreen: {
+        emptyMessage: string,
+        filter: CourseFilter,
+        title: string
+    },
+    SuspendedCoursesScreen: {
+        emptyMessage: string,
+        filter: CourseFilter,
+        title: string
+    }
 }
 
 export interface CoursesState {
@@ -31,7 +49,7 @@ export interface Course {
     person_about: string;
     person_address: string;
     book: string;
-    discontinued: boolean;
+    suspended: boolean;
     created_at: string;
     updated_at: string;
 }
@@ -46,7 +64,7 @@ export interface CourseClass {
     updated_at: string;
 }
 
-export type CourseFilter = 'all' | 'continued' | 'discontinued';
+export type CourseFilter = 'all' | 'active' | 'suspended';
 
 export type CoursePayload = {
     course: Course;

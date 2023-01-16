@@ -21,6 +21,8 @@ export const RevisitCard: FC<RevisitCardProps> = ({ onDelete, onRevisit, revisit
     const { setSelectedRevisit } = useRevisits();
     const { state: { colors }, BUTTON_TRANSPARENT_COLOR } = useTheme();
 
+    const nextVisit = dayjs(revisit.next_visit);
+
     const handleRevisitDetail = () => {
         setSelectedRevisit(revisit);
         navigate('RevisitDetailScreen' as never);
@@ -53,7 +55,7 @@ export const RevisitCard: FC<RevisitCardProps> = ({ onDelete, onRevisit, revisit
                 style={{ ...styles.container, backgroundColor: colors.card }}
             >
                 <Text style={{ ...styles.textDate, color: colors.icon }}>
-                    { `${ dayjs(revisit.next_visit).format('DD') }-${ dayjs(revisit.next_visit).format('MMMM') }`  }
+                    { `${ nextVisit.format('DD') } de ${ nextVisit.format('MMMM') } del ${ nextVisit.format('YYYY') }`  }
                 </Text>
 
                 <Text style={{ ...styles.textName, color: colors.text }}>{ revisit.person_name }</Text>

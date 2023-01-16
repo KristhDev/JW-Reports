@@ -1,6 +1,8 @@
+import { RevisitFilter } from '../../../interfaces/revisits';
+
 export interface RevisitsListProps {
     emptyMessage: string;
-    filter: 'all' | 'visited' | 'unvisited';
+    filter: RevisitFilter;
     title: string;
 }
 
