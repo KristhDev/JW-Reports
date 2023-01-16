@@ -9,3 +9,8 @@ export type MainTabsBottomParamsList = {
     RevistsStackNavigation: undefined;
     CoursesStackNavigation: undefined;
 }
+
+export interface Pagination {
+    from: number;
+    to: number;
+}

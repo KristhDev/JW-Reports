@@ -1,14 +1,20 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+
 import {
     RevisitPayload,
     RevisitsState,
-    SetHasMoreRevisitsPayload,
     SetRevisitsPayload,
-    SetRevisitsHistoryPayload,
-    SetRevisitsPaginationPayload,
     SetRefreshRevisitsPayload
 } from '../../interfaces/revisits';
-import { RemoveResourcePayload, SetIsDeletingPayload, SetIsLoadingPayload } from '../../interfaces/features';
+
+import {
+    RemoveResourcePayload,
+    SetIsDeletingPayload,
+    SetIsLoadingPayload,
+    HistoryPayload,
+    PaginationPayload,
+    HasMorePayload
+} from '../../interfaces/features';
 
 const INITIAL_STATE: RevisitsState = {
     hasMoreRevisits: true,
@@ -83,7 +89,7 @@ const revisitsSlice = createSlice({
             state.revisits = [];
         },
 
-        setHasMoreRevisits: (state, action: PayloadAction<SetHasMoreRevisitsPayload>) => {
+        setHasMoreRevisits: (state, action: PayloadAction<HasMorePayload>) => {
             state.hasMoreRevisits = action.payload.hasMore;
         },
 
@@ -108,11 +114,11 @@ const revisitsSlice = createSlice({
             state.isRevisitsLoading = false;
         },
 
-        setRevisitsPagination: (state, action: PayloadAction<SetRevisitsPaginationPayload>) => {
+        setRevisitsPagination: (state, action: PayloadAction<PaginationPayload>) => {
             state.revisitsPagination = action.payload.pagination;
         },
 
-        setRevisitsScreenHistory: (state, action: PayloadAction<SetRevisitsHistoryPayload>) => {
+        setRevisitsScreenHistory: (state, action: PayloadAction<HistoryPayload>) => {
             state.revisitsScreenHistory = [ ...state.revisitsScreenHistory, action.payload.newScreen ]
         },
 

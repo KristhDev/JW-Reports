@@ -1,3 +1,73 @@
+import { Pagination } from './ui';
+
 export type CoursesStackParamsList = {
     CoursesScreen: undefined;
+}
+
+export interface CoursesState {
+    classes: CourseClass[];
+    classesPagination: Pagination;
+    courses: Course[];
+    coursesPagination: Pagination;
+    coursesScreenHistory: string[];
+    hasMoreClasses: boolean;
+    hasMoreCourses: boolean;
+    isClassDeleting: boolean;
+    isClassesLoading: boolean;
+    isClassLoading: boolean;
+    isCourseDeleting: boolean;
+    isCourseLoading: boolean;
+    isCoursesLoading: boolean;
+    refreshClasses: boolean;
+    refreshCourses: boolean;
+    selectedClass: CourseClass;
+    selectedCourse: Course;
+}
+
+export interface Course {
+    id: string;
+    user_id: string;
+    person_name: string;
+    person_about: string;
+    person_address: string;
+    book: string;
+    discontinued: boolean;
+    created_at: string;
+    updated_at: string;
+}
+
+export interface CourseClass {
+    id: string;
+    course_id: string;
+    description: string;
+    next_class: string;
+    done: boolean;
+    created_at: string;
+    updated_at: string;
+}
+
+export type CourseFilter = 'all' | 'continued' | 'discontinued';
+
+export type CoursePayload = {
+    course: Course;
+}
+
+export type SetHasMoreCoursesPayload = {
+    hasMore: boolean;
+}
+
+export type SetRefreshCoursesPayload = {
+    refresh: boolean;
+}
+
+export type SetCoursesPayload = {
+    courses: Course[];
+}
+
+export type SetCoursesHistoryPayload = {
+    newScreen: string;
+}
+
+export type SetCoursesPaginationPayload = {
+    pagination: Pagination;
 }

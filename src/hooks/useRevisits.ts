@@ -28,6 +28,7 @@ import { useAuth, useImage, useStatus } from './';
 
 import { Revisit, RevisitsState } from '../interfaces/revisits';
 import { RevisitFormValues } from '../components/revisits/RevisitForm/interfaces';
+import { Pagination } from '../interfaces/ui';
 
 const useRevisits = () => {
     const dispatch = useAppDispatch();
@@ -46,7 +47,7 @@ const useRevisits = () => {
     const setRefreshRevisits = (refresh: boolean) => dispatch(setRefreshRevisitsAction({ refresh }));
     const setRevisits = (revisits: Revisit[]) => dispatch(setRevisitsAction({ revisits }));
     const setRevisitsScreenHistory = (newScreen: string) => dispatch(setRevisitsScreenHistoryAction({ newScreen }));
-    const setRevisitsPagination = (pagination: { from: number, to: number }) => dispatch(setRevisitsPaginationAction({ pagination }));
+    const setRevisitsPagination = (pagination: Pagination) => dispatch(setRevisitsPaginationAction({ pagination }));
     const setSelectedRevisit = (revisit: Revisit) => dispatch(setSelectedRevisitAction({ revisit }));
 
     const loadRevisits = async (filter: 'all' | 'visited' | 'unvisited', refresh: boolean = false, loadMore: boolean = false) => {

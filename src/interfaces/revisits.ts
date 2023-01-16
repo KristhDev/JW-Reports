@@ -1,3 +1,5 @@
+import { Pagination } from './ui';
+
 export type RevisitsStackParamsList = {
     RevisitsTopTabsNavigation: undefined;
     RevisitDetailScreen: undefined;
@@ -30,10 +32,7 @@ export interface RevisitsState {
     refreshRevisits: boolean;
     revisits: Revisit[];
     revisitsScreenHistory: string[];
-    revisitsPagination: {
-        from: number;
-        to: number;
-    }
+    revisitsPagination: Pagination;
     seletedRevisit: Revisit;
 }
 
@@ -73,8 +72,5 @@ export type SetRevisitsHistoryPayload = {
 }
 
 export type SetRevisitsPaginationPayload = {
-    pagination: {
-        to: number;
-        from: number;
-    }
+    pagination: Pagination;
 }

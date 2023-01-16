@@ -84,7 +84,7 @@ export const RevisitCard: FC<RevisitCardProps> = ({ onDelete, onRevisit, revisit
                 >
                     <MenuTrigger text="" />
 
-                    <MenuOptions optionsContainerStyle={{ backgroundColor: colors.card, borderRadius: 5 }}>
+                    <MenuOptions optionsContainerStyle={{ backgroundColor: colors.card, borderRadius: 5, width: 220 }}>
                         <MenuOption onSelect={ handleEdit }>
                             <Text
                                 style={{
