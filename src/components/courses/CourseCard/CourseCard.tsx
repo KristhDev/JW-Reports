@@ -7,7 +7,7 @@ import Icon from 'react-native-vector-icons/Ionicons';
 
 import { Fab } from '../../ui';
 
-import { useTheme } from '../../../hooks';
+import { useCourses, useTheme } from '../../../hooks';
 
 import { CourseCardProps } from './interfaces';
 
@@ -17,6 +17,7 @@ export const CourseCard: FC<CourseCardProps> = ({ course, onCourse, onDelete }) 
     const [ isOpen, setIsOpen ] = useState<boolean>(false);
     const { navigate } = useNavigation();
 
+    const { setSelectedCourse } = useCourses();
     const { state: { colors }, BUTTON_TRANSPARENT_COLOR } = useTheme();
 
     const handleRevisitDetail = () => {
@@ -25,9 +26,9 @@ export const CourseCard: FC<CourseCardProps> = ({ course, onCourse, onDelete }) 
     }
 
     const handleEdit = () => {
-        // setIsOpen(false);
-        // setSelectedCourse(course);
-        // navigate('AddOrEditCourseScreen' as never);
+        setIsOpen(false);
+        setSelectedCourse(course);
+        navigate('AddOrEditCourseScreen' as never);
     }
 
     const handleRevist = () => {

@@ -15,10 +15,26 @@ import themeStyles from '../../../theme/styles';
 type CoursesProps = MaterialTopTabScreenProps<CoursesTopTabsParamsList>;
 
 const Courses: FC<CoursesProps> = ({ route }) => {
-    const { addListener, removeListener, getState } = useNavigation();
+    const { addListener, removeListener, getState, navigate } = useNavigation();
 
-    const { setCoursesScreenHistory } = useCourses();
+    const { setCoursesScreenHistory, setSelectedCourse } = useCourses();
     const { state: { colors } } = useTheme();
+
+    const handleNavigate = () => {
+        setSelectedCourse({
+            id: '',
+            user_id: '',
+            person_name: '',
+            person_about: '',
+            person_address: '',
+            publication: '',
+            suspended: false,
+            created_at: new Date().toString(),
+            updated_at: new Date().toString()
+        });
+
+        navigate('AddOrEditCourseScreen' as never);
+    }
 
     useEffect(() => {
         addListener('focus', () => {
@@ -51,7 +67,7 @@ const Courses: FC<CoursesProps> = ({ route }) => {
                                 style={{ marginLeft: 3 }}
                             />
                         }
-                        onPress={ () => {} }
+                        onPress={ handleNavigate }
                         style={ themeStyles.fabBottomRight }
                         touchColor="rgba(0, 0, 0, 0.15)"
                     />

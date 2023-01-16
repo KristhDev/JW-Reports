@@ -3,10 +3,10 @@ import { CardStyleInterpolators, createStackNavigator } from '@react-navigation/
 
 import CoursesTopTabsNavigation from './CoursesTopTabsNavigation';
 
-// import { AddOrEditRevisit, RevisitDetail } from '../../screens/revisits';
+import { AddOrEditCourse } from '../../screens/courses';
 
-// import { RevisitHeader } from '../../components/revisits';
-// import { BackButton } from '../../components/ui';
+import { CourseHeader } from '../../components/courses';
+import { BackButton } from '../../components/ui';
 
 import { useCourses, useTheme } from '../../hooks';
 
@@ -15,9 +15,8 @@ import { CoursesStackParamsList } from '../../interfaces/courses';
 const Stack = createStackNavigator<CoursesStackParamsList>();
 
 const CoursesStackNavigation = () => {
-    // const { state: { selectedCourse } } = useCourses();
+    const { state: { selectedCourse } } = useCourses();
     const { state: { colors } } = useTheme();
-
 
     // const revisitDetailTitle = `Curso a ${ selectedCourse.person_name }`;
 
@@ -55,21 +54,22 @@ const CoursesStackNavigation = () => {
                     title: (revisitDetailTitle.length >= 22) ? revisitDetailTitle.slice(0, 22) + '...' : revisitDetailTitle
                 }}
             />
+            */}
 
             <Stack.Screen
-                component={ AddOrEditRevisit }
-                name="AddOrEditRevisitScreen"
+                component={ AddOrEditCourse }
+                name="AddOrEditCourseScreen"
                 options={{
                     headerLeft: ({ onPress }) => <BackButton onPress={ onPress } />,
                     headerRight: () => (
-                        <RevisitHeader
-                            deleteButton={ seletedRevisit.id !== '' }
+                        <CourseHeader
+                            deleteButton={ selectedCourse.id !== '' }
                             editButton={ false }
                         />
                     ),
-                    title: `${ seletedRevisit.id !== '' ? 'Editar' : 'Agregar' } revisita`
+                    title: `${ selectedCourse.id !== '' ? 'Editar' : 'Agregar' } curso`
                 }}
-            /> */}
+            />
         </Stack.Navigator>
     );
 }

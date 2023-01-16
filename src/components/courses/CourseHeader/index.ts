@@ -1,0 +1,1 @@
+export { CourseHeader } from './CourseHeader';

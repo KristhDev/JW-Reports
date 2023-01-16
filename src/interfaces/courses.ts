@@ -2,6 +2,7 @@ import { Pagination } from './ui';
 
 export type CoursesStackParamsList = {
     CoursesTopTabsNavigation: undefined;
+    AddOrEditCourseScreen: undefined;
 }
 
 export type CoursesTopTabsParamsList = {
