@@ -29,6 +29,7 @@
     "react-native-dotenv": "^3.4.6",
     "react-native-flipper": "^0.176.1",
     "react-native-gesture-handler": "^2.8.0",
+    "react-native-image-crop-picker": "0.38.1",
     "react-native-keyboard-aware-scroll-view": "^0.9.5",
     "react-native-modal-datetime-picker": "^14.0.1",
     "react-native-month-year-picker": "^1.9.0",

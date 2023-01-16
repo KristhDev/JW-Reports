@@ -1,18 +1,25 @@
-import React from 'react';
-import { ActivityIndicator, View } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { ActivityIndicator, Image, Text, View, useWindowDimensions } from 'react-native';
 import { Formik } from 'formik';
 import { date, object, string } from 'yup';
 import Icon from 'react-native-vector-icons/Ionicons';
 
 import { Button, DatetimeField, FormField } from '../../ui';
 
-import { useRevisits, useStatus, useTheme } from '../../../hooks';
+import { useImagePicker, useRevisits, useStatus, useTheme } from '../../../hooks';
 
 import { RevisitFormValues } from './interfaces';
 
 import themeStyles from '../../../theme/styles';
 
+const defaultRevisit = require('../../../assets/revisit-default.jpg');
+
 export const RevisitForm = () => {
+    const [ imageHeight, setImageHeight ] = useState<number>(0);
+    const [ imageUri, setImageUri ] = useState<string>('https://local-image.com/images.jpg');
+    const { width: windowWidth } = useWindowDimensions();
+
+    const { image, takeImageToGallery, takePhoto } = useImagePicker();
     const { state: { seletedRevisit, isRevisitLoading }, saveRevisit, updateRevisit } = useRevisits();
     const { setErrorForm } = useStatus();
     const { state: { colors } } = useTheme();
@@ -36,6 +43,30 @@ export const RevisitForm = () => {
         next_visit: date()
             .required('La fecha de la próxima visita no puede estar vacía'),
     });
+
+    useEffect(() => {
+        if (!seletedRevisit?.photo) {
+            const { height, width, uri } = Image.resolveAssetSource(defaultRevisit);
+            const h = windowWidth / width * height;
+            setImageHeight(h);
+            setImageUri(uri);
+        }
+        else {
+            Image.getSize(seletedRevisit.photo, (width, height) => {
+                const h = windowWidth / width * height;
+                setImageHeight(h);
+                setImageUri(seletedRevisit.photo!);
+            });
+        }
+    }, []);
+
+    useEffect(() => {
+        if (image?.path) {
+            const h = windowWidth / (image?.width || windowWidth) * (image?.height || 200);
+            setImageHeight(h);
+            setImageUri(image.path);
+        }
+    }, [ image ]);
 
     return (
         <Formik
@@ -81,6 +112,45 @@ export const RevisitForm = () => {
                         numberOfLines={ 4 }
                         placeholder="Ingrese la dirección"
                     />
+
+                    <View style={{ ...themeStyles.formField, width: windowWidth * 0.9 }}>
+                        <Text style={{ ...themeStyles.formLabel, color: colors.titleText }}>
+                            Foto
+                        </Text>
+
+                        <Image
+                            source={{ uri: imageUri }}
+                            style={{ height: imageHeight, width: '100%' }}
+                        />
+
+                        <View style={{ flexDirection: 'row', justifyContent: 'space-around', marginTop: 20 }}>
+                            <Button
+                                icon={
+                                    <Icon
+                                        color={ colors.contentHeader }
+                                        name="image-outline"
+                                        size={ 25 }
+                                        style={{ marginLeft: 5 }}
+                                    />
+                                }
+                                onPress={ takeImageToGallery }
+                                text="Galeria"
+                            />
+
+                            <Button
+                                icon={
+                                    <Icon
+                                        color={ colors.contentHeader }
+                                        name="camera-outline"
+                                        size={ 25 }
+                                        style={{ marginLeft: 5 }}
+                                    />
+                                }
+                                onPress={ takePhoto }
+                                text="Camara"
+                            />
+                        </View>
+                    </View>
 
                     <DatetimeField
                         icon={
