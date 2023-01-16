@@ -18,29 +18,29 @@ const RevisitModal: FC<RevisitModalProps> = ({ isOpen, onClose }) => {
     const [ completeMsg, setCompleteMsg ] = useState<string>('');
     const [ revisitPerson, setRevisitPerson ] = useState<boolean>(false);
 
-    const { state: { seletedRevisit, isRevisitLoading }, completeRevisit, saveRevisit } = useRevisits();
+    const { state: { selectedRevisit, isRevisitLoading }, completeRevisit, saveRevisit } = useRevisits();
     const { state: { colors } } = useTheme();
 
-    const modalTitle = (seletedRevisit.done)
-        ? `¿Quieres volver a visitar a ${ seletedRevisit.person_name }?`
+    const modalTitle = (selectedRevisit.done)
+        ? `¿Quieres volver a visitar a ${ selectedRevisit.person_name }?`
         : '¿Estás seguro de marcar está revistada como visitada?';
 
     const handleConfirm = async (values?: { next_visit: Date }) => {
-        if (!seletedRevisit.done) {
+        if (!selectedRevisit.done) {
             const msg = await completeRevisit(onClose);
             setCompleteMsg(msg);
         }
-        else if (seletedRevisit.done && !values?.next_visit) {
+        else if (selectedRevisit.done && !values?.next_visit) {
             setRevisitPerson(true);
         }
         else if (values?.next_visit) {
             setRevisitPerson(false);
             saveRevisit({
                 ...values,
-                about: seletedRevisit.about,
-                address: seletedRevisit.address,
-                person_name: seletedRevisit.person_name
-            }, seletedRevisit.photo, undefined, false, onClose);
+                about: selectedRevisit.about,
+                address: selectedRevisit.address,
+                person_name: selectedRevisit.person_name
+            }, selectedRevisit.photo, undefined, false, onClose);
         }
     }
 

@@ -28,7 +28,7 @@ const INITIAL_STATE: RevisitsState = {
         from: 0,
         to: 9
     },
-    seletedRevisit: {
+    selectedRevisit: {
         id: '',
         user_id: '',
         person_name: '',
@@ -67,7 +67,7 @@ const revisitsSlice = createSlice({
                 from: 0,
                 to: 9
             }
-            state.seletedRevisit = {
+            state.selectedRevisit = {
                 id: '',
                 user_id: '',
                 person_name: '',
@@ -123,7 +123,7 @@ const revisitsSlice = createSlice({
         },
 
         setSelectedRevisit: (state, action: PayloadAction<RevisitPayload>) => {
-            state.seletedRevisit = action.payload.revisit;
+            state.selectedRevisit = action.payload.revisit;
             state.isRevisitLoading = false;
         },
 
@@ -134,9 +134,9 @@ const revisitsSlice = createSlice({
                     : revisit
             );
             state.revisits = state.revisits.sort((a, b) => new Date(b.next_visit).getTime() - new Date(a.next_visit).getTime());
-            state.seletedRevisit = (state.seletedRevisit.id === action.payload.revisit.id)
+            state.selectedRevisit = (state.selectedRevisit.id === action.payload.revisit.id)
                 ? action.payload.revisit
-                : state.seletedRevisit;
+                : state.selectedRevisit;
             state.isRevisitLoading = false;
         }
     }

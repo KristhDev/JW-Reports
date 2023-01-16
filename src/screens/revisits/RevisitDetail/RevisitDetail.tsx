@@ -18,19 +18,19 @@ const RevisitDetail = () => {
     const { addListener, removeListener, getState } = useNavigation();
     const { width: windowWidth } = useWindowDimensions();
 
-    const { state: { seletedRevisit }, setSelectedRevisit } = useRevisits();
+    const { state: { selectedRevisit }, setSelectedRevisit } = useRevisits();
     const { state: { colors } } = useTheme();
 
-    const nextVist = dayjs(seletedRevisit.next_visit);
+    const nextVist = dayjs(selectedRevisit.next_visit);
 
     useEffect(() => {
-        if (seletedRevisit.photo) {
-            Image.getSize(seletedRevisit.photo, (width, height) => {
+        if (selectedRevisit.photo) {
+            Image.getSize(selectedRevisit.photo, (width, height) => {
                 const h = windowWidth / width * height;
                 setImageHeight(h);
             });
         }
-    }, [ seletedRevisit.photo ]);
+    }, [ selectedRevisit.photo ]);
 
     useEffect(() => {
         addListener('blur', () => {
@@ -55,7 +55,7 @@ const RevisitDetail = () => {
         return () => {
             removeListener('blur', () => {});
         }
-    }, [ seletedRevisit ]);
+    }, [ selectedRevisit ]);
 
     return (
         <>
@@ -66,12 +66,12 @@ const RevisitDetail = () => {
             >
                 <Title
                     containerStyle={ themeStyles.titleContainer }
-                    text={ seletedRevisit.person_name.toUpperCase() }
+                    text={ selectedRevisit.person_name.toUpperCase() }
                     textStyle={{ fontSize: 24 }}
                 />
 
                 {
-                    (!seletedRevisit.done) ? (
+                    (!selectedRevisit.done) ? (
                         <View style={{ ...styles.sectionStyle, paddingTop: 40 }}>
                             <View style={{ flexDirection: 'row' }}>
                                 <Text
@@ -123,11 +123,11 @@ const RevisitDetail = () => {
                             color: colors.text
                         }}
                     >
-                        Información de { seletedRevisit.person_name }:
+                        Información de { selectedRevisit.person_name }:
                     </Text>
 
                     <Text style={{ color: colors.text, fontSize: 19 }}>
-                        { seletedRevisit.about }
+                        { selectedRevisit.about }
                     </Text>
                 </View>
 
@@ -142,12 +142,12 @@ const RevisitDetail = () => {
                     </Text>
 
                     <Text style={{ color: colors.text, fontSize: 19 }}>
-                        { seletedRevisit.address }
+                        { selectedRevisit.address }
                     </Text>
                 </View>
 
                 {
-                    seletedRevisit.photo && (
+                    selectedRevisit.photo && (
                         <View style={ styles.sectionStyle }>
                             <Text
                                 style={{
@@ -160,18 +160,18 @@ const RevisitDetail = () => {
 
                             <Image
                                 style={{ height: imageHeight, width: '100%' }}
-                                source={{ uri: seletedRevisit.photo }}
+                                source={{ uri: selectedRevisit.photo }}
                             />
 
                             <Text style={{ ...styles.imageText, color: colors.modalText }}>
-                                La foto es para ayudarte a recordar el lugar de residencia de { seletedRevisit.person_name }
+                                La foto es para ayudarte a recordar el lugar de residencia de { selectedRevisit.person_name }
                             </Text>
                         </View>
                     )
                 }
 
                 <Text style={{ ...styles.dateCreatedText, color: colors.modalText }}>
-                    { dayjs(seletedRevisit.created_at).format('DD/MM/YYYY') }
+                    { dayjs(selectedRevisit.created_at).format('DD/MM/YYYY') }
                 </Text>
             </ScrollView>
 

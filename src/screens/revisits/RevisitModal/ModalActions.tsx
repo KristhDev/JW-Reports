@@ -10,12 +10,12 @@ import { ModalActionProps } from './interfaces';
 import themeStyles from '../../../theme/styles';
 
 export const ModalActions: FC<ModalActionProps> = ({ onClose, onConfirm, revisitPerson }) => {
-    const { state: { seletedRevisit } } = useRevisits();
+    const { state: { selectedRevisit } } = useRevisits();
     const { state: { colors }, BUTTON_TRANSLUCENT_COLOR } = useTheme();
 
     const confirmTextButton = (revisitPerson)
         ? 'Guardar'
-        : (seletedRevisit.done)
+        : (selectedRevisit.done)
             ? 'Aceptar'
             : 'Marcar';
 

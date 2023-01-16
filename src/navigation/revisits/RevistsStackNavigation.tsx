@@ -15,11 +15,10 @@ import { RevisitsStackParamsList } from '../../interfaces/revisits';
 const Stack = createStackNavigator<RevisitsStackParamsList>();
 
 const RevisitsStackNavigation = () => {
-    const { state: { seletedRevisit } } = useRevisits();
+    const { state: { selectedRevisit } } = useRevisits();
     const { state: { colors } } = useTheme();
 
-
-    const revisitDetailTitle = `Revisita ${ seletedRevisit.person_name }`;
+    const revisitDetailTitle = `Revisita ${ selectedRevisit.person_name }`;
 
     return (
         <Stack.Navigator
@@ -63,11 +62,11 @@ const RevisitsStackNavigation = () => {
                     headerLeft: ({ onPress }) => <BackButton onPress={ onPress } />,
                     headerRight: () => (
                         <RevisitHeader
-                            deleteButton={ seletedRevisit.id !== '' }
+                            deleteButton={ selectedRevisit.id !== '' }
                             editButton={ false }
                         />
                     ),
-                    title: `${ seletedRevisit.id !== '' ? 'Editar' : 'Agregar' } revisita`
+                    title: `${ selectedRevisit.id !== '' ? 'Editar' : 'Agregar' } revisita`
                 }}
             />
         </Stack.Navigator>

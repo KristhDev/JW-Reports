@@ -130,7 +130,7 @@ const useRevisits = () => {
     const updateRevisit = async (revisitValues: RevisitFormValues, image?: Image) => {
         dispatch(setIsRevisitLoading({ isLoading: true }));
 
-        let photo = state.seletedRevisit.photo;
+        let photo = state.selectedRevisit.photo;
 
         if (image) {
             if (photo) {
@@ -155,7 +155,7 @@ const useRevisits = () => {
                 next_visit: dayjs(revisitValues.next_visit).format('YYYY-MM-DD HH:mm'),
                 updated_at:dayjs().format('YYYY-MM-DD HH:mm')
             })
-            .eq('id', state.seletedRevisit.id)
+            .eq('id', state.selectedRevisit.id)
             .eq('user_id', user.id)
             .select();
 
@@ -175,7 +175,7 @@ const useRevisits = () => {
     const deleteRevisit = async (back: boolean = false, onFinish?: () => void) => {
         dispatch(setIsRevisitDeleting({ isDeleting: true }));
 
-        if (state.seletedRevisit.id === '') {
+        if (state.selectedRevisit.id === '') {
             onFinish && onFinish();
             dispatch(setIsRevisitDeleting({ isDeleting: false }));
 
@@ -187,8 +187,8 @@ const useRevisits = () => {
             return;
         }
 
-        if (state.seletedRevisit.photo) {
-            const { error: errorDelete } = await deleteImage(state.seletedRevisit.photo);
+        if (state.selectedRevisit.photo) {
+            const { error: errorDelete } = await deleteImage(state.selectedRevisit.photo);
 
             const next = setSupabaseError(errorDelete, () => {
                 onFinish && onFinish();
@@ -200,7 +200,7 @@ const useRevisits = () => {
 
         const { error } = await supabase.from('revisits')
             .delete()
-            .eq('id', state.seletedRevisit.id)
+            .eq('id', state.selectedRevisit.id)
             .eq('user_id', user.id);
 
         const next = setSupabaseError(error, () => {
@@ -210,7 +210,7 @@ const useRevisits = () => {
 
         if (next) return;
 
-        dispatch(removeRevisit({ id: state.seletedRevisit.id }));
+        dispatch(removeRevisit({ id: state.selectedRevisit.id }));
         onFinish && onFinish();
         back && goBack();
 
@@ -236,7 +236,7 @@ const useRevisits = () => {
     const completeRevisit = async (onFailFinish?: () => void) => {
         dispatch(setIsRevisitLoading({ isLoading: true }));
 
-        if (state.seletedRevisit.id === '') {
+        if (state.selectedRevisit.id === '') {
             onFailFinish && onFailFinish();
             dispatch(setIsRevisitDeleting({ isDeleting: false }));
 
@@ -253,7 +253,7 @@ const useRevisits = () => {
                 done: true,
                 updated_at:dayjs().format('YYYY-MM-DD HH:mm')
             })
-            .eq('id', state.seletedRevisit.id)
+            .eq('id', state.selectedRevisit.id)
             .eq('user_id', user.id)
             .select();
 

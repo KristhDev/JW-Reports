@@ -10,7 +10,7 @@ import { useRevisits } from '../../../hooks';
 import themeStyles from '../../../theme/styles';
 
 const AddOrEditRevisit = () => {
-    const { state: { seletedRevisit } } = useRevisits();
+    const { state: { selectedRevisit } } = useRevisits();
 
     return (
         <KeyboardAwareScrollView
@@ -20,8 +20,8 @@ const AddOrEditRevisit = () => {
             <View style={{ flex: 1, alignItems: 'center' }}>
                 <Title
                     containerStyle={ themeStyles.titleContainer }
+                    text={ `${ (selectedRevisit.id === '') ? 'Agregar' : 'Editar' } revisita` }
                     textStyle={{ fontSize: 24 }}
-                    text={ `${ (seletedRevisit.id === '') ? 'Agregar' : 'Editar' } revisita` }
                 />
 
                 <RevisitForm />

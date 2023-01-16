@@ -33,7 +33,7 @@ export interface RevisitsState {
     revisits: Revisit[];
     revisitsScreenHistory: string[];
     revisitsPagination: Pagination;
-    seletedRevisit: Revisit;
+    selectedRevisit: Revisit;
 }
 
 export interface Revisit {

@@ -20,12 +20,12 @@ export const RevisitForm = () => {
     const { width: windowWidth } = useWindowDimensions();
 
     const { image, takeImageToGallery, takePhoto } = useImage();
-    const { state: { seletedRevisit, isRevisitLoading }, saveRevisit, updateRevisit } = useRevisits();
+    const { state: { selectedRevisit, isRevisitLoading }, saveRevisit, updateRevisit } = useRevisits();
     const { setErrorForm } = useStatus();
     const { state: { colors } } = useTheme();
 
     const handleSaveOrUpdate = (formValues: RevisitFormValues) => {
-        (seletedRevisit.id === '')
+        (selectedRevisit.id === '')
             ? saveRevisit(formValues, undefined, isChangeImage() ? image : undefined)
             : updateRevisit(formValues, isChangeImage() ? image : undefined);
     }
@@ -45,8 +45,8 @@ export const RevisitForm = () => {
     });
 
     const isChangeImage = () => {
-        if (seletedRevisit?.photo) {
-            return seletedRevisit.photo !== imageUri;
+        if (selectedRevisit?.photo) {
+            return selectedRevisit.photo !== imageUri;
         }
         else {
             const { uri } = Image.resolveAssetSource(defaultRevisit);
@@ -55,17 +55,17 @@ export const RevisitForm = () => {
     }
 
     useEffect(() => {
-        if (!seletedRevisit?.photo) {
+        if (!selectedRevisit?.photo) {
             const { height, width, uri } = Image.resolveAssetSource(defaultRevisit);
             const h = windowWidth / width * height;
             setImageHeight(h);
             setImageUri(uri);
         }
         else {
-            Image.getSize(seletedRevisit.photo, (width, height) => {
+            Image.getSize(selectedRevisit.photo, (width, height) => {
                 const h = windowWidth / width * height;
                 setImageHeight(h);
-                setImageUri(seletedRevisit.photo!);
+                setImageUri(selectedRevisit.photo!);
             });
         }
     }, []);
@@ -81,10 +81,10 @@ export const RevisitForm = () => {
     return (
         <Formik
             initialValues={{
-                person_name: seletedRevisit.person_name,
-                about: seletedRevisit.about,
-                address: seletedRevisit.address,
-                next_visit: new Date(seletedRevisit.next_visit)
+                person_name: selectedRevisit.person_name,
+                about: selectedRevisit.about,
+                address: selectedRevisit.address,
+                next_visit: new Date(selectedRevisit.next_visit)
             }}
             onSubmit={ handleSaveOrUpdate }
             validateOnMount
@@ -190,7 +190,7 @@ export const RevisitForm = () => {
                             )
                         }
                         onPress={ (isValid) ? handleSubmit : () => setErrorForm(errors) }
-                        text={ (seletedRevisit.id !== '') ? 'Actualizar' : 'Guardar' }
+                        text={ (selectedRevisit.id !== '') ? 'Actualizar' : 'Guardar' }
                         touchableStyle={{ marginTop: 30 }}
                     />
                 </View>
