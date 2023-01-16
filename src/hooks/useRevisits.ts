@@ -55,12 +55,8 @@ const useRevisits = () => {
 
         const revisitsPromise = supabase.from('revisits').select().eq('user_id', user.id);
 
-        if (filter === 'visited') {
-            revisitsPromise.eq('done', true);
-        }
-        else if (filter === 'unvisited') {
-            revisitsPromise.eq('done', false);
-        }
+        if (filter === 'visited') revisitsPromise.eq('done', true);
+        else if (filter === 'unvisited') revisitsPromise.eq('done', false);
 
         revisitsPromise.order('next_visit', { ascending: false })
             .order('created_at', { ascending: false })

@@ -53,7 +53,7 @@ const INITIAL_STATE: CoursesState = {
         person_name: '',
         person_about: '',
         person_address: '',
-        book: '',
+        publication: '',
         suspended: false,
         created_at: new Date().toString(),
         updated_at: new Date().toString(),
