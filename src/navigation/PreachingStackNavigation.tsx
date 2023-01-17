@@ -1,10 +1,9 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { CardStyleInterpolators, createStackNavigator } from '@react-navigation/stack';
 
 import { AddOrEditPreaching, Home } from '../screens/preaching';
 
-import { PreachingHeader } from '../components/preaching';
-import { BackButton, HomeHeader } from '../components/ui';
+import { BackButton, HeaderButtons } from '../components/ui';
 
 import { usePreaching, useTheme } from '../hooks';
 
@@ -13,8 +12,14 @@ import { PreachingStackParamsList } from '../interfaces/preaching';
 const Stack = createStackNavigator<PreachingStackParamsList>();
 
 const PreachingStackNavigation = () => {
-    const { state: { seletedPreaching, selectedDate }, setSelectedDate, loadPreachings } = usePreaching();
+    const [ showDeleteModal, setShowDeleteModal ] = useState<boolean>(false);
+
+    const { state: { isPreachingDeleting, seletedPreaching, selectedDate }, deletePreaching, setSelectedDate, loadPreachings } = usePreaching();
     const { state: { colors } } = useTheme();
+
+    const handleDeleteConfirm = () => {
+        deletePreaching(() => setShowDeleteModal(false));
+    }
 
     useEffect(() => {
         setSelectedDate(new Date());
@@ -42,7 +47,13 @@ const PreachingStackNavigation = () => {
                 component={ Home }
                 name="HomeScreen"
                 options={{
-                    headerRight: HomeHeader,
+                    headerRight: () => (
+                        <HeaderButtons
+                            logoutButton
+                            changeMonthButton
+                            settingsButtons
+                        />
+                    ),
                     title: 'Inicio'
                 }}
             />
@@ -53,8 +64,14 @@ const PreachingStackNavigation = () => {
                 options={{
                     headerLeft: ({ onPress }) => <BackButton onPress={ onPress } />,
                     headerRight: () => (
-                        <PreachingHeader
+                        <HeaderButtons
                             deleteButton={ seletedPreaching.id !== '' }
+                            deleteModalText="¿Estás seguro de eliminar este día de predicación?"
+                            isDeleteModalLoading={ isPreachingDeleting }
+                            onCloseDeleteModal={ () => setShowDeleteModal(false) }
+                            onConfirmDeleteModal={ handleDeleteConfirm }
+                            onShowDeleteModal={ () => setShowDeleteModal(true) }
+                            showDeleteModal={ showDeleteModal }
                         />
                     ),
                     title: `${ seletedPreaching.id !== '' ? 'Editar' : 'Agregar' } predicación`

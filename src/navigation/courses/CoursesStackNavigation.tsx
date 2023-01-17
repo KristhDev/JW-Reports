@@ -1,12 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { CardStyleInterpolators, createStackNavigator } from '@react-navigation/stack';
 
 import CoursesTopTabsNavigation from './CoursesTopTabsNavigation';
 
 import { AddOrEditCourse } from '../../screens/courses';
 
-import { CourseHeader } from '../../components/courses';
-import { BackButton } from '../../components/ui';
+import { BackButton, HeaderButtons } from '../../components/ui';
 
 import { useCourses, useTheme } from '../../hooks';
 
@@ -15,10 +14,16 @@ import { CoursesStackParamsList } from '../../interfaces/courses';
 const Stack = createStackNavigator<CoursesStackParamsList>();
 
 const CoursesStackNavigation = () => {
-    const { state: { selectedCourse } } = useCourses();
+    const [ showDeleteModal, setShowDeleteModal ] = useState<boolean>(false);
+
+    const { state: { isCourseDeleting, selectedCourse }, deleteCourse } = useCourses();
     const { state: { colors } } = useTheme();
 
     // const revisitDetailTitle = `Curso a ${ selectedCourse.person_name }`;
+
+    const handleDeleteConfirm = () => {
+        deleteCourse(true, () => setShowDeleteModal(false));
+    }
 
     return (
         <Stack.Navigator
@@ -62,9 +67,14 @@ const CoursesStackNavigation = () => {
                 options={{
                     headerLeft: ({ onPress }) => <BackButton onPress={ onPress } />,
                     headerRight: () => (
-                        <CourseHeader
+                        <HeaderButtons
                             deleteButton={ selectedCourse.id !== '' }
-                            editButton={ false }
+                            deleteModalText="¿Estás seguro de eliminar este curso?"
+                            isDeleteModalLoading={ isCourseDeleting }
+                            onCloseDeleteModal={ () => setShowDeleteModal(false) }
+                            onConfirmDeleteModal={ handleDeleteConfirm }
+                            onShowDeleteModal={ () => setShowDeleteModal(true) }
+                            showDeleteModal={ showDeleteModal }
                         />
                     ),
                     title: `${ selectedCourse.id !== '' ? 'Editar' : 'Agregar' } curso`

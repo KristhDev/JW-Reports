@@ -1,1 +1,0 @@
-export { PreachingHeader } from './PreachingHeader';

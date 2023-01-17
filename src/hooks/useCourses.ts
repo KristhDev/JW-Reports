@@ -25,7 +25,7 @@ import { Pagination } from '../interfaces/ui';
 
 const useCourses = () => {
     const dispatch = useAppDispatch();
-    const { goBack } = useNavigation();
+    const { navigate } = useNavigation();
 
     const state = useSelector<RootState, CoursesState>(store => store.courses);
 
@@ -100,7 +100,7 @@ const useCourses = () => {
 
         dispatch(removeCourse({ id: state.selectedCourse.id }));
         onFinish && onFinish();
-        back && goBack();
+        back && navigate('CoursesScreen' as never);
 
         setSelectedCourse({
             id: '',

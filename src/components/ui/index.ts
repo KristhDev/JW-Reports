@@ -4,7 +4,7 @@ export { DatetimeField } from './DatetimeField';
 export { EyeBtn } from './EyeBtn';
 export { Fab } from './Fab';
 export { FormField } from './FormField';
-export { HomeHeader } from './HomeHeader';
+export { HeaderButtons } from './HeaderButtons';
 export { InfoText } from './InfoText';
 export { TabBar } from './TabBar';
 export { TabBarButton } from './TabBarButton';

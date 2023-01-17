@@ -1,12 +1,12 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { CardStyleInterpolators, createStackNavigator } from '@react-navigation/stack';
+import { useNavigation } from '@react-navigation/native';
 
 import RevisitsTopTabsNavigation from './RevisitsTopTabsNavigation';
 
 import { AddOrEditRevisit, RevisitDetail } from '../../screens/revisits';
 
-import { RevisitHeader } from '../../components/revisits';
-import { BackButton } from '../../components/ui';
+import { BackButton, HeaderButtons } from '../../components/ui';
 
 import { useRevisits, useTheme } from '../../hooks';
 
@@ -15,10 +15,17 @@ import { RevisitsStackParamsList } from '../../interfaces/revisits';
 const Stack = createStackNavigator<RevisitsStackParamsList>();
 
 const RevisitsStackNavigation = () => {
-    const { state: { selectedRevisit } } = useRevisits();
+    const [ showDeleteModal, setShowDeleteModal ] = useState<boolean>(false);
+    const { navigate } = useNavigation();
+
+    const { state: { isRevisitDeleting, selectedRevisit }, deleteRevisit } = useRevisits();
     const { state: { colors } } = useTheme();
 
     const revisitDetailTitle = `Revisita ${ selectedRevisit.person_name }`;
+
+    const handleDeleteConfirm = () => {
+        deleteRevisit(true, () => setShowDeleteModal(false));
+    }
 
     return (
         <Stack.Navigator
@@ -46,9 +53,17 @@ const RevisitsStackNavigation = () => {
                 options={{
                     headerLeft: ({ onPress }) => <BackButton onPress={ onPress } />,
                     headerRight: () => (
-                        <RevisitHeader
+                        <HeaderButtons
                             deleteButton={ true }
+                            deleteModalText="¿Estás seguro de eliminar está revisita?"
+                            isDeleteModalLoading={ isRevisitDeleting }
+                            onCloseDeleteModal={ () => setShowDeleteModal(false) }
+                            onConfirmDeleteModal={ handleDeleteConfirm }
+                            onShowDeleteModal={ () => setShowDeleteModal(true) }
+                            showDeleteModal={ showDeleteModal }
+
                             editButton={ true }
+                            onPressEditButton={ () => navigate('AddOrEditRevisitScreen' as never) }
                         />
                     ),
                     title: (revisitDetailTitle.length >= 22) ? revisitDetailTitle.slice(0, 22) + '...' : revisitDetailTitle
@@ -61,8 +76,15 @@ const RevisitsStackNavigation = () => {
                 options={{
                     headerLeft: ({ onPress }) => <BackButton onPress={ onPress } />,
                     headerRight: () => (
-                        <RevisitHeader
+                        <HeaderButtons
                             deleteButton={ selectedRevisit.id !== '' }
+                            deleteModalText="¿Estás seguro de eliminar está revisita?"
+                            isDeleteModalLoading={ isRevisitDeleting }
+                            onCloseDeleteModal={ () => setShowDeleteModal(false) }
+                            onConfirmDeleteModal={ handleDeleteConfirm }
+                            onShowDeleteModal={ () => setShowDeleteModal(true) }
+                            showDeleteModal={ showDeleteModal }
+
                             editButton={ false }
                         />
                     ),

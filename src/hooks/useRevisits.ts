@@ -32,7 +32,7 @@ import { Pagination } from '../interfaces/ui';
 
 const useRevisits = () => {
     const dispatch = useAppDispatch();
-    const { goBack } = useNavigation();
+    const { navigate } = useNavigation();
 
     const { state: { user } } = useAuth();
     const { uploadImage, deleteImage } = useImage();
@@ -124,7 +124,7 @@ const useRevisits = () => {
 
         setStatus({ code: 201, msg: successMsg });
 
-        back && goBack();
+        back && navigate('RevisitsTopTabsNavigation' as never);
     }
 
     const updateRevisit = async (revisitValues: RevisitFormValues, image?: Image) => {
@@ -169,7 +169,7 @@ const useRevisits = () => {
             msg: 'Haz actualizado tu revisita correctamente.'
         });
 
-        goBack();
+        navigate('RevisitsTopTabsNavigation' as never);
     }
 
     const deleteRevisit = async (back: boolean = false, onFinish?: () => void) => {
@@ -212,7 +212,7 @@ const useRevisits = () => {
 
         dispatch(removeRevisit({ id: state.selectedRevisit.id }));
         onFinish && onFinish();
-        back && goBack();
+        back && navigate('RevisitsTopTabsNavigation' as never);
 
         setSelectedRevisit({
             id: '',
