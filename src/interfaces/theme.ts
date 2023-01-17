@@ -12,6 +12,7 @@ export interface Colors {
     buttonDark: string;
     card: string;
     contentHeader: string;
+    focus: string;
     header: string;
     headerText: string;
     icon: string;

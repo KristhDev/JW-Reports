@@ -106,7 +106,6 @@ export const RevisitForm = () => {
                     />
 
                     <FormField
-                        inputStyle={{ maxHeight: 225 }}
                         label="Información de la persona:"
                         multiline
                         name="about"
@@ -115,7 +114,6 @@ export const RevisitForm = () => {
                     />
 
                     <FormField
-                        inputStyle={{ maxHeight: 105 }}
                         label="Dirección:"
                         multiline
                         name="address"
@@ -130,7 +128,7 @@ export const RevisitForm = () => {
 
                         <Image
                             source={{ uri: imageUri }}
-                            style={{ height: imageHeight, width: '100%' }}
+                            style={{ borderRadius: 5, height: imageHeight, width: '100%' }}
                         />
 
                         <View style={{ flexDirection: 'row', justifyContent: 'space-around', marginTop: 20 }}>
@@ -144,7 +142,7 @@ export const RevisitForm = () => {
                                     />
                                 }
                                 onPress={ takeImageToGallery }
-                                text="Galeria"
+                                text="Galería"
                             />
 
                             <Button
@@ -157,7 +155,7 @@ export const RevisitForm = () => {
                                     />
                                 }
                                 onPress={ takePhoto }
-                                text="Camara"
+                                text="Cámara"
                             />
                         </View>
                     </View>
