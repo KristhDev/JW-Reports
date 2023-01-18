@@ -1,10 +1,12 @@
 import { useSelector } from 'react-redux';
 import { useNavigation } from '@react-navigation/native';
+import dayjs from 'dayjs';
 
 import { supabase } from '../supabase/config';
 
 import { RootState, useAppDispatch } from '../features/store';
 import {
+    addCourse,
     addCourses as addCoursesAction,
     removeCourse,
     removeCourses as removeCoursesAction,
@@ -13,15 +15,18 @@ import {
     setCoursesScreenHistory as setCoursesScreenHistoryAction,
     setHasMoreCourses,
     setIsCourseDeleting,
+    setIsCourseLoading,
     setIsCoursesLoading as setIsCoursesLoadingAction,
     setRefreshCourses as setRefreshCoursesAction,
     setSelectedCourse as setSelectedCourseAction,
+    updateCourse as updateCourseAction
 } from '../features/courses';
 
 import { useAuth, useStatus } from './';
 
 import { Course, CourseFilter, CoursesState } from '../interfaces/courses';
 import { Pagination } from '../interfaces/ui';
+import { CourseFormValues } from '../components/courses/CourseForm/interfaces';
 
 const useCourses = () => {
     const dispatch = useAppDispatch();
@@ -69,6 +74,56 @@ const useCourses = () => {
 
         dispatch(setHasMoreCourses({ hasMore: (data!.length >= 10) }));
         (loadMore) ? addCourses(data!) : setCourses(data!);
+    }
+
+    const saveCourse = async (courseValues: CourseFormValues, onFinish?: () => void) => {
+        dispatch(setIsCourseLoading({ isLoading: true }));
+
+        const { data, error } = await supabase.from('courses')
+            .insert({ ...courseValues, user_id: user.id })
+            .select();
+
+        const next = setSupabaseError(error, () => {
+            dispatch(setIsCourseLoading({ isLoading: false }));
+            onFinish && onFinish();
+        });
+
+        if (next) return;
+
+        dispatch(addCourse({ course: data![0] }));
+        onFinish && onFinish();
+
+        setStatus({
+            code: 201,
+            msg: 'Haz agregado un curso correctamente'
+        });
+
+        navigate('CoursesTopTabsNavigation' as never);
+    }
+
+    const updateCourse = async (courseValues: CourseFormValues) => {
+        dispatch(setIsCourseLoading({ isLoading: true }));
+
+        const { data, error } = await supabase.from('courses')
+            .update({
+                ...courseValues,
+                updated_at: dayjs().format('YYYY-MM-DD HH:mm')
+            })
+            .eq('id', state.selectedCourse.id)
+            .eq('user_id', user.id)
+            .select();
+
+        const next = setSupabaseError(error, () => dispatch(setIsCourseLoading({ isLoading: false })));
+        if (next) return;
+
+        dispatch(updateCourseAction({ course: data![0] }));
+
+        setStatus({
+            code: 200,
+            msg: 'Haz actualizado el curso correctamente.'
+        });
+
+        navigate('CoursesTopTabsNavigation' as never);
     }
 
     const deleteCourse = async (back: boolean = false, onFinish?: () => void) => {
@@ -133,6 +188,8 @@ const useCourses = () => {
         // Functions
         deleteCourse,
         loadCourses,
+        saveCourse,
+        updateCourse
     }
 }
 

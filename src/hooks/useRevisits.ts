@@ -153,7 +153,7 @@ const useRevisits = () => {
                 ...revisitValues,
                 photo,
                 next_visit: dayjs(revisitValues.next_visit).format('YYYY-MM-DD HH:mm'),
-                updated_at:dayjs().format('YYYY-MM-DD HH:mm')
+                updated_at: dayjs().format('YYYY-MM-DD HH:mm')
             })
             .eq('id', state.selectedRevisit.id)
             .eq('user_id', user.id)
