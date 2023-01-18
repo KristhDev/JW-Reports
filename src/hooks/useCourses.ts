@@ -76,6 +76,47 @@ const useCourses = () => {
         (loadMore) ? addCourses(data!) : setCourses(data!);
     }
 
+    const activeOrSuspendCourse = async (onFinish?: () => void) => {
+        dispatch(setIsCourseLoading({ isLoading: true }));
+
+        if (state.selectedCourse.id === '') {
+            dispatch(setIsCourseLoading({ isLoading: false }));
+            onFinish && onFinish();
+
+            setStatus({
+                code: 400,
+                msg: 'No hay una curso seleccionado para eliminar.'
+            });
+
+            return;
+        }
+
+        const { data, error } = await supabase.from('courses')
+            .update({
+                suspended: !state.selectedCourse.suspended,
+                updated_at: dayjs().format('YYYY-MM-DD HH:mm')
+            })
+            .eq('id', state.selectedCourse.id)
+            .eq('user_id', user.id)
+            .select();
+
+        const next = setSupabaseError(error, () => {
+            dispatch(setIsCourseLoading({ isLoading: false }));
+            onFinish && onFinish();
+        });
+
+        if (next) return;
+
+        const msg = (data![0].suspended)
+            ? 'Haz suspendido el curso correctamente.'
+            : 'Haz comenzado de nuevo el curso correctamente.'
+
+        dispatch(updateCourseAction({ course: data![0] }));
+        onFinish && onFinish();
+
+        setStatus({ code: 200, msg });
+    }
+
     const saveCourse = async (courseValues: CourseFormValues, onFinish?: () => void) => {
         dispatch(setIsCourseLoading({ isLoading: true }));
 
@@ -135,7 +176,7 @@ const useCourses = () => {
 
             setStatus({
                 code: 400,
-                msg: 'No hay una revisita seleccionada para eliminar.'
+                msg: 'No hay una curso seleccionado para eliminar.'
             });
 
             return;
@@ -186,6 +227,7 @@ const useCourses = () => {
         setSelectedCourse,
 
         // Functions
+        activeOrSuspendCourse,
         deleteCourse,
         loadCourses,
         saveCourse,

@@ -31,9 +31,9 @@ export const CourseCard: FC<CourseCardProps> = ({ course, onCourse, onDelete }) 
         navigate('AddOrEditCourseScreen' as never);
     }
 
-    const handleRevist = () => {
-        // setIsOpen(false);
-        // onCourse();
+    const handleCourse = () => {
+        setIsOpen(false);
+        onCourse();
     }
 
     const handleDelete = () => {
@@ -94,14 +94,14 @@ export const CourseCard: FC<CourseCardProps> = ({ course, onCourse, onDelete }) 
                             </Text>
                         </MenuOption>
 
-                        <MenuOption onSelect={ handleRevist }>
+                        <MenuOption onSelect={ handleCourse }>
                             <Text
                                 style={{
                                     color: colors.text,
                                     ...styles.textMenuOpt
                                 }}
                             >
-                                { (course.suspended) ? 'Continuar curso' : 'Suspender curso' }
+                                { (course.suspended) ? 'Renovar curso' : 'Suspender curso' }
                             </Text>
                         </MenuOption>
 

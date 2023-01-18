@@ -2,7 +2,7 @@ import React, { FC, useEffect, useState } from 'react';
 import { FlatList } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
-// import { RevisitModal } from '../../../screens/revisits';
+import { ActiveOrSuspendCourseModal } from '../../../screens/courses';
 import { DeleteModal } from '../../../screens/ui';
 
 import { CourseCard } from '../CourseCard';
@@ -20,7 +20,7 @@ import themeStyles from '../../../theme/styles';
 export const CoursesList: FC<CoursesListProps> = ({ filter, title, emptyMessage }) => {
     const [ isRefreshing, setIsRefreshing ] = useState<boolean>(false);
     const [ showDeleteModal, setShowDeleteModal ] = useState<boolean>(false);
-    // const [ showRevisitModal, setShowRevisitModal ] = useState<boolean>(false);
+    const [ showCourseModal, setShowCourseModal ] = useState<boolean>(false);
 
     const { getState, isFocused } = useNavigation();
     const { index, routeNames } = getState();
@@ -118,17 +118,16 @@ export const CoursesList: FC<CoursesListProps> = ({ filter, title, emptyMessage 
                 renderItem={ ({ item }) => (
                     <CourseCard
                         course={ item }
-                        onCourse={ () => {} }
+                        onCourse={ () => handleShowModal(item, setShowCourseModal) }
                         onDelete={ () => handleShowModal(item, setShowDeleteModal) }
                     />
                 ) }
             />
 
-            {/* <RevisitModal
-                isOpen={ showRevisitModal }
-                onClose={ () => handleHideModal(setShowRevisitModal) }
+            <ActiveOrSuspendCourseModal
+                isOpen={ showCourseModal }
+                onClose={ () => handleHideModal(setShowCourseModal) }
             />
-            */}
 
             <DeleteModal
                 isLoading={ isCourseDeleting }
