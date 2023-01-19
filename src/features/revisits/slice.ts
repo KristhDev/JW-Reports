@@ -57,27 +57,15 @@ const revisitsSlice = createSlice({
         },
 
         clearRevisits: (state) => {
-            state.hasMoreRevisits = true;
-            state.refreshRevisits = false;
-            state.isRevisitLoading = false;
-            state.isRevisitsLoading = false;
-            state.revisits = [];
-            state.revisitsScreenHistory = [];
-            state.revisitsPagination = {
-                from: 0,
-                to: 9
-            }
-            state.selectedRevisit = {
-                id: '',
-                user_id: '',
-                person_name: '',
-                about: '',
-                address: '',
-                next_visit: new Date().toString(),
-                done: false,
-                created_at: new Date().toString(),
-                updated_at: new Date().toString()
-            }
+            state.hasMoreRevisits = INITIAL_STATE.hasMoreRevisits;
+            state.isRevisitDeleting = INITIAL_STATE.isRevisitDeleting;
+            state.isRevisitLoading = INITIAL_STATE.isRevisitLoading;
+            state.isRevisitsLoading = INITIAL_STATE.isRevisitsLoading;
+            state.refreshRevisits = INITIAL_STATE.refreshRevisits;
+            state.revisits = INITIAL_STATE.revisits;
+            state.revisitsPagination = INITIAL_STATE.revisitsPagination;
+            state.revisitsScreenHistory = INITIAL_STATE.revisitsScreenHistory;
+            state.selectedRevisit = INITIAL_STATE.selectedRevisit;
         },
 
         removeRevisit: (state, action: PayloadAction<RemoveResourcePayload>) => {
@@ -154,8 +142,8 @@ export const {
     setIsRevisitsLoading,
     setRefreshRevisits,
     setRevisits,
-    setRevisitsScreenHistory,
     setRevisitsPagination,
+    setRevisitsScreenHistory,
     setSelectedRevisit,
     updateRevisit
 } = revisitsSlice.actions;

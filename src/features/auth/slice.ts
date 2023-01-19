@@ -28,15 +28,15 @@ const authSlice = createSlice({
             state.isAuthLoading = false;
         },
 
+        setIsAuthLoading: (state, action: PayloadAction<SetIsLoadingPayload>) => {
+            state.isAuthLoading = action.payload.isLoading;
+        },
+
         setUser: (state, action: PayloadAction<SetUserPayload>) => {
             state.user = action.payload.user;
             state.token = action.payload.token;
             state.isAuthenticated = true;
             state.isAuthLoading = false;
-        },
-
-        setIsAuthLoading: (state, action: PayloadAction<SetIsLoadingPayload>) => {
-            state.isAuthLoading = action.payload.isLoading;
         }
     }
 });

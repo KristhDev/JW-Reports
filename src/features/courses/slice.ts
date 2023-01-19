@@ -104,6 +104,19 @@ const courseSlice = createSlice({
             state.courses = [];
         },
 
+        setCourses: (state, action: PayloadAction<SetCoursesPayload>) => {
+            state.courses = [ ...action.payload.courses ];
+            state.isCoursesLoading = false;
+        },
+
+        setCoursesPagination: (state, action: PayloadAction<PaginationPayload>) => {
+            state.coursesPagination = action.payload.pagination;
+        },
+
+        setCoursesScreenHistory: (state, action: PayloadAction<HistoryPayload>) => {
+            state.coursesScreenHistory = [ ...state.coursesScreenHistory, action.payload.newScreen ]
+        },
+
         setHasMoreCourses: (state, action: PayloadAction<HasMorePayload>) => {
             state.hasMoreCourses = action.payload.hasMore;
         },
@@ -122,19 +135,6 @@ const courseSlice = createSlice({
 
         setRefreshCourses: (state, action: PayloadAction<SetRefreshCoursesPayload>) => {
             state.refreshCourses = action.payload.refresh;
-        },
-
-        setCourses: (state, action: PayloadAction<SetCoursesPayload>) => {
-            state.courses = [ ...action.payload.courses ];
-            state.isCoursesLoading = false;
-        },
-
-        setCoursesPagination: (state, action: PayloadAction<PaginationPayload>) => {
-            state.coursesPagination = action.payload.pagination;
-        },
-
-        setCoursesScreenHistory: (state, action: PayloadAction<HistoryPayload>) => {
-            state.coursesScreenHistory = [ ...state.coursesScreenHistory, action.payload.newScreen ]
         },
 
         setSelectedCourse: (state, action: PayloadAction<CoursePayload>) => {

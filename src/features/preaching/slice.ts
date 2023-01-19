@@ -34,23 +34,12 @@ const preachingSlice = createSlice({
         },
 
         clearPreaching: (state) => {
-            state.isPreachingDeleting = false;
-            state.isPreachingLoading = false;
-            state.isPreachingsLoading = false;
-            state.preachings = [];
-            state.selectedDate = new Date();
-            state.seletedPreaching = {
-                id: '',
-                user_id: '',
-                day: new Date().toString(),
-                init_hour: new Date().toString(),
-                final_hour: new Date().toString(),
-                publications: 0,
-                videos: 0,
-                revisits: 0,
-                created_at: new Date().toString(),
-                updated_at: new Date().toString()
-            }
+            state.isPreachingDeleting = INITIAL_STATE.isPreachingDeleting;
+            state.isPreachingLoading = INITIAL_STATE.isPreachingLoading;
+            state.isPreachingsLoading = INITIAL_STATE.isPreachingsLoading;
+            state.preachings = INITIAL_STATE.preachings;
+            state.selectedDate = INITIAL_STATE.selectedDate;
+            state.seletedPreaching = INITIAL_STATE.seletedPreaching;
         },
 
         removePreaching: (state, action: PayloadAction<RemoveResourcePayload>) => {
@@ -62,12 +51,12 @@ const preachingSlice = createSlice({
             state.isPreachingDeleting = action.payload.isDeleting;
         },
 
-        setIsPreachingsLoading: (state, action: PayloadAction<SetIsLoadingPayload>) => {
-            state.isPreachingsLoading = action.payload.isLoading;
-        },
-
         setIsPreachingLoading: (state, action: PayloadAction<SetIsLoadingPayload>) => {
             state.isPreachingLoading = action.payload.isLoading;
+        },
+
+        setIsPreachingsLoading: (state, action: PayloadAction<SetIsLoadingPayload>) => {
+            state.isPreachingsLoading = action.payload.isLoading;
         },
 
         setPreachings: (state, action: PayloadAction<SetPreachingsPayload>) => {
