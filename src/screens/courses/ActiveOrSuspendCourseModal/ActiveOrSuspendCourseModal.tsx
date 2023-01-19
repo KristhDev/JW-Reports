@@ -20,8 +20,8 @@ const ActiveOrSuspendCourseModal: FC<ActiveOrSuspendCourseModalProps> = ({ onClo
         : '¿Está seguro de suspender este curso?';
 
     const confirmTextButton = (selectedCourse.suspended)
-        ? 'Aceptar'
-        : 'Suspender';
+        ? 'ACEPTAR'
+        : 'SUSPENDER';
 
     const handleConfirm = () => {
         activeOrSuspendCourse(onClose);
@@ -48,19 +48,19 @@ const ActiveOrSuspendCourseModal: FC<ActiveOrSuspendCourseModalProps> = ({ onClo
 
                         <View style={{ ...themeStyles.modalActions, alignSelf: 'flex-end' }}>
                             <Button
-                                containerStyle={{ paddingHorizontal: 14, paddingVertical: 7 }}
+                                containerStyle={{ paddingHorizontal: 12 }}
                                 onPress={ onClose }
-                                text="Cancelar"
-                                textStyle={{ color: colors.button }}
-                                touchableStyle={{ backgroundColor: 'transparent', marginRight: 10 }}
+                                text="CANCELAR"
+                                textStyle={{ color: colors.button, fontSize: 16 }}
+                                touchableStyle={{ backgroundColor: 'transparent', marginRight: 5 }}
                                 underlayColor={ BUTTON_TRANSLUCENT_COLOR }
                             />
 
                             <Button
-                                containerStyle={{ paddingHorizontal: 14, paddingVertical: 7 }}
+                                containerStyle={{ paddingHorizontal: 12 }}
                                 onPress={ handleConfirm }
                                 text={ confirmTextButton }
-                                textStyle={{ color: colors.button }}
+                                textStyle={{ color: colors.button, fontSize: 16 }}
                                 touchableStyle={{ backgroundColor: 'transparent' }}
                                 underlayColor={ BUTTON_TRANSLUCENT_COLOR }
                             />

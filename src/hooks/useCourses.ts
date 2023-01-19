@@ -139,7 +139,12 @@ const useCourses = () => {
             msg: 'Haz agregado un curso correctamente'
         });
 
-        navigate('CoursesTopTabsNavigation' as never);
+        navigate({
+            name: 'CoursesStackNavigation',
+            params: {
+                screen: 'CoursesTopTabsNavigation'
+            }
+        } as never);
     }
 
     const updateCourse = async (courseValues: CourseFormValues) => {

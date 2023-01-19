@@ -24,21 +24,22 @@ const PassToCourseModal: FC<PassToCourseModalProps> = ({ isOpen, onClose }) => {
 
     const handleConfirm = (values?: { publication: string }) => {
         if (startCourse) {
-            if (values?.publication && values?.publication.length <= 0) {
+            if (values?.publication && values?.publication.length >= 5) {
+                saveCourse({
+                    person_name: selectedRevisit.person_name,
+                    person_about: selectedRevisit.about,
+                    person_address: selectedRevisit.address,
+                    publication: values?.publication!
+                }, onClose);
+            }
+            else {
                 setStatus({
                     code: 400,
-                    msg: 'El nombre de la publicación no puede estar vacío',
+                    msg: 'El nombre de la publicación debe tener al menos 5 caracteres.',
                 });
 
-                return;
+                onClose();
             }
-
-            saveCourse({
-                person_name: selectedRevisit.person_name,
-                person_about: selectedRevisit.about,
-                person_address: selectedRevisit.address,
-                publication: values?.publication!
-            }, onClose);
 
             setStartCourse(false);
         }

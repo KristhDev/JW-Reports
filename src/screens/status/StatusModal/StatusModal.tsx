@@ -16,8 +16,8 @@ const StatusModal = () => {
     const configMsg = 'Para realizar está acción necesitas permisos del dispositivo, por favor abra la configuración de su dispositivo y active los permisos de la aplicación';
 
     const btnText = (msg === configMsg)
-        ? 'Configuración'
-        : 'Está bien';
+        ? 'CONFIGURACIÓN'
+        : 'ESTÁ BIEN';
 
     const handleClose = () => {
         clearStatus();
@@ -47,21 +47,21 @@ const StatusModal = () => {
                     {
                         (msg === configMsg) && (
                             <Button
-                                containerStyle={{ paddingHorizontal: 14, paddingVertical: 7 }}
+                                containerStyle={{ paddingHorizontal: 12 }}
                                 onPress={ clearStatus }
                                 text="Cancelar"
-                                textStyle={{ color: colors.button }}
-                                touchableStyle={{ backgroundColor: 'transparent', marginRight: 10 }}
+                                textStyle={{ color: colors.button, fontSize: 16 }}
+                                touchableStyle={{ backgroundColor: 'transparent', marginRight: 5 }}
                                 underlayColor={ BUTTON_TRANSLUCENT_COLOR }
                             />
                         )
                     }
 
                     <Button
-                        containerStyle={{ paddingHorizontal: 14, paddingVertical: 7 }}
+                        containerStyle={{ paddingHorizontal: 12 }}
                         onPress={ handleClose }
                         text={ btnText }
-                        textStyle={{ color: colors.button }}
+                        textStyle={{ color: colors.button, fontSize: 16 }}
                         touchableStyle={{ backgroundColor: 'transparent' }}
                         underlayColor={ BUTTON_TRANSLUCENT_COLOR }
                     />

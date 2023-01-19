@@ -15,19 +15,19 @@ export const ModalActions: FC<ModalActionProps> = ({ onClose, onConfirm }) => {
     return (
         <View style={{ ...themeStyles.modalActions, alignSelf: 'flex-end' }}>
             <Button
-                containerStyle={{ paddingHorizontal: 14, paddingVertical: 7 }}
+                containerStyle={{ paddingHorizontal: 12 }}
                 onPress={ onClose }
-                text="Cancelar"
-                textStyle={{ color: colors.button }}
+                text="CANCELAR"
+                textStyle={{ color: colors.button, fontSize: 16 }}
                 touchableStyle={{ backgroundColor: 'transparent', marginRight: 10 }}
                 underlayColor={ BUTTON_TRANSLUCENT_COLOR }
             />
 
             <Button
-                containerStyle={{ paddingHorizontal: 14, paddingVertical: 7 }}
+                containerStyle={{ paddingHorizontal: 12 }}
                 onPress={ onConfirm }
-                text="Aceptar"
-                textStyle={{ color: colors.button }}
+                text="ACEPTAR"
+                textStyle={{ color: colors.button, fontSize: 16 }}
                 touchableStyle={{ backgroundColor: 'transparent' }}
                 underlayColor={ BUTTON_TRANSLUCENT_COLOR }
             />

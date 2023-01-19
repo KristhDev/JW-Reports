@@ -14,27 +14,27 @@ export const ModalActions: FC<ModalActionProps> = ({ onClose, onConfirm, revisit
     const { state: { colors }, BUTTON_TRANSLUCENT_COLOR } = useTheme();
 
     const confirmTextButton = (revisitPerson)
-        ? 'Guardar'
+        ? 'GUARDAR'
         : (selectedRevisit.done)
-            ? 'Aceptar'
-            : 'Marcar';
+            ? 'ACEPTAR'
+            : 'MARCAR';
 
     return (
         <View style={{ ...themeStyles.modalActions, alignSelf: 'flex-end' }}>
             <Button
-                containerStyle={{ paddingHorizontal: 14, paddingVertical: 7 }}
+                containerStyle={{ paddingHorizontal: 12 }}
                 onPress={ onClose }
-                text="Cancelar"
-                textStyle={{ color: colors.button }}
-                touchableStyle={{ backgroundColor: 'transparent', marginRight: 10 }}
+                text="CANCELAR"
+                textStyle={{ color: colors.button, fontSize: 16 }}
+                touchableStyle={{ backgroundColor: 'transparent', marginRight: 5 }}
                 underlayColor={ BUTTON_TRANSLUCENT_COLOR }
             />
 
             <Button
-                containerStyle={{ paddingHorizontal: 14, paddingVertical: 7 }}
+                containerStyle={{ paddingHorizontal: 12 }}
                 onPress={ onConfirm }
                 text={ confirmTextButton }
-                textStyle={{ color: colors.button }}
+                textStyle={{ color: colors.button, fontSize: 16 }}
                 touchableStyle={{ backgroundColor: 'transparent' }}
                 underlayColor={ BUTTON_TRANSLUCENT_COLOR }
             />
