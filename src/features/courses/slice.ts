@@ -75,6 +75,26 @@ const courseSlice = createSlice({
             state.isCoursesLoading = false;
         },
 
+        clearCourses: (state) => {
+            state.classes = INITIAL_STATE.classes;
+            state.classesPagination = INITIAL_STATE.classesPagination;
+            state.courses = INITIAL_STATE.courses;
+            state.coursesPagination = INITIAL_STATE.coursesPagination;
+            state.coursesScreenHistory = INITIAL_STATE.coursesScreenHistory;
+            state.hasMoreClasses = INITIAL_STATE.hasMoreClasses;
+            state.hasMoreCourses = INITIAL_STATE.hasMoreCourses;
+            state.isClassDeleting = INITIAL_STATE.isClassDeleting;
+            state.isClassesLoading = INITIAL_STATE.isClassesLoading;
+            state.isClassLoading = INITIAL_STATE.isClassLoading;
+            state.isCourseDeleting = INITIAL_STATE.isCourseDeleting;
+            state.isCourseLoading = INITIAL_STATE.isCourseLoading;
+            state.isCoursesLoading = INITIAL_STATE.isCoursesLoading;
+            state.refreshClasses = INITIAL_STATE.refreshClasses;
+            state.refreshCourses = INITIAL_STATE.refreshCourses;
+            state.selectedClass = INITIAL_STATE.selectedClass;
+            state.selectedCourse = INITIAL_STATE.selectedCourse;
+        },
+
         removeCourse: (state, action: PayloadAction<RemoveResourcePayload>) => {
             state.courses = state.courses.filter(r => r.id !== action.payload.id);
             state.isCourseDeleting = false;
@@ -140,6 +160,7 @@ const courseSlice = createSlice({
 export const {
     addCourse,
     addCourses,
+    clearCourses,
     removeCourse,
     removeCourses,
     setCourses,

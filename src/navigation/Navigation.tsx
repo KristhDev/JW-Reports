@@ -6,7 +6,7 @@ import { AuthStackNavigation, MainTabsBottomNavigation } from './';
 
 import { StatusModal } from '../screens/status';
 
-import { useAuth, usePermissions, useRevisits, useStatus, useTheme } from '../hooks';
+import { useAuth, useCourses, usePermissions, useRevisits, useStatus, useTheme } from '../hooks';
 
 import { NavigationParamsList } from '../interfaces/ui';
 
@@ -15,6 +15,7 @@ const Stack = createStackNavigator<NavigationParamsList>();
 const Navigation = () => {
     const { state: { isAuthenticated }, renew } = useAuth();
     const { checkPermissions } = usePermissions();
+    const { clearCourses } = useCourses();
     const { clearRevisits } = useRevisits();
     const { clearStatus } = useStatus();
     const { state: { theme }, setDefaultTheme } = useTheme();
@@ -22,7 +23,10 @@ const Navigation = () => {
     useEffect(() => {
         checkPermissions();
         clearStatus();
+
+        clearCourses();
         clearRevisits();
+
         setDefaultTheme();
         renew();
     }, []);

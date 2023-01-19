@@ -8,6 +8,7 @@ import { RootState, useAppDispatch } from '../features/store';
 import {
     addCourse,
     addCourses as addCoursesAction,
+    clearCourses as clearCoursesAction,
     removeCourse,
     removeCourses as removeCoursesAction,
     setCourses as setCoursesAction,
@@ -38,6 +39,7 @@ const useCourses = () => {
     const { setStatus, setSupabaseError } = useStatus();
 
     const addCourses = (courses: Course[]) => dispatch(addCoursesAction({ courses }));
+    const clearCourses = () => dispatch(clearCoursesAction());
     const removeCourses = () => dispatch(removeCoursesAction());
     const setCourses = (courses: Course[]) => dispatch(setCoursesAction({ courses }));
     const setCoursesPagination = (pagination: Pagination) => dispatch(setCoursesPaginationAction({ pagination }));
@@ -225,6 +227,7 @@ const useCourses = () => {
         state,
 
         // Actions
+        clearCourses,
         removeCourses,
         setCoursesPagination,
         setCoursesScreenHistory,

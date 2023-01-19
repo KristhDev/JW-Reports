@@ -2,6 +2,7 @@ export {
     default as coursesReducer,
     addCourse,
     addCourses,
+    clearCourses,
     removeCourse,
     removeCourses,
     setCourses,
