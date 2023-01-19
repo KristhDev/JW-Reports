@@ -18,7 +18,7 @@ export interface Preaching {
     day: string;
     init_hour: string;
     final_hour: string;
-    posts: number;
+    publications: number;
     videos: number;
     revisits: number;
     created_at: string;

@@ -36,7 +36,7 @@ export const PreachingForm = () => {
             }),
         final_hour: date()
             .required('La hora final no puede estar vacía'),
-        posts: number()
+        publications: number()
             .min(0, 'El número de publicaciones no puede ser negativo'),
         videos: number()
             .min(0, 'El número de videos no puede ser negativo'),
@@ -56,7 +56,7 @@ export const PreachingForm = () => {
                 day: new Date(seletedPreaching.day),
                 init_hour: new Date(seletedPreaching.init_hour),
                 final_hour: new Date(seletedPreaching.final_hour),
-                posts: seletedPreaching.posts,
+                publications: seletedPreaching.publications,
                 videos: seletedPreaching.videos,
                 revisits: seletedPreaching.revisits
             }}
@@ -92,7 +92,7 @@ export const PreachingForm = () => {
                         }
                         keyboardType="numeric"
                         label="Publicaciones:"
-                        name="posts"
+                        name="publications"
                         placeholder="Número de publicaciones"
                     />
 

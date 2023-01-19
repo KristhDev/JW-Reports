@@ -32,7 +32,7 @@ const Home = () => {
             day: new Date().toString(),
             init_hour: new Date().toString(),
             final_hour: new Date().toString(),
-            posts: 0,
+            publications: 0,
             videos: 0,
             revisits: 0,
             created_at: new Date().toString(),

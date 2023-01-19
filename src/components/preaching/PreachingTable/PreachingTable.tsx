@@ -61,7 +61,7 @@ export const PreachingTable = () => {
                             />
 
                             <TableCell
-                                text={ preaching.posts }
+                                text={ preaching.publications }
                                 style={{ backgroundColor: '#746C84', width: width * 0.15 }}
                             />
 
@@ -91,7 +91,7 @@ export const PreachingTable = () => {
                 />
 
                 <TableCell
-                    text={ sumNumbers(preachings.map(p => p.posts)) }
+                    text={ sumNumbers(preachings.map(p => p.publications)) }
                     style={{ backgroundColor: '#544C63', width: width * 0.15 }}
                 />
 

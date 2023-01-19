@@ -2,7 +2,7 @@ export interface PreachingFormValues {
     day: Date;
     init_hour: Date;
     final_hour: Date;
-    posts: number;
+    publications: number;
     videos: number;
     revisits: number;
 }

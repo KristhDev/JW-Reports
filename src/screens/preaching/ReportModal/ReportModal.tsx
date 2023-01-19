@@ -19,7 +19,7 @@ const ReportModal: FC<ReportModalProps> = ({ isOpen, month, onClose }) => {
     const { state: { colors }, BUTTON_TRANSLUCENT_COLOR } = useTheme();
 
     const username = `${ user.name } ${ user.surname }`;
-    const totalPosts = sumNumbers(preachings.map(p => p.posts));
+    const totalPublications = sumNumbers(preachings.map(p => p.publications));
     const totalVideos = sumNumbers(preachings.map(p => p.videos));
     const totalHours = sumHours(preachings.map(p => ({ init: p.init_hour, finish: p.final_hour })));
     const totalRevisits = sumNumbers(preachings.map(p => p.revisits));
@@ -31,7 +31,7 @@ const ReportModal: FC<ReportModalProps> = ({ isOpen, month, onClose }) => {
         let report = '*Informe De Predicación* \n \n';
         report += `Nombre: ${ username }\n`;
         report += `Mes: ${ month.toLowerCase() }\n`;
-        report += `Publicaciones: ${ totalPosts }\n`;
+        report += `Publicaciones: ${ totalPublications }\n`;
         report += `Videos: ${ totalVideos }\n`;
         report += `Horas: ${ totalHours }\n`;
         report += `Revisitas: ${ totalRevisits }\n`;
@@ -63,7 +63,7 @@ const ReportModal: FC<ReportModalProps> = ({ isOpen, month, onClose }) => {
 
                     <View style={{ flexDirection: 'row' }}>
                         <Text style={{ ...styles.reportText, color: colors.text }}>Pulicaciones: </Text>
-                        <Text style={{ ...styles.reportText, color: colors.modalText }}>{ totalPosts }</Text>
+                        <Text style={{ ...styles.reportText, color: colors.modalText }}>{ totalPublications }</Text>
                     </View>
 
                     <View style={{ flexDirection: 'row' }}>
