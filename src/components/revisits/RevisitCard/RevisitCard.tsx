@@ -14,7 +14,7 @@ import { RevisitCardProps } from './interfaces';
 
 import styles from './styles';
 
-export const RevisitCard: FC<RevisitCardProps> = ({ onDelete, onRevisit, revisit }) => {
+export const RevisitCard: FC<RevisitCardProps> = ({ onDelete, onRevisit, onPass, revisit }) => {
     const [ isOpen, setIsOpen ] = useState<boolean>(false);
     const { navigate } = useNavigation();
 
@@ -34,14 +34,9 @@ export const RevisitCard: FC<RevisitCardProps> = ({ onDelete, onRevisit, revisit
         navigate('AddOrEditRevisitScreen' as never);
     }
 
-    const handleRevist = () => {
+    const handleAction = (onAction: () => void) => {
         setIsOpen(false);
-        onRevisit();
-    }
-
-    const handleDelete = () => {
-        setIsOpen(false);
-        onDelete();
+        onAction();
     }
 
     return (
@@ -98,7 +93,7 @@ export const RevisitCard: FC<RevisitCardProps> = ({ onDelete, onRevisit, revisit
                             </Text>
                         </MenuOption>
 
-                        <MenuOption onSelect={ handleRevist }>
+                        <MenuOption onSelect={ () => handleAction(onRevisit) }>
                             <Text
                                 style={{
                                     color: colors.text,
@@ -109,7 +104,18 @@ export const RevisitCard: FC<RevisitCardProps> = ({ onDelete, onRevisit, revisit
                             </Text>
                         </MenuOption>
 
-                        <MenuOption onSelect={ handleDelete }>
+                        <MenuOption onSelect={ () => handleAction(onPass) }>
+                            <Text
+                                style={{
+                                    color: colors.text,
+                                    ...styles.textMenuOpt
+                                }}
+                            >
+                                Pasar a curso bíblico
+                            </Text>
+                        </MenuOption>
+
+                        <MenuOption onSelect={ () => handleAction(onDelete) }>
                             <Text
                                 style={{
                                     color: colors.text,

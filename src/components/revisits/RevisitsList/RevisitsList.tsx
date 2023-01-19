@@ -2,6 +2,7 @@ import React, { FC, useEffect, useState } from 'react';
 import { FlatList } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
+import { PassToCourseModal } from '../../../screens/courses';
 import { RevisitModal } from '../../../screens/revisits';
 import { DeleteModal } from '../../../screens/ui';
 
@@ -19,8 +20,9 @@ import themeStyles from '../../../theme/styles';
 
 export const RevisitsList: FC<RevisitsListProps> = ({ filter, title, emptyMessage }) => {
     const [ isRefreshing, setIsRefreshing ] = useState<boolean>(false);
-    const [ showDeleteModal, setShowDeleteModal ] = useState<boolean>(false);
     const [ showRevisitModal, setShowRevisitModal ] = useState<boolean>(false);
+    const [ showPassModal, setShowPassModal ] = useState<boolean>(false);
+    const [ showDeleteModal, setShowDeleteModal ] = useState<boolean>(false);
 
     const { getState, isFocused } = useNavigation();
     const { index, routeNames } = getState();
@@ -117,9 +119,10 @@ export const RevisitsList: FC<RevisitsListProps> = ({ filter, title, emptyMessag
                 refreshing={ isRefreshing }
                 renderItem={ ({ item }) => (
                     <RevisitCard
-                        revisit={ item }
                         onDelete={ () => handleShowModal(item, setShowDeleteModal) }
+                        onPass={ () => handleShowModal(item, setShowPassModal) }
                         onRevisit={ () => handleShowModal(item, setShowRevisitModal) }
+                        revisit={ item }
                     />
                 ) }
             />
@@ -127,6 +130,11 @@ export const RevisitsList: FC<RevisitsListProps> = ({ filter, title, emptyMessag
             <RevisitModal
                 isOpen={ showRevisitModal }
                 onClose={ () => handleHideModal(setShowRevisitModal) }
+            />
+
+            <PassToCourseModal
+                isOpen={ showPassModal }
+                onClose={ () => handleHideModal(setShowPassModal) }
             />
 
             <DeleteModal

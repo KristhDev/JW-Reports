@@ -212,7 +212,7 @@ const useCourses = () => {
 
         setStatus({
             code: 200,
-            msg: 'Haz eliminado tu revisita correctamente.'
+            msg: 'Haz eliminado el curso correctamente.'
         });
     }
 

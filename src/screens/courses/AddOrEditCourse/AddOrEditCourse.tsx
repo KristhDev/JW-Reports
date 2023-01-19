@@ -21,7 +21,7 @@ const AddOrEditCourse = () => {
                 <Title
                     containerStyle={ themeStyles.titleContainer }
                     textStyle={{ fontSize: 24 }}
-                    text={ `${ (selectedCourse.id === '') ? 'Agregar' : 'Editar' } curso` }
+                    text={ `${ (selectedCourse.id === '') ? 'Agregar' : 'Editar' } curso bíblico` }
                 />
 
                 <CourseForm />
