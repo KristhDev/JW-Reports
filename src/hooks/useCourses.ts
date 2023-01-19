@@ -94,7 +94,7 @@ const useCourses = () => {
         const { data, error } = await supabase.from('courses')
             .update({
                 suspended: !state.selectedCourse.suspended,
-                updated_at: dayjs().format('YYYY-MM-DD HH:mm')
+                updated_at: dayjs().format('YYYY-MM-DD HH:mm:ss.SSSSSS')
             })
             .eq('id', state.selectedCourse.id)
             .eq('user_id', user.id)
@@ -148,7 +148,7 @@ const useCourses = () => {
         const { data, error } = await supabase.from('courses')
             .update({
                 ...courseValues,
-                updated_at: dayjs().format('YYYY-MM-DD HH:mm')
+                updated_at: dayjs().format('YYYY-MM-DD HH:mm:ss.SSSSSS')
             })
             .eq('id', state.selectedCourse.id)
             .eq('user_id', user.id)

@@ -40,8 +40,8 @@ const usePreaching = () => {
     const loadPreachings = async (date: Date) => {
         setIsPreachingsLoading(true);
 
-        const init_date = dayjs(date).startOf('month').format('YYYY-MM-DD HH:mm');
-        const final_date = dayjs(date).endOf('month').format('YYYY-MM-DD HH:mm');
+        const init_date = dayjs(date).startOf('month').format('YYYY-MM-DD');
+        const final_date = dayjs(date).endOf('month').format('YYYY-MM-DD');
 
         const { data, error } = await supabase.from('preachings')
             .select()
@@ -64,8 +64,8 @@ const usePreaching = () => {
             .insert({
                 ...preachingValues,
                 day: dayjs(preachingValues.day).format('YYYY-MM-DD'),
-                init_hour: dayjs(preachingValues.init_hour).format('YYYY-MM-DD HH:mm'),
-                final_hour: dayjs(preachingValues.final_hour).format('YYYY-MM-DD HH:mm'),
+                init_hour: dayjs(preachingValues.init_hour).format('YYYY-MM-DD HH:mm:ss.SSSSSS'),
+                final_hour: dayjs(preachingValues.final_hour).format('YYYY-MM-DD HH:mm:ss.SSSSSS'),
                 user_id: user.id
             })
             .select();
@@ -92,9 +92,9 @@ const usePreaching = () => {
             .update({
                 ...preachingValues,
                 day: dayjs(preachingValues.day).format('YYYY-MM-DD'),
-                init_hour: dayjs(preachingValues.init_hour).format('YYYY-MM-DD HH:mm'),
-                final_hour: dayjs(preachingValues.final_hour).format('YYYY-MM-DD HH:mm'),
-                updated_at:dayjs().format('YYYY-MM-DD HH:mm')
+                init_hour: dayjs(preachingValues.init_hour).format('YYYY-MM-DD HH:mm:ss.SSSSSS'),
+                final_hour: dayjs(preachingValues.final_hour).format('YYYY-MM-DD HH:mm:ss.SSSSSS'),
+                updated_at:dayjs().format('YYYY-MM-DD HH:mm:ss.SSSSSS')
             })
             .eq('id', state.seletedPreaching.id)
             .eq('user_id', user.id)

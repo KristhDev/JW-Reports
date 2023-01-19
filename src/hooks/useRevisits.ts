@@ -103,7 +103,7 @@ const useRevisits = () => {
             .insert({
                 ...revisitValues,
                 photo,
-                next_visit: dayjs(revisitValues.next_visit).format('YYYY-MM-DD HH:mm'),
+                next_visit: dayjs(revisitValues.next_visit).format('YYYY-MM-DD HH:mm:ss.SSSSSS'),
                 user_id: user.id
             })
             .select();
@@ -152,8 +152,8 @@ const useRevisits = () => {
             .update({
                 ...revisitValues,
                 photo,
-                next_visit: dayjs(revisitValues.next_visit).format('YYYY-MM-DD HH:mm'),
-                updated_at: dayjs().format('YYYY-MM-DD HH:mm')
+                next_visit: dayjs(revisitValues.next_visit).format('YYYY-MM-DD HH:mm:ss.SSSSSS'),
+                updated_at: dayjs().format('YYYY-MM-DD HH:mm:ss.SSSSSS')
             })
             .eq('id', state.selectedRevisit.id)
             .eq('user_id', user.id)
@@ -251,7 +251,7 @@ const useRevisits = () => {
         const { data, error } = await supabase.from('revisits')
             .update({
                 done: true,
-                updated_at:dayjs().format('YYYY-MM-DD HH:mm')
+                updated_at:dayjs().format('YYYY-MM-DD HH:mm:ss.SSSSSS')
             })
             .eq('id', state.selectedRevisit.id)
             .eq('user_id', user.id)
