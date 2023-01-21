@@ -2,6 +2,8 @@ import React, { FC, useEffect, useState } from 'react';
 import { FlatList } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
+import { INIT_REVISIT } from '../../../features/revisits';
+
 import { PassToCourseModal } from '../../../screens/courses';
 import { RevisitModal } from '../../../screens/revisits';
 import { DeleteModal } from '../../../screens/ui';
@@ -16,7 +18,7 @@ import { useRevisits } from '../../../hooks';
 import { RevisitsListProps } from './interfaces';
 import { Revisit } from '../../../interfaces/revisits';
 
-import themeStyles from '../../../theme/styles';
+import { styles as themeStyles } from '../../../theme';
 
 export const RevisitsList: FC<RevisitsListProps> = ({ filter, title, emptyMessage }) => {
     const [ isRefreshing, setIsRefreshing ] = useState<boolean>(false);
@@ -63,17 +65,7 @@ export const RevisitsList: FC<RevisitsListProps> = ({ filter, title, emptyMessag
 
     const handleHideModal = (setShowModal: (value: boolean) => void) => {
         setShowModal(false);
-        setSelectedRevisit({
-            id: '',
-            user_id: '',
-            person_name: '',
-            about: '',
-            address: '',
-            next_visit: new Date().toString(),
-            done: false,
-            created_at: new Date().toString(),
-            updated_at: new Date().toString()
-        });
+        setSelectedRevisit(INIT_REVISIT);
     }
 
     const handleDeleteConfirm = () => {

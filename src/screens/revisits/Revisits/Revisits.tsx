@@ -3,6 +3,8 @@ import { useNavigation } from '@react-navigation/native';
 import { MaterialTopTabScreenProps } from '@react-navigation/material-top-tabs';
 import Icon from 'react-native-vector-icons/Ionicons';
 
+import { INIT_REVISIT } from '../../../features/revisits';
+
 import { RevisitsList } from '../../../components/revisits';
 import { Fab } from '../../../components/ui';
 
@@ -10,7 +12,7 @@ import { useRevisits, useTheme } from '../../../hooks';
 
 import { RevistsTopTabsParamsList } from '../../../interfaces/revisits';
 
-import themeStyles from '../../../theme/styles';
+import { styles as themeStyles } from '../../../theme';
 
 type RevisitsProps = MaterialTopTabScreenProps<RevistsTopTabsParamsList>;
 
@@ -21,19 +23,7 @@ const Revisits: FC<RevisitsProps> = ({ route }) => {
     const { state: { colors } } = useTheme();
 
     const handleNavigate = () => {
-        setSelectedRevisit({
-            id: '',
-            user_id: '',
-            person_name: '',
-            about: '',
-            address: '',
-            photo: '',
-            next_visit: new Date().toString(),
-            done: false,
-            created_at: new Date().toString(),
-            updated_at: new Date().toString()
-        });
-
+        setSelectedRevisit(INIT_REVISIT);
         navigate('AddOrEditRevisitScreen' as never);
     }
 

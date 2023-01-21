@@ -2,6 +2,8 @@ import React, { FC, useEffect, useState } from 'react';
 import { FlatList } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
+import { INIT_COURSE } from '../../../features/courses';
+
 import { ActiveOrSuspendCourseModal, FinishOrStartCourseModal } from '../../../screens/courses';
 import { DeleteModal } from '../../../screens/ui';
 
@@ -15,7 +17,7 @@ import { useCourses } from '../../../hooks';
 import { CoursesListProps } from './interfaces';
 import { Course } from '../../../interfaces/courses';
 
-import themeStyles from '../../../theme/styles';
+import { styles as themeStyles } from '../../../theme';
 
 export const CoursesList: FC<CoursesListProps> = ({ filter, title, emptyMessage }) => {
     const [ isRefreshing, setIsRefreshing ] = useState<boolean>(false);
@@ -62,18 +64,7 @@ export const CoursesList: FC<CoursesListProps> = ({ filter, title, emptyMessage 
 
     const handleHideModal = (setShowModal: (value: boolean) => void) => {
         setShowModal(false);
-        setSelectedCourse({
-            id: '',
-            user_id: '',
-            person_name: '',
-            person_about: '',
-            person_address: '',
-            publication: '',
-            suspended: false,
-            finished: false,
-            created_at: new Date().toString(),
-            updated_at: new Date().toString()
-        });
+        setSelectedCourse(INIT_COURSE);
     }
 
     const handleDeleteConfirm = () => {

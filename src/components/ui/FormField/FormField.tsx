@@ -6,7 +6,7 @@ import { useTheme } from '../../../hooks';
 
 import { FormFieldProps } from './interfaces';
 
-import themeStyles from '../../../theme/styles';
+import { styles as themeStyles } from '../../../theme';
 import styles from './styles';
 
 export const FormField: FC<FormFieldProps> = ({ icon, label, style, controlStyle, inputStyle, labelStyle, name, ...rest }) => {

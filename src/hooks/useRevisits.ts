@@ -7,6 +7,7 @@ import { supabase } from '../supabase/config';
 
 import { RootState, useAppDispatch } from '../features/store';
 import {
+    INIT_REVISIT,
     addRevisit,
     addRevisits as addRevisitsAction,
     clearRevisits as clearRevisitsAction,
@@ -21,7 +22,7 @@ import {
     setRevisitsScreenHistory as setRevisitsScreenHistoryAction,
     setSelectedRevisit as setSelectedRevisitAction,
     updateRevisit as updateRevisitAction,
-    removeRevisit
+    removeRevisit,
 } from '../features/revisits';
 
 import { useAuth, useImage, useStatus } from './';
@@ -214,18 +215,7 @@ const useRevisits = () => {
         onFinish && onFinish();
         back && navigate('RevisitsTopTabsNavigation' as never);
 
-        setSelectedRevisit({
-            id: '',
-            user_id: '',
-            person_name: '',
-            about: '',
-            address: '',
-            photo: '',
-            next_visit: new Date().toString(),
-            done: false,
-            created_at: new Date().toString(),
-            updated_at: new Date().toString()
-        });
+        setSelectedRevisit(INIT_REVISIT);
 
         setStatus({
             code: 200,

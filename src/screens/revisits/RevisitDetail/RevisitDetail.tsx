@@ -3,13 +3,15 @@ import { Image, ScrollView, Text, TouchableOpacity, View, useWindowDimensions } 
 import { useNavigation } from '@react-navigation/native';
 import dayjs from 'dayjs';
 
+import { INIT_REVISIT } from '../../../features/revisits';
+
 import { RevisitModal } from '../RevisitModal';
 
 import { Title } from '../../../components/ui';
 
 import { useRevisits, useTheme } from '../../../hooks';
 
-import themeStyles from '../../../theme/styles';
+import { styles as themeStyles } from '../../../theme';
 import styles from './styles';
 
 const RevisitDetail = () => {
@@ -36,20 +38,7 @@ const RevisitDetail = () => {
         addListener('blur', () => {
             const { index } = getState();
 
-            if (index === 0) {
-                setSelectedRevisit({
-                    id: '',
-                    user_id: '',
-                    person_name: '',
-                    about: '',
-                    address: '',
-                    photo: '',
-                    next_visit: new Date().toString(),
-                    done: false,
-                    created_at: new Date().toString(),
-                    updated_at: new Date().toString()
-                });
-            }
+            if (index === 0) setSelectedRevisit(INIT_REVISIT);
         });
 
         return () => {

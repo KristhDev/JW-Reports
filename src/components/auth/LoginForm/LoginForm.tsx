@@ -9,7 +9,7 @@ import { Button, EyeBtn, FormField } from '../../ui';
 
 import { useAuth, useStatus, useTheme } from '../../../hooks';
 
-import themeStyles from '../../../theme/styles';
+import { styles as themeStyles } from '../../../theme';
 
 export const LoginForm = () => {
     const [ showPassword, setShowPassword ] = useState<boolean>(false);

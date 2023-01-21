@@ -4,6 +4,8 @@ import { useNavigation } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import dayjs from 'dayjs';
 
+import { INIT_PREACHING } from '../../../features/preaching';
+
 import { ReportModal } from '../ReportModal';
 
 import { PreachingTable } from '../../../components/preaching';
@@ -11,7 +13,7 @@ import { Fab, InfoText, Title } from '../../../components/ui';
 
 import { usePreaching, useTheme } from '../../../hooks';
 
-import themeStyles from '../../../theme/styles';
+import { styles as themeStyles } from '../../../theme';
 
 const Home = () => {
     const [ isRefreshing, setIsRefreshing ] = useState<boolean>(false);
@@ -26,19 +28,7 @@ const Home = () => {
     const year = dayjs(selectedDate).get('year');
 
     const handleNavigate = () => {
-        setSelectedPreaching({
-            id: '',
-            user_id: '',
-            day: new Date().toString(),
-            init_hour: new Date().toString(),
-            final_hour: new Date().toString(),
-            publications: 0,
-            videos: 0,
-            revisits: 0,
-            created_at: new Date().toString(),
-            updated_at: new Date().toString()
-        });
-
+        setSelectedPreaching(INIT_PREACHING);
         navigate('AddOrEditPreachingScreen' as never);
     }
 

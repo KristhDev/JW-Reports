@@ -18,6 +18,18 @@ import {
     HasMorePayload
 } from '../../interfaces/features';
 
+export const INIT_REVISIT: Revisit = {
+    id: '',
+    user_id: '',
+    person_name: '',
+    about: '',
+    address: '',
+    next_visit: new Date().toString(),
+    done: false,
+    created_at: new Date().toString(),
+    updated_at: new Date().toString()
+}
+
 const INITIAL_STATE: RevisitsState = {
     hasMoreRevisits: true,
     isRevisitDeleting: false,
@@ -30,17 +42,7 @@ const INITIAL_STATE: RevisitsState = {
         from: 0,
         to: 9
     },
-    selectedRevisit: {
-        id: '',
-        user_id: '',
-        person_name: '',
-        about: '',
-        address: '',
-        next_visit: new Date().toString(),
-        done: false,
-        created_at: new Date().toString(),
-        updated_at: new Date().toString()
-    }
+    selectedRevisit: INIT_REVISIT
 }
 
 const filterRevisits = (revisits: Revisit[], filter: RevisitFilter) => {

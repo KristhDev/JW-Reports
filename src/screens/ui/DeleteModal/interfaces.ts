@@ -1,7 +1,7 @@
-export interface DeleteModalProps {
+import { ModalProps } from '../../../interfaces/ui';
+
+export interface DeleteModalProps extends ModalProps {
     isLoading: boolean;
-    isOpen: boolean;
-    onClose: () => void;
     onConfirm: () => void;
     text: string;
 }

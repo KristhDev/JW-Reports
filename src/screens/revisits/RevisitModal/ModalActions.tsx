@@ -7,7 +7,7 @@ import { useRevisits, useTheme } from '../../../hooks';
 
 import { ModalActionProps } from './interfaces';
 
-import themeStyles from '../../../theme/styles';
+import { styles as themeStyles } from '../../../theme';
 
 export const ModalActions: FC<ModalActionProps> = ({ onClose, onConfirm, revisitPerson }) => {
     const { state: { selectedRevisit } } = useRevisits();

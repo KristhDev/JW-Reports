@@ -12,7 +12,7 @@ import { useCourses, useStatus, useTheme } from '../../../hooks';
 import { CourseFormValues } from './interfaces';
 import { CoursesTopTabsParamsList } from '../../../interfaces/courses';
 
-import themeStyles from '../../../theme/styles';
+import { styles as themeStyles } from '../../../theme';
 
 export const CourseForm = () => {
     const { params } = useRoute<RouteProp<CoursesTopTabsParamsList>>();

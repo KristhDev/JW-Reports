@@ -10,7 +10,7 @@ import { useTheme } from '../../../hooks';
 
 import { DatetimeFieldProps } from './interfaces';
 
-import themeStyles from '../../../theme/styles';
+import { styles as themeStyles } from '../../../theme';
 
 export const DatetimeField: FC<DatetimeFieldProps> = ({
     controlStyle,

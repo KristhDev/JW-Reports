@@ -14,3 +14,8 @@ export interface Pagination {
     from: number;
     to: number;
 }
+
+export interface ModalProps {
+    isOpen: boolean;
+    onClose: () => void;
+}

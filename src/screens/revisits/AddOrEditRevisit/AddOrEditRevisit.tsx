@@ -7,7 +7,7 @@ import { Title } from '../../../components/ui';
 
 import { useRevisits } from '../../../hooks';
 
-import themeStyles from '../../../theme/styles';
+import { styles as themeStyles } from '../../../theme';
 
 const AddOrEditRevisit = () => {
     const { state: { selectedRevisit } } = useRevisits();

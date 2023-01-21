@@ -32,7 +32,7 @@ const CoursesTopTabsNavigation = () => {
                         height: 3
                     },
                     tabBarItemStyle: {
-                        width: width * 0.3
+                        width: width / 3
                     },
                     tabBarLabelStyle: {
                         fontWeight: (isFocused()) ? 'bold' : 'normal'

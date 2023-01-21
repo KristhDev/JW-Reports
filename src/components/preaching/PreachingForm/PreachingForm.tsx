@@ -11,7 +11,7 @@ import { usePreaching, useStatus, useTheme } from '../../../hooks';
 
 import { PreachingFormValues } from './interfaces';
 
-import themeStyles from '../../../theme/styles';
+import { styles as themeStyles } from '../../../theme';
 
 export const PreachingForm = () => {
     const {

@@ -7,7 +7,7 @@ import { useTheme } from '../../../hooks';
 
 import { ModalActionProps } from './interfaces';
 
-import themeStyles from '../../../theme/styles';
+import { styles as themeStyles } from '../../../theme';
 
 export const ModalActions: FC<ModalActionProps> = ({ onClose, onConfirm }) => {
     const { state: { colors }, BUTTON_TRANSLUCENT_COLOR } = useTheme();

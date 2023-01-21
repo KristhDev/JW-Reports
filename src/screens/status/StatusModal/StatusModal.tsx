@@ -7,7 +7,7 @@ import { Button } from '../../../components/ui';
 
 import { useStatus, useTheme } from '../../../hooks';
 
-import themeStyles from '../../../theme/styles';
+import { styles as themeStyles } from '../../../theme';
 
 const StatusModal = () => {
     const { state: { msg }, clearStatus } = useStatus();

@@ -10,11 +10,11 @@ import { FormField } from '../../../components/ui';
 
 import { useCourses, useRevisits, useStatus, useTheme } from '../../../hooks';
 
-import { PassToCourseModalProps } from './interfaces';
+import { ModalProps } from '../../../interfaces/ui';
 
-import themeStyles from '../../../theme/styles';
+import { styles as themeStyles } from '../../../theme';
 
-const PassToCourseModal: FC<PassToCourseModalProps> = ({ isOpen, onClose }) => {
+const PassToCourseModal: FC<ModalProps> = ({ isOpen, onClose }) => {
     const [ startCourse, setStartCourse ] = useState<boolean>(false);
 
     const { state: { selectedRevisit } } = useRevisits();

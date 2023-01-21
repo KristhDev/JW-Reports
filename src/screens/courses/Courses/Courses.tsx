@@ -3,6 +3,8 @@ import { MaterialTopTabScreenProps } from '@react-navigation/material-top-tabs';
 import { useNavigation } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/Ionicons';
 
+import { INIT_COURSE } from '../../../features/courses';
+
 import { CoursesList } from '../../../components/courses';
 import { Fab } from '../../../components/ui';
 
@@ -10,7 +12,7 @@ import { useCourses, useTheme } from '../../../hooks';
 
 import { CoursesTopTabsParamsList } from '../../../interfaces/courses';
 
-import themeStyles from '../../../theme/styles';
+import { styles as themeStyles } from '../../../theme';
 
 type CoursesProps = MaterialTopTabScreenProps<CoursesTopTabsParamsList>;
 
@@ -21,19 +23,7 @@ const Courses: FC<CoursesProps> = ({ route }) => {
     const { state: { colors } } = useTheme();
 
     const handleNavigate = () => {
-        setSelectedCourse({
-            id: '',
-            user_id: '',
-            person_name: '',
-            person_about: '',
-            person_address: '',
-            publication: '',
-            suspended: false,
-            finished: false,
-            created_at: new Date().toString(),
-            updated_at: new Date().toString()
-        });
-
+        setSelectedCourse(INIT_COURSE);
         navigate('AddOrEditCourseScreen' as never);
     }
 

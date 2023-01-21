@@ -13,12 +13,12 @@ import { ModalActions } from './ModalActions';
 
 import { useRevisits, useStatus, useTheme } from '../../../hooks';
 
-import { RevisitModalProps } from './interfaces';
 import { RevistsTopTabsParamsList } from '../../../interfaces/revisits';
+import { ModalProps } from '../../../interfaces/ui';
 
-import themeStyles from '../../../theme/styles';
+import { styles as themeStyles } from '../../../theme';
 
-const RevisitModal: FC<RevisitModalProps> = ({ isOpen, onClose }) => {
+const RevisitModal: FC<ModalProps> = ({ isOpen, onClose }) => {
     const [ completeMsg, setCompleteMsg ] = useState<string>('');
     const [ revisitPerson, setRevisitPerson ] = useState<boolean>(false);
 

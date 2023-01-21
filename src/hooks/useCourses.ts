@@ -6,6 +6,7 @@ import { supabase } from '../supabase/config';
 
 import { RootState, useAppDispatch } from '../features/store';
 import {
+    INIT_COURSE,
     addCourse,
     addCourses as addCoursesAction,
     clearCourses as clearCoursesAction,
@@ -282,18 +283,7 @@ const useCourses = () => {
         onFinish && onFinish();
         back && navigate('CoursesScreen' as never);
 
-        setSelectedCourse({
-            id: '',
-            user_id: '',
-            person_name: '',
-            person_about: '',
-            person_address: '',
-            publication: '',
-            suspended: false,
-            finished: false,
-            created_at: new Date().toString(),
-            updated_at: new Date().toString()
-        });
+        setSelectedCourse(INIT_COURSE);
 
         setStatus({
             code: 200,

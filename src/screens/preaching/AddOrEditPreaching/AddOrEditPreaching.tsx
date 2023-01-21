@@ -7,7 +7,7 @@ import { Title } from '../../../components/ui';
 
 import { usePreaching } from '../../../hooks';
 
-import themeStyles from '../../../theme/styles';
+import { styles as themeStyles } from '../../../theme';
 
 const AddOrEditPreaching = () => {
     const { state: { seletedPreaching } } = usePreaching();

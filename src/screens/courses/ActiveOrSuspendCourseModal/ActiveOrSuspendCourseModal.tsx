@@ -8,12 +8,12 @@ import { Button } from '../../../components/ui';
 
 import { useCourses, useTheme } from '../../../hooks';
 
-import { ActiveOrSuspendCourseModalProps } from './interfaces';
 import { CoursesTopTabsParamsList } from '../../../interfaces/courses';
+import { ModalProps } from '../../../interfaces/ui';
 
-import themeStyles from '../../../theme/styles';
+import { styles as themeStyles } from '../../../theme';
 
-const ActiveOrSuspendCourseModal: FC<ActiveOrSuspendCourseModalProps> = ({ onClose, isOpen }) => {
+const ActiveOrSuspendCourseModal: FC<ModalProps> = ({ onClose, isOpen }) => {
     const { params } = useRoute<RouteProp<CoursesTopTabsParamsList>>();
 
     const { state: { selectedCourse, isCourseLoading }, activeOrSuspendCourse } = useCourses();

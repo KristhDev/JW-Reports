@@ -1,7 +1,20 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-import { PreachingPayload, PreachingState, SetPreachingsPayload, SetSelectedDatePayload } from '../../interfaces/preaching';
+import { Preaching, PreachingPayload, PreachingState, SetPreachingsPayload, SetSelectedDatePayload } from '../../interfaces/preaching';
 import { RemoveResourcePayload, SetIsDeletingPayload, SetIsLoadingPayload } from '../../interfaces/features';
+
+export const INIT_PREACHING: Preaching = {
+    id: '',
+    user_id: '',
+    day: new Date().toString(),
+    init_hour: new Date().toString(),
+    final_hour: new Date().toString(),
+    publications: 0,
+    videos: 0,
+    revisits: 0,
+    created_at: new Date().toString(),
+    updated_at: new Date().toString()
+}
 
 const INITIAL_STATE: PreachingState = {
     isPreachingDeleting: false,
@@ -9,18 +22,7 @@ const INITIAL_STATE: PreachingState = {
     isPreachingLoading: false,
     preachings: [],
     selectedDate: new Date(),
-    seletedPreaching: {
-        id: '',
-        user_id: '',
-        day: new Date().toString(),
-        init_hour: new Date().toString(),
-        final_hour: new Date().toString(),
-        publications: 0,
-        videos: 0,
-        revisits: 0,
-        created_at: new Date().toString(),
-        updated_at: new Date().toString()
-    }
+    seletedPreaching: INIT_PREACHING
 }
 
 const preachingSlice = createSlice({

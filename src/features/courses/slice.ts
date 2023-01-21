@@ -2,6 +2,7 @@ import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 
 import {
     Course,
+    CourseClass,
     CourseFilter,
     CoursePayload,
     CoursesState,
@@ -17,6 +18,29 @@ import {
     SetIsDeletingPayload,
     SetIsLoadingPayload
 } from '../../interfaces/features';
+
+export const INIT_CLASS: CourseClass = {
+    id: '',
+    course_id: '',
+    description: '',
+    next_class: new Date().toString(),
+    done: false,
+    created_at: new Date().toString(),
+    updated_at: new Date().toString(),
+}
+
+export const INIT_COURSE: Course = {
+    id: '',
+    user_id: '',
+    person_name: '',
+    person_about: '',
+    person_address: '',
+    publication: '',
+    suspended: false,
+    finished: false,
+    created_at: new Date().toString(),
+    updated_at: new Date().toString()
+}
 
 const INITIAL_STATE: CoursesState = {
     classes: [],
@@ -40,27 +64,8 @@ const INITIAL_STATE: CoursesState = {
     isCoursesLoading: false,
     refreshClasses: false,
     refreshCourses: false,
-    selectedClass: {
-        id: '',
-        course_id: '',
-        description: '',
-        next_class: new Date().toString(),
-        done: false,
-        created_at: new Date().toString(),
-        updated_at: new Date().toString(),
-    },
-    selectedCourse: {
-        id: '',
-        user_id: '',
-        person_name: '',
-        person_about: '',
-        person_address: '',
-        publication: '',
-        suspended: false,
-        finished: false,
-        created_at: new Date().toString(),
-        updated_at: new Date().toString(),
-    }
+    selectedClass: INIT_CLASS,
+    selectedCourse: INIT_COURSE
 }
 
 const filterCourses = (courses: Course[], filter: CourseFilter) => {

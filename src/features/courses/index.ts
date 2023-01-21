@@ -1,5 +1,7 @@
 export {
     default as coursesReducer,
+    INIT_CLASS,
+    INIT_COURSE,
     addCourse,
     addCourses,
     clearCourses,

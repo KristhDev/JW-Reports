@@ -6,6 +6,7 @@ import { supabase } from '../supabase/config';
 
 import { RootState, useAppDispatch } from '../features/store';
 import {
+    INIT_PREACHING,
     addPreaching,
     clearPreaching as clearPreachingAction,
     removePreaching,
@@ -144,18 +145,7 @@ const usePreaching = () => {
         onFinish && onFinish();
         goBack();
 
-        setSelectedPreaching({
-            id: '',
-            user_id: '',
-            day: new Date().toString(),
-            init_hour: new Date().toString(),
-            final_hour: new Date().toString(),
-            publications: 0,
-            videos: 0,
-            revisits: 0,
-            created_at: new Date().toString(),
-            updated_at: new Date().toString()
-        });
+        setSelectedPreaching(INIT_PREACHING);
 
         setStatus({
             code: 200,

@@ -7,7 +7,7 @@ import { Title } from '../../../components/ui';
 
 import { useCourses } from '../../../hooks';
 
-import themeStyles from '../../../theme/styles';
+import { styles as themeStyles } from '../../../theme';
 
 const AddOrEditCourse = () => {
     const { state: { selectedCourse } } = useCourses();

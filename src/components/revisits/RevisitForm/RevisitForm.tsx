@@ -10,9 +10,9 @@ import { Button, DatetimeField, FormField } from '../../ui';
 import { useImage, useRevisits, useStatus, useTheme } from '../../../hooks';
 
 import { RevisitFormValues } from './interfaces';
-
-import themeStyles from '../../../theme/styles';
 import { RevistsTopTabsParamsList } from '../../../interfaces/revisits';
+
+import { styles as themeStyles } from '../../../theme';
 
 const defaultRevisit = require('../../../assets/revisit-default.jpg');
 
