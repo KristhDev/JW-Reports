@@ -53,8 +53,18 @@ const useCourses = () => {
 
         const coursesPromise = supabase.from('courses').select().eq('user_id', user.id);
 
-        if (filter === 'active') coursesPromise.eq('suspended', false);
-        else if (filter === 'suspended') coursesPromise.eq('suspended', true);
+        if (filter === 'active') {
+            coursesPromise.eq('suspended', false)
+                .eq('finished', false)
+        }
+        else if (filter === 'suspended') {
+            coursesPromise.eq('suspended', true)
+                .eq('finished', false)
+        }
+        else if (filter === 'finished') {
+            coursesPromise.eq('suspended', false)
+                .eq('finished', true);
+        }
 
         coursesPromise.order('created_at', { ascending: false })
             .range(
@@ -88,6 +98,18 @@ const useCourses = () => {
             setStatus({
                 code: 400,
                 msg: 'No hay una curso seleccionado para eliminar.'
+            });
+
+            return;
+        }
+
+        if (state.selectedCourse.finished) {
+            dispatch(setIsCourseLoading({ isLoading: false }));
+            onFinish && onFinish();
+
+            setStatus({
+                code: 400,
+                msg: 'No pudes suspender o renovar un curso terminado.'
             });
 
             return;
@@ -213,6 +235,7 @@ const useCourses = () => {
             person_address: '',
             publication: '',
             suspended: false,
+            finished: false,
             created_at: new Date().toString(),
             updated_at: new Date().toString()
         });

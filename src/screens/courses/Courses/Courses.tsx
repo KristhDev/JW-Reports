@@ -29,6 +29,7 @@ const Courses: FC<CoursesProps> = ({ route }) => {
             person_address: '',
             publication: '',
             suspended: false,
+            finished: false,
             created_at: new Date().toString(),
             updated_at: new Date().toString()
         });

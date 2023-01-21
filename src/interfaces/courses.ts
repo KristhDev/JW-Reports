@@ -20,6 +20,11 @@ export type CoursesTopTabsParamsList = {
         emptyMessage: string,
         filter: CourseFilter,
         title: string
+    },
+    FinishedCoursesScreen: {
+        emptyMessage: string,
+        filter: CourseFilter,
+        title: string
     }
 }
 
@@ -51,6 +56,7 @@ export interface Course {
     person_address: string;
     publication: string;
     suspended: boolean;
+    finished: boolean;
     created_at: string;
     updated_at: string;
 }
@@ -65,7 +71,7 @@ export interface CourseClass {
     updated_at: string;
 }
 
-export type CourseFilter = 'all' | 'active' | 'suspended';
+export type CourseFilter = 'all' | 'active' | 'suspended' | 'finished';
 
 export type CoursePayload = {
     course: Course;

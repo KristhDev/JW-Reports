@@ -1,4 +1,5 @@
 import React from 'react';
+import { useWindowDimensions } from 'react-native';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 
 import { Courses } from '../../screens/courses';
@@ -10,6 +11,7 @@ import { CoursesTopTabsParamsList } from '../../interfaces/courses';
 const Tabs = createMaterialTopTabNavigator<CoursesTopTabsParamsList>();
 
 const CoursesTopTabsNavigation = () => {
+    const { width } = useWindowDimensions();
     const { state: { colors }, BUTTON_TRANSLUCENT_COLOR, BUTTON_TRANSPARENT_COLOR } = useTheme();
 
     return (
@@ -24,20 +26,24 @@ const CoursesTopTabsNavigation = () => {
 
                 return {
                     tabBarActiveTintColor: colors.button,
+                    tabBarInactiveTintColor: colors.headerText,
+                    tabBarIndicatorStyle: {
+                        backgroundColor: colors.button,
+                        height: 3
+                    },
+                    tabBarItemStyle: {
+                        width: width * 0.3
+                    },
+                    tabBarLabelStyle: {
+                        fontWeight: (isFocused()) ? 'bold' : 'normal'
+                    },
                     tabBarPressColor: pressColor,
+                    tabBarScrollEnabled: true,
                     tabBarStyle: {
                         backgroundColor: colors.contentHeader,
                         borderBottomWidth: 1,
                         borderBottomColor: colors.header
                     },
-                    tabBarLabelStyle: {
-                        fontWeight: (isFocused()) ? 'bold' : 'normal'
-                    },
-                    tabBarInactiveTintColor: colors.headerText,
-                    tabBarIndicatorStyle: {
-                        backgroundColor: colors.button,
-                        height: 3
-                    }
                 }
             } }
         >
@@ -60,7 +66,7 @@ const CoursesTopTabsNavigation = () => {
                     title: 'CURSOS ACTIVOS'
                 }}
                 name="ActiveCoursesScreen"
-                options={{ title: 'En Curso' }}
+                options={{ title: 'Activos' }}
             />
 
             <Tabs.Screen
@@ -72,6 +78,17 @@ const CoursesTopTabsNavigation = () => {
                 }}
                 name="SuspendedCoursesScreen"
                 options={{ title: 'Suspendidos' }}
+            />
+
+            <Tabs.Screen
+                component={ Courses }
+                initialParams={{
+                    emptyMessage: 'Ninguno de tus estudiantes ha terminado el curso.',
+                    filter: 'finished',
+                    title: 'CURSOS TERMINADOS'
+                }}
+                name="FinishedCoursesScreen"
+                options={{ title: 'Terminados' }}
             />
         </Tabs.Navigator>
     );
