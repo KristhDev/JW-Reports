@@ -26,7 +26,7 @@ import {
 
 import { useAuth, useImage, useStatus } from './';
 
-import { Revisit, RevisitsState } from '../interfaces/revisits';
+import { Revisit, RevisitFilter, RevisitsState } from '../interfaces/revisits';
 import { RevisitFormValues } from '../components/revisits/RevisitForm/interfaces';
 import { Pagination } from '../interfaces/ui';
 
@@ -81,7 +81,7 @@ const useRevisits = () => {
         (loadMore) ? addRevisits(data!) : setRevisits(data!);
     }
 
-    const saveRevisit = async (revisitValues: RevisitFormValues, imageUri?: string, image?: Image, back: boolean = true, onFinish?: () => void) => {
+    const saveRevisit = async (revisitValues: RevisitFormValues, filter: RevisitFilter, imageUri?: string, image?: Image, back: boolean = true, onFinish?: () => void) => {
         dispatch(setIsRevisitLoading({ isLoading: true }));
 
         let photo = imageUri || null;
@@ -115,7 +115,7 @@ const useRevisits = () => {
 
         if (next) return;
 
-        dispatch(addRevisit({ revisit: data![0] }));
+        dispatch(addRevisit({ revisit: data![0], filter }));
         onFinish && onFinish();
 
         const successMsg = (back)
@@ -127,7 +127,7 @@ const useRevisits = () => {
         back && navigate('RevisitsTopTabsNavigation' as never);
     }
 
-    const updateRevisit = async (revisitValues: RevisitFormValues, image?: Image) => {
+    const updateRevisit = async (revisitValues: RevisitFormValues, filter: RevisitFilter, image?: Image) => {
         dispatch(setIsRevisitLoading({ isLoading: true }));
 
         let photo = state.selectedRevisit.photo;
@@ -162,7 +162,7 @@ const useRevisits = () => {
         const next = setSupabaseError(error, () => dispatch(setIsRevisitLoading({ isLoading: false })));
         if (next) return;
 
-        dispatch(updateRevisitAction({ revisit: data![0] }));
+        dispatch(updateRevisitAction({ revisit: data![0], filter }));
 
         setStatus({
             code: 200,
@@ -233,7 +233,7 @@ const useRevisits = () => {
         });
     }
 
-    const completeRevisit = async (onFailFinish?: () => void) => {
+    const completeRevisit = async (filter: RevisitFilter, onFailFinish?: () => void) => {
         dispatch(setIsRevisitLoading({ isLoading: true }));
 
         if (state.selectedRevisit.id === '') {
@@ -266,7 +266,7 @@ const useRevisits = () => {
             return '';
         }
 
-        dispatch(updateRevisitAction({ revisit: data[0] }));
+        dispatch(updateRevisitAction({ revisit: data[0], filter }));
         setSelectedRevisit(data[0]);
 
         return 'Haz marcado como completa tu revista correctamente.';

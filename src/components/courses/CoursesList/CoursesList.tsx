@@ -2,7 +2,7 @@ import React, { FC, useEffect, useState } from 'react';
 import { FlatList } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
-import { ActiveOrSuspendCourseModal } from '../../../screens/courses';
+import { ActiveOrSuspendCourseModal, FinishOrStartCourseModal } from '../../../screens/courses';
 import { DeleteModal } from '../../../screens/ui';
 
 import { CourseCard } from '../CourseCard';
@@ -20,7 +20,8 @@ import themeStyles from '../../../theme/styles';
 export const CoursesList: FC<CoursesListProps> = ({ filter, title, emptyMessage }) => {
     const [ isRefreshing, setIsRefreshing ] = useState<boolean>(false);
     const [ showDeleteModal, setShowDeleteModal ] = useState<boolean>(false);
-    const [ showCourseModal, setShowCourseModal ] = useState<boolean>(false);
+    const [ showASModal, setShowASModal ] = useState<boolean>(false);
+    const [ showFSModal, setShowFSModal ] = useState<boolean>(false);
 
     const { getState, isFocused } = useNavigation();
     const { index, routeNames } = getState();
@@ -119,15 +120,21 @@ export const CoursesList: FC<CoursesListProps> = ({ filter, title, emptyMessage 
                 renderItem={ ({ item }) => (
                     <CourseCard
                         course={ item }
-                        onCourse={ () => handleShowModal(item, setShowCourseModal) }
+                        onActiveOrSuspend={ () => handleShowModal(item, setShowASModal) }
                         onDelete={ () => handleShowModal(item, setShowDeleteModal) }
+                        onFinishOrStart={ () => handleShowModal(item, setShowFSModal) }
                     />
                 ) }
             />
 
             <ActiveOrSuspendCourseModal
-                isOpen={ showCourseModal }
-                onClose={ () => handleHideModal(setShowCourseModal) }
+                isOpen={ showASModal }
+                onClose={ () => handleHideModal(setShowASModal) }
+            />
+
+            <FinishOrStartCourseModal
+                isOpen={ showFSModal }
+                onClose={ () => handleHideModal(setShowFSModal) }
             />
 
             <DeleteModal

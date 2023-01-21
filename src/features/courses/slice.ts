@@ -1,6 +1,8 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 
 import {
+    Course,
+    CourseFilter,
     CoursePayload,
     CoursesState,
     SetCoursesPayload,
@@ -59,6 +61,23 @@ const INITIAL_STATE: CoursesState = {
         created_at: new Date().toString(),
         updated_at: new Date().toString(),
     }
+}
+
+const filterCourses = (courses: Course[], filter: CourseFilter) => {
+    let coursesFiltered: Course[] = [];
+
+    if (filter === 'active') {
+        coursesFiltered = courses.filter(c => !c.suspended && !c.finished);
+    }
+    else if (filter === 'suspended') {
+        coursesFiltered = courses.filter(c => c.suspended && !c.finished);
+    }
+    else if (filter === 'finished') {
+        coursesFiltered = courses.filter(c => !c.suspended && c.finished);
+    }
+    else coursesFiltered = courses;
+
+    return coursesFiltered;
 }
 
 const courseSlice = createSlice({
@@ -143,12 +162,13 @@ const courseSlice = createSlice({
             state.isCourseLoading = false;
         },
 
-        updateCourse: (state, action: PayloadAction<CoursePayload>) => {
+        updateCourse: (state, action: PayloadAction<CoursePayload & { filter: CourseFilter }>) => {
             state.courses = state.courses.map(course =>
                 (course.id === action.payload.course.id)
                     ? action.payload.course
                     : course
             );
+            state.courses = filterCourses(state.courses, action.payload.filter);
             state.courses = state.courses.sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime());
             state.selectedCourse = (state.selectedCourse.id === action.payload.course.id)
                 ? action.payload.course

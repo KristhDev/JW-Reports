@@ -88,7 +88,7 @@ const useCourses = () => {
         (loadMore) ? addCourses(data!) : setCourses(data!);
     }
 
-    const activeOrSuspendCourse = async (onFinish?: () => void) => {
+    const activeOrSuspendCourse = async (filter: CourseFilter, onFinish?: () => void) => {
         dispatch(setIsCourseLoading({ isLoading: true }));
 
         if (state.selectedCourse.id === '') {
@@ -97,7 +97,7 @@ const useCourses = () => {
 
             setStatus({
                 code: 400,
-                msg: 'No hay una curso seleccionado para eliminar.'
+                msg: 'No hay un curso seleccionado.'
             });
 
             return;
@@ -133,9 +133,64 @@ const useCourses = () => {
 
         const msg = (data![0].suspended)
             ? 'Haz suspendido el curso correctamente.'
+            : 'Haz renovado el curso correctamente.'
+
+        dispatch(updateCourseAction({ course: data![0], filter }));
+
+        onFinish && onFinish();
+
+        setStatus({ code: 200, msg });
+    }
+
+    const finishOrStartCourse = async (filter: CourseFilter, onFinish?: () => void) => {
+        dispatch(setIsCourseLoading({ isLoading: true }));
+
+        if (state.selectedCourse.id === '') {
+            dispatch(setIsCourseLoading({ isLoading: false }));
+            onFinish && onFinish();
+
+            setStatus({
+                code: 400,
+                msg: 'No hay un curso seleccionado.'
+            });
+
+            return;
+        }
+
+        if (state.selectedCourse.suspended) {
+            dispatch(setIsCourseLoading({ isLoading: false }));
+            onFinish && onFinish();
+
+            setStatus({
+                code: 400,
+                msg: 'No pudes terminar o comenzar de nuevo un curso suspendido.'
+            });
+
+            return;
+        }
+
+        const { data, error } = await supabase.from('courses')
+            .update({
+                finished: !state.selectedCourse.finished,
+                updated_at: dayjs().format('YYYY-MM-DD HH:mm:ss.SSSSSS')
+            })
+            .eq('id', state.selectedCourse.id)
+            .eq('user_id', user.id)
+            .select();
+
+        const next = setSupabaseError(error, () => {
+            dispatch(setIsCourseLoading({ isLoading: false }));
+            onFinish && onFinish();
+        });
+
+        if (next) return;
+
+        const msg = (data![0].finished)
+            ? 'Haz terminado el curso correctamente.'
             : 'Haz comenzado de nuevo el curso correctamente.'
 
-        dispatch(updateCourseAction({ course: data![0] }));
+        dispatch(updateCourseAction({ course: data![0], filter }));
+
         onFinish && onFinish();
 
         setStatus({ code: 200, msg });
@@ -171,7 +226,7 @@ const useCourses = () => {
         } as never);
     }
 
-    const updateCourse = async (courseValues: CourseFormValues) => {
+    const updateCourse = async (filter: CourseFilter, courseValues: CourseFormValues) => {
         dispatch(setIsCourseLoading({ isLoading: true }));
 
         const { data, error } = await supabase.from('courses')
@@ -186,7 +241,7 @@ const useCourses = () => {
         const next = setSupabaseError(error, () => dispatch(setIsCourseLoading({ isLoading: false })));
         if (next) return;
 
-        dispatch(updateCourseAction({ course: data![0] }));
+        dispatch(updateCourseAction({ course: data![0], filter }));
 
         setStatus({
             code: 200,
@@ -205,7 +260,7 @@ const useCourses = () => {
 
             setStatus({
                 code: 400,
-                msg: 'No hay una curso seleccionado para eliminar.'
+                msg: 'No hay un curso seleccionado para eliminar.'
             });
 
             return;
@@ -260,9 +315,10 @@ const useCourses = () => {
         // Functions
         activeOrSuspendCourse,
         deleteCourse,
+        finishOrStartCourse,
         loadCourses,
         saveCourse,
-        updateCourse
+        updateCourse,
     }
 }
 

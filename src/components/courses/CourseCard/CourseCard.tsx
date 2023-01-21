@@ -13,7 +13,7 @@ import { CourseCardProps } from './interfaces';
 
 import styles from './styles';
 
-export const CourseCard: FC<CourseCardProps> = ({ course, onCourse, onDelete }) => {
+export const CourseCard: FC<CourseCardProps> = ({ course, onActiveOrSuspend, onDelete, onFinishOrStart }) => {
     const [ isOpen, setIsOpen ] = useState<boolean>(false);
     const { navigate } = useNavigation();
 
@@ -31,14 +31,9 @@ export const CourseCard: FC<CourseCardProps> = ({ course, onCourse, onDelete }) 
         navigate('AddOrEditCourseScreen' as never);
     }
 
-    const handleCourse = () => {
+    const handleSelect = (onSelect: () => void) => {
         setIsOpen(false);
-        onCourse();
-    }
-
-    const handleDelete = () => {
-        setIsOpen(false);
-        onDelete();
+        onSelect();
     }
 
     return (
@@ -50,7 +45,13 @@ export const CourseCard: FC<CourseCardProps> = ({ course, onCourse, onDelete }) 
         >
             <View style={{ ...styles.container, backgroundColor: colors.card }}>
                 <Text style={{ ...styles.textDate, color: colors.icon }}>
-                    { (course.suspended) ? 'Suspendido' : 'En Curso' }
+                    {
+                        (course.finished)
+                            ? 'Terminado'
+                            : (course.suspended)
+                                ? 'Suspendido'
+                                : 'En Curso'
+                    }
                 </Text>
 
                 <Text style={{ ...styles.textName, color: colors.text }}>{ course.person_name }</Text>
@@ -83,29 +84,50 @@ export const CourseCard: FC<CourseCardProps> = ({ course, onCourse, onDelete }) 
                     <MenuTrigger text="" />
 
                     <MenuOptions optionsContainerStyle={{ backgroundColor: colors.card, borderRadius: 5, width: 220 }}>
-                        <MenuOption onSelect={ handleEdit }>
-                            <Text
-                                style={{
-                                    color: colors.text,
-                                    ...styles.textMenuOpt
-                                }}
-                            >
-                                Editar
-                            </Text>
-                        </MenuOption>
+                        {
+                            (!course.finished) && (
+                                <>
+                                    <MenuOption onSelect={ handleEdit }>
+                                        <Text
+                                            style={{
+                                                color: colors.text,
+                                                ...styles.textMenuOpt
+                                            }}
+                                        >
+                                            Editar
+                                        </Text>
+                                    </MenuOption>
 
-                        <MenuOption onSelect={ handleCourse }>
-                            <Text
-                                style={{
-                                    color: colors.text,
-                                    ...styles.textMenuOpt
-                                }}
-                            >
-                                { (course.suspended) ? 'Renovar curso' : 'Suspender curso' }
-                            </Text>
-                        </MenuOption>
+                                    <MenuOption onSelect={ () => handleSelect(onActiveOrSuspend) }>
+                                        <Text
+                                            style={{
+                                                color: colors.text,
+                                                ...styles.textMenuOpt
+                                            }}
+                                        >
+                                            { (course.suspended) ? 'Continuar' : 'Suspender' }
+                                        </Text>
+                                    </MenuOption>
+                                </>
+                            )
+                        }
 
-                        <MenuOption onSelect={ handleDelete }>
+                        {
+                            (!course.suspended) && (
+                                <MenuOption onSelect={ () => handleSelect(onFinishOrStart) }>
+                                    <Text
+                                        style={{
+                                            color: colors.text,
+                                            ...styles.textMenuOpt
+                                        }}
+                                    >
+                                        { (course.finished) ? 'Comenzar de nuevo' : 'Terminar' }
+                                    </Text>
+                                </MenuOption>
+                            )
+                        }
+
+                        <MenuOption onSelect={  () => handleSelect(onDelete) }>
                             <Text
                                 style={{
                                     color: colors.text,

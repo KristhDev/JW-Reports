@@ -4,7 +4,9 @@ import {
     RevisitPayload,
     RevisitsState,
     SetRevisitsPayload,
-    SetRefreshRevisitsPayload
+    SetRefreshRevisitsPayload,
+    Revisit,
+    RevisitFilter
 } from '../../interfaces/revisits';
 
 import {
@@ -41,12 +43,26 @@ const INITIAL_STATE: RevisitsState = {
     }
 }
 
+const filterRevisits = (revisits: Revisit[], filter: RevisitFilter) => {
+    let revisitsFiltered: Revisit[] = [];
+
+    if (filter === 'visited') {
+        revisitsFiltered = revisits.filter(c => c.done);
+    }
+    else if (filter === 'unvisited') {
+        revisitsFiltered = revisits.filter(c => !c.done);
+    }
+    else revisitsFiltered = revisits;
+
+    return revisitsFiltered;
+}
+
 const revisitsSlice = createSlice({
     name: 'revisits',
     initialState: INITIAL_STATE,
     reducers: {
-        addRevisit: (state, action: PayloadAction<RevisitPayload>) => {
-            state.revisits = [ action.payload.revisit, ...state.revisits ];
+        addRevisit: (state, action: PayloadAction<RevisitPayload & { filter: RevisitFilter }>) => {
+            state.revisits = filterRevisits([ action.payload.revisit, ...state.revisits ], action.payload.filter);
             state.revisits = state.revisits.sort((a, b) => new Date(b.next_visit).getTime() - new Date(a.next_visit).getTime());
             state.isRevisitLoading = false;
         },
@@ -115,12 +131,12 @@ const revisitsSlice = createSlice({
             state.isRevisitLoading = false;
         },
 
-        updateRevisit: (state, action: PayloadAction<RevisitPayload>) => {
-            state.revisits = state.revisits.map(revisit =>
+        updateRevisit: (state, action: PayloadAction<RevisitPayload & { filter: RevisitFilter }>) => {
+            state.revisits = filterRevisits(state.revisits.map(revisit =>
                 (revisit.id === action.payload.revisit.id)
                     ? action.payload.revisit
                     : revisit
-            );
+            ), action.payload.filter);
             state.revisits = state.revisits.sort((a, b) => new Date(b.next_visit).getTime() - new Date(a.next_visit).getTime());
             state.selectedRevisit = (state.selectedRevisit.id === action.payload.revisit.id)
                 ? action.payload.revisit

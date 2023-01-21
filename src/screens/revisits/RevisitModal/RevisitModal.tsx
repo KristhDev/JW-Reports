@@ -1,33 +1,46 @@
 import React, { useState, FC } from 'react';
 import { View, Text, ActivityIndicator } from 'react-native';
+import { RouteProp, useRoute } from '@react-navigation/native';
 import { Formik } from 'formik';
+import { date, object, string } from 'yup';
 import Icon from 'react-native-vector-icons/Ionicons';
 
 import { Modal } from '../../ui';
 
-import { DatetimeField } from '../../../components/ui';
+import { DatetimeField, FormField } from '../../../components/ui';
 import { ModalActions } from './ModalActions';
 
-import { useRevisits, useTheme } from '../../../hooks';
+import { useRevisits, useStatus, useTheme } from '../../../hooks';
 
 import { RevisitModalProps } from './interfaces';
+import { RevistsTopTabsParamsList } from '../../../interfaces/revisits';
 
 import themeStyles from '../../../theme/styles';
 
 const RevisitModal: FC<RevisitModalProps> = ({ isOpen, onClose }) => {
     const [ completeMsg, setCompleteMsg ] = useState<string>('');
     const [ revisitPerson, setRevisitPerson ] = useState<boolean>(false);
+    const { params } = useRoute<RouteProp<RevistsTopTabsParamsList>>();
 
     const { state: { selectedRevisit, isRevisitLoading }, completeRevisit, saveRevisit } = useRevisits();
+    const { setErrorForm } = useStatus();
     const { state: { colors } } = useTheme();
 
     const modalTitle = (selectedRevisit.done)
         ? `¿Quieres volver a visitar a ${ selectedRevisit.person_name }?`
         : '¿Estás seguro de marcar está revistada como visitada?';
 
+    const revisitFormSchema = object().shape({
+        about: string()
+            .min(10, 'La información de la persona debe tener al meno 10 caracteres.')
+            .required('La información de la persona es requerida.'),
+        next_visit: date()
+            .required('La fecha de la próxima visita no puede estar vacía'),
+    });
+
     const handleConfirm = async (values?: { next_visit: Date }) => {
         if (!selectedRevisit.done) {
-            const msg = await completeRevisit(onClose);
+            const msg = await completeRevisit(params.filter, onClose);
             setCompleteMsg(msg);
         }
         else if (selectedRevisit.done && !values?.next_visit) {
@@ -40,7 +53,7 @@ const RevisitModal: FC<RevisitModalProps> = ({ isOpen, onClose }) => {
                 about: selectedRevisit.about,
                 address: selectedRevisit.address,
                 person_name: selectedRevisit.person_name
-            }, selectedRevisit.photo, undefined, false, onClose);
+            }, params.filter, selectedRevisit.photo, undefined, false, onClose);
         }
     }
 
@@ -98,15 +111,29 @@ const RevisitModal: FC<RevisitModalProps> = ({ isOpen, onClose }) => {
                                             color: colors.modalText
                                         }}
                                     >
-                                        Por favor seleciona el día de la próxima vista.
+                                        Por favor verifica los siguientes datos.
                                     </Text>
 
                                     <Formik
-                                        initialValues={{ next_visit: new Date() }}
+                                        initialValues={{
+                                            about: selectedRevisit.about,
+                                            next_visit: new Date()
+                                        }}
                                         onSubmit={ handleConfirm }
+                                        validateOnMount
+                                        validationSchema={ revisitFormSchema }
                                     >
-                                        { ({ handleSubmit }) => (
+                                        { ({ handleSubmit, isValid, errors }) => (
                                             <View style={{ alignItems: 'center' }}>
+                                                <FormField
+                                                    label="Información actual:"
+                                                    multiline
+                                                    name="about"
+                                                    numberOfLines={ 10 }
+                                                    placeholder="Ingrese datos sobre la persona, tema de conversación, aspectos importantes, etc..."
+                                                    style={{ width: '100%' }}
+                                                />
+
                                                 <DatetimeField
                                                     icon={
                                                         <Icon
@@ -126,7 +153,7 @@ const RevisitModal: FC<RevisitModalProps> = ({ isOpen, onClose }) => {
 
                                                 <ModalActions
                                                     onClose={ handleClose }
-                                                    onConfirm={ handleSubmit }
+                                                    onConfirm={ (isValid) ? handleSubmit : () => setErrorForm(errors) }
                                                     revisitPerson={ revisitPerson }
                                                 />
                                             </View>

@@ -8,27 +8,25 @@ import { Button } from '../../../components/ui';
 
 import { useCourses, useTheme } from '../../../hooks';
 
-import { ActiveOrSuspendCourseModalProps } from './interfaces';
+import { FinishOrStartCourseModalProps } from './interfaces';
 import { CoursesTopTabsParamsList } from '../../../interfaces/courses';
 
 import themeStyles from '../../../theme/styles';
 
-const ActiveOrSuspendCourseModal: FC<ActiveOrSuspendCourseModalProps> = ({ onClose, isOpen }) => {
+const FinishOrStartCourseModal: FC<FinishOrStartCourseModalProps> = ({ isOpen, onClose }) => {
     const { params } = useRoute<RouteProp<CoursesTopTabsParamsList>>();
 
-    const { state: { selectedCourse, isCourseLoading }, activeOrSuspendCourse } = useCourses();
+    const { state: { selectedCourse, isCourseLoading }, finishOrStartCourse } = useCourses();
     const { state: { colors }, BUTTON_TRANSLUCENT_COLOR } = useTheme();
 
-    const modalMsg = (selectedCourse.suspended)
-        ? '¿Está seguro de continuar este curso?'
-        : '¿Está seguro de suspender este curso?';
+    const modalMsg = (selectedCourse.finished)
+        ? '¿Está seguro de volver a comenzar este curso?'
+        : '¿Está seguro de terminar este curso?';
 
-    const confirmTextButton = (selectedCourse.suspended)
-        ? 'ACEPTAR'
-        : 'SUSPENDER';
+    const confirmTextButton = (selectedCourse.finished) ? 'COMENZAR' : 'TERMINAR';
 
     const handleConfirm = () => {
-        activeOrSuspendCourse(params.filter, onClose);
+        finishOrStartCourse(params.filter, onClose);
     }
 
     return (
@@ -81,4 +79,4 @@ const ActiveOrSuspendCourseModal: FC<ActiveOrSuspendCourseModalProps> = ({ onClo
     );
 }
 
-export default ActiveOrSuspendCourseModal;
+export default FinishOrStartCourseModal;
