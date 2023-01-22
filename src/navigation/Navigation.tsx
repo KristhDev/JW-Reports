@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { Appearance, AppState, StatusBar } from 'react-native';
 import { CardStyleInterpolators, createStackNavigator } from '@react-navigation/stack';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import { AuthStackNavigation, MainTabsBottomNavigation, SettingsStackNavigation } from './';
 
@@ -8,6 +9,7 @@ import { StatusModal } from '../screens/status';
 
 import { useAuth, useCourses, usePermissions, useRevisits, useStatus, useTheme } from '../hooks';
 
+import { Theme } from '../interfaces/theme';
 import { NavigationParamsList } from '../interfaces/ui';
 
 const Stack = createStackNavigator<NavigationParamsList>();
@@ -18,7 +20,7 @@ const Navigation = () => {
     const { clearCourses } = useCourses();
     const { clearRevisits } = useRevisits();
     const { clearStatus } = useStatus();
-    const { state: { selectedTheme }, setDefaultTheme } = useTheme();
+    const { state: { selectedTheme }, setDefaultTheme, setTheme } = useTheme();
 
     useEffect(() => {
         checkPermissions();
@@ -27,7 +29,10 @@ const Navigation = () => {
         clearCourses();
         clearRevisits();
 
-        setDefaultTheme();
+        AsyncStorage.getItem('jw-reports-theme').then(theme => {
+            setTheme(theme as Theme || 'default');
+        });
+
         renew();
     }, []);
 

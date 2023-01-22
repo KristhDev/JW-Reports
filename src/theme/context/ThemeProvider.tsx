@@ -1,6 +1,7 @@
 import React, { FC, PropsWithChildren, useEffect, useReducer, useRef } from 'react';
 import { Appearance } from 'react-native';
 import { Transitioning, TransitioningView, Transition } from 'react-native-reanimated';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import ThemeContext from './ThemeContext';
 import themeReducer from './themeReducer';
@@ -19,8 +20,9 @@ const ThemeProvider: FC<PropsWithChildren> = ({ children }) => {
     const [ state, dispatch ] = useReducer(themeReducer, INITIAL_STATE);
     const ref = useRef<TransitioningView>(null);
 
-    const setTheme = (theme: Theme) => {
+    const setTheme = async (theme: Theme) => {
         dispatch({ type: '[Theme] set theme', payload: { theme } });
+        await AsyncStorage.setItem('jw-reports-theme', theme);
 
         if (ref.current) ref.current.animateNextTransition();
         if (theme === 'default') theme = Appearance.getColorScheme() || 'light';
