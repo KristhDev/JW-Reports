@@ -18,7 +18,7 @@ export const PreachingTable = () => {
     const { width } = useWindowDimensions();
 
     const { state: { preachings }, setSelectedPreaching } = usePreaching();
-    const { state: { theme, colors } } = useTheme();
+    const { state: { selectedTheme, colors } } = useTheme();
 
     const handleGoToEditPreaching = (preaching: Preaching) => {
         setSelectedPreaching(preaching);
@@ -42,7 +42,7 @@ export const PreachingTable = () => {
                 Children.toArray(preachings.map((preaching) => (
                     <TouchableHighlight
                         onPress={ () => handleGoToEditPreaching(preaching) }
-                        underlayColor={ (theme === 'dark') ? 'rgba(255, 255, 255, 0.15)' : 'rgba(0, 0, 0, 0.15)' }
+                        underlayColor={ (selectedTheme === 'dark') ? 'rgba(255, 255, 255, 0.15)' : 'rgba(0, 0, 0, 0.15)' }
                     >
                         <View style={{ ...styles.tableRow }}>
                             <TableCell

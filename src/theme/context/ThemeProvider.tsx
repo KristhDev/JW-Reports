@@ -1,4 +1,4 @@
-import React, { FC, PropsWithChildren, useEffect, useReducer, useRef } from 'react';
+import React, { FC, PropsWithChildren, useReducer, useRef } from 'react';
 import { Appearance } from 'react-native';
 import { Transitioning, TransitioningView, Transition } from 'react-native-reanimated';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -11,7 +11,7 @@ import { darkColors, lightColors } from '../colors';
 import { Theme, ThemeState } from '../../interfaces/theme';
 
 const INITIAL_STATE: ThemeState = {
-    theme: 'light',
+    theme: 'default',
     selectedTheme: 'light',
     colors: lightColors
 }
@@ -23,6 +23,15 @@ const ThemeProvider: FC<PropsWithChildren> = ({ children }) => {
     const setTheme = async (theme: Theme) => {
         dispatch({ type: '[Theme] set theme', payload: { theme } });
         await AsyncStorage.setItem('jw-reports-theme', theme);
+
+        dispatch({
+            type: '[Theme] set selected theme',
+            payload: {
+                selectedTheme: (theme === 'default')
+                    ? (Appearance.getColorScheme() || 'light')
+                    : theme
+            }
+        });
 
         if (ref.current) ref.current.animateNextTransition();
         if (theme === 'default') theme = Appearance.getColorScheme() || 'light';
@@ -45,25 +54,6 @@ const ThemeProvider: FC<PropsWithChildren> = ({ children }) => {
             <Transition.Out type="fade" durationMs={ 300 } />
         </Transition.Together>
     );
-
-    useEffect(() => {
-        if (state.theme === 'default') {
-            dispatch({
-                type: '[Theme] set selected theme',
-                payload: {
-                    selectedTheme: (Appearance.getColorScheme() || 'light')
-                }
-            });
-        }
-        else {
-            dispatch({
-                type: '[Theme] set selected theme',
-                payload: {
-                    selectedTheme: state.theme
-                }
-            });
-        }
-    }, [ state.theme ]);
 
     return (
         <ThemeContext.Provider

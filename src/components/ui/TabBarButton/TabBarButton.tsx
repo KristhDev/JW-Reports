@@ -9,7 +9,7 @@ import { TabBarButtonProps } from './interfaces';
 import styles from './styles';
 
 export const TabBarButton: FC<TabBarButtonProps> = ({ active, color, iconName, onPress, title }) => {
-    const { state: { theme }, BUTTON_TRANSLUCENT_COLOR, BUTTON_TRANSPARENT_COLOR } = useTheme();
+    const { state: { selectedTheme }, BUTTON_TRANSLUCENT_COLOR, BUTTON_TRANSPARENT_COLOR } = useTheme();
     const [ pressColor, setPressColor ] = useState<string>(BUTTON_TRANSPARENT_COLOR);
 
     useEffect(() => {
@@ -18,7 +18,7 @@ export const TabBarButton: FC<TabBarButtonProps> = ({ active, color, iconName, o
         }, 700);
 
         return () => clearTimeout(timeout);
-    }, [ active, theme ]);
+    }, [ active, selectedTheme ]);
 
     return (
         <TouchableRipple

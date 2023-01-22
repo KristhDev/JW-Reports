@@ -20,7 +20,7 @@ const Navigation = () => {
     const { clearCourses } = useCourses();
     const { clearRevisits } = useRevisits();
     const { clearStatus } = useStatus();
-    const { state: { selectedTheme }, setDefaultTheme, setTheme } = useTheme();
+    const { state: { selectedTheme, theme: appTheme }, setDefaultTheme, setTheme } = useTheme();
 
     useEffect(() => {
         checkPermissions();
@@ -30,6 +30,7 @@ const Navigation = () => {
         clearRevisits();
 
         AsyncStorage.getItem('jw-reports-theme').then(theme => {
+            console.log(theme);
             setTheme(theme as Theme || 'default');
         });
 
@@ -49,13 +50,13 @@ const Navigation = () => {
 
     useEffect(() => {
         const unSubscribeTheme = Appearance.addChangeListener(() => {
-            setDefaultTheme();
+            (appTheme === 'default') && setDefaultTheme();
         });
 
         return () => {
             unSubscribeTheme.remove();
         }
-    }, []);
+    }, [ appTheme ]);
 
     return (
         <>
