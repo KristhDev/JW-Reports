@@ -54,10 +54,7 @@ const Navigation = () => {
 
             <Stack.Navigator
                 screenOptions={{
-                    headerShown: false,
-                    cardStyle: {
-                        // backgroundColor: '#000000'
-                    }
+                    headerShown: false
                 }}
             >
                 {

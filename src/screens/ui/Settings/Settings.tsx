@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { ScrollView } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 
 import { SectionButton, SectionContent } from '../../../components/ui';
 
@@ -9,6 +10,8 @@ import { ThemeModal } from '../../../theme/screens';
 
 const Settings = () => {
     const [ showThemeModal, setShowThemeModal ] = useState<boolean>(false);
+    const { navigate } = useNavigation();
+
     const { state: { theme } } = useTheme();
 
     const themeText = {
@@ -22,13 +25,13 @@ const Settings = () => {
             <ScrollView overScrollMode="never">
                 <SectionContent title="MI CUENTA">
                     <SectionButton
-                        onPress={ () => {} }
+                        onPress={ () => navigate('ProfileScreen' as never) }
                         subText="Actualize sus datos personales"
                         text="Perfil"
                     />
 
                     <SectionButton
-                        onPress={ () => {} }
+                        onPress={ () => navigate('ResetPasswordScreen' as never) }
                         subText="Cambie su contraseña"
                         text="Contraseña"
                     />

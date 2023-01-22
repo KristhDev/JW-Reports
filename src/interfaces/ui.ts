@@ -1,6 +1,8 @@
 export type NavigationParamsList = {
     MainTabsBottomNavigation: undefined;
     SettingsStackNavigation: undefined;
+    ProfileScreen: undefined;
+    ResetPasswordScreen: undefined;
     AuthStackNavigation: undefined;
 }
 
