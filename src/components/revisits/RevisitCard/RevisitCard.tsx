@@ -50,7 +50,11 @@ export const RevisitCard: FC<RevisitCardProps> = ({ onDelete, onRevisit, onPass,
                 style={{ ...styles.container, backgroundColor: colors.card }}
             >
                 <Text style={{ ...styles.textDate, color: colors.icon }}>
-                    { `${ nextVisit.format('DD') } de ${ nextVisit.format('MMMM') } del ${ nextVisit.format('YYYY') }`  }
+                    {
+                        (revisit.done)
+                            ? 'Visita hecha'
+                            : `Visitar el ${ nextVisit.format('DD') } de ${ nextVisit.format('MMMM') } del ${ nextVisit.format('YYYY') }`
+                    }
                 </Text>
 
                 <Text style={{ ...styles.textName, color: colors.text }}>{ revisit.person_name }</Text>
@@ -60,7 +64,7 @@ export const RevisitCard: FC<RevisitCardProps> = ({ onDelete, onRevisit, onPass,
                 </Text>
 
                 <Fab
-                    color={ 'transparent' }
+                    color="transparent"
                     icon={
                         <Icon
                             color={ colors.button }
