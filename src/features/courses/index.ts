@@ -7,6 +7,7 @@ export {
     clearCourses,
     removeCourse,
     removeCourses,
+    setCourseFilter,
     setCourses,
     setCoursesPagination,
     setCoursesScreenHistory,

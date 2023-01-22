@@ -30,6 +30,7 @@ export interface RevisitsState {
     isRevisitLoading: boolean;
     isRevisitsLoading: boolean;
     refreshRevisits: boolean;
+    revisitFilter: RevisitFilter;
     revisits: Revisit[];
     revisitsScreenHistory: string[];
     revisitsPagination: Pagination;

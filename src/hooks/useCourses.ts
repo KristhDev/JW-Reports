@@ -12,6 +12,7 @@ import {
     clearCourses as clearCoursesAction,
     removeCourse,
     removeCourses as removeCoursesAction,
+    setCourseFilter,
     setCourses as setCoursesAction,
     setCoursesPagination as setCoursesPaginationAction,
     setCoursesScreenHistory as setCoursesScreenHistoryAction,
@@ -50,6 +51,7 @@ const useCourses = () => {
     const setSelectedCourse = (course: Course) => dispatch(setSelectedCourseAction({ course }));
 
     const loadCourses = async (filter: CourseFilter, refresh: boolean = false, loadMore: boolean = false) => {
+        dispatch(setCourseFilter({ filter }));
         setIsCoursesLoading(true);
 
         const coursesPromise = supabase.from('courses').select().eq('user_id', user.id);
@@ -89,7 +91,7 @@ const useCourses = () => {
         (loadMore) ? addCourses(data!) : setCourses(data!);
     }
 
-    const activeOrSuspendCourse = async (filter: CourseFilter, onFinish?: () => void) => {
+    const activeOrSuspendCourse = async (onFinish?: () => void) => {
         dispatch(setIsCourseLoading({ isLoading: true }));
 
         if (state.selectedCourse.id === '') {
@@ -136,14 +138,14 @@ const useCourses = () => {
             ? 'Haz suspendido el curso correctamente.'
             : 'Haz renovado el curso correctamente.'
 
-        dispatch(updateCourseAction({ course: data![0], filter }));
+        dispatch(updateCourseAction({ course: data![0] }));
 
         onFinish && onFinish();
 
         setStatus({ code: 200, msg });
     }
 
-    const finishOrStartCourse = async (filter: CourseFilter, onFinish?: () => void) => {
+    const finishOrStartCourse = async (onFinish?: () => void) => {
         dispatch(setIsCourseLoading({ isLoading: true }));
 
         if (state.selectedCourse.id === '') {
@@ -190,7 +192,7 @@ const useCourses = () => {
             ? 'Haz terminado el curso correctamente.'
             : 'Haz comenzado de nuevo el curso correctamente.'
 
-        dispatch(updateCourseAction({ course: data![0], filter }));
+        dispatch(updateCourseAction({ course: data![0] }));
 
         onFinish && onFinish();
 
@@ -227,7 +229,7 @@ const useCourses = () => {
         } as never);
     }
 
-    const updateCourse = async (filter: CourseFilter, courseValues: CourseFormValues) => {
+    const updateCourse = async (courseValues: CourseFormValues) => {
         dispatch(setIsCourseLoading({ isLoading: true }));
 
         const { data, error } = await supabase.from('courses')
@@ -242,7 +244,7 @@ const useCourses = () => {
         const next = setSupabaseError(error, () => dispatch(setIsCourseLoading({ isLoading: false })));
         if (next) return;
 
-        dispatch(updateCourseAction({ course: data![0], filter }));
+        dispatch(updateCourseAction({ course: data![0] }));
 
         setStatus({
             code: 200,

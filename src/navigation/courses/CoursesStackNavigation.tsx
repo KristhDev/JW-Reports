@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import { CardStyleInterpolators, createStackNavigator } from '@react-navigation/stack';
+import { useNavigation } from '@react-navigation/native';
 
 import CoursesTopTabsNavigation from './CoursesTopTabsNavigation';
 
-import { AddOrEditCourse } from '../../screens/courses';
+import { AddOrEditCourse, CourseDetail } from '../../screens/courses';
 
 import { BackButton, HeaderButtons } from '../../components/ui';
 
@@ -15,11 +16,12 @@ const Stack = createStackNavigator<CoursesStackParamsList>();
 
 const CoursesStackNavigation = () => {
     const [ showDeleteModal, setShowDeleteModal ] = useState<boolean>(false);
+    const { navigate } = useNavigation();
 
     const { state: { isCourseDeleting, selectedCourse }, deleteCourse } = useCourses();
     const { state: { colors } } = useTheme();
 
-    // const revisitDetailTitle = `Curso a ${ selectedCourse.person_name }`;
+    const courseDetailTitle = `Curso a ${ selectedCourse.person_name }`;
 
     const handleDeleteConfirm = () => {
         deleteCourse(true, () => setShowDeleteModal(false));
@@ -45,21 +47,28 @@ const CoursesStackNavigation = () => {
                 options={{ title: 'Cursos' }}
             />
 
-            {/* <Stack.Screen
-                component={ RevisitDetail }
-                name="RevisitDetailScreen"
+            <Stack.Screen
+                component={ CourseDetail }
+                name="CourseDetailScreen"
                 options={{
                     headerLeft: ({ onPress }) => <BackButton onPress={ onPress } />,
                     headerRight: () => (
-                        <RevisitHeader
+                        <HeaderButtons
                             deleteButton={ true }
-                            editButton={ true }
+                            deleteModalText="¿Estás seguro de eliminar este curso?"
+                            isDeleteModalLoading={ isCourseDeleting }
+                            onCloseDeleteModal={ () => setShowDeleteModal(false) }
+                            onConfirmDeleteModal={ handleDeleteConfirm }
+                            onShowDeleteModal={ () => setShowDeleteModal(true) }
+                            showDeleteModal={ showDeleteModal }
+
+                            editButton={ !selectedCourse.finished }
+                            onPressEditButton={ () => navigate('AddOrEditCourseScreen' as never) }
                         />
                     ),
-                    title: (revisitDetailTitle.length >= 22) ? revisitDetailTitle.slice(0, 22) + '...' : revisitDetailTitle
+                    title: (courseDetailTitle.length >= 22) ? courseDetailTitle.slice(0, 22) + '...' : courseDetailTitle
                 }}
             />
-            */}
 
             <Stack.Screen
                 component={ AddOrEditCourse }

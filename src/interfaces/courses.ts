@@ -2,6 +2,7 @@ import { Pagination } from './ui';
 
 export type CoursesStackParamsList = {
     CoursesTopTabsNavigation: undefined;
+    CourseDetailScreen: undefined;
     AddOrEditCourseScreen: undefined;
 }
 
@@ -31,6 +32,7 @@ export type CoursesTopTabsParamsList = {
 export interface CoursesState {
     classes: CourseClass[];
     classesPagination: Pagination;
+    courseFilter: CourseFilter;
     courses: Course[];
     coursesPagination: Pagination;
     coursesScreenHistory: string[];

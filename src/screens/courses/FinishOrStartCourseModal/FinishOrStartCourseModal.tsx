@@ -1,6 +1,5 @@
 import React, { FC } from 'react';
 import { ActivityIndicator, Text, View } from 'react-native';
-import { RouteProp, useRoute } from '@react-navigation/native';
 
 import { Modal } from '../../ui';
 
@@ -8,14 +7,11 @@ import { Button } from '../../../components/ui';
 
 import { useCourses, useTheme } from '../../../hooks';
 
-import { CoursesTopTabsParamsList } from '../../../interfaces/courses';
 import { ModalProps } from '../../../interfaces/ui';
 
 import { styles as themeStyles } from '../../../theme';
 
 const FinishOrStartCourseModal: FC<ModalProps> = ({ isOpen, onClose }) => {
-    const { params } = useRoute<RouteProp<CoursesTopTabsParamsList>>();
-
     const { state: { selectedCourse, isCourseLoading }, finishOrStartCourse } = useCourses();
     const { state: { colors }, BUTTON_TRANSLUCENT_COLOR } = useTheme();
 
@@ -26,7 +22,7 @@ const FinishOrStartCourseModal: FC<ModalProps> = ({ isOpen, onClose }) => {
     const confirmTextButton = (selectedCourse.finished) ? 'COMENZAR' : 'TERMINAR';
 
     const handleConfirm = () => {
-        finishOrStartCourse(params.filter, onClose);
+        finishOrStartCourse(onClose);
     }
 
     return (

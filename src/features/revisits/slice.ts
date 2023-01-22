@@ -36,6 +36,7 @@ const INITIAL_STATE: RevisitsState = {
     isRevisitLoading: false,
     isRevisitsLoading: false,
     refreshRevisits: false,
+    revisitFilter: 'all',
     revisits: [],
     revisitsScreenHistory: [],
     revisitsPagination: {
@@ -63,8 +64,8 @@ const revisitsSlice = createSlice({
     name: 'revisits',
     initialState: INITIAL_STATE,
     reducers: {
-        addRevisit: (state, action: PayloadAction<RevisitPayload & { filter: RevisitFilter }>) => {
-            state.revisits = filterRevisits([ action.payload.revisit, ...state.revisits ], action.payload.filter);
+        addRevisit: (state, action: PayloadAction<RevisitPayload>) => {
+            state.revisits = filterRevisits([ action.payload.revisit, ...state.revisits ], state.revisitFilter);
             state.revisits = state.revisits.sort((a, b) => new Date(b.next_visit).getTime() - new Date(a.next_visit).getTime());
             state.isRevisitLoading = false;
         },
@@ -80,6 +81,7 @@ const revisitsSlice = createSlice({
             state.isRevisitLoading = INITIAL_STATE.isRevisitLoading;
             state.isRevisitsLoading = INITIAL_STATE.isRevisitsLoading;
             state.refreshRevisits = INITIAL_STATE.refreshRevisits;
+            state.revisitFilter = INITIAL_STATE.revisitFilter;
             state.revisits = INITIAL_STATE.revisits;
             state.revisitsPagination = INITIAL_STATE.revisitsPagination;
             state.revisitsScreenHistory = INITIAL_STATE.revisitsScreenHistory;
@@ -115,6 +117,10 @@ const revisitsSlice = createSlice({
             state.refreshRevisits = action.payload.refresh;
         },
 
+        setRevisitFilter: (state, action: PayloadAction<{ filter: RevisitFilter }>) => {
+            state.revisitFilter = action.payload.filter;
+        },
+
         setRevisits: (state, action: PayloadAction<SetRevisitsPayload>) => {
             state.revisits = [ ...action.payload.revisits ];
             state.isRevisitsLoading = false;
@@ -133,12 +139,12 @@ const revisitsSlice = createSlice({
             state.isRevisitLoading = false;
         },
 
-        updateRevisit: (state, action: PayloadAction<RevisitPayload & { filter: RevisitFilter }>) => {
+        updateRevisit: (state, action: PayloadAction<RevisitPayload>) => {
             state.revisits = filterRevisits(state.revisits.map(revisit =>
                 (revisit.id === action.payload.revisit.id)
                     ? action.payload.revisit
                     : revisit
-            ), action.payload.filter);
+            ), state.revisitFilter);
             state.revisits = state.revisits.sort((a, b) => new Date(b.next_visit).getTime() - new Date(a.next_visit).getTime());
             state.selectedRevisit = (state.selectedRevisit.id === action.payload.revisit.id)
                 ? action.payload.revisit
@@ -159,6 +165,7 @@ export const {
     setIsRevisitLoading,
     setIsRevisitsLoading,
     setRefreshRevisits,
+    setRevisitFilter,
     setRevisits,
     setRevisitsPagination,
     setRevisitsScreenHistory,

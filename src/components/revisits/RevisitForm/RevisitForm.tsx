@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { ActivityIndicator, Image, Text, View, useWindowDimensions } from 'react-native';
-import { RouteProp, useRoute } from '@react-navigation/native';
 import { Formik } from 'formik';
 import { date, object, string } from 'yup';
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -10,7 +9,6 @@ import { Button, DatetimeField, FormField } from '../../ui';
 import { useImage, useRevisits, useStatus, useTheme } from '../../../hooks';
 
 import { RevisitFormValues } from './interfaces';
-import { RevistsTopTabsParamsList } from '../../../interfaces/revisits';
 
 import { styles as themeStyles } from '../../../theme';
 
@@ -19,7 +17,6 @@ const defaultRevisit = require('../../../assets/revisit-default.jpg');
 export const RevisitForm = () => {
     const [ imageHeight, setImageHeight ] = useState<number>(0);
     const [ imageUri, setImageUri ] = useState<string>('https://local-image.com/images.jpg');
-    const { params } = useRoute<RouteProp<RevistsTopTabsParamsList>>();
     const { width: windowWidth } = useWindowDimensions();
 
     const { image, takeImageToGallery, takePhoto } = useImage();
@@ -29,8 +26,8 @@ export const RevisitForm = () => {
 
     const handleSaveOrUpdate = (formValues: RevisitFormValues) => {
         (selectedRevisit.id === '')
-            ? saveRevisit(formValues, params.filter, undefined, isChangeImage() ? image : undefined)
-            : updateRevisit(formValues, params.filter, isChangeImage() ? image : undefined);
+            ? saveRevisit(formValues, undefined, isChangeImage() ? image : undefined)
+            : updateRevisit(formValues, isChangeImage() ? image : undefined);
     }
 
     const revisitFormSchema = object().shape({

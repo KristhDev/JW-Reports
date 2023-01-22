@@ -48,6 +48,7 @@ const INITIAL_STATE: CoursesState = {
         from: 0,
         to: 9,
     },
+    courseFilter: 'all',
     courses: [],
     coursesPagination: {
         from: 0,
@@ -103,6 +104,7 @@ const courseSlice = createSlice({
         clearCourses: (state) => {
             state.classes = INITIAL_STATE.classes;
             state.classesPagination = INITIAL_STATE.classesPagination;
+            state.courseFilter = INITIAL_STATE.courseFilter;
             state.courses = INITIAL_STATE.courses;
             state.coursesPagination = INITIAL_STATE.coursesPagination;
             state.coursesScreenHistory = INITIAL_STATE.coursesScreenHistory;
@@ -127,6 +129,10 @@ const courseSlice = createSlice({
 
         removeCourses: (state) => {
             state.courses = [];
+        },
+
+        setCourseFilter: (state, action: PayloadAction<{ filter: CourseFilter }>) => {
+            state.courseFilter = action.payload.filter;
         },
 
         setCourses: (state, action: PayloadAction<SetCoursesPayload>) => {
@@ -167,13 +173,12 @@ const courseSlice = createSlice({
             state.isCourseLoading = false;
         },
 
-        updateCourse: (state, action: PayloadAction<CoursePayload & { filter: CourseFilter }>) => {
-            state.courses = state.courses.map(course =>
+        updateCourse: (state, action: PayloadAction<CoursePayload>) => {
+            state.courses = filterCourses(state.courses.map(course =>
                 (course.id === action.payload.course.id)
                     ? action.payload.course
                     : course
-            );
-            state.courses = filterCourses(state.courses, action.payload.filter);
+            ), state.courseFilter);
             state.courses = state.courses.sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime());
             state.selectedCourse = (state.selectedCourse.id === action.payload.course.id)
                 ? action.payload.course
@@ -189,6 +194,7 @@ export const {
     clearCourses,
     removeCourse,
     removeCourses,
+    setCourseFilter,
     setCourses,
     setCoursesPagination,
     setCoursesScreenHistory,

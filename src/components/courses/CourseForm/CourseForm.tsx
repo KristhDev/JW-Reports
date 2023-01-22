@@ -1,6 +1,5 @@
 import React from 'react';
 import { ActivityIndicator, View } from 'react-native';
-import { RouteProp, useRoute } from '@react-navigation/native';
 import { Formik } from 'formik';
 import { object, string } from 'yup';
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -10,13 +9,10 @@ import { Button, FormField } from '../../ui';
 import { useCourses, useStatus, useTheme } from '../../../hooks';
 
 import { CourseFormValues } from './interfaces';
-import { CoursesTopTabsParamsList } from '../../../interfaces/courses';
 
 import { styles as themeStyles } from '../../../theme';
 
 export const CourseForm = () => {
-    const { params } = useRoute<RouteProp<CoursesTopTabsParamsList>>();
-
     const { state: { isCourseLoading, selectedCourse }, saveCourse, updateCourse } = useCourses();
     const { setErrorForm } = useStatus();
     const { state: { colors } } = useTheme();
@@ -24,7 +20,7 @@ export const CourseForm = () => {
     const handleSaveOrUpdate = (formValues: CourseFormValues) => {
         (selectedCourse.id === '')
             ? saveCourse(formValues)
-            : updateCourse(params.filter, formValues);
+            : updateCourse(formValues);
     }
 
     const courseFormSchema = object().shape({

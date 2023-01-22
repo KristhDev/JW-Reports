@@ -11,6 +11,7 @@ export {
     setIsRevisitLoading,
     setIsRevisitsLoading,
     setRefreshRevisits,
+    setRevisitFilter,
     setRevisits,
     setRevisitsPagination,
     setRevisitsScreenHistory,

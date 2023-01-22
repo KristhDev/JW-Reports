@@ -1,6 +1,5 @@
 import React, { useState, FC } from 'react';
 import { KeyboardAvoidingView, View, Text, ActivityIndicator, ScrollView, useWindowDimensions } from 'react-native';
-import { RouteProp, useRoute } from '@react-navigation/native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Formik } from 'formik';
 import { date, object, string } from 'yup';
@@ -13,7 +12,6 @@ import { ModalActions } from './ModalActions';
 
 import { useRevisits, useStatus, useTheme } from '../../../hooks';
 
-import { RevistsTopTabsParamsList } from '../../../interfaces/revisits';
 import { ModalProps } from '../../../interfaces/ui';
 
 import { styles as themeStyles } from '../../../theme';
@@ -22,7 +20,6 @@ const RevisitModal: FC<ModalProps> = ({ isOpen, onClose }) => {
     const [ completeMsg, setCompleteMsg ] = useState<string>('');
     const [ revisitPerson, setRevisitPerson ] = useState<boolean>(false);
 
-    const { params } = useRoute<RouteProp<RevistsTopTabsParamsList>>();
     const { top } = useSafeAreaInsets();
     const { width } = useWindowDimensions();
 
@@ -44,7 +41,7 @@ const RevisitModal: FC<ModalProps> = ({ isOpen, onClose }) => {
 
     const handleConfirm = async (values?: { about: string, next_visit: Date }) => {
         if (!selectedRevisit.done) {
-            const msg = await completeRevisit(params.filter, onClose);
+            const msg = await completeRevisit(onClose);
             setCompleteMsg(msg);
         }
         else if (selectedRevisit.done && !values?.next_visit) {
@@ -56,7 +53,7 @@ const RevisitModal: FC<ModalProps> = ({ isOpen, onClose }) => {
                 ...values,
                 address: selectedRevisit.address,
                 person_name: selectedRevisit.person_name
-            }, params.filter, selectedRevisit.photo, undefined, false, onClose);
+            }, selectedRevisit.photo, undefined, false, onClose);
         }
     }
 

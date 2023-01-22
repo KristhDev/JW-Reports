@@ -17,6 +17,7 @@ import {
     setIsRevisitDeleting,
     setIsRevisitLoading,
     setIsRevisitsLoading as setIsRevisitsLoadingAction,
+    setRevisitFilter,
     setRevisits as setRevisitsAction,
     setRevisitsPagination as setRevisitsPaginationAction,
     setRevisitsScreenHistory as setRevisitsScreenHistoryAction,
@@ -51,7 +52,8 @@ const useRevisits = () => {
     const setRevisitsPagination = (pagination: Pagination) => dispatch(setRevisitsPaginationAction({ pagination }));
     const setSelectedRevisit = (revisit: Revisit) => dispatch(setSelectedRevisitAction({ revisit }));
 
-    const loadRevisits = async (filter: 'all' | 'visited' | 'unvisited', refresh: boolean = false, loadMore: boolean = false) => {
+    const loadRevisits = async (filter: RevisitFilter, refresh: boolean = false, loadMore: boolean = false) => {
+        dispatch(setRevisitFilter({ filter }));
         setIsRevisitsLoading(true);
 
         const revisitsPromise = supabase.from('revisits').select().eq('user_id', user.id);
@@ -82,7 +84,7 @@ const useRevisits = () => {
         (loadMore) ? addRevisits(data!) : setRevisits(data!);
     }
 
-    const saveRevisit = async (revisitValues: RevisitFormValues, filter: RevisitFilter, imageUri?: string, image?: Image, back: boolean = true, onFinish?: () => void) => {
+    const saveRevisit = async (revisitValues: RevisitFormValues, imageUri?: string, image?: Image, back: boolean = true, onFinish?: () => void) => {
         dispatch(setIsRevisitLoading({ isLoading: true }));
 
         let photo = imageUri || null;
@@ -116,7 +118,7 @@ const useRevisits = () => {
 
         if (next) return;
 
-        dispatch(addRevisit({ revisit: data![0], filter }));
+        dispatch(addRevisit({ revisit: data![0] }));
         onFinish && onFinish();
 
         const successMsg = (back)
@@ -128,7 +130,7 @@ const useRevisits = () => {
         back && navigate('RevisitsTopTabsNavigation' as never);
     }
 
-    const updateRevisit = async (revisitValues: RevisitFormValues, filter: RevisitFilter, image?: Image) => {
+    const updateRevisit = async (revisitValues: RevisitFormValues, image?: Image) => {
         dispatch(setIsRevisitLoading({ isLoading: true }));
 
         let photo = state.selectedRevisit.photo;
@@ -163,7 +165,7 @@ const useRevisits = () => {
         const next = setSupabaseError(error, () => dispatch(setIsRevisitLoading({ isLoading: false })));
         if (next) return;
 
-        dispatch(updateRevisitAction({ revisit: data![0], filter }));
+        dispatch(updateRevisitAction({ revisit: data![0] }));
 
         setStatus({
             code: 200,
@@ -223,7 +225,7 @@ const useRevisits = () => {
         });
     }
 
-    const completeRevisit = async (filter: RevisitFilter, onFailFinish?: () => void) => {
+    const completeRevisit = async (onFailFinish?: () => void) => {
         dispatch(setIsRevisitLoading({ isLoading: true }));
 
         if (state.selectedRevisit.id === '') {
@@ -256,7 +258,7 @@ const useRevisits = () => {
             return '';
         }
 
-        dispatch(updateRevisitAction({ revisit: data[0], filter }));
+        dispatch(updateRevisitAction({ revisit: data[0] }));
         setSelectedRevisit(data[0]);
 
         return 'Haz marcado como completa tu revista correctamente.';

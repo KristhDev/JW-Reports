@@ -20,9 +20,9 @@ export const CourseCard: FC<CourseCardProps> = ({ course, onActiveOrSuspend, onD
     const { setSelectedCourse } = useCourses();
     const { state: { colors }, BUTTON_TRANSPARENT_COLOR } = useTheme();
 
-    const handleRevisitDetail = () => {
-        // setSelectedCourse(course);
-        // navigate('CourseDetailScreen' as never);
+    const handleCourseDetail = () => {
+        setSelectedCourse(course);
+        navigate('CourseDetailScreen' as never);
     }
 
     const handleEdit = () => {
@@ -39,7 +39,7 @@ export const CourseCard: FC<CourseCardProps> = ({ course, onActiveOrSuspend, onD
     return (
         <TouchableRipple
             borderless
-            onPress={ handleRevisitDetail }
+            onPress={ handleCourseDetail }
             rippleColor={ BUTTON_TRANSPARENT_COLOR }
             style={ styles.touchable }
         >
