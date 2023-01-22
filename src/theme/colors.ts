@@ -16,7 +16,8 @@ export const lightColors: Colors = {
     modal: '#F1F1F1',
     modalText: '#000000',
     text: '#000000',
-    titleText: '#292929'
+    titleSecondary: '#5A7475',
+    titleText: '#292929',
 }
 
 export const darkColors: Colors = {
@@ -35,5 +36,6 @@ export const darkColors: Colors = {
     modal: '#292929',
     modalText: '#B4B4B4',
     text: '#FFFFFF',
+    titleSecondary: '#93A8AB',
     titleText: '#FFFFFF',
 }

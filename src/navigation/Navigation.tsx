@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react';
 import { Appearance, AppState, StatusBar } from 'react-native';
-import { createStackNavigator } from '@react-navigation/stack';
+import { CardStyleInterpolators, createStackNavigator } from '@react-navigation/stack';
 
-import { AuthStackNavigation, MainTabsBottomNavigation } from './';
+import { AuthStackNavigation, MainTabsBottomNavigation, SettingsStackNavigation } from './';
 
 import { StatusModal } from '../screens/status';
 
@@ -18,7 +18,7 @@ const Navigation = () => {
     const { clearCourses } = useCourses();
     const { clearRevisits } = useRevisits();
     const { clearStatus } = useStatus();
-    const { state: { theme }, setDefaultTheme } = useTheme();
+    const { state: { selectedTheme }, setDefaultTheme } = useTheme();
 
     useEffect(() => {
         checkPermissions();
@@ -57,7 +57,7 @@ const Navigation = () => {
             <StatusBar
                 animated
                 backgroundColor="transparent"
-                barStyle={ (theme === 'dark') ? 'light-content' : 'dark-content' }
+                barStyle={ (selectedTheme === 'dark') ? 'light-content' : 'dark-content' }
                 translucent
             />
 
@@ -70,10 +70,20 @@ const Navigation = () => {
             >
                 {
                     (isAuthenticated) ? (
-                        <Stack.Screen
-                            component={ MainTabsBottomNavigation }
-                            name="MainTabsBottomNavigation"
-                        />
+                        <>
+                            <Stack.Screen
+                                component={ MainTabsBottomNavigation }
+                                name="MainTabsBottomNavigation"
+                            />
+
+                            <Stack.Screen
+                                component={ SettingsStackNavigation }
+                                name="SettingsStackNavigation"
+                                options={{
+                                    cardStyleInterpolator: CardStyleInterpolators.forBottomSheetAndroid,
+                                }}
+                            />
+                        </>
                     ) : (
                         <Stack.Screen
                             component={ AuthStackNavigation }

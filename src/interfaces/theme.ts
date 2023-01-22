@@ -1,7 +1,8 @@
-export type Theme = 'dark' | 'light';
+export type Theme = 'dark' | 'light' | 'default';
 
 export interface ThemeState {
     theme: Theme,
+    selectedTheme: Theme,
     colors: Colors
 }
 
@@ -21,6 +22,7 @@ export interface Colors {
     modal: string;
     modalText: string;
     text: string;
+    titleSecondary: string;
     titleText: string;
 }
 

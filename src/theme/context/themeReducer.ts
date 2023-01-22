@@ -1,17 +1,28 @@
-import { SetThemePayload, ThemeState } from '../../interfaces/theme';
-
-import { darkColors, lightColors } from '../colors';
+import { Colors, Theme, ThemeState } from '../../interfaces/theme';
 
 type ThemeAction =
-    | { type: '[Theme] set_theme', payload: SetThemePayload }
+    | { type: '[Theme] set theme', payload: { theme: Theme } }
+    | { type: '[Theme] set colors', payload: { colors: Colors } }
+    | { type: '[Theme] set selected theme', payload: { selectedTheme: Theme } }
 
 const themeReducer = (state: ThemeState, action: ThemeAction): ThemeState => {
     switch (action.type) {
-        case '[Theme] set_theme':
+        case '[Theme] set theme':
             return {
                 ...state,
-                theme: action.payload.theme,
-                colors: (action.payload.theme === 'dark') ? darkColors : lightColors
+                theme: action.payload.theme
+            }
+
+        case '[Theme] set colors':
+            return {
+                ...state,
+                colors: action.payload.colors
+            }
+
+        case '[Theme] set selected theme':
+            return {
+                ...state,
+                selectedTheme: action.payload.selectedTheme
             }
 
         default:

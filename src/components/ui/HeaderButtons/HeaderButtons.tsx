@@ -1,5 +1,6 @@
 import React, { FC, useState } from 'react';
 import { View } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 import MonthPicker from 'react-native-month-year-picker';
 import Icon from 'react-native-vector-icons/Ionicons';
 
@@ -28,6 +29,7 @@ export const HeaderButtons: FC<HeaderButtonsProps> = ({
     showDeleteModal = false,
 }) => {
     const [ showMonthPicker, setShowMonthPicker ] = useState<boolean>(false);
+    const { navigate } = useNavigation();
 
     const { logout } = useAuth();
     const { setSelectedDate, state: { selectedDate } } = usePreaching();
@@ -91,7 +93,7 @@ export const HeaderButtons: FC<HeaderButtonsProps> = ({
                                     style={{ marginLeft: 1 }}
                                 />
                             }
-                            onPress={ () => {} }
+                            onPress={ () => navigate('SettingsStackNavigation' as never) }
                             touchColor={ BUTTON_TRANSPARENT_COLOR }
                         />
                     )

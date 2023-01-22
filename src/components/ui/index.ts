@@ -6,6 +6,8 @@ export { Fab } from './Fab';
 export { FormField } from './FormField';
 export { HeaderButtons } from './HeaderButtons';
 export { InfoText } from './InfoText';
+export { SectionButton } from './SectionButton';
+export { SectionContent } from './SectionContent';
 export { TabBar } from './TabBar';
 export { TabBarButton } from './TabBarButton';
 export { TableCell } from './TableCell';
