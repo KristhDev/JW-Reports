@@ -86,7 +86,7 @@ const ThemeProvider: FC<PropsWithChildren> = ({ children }) => {
     }, []);
 
     useEffect(() => {
-        if (state.deviceTheme === 'default' && state.isLoadedTheme) {
+        if (state.theme === 'default' && state.isLoadedTheme) {
             setDefaultTheme();
         }
     }, [ state.deviceTheme ]);
