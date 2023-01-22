@@ -1,4 +1,4 @@
-import React, { FC, PropsWithChildren, useReducer, useRef } from 'react';
+import React, { FC, PropsWithChildren, useEffect, useReducer, useRef } from 'react';
 import { Appearance } from 'react-native';
 import { Transitioning, TransitioningView, Transition } from 'react-native-reanimated';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -6,14 +6,16 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import ThemeContext from './ThemeContext';
 import themeReducer from './themeReducer';
 
-import { darkColors, lightColors } from '../colors';
+import { darkColors, lightColors, undefinedColors } from '../colors';
 
 import { Theme, ThemeState } from '../../interfaces/theme';
 
 const INITIAL_STATE: ThemeState = {
-    theme: 'default',
-    selectedTheme: 'light',
-    colors: lightColors
+    colors: undefinedColors,
+    deviceTheme: 'default',
+    isLoadedTheme: false,
+    selectedTheme: 'default',
+    theme: 'default'
 }
 
 const ThemeProvider: FC<PropsWithChildren> = ({ children }) => {
@@ -42,6 +44,13 @@ const ThemeProvider: FC<PropsWithChildren> = ({ children }) => {
                 colors: (theme === 'light') ? lightColors : darkColors
             }
         });
+
+        dispatch({
+            type: '[Theme] set is loaded theme',
+            payload: {
+                isLoaded: true
+            }
+        });
     }
 
     const setDefaultTheme = () => {
@@ -55,18 +64,51 @@ const ThemeProvider: FC<PropsWithChildren> = ({ children }) => {
         </Transition.Together>
     );
 
+    useEffect(() => {
+        AsyncStorage.getItem('jw-reports-theme').then(theme => {
+            setTheme(theme as Theme || 'default');
+        });
+    }, []);
+
+    useEffect(() => {
+        const unSubscribeTheme = Appearance.addChangeListener(({ colorScheme }) => {
+            dispatch({
+                type: '[Theme] set device theme',
+                payload: {
+                    theme: colorScheme || 'light',
+                }
+            });
+        });
+
+        return () => {
+            unSubscribeTheme.remove();
+        }
+    }, []);
+
+    useEffect(() => {
+        if (state.deviceTheme === 'default' && state.isLoadedTheme) {
+            setDefaultTheme();
+        }
+    }, [ state.deviceTheme ]);
+
     return (
-        <ThemeContext.Provider
-            value={{
-                state,
-                setTheme,
-                setDefaultTheme
-            }}
-        >
-            <Transitioning.View style={{ flex: 1 }} { ...{ ref, transition } }>
-                { children }
-            </Transitioning.View>
-        </ThemeContext.Provider>
+        <>
+            {
+                (state.isLoadedTheme) && (
+                    <ThemeContext.Provider
+                        value={{
+                            state,
+                            setTheme,
+                            setDefaultTheme
+                        }}
+                    >
+                        <Transitioning.View style={{ flex: 1 }} { ...{ ref, transition } }>
+                            { children }
+                        </Transitioning.View>
+                    </ThemeContext.Provider>
+                )
+            }
+        </>
     );
 }
 

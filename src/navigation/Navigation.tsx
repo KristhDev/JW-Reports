@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react';
-import { Appearance, AppState, StatusBar } from 'react-native';
+import { AppState, StatusBar } from 'react-native';
 import { CardStyleInterpolators, createStackNavigator } from '@react-navigation/stack';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import { AuthStackNavigation, MainTabsBottomNavigation, SettingsStackNavigation } from './';
 
@@ -9,7 +8,6 @@ import { StatusModal } from '../screens/status';
 
 import { useAuth, useCourses, usePermissions, useRevisits, useStatus, useTheme } from '../hooks';
 
-import { Theme } from '../interfaces/theme';
 import { NavigationParamsList } from '../interfaces/ui';
 
 const Stack = createStackNavigator<NavigationParamsList>();
@@ -20,7 +18,7 @@ const Navigation = () => {
     const { clearCourses } = useCourses();
     const { clearRevisits } = useRevisits();
     const { clearStatus } = useStatus();
-    const { state: { selectedTheme, theme: appTheme }, setDefaultTheme, setTheme } = useTheme();
+    const { state: { selectedTheme, } } = useTheme();
 
     useEffect(() => {
         checkPermissions();
@@ -28,11 +26,6 @@ const Navigation = () => {
 
         clearCourses();
         clearRevisits();
-
-        AsyncStorage.getItem('jw-reports-theme').then(theme => {
-            console.log(theme);
-            setTheme(theme as Theme || 'default');
-        });
 
         renew();
     }, []);
@@ -48,16 +41,6 @@ const Navigation = () => {
         }
     }, []);
 
-    useEffect(() => {
-        const unSubscribeTheme = Appearance.addChangeListener(() => {
-            (appTheme === 'default') && setDefaultTheme();
-        });
-
-        return () => {
-            unSubscribeTheme.remove();
-        }
-    }, [ appTheme ]);
-
     return (
         <>
             <StatusBar
@@ -71,7 +54,10 @@ const Navigation = () => {
 
             <Stack.Navigator
                 screenOptions={{
-                    headerShown: false
+                    headerShown: false,
+                    cardStyle: {
+                        // backgroundColor: '#000000'
+                    }
                 }}
             >
                 {

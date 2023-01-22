@@ -1,9 +1,11 @@
 export type Theme = 'dark' | 'light' | 'default';
 
 export interface ThemeState {
-    theme: Theme,
+    colors: Colors;
+    deviceTheme: Theme;
+    isLoadedTheme: boolean;
     selectedTheme: Theme,
-    colors: Colors
+    theme: Theme,
 }
 
 export interface Colors {

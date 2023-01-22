@@ -39,3 +39,23 @@ export const darkColors: Colors = {
     titleSecondary: '#93A8AB',
     titleText: '#FFFFFF',
 }
+
+export const undefinedColors: Colors = {
+    background: 'transparent',
+    bottom: 'transparent',
+    button: 'transparent',
+    buttonDark: 'transparent',
+    card: 'transparent',
+    contentHeader: 'transparent',
+    focus: 'transparent',
+    header: 'transparent',
+    headerText: 'transparent',
+    icon: 'transparent',
+    inputText: 'transparent',
+    linkText: 'transparent',
+    modal: 'transparent',
+    modalText: 'transparent',
+    text: 'transparent',
+    titleSecondary: 'transparent',
+    titleText: 'transparent',
+}

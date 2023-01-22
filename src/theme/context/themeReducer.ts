@@ -4,6 +4,8 @@ type ThemeAction =
     | { type: '[Theme] set theme', payload: { theme: Theme } }
     | { type: '[Theme] set colors', payload: { colors: Colors } }
     | { type: '[Theme] set selected theme', payload: { selectedTheme: Theme } }
+    | { type: '[Theme] set is loaded theme', payload: { isLoaded: boolean } }
+    | { type: '[Theme] set device theme', payload: { theme: Theme } }
 
 const themeReducer = (state: ThemeState, action: ThemeAction): ThemeState => {
     switch (action.type) {
@@ -23,6 +25,18 @@ const themeReducer = (state: ThemeState, action: ThemeAction): ThemeState => {
             return {
                 ...state,
                 selectedTheme: action.payload.selectedTheme
+            }
+
+        case '[Theme] set is loaded theme':
+            return {
+                ...state,
+                isLoadedTheme: action.payload.isLoaded
+            }
+
+        case '[Theme] set device theme':
+            return {
+                ...state,
+                deviceTheme: action.payload.theme
             }
 
         default:
