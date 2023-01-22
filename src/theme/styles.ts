@@ -7,12 +7,27 @@ const styles = StyleSheet.create({
         marginTop: 30,
     },
 
+    defaultBorder: {
+        borderRadius: 5,
+        borderWidth: 0.5
+    },
+
     fabBottomRight: {
         bottom: 5,
         height: 60,
         position: 'absolute',
         right: 10,
         width: 60,
+    },
+
+    focusExternalBorder: {
+        borderRadius: 7,
+        borderWidth: 1
+    },
+
+    focusInternalBorder: {
+        borderWidth: 1.5,
+        paddingRight: 10
     },
 
     formContainer: {

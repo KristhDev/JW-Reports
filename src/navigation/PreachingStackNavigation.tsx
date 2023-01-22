@@ -5,7 +5,7 @@ import { AddOrEditPreaching, Home } from '../screens/preaching';
 
 import { BackButton, HeaderButtons } from '../components/ui';
 
-import { usePreaching, useTheme } from '../hooks';
+import { useCourses, usePreaching, useTheme } from '../hooks';
 
 import { PreachingStackParamsList } from '../interfaces/preaching';
 
@@ -14,7 +14,15 @@ const Stack = createStackNavigator<PreachingStackParamsList>();
 const PreachingStackNavigation = () => {
     const [ showDeleteModal, setShowDeleteModal ] = useState<boolean>(false);
 
-    const { state: { isPreachingDeleting, seletedPreaching, selectedDate }, deletePreaching, setSelectedDate, loadPreachings } = usePreaching();
+    const { loadCourses } = useCourses();
+    const { state: {
+        isPreachingDeleting,
+        seletedPreaching,
+        selectedDate },
+        deletePreaching,
+        setSelectedDate,
+        loadPreachings
+    } = usePreaching();
     const { state: { colors } } = useTheme();
 
     const handleDeleteConfirm = () => {
@@ -23,6 +31,7 @@ const PreachingStackNavigation = () => {
 
     useEffect(() => {
         setSelectedDate(new Date());
+        loadCourses('all');
     }, []);
 
     useEffect(() => {

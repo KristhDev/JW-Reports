@@ -7,7 +7,6 @@ import { useTheme } from '../../../hooks';
 import { FormFieldProps } from './interfaces';
 
 import { styles as themeStyles } from '../../../theme';
-import styles from './styles';
 
 export const FormField: FC<FormFieldProps> = ({ icon, label, style, controlStyle, inputStyle, labelStyle, name, ...rest }) => {
     const { width } = useWindowDimensions();
@@ -40,13 +39,13 @@ export const FormField: FC<FormFieldProps> = ({ icon, label, style, controlStyle
 
             <View
                 style={{
-                    ...styles.focusExternalBorder,
+                    ...themeStyles.focusExternalBorder,
                     borderColor: (isFocused) ? '#FFFFFF' : 'transparent'
                 }}
             >
                 <View
                     style={{
-                        ...styles.defaultBorder,
+                        ...themeStyles.defaultBorder,
                         borderColor: (!isFocused) ? colors.text : colors.focus
                     }}
                 >
@@ -54,7 +53,7 @@ export const FormField: FC<FormFieldProps> = ({ icon, label, style, controlStyle
                         style={[
                             {
                                 ...themeStyles.formControl,
-                                ...styles.focusInternalBorder,
+                                ...themeStyles.focusInternalBorder,
                                 borderColor: (isFocused) ? colors.focus : 'transparent',
                             },
                             controlStyle

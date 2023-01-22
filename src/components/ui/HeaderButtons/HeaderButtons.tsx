@@ -48,9 +48,9 @@ export const HeaderButtons: FC<HeaderButtonsProps> = ({
                             icon={
                                 <Icon
                                     color={ colors.button }
-                                    name="log-in-outline"
+                                    name="log-out-outline"
                                     size={ 34 }
-                                    style={{ marginRight: 3 }}
+                                    style={{ marginLeft: 3 }}
                                 />
                             }
                             style={{ marginRight: -2 }}
