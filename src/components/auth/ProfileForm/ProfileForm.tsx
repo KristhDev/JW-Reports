@@ -29,8 +29,8 @@ export const ProfileForm = () => {
             .min(2, 'Los apellidos deben tener al menos 2 caracteres.')
             .required('Los apellidos son requeridos.'),
         precursor: string()
-            .oneOf([ 'ninguno', 'auxiliar', 'regular', 'e' ], 'Por favor seleccione una opción de precursor')
-            .required('El campo precursor es requerido')
+            .oneOf([ 'ninguno', 'auxiliar', 'regular', 'especial' ], 'Por favor seleccione una opción de precursor.')
+            .required('El campo precursor es requerido.')
     });
 
     return (
