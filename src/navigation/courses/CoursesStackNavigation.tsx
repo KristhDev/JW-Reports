@@ -4,7 +4,7 @@ import { useNavigation } from '@react-navigation/native';
 
 import CoursesTopTabsNavigation from './CoursesTopTabsNavigation';
 
-import { AddOrEditCourse, CourseDetail } from '../../screens/courses';
+import { AddOrEditClass, AddOrEditCourse, CourseDetail } from '../../screens/courses';
 
 import { BackButton, HeaderButtons } from '../../components/ui';
 
@@ -18,7 +18,7 @@ const CoursesStackNavigation = () => {
     const [ showDeleteModal, setShowDeleteModal ] = useState<boolean>(false);
     const { navigate } = useNavigation();
 
-    const { state: { isCourseDeleting, selectedCourse }, deleteCourse } = useCourses();
+    const { state: { isCourseDeleting, selectedClass, selectedCourse }, deleteCourse } = useCourses();
     const { state: { colors } } = useTheme();
 
     const courseDetailTitle = `Curso a ${ selectedCourse.person_name }`;
@@ -87,6 +87,26 @@ const CoursesStackNavigation = () => {
                         />
                     ),
                     title: `${ selectedCourse.id !== '' ? 'Editar' : 'Agregar' } curso`
+                }}
+            />
+
+            <Stack.Screen
+                component={ AddOrEditClass }
+                name="AddOrEditClassScreen"
+                options={{
+                    headerLeft: ({ onPress }) => <BackButton onPress={ onPress } />,
+                    // headerRight: () => (
+                    //     <HeaderButtons
+                    //         deleteButton={ selectedCourse.id !== '' }
+                    //         deleteModalText="¿Estás seguro de eliminar este curso?"
+                    //         isDeleteModalLoading={ isCourseDeleting }
+                    //         onCloseDeleteModal={ () => setShowDeleteModal(false) }
+                    //         onConfirmDeleteModal={ handleDeleteConfirm }
+                    //         onShowDeleteModal={ () => setShowDeleteModal(true) }
+                    //         showDeleteModal={ showDeleteModal }
+                    //     />
+                    // ),
+                    title: `${ selectedClass.id !== '' ? 'Editar' : 'Agregar' } clase`
                 }}
             />
         </Stack.Navigator>

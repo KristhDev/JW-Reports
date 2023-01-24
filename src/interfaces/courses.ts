@@ -4,6 +4,7 @@ export type CoursesStackParamsList = {
     CoursesTopTabsNavigation: undefined;
     CourseDetailScreen: undefined;
     AddOrEditCourseScreen: undefined;
+    AddOrEditClassScreen: undefined;
 }
 
 export type CoursesTopTabsParamsList = {
@@ -74,6 +75,10 @@ export interface CourseClass {
 }
 
 export type CourseFilter = 'all' | 'active' | 'suspended' | 'finished';
+
+export type ClassPayload = {
+    class: CourseClass;
+}
 
 export type CoursePayload = {
     course: Course;

@@ -21,13 +21,14 @@ import {
     setIsCourseLoading,
     setIsCoursesLoading as setIsCoursesLoadingAction,
     setRefreshCourses as setRefreshCoursesAction,
+    setSelectedClass as setSelectedClassAction,
     setSelectedCourse as setSelectedCourseAction,
     updateCourse as updateCourseAction
 } from '../features/courses';
 
 import { useAuth, useStatus } from './';
 
-import { Course, CourseFilter, CoursesState } from '../interfaces/courses';
+import { Course, CourseFilter, CoursesState, CourseClass } from '../interfaces/courses';
 import { Pagination } from '../interfaces/ui';
 import { CourseFormValues } from '../components/courses/CourseForm/interfaces';
 
@@ -48,6 +49,7 @@ const useCourses = () => {
     const setCoursesScreenHistory = (newScreen: string) => dispatch(setCoursesScreenHistoryAction({ newScreen }));
     const setIsCoursesLoading = (isLoading: boolean) => dispatch(setIsCoursesLoadingAction({ isLoading }));
     const setRefreshCourses = (refresh: boolean) => dispatch(setRefreshCoursesAction({ refresh }));
+    const setSelectedClass = (courseClass: CourseClass) => dispatch(setSelectedClassAction({ class: courseClass }));
     const setSelectedCourse = (course: Course) => dispatch(setSelectedCourseAction({ course }));
 
     const loadCourses = async (filter: CourseFilter, refresh: boolean = false, loadMore: boolean = false) => {
@@ -302,6 +304,7 @@ const useCourses = () => {
         setCoursesPagination,
         setCoursesScreenHistory,
         setRefreshCourses,
+        setSelectedClass,
         setSelectedCourse,
 
         // Functions

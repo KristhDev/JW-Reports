@@ -17,7 +17,7 @@ export const CourseCard: FC<CourseCardProps> = ({ course, onActiveOrSuspend, onD
     const [ isOpen, setIsOpen ] = useState<boolean>(false);
     const { navigate } = useNavigation();
 
-    const { setSelectedCourse } = useCourses();
+    const { state: { selectedClass }, setSelectedClass, setSelectedCourse } = useCourses();
     const { state: { colors }, BUTTON_TRANSPARENT_COLOR } = useTheme();
 
     const handleCourseDetail = () => {
@@ -29,6 +29,17 @@ export const CourseCard: FC<CourseCardProps> = ({ course, onActiveOrSuspend, onD
         setIsOpen(false);
         setSelectedCourse(course);
         navigate('AddOrEditCourseScreen' as never);
+    }
+
+    const handleAddClass = () => {
+        setIsOpen(false);
+
+        setSelectedClass({
+            ...selectedClass,
+            next_class: new Date().toString()
+        });
+
+        navigate('AddOrEditClassScreen' as never);
     }
 
     const handleSelect = (onSelect: () => void) => {
@@ -114,16 +125,29 @@ export const CourseCard: FC<CourseCardProps> = ({ course, onActiveOrSuspend, onD
 
                         {
                             (!course.suspended) && (
-                                <MenuOption onSelect={ () => handleSelect(onFinishOrStart) }>
-                                    <Text
-                                        style={{
-                                            color: colors.text,
-                                            ...styles.textMenuOpt
-                                        }}
-                                    >
-                                        { (course.finished) ? 'Comenzar de nuevo' : 'Terminar' }
-                                    </Text>
-                                </MenuOption>
+                                <>
+                                    <MenuOption onSelect={ handleAddClass }>
+                                        <Text
+                                            style={{
+                                                color: colors.text,
+                                                ...styles.textMenuOpt
+                                            }}
+                                        >
+                                            Agregar clase
+                                        </Text>
+                                    </MenuOption>
+
+                                    <MenuOption onSelect={ () => handleSelect(onFinishOrStart) }>
+                                        <Text
+                                            style={{
+                                                color: colors.text,
+                                                ...styles.textMenuOpt
+                                            }}
+                                        >
+                                            { (course.finished) ? 'Comenzar de nuevo' : 'Terminar' }
+                                        </Text>
+                                    </MenuOption>
+                                </>
                             )
                         }
 

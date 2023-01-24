@@ -16,6 +16,7 @@ export {
     setIsCourseLoading,
     setIsCoursesLoading,
     setRefreshCourses,
+    setSelectedClass,
     setSelectedCourse,
     updateCourse
 } from './slice';

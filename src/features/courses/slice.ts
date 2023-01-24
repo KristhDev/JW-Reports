@@ -1,6 +1,7 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 
 import {
+    ClassPayload,
     Course,
     CourseClass,
     CourseFilter,
@@ -168,6 +169,11 @@ const courseSlice = createSlice({
             state.refreshCourses = action.payload.refresh;
         },
 
+        setSelectedClass: (state, action: PayloadAction<ClassPayload>) => {
+            state.selectedClass = action.payload.class;
+            state.isClassLoading = false;
+        },
+
         setSelectedCourse: (state, action: PayloadAction<CoursePayload>) => {
             state.selectedCourse = action.payload.course;
             state.isCourseLoading = false;
@@ -203,6 +209,7 @@ export const {
     setIsCourseLoading,
     setIsCoursesLoading,
     setRefreshCourses,
+    setSelectedClass,
     setSelectedCourse,
     updateCourse
 } = courseSlice.actions;
