@@ -17,7 +17,7 @@ export const CredentialsForm = () => {
     const [ showConfirmPassword, setShowConfirmPassword ] = useState<boolean>(false);
     const { top } = useSafeAreaInsets();
 
-    const { state: { user, isAuthLoading }, updateEmail } = useAuth();
+    const { state: { user, isAuthLoading }, updateEmail, updatePassword } = useAuth();
     const { setErrorForm } = useStatus();
     const { state: { colors } } = useTheme();
 
@@ -42,9 +42,10 @@ export const CredentialsForm = () => {
         updateEmail(values, () => setLoadingEmail(false));
     }
 
-    const handleUpdatePassword = (values: { password: string, confirmPassword: string }) => {
+    const handleUpdatePassword = (values: { password: string, confirmPassword: string }, resetForm: () => void) => {
         setLoadingPassword(true);
-        console.log(values);
+        updatePassword({ password: values.password }, () => setLoadingPassword(false))
+            .then(resetForm);
     }
 
     return (
@@ -98,7 +99,7 @@ export const CredentialsForm = () => {
                     password: '',
                     confirmPassword: ''
                 }}
-                onSubmit={ handleUpdatePassword }
+                onSubmit={ (values, { resetForm }) => handleUpdatePassword(values, resetForm) }
                 validateOnMount
                 validationSchema={ passwordFormSchema }
             >

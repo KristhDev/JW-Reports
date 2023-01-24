@@ -155,6 +155,42 @@ const useAuth = () => {
         setStatus({ code: 200, msg });
     }
 
+    const updatePassword = async ({ password }: { password: string }, onFinish?: () => void) => {
+        dispatch(setIsAuthLoading({ isLoading: true }));
+
+        if (password.trim().length === 0) {
+            dispatch(setIsAuthLoading({ isLoading: false }));
+            onFinish && onFinish();
+
+            setStatus({
+                code: 400,
+                msg: 'La contraseña no puede estar vacia.'
+            });
+
+            return;
+        }
+
+        const { error } = await supabase.auth.updateUser({ password });
+
+        if (error) {
+            console.log(error);
+
+            dispatch(setIsAuthLoading({ isLoading: false }));
+            onFinish && onFinish();
+            setStatus({ code: 400, msg: error.message });
+
+            return;
+        }
+
+        dispatch(setIsAuthLoading({ isLoading: false }));
+        onFinish && onFinish();
+
+        setStatus({
+            code: 200,
+            msg: 'Haz actualizado tu contraseña correctamente'
+        });
+    }
+
     return {
         state,
 
@@ -167,7 +203,8 @@ const useAuth = () => {
         register,
         renew,
         updateEmail,
-        updateProfile,
+        updatePassword,
+        updateProfile
     }
 }
 
