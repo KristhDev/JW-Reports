@@ -49,7 +49,7 @@ export const RegisterForm = () => {
                 password: '',
                 confirmPassword: ''
             }}
-            onSubmit={ (values) => register({ ...values }) }
+            onSubmit={ register }
             validateOnMount
             validationSchema={ registerFormSchema }
         >

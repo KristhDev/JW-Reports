@@ -10,12 +10,14 @@ import { Button, FormField, FormSelect } from '../../ui';
 
 import { useAuth, useStatus, useTheme } from '../../../hooks';
 
+import { PRECURSORS_OPTIONS } from '../../../utils';
+
 import { styles as themeStyles } from '../../../theme';
 
 export const ProfileForm = () => {
     const { top } = useSafeAreaInsets();
 
-    const { state: { user, isAuthLoading } } = useAuth();
+    const { state: { user, isAuthLoading }, updateProfile } = useAuth();
     const { setErrorForm } = useStatus();
     const { state: { colors } } = useTheme();
 
@@ -38,7 +40,7 @@ export const ProfileForm = () => {
                 surname: user.surname,
                 precursor: user.precursor
             }}
-            onSubmit={ (values) => console.log(values) }
+            onSubmit={ updateProfile }
             validateOnMount
             validationSchema={ profileFormSchema }
         >
@@ -75,12 +77,7 @@ export const ProfileForm = () => {
                     <FormSelect
                         name="precursor"
                         label="Precursor:"
-                        items={[
-                            { label: 'Ninguno', value: 'ninguno' },
-                            { label: 'Auxiliar', value: 'auxiliar' },
-                            { label: 'Regular', value: 'regular' },
-                            { label: 'Especial', value: 'especial' }
-                        ]}
+                        items={ PRECURSORS_OPTIONS }
                         placeholder="Seleccione una opción"
                     />
 

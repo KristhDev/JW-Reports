@@ -7,14 +7,15 @@ import { RootState, useAppDispatch } from '../features/store';
 import {
     setUser as setUserAction,
     clearAuth as clearAuthAction,
-    setIsAuthLoading
+    setIsAuthLoading,
+    updateUser
 } from '../features/auth';
 import { clearPreaching } from '../features/preaching';
 import { clearRevisits } from '../features/revisits';
 
 import { useStatus } from './';
 
-import { AuthState, Register, User } from '../interfaces/auth';
+import { AuthState, Login, Profile, Register, User } from '../interfaces/auth';
 
 const useAuth = () => {
     const dispatch = useAppDispatch();
@@ -65,7 +66,7 @@ const useAuth = () => {
         setUser(result);
     }
 
-    const login = async ({ email, password }: { email: string, password: string }) => {
+    const login = async ({ email, password }: Login) => {
         dispatch(setIsAuthLoading({ isLoading: true }));
 
         const result = await supabase.auth.signInWithPassword({ email, password });
@@ -94,6 +95,29 @@ const useAuth = () => {
         dispatch(clearAuthAction());
     }
 
+    const updateProfile = async (values: Profile) => {
+        dispatch(setIsAuthLoading({ isLoading: true }));
+
+        const { error } = await supabase.auth.updateUser({ data: { ...values } });
+
+        if (error) {
+            console.log(error);
+            dispatch(clearAuthAction());
+            setStatus({ code: 400, msg: error.message });
+
+            return;
+        }
+
+        dispatch(updateUser({
+            user: { ...state.user, ...values }
+        }));
+
+        setStatus({
+            code: 200,
+            msg: 'Haz actualizado tu perfil correctamente'
+        });
+    }
+
     return {
         state,
 
@@ -104,7 +128,8 @@ const useAuth = () => {
         login,
         logout,
         register,
-        renew
+        renew,
+        updateProfile
     }
 }
 

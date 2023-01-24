@@ -22,6 +22,17 @@ export interface User {
 
 export type Precursor = 'ninguno' | 'auxiliar' | 'regular' | 'especial';
 
+export interface Profile {
+    name: string;
+    surname: string;
+    precursor: Precursor;
+}
+
+export interface Login {
+    email: string;
+    password: string
+}
+
 export interface Register {
     name: string;
     surname: string;
@@ -32,4 +43,8 @@ export interface Register {
 export type SetUserPayload = {
     user: User;
     token: string;
+}
+
+export interface UserPayload {
+    user: User;
 }

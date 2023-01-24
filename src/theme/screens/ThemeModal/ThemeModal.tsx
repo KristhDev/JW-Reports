@@ -7,17 +7,15 @@ import { useTheme } from '../../../hooks';
 import { Theme } from '../../../interfaces/theme';
 import { ModalProps } from '../../../interfaces/ui';
 
+import { THEME_OPTIONS } from '../../../utils';
+
 const ThemeModal: FC<ModalProps> = ({ isOpen, onClose }) => {
     const { state: { theme }, setTheme } = useTheme();
 
     return (
         <OptionsModal
             isOpen={ isOpen }
-            items={[
-                { label: 'Modo predeterminado', value: 'default' },
-                { label: 'Modo claro', value: 'light' },
-                { label: 'Modo oscuro', value: 'dark' }
-            ]}
+            items={ THEME_OPTIONS }
             onCancel={ onClose }
             onChangeValue={ (value) => setTheme(value as Theme) }
             title="Apariencia"
