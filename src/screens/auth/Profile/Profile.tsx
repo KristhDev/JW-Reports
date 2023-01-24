@@ -16,7 +16,7 @@ const Profile = () => {
             <View style={{ flex: 1, alignItems: 'center' }}>
                 <Title
                     containerStyle={ themeStyles.titleContainer }
-                    text="Perfil"
+                    text="Mi perfil"
                     textStyle={{ fontSize: 24 }}
                 />
 

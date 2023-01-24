@@ -1,7 +1,7 @@
 import React from 'react';
 import { CardStyleInterpolators, createStackNavigator } from '@react-navigation/stack';
 
-import { Profile, ResetPassword } from '../screens/auth';
+import { Profile, Credentials } from '../screens/auth';
 import { Settings } from '../screens/ui';
 
 import { BackButton } from '../components/ui';
@@ -46,11 +46,11 @@ const SettingsStackNavigation = () => {
             />
 
             <Stack.Screen
-                component={ ResetPassword }
-                name="ResetPasswordScreen"
+                component={ Credentials }
+                name="CredentialsScreen"
                 options={{
                     cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
-                    title: 'Cambiar contraseña'
+                    title: 'Credenciales'
                 }}
             />
         </Stack.Navigator>

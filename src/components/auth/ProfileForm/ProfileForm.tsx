@@ -1,5 +1,7 @@
 import React from 'react';
 import { Formik } from 'formik';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { object, string } from 'yup';
 import Icon from 'react-native-vector-icons/Ionicons';
 
 import { View, ActivityIndicator } from 'react-native';
@@ -11,23 +13,37 @@ import { useAuth, useStatus, useTheme } from '../../../hooks';
 import { styles as themeStyles } from '../../../theme';
 
 export const ProfileForm = () => {
+    const { top } = useSafeAreaInsets();
+
     const { state: { user, isAuthLoading } } = useAuth();
     const { setErrorForm } = useStatus();
     const { state: { colors } } = useTheme();
+
+    const profileFormSchema = object().shape({
+        name: string()
+            .min(2, 'El nombre debe tener al menos 2 caracteres.')
+            .required('El nombre es requerido.'),
+        surname: string()
+            .min(2, 'Los apellidos deben tener al menos 2 caracteres.')
+            .required('Los apellidos son requeridos.'),
+        precursor: string()
+            .oneOf([ 'ninguno', 'auxiliar', 'regular', 'e' ], 'Por favor seleccione una opción de precursor')
+            .required('El campo precursor es requerido')
+    });
 
     return (
         <Formik
             initialValues={{
                 name: user.name,
                 surname: user.surname,
-                email: user.email,
                 precursor: user.precursor
             }}
-            onSubmit={ () => {} }
+            onSubmit={ (values) => console.log(values) }
             validateOnMount
+            validationSchema={ profileFormSchema }
         >
             { ({ errors, handleSubmit, isValid }) => (
-                <View style={ themeStyles.formContainer }>
+                <View style={{ ...themeStyles.formContainer, justifyContent: 'flex-start', paddingTop: 20 }}>
                     <FormField
                         autoCapitalize="none"
                         icon={
@@ -56,21 +72,6 @@ export const ProfileForm = () => {
                         placeholder="Ingrese su apellido"
                     />
 
-                    <FormField
-                        autoCapitalize="none"
-                        icon={
-                            <Icon
-                                color={ colors.icon }
-                                name="mail-outline"
-                                size={ 25 }
-                            />
-                        }
-                        keyboardType="email-address"
-                        label="Correo:"
-                        name="email"
-                        placeholder="Ingrese su correo"
-                    />
-
                     <FormSelect
                         name="precursor"
                         label="Precursor:"
@@ -82,6 +83,8 @@ export const ProfileForm = () => {
                         ]}
                         placeholder="Seleccione una opción"
                     />
+
+                    <View style={{ flex: 1 }} />
 
                     <Button
                         disabled={ isAuthLoading }
@@ -96,7 +99,7 @@ export const ProfileForm = () => {
                         }
                         onPress={ (isValid) ? handleSubmit : () => setErrorForm(errors)  }
                         text="Guardar"
-                        touchableStyle={{ paddingHorizontal: 20, marginTop: 30 }}
+                        touchableStyle={{ paddingHorizontal: 20, marginVertical: top }}
                     />
                 </View>
             ) }

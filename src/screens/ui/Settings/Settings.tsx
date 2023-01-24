@@ -31,9 +31,9 @@ const Settings = () => {
                     />
 
                     <SectionButton
-                        onPress={ () => navigate('ResetPasswordScreen' as never) }
-                        subText="Cambie su contraseña"
-                        text="Contraseña"
+                        onPress={ () => navigate('CredentialsScreen' as never) }
+                        subText="Cambie sus credenciales (correo y contraseña)"
+                        text="Credenciales"
                     />
                 </SectionContent>
 

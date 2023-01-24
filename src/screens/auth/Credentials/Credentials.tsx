@@ -6,7 +6,7 @@ import { Title } from '../../../components/ui';
 
 import { styles as themeStyles } from '../../../theme';
 
-const ResetPassword = () => {
+const Credentials = () => {
     return (
         <KeyboardAwareScrollView
             contentContainerStyle={{ flexGrow: 1 }}
@@ -15,7 +15,7 @@ const ResetPassword = () => {
             <View style={{ flex: 1, alignItems: 'center' }}>
                 <Title
                     containerStyle={ themeStyles.titleContainer }
-                    text="Cambiar contraseña"
+                    text="Credenciales"
                     textStyle={{ fontSize: 24 }}
                 />
             </View>
@@ -23,4 +23,4 @@ const ResetPassword = () => {
     );
 }
 
-export default ResetPassword;
+export default Credentials;
