@@ -15,9 +15,12 @@ export interface User {
     name: string;
     surname: string;
     email: string;
+    precursor: Precursor;
     createdAt: string;
     updatedAt: string;
 }
+
+export type Precursor = 'ninguno' | 'auxiliar' | 'regular' | 'especial';
 
 export interface Register {
     name: string;

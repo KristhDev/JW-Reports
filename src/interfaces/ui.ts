@@ -22,3 +22,8 @@ export interface ModalProps {
     isOpen: boolean;
     onClose: () => void;
 }
+
+export type ItemOption = {
+    label: string;
+    value: string;
+}

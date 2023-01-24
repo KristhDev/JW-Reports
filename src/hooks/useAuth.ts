@@ -55,10 +55,11 @@ const useAuth = () => {
             result.data.user.user_metadata = {
                 ...result.data.user!.user_metadata,
                 name,
-                surname
+                surname,
+                precursor: 'ninguno'
             }
 
-            await supabase.auth.updateUser({ data: { name, surname } });
+            await supabase.auth.updateUser({ data: { name, surname, precursor: 'ninguno' } });
         }
 
         setUser(result);

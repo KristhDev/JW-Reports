@@ -9,6 +9,7 @@ const INITIAL_STATE: AuthState = {
         name: '',
         surname: '',
         email: '',
+        precursor: 'ninguno',
         createdAt: Date.now().toString(),
         updatedAt: Date.now().toString(),
     },

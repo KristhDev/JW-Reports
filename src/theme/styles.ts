@@ -53,6 +53,11 @@ const styles = StyleSheet.create({
         paddingLeft: 10
     },
 
+    formInputText: {
+        flex: 1,
+        fontSize: 17
+    },
+
     formLabel: {
         fontSize: 18,
         marginBottom: 5,
@@ -61,6 +66,12 @@ const styles = StyleSheet.create({
 
     formLink: {
         fontSize: 16,
+    },
+
+    formSelectTouchableContainer: {
+        alignItems: 'center',
+        flexDirection: 'row',
+        padding: 10
     },
 
     formText: {
