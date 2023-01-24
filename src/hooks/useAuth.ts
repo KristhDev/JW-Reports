@@ -102,7 +102,7 @@ const useAuth = () => {
 
         if (error) {
             console.log(error);
-            dispatch(clearAuthAction());
+            dispatch(setIsAuthLoading({ isLoading: false }));
             setStatus({ code: 400, msg: error.message });
 
             return;
@@ -118,6 +118,43 @@ const useAuth = () => {
         });
     }
 
+    const updateEmail = async ({ email }: { email: string }, onFinish?: () => void) => {
+        dispatch(setIsAuthLoading({ isLoading: true }));
+
+        if (state.user.email === email) {
+            dispatch(setIsAuthLoading({ isLoading: false }));
+            onFinish && onFinish();
+
+            setStatus({
+                code: 400,
+                msg: 'Para actualizar tu correo debes cambiarlo.'
+            });
+
+            return;
+        }
+
+        const { error } = await supabase.auth.updateUser({ email });
+
+        if (error) {
+            console.log(error);
+
+            dispatch(setIsAuthLoading({ isLoading: false }));
+            onFinish && onFinish();
+            setStatus({ code: 400, msg: error.message });
+
+            return;
+        }
+
+        dispatch(setIsAuthLoading({ isLoading: false }));
+        onFinish && onFinish();
+
+        let msg = `Hemos mandado un correo de confirmación a ${ state.user.email }. `;
+        msg += `Por favor revisalo. Una vez confirmes ese correo se enviara otro a ${ email }. `
+        msg += 'Ese también confirmalo para efectuar el cambio.'
+
+        setStatus({ code: 200, msg });
+    }
+
     return {
         state,
 
@@ -129,7 +166,8 @@ const useAuth = () => {
         logout,
         register,
         renew,
-        updateProfile
+        updateEmail,
+        updateProfile,
     }
 }
 

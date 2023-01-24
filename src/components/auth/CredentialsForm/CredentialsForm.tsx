@@ -11,11 +11,13 @@ import { Button, EyeBtn, FormField } from '../../ui';
 import { useAuth, useStatus, useTheme } from '../../../hooks';
 
 export const CredentialsForm = () => {
+    const [ loadingEmail, setLoadingEmail ] = useState<boolean>(false);
+    const [ loadingPassword, setLoadingPassword ] = useState<boolean>(false);
     const [ showPassword, setShowPassword ] = useState<boolean>(false);
     const [ showConfirmPassword, setShowConfirmPassword ] = useState<boolean>(false);
     const { top } = useSafeAreaInsets();
 
-    const { state: { user, isAuthLoading } } = useAuth();
+    const { state: { user, isAuthLoading }, updateEmail } = useAuth();
     const { setErrorForm } = useStatus();
     const { state: { colors } } = useTheme();
 
@@ -35,13 +37,23 @@ export const CredentialsForm = () => {
             .required('La confirmación de la contraseña es requerida.'),
     });
 
+    const handleUpdateEmail = (values: { email: string }) => {
+        setLoadingEmail(true);
+        updateEmail(values, () => setLoadingEmail(false));
+    }
+
+    const handleUpdatePassword = (values: { password: string, confirmPassword: string }) => {
+        setLoadingPassword(true);
+        console.log(values);
+    }
+
     return (
         <View style={{ paddingVertical: top }}>
             <Formik
                 initialValues={{
                     email: user.email
                 }}
-                onSubmit={ () => {} }
+                onSubmit={ handleUpdateEmail }
                 validateOnMount
                 validationSchema={ emailFormSchema }
             >
@@ -63,9 +75,9 @@ export const CredentialsForm = () => {
                         />
 
                         <Button
-                            disabled={ isAuthLoading }
+                            disabled={ isAuthLoading && loadingEmail }
                             icon={
-                                (isAuthLoading) && (
+                                (isAuthLoading && loadingEmail) && (
                                     <ActivityIndicator
                                         color={ colors.contentHeader }
                                         size="small"
@@ -86,7 +98,7 @@ export const CredentialsForm = () => {
                     password: '',
                     confirmPassword: ''
                 }}
-                onSubmit={ () => {} }
+                onSubmit={ handleUpdatePassword }
                 validateOnMount
                 validationSchema={ passwordFormSchema }
             >
@@ -121,9 +133,9 @@ export const CredentialsForm = () => {
                         />
 
                         <Button
-                            disabled={ isAuthLoading }
+                            disabled={ isAuthLoading && loadingPassword }
                             icon={
-                                (isAuthLoading) && (
+                                (isAuthLoading && loadingPassword) && (
                                     <ActivityIndicator
                                         color={ colors.contentHeader }
                                         size="small"
