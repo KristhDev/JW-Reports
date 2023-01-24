@@ -65,7 +65,10 @@ export const RevisitsList: FC<RevisitsListProps> = ({ filter, title, emptyMessag
 
     const handleHideModal = (setShowModal: (value: boolean) => void) => {
         setShowModal(false);
-        setSelectedRevisit(INIT_REVISIT);
+        setSelectedRevisit({
+            ...INIT_REVISIT,
+            next_visit: new Date().toString()
+        });
     }
 
     const handleDeleteConfirm = () => {

@@ -38,7 +38,12 @@ const RevisitDetail = () => {
         addListener('blur', () => {
             const { index } = getState();
 
-            if (index === 0) setSelectedRevisit(INIT_REVISIT);
+            if (index === 0) {
+                setSelectedRevisit({
+                    ...INIT_REVISIT,
+                    next_visit: new Date().toString()
+                });
+            }
         });
 
         return () => {

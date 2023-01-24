@@ -23,7 +23,11 @@ const Revisits: FC<RevisitsProps> = ({ route }) => {
     const { state: { colors } } = useTheme();
 
     const handleNavigate = () => {
-        setSelectedRevisit(INIT_REVISIT);
+        setSelectedRevisit({
+            ...INIT_REVISIT,
+            next_visit: new Date().toString()
+        });
+
         navigate('AddOrEditRevisitScreen' as never);
     }
 

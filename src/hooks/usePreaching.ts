@@ -145,7 +145,12 @@ const usePreaching = () => {
         onFinish && onFinish();
         goBack();
 
-        setSelectedPreaching(INIT_PREACHING);
+        setSelectedPreaching({
+            ...INIT_PREACHING,
+            day: new Date().toString(),
+            init_hour: new Date().toString(),
+            final_hour: new Date().toString()
+        });
 
         setStatus({
             code: 200,
