@@ -19,6 +19,7 @@ import {
     setHasMoreCourses,
     setIsCourseDeleting,
     setIsCourseLoading,
+    setIsLessonLoading,
     setIsCoursesLoading as setIsCoursesLoadingAction,
     setRefreshCourses as setRefreshCoursesAction,
     setSelectedLesson as setSelectedLessonAction,
@@ -31,6 +32,7 @@ import { useAuth, useStatus } from './';
 import { Course, CourseFilter, CoursesState, Lesson } from '../interfaces/courses';
 import { Pagination } from '../interfaces/ui';
 import { CourseFormValues } from '../components/courses/CourseForm/interfaces';
+import { LessonFormValues } from '../components/courses/LessonForm/interfaces';
 
 const useCourses = () => {
     const dispatch = useAppDispatch();
@@ -231,6 +233,43 @@ const useCourses = () => {
         } as never);
     }
 
+    const saveLesson = async (lessonValues: LessonFormValues) => {
+        dispatch(setIsLessonLoading({ isLoading: true }));
+
+        const { data, error } = await supabase.from('lessons')
+            .insert({
+                course_id: state.selectedCourse.id,
+                description: lessonValues.description,
+                next_lesson: dayjs(lessonValues.next_lesson).format('YYYY-MM-DD HH:mm:ss.SSSSSS')
+            })
+            .select();
+
+        const next = setSupabaseError(error, () => {
+            dispatch(setIsLessonLoading({ isLoading: false }));
+        });
+
+        if (next) return;
+
+        if (state.lessons.length > 0) {
+
+        }
+
+        dispatch(setIsLessonLoading({ isLoading: false }));
+
+        setStatus({
+            code: 201,
+            msg: 'Haz agregado una clase al curso correctamente.'
+        });
+
+        // navigate({
+        //     name: 'CoursesStackNavigation',
+        //     params: {
+        //         screen: 'CoursesTopTabsNavigation'
+        //     }
+        // } as never);
+
+    }
+
     const updateCourse = async (courseValues: CourseFormValues) => {
         dispatch(setIsCourseLoading({ isLoading: true }));
 
@@ -313,6 +352,7 @@ const useCourses = () => {
         finishOrStartCourse,
         loadCourses,
         saveCourse,
+        saveLesson,
         updateCourse,
     }
 }

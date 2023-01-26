@@ -14,6 +14,7 @@ export {
     setHasMoreCourses,
     setIsCourseDeleting,
     setIsCourseLoading,
+    setIsLessonLoading,
     setIsCoursesLoading,
     setRefreshCourses,
     setSelectedCourse,

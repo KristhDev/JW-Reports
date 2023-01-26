@@ -13,21 +13,21 @@ import { LessonFormValues } from './interfaces';
 import { styles as themeStyles } from '../../../theme';
 
 export const LessonForm = () => {
-    const { state: { isCourseLoading, selectedLesson } } = useCourses();
+    const { state: { isLessonLoading, selectedLesson }, saveLesson } = useCourses();
     const { setErrorForm } = useStatus();
     const { state: { colors } } = useTheme();
 
     const handleSaveOrUpdate = (formValues: LessonFormValues) => {
-        // (selectedLesson.id === '')
-            // ? saveCourse(formValues)
-            // : updateCourse(formValues);
+        (selectedLesson.id === '')
+            ? saveLesson(formValues)
+            : () => {}
     }
 
     const lessonFormSchema = object().shape({
         description: string()
             .min(2, 'El nombre de la persona debe tener al menoss 2 caracteres.')
             .required('El nombre de la persona es requerido.'),
-        next_class: date()
+        next_lesson: date()
             .required('La fecha de la próxima clase no puede estar vacía.'),
     });
 
@@ -35,7 +35,7 @@ export const LessonForm = () => {
         <Formik
             initialValues={{
                 description: selectedLesson.description,
-                next_class: new Date(selectedLesson.next_class)
+                next_lesson: new Date(selectedLesson.next_lesson)
             }}
             onSubmit={ handleSaveOrUpdate }
             validateOnMount
@@ -70,9 +70,9 @@ export const LessonForm = () => {
                     <View style={{ flex: 1 }} />
 
                     <Button
-                        disabled={ isCourseLoading }
+                        disabled={ isLessonLoading }
                         icon={
-                            (isCourseLoading) && (
+                            (isLessonLoading) && (
                                 <ActivityIndicator
                                     color={ colors.contentHeader }
                                     size="small"

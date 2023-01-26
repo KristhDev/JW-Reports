@@ -24,7 +24,7 @@ export const INIT_LESSON: Lesson = {
     id: '',
     course_id: '',
     description: '',
-    next_class: new Date().toString(),
+    next_lesson: new Date().toString(),
     done: false,
     created_at: new Date().toString(),
     updated_at: new Date().toString(),
@@ -161,6 +161,10 @@ const courseSlice = createSlice({
             state.isCourseLoading = action.payload.isLoading;
         },
 
+        setIsLessonLoading: (state, action: PayloadAction<SetIsLoadingPayload>) => {
+            state.isLessonLoading = action.payload.isLoading;
+        },
+
         setIsCoursesLoading: (state, action: PayloadAction<SetIsLoadingPayload>) => {
             state.isCoursesLoading = action.payload.isLoading;
         },
@@ -207,6 +211,7 @@ export const {
     setHasMoreCourses,
     setIsCourseDeleting,
     setIsCourseLoading,
+    setIsLessonLoading,
     setIsCoursesLoading,
     setRefreshCourses,
     setSelectedCourse,

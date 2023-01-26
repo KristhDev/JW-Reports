@@ -18,9 +18,9 @@ import styles from './styles';
 const CourseDetail = () => {
     const [ showASModal, setShowASModal ] = useState<boolean>(false);
     const [ showFSModal, setShowFSModal ] = useState<boolean>(false);
-    const { addListener, removeListener, getState } = useNavigation();
+    const { addListener, getState, navigate, removeListener } = useNavigation();
 
-    const { state: { selectedCourse }, setSelectedCourse } = useCourses();
+    const { state: { selectedCourse, selectedLesson }, setSelectedCourse, setSelectedLesson } = useCourses();
     const { state: { colors } } = useTheme();
 
     const statusCourseText = (selectedCourse.finished)
@@ -28,6 +28,15 @@ const CourseDetail = () => {
         : (selectedCourse.suspended)
             ? 'Suspendido'
             : 'En curso';
+
+    const handleNavigate = () => {
+        setSelectedLesson({
+            ...selectedLesson,
+            next_lesson: new Date().toString()
+        });
+
+        navigate('AddOrEditLessonScreen' as never);
+    }
 
     useEffect(() => {
         addListener('blur', () => {
@@ -122,6 +131,27 @@ const CourseDetail = () => {
                     <Text style={{ color: colors.text, fontSize: 19 }}>
                         { selectedCourse.person_address }
                     </Text>
+                </View>
+
+                <View style={ styles.sectionStyle }>
+                    <Text
+                        style={{
+                            ...styles.sectionSubTitle,
+                            color: colors.text,
+                            marginBottom: 0
+                        }}
+                    >
+                        Clases:
+                    </Text>
+
+                    <TouchableOpacity
+                        activeOpacity={ 0.75 }
+                        onPress={ handleNavigate }
+                    >
+                        <Text style={{ color: colors.linkText, fontSize: 19 }}>
+                            Agregar clase
+                        </Text>
+                    </TouchableOpacity>
                 </View>
 
                 <Text style={{ ...styles.dateCreatedText, color: colors.modalText }}>

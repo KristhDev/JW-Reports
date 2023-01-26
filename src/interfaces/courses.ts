@@ -68,7 +68,7 @@ export interface Lesson {
     id: string;
     course_id: string;
     description: string;
-    next_class: string;
+    next_lesson: string;
     done: boolean;
     created_at: string;
     updated_at: string;

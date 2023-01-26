@@ -1,4 +1,4 @@
 export interface LessonFormValues {
     description: string;
-    next_class: Date;
+    next_lesson: Date;
 }
