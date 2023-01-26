@@ -28,20 +28,20 @@ export const PreachingForm = () => {
 
     const preachingFormSchema = object().shape({
         day: date()
-            .required('El día no puede estar vacío'),
+            .required('El día no puede estar vacío.'),
         init_hour: date()
-            .required('La hora inicial no puede estar vacía')
-            .test('date-min', 'La hora inicial no puede ser mayor que la hora final', (value, { parent }) => {
+            .required('La hora inicial no puede estar vacía.')
+            .test('date-min', 'La hora inicial no puede ser mayor que la hora final.', (value, { parent }) => {
                 return dayjs(value).isBefore(dayjs(parent.final_hour));
             }),
         final_hour: date()
-            .required('La hora final no puede estar vacía'),
+            .required('La hora final no puede estar vacía.'),
         publications: number()
-            .min(0, 'El número de publicaciones no puede ser negativo'),
+            .min(0, 'El número de publicaciones no puede ser negativo.'),
         videos: number()
-            .min(0, 'El número de videos no puede ser negativo'),
+            .min(0, 'El número de videos no puede ser negativo.'),
         revisits: number()
-            .min(0, 'El número de revisitas no puede ser negativo'),
+            .min(0, 'El número de revisitas no puede ser negativo.'),
     });
 
     const handleSaveOrUpdate = (formValues: PreachingFormValues) => {

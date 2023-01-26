@@ -1,7 +1,7 @@
 export {
     default as coursesReducer,
-    INIT_CLASS,
     INIT_COURSE,
+    INIT_LESSON,
     addCourse,
     addCourses,
     clearCourses,
@@ -16,7 +16,7 @@ export {
     setIsCourseLoading,
     setIsCoursesLoading,
     setRefreshCourses,
-    setSelectedClass,
     setSelectedCourse,
+    setSelectedLesson,
     updateCourse
 } from './slice';

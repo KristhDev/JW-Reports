@@ -4,7 +4,7 @@ export type CoursesStackParamsList = {
     CoursesTopTabsNavigation: undefined;
     CourseDetailScreen: undefined;
     AddOrEditCourseScreen: undefined;
-    AddOrEditClassScreen: undefined;
+    AddOrEditLessonScreen: undefined;
 }
 
 export type CoursesTopTabsParamsList = {
@@ -31,24 +31,24 @@ export type CoursesTopTabsParamsList = {
 }
 
 export interface CoursesState {
-    classes: CourseClass[];
-    classesPagination: Pagination;
     courseFilter: CourseFilter;
     courses: Course[];
     coursesPagination: Pagination;
     coursesScreenHistory: string[];
-    hasMoreClasses: boolean;
     hasMoreCourses: boolean;
-    isClassDeleting: boolean;
-    isClassesLoading: boolean;
-    isClassLoading: boolean;
+    hasMoreLessons: boolean;
+    isLessonDeleting: boolean;
     isCourseDeleting: boolean;
     isCourseLoading: boolean;
     isCoursesLoading: boolean;
-    refreshClasses: boolean;
+    isLessonLoading: boolean;
+    isLessonsLoading: boolean;
+    lessons: Lesson[];
+    lessonsPagination: Pagination;
     refreshCourses: boolean;
-    selectedClass: CourseClass;
+    refreshLessons: boolean;
     selectedCourse: Course;
+    selectedLesson: Lesson;
 }
 
 export interface Course {
@@ -64,7 +64,7 @@ export interface Course {
     updated_at: string;
 }
 
-export interface CourseClass {
+export interface Lesson {
     id: string;
     course_id: string;
     description: string;
@@ -76,8 +76,8 @@ export interface CourseClass {
 
 export type CourseFilter = 'all' | 'active' | 'suspended' | 'finished';
 
-export type ClassPayload = {
-    class: CourseClass;
+export type LessonPayload = {
+    lesson: Lesson;
 }
 
 export type CoursePayload = {

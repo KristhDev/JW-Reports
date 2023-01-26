@@ -1,9 +1,9 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 
 import {
-    ClassPayload,
+    LessonPayload,
     Course,
-    CourseClass,
+    Lesson,
     CourseFilter,
     CoursePayload,
     CoursesState,
@@ -20,7 +20,7 @@ import {
     SetIsLoadingPayload
 } from '../../interfaces/features';
 
-export const INIT_CLASS: CourseClass = {
+export const INIT_LESSON: Lesson = {
     id: '',
     course_id: '',
     description: '',
@@ -44,30 +44,30 @@ export const INIT_COURSE: Course = {
 }
 
 const INITIAL_STATE: CoursesState = {
-    classes: [],
-    classesPagination: {
-        from: 0,
-        to: 9,
-    },
     courseFilter: 'all',
     courses: [],
     coursesPagination: {
         from: 0,
-        to: 9,
+        to: 9
     },
     coursesScreenHistory: [],
-    hasMoreClasses: true,
     hasMoreCourses: true,
-    isClassDeleting: false,
-    isClassesLoading: false,
-    isClassLoading: false,
+    hasMoreLessons: true,
     isCourseDeleting: false,
     isCourseLoading: false,
     isCoursesLoading: false,
-    refreshClasses: false,
+    isLessonDeleting: false,
+    isLessonLoading: false,
+    isLessonsLoading: false,
+    lessons: [],
+    lessonsPagination: {
+        from: 0,
+        to: 9
+    },
     refreshCourses: false,
-    selectedClass: INIT_CLASS,
-    selectedCourse: INIT_COURSE
+    refreshLessons: false,
+    selectedCourse: INIT_COURSE,
+    selectedLesson: INIT_LESSON,
 }
 
 const filterCourses = (courses: Course[], filter: CourseFilter) => {
@@ -103,24 +103,24 @@ const courseSlice = createSlice({
         },
 
         clearCourses: (state) => {
-            state.classes = INITIAL_STATE.classes;
-            state.classesPagination = INITIAL_STATE.classesPagination;
             state.courseFilter = INITIAL_STATE.courseFilter;
             state.courses = INITIAL_STATE.courses;
             state.coursesPagination = INITIAL_STATE.coursesPagination;
             state.coursesScreenHistory = INITIAL_STATE.coursesScreenHistory;
-            state.hasMoreClasses = INITIAL_STATE.hasMoreClasses;
             state.hasMoreCourses = INITIAL_STATE.hasMoreCourses;
-            state.isClassDeleting = INITIAL_STATE.isClassDeleting;
-            state.isClassesLoading = INITIAL_STATE.isClassesLoading;
-            state.isClassLoading = INITIAL_STATE.isClassLoading;
+            state.hasMoreLessons = INITIAL_STATE.hasMoreLessons;
             state.isCourseDeleting = INITIAL_STATE.isCourseDeleting;
             state.isCourseLoading = INITIAL_STATE.isCourseLoading;
             state.isCoursesLoading = INITIAL_STATE.isCoursesLoading;
-            state.refreshClasses = INITIAL_STATE.refreshClasses;
+            state.isLessonDeleting = INITIAL_STATE.isLessonDeleting;
+            state.isLessonLoading = INITIAL_STATE.isLessonLoading;
+            state.isLessonsLoading = INITIAL_STATE.isLessonsLoading;
+            state.lessons = INITIAL_STATE.lessons;
+            state.lessonsPagination = INITIAL_STATE.lessonsPagination;
             state.refreshCourses = INITIAL_STATE.refreshCourses;
-            state.selectedClass = INITIAL_STATE.selectedClass;
+            state.refreshLessons = INITIAL_STATE.refreshLessons;
             state.selectedCourse = INITIAL_STATE.selectedCourse;
+            state.selectedLesson = INITIAL_STATE.selectedLesson;
         },
 
         removeCourse: (state, action: PayloadAction<RemoveResourcePayload>) => {
@@ -169,9 +169,9 @@ const courseSlice = createSlice({
             state.refreshCourses = action.payload.refresh;
         },
 
-        setSelectedClass: (state, action: PayloadAction<ClassPayload>) => {
-            state.selectedClass = action.payload.class;
-            state.isClassLoading = false;
+        setSelectedLesson: (state, action: PayloadAction<LessonPayload>) => {
+            state.selectedLesson = action.payload.lesson;
+            state.isLessonLoading = false;
         },
 
         setSelectedCourse: (state, action: PayloadAction<CoursePayload>) => {
@@ -209,8 +209,8 @@ export const {
     setIsCourseLoading,
     setIsCoursesLoading,
     setRefreshCourses,
-    setSelectedClass,
     setSelectedCourse,
+    setSelectedLesson,
     updateCourse
 } = courseSlice.actions;
 

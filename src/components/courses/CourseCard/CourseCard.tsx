@@ -17,7 +17,7 @@ export const CourseCard: FC<CourseCardProps> = ({ course, onActiveOrSuspend, onD
     const [ isOpen, setIsOpen ] = useState<boolean>(false);
     const { navigate } = useNavigation();
 
-    const { state: { selectedClass }, setSelectedClass, setSelectedCourse } = useCourses();
+    const { state: { selectedLesson }, setSelectedLesson, setSelectedCourse } = useCourses();
     const { state: { colors }, BUTTON_TRANSPARENT_COLOR } = useTheme();
 
     const handleCourseDetail = () => {
@@ -34,12 +34,12 @@ export const CourseCard: FC<CourseCardProps> = ({ course, onActiveOrSuspend, onD
     const handleAddClass = () => {
         setIsOpen(false);
 
-        setSelectedClass({
-            ...selectedClass,
+        setSelectedLesson({
+            ...selectedLesson,
             next_class: new Date().toString()
         });
 
-        navigate('AddOrEditClassScreen' as never);
+        navigate('AddOrEditLessonScreen' as never);
     }
 
     const handleSelect = (onSelect: () => void) => {
