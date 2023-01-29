@@ -19,7 +19,7 @@ const CoursesStackNavigation = () => {
     const [ showDeleteLessonModal, setShowDeleteLessonModal ] = useState<boolean>(false);
     const { navigate } = useNavigation();
 
-    const { state: { isCourseDeleting, selectedCourse, selectedLesson, isLessonDeleting }, deleteCourse } = useCourses();
+    const { state: { isCourseDeleting, selectedCourse, selectedLesson, isLessonDeleting }, deleteCourse, deleteLesson } = useCourses();
     const { state: { colors } } = useTheme();
 
     const courseDetailTitle = `Curso a ${ selectedCourse.person_name }`;
@@ -29,7 +29,7 @@ const CoursesStackNavigation = () => {
     }
 
     const handleDeleteLesson = () => {
-        setShowDeleteLessonModal(false);
+        deleteLesson(true, () => setShowDeleteLessonModal(false));
     }
 
     return (

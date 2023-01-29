@@ -7,6 +7,7 @@ import { supabase } from '../supabase/config';
 import { RootState, useAppDispatch } from '../features/store';
 import {
     INIT_COURSE,
+    INIT_LESSON,
     addCourse,
     addCourses as addCoursesAction,
     addLesson,
@@ -14,6 +15,7 @@ import {
     clearCourses as clearCoursesAction,
     removeCourse,
     removeCourses as removeCoursesAction,
+    removeLesson,
     removeLessons as removeLessonsAction,
     setCourseFilter,
     setCourses as setCoursesAction,
@@ -24,6 +26,7 @@ import {
     setIsCourseDeleting,
     setIsCourseLoading,
     setIsCoursesLoading as setIsCoursesLoadingAction,
+    setIsLessonDeleting,
     setIsLessonLoading,
     setIsLessonsLoading as setIsLessonsLoadingAction,
     setLessons as setLessonsAction,
@@ -157,6 +160,59 @@ const useCourses = () => {
         setStatus({
             code: 200,
             msg: 'Haz eliminado el curso correctamente.'
+        });
+    }
+
+    const deleteLesson = async (back: boolean = false, onFinish?: () => void) => {
+        dispatch(setIsLessonDeleting({ isDeleting: true }));
+
+        if (state.selectedLesson.id === '') {
+            onFinish && onFinish();
+            dispatch(setIsLessonDeleting({ isDeleting: false }));
+
+            setStatus({
+                code: 400,
+                msg: 'No hay una clase seleccionada para eliminar.'
+            });
+
+            return;
+        }
+
+        if (state.selectedCourse.user_id !== user.id) {
+            onFinish && onFinish();
+            dispatch(setIsLessonDeleting({ isDeleting: false }));
+
+            setStatus({
+                code: 400,
+                msg: 'No tienes permiso para realizar está acción.'
+            });
+
+            return;
+        }
+
+        const { error } = await supabase.from('lessons')
+            .delete()
+            .eq('id', state.selectedLesson.id);
+
+        const next = setSupabaseError(error, () => {
+            onFinish && onFinish();
+            dispatch(setIsLessonDeleting({ isDeleting: false }));
+        });
+
+        if (next) return;
+
+        dispatch(removeLesson({ id: state.selectedCourse.id }));
+        onFinish && onFinish();
+        back && navigate('LessonsScreen' as never);
+
+        setSelectedLesson({
+            ...INIT_LESSON,
+            next_lesson: new Date().toString()
+        });
+
+        setStatus({
+            code: 200,
+            msg: 'Haz eliminado la clase correctamente.'
         });
     }
 
@@ -373,6 +429,7 @@ const useCourses = () => {
         const { data, error } = await supabase.from('lessons')
             .update({
                 ...lessonValues,
+                next_lesson: dayjs(lessonValues.next_lesson).format('YYYY-MM-DD HH:mm:ss.SSSSSS'),
                 updated_at: dayjs().format('YYYY-MM-DD HH:mm:ss.SSSSSS')
             })
             .eq('id', state.selectedLesson.id)
@@ -409,6 +466,7 @@ const useCourses = () => {
         // Functions
         activeOrSuspendCourse,
         deleteCourse,
+        deleteLesson,
         finishOrStartCourse,
         loadCourses,
         loadLessons,

@@ -20,6 +20,7 @@ export {
     setIsCourseDeleting,
     setIsCourseLoading,
     setIsCoursesLoading,
+    setIsLessonDeleting,
     setIsLessonLoading,
     setIsLessonsLoading,
     setLessons,

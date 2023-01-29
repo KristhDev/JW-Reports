@@ -195,6 +195,10 @@ const courseSlice = createSlice({
             state.isCoursesLoading = action.payload.isLoading;
         },
 
+        setIsLessonDeleting: (state, action: PayloadAction<SetIsDeletingPayload>) => {
+            state.isLessonDeleting = action.payload.isDeleting;
+        },
+
         setIsLessonLoading: (state, action: PayloadAction<SetIsLoadingPayload>) => {
             state.isLessonLoading = action.payload.isLoading;
         },
@@ -272,6 +276,7 @@ export const {
     setIsCourseDeleting,
     setIsCourseLoading,
     setIsCoursesLoading,
+    setIsLessonDeleting,
     setIsLessonLoading,
     setIsLessonsLoading,
     setLessons,

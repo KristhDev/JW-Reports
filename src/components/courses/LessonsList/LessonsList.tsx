@@ -33,7 +33,7 @@ export const LessonsList = () => {
             lessons,
             selectedCourse,
         },
-        // deleteCourse,
+        deleteLesson,
         removeLessons,
         setLessonsPagination,
         setSelectedLesson,
@@ -66,13 +66,17 @@ export const LessonsList = () => {
     }
 
     const handleDeleteConfirm = () => {
-        // deleteCourse(false, () => setShowDeleteModal(false));
+        deleteLesson(false, () => setShowDeleteModal(false));
     }
 
     useEffect(() => {
         addListener('blur', () => {
             const { index } = getState();
-            if (index !== 2) removeLessons();
+
+            if (index !== 2) {
+                setLessonsPagination({ from: 0, to: 9 });
+                removeLessons();
+            }
         });
 
         return () => {
