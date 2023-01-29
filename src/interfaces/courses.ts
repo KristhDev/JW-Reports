@@ -5,6 +5,7 @@ export type CoursesStackParamsList = {
     CourseDetailScreen: undefined;
     AddOrEditCourseScreen: undefined;
     AddOrEditLessonScreen: undefined;
+    LessonsScreen: undefined;
 }
 
 export type CoursesTopTabsParamsList = {
@@ -102,4 +103,8 @@ export type SetCoursesHistoryPayload = {
 
 export type SetCoursesPaginationPayload = {
     pagination: Pagination;
+}
+
+export type SetLessonsPayload = {
+    lessons: Lesson[];
 }

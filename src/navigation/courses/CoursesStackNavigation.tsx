@@ -4,7 +4,7 @@ import { useNavigation } from '@react-navigation/native';
 
 import CoursesTopTabsNavigation from './CoursesTopTabsNavigation';
 
-import { AddOrEditCourse, AddOrEditLesson, CourseDetail } from '../../screens/courses';
+import { AddOrEditCourse, AddOrEditLesson, CourseDetail, Lessons } from '../../screens/courses';
 
 import { BackButton, HeaderButtons } from '../../components/ui';
 
@@ -15,16 +15,21 @@ import { CoursesStackParamsList } from '../../interfaces/courses';
 const Stack = createStackNavigator<CoursesStackParamsList>();
 
 const CoursesStackNavigation = () => {
-    const [ showDeleteModal, setShowDeleteModal ] = useState<boolean>(false);
+    const [ showDeleteCourseModal, setShowDeleteCourseModal ] = useState<boolean>(false);
+    const [ showDeleteLessonModal, setShowDeleteLessonModal ] = useState<boolean>(false);
     const { navigate } = useNavigation();
 
-    const { state: { isCourseDeleting, selectedCourse, selectedLesson }, deleteCourse } = useCourses();
+    const { state: { isCourseDeleting, selectedCourse, selectedLesson, isLessonDeleting }, deleteCourse } = useCourses();
     const { state: { colors } } = useTheme();
 
     const courseDetailTitle = `Curso a ${ selectedCourse.person_name }`;
 
-    const handleDeleteConfirm = () => {
-        deleteCourse(true, () => setShowDeleteModal(false));
+    const handleDeleteCourse = () => {
+        deleteCourse(true, () => setShowDeleteCourseModal(false));
+    }
+
+    const handleDeleteLesson = () => {
+        setShowDeleteLessonModal(false);
     }
 
     return (
@@ -57,10 +62,10 @@ const CoursesStackNavigation = () => {
                             deleteButton={ true }
                             deleteModalText="¿Estás seguro de eliminar este curso?"
                             isDeleteModalLoading={ isCourseDeleting }
-                            onCloseDeleteModal={ () => setShowDeleteModal(false) }
-                            onConfirmDeleteModal={ handleDeleteConfirm }
-                            onShowDeleteModal={ () => setShowDeleteModal(true) }
-                            showDeleteModal={ showDeleteModal }
+                            onCloseDeleteModal={ () => setShowDeleteCourseModal(false) }
+                            onConfirmDeleteModal={ handleDeleteCourse }
+                            onShowDeleteModal={ () => setShowDeleteCourseModal(true) }
+                            showDeleteModal={ showDeleteCourseModal }
 
                             editButton={ !selectedCourse.finished }
                             onPressEditButton={ () => navigate('AddOrEditCourseScreen' as never) }
@@ -80,10 +85,10 @@ const CoursesStackNavigation = () => {
                             deleteButton={ selectedCourse.id !== '' }
                             deleteModalText="¿Estás seguro de eliminar este curso?"
                             isDeleteModalLoading={ isCourseDeleting }
-                            onCloseDeleteModal={ () => setShowDeleteModal(false) }
-                            onConfirmDeleteModal={ handleDeleteConfirm }
-                            onShowDeleteModal={ () => setShowDeleteModal(true) }
-                            showDeleteModal={ showDeleteModal }
+                            onCloseDeleteModal={ () => setShowDeleteCourseModal(false) }
+                            onConfirmDeleteModal={ handleDeleteCourse }
+                            onShowDeleteModal={ () => setShowDeleteCourseModal(true) }
+                            showDeleteModal={ showDeleteCourseModal }
                         />
                     ),
                     title: `${ selectedCourse.id !== '' ? 'Editar' : 'Agregar' } curso`
@@ -97,18 +102,25 @@ const CoursesStackNavigation = () => {
                     headerLeft: ({ onPress }) => <BackButton onPress={ onPress } />,
                     headerRight: () => (
                         <HeaderButtons
-                            // deleteButton={ selectedCourse.id !== '' }
-                            // deleteModalText="¿Estás seguro de eliminar este curso?"
-                            // isDeleteModalLoading={ isCourseDeleting }
-                            // onCloseDeleteModal={ () => setShowDeleteModal(false) }
-                            // onConfirmDeleteModal={ handleDeleteConfirm }
-                            // onShowDeleteModal={ () => setShowDeleteModal(true) }
-                            // showDeleteModal={ showDeleteModal }
-                            editButton={ !selectedLesson.done && selectedCourse.id !== '' }
-                            onPressEditButton={ () => navigate('AddOrEditLessonScreen' as never) }
+                            deleteButton={ selectedLesson.id !== '' }
+                            deleteModalText="¿Estás seguro de eliminar está clase?"
+                            isDeleteModalLoading={ isLessonDeleting }
+                            onCloseDeleteModal={ () => setShowDeleteLessonModal(false) }
+                            onConfirmDeleteModal={ handleDeleteLesson }
+                            onShowDeleteModal={ () => setShowDeleteLessonModal(true) }
+                            showDeleteModal={ showDeleteLessonModal }
                         />
                     ),
                     title: `${ selectedLesson.id !== '' ? 'Editar' : 'Agregar' } clase`
+                }}
+            />
+
+            <Stack.Screen
+                component={ Lessons }
+                name="LessonsScreen"
+                options={{
+                    headerLeft: ({ onPress }) => <BackButton onPress={ onPress } />,
+                    title: 'Clases'
                 }}
             />
         </Stack.Navigator>

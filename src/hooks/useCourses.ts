@@ -9,21 +9,28 @@ import {
     INIT_COURSE,
     addCourse,
     addCourses as addCoursesAction,
+    addLesson,
+    addLessons as addLessonsAction,
     clearCourses as clearCoursesAction,
     removeCourse,
     removeCourses as removeCoursesAction,
+    removeLessons as removeLessonsAction,
     setCourseFilter,
     setCourses as setCoursesAction,
     setCoursesPagination as setCoursesPaginationAction,
     setCoursesScreenHistory as setCoursesScreenHistoryAction,
     setHasMoreCourses,
+    setHasMoreLessons,
     setIsCourseDeleting,
     setIsCourseLoading,
-    setIsLessonLoading,
     setIsCoursesLoading as setIsCoursesLoadingAction,
+    setIsLessonLoading,
+    setIsLessonsLoading as setIsLessonsLoadingAction,
+    setLessons as setLessonsAction,
+    setLessonsPagination as setLessonsPaginationAction,
     setRefreshCourses as setRefreshCoursesAction,
-    setSelectedLesson as setSelectedLessonAction,
     setSelectedCourse as setSelectedCourseAction,
+    setSelectedLesson as setSelectedLessonAction,
     updateCourse as updateCourseAction
 } from '../features/courses';
 
@@ -44,12 +51,17 @@ const useCourses = () => {
     const { setStatus, setSupabaseError } = useStatus();
 
     const addCourses = (courses: Course[]) => dispatch(addCoursesAction({ courses }));
+    const addLessons = (lessons: Lesson[]) => dispatch(addLessonsAction({ lessons }));
     const clearCourses = () => dispatch(clearCoursesAction());
     const removeCourses = () => dispatch(removeCoursesAction());
+    const removeLessons = () => dispatch(removeLessonsAction());
     const setCourses = (courses: Course[]) => dispatch(setCoursesAction({ courses }));
     const setCoursesPagination = (pagination: Pagination) => dispatch(setCoursesPaginationAction({ pagination }));
     const setCoursesScreenHistory = (newScreen: string) => dispatch(setCoursesScreenHistoryAction({ newScreen }));
     const setIsCoursesLoading = (isLoading: boolean) => dispatch(setIsCoursesLoadingAction({ isLoading }));
+    const setIsLessonsLoading = (isLoading: boolean) => dispatch(setIsLessonsLoadingAction({ isLoading }));
+    const setLessons = (lessons: Lesson[]) => dispatch(setLessonsAction({ lessons }));
+    const setLessonsPagination = (pagination: Pagination) => dispatch(setLessonsPaginationAction({ pagination }));
     const setRefreshCourses = (refresh: boolean) => dispatch(setRefreshCoursesAction({ refresh }));
     const setSelectedCourse = (course: Course) => dispatch(setSelectedCourseAction({ course }));
     const setSelectedLesson = (lesson: Lesson) => dispatch(setSelectedLessonAction({ lesson }));
@@ -93,6 +105,31 @@ const useCourses = () => {
 
         dispatch(setHasMoreCourses({ hasMore: (data!.length >= 10) }));
         (loadMore) ? addCourses(data!) : setCourses(data!);
+    }
+
+    const loadLessons = async (refresh: boolean = false, loadMore: boolean = false) => {
+        setIsLessonsLoading(true);
+
+        const { data, error } = await supabase.from('lessons')
+            .select()
+            .eq('course_id', state.selectedCourse.id)
+            .range(
+                (refresh) ? 0 : state.lessonsPagination.from,
+                (refresh) ? 9 : state.lessonsPagination.to
+            );
+
+        const next = setSupabaseError(error, () => setIsLessonsLoading(false));
+        if (next) return;
+
+        if (data!.length >= 10) {
+            setLessonsPagination({
+                from: (refresh) ? 10 : state.lessonsPagination.from + 10,
+                to: (refresh) ? 19 : state.lessonsPagination.to + 10
+            });
+        }
+
+        dispatch(setHasMoreLessons({ hasMore: (data!.length >= 10) }));
+        (loadMore) ? addLessons(data!) : setLessons(data!);
     }
 
     const activeOrSuspendCourse = async (onFinish?: () => void) => {
@@ -255,19 +292,14 @@ const useCourses = () => {
         }
 
         dispatch(setIsLessonLoading({ isLoading: false }));
+        dispatch(addLesson({ lesson: data![0] }));
 
         setStatus({
             code: 201,
             msg: 'Haz agregado una clase al curso correctamente.'
         });
 
-        // navigate({
-        //     name: 'CoursesStackNavigation',
-        //     params: {
-        //         screen: 'CoursesTopTabsNavigation'
-        //     }
-        // } as never);
-
+        navigate('LessonsScreen' as never);
     }
 
     const updateCourse = async (courseValues: CourseFormValues) => {
@@ -340,8 +372,10 @@ const useCourses = () => {
         // Actions
         clearCourses,
         removeCourses,
+        removeLessons,
         setCoursesPagination,
         setCoursesScreenHistory,
+        setLessonsPagination,
         setRefreshCourses,
         setSelectedCourse,
         setSelectedLesson,
@@ -351,6 +385,7 @@ const useCourses = () => {
         deleteCourse,
         finishOrStartCourse,
         loadCourses,
+        loadLessons,
         saveCourse,
         saveLesson,
         updateCourse,

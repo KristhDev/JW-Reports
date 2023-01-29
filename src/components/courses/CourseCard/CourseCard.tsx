@@ -43,6 +43,12 @@ export const CourseCard: FC<CourseCardProps> = ({ course, onActiveOrSuspend, onD
         navigate('AddOrEditLessonScreen' as never);
     }
 
+    const handleClassList = () => {
+        setIsOpen(false);
+        setSelectedCourse(course);
+        navigate('LessonsScreen' as never);
+    }
+
     const handleSelect = (onSelect: () => void) => {
         setIsOpen(false);
         onSelect();
@@ -123,6 +129,17 @@ export const CourseCard: FC<CourseCardProps> = ({ course, onActiveOrSuspend, onD
                                 </>
                             )
                         }
+
+                        <MenuOption onSelect={ handleClassList }>
+                                <Text
+                                    style={{
+                                        color: colors.text,
+                                        ...styles.textMenuOpt
+                                    }}
+                                >
+                                    Clases
+                                </Text>
+                            </MenuOption>
 
                         {
                             (!course.suspended) && (

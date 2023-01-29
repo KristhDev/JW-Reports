@@ -1,14 +1,15 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 
 import {
-    LessonPayload,
     Course,
-    Lesson,
     CourseFilter,
     CoursePayload,
     CoursesState,
+    Lesson,
+    LessonPayload,
     SetCoursesPayload,
-    SetRefreshCoursesPayload
+    SetLessonsPayload,
+    SetRefreshCoursesPayload,
 } from '../../interfaces/courses';
 
 import {
@@ -102,6 +103,17 @@ const courseSlice = createSlice({
             state.isCoursesLoading = false;
         },
 
+        addLesson: (state, action: PayloadAction<LessonPayload>) => {
+            state.lessons = [ action.payload.lesson, ...state.lessons ];
+            state.lessons = state.lessons.sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime());
+            state.isLessonLoading = false;
+        },
+
+        addLessons: (state, action: PayloadAction<SetLessonsPayload>) => {
+            state.lessons = [ ...state.lessons, ...action.payload.lessons ];
+            state.isLessonsLoading = false;
+        },
+
         clearCourses: (state) => {
             state.courseFilter = INITIAL_STATE.courseFilter;
             state.courses = INITIAL_STATE.courses;
@@ -132,6 +144,15 @@ const courseSlice = createSlice({
             state.courses = [];
         },
 
+        removeLesson: (state, action: PayloadAction<RemoveResourcePayload>) => {
+            state.lessons = state.lessons.filter(l => l.id !== action.payload.id);
+            state.isLessonDeleting = false;
+        },
+
+        removeLessons: (state) => {
+            state.lessons = [];
+        },
+
         setCourseFilter: (state, action: PayloadAction<{ filter: CourseFilter }>) => {
             state.courseFilter = action.payload.filter;
         },
@@ -139,6 +160,11 @@ const courseSlice = createSlice({
         setCourses: (state, action: PayloadAction<SetCoursesPayload>) => {
             state.courses = [ ...action.payload.courses ];
             state.isCoursesLoading = false;
+        },
+
+        setLessons: (state, action: PayloadAction<SetLessonsPayload>) => {
+            state.lessons = [ ...action.payload.lessons ];
+            state.isLessonsLoading = false;
         },
 
         setCoursesPagination: (state, action: PayloadAction<PaginationPayload>) => {
@@ -153,6 +179,10 @@ const courseSlice = createSlice({
             state.hasMoreCourses = action.payload.hasMore;
         },
 
+        setHasMoreLessons: (state, action: PayloadAction<HasMorePayload>) => {
+            state.hasMoreLessons = action.payload.hasMore;
+        },
+
         setIsCourseDeleting: (state, action: PayloadAction<SetIsDeletingPayload>) => {
             state.isCourseDeleting = action.payload.isDeleting;
         },
@@ -161,16 +191,28 @@ const courseSlice = createSlice({
             state.isCourseLoading = action.payload.isLoading;
         },
 
-        setIsLessonLoading: (state, action: PayloadAction<SetIsLoadingPayload>) => {
-            state.isLessonLoading = action.payload.isLoading;
-        },
-
         setIsCoursesLoading: (state, action: PayloadAction<SetIsLoadingPayload>) => {
             state.isCoursesLoading = action.payload.isLoading;
         },
 
+        setIsLessonLoading: (state, action: PayloadAction<SetIsLoadingPayload>) => {
+            state.isLessonLoading = action.payload.isLoading;
+        },
+
+        setIsLessonsLoading: (state, action: PayloadAction<SetIsLoadingPayload>) => {
+            state.isLessonsLoading = action.payload.isLoading;
+        },
+
+        setLessonsPagination: (state, action: PayloadAction<PaginationPayload>) => {
+            state.lessonsPagination = action.payload.pagination;
+        },
+
         setRefreshCourses: (state, action: PayloadAction<SetRefreshCoursesPayload>) => {
             state.refreshCourses = action.payload.refresh;
+        },
+
+        setRefreshLessons: (state, action: PayloadAction<SetRefreshCoursesPayload>) => {
+            state.refreshLessons = action.payload.refresh;
         },
 
         setSelectedLesson: (state, action: PayloadAction<LessonPayload>) => {
@@ -194,6 +236,19 @@ const courseSlice = createSlice({
                 ? action.payload.course
                 : state.selectedCourse;
             state.isCourseLoading = false;
+        },
+
+        updateLesson: (state, action: PayloadAction<LessonPayload>) => {
+            state.lessons = state.lessons.map(lesson =>
+                (lesson.id === action.payload.lesson.id)
+                    ? action.payload.lesson
+                    : lesson
+            );
+            state.lessons = state.lessons.sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime());
+            state.selectedLesson = (state.selectedLesson.id === action.payload.lesson.id)
+                ? action.payload.lesson
+                : state.selectedLesson;
+            state.isLessonLoading = false;
         }
     }
 });
@@ -201,22 +256,32 @@ const courseSlice = createSlice({
 export const {
     addCourse,
     addCourses,
+    addLesson,
+    addLessons,
     clearCourses,
     removeCourse,
     removeCourses,
+    removeLesson,
+    removeLessons,
     setCourseFilter,
     setCourses,
     setCoursesPagination,
     setCoursesScreenHistory,
     setHasMoreCourses,
+    setHasMoreLessons,
     setIsCourseDeleting,
     setIsCourseLoading,
-    setIsLessonLoading,
     setIsCoursesLoading,
+    setIsLessonLoading,
+    setIsLessonsLoading,
+    setLessons,
+    setLessonsPagination,
     setRefreshCourses,
+    setRefreshLessons,
     setSelectedCourse,
     setSelectedLesson,
-    updateCourse
+    updateCourse,
+    updateLesson
 } = courseSlice.actions;
 
 export default courseSlice.reducer;
