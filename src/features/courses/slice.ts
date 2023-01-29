@@ -105,7 +105,7 @@ const courseSlice = createSlice({
 
         addLesson: (state, action: PayloadAction<LessonPayload>) => {
             state.lessons = [ action.payload.lesson, ...state.lessons ];
-            state.lessons = state.lessons.sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime());
+            state.lessons = state.lessons.sort((a, b) => new Date(b.next_lesson).getTime() - new Date(a.next_lesson).getTime());
             state.isLessonLoading = false;
         },
 
@@ -244,7 +244,7 @@ const courseSlice = createSlice({
                     ? action.payload.lesson
                     : lesson
             );
-            state.lessons = state.lessons.sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime());
+            state.lessons = state.lessons.sort((a, b) => new Date(b.next_lesson).getTime() - new Date(a.next_lesson).getTime());
             state.selectedLesson = (state.selectedLesson.id === action.payload.lesson.id)
                 ? action.payload.lesson
                 : state.selectedLesson;

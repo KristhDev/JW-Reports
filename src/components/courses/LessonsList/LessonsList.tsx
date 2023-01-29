@@ -30,7 +30,8 @@ export const LessonsList = () => {
             hasMoreLessons,
             isLessonDeleting,
             isLessonsLoading,
-            lessons
+            lessons,
+            selectedCourse,
         },
         // deleteCourse,
         removeLessons,
@@ -89,7 +90,7 @@ export const LessonsList = () => {
                 ListHeaderComponent={
                     <Title
                         containerStyle={ themeStyles.titleContainerSpacingVertical }
-                        text="Clases del curso"
+                        text={ `Clases del curso con ${ selectedCourse.person_name }` }
                         textStyle={{ fontSize: 24 }}
                     />
                 }

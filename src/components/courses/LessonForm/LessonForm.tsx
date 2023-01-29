@@ -13,14 +13,14 @@ import { LessonFormValues } from './interfaces';
 import { styles as themeStyles } from '../../../theme';
 
 export const LessonForm = () => {
-    const { state: { isLessonLoading, selectedLesson }, saveLesson } = useCourses();
+    const { state: { isLessonLoading, selectedLesson }, saveLesson, updateLesson } = useCourses();
     const { setErrorForm } = useStatus();
     const { state: { colors } } = useTheme();
 
     const handleSaveOrUpdate = (formValues: LessonFormValues) => {
         (selectedLesson.id === '')
             ? saveLesson(formValues)
-            : () => {}
+            : updateLesson(formValues);
     }
 
     const lessonFormSchema = object().shape({
@@ -63,7 +63,7 @@ export const LessonForm = () => {
                         label="Próxima clase:"
                         modalTitle="Próxima clase"
                         mode="date"
-                        name="next_visit"
+                        name="next_lesson"
                         placeholder="Seleccione el día"
                     />
 
