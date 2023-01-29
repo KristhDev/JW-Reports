@@ -270,6 +270,63 @@ const useCourses = () => {
         setStatus({ code: 200, msg });
     }
 
+    const finishOrStartLesson = async (next_lesson: Date, onFinish?: () => void) => {
+        dispatch(setIsLessonLoading({ isLoading: true }));
+
+        if (state.selectedLesson.id === '') {
+            dispatch(setIsLessonLoading({ isLoading: false }));
+            onFinish && onFinish();
+
+            setStatus({
+                code: 400,
+                msg: 'No hay una clase seleccionada.'
+            });
+
+            return;
+        }
+
+        if (state.selectedCourse.suspended || state.selectedCourse.finished) {
+            dispatch(setIsLessonLoading({ isLoading: false }));
+            onFinish && onFinish();
+
+            setStatus({
+                code: 400,
+                msg: 'No pudes terminar o reprogramar de nuevo una clase de un curso suspendido o terminado.'
+            });
+
+            return;
+        }
+
+        console.log(dayjs(next_lesson).format('YYYY-MM-DD HH:mm:ss.SSSSSS'));
+
+        const { data, error } = await supabase.from('lessons')
+            .update({
+                done: !state.selectedLesson.done,
+                next_lesson: dayjs(next_lesson).format('YYYY-MM-DD HH:mm:ss.SSSSSS'),
+                updated_at: dayjs().format('YYYY-MM-DD HH:mm:ss.SSSSSS')
+            })
+            .eq('id', state.selectedLesson.id)
+            .eq('course_id', state.selectedCourse.id)
+            .select();
+
+        const next = setSupabaseError(error, () => {
+            dispatch(setIsLessonLoading({ isLoading: false }));
+            onFinish && onFinish();
+        });
+
+        if (next) return;
+
+        const msg = (data![0].done)
+            ? 'Haz terminado la clase correctamente.'
+            : 'Haz reprogrado la clase correctamente.'
+
+        dispatch(updateLessonAction({ lesson: data![0] }));
+
+        onFinish && onFinish();
+
+        setStatus({ code: 200, msg });
+    }
+
     const loadCourses = async (filter: CourseFilter, refresh: boolean = false, loadMore: boolean = false) => {
         dispatch(setCourseFilter({ filter }));
         setIsCoursesLoading(true);
@@ -317,6 +374,7 @@ const useCourses = () => {
         const { data, error } = await supabase.from('lessons')
             .select()
             .eq('course_id', state.selectedCourse.id)
+            .order('next_lesson', { ascending: false })
             .range(
                 (refresh) ? 0 : state.lessonsPagination.from,
                 (refresh) ? 9 : state.lessonsPagination.to
@@ -468,6 +526,7 @@ const useCourses = () => {
         deleteCourse,
         deleteLesson,
         finishOrStartCourse,
+        finishOrStartLesson,
         loadCourses,
         loadLessons,
         saveCourse,

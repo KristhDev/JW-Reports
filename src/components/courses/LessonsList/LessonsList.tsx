@@ -4,7 +4,7 @@ import { useNavigation } from '@react-navigation/native';
 
 import { INIT_LESSON } from '../../../features/courses';
 
-// import { ActiveOrSuspendCourseModal, FinishOrStartCourseModal } from '../../../screens/courses';
+import { FinishOrStartLessonModal } from '../../../screens/courses';
 import { DeleteModal } from '../../../screens/ui';
 
 import { LessonCard } from '../LessonCard';
@@ -21,7 +21,7 @@ import { styles as themeStyles } from '../../../theme';
 export const LessonsList = () => {
     const [ isRefreshing, setIsRefreshing ] = useState<boolean>(false);
     const [ showDeleteModal, setShowDeleteModal ] = useState<boolean>(false);
-    const [ showFinishModal, setShowFinishModal ] = useState<boolean>(false);
+    const [ showFSModal, setShowFSModal ] = useState<boolean>(false);
 
     const { addListener, getState, removeListener } = useNavigation();
 
@@ -109,21 +109,15 @@ export const LessonsList = () => {
                     <LessonCard
                         lesson={ item }
                         onDelete={ () => handleShowModal(item, setShowDeleteModal) }
-                        onFinish={ () => handleShowModal(item, setShowFinishModal) }
+                        onFinish={ () => handleShowModal(item, setShowFSModal) }
                     />
                 ) }
             />
 
-            {/* <ActiveOrSuspendCourseModal
-                isOpen={ showASModal }
-                onClose={ () => handleHideModal(setShowASModal) }
-            />
-
-            <FinishOrStartCourseModal
+            <FinishOrStartLessonModal
                 isOpen={ showFSModal }
                 onClose={ () => handleHideModal(setShowFSModal) }
             />
-            */}
 
             <DeleteModal
                 isLoading={ isLessonDeleting }

@@ -50,7 +50,7 @@ export const LessonCard: FC<LessonCardProps> = ({ lesson, onDelete, onFinish }) 
                 <Text style={{ ...styles.textDate, color: colors.icon }}>
                     {
                         (lesson.done)
-                            ? 'Clase dada'
+                            ? 'Clase impartida'
                             : `Clase para el ${ nextVisit.format('DD') } de ${ nextVisit.format('MMMM') } del ${ nextVisit.format('YYYY') }`
                     }
                 </Text>
@@ -107,7 +107,7 @@ export const LessonCard: FC<LessonCardProps> = ({ lesson, onDelete, onFinish }) 
                                     ...styles.textMenuOpt
                                 }}
                             >
-                                { (lesson.done) ? 'Reprogramar' : 'Terminada' }
+                                { (lesson.done) ? 'Reprogramar' : 'Terminar clase' }
                             </Text>
                         </MenuOption>
 
