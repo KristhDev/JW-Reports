@@ -29,13 +29,17 @@ const CourseDetail = () => {
             ? 'Suspendido'
             : 'En curso';
 
-    const handleNavigate = () => {
+    const handleAddLesson = () => {
         setSelectedLesson({
             ...selectedLesson,
             next_lesson: new Date().toString()
         });
 
         navigate('AddOrEditLessonScreen' as never);
+    }
+
+    const handleLessonsList = () => {
+        navigate('LessonsScreen' as never);
     }
 
     useEffect(() => {
@@ -137,16 +141,63 @@ const CourseDetail = () => {
                     <Text
                         style={{
                             ...styles.sectionSubTitle,
-                            color: colors.text,
-                            marginBottom: 0
+                            color: colors.text
                         }}
                     >
-                        Clases:
+                        Última clase:
                     </Text>
+
+                    {
+                        (selectedCourse?.last_lesson) && (
+                            <View
+                                style={{
+                                    ...styles.cardContainer,
+                                    borderColor: colors.text,
+                                }}
+                            >
+                                <View style={{ backgroundColor: colors.header }}>
+                                    <Text
+                                        style={{
+                                            ...styles.cardHeaderText,
+                                            color: colors.text
+                                        }}
+                                    >
+                                        {
+                                            (selectedCourse.last_lesson.done)
+                                                ? 'Clase impartida'
+                                                : `Próxima clase ${ dayjs(selectedCourse.last_lesson.next_lesson).format('DD/MM/YYYY') }`
+                                            }
+                                    </Text>
+                                </View>
+
+                                <View>
+                                    <Text
+                                        style={{
+                                            ...styles.cardContentText,
+                                            color: colors.text,
+                                        }}
+                                    >
+                                        { selectedCourse.last_lesson.description }
+                                    </Text>
+                                </View>
+                            </View>
+                        )
+                    }
 
                     <TouchableOpacity
                         activeOpacity={ 0.75 }
-                        onPress={ handleNavigate }
+                        onPress={ handleLessonsList }
+                        style={{ marginTop: 20 }}
+                    >
+                        <Text style={{ color: colors.linkText, fontSize: 19 }}>
+                            Ver todas las clases
+                        </Text>
+                    </TouchableOpacity>
+
+                    <TouchableOpacity
+                        activeOpacity={ 0.75 }
+                        onPress={ handleAddLesson }
+                        style={{ marginTop: 5 }}
                     >
                         <Text style={{ color: colors.linkText, fontSize: 19 }}>
                             Agregar clase

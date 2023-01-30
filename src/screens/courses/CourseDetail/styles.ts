@@ -23,6 +23,23 @@ const styles = StyleSheet.create({
         fontSize: 16,
         position: 'absolute',
         right: 20,
+    },
+
+    cardContainer: {
+        borderWidth: 1,
+        width: '100%'
+    },
+
+    cardHeaderText: {
+        fontSize: 24,
+        fontWeight: 'bold',
+        padding: 10,
+        textAlign: 'center'
+    },
+
+    cardContentText: {
+        fontSize: 19,
+        padding: 22
     }
 });
 

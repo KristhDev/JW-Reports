@@ -43,7 +43,7 @@ export const CourseCard: FC<CourseCardProps> = ({ course, onActiveOrSuspend, onD
         navigate('AddOrEditLessonScreen' as never);
     }
 
-    const handleClassList = () => {
+    const handleLessonList = () => {
         setIsOpen(false);
         setSelectedCourse(course);
         navigate('LessonsScreen' as never);
@@ -130,7 +130,7 @@ export const CourseCard: FC<CourseCardProps> = ({ course, onActiveOrSuspend, onD
                             )
                         }
 
-                        <MenuOption onSelect={ handleClassList }>
+                        <MenuOption onSelect={ handleLessonList }>
                                 <Text
                                     style={{
                                         color: colors.text,

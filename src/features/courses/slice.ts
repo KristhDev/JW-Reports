@@ -38,6 +38,7 @@ export const INIT_COURSE: Course = {
     person_about: '',
     person_address: '',
     publication: '',
+    last_lesson: undefined,
     suspended: false,
     finished: false,
     created_at: new Date().toString(),

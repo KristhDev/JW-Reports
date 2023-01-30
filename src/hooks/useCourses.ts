@@ -297,8 +297,6 @@ const useCourses = () => {
             return;
         }
 
-        console.log(dayjs(next_lesson).format('YYYY-MM-DD HH:mm:ss.SSSSSS'));
-
         const { data, error } = await supabase.from('lessons')
             .update({
                 done: !state.selectedLesson.done,
@@ -331,7 +329,12 @@ const useCourses = () => {
         dispatch(setCourseFilter({ filter }));
         setIsCoursesLoading(true);
 
-        const coursesPromise = supabase.from('courses').select().eq('user_id', user.id);
+        const coursesPromise = supabase.from('courses')
+            .select(`
+                *,
+                lessons (*)
+            `)
+            .eq('user_id', user.id)
 
         if (filter === 'active') {
             coursesPromise.eq('suspended', false)
@@ -347,6 +350,8 @@ const useCourses = () => {
         }
 
         coursesPromise.order('created_at', { ascending: false })
+            .order('next_lesson', { ascending: false, foreignTable: 'lessons' })
+            .limit(1, { foreignTable: 'lessons' })
             .range(
                 (refresh) ? 0 : state.coursesPagination.from,
                 (refresh) ? 9 : state.coursesPagination.to
@@ -364,8 +369,13 @@ const useCourses = () => {
             });
         }
 
-        dispatch(setHasMoreCourses({ hasMore: (data!.length >= 10) }));
-        (loadMore) ? addCourses(data!) : setCourses(data!);
+        const courses = data!.map(({ lessons, ...rest }) => ({
+            ...rest,
+            last_lesson: lessons[0]
+        }));
+
+        dispatch(setHasMoreCourses({ hasMore: (courses!.length >= 10) }));
+        (loadMore) ? addCourses(courses!) : setCourses(courses!);
     }
 
     const loadLessons = async (refresh: boolean = false, loadMore: boolean = false) => {

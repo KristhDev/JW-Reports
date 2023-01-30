@@ -59,6 +59,7 @@ export interface Course {
     person_about: string;
     person_address: string;
     publication: string;
+    last_lesson?: Lesson;
     suspended: boolean;
     finished: boolean;
     created_at: string;
