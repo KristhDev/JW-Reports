@@ -9,15 +9,15 @@ import { SectionContentProps } from './interfaces';
 
 import styles from './styles';
 
-export const SectionContent: FC<PropsWithChildren<SectionContentProps>> = ({ title, children }) => {
+export const SectionContent: FC<PropsWithChildren<SectionContentProps>> = ({ containerStyle, children, title }) => {
     const { state: { colors } } = useTheme();
 
     return (
         <View
-            style={{
-                borderBottomColor: colors.header,
-                ...styles.sectionContainer
-            }}
+            style={[
+                { borderBottomColor: colors.header, ...styles.sectionContainer },
+                containerStyle
+            ]}
         >
             <InfoText
                 containerStyle={{ marginHorizontal: 8 }}
