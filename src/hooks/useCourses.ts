@@ -336,7 +336,7 @@ const useCourses = () => {
         setStatus({ code: 200, msg });
     }
 
-    const loadCourses = async (filter: CourseFilter, refresh: boolean = false, loadMore: boolean = false) => {
+    const loadCourses = async (filter: CourseFilter, search: string = '', refresh: boolean = false, loadMore: boolean = false) => {
         dispatch(setCourseFilter({ filter }));
         setIsCoursesLoading(true);
 
@@ -348,16 +348,22 @@ const useCourses = () => {
             .eq('user_id', user.id)
 
         if (filter === 'active') {
-            coursesPromise.eq('suspended', false)
-                .eq('finished', false)
+            coursesPromise.eq('suspended', false).eq('finished', false)
         }
         else if (filter === 'suspended') {
-            coursesPromise.eq('suspended', true)
-                .eq('finished', false)
+            coursesPromise.eq('suspended', true).eq('finished', false)
         }
         else if (filter === 'finished') {
-            coursesPromise.eq('suspended', false)
-                .eq('finished', true);
+            coursesPromise.eq('suspended', false).eq('finished', true);
+        }
+
+        if (search.trim().length > 0) {
+            let searchQuery = `person_name.ilike.%${ search }%,`;
+            searchQuery += `person_about.ilike.%${ search }%,`;
+            searchQuery += `person_address.ilike.%${ search }%,`;
+            searchQuery += `publication.ilike.%${ search }%`;
+
+            coursesPromise.or(searchQuery);
         }
 
         coursesPromise.order('created_at', { ascending: false })
@@ -397,7 +403,7 @@ const useCourses = () => {
             .eq('course_id', state.selectedCourse.id);
 
         if (search.trim().length > 0) {
-            lessonsPromise.like('description', `%${ search }%`);
+            lessonsPromise.ilike('description', `%${ search }%`);
         }
 
         const { data, error } = await lessonsPromise.order('next_lesson', { ascending: false })

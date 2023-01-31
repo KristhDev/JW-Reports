@@ -12,7 +12,7 @@ export const TabBar: FC<BottomTabBarProps> = ({ navigation, state, descriptors }
     const [ hideTabBar, setHideTabBar ] = useState<boolean>(false);
     const { state: { colors } } = useTheme();
 
-    const icons = [ 'home-outline', 'search-outline', 'briefcase-outline', 'book-outline' ];
+    const icons = [ 'home-outline', 'briefcase-outline', 'book-outline' ];
 
     const { navigate } = navigation;
 

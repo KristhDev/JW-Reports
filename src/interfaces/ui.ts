@@ -8,7 +8,6 @@ export type NavigationParamsList = {
 
 export type MainTabsBottomParamsList = {
     PreachingStackNavigation: undefined;
-    SearchStackNavigation: undefined;
     RevistsStackNavigation: undefined;
     CoursesStackNavigation: undefined;
 }

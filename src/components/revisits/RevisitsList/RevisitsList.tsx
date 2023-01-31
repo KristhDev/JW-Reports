@@ -11,17 +11,17 @@ import { DeleteModal } from '../../../screens/ui';
 import { ListEmptyComponent } from './ListEmptyComponent';
 import { ListFooterComponent } from './ListFooterComponent';
 import { RevisitCard } from '../RevisitCard';
-import { Title } from '../../ui';
+import { SearchInput, Title } from '../../ui';
 
 import { useRevisits } from '../../../hooks';
 
 import { RevisitsListProps } from './interfaces';
 import { Revisit } from '../../../interfaces/revisits';
 
-import { styles as themeStyles } from '../../../theme';
-
 export const RevisitsList: FC<RevisitsListProps> = ({ filter, title, emptyMessage }) => {
+    const [ searchTerm, setSearchTerm ] = useState<string>('');
     const [ isRefreshing, setIsRefreshing ] = useState<boolean>(false);
+
     const [ showRevisitModal, setShowRevisitModal ] = useState<boolean>(false);
     const [ showPassModal, setShowPassModal ] = useState<boolean>(false);
     const [ showDeleteModal, setShowDeleteModal ] = useState<boolean>(false);
@@ -47,15 +47,15 @@ export const RevisitsList: FC<RevisitsListProps> = ({ filter, title, emptyMessag
     } = useRevisits();
 
     const handleRefreshing = () => {
+        setSearchTerm('');
         setRevisitsPagination({ from: 0, to: 9 });
         removeRevisits();
-        loadRevisits(filter, true);
-        setIsRefreshing(false);
+        loadRevisits(filter, '', true);
     }
 
     const handleEndReach = () => {
         if (!hasMoreRevisits || isRevisitsLoading) return;
-        loadRevisits(filter, false, true);
+        loadRevisits(filter, searchTerm, true);
     }
 
     const handleShowModal = (revisit: Revisit, setShowModal: (value: boolean) => void) => {
@@ -76,6 +76,19 @@ export const RevisitsList: FC<RevisitsListProps> = ({ filter, title, emptyMessag
     }
 
     useEffect(() => {
+        if (isRefreshing) setIsRefreshing(false);
+    }, [ isRefreshing ]);
+
+    useEffect(() => {
+        if (searchTerm.trim().length > 0) {
+            setRevisitsPagination({ from: 0, to: 9 });
+            removeRevisits();
+            loadRevisits(filter, searchTerm, true);
+            setIsRefreshing(false);
+        }
+    }, [ searchTerm ]);
+
+    useEffect(() => {
         if (isFocused()) {
             const prevLast = revisitsScreenHistory[revisitsScreenHistory.length - 2];
             const last = routeNames[index];
@@ -87,7 +100,7 @@ export const RevisitsList: FC<RevisitsListProps> = ({ filter, title, emptyMessag
     useEffect(() => {
         if (isFocused() && refreshRevisits) {
             removeRevisits();
-            loadRevisits(filter, true);
+            loadRevisits(filter, searchTerm, true);
         }
     }, [ refreshRevisits, index ]);
 
@@ -99,17 +112,37 @@ export const RevisitsList: FC<RevisitsListProps> = ({ filter, title, emptyMessag
                 keyExtractor={ (item) => item.id }
                 ListFooterComponent={ ListFooterComponent }
                 ListHeaderComponent={
-                    <Title
-                        containerStyle={ themeStyles.titleContainerSpacingVertical }
-                        text={ title }
-                        textStyle={{ fontSize: 24 }}
+                    <>
+                        <Title
+                            containerStyle={{ paddingTop: 30, paddingBottom: 20 }}
+                            text={ title }
+                            textStyle={{ fontSize: 24 }}
+                        />
+
+                        <SearchInput
+                            onClean={ handleRefreshing }
+                            onSearch={ setSearchTerm }
+                            searchTerm={ searchTerm }
+                            refreshing={ isRefreshing }
+                        />
+                    </>
+                }
+                ListEmptyComponent={
+                    <ListEmptyComponent
+                        msg={
+                            (searchTerm.trim().length > 0)
+                                ? `No se encontraron revisitas con la busqueda: ${ searchTerm.trim() }`
+                                : emptyMessage
+                        }
                     />
                 }
-                ListEmptyComponent={ <ListEmptyComponent msg={ emptyMessage } /> }
                 ListHeaderComponentStyle={{ alignSelf: 'flex-start' }}
                 onEndReached={ handleEndReach }
                 onEndReachedThreshold={ 0.5 }
-                onRefresh={ handleRefreshing }
+                onRefresh={ () => {
+                    setIsRefreshing(true);
+                    handleRefreshing()
+                } }
                 overScrollMode="never"
                 refreshing={ isRefreshing }
                 renderItem={ ({ item }) => (

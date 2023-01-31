@@ -52,7 +52,7 @@ const useRevisits = () => {
     const setRevisitsPagination = (pagination: Pagination) => dispatch(setRevisitsPaginationAction({ pagination }));
     const setSelectedRevisit = (revisit: Revisit) => dispatch(setSelectedRevisitAction({ revisit }));
 
-    const loadRevisits = async (filter: RevisitFilter, refresh: boolean = false, loadMore: boolean = false) => {
+    const loadRevisits = async (filter: RevisitFilter, search: string = '', refresh: boolean = false, loadMore: boolean = false) => {
         dispatch(setRevisitFilter({ filter }));
         setIsRevisitsLoading(true);
 
@@ -60,6 +60,14 @@ const useRevisits = () => {
 
         if (filter === 'visited') revisitsPromise.eq('done', true);
         else if (filter === 'unvisited') revisitsPromise.eq('done', false);
+
+        if (search.trim().length > 0) {
+            let searchQuery = `person_name.ilike.%${ search }%,`;
+            searchQuery += `about.ilike.%${ search }%,`;
+            searchQuery += `address.ilike.%${ search }%`;
+
+            revisitsPromise.or(searchQuery);
+        }
 
         revisitsPromise.order('next_visit', { ascending: false })
             .order('created_at', { ascending: false })

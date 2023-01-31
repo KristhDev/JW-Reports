@@ -1,7 +1,7 @@
 import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
-import { PreachingStackNavigation, SearchStackNavigation } from './';
+import { PreachingStackNavigation } from './';
 import { CoursesStackNavigation } from './courses';
 import { RevistsStackNavigation } from './revisits';
 
@@ -33,14 +33,6 @@ const MainTabsBottomNavigation = () => {
                 name="PreachingStackNavigation"
                 options={{
                     title: 'Inicio'
-                }}
-            />
-
-            <Tabs.Screen
-                component={ SearchStackNavigation }
-                name="SearchStackNavigation"
-                options={{
-                    title: 'Buscar'
                 }}
             />
 

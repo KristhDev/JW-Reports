@@ -1,4 +1,4 @@
-import React, { FC, useState } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import { View, TextInput } from 'react-native';
 import { TouchableRipple } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -10,7 +10,7 @@ import { SearchInputProps } from './interfaces';
 import { styles as themeStyles } from '../../../theme';
 import styles from './styles';
 
-export const SearchInput: FC<SearchInputProps> = ({ onClean, onSearch, searchTerm }) => {
+export const SearchInput: FC<SearchInputProps> = ({ onClean, onSearch, refreshing, searchTerm }) => {
     const [ searchText, setSearchText ] = useState<string>(searchTerm);
     const [ isFocused, setIsFocused ] = useState<boolean>(false);
 
@@ -21,6 +21,10 @@ export const SearchInput: FC<SearchInputProps> = ({ onClean, onSearch, searchTer
         onClean();
         setIsFocused(false);
     }
+
+    useEffect(() => {
+        if (refreshing) handleClearInput();
+    }, [ refreshing ]);
 
     return (
         <View style={ styles.searchInputContainer }>
@@ -33,7 +37,7 @@ export const SearchInput: FC<SearchInputProps> = ({ onClean, onSearch, searchTer
             <View
                 style={{
                     ...styles.inputContainer,
-                    borderColor: (isFocused) ? colors.button : colors.icon,
+                    borderColor: (isFocused) ? colors.button : colors.icon
                 }}
             >
                 <TextInput

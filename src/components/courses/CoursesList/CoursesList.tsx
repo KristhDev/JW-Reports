@@ -10,16 +10,15 @@ import { DeleteModal } from '../../../screens/ui';
 import { CourseCard } from '../CourseCard';
 import { ListEmptyComponent } from './ListEmptyComponent';
 import { ListFooterComponent } from './ListFooterComponent';
-import { Title } from '../../ui';
+import { SearchInput, Title } from '../../ui';
 
 import { useCourses } from '../../../hooks';
 
 import { CoursesListProps } from './interfaces';
 import { Course } from '../../../interfaces/courses';
 
-import { styles as themeStyles } from '../../../theme';
-
 export const CoursesList: FC<CoursesListProps> = ({ filter, title, emptyMessage }) => {
+    const [ searchTerm, setSearchTerm ] = useState<string>('');
     const [ isRefreshing, setIsRefreshing ] = useState<boolean>(false);
     const [ showDeleteModal, setShowDeleteModal ] = useState<boolean>(false);
     const [ showASModal, setShowASModal ] = useState<boolean>(false);
@@ -46,15 +45,15 @@ export const CoursesList: FC<CoursesListProps> = ({ filter, title, emptyMessage 
     } = useCourses();
 
     const handleRefreshing = () => {
+        setSearchTerm('');
         setCoursesPagination({ from: 0, to: 9 });
         removeCourses();
-        loadCourses(filter, true);
-        setIsRefreshing(false);
+        loadCourses(filter, '', true);
     }
 
     const handleEndReach = () => {
         if (!hasMoreCourses || isCoursesLoading) return;
-        loadCourses(filter, false, true);
+        loadCourses(filter, searchTerm, false, true);
     }
 
     const handleShowModal = (course: Course, setShowModal: (value: boolean) => void) => {
@@ -72,6 +71,19 @@ export const CoursesList: FC<CoursesListProps> = ({ filter, title, emptyMessage 
     }
 
     useEffect(() => {
+        if (isRefreshing) setIsRefreshing(false);
+    }, [ isRefreshing ]);
+
+    useEffect(() => {
+        if (searchTerm.trim().length > 0) {
+            setCoursesPagination({ from: 0, to: 9 });
+            removeCourses();
+            loadCourses(filter, searchTerm, true);
+            setIsRefreshing(false);
+        }
+    }, [ searchTerm ]);
+
+    useEffect(() => {
         if (isFocused()) {
             const prevLast = coursesScreenHistory[coursesScreenHistory.length - 2];
             const last = routeNames[index];
@@ -83,7 +95,7 @@ export const CoursesList: FC<CoursesListProps> = ({ filter, title, emptyMessage 
     useEffect(() => {
         if (isFocused() && refreshCourses) {
             removeCourses();
-            loadCourses(filter, true);
+            loadCourses(filter, searchTerm, true);
         }
     }, [ refreshCourses, index ]);
 
@@ -95,17 +107,37 @@ export const CoursesList: FC<CoursesListProps> = ({ filter, title, emptyMessage 
                 keyExtractor={ (item) => item.id }
                 ListFooterComponent={ ListFooterComponent }
                 ListHeaderComponent={
-                    <Title
-                        containerStyle={ themeStyles.titleContainerSpacingVertical }
-                        text={ title }
-                        textStyle={{ fontSize: 24 }}
+                    <>
+                        <Title
+                            containerStyle={{ paddingTop: 30, paddingBottom: 20 }}
+                            text={ title }
+                            textStyle={{ fontSize: 24 }}
+                        />
+
+                        <SearchInput
+                            onClean={ handleRefreshing }
+                            onSearch={ setSearchTerm }
+                            refreshing={ isRefreshing }
+                            searchTerm={ searchTerm }
+                        />
+                    </>
+                }
+                ListEmptyComponent={
+                    <ListEmptyComponent
+                        msg={
+                            (searchTerm.trim().length > 0)
+                                ? `No se encontraron cursos con la busqueda: ${ searchTerm.trim() }`
+                                : emptyMessage
+                        }
                     />
                 }
-                ListEmptyComponent={ <ListEmptyComponent msg={ emptyMessage } /> }
                 ListHeaderComponentStyle={{ alignSelf: 'flex-start' }}
                 onEndReached={ handleEndReach }
                 onEndReachedThreshold={ 0.5 }
-                onRefresh={ handleRefreshing }
+                onRefresh={ () => {
+                    handleRefreshing();
+                    setIsRefreshing(true);
+                } }
                 overScrollMode="never"
                 refreshing={ isRefreshing }
                 renderItem={ ({ item }) => (

@@ -6,6 +6,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         marginBottom: 30,
         paddingHorizontal: 30,
+        width: '100%'
     },
 
     inputContainer: {

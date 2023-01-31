@@ -44,7 +44,6 @@ export const LessonsList = () => {
         setLessonsPagination({ from: 0, to: 9 });
         removeLessons();
         loadLessons('', true);
-        setIsRefreshing(false);
     }
 
     const handleEndReach = () => {
@@ -68,6 +67,10 @@ export const LessonsList = () => {
     const handleDeleteConfirm = () => {
         deleteLesson(false, () => setShowDeleteModal(false));
     }
+
+    useEffect(() => {
+        if (isRefreshing) setIsRefreshing(false);
+    }, [ isRefreshing ]);
 
     useEffect(() => {
         if (searchTerm.trim().length > 0) {
@@ -103,7 +106,7 @@ export const LessonsList = () => {
                 ListHeaderComponent={
                     <>
                         <Title
-                            containerStyle={{ paddingVertical: 30 }}
+                            containerStyle={{ paddingTop: 30, paddingBottom: 20 }}
                             text={ `Clases del curso con ${ selectedCourse.person_name }` }
                             textStyle={{ fontSize: 24 }}
                         />
@@ -111,6 +114,7 @@ export const LessonsList = () => {
                         <SearchInput
                             onClean={ handleRefreshing }
                             onSearch={ setSearchTerm }
+                            refreshing={ isRefreshing }
                             searchTerm={ searchTerm }
                         />
                     </>
@@ -127,7 +131,10 @@ export const LessonsList = () => {
                 ListHeaderComponentStyle={{ alignSelf: 'flex-start' }}
                 onEndReached={ handleEndReach }
                 onEndReachedThreshold={ 0.5 }
-                onRefresh={ handleRefreshing }
+                onRefresh={ () => {
+                    setIsRefreshing(true);
+                    handleRefreshing();
+                } }
                 overScrollMode="never"
                 refreshing={ isRefreshing }
                 renderItem={ ({ item }) => (
