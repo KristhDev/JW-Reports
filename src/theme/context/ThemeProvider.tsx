@@ -95,11 +95,12 @@ const ThemeProvider: FC<PropsWithChildren> = ({ children }) => {
     useEffect(() => {
         if (state.isLoadedTheme) {
             SystemNavigationBar.setNavigationColor(
-                (state.selectedTheme === 'dark') ? '#000000' : '#FFFFFF',
-                (state.selectedTheme === 'dark') ? 'light' : 'dark'
+                state.colors.navbar,
+                (state.selectedTheme === 'dark') ? 'light' : 'dark',
+                'navigation'
             );
         }
-    }, [ state.isLoadedTheme, state.selectedTheme ]);
+    }, [ state.isLoadedTheme, state.selectedTheme, state.colors ]);
 
     return (
         <>
