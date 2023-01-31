@@ -60,7 +60,7 @@ const CoursesStackNavigation = () => {
                     headerRight: () => (
                         <HeaderButtons
                             deleteButton={ true }
-                            deleteModalText="¿Estás seguro de eliminar este curso?"
+                            deleteModalText="¿Está seguro de eliminar este curso?"
                             isDeleteModalLoading={ isCourseDeleting }
                             onCloseDeleteModal={ () => setShowDeleteCourseModal(false) }
                             onConfirmDeleteModal={ handleDeleteCourse }
@@ -83,7 +83,7 @@ const CoursesStackNavigation = () => {
                     headerRight: () => (
                         <HeaderButtons
                             deleteButton={ selectedCourse.id !== '' }
-                            deleteModalText="¿Estás seguro de eliminar este curso?"
+                            deleteModalText="¿Está seguro de eliminar este curso?"
                             isDeleteModalLoading={ isCourseDeleting }
                             onCloseDeleteModal={ () => setShowDeleteCourseModal(false) }
                             onConfirmDeleteModal={ handleDeleteCourse }
@@ -103,7 +103,7 @@ const CoursesStackNavigation = () => {
                     headerRight: () => (
                         <HeaderButtons
                             deleteButton={ selectedLesson.id !== '' }
-                            deleteModalText="¿Estás seguro de eliminar está clase?"
+                            deleteModalText="¿Está seguro de eliminar esta clase?"
                             isDeleteModalLoading={ isLessonDeleting }
                             onCloseDeleteModal={ () => setShowDeleteLessonModal(false) }
                             onConfirmDeleteModal={ handleDeleteLesson }
@@ -132,7 +132,7 @@ const CoursesStackNavigation = () => {
                     headerRight: () => (
                         <HeaderButtons
                             deleteButton={ true }
-                            deleteModalText="¿Estás seguro de eliminar está clase?"
+                            deleteModalText="¿Está seguro de eliminar esta clase?"
                             isDeleteModalLoading={ isLessonDeleting }
                             onCloseDeleteModal={ () => setShowDeleteLessonModal(false) }
                             onConfirmDeleteModal={ handleDeleteLesson }

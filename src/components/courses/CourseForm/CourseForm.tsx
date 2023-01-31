@@ -34,7 +34,7 @@ export const CourseForm = () => {
             .min(10, 'La dirección debe tener al menos 10 caracteres.')
             .required('La dirección es requerida.'),
         publication: string()
-            .min(5, 'La publicación debe estudio tener al menos 5 caracteres.')
+            .min(5, 'La publicación de estudio debe tener al menos 5 caracteres.')
             .required('La publicación de estudio no puede estar vacía'),
     });
 

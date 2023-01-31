@@ -25,7 +25,7 @@ export const LessonForm = () => {
 
     const lessonFormSchema = object().shape({
         description: string()
-            .min(10, 'El contenido de la clase debe tener al menos 10 carácteres.')
+            .min(10, 'El contenido de la clase debe tener al menos 10 caracteres.')
             .required('El contenido de la clase es requerido.'),
         next_lesson: date()
             .required('La fecha de la próxima clase no puede estar vacía.'),
@@ -48,7 +48,7 @@ export const LessonForm = () => {
                         multiline
                         name="description"
                         numberOfLines={ 10 }
-                        placeholder="Ingrese el tema que se estudiarán en la siguiente clase"
+                        placeholder="Ingrese el tema que se estudiará en la siguiente clase"
                     />
 
                     <DatetimeField

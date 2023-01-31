@@ -11,18 +11,14 @@ import { useStatus, useTheme } from '../../../hooks';
 
 import { ThemeModal } from '../../../theme/screens';
 
+import { THEME_OPTIONS } from '../../../utils';
+
 const Settings = () => {
     const [ showThemeModal, setShowThemeModal ] = useState<boolean>(false);
     const { navigate } = useNavigation();
 
     const { setStatus } = useStatus();
     const { state: { colors, theme } } = useTheme();
-
-    const themeText = {
-        default: 'Modo predeterminado',
-        light: 'Modo claro',
-        dark: 'Modo oscuro'
-    }
 
     const handleMoreInfo = () => {
         setStatus({
@@ -51,7 +47,7 @@ const Settings = () => {
                 <SectionContent title="PANTALLA">
                     <SectionButton
                         onPress={ () => setShowThemeModal(true) }
-                        subText={ themeText[theme] }
+                        subText={ THEME_OPTIONS.find(t => t.value === theme)?.label || '' }
                         text="Apariencia"
                     />
                 </SectionContent>

@@ -165,7 +165,7 @@ export const CoursesList: FC<CoursesListProps> = ({ filter, title, emptyMessage 
                 isOpen={ showDeleteModal }
                 onClose={ () => handleHideModal(setShowDeleteModal) }
                 onConfirm={ handleDeleteConfirm }
-                text="¿Estás seguro de eliminar este curso?"
+                text="¿Está seguro de eliminar este curso?"
             />
         </>
     );

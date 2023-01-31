@@ -54,7 +54,7 @@ const RevisitDetail = () => {
     return (
         <>
             <ScrollView
-                contentContainerStyle={{ alignItems: 'center', paddingBottom: 100, flexGrow: 1 }}
+                contentContainerStyle={{ alignItems: 'center', flexGrow: 1, paddingBottom: 100 }}
                 overScrollMode="never"
                 style={{ flex: 1 }}
             >

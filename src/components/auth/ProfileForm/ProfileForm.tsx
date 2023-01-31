@@ -75,10 +75,11 @@ export const ProfileForm = () => {
                     />
 
                     <FormSelect
-                        name="precursor"
-                        label="Precursor:"
                         items={ PRECURSORS_OPTIONS }
+                        label="Precursor:"
+                        name="precursor"
                         placeholder="Seleccione una opción"
+                        title="Seleccione su precursorado"
                     />
 
                     <View style={{ flex: 1 }} />

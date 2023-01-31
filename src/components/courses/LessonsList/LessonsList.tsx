@@ -156,7 +156,7 @@ export const LessonsList = () => {
                 isOpen={ showDeleteModal }
                 onClose={ () => handleHideModal(setShowDeleteModal) }
                 onConfirm={ handleDeleteConfirm }
-                text="¿Estás seguro de eliminar está clase?"
+                text="¿Está seguro de eliminar esta clase?"
             />
         </>
     );

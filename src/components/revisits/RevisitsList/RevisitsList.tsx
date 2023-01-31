@@ -170,7 +170,7 @@ export const RevisitsList: FC<RevisitsListProps> = ({ filter, title, emptyMessag
                 isOpen={ showDeleteModal }
                 onClose={ () => handleHideModal(setShowDeleteModal) }
                 onConfirm={ handleDeleteConfirm }
-                text="¿Estás seguro de eliminar está revisita?"
+                text="¿Está seguro de eliminar esta revisita?"
             />
         </>
     );

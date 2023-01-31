@@ -21,8 +21,8 @@ const FinishOrStartLessonModal: FC<ModalProps> = ({ isOpen, onClose }) => {
     const { state: { colors } } = useTheme();
 
     const modalMsg = (selectedLesson.done)
-        ? '¿Está seguro de reprogramar está clase?'
-        : '¿Está seguro de terminar está clase?';
+        ? '¿Está seguro de reprogramar esta clase?'
+        : '¿Está seguro de terminar esta clase?';
 
     const handleClose = () => {
         setReschedule(false);

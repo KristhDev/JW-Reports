@@ -20,7 +20,8 @@ export const FormSelect: FC<FormSelectProps> = ({
     labelStyle,
     name,
     placeholder,
-    style
+    style,
+    title
 }) => {
     const { width } = useWindowDimensions();
 
@@ -121,7 +122,7 @@ export const FormSelect: FC<FormSelectProps> = ({
                 items={ items }
                 onCancel={ handleHideModal }
                 onChangeValue={ handleChangeValue }
-                title="Seleccione su precursorado"
+                title={ title }
                 value={ field.value }
             />
         </>

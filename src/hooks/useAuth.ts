@@ -114,7 +114,7 @@ const useAuth = () => {
 
         setStatus({
             code: 200,
-            msg: 'Haz actualizado tu perfil correctamente'
+            msg: 'Haz actualizado tu perfil correctamente.'
         });
     }
 
@@ -149,8 +149,8 @@ const useAuth = () => {
         onFinish && onFinish();
 
         let msg = `Hemos mandado un correo de confirmación a ${ state.user.email }. `;
-        msg += `Por favor revisalo. Una vez confirmes ese correo se enviara otro a ${ email }. `
-        msg += 'Ese también confirmalo para efectuar el cambio.'
+        msg += `Por favor revísalo. Una vez confirmes ese correo se enviará otro a ${ email }. `
+        msg += 'Ese también confírmalo para efectuar el cambio.'
 
         setStatus({ code: 200, msg });
     }
@@ -164,7 +164,7 @@ const useAuth = () => {
 
             setStatus({
                 code: 400,
-                msg: 'La contraseña no puede estar vacia.'
+                msg: 'La contraseña no puede estar vacía.'
             });
 
             return;
@@ -187,7 +187,7 @@ const useAuth = () => {
 
         setStatus({
             code: 200,
-            msg: 'Haz actualizado tu contraseña correctamente'
+            msg: 'Haz actualizado tu contraseña correctamente.'
         });
     }
 

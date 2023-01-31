@@ -91,7 +91,7 @@ const useCourses = () => {
 
             setStatus({
                 code: 400,
-                msg: 'No pudes suspender o renovar un curso terminado.'
+                msg: 'No puedes suspender o renovar un curso terminado.'
             });
 
             return;
@@ -445,7 +445,7 @@ const useCourses = () => {
 
         setStatus({
             code: 201,
-            msg: 'Haz agregado un curso correctamente'
+            msg: 'Haz agregado un curso correctamente.'
         });
 
         navigate({

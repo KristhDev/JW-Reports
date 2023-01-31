@@ -29,11 +29,11 @@ const RevisitModal: FC<ModalProps> = ({ isOpen, onClose }) => {
 
     const modalTitle = (selectedRevisit.done)
         ? `¿Quieres volver a visitar a ${ selectedRevisit.person_name }?`
-        : '¿Estás seguro de marcar está revistada como visitada?';
+        : '¿Está seguro de marcar esta revisitada como visitada?';
 
     const revisitFormSchema = object().shape({
         about: string()
-            .min(10, 'La información de la persona debe tener al meno 10 caracteres.')
+            .min(10, 'La información de la persona debe tener al menos 10 caracteres.')
             .required('La información de la persona es requerida.'),
         next_visit: date()
             .required('La fecha de la próxima visita no puede estar vacía'),

@@ -21,7 +21,7 @@ const AddOrEditLesson = () => {
                 <Title
                     containerStyle={ themeStyles.titleContainer }
                     textStyle={{ fontSize: 24 }}
-                    text={ `${ (selectedLesson.id === '') ? 'Agregar' : 'Editar' } clase del curso` }
+                    text={ (selectedLesson.id === '') ? 'Agregar clase para el curso' : 'Editar clase del curso' }
                 />
 
                 <LessonForm />

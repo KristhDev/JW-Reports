@@ -104,7 +104,7 @@ export const RevisitCard: FC<RevisitCardProps> = ({ onDelete, onRevisit, onPass,
                                     ...styles.textMenuOpt
                                 }}
                             >
-                                { (revisit.done) ? 'Volver a visitar' : 'Marcar como vistada' }
+                                { (revisit.done) ? 'Volver a visitar' : 'Marcar como visitada' }
                             </Text>
                         </MenuOption>
 

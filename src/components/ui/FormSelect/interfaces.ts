@@ -12,4 +12,5 @@ export interface FormSelectProps {
     name: string;
     placeholder?: string;
     style?: StyleProp<ViewStyle>;
+    title: string;
 }

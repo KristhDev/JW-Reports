@@ -75,7 +75,7 @@ const PreachingStackNavigation = () => {
                     headerRight: () => (
                         <HeaderButtons
                             deleteButton={ seletedPreaching.id !== '' }
-                            deleteModalText="¿Estás seguro de eliminar este día de predicación?"
+                            deleteModalText="¿Está seguro de eliminar este día de predicación?"
                             isDeleteModalLoading={ isPreachingDeleting }
                             onCloseDeleteModal={ () => setShowDeleteModal(false) }
                             onConfirmDeleteModal={ handleDeleteConfirm }

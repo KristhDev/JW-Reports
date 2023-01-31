@@ -55,7 +55,7 @@ const RevisitsStackNavigation = () => {
                     headerRight: () => (
                         <HeaderButtons
                             deleteButton={ true }
-                            deleteModalText="¿Estás seguro de eliminar está revisita?"
+                            deleteModalText="¿Está seguro de eliminar esta revisita?"
                             isDeleteModalLoading={ isRevisitDeleting }
                             onCloseDeleteModal={ () => setShowDeleteModal(false) }
                             onConfirmDeleteModal={ handleDeleteConfirm }
@@ -78,7 +78,7 @@ const RevisitsStackNavigation = () => {
                     headerRight: () => (
                         <HeaderButtons
                             deleteButton={ selectedRevisit.id !== '' }
-                            deleteModalText="¿Estás seguro de eliminar está revisita?"
+                            deleteModalText="¿Está seguro de eliminar esta revisita?"
                             isDeleteModalLoading={ isRevisitDeleting }
                             onCloseDeleteModal={ () => setShowDeleteModal(false) }
                             onConfirmDeleteModal={ handleDeleteConfirm }
