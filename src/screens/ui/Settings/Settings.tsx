@@ -33,7 +33,7 @@ const Settings = () => {
                 <SectionContent title="MI CUENTA">
                     <SectionButton
                         onPress={ () => navigate('ProfileScreen' as never) }
-                        subText="Actualize sus datos personales"
+                        subText="Actualice sus datos personales"
                         text="Perfil"
                     />
 
@@ -55,7 +55,7 @@ const Settings = () => {
                 <SectionContent title="PRIVACIDAD">
                     <SectionButton
                         onPress={ () => Linking.openSettings() }
-                        subText="Admita o rechace los permisos de la aplicación (tenga en cuenta que ciertas funcionalidades se veran afectadas)."
+                        subText="Admita o rechace los permisos de la aplicación (tenga en cuenta que ciertas funcionalidades se verán afectadas)."
                         text="Permisos"
                     />
                 </SectionContent>
