@@ -8,6 +8,7 @@ export { FormSelect } from './FormSelect';
 export { HeaderButtons } from './HeaderButtons';
 export { InfoText } from './InfoText';
 export { RadioBtn } from './RadioBtn';
+export { SearchInput } from './SearchInput';
 export { SectionButton } from './SectionButton';
 export { SectionContent } from './SectionContent';
 export { TabBar } from './TabBar';

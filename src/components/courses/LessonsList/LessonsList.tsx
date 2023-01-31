@@ -10,13 +10,11 @@ import { DeleteModal } from '../../../screens/ui';
 import { LessonCard } from '../LessonCard';
 import { ListEmptyComponent } from './ListEmptyComponent';
 import { ListFooterComponent } from './ListFooterComponent';
-import { Title } from '../../ui';
+import { SearchInput, Title } from '../../ui';
 
 import { useCourses } from '../../../hooks';
 
 import { Lesson } from '../../../interfaces/courses';
-
-import { styles as themeStyles } from '../../../theme';
 
 export const LessonsList = () => {
     const [ isRefreshing, setIsRefreshing ] = useState<boolean>(false);
@@ -92,11 +90,19 @@ export const LessonsList = () => {
                 keyExtractor={ (item) => item.id }
                 ListFooterComponent={ ListFooterComponent }
                 ListHeaderComponent={
-                    <Title
-                        containerStyle={ themeStyles.titleContainerSpacingVertical }
-                        text={ `Clases del curso con ${ selectedCourse.person_name }` }
-                        textStyle={{ fontSize: 24 }}
-                    />
+                    <>
+                        <Title
+                            containerStyle={{ paddingVertical: 30 }}
+                            text={ `Clases del curso con ${ selectedCourse.person_name }` }
+                            textStyle={{ fontSize: 24 }}
+                        />
+
+                        <SearchInput
+                            onClean={ () => {} }
+                            onSearch={ (text) => console.log(text) }
+                            searchTerm=""
+                        />
+                    </>
                 }
                 ListEmptyComponent={ <ListEmptyComponent msg="No haz agregado clases a este curso." /> }
                 ListHeaderComponentStyle={{ alignSelf: 'flex-start' }}
