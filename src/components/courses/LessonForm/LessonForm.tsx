@@ -25,8 +25,8 @@ export const LessonForm = () => {
 
     const lessonFormSchema = object().shape({
         description: string()
-            .min(2, 'El nombre de la persona debe tener al menoss 2 caracteres.')
-            .required('El nombre de la persona es requerido.'),
+            .min(10, 'El contenido de la clase debe tener al menos 10 carácteres.')
+            .required('El contenido de la clase es requerido.'),
         next_lesson: date()
             .required('La fecha de la próxima clase no puede estar vacía.'),
     });

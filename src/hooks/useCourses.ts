@@ -139,6 +139,17 @@ const useCourses = () => {
             return;
         }
 
+        const { error: lessonsError } = await supabase.from('lessons')
+            .delete()
+            .eq('course_id', state.selectedCourse.id);
+
+        const nextLesson = setSupabaseError(lessonsError, () => {
+            onFinish && onFinish();
+            dispatch(setIsCourseDeleting({ isDeleting: false }));
+        });
+
+        if (nextLesson) return;
+
         const { error } = await supabase.from('courses')
             .delete()
             .eq('id', state.selectedCourse.id)
@@ -201,7 +212,7 @@ const useCourses = () => {
 
         if (next) return;
 
-        dispatch(removeLesson({ id: state.selectedCourse.id }));
+        dispatch(removeLesson({ id: state.selectedLesson.id }));
         onFinish && onFinish();
         back && navigate('LessonsScreen' as never);
 
@@ -378,13 +389,18 @@ const useCourses = () => {
         (loadMore) ? addCourses(courses!) : setCourses(courses!);
     }
 
-    const loadLessons = async (refresh: boolean = false, loadMore: boolean = false) => {
+    const loadLessons = async (search: string = '', refresh: boolean = false, loadMore: boolean = false) => {
         setIsLessonsLoading(true);
 
-        const { data, error } = await supabase.from('lessons')
+        const lessonsPromise = supabase.from('lessons')
             .select()
-            .eq('course_id', state.selectedCourse.id)
-            .order('next_lesson', { ascending: false })
+            .eq('course_id', state.selectedCourse.id);
+
+        if (search.trim().length > 0) {
+            lessonsPromise.like('description', `%${ search }%`);
+        }
+
+        const { data, error } = await lessonsPromise.order('next_lesson', { ascending: false })
             .range(
                 (refresh) ? 0 : state.lessonsPagination.from,
                 (refresh) ? 9 : state.lessonsPagination.to

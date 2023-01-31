@@ -17,6 +17,7 @@ import { useCourses } from '../../../hooks';
 import { Lesson } from '../../../interfaces/courses';
 
 export const LessonsList = () => {
+    const [ searchTerm, setSearchTerm ] = useState<string>('');
     const [ isRefreshing, setIsRefreshing ] = useState<boolean>(false);
     const [ showDeleteModal, setShowDeleteModal ] = useState<boolean>(false);
     const [ showFSModal, setShowFSModal ] = useState<boolean>(false);
@@ -39,15 +40,16 @@ export const LessonsList = () => {
     } = useCourses();
 
     const handleRefreshing = () => {
+        setSearchTerm('');
         setLessonsPagination({ from: 0, to: 9 });
         removeLessons();
-        loadLessons(true);
+        loadLessons('', true);
         setIsRefreshing(false);
     }
 
     const handleEndReach = () => {
         if (!hasMoreLessons || isLessonsLoading) return;
-        loadLessons(false, true);
+        loadLessons(searchTerm, false, true);
     }
 
     const handleShowModal = (lesson: Lesson, setShowModal: (value: boolean) => void) => {
@@ -66,6 +68,15 @@ export const LessonsList = () => {
     const handleDeleteConfirm = () => {
         deleteLesson(false, () => setShowDeleteModal(false));
     }
+
+    useEffect(() => {
+        if (searchTerm.trim().length > 0) {
+            setLessonsPagination({ from: 0, to: 9 });
+            removeLessons();
+            loadLessons(searchTerm, true);
+            setIsRefreshing(false);
+        }
+    }, [ searchTerm ]);
 
     useEffect(() => {
         addListener('blur', () => {
@@ -98,13 +109,21 @@ export const LessonsList = () => {
                         />
 
                         <SearchInput
-                            onClean={ () => {} }
-                            onSearch={ (text) => console.log(text) }
-                            searchTerm=""
+                            onClean={ handleRefreshing }
+                            onSearch={ setSearchTerm }
+                            searchTerm={ searchTerm }
                         />
                     </>
                 }
-                ListEmptyComponent={ <ListEmptyComponent msg="No haz agregado clases a este curso." /> }
+                ListEmptyComponent={
+                    <ListEmptyComponent
+                        msg={
+                            (searchTerm.trim().length > 0 && lessons.length === 0)
+                                ? `No se encontraron resultados para: ${ searchTerm.trim() }`
+                                : 'No haz agregado clases a este curso.'
+                        }
+                    />
+                }
                 ListHeaderComponentStyle={{ alignSelf: 'flex-start' }}
                 onEndReached={ handleEndReach }
                 onEndReachedThreshold={ 0.5 }

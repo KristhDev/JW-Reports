@@ -105,6 +105,14 @@ const courseSlice = createSlice({
         },
 
         addLesson: (state, action: PayloadAction<LessonPayload>) => {
+            state.courses = state.courses.map(c =>
+                (!c.last_lesson && c.id === action.payload.lesson.course_id)
+                    ? { ...c, last_lesson: action.payload.lesson }
+                    : c
+            );
+            state.selectedCourse = (!state.selectedCourse.last_lesson && state.selectedCourse.id === action.payload.lesson.course_id)
+                ? { ...state.selectedCourse, last_lesson: action.payload.lesson }
+                : state.selectedCourse;
             state.lessons = [ action.payload.lesson, ...state.lessons ];
             state.lessons = state.lessons.sort((a, b) => new Date(b.next_lesson).getTime() - new Date(a.next_lesson).getTime());
             state.isLessonLoading = false;
@@ -146,6 +154,14 @@ const courseSlice = createSlice({
         },
 
         removeLesson: (state, action: PayloadAction<RemoveResourcePayload>) => {
+            state.courses = state.courses.map(c =>
+                (c.last_lesson && c.last_lesson.id === action.payload.id)
+                    ? { ...c, last_lesson: undefined }
+                    : c
+            );
+            state.selectedCourse = (state.selectedCourse.last_lesson && state.selectedCourse.last_lesson.id === action.payload.id)
+                ? { ...state.selectedCourse, last_lesson: undefined }
+                : state.selectedCourse;
             state.lessons = state.lessons.filter(l => l.id !== action.payload.id);
             state.isLessonDeleting = false;
         },
