@@ -1,6 +1,7 @@
 import React, { FC, PropsWithChildren, useEffect, useReducer, useRef } from 'react';
 import { Appearance } from 'react-native';
 import { Transitioning, TransitioningView, Transition } from 'react-native-reanimated';
+import SystemNavigationBar from 'react-native-system-navigation-bar';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import ThemeContext from './ThemeContext';
@@ -90,6 +91,15 @@ const ThemeProvider: FC<PropsWithChildren> = ({ children }) => {
             setDefaultTheme();
         }
     }, [ state.deviceTheme ]);
+
+    useEffect(() => {
+        if (state.isLoadedTheme) {
+            SystemNavigationBar.setNavigationColor(
+                (state.selectedTheme === 'dark') ? '#000000' : '#FFFFFF',
+                (state.selectedTheme === 'dark') ? 'light' : 'dark'
+            );
+        }
+    }, [ state.isLoadedTheme, state.selectedTheme ]);
 
     return (
         <>

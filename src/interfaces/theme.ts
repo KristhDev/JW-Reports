@@ -23,6 +23,7 @@ export interface Colors {
     linkText: string;
     modal: string;
     modalText: string;
+    navbar: string;
     text: string;
     titleSecondary: string;
     titleText: string;
