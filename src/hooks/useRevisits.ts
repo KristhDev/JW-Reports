@@ -34,7 +34,7 @@ import { Pagination } from '../interfaces/ui';
 
 const useRevisits = () => {
     const dispatch = useAppDispatch();
-    const { navigate } = useNavigation();
+    const { goBack, navigate } = useNavigation();
 
     const { state: { user } } = useAuth();
     const { uploadImage, deleteImage } = useImage();
@@ -172,7 +172,7 @@ const useRevisits = () => {
             msg: 'Haz actualizado tu revisita correctamente.'
         });
 
-        navigate('RevisitsTopTabsNavigation' as never);
+        goBack();
     }
 
     const deleteRevisit = async (back: boolean = false, onFinish?: () => void) => {

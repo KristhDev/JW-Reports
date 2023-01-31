@@ -6,6 +6,7 @@ export type CoursesStackParamsList = {
     AddOrEditCourseScreen: undefined;
     AddOrEditLessonScreen: undefined;
     LessonsScreen: undefined;
+    LessonDetailScreen: undefined;
 }
 
 export type CoursesTopTabsParamsList = {

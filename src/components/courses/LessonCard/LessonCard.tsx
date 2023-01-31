@@ -23,9 +23,9 @@ export const LessonCard: FC<LessonCardProps> = ({ lesson, onDelete, onFinish }) 
 
     const nextVisit = dayjs(lesson.next_lesson);
 
-    const handleCourseDetail = () => {
+    const handleLessonDetail = () => {
         setSelectedLesson(lesson);
-        navigate('CourseDetailScreen' as never);
+        navigate('LessonDetailScreen' as never);
     }
 
     const handleEdit = () => {
@@ -42,7 +42,7 @@ export const LessonCard: FC<LessonCardProps> = ({ lesson, onDelete, onFinish }) 
     return (
         <TouchableRipple
             borderless
-            onPress={ handleCourseDetail }
+            onPress={ handleLessonDetail }
             rippleColor={ BUTTON_TRANSPARENT_COLOR }
             style={ styles.touchable }
         >

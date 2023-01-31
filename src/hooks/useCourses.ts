@@ -47,7 +47,7 @@ import { LessonFormValues } from '../components/courses/LessonForm/interfaces';
 
 const useCourses = () => {
     const dispatch = useAppDispatch();
-    const { navigate } = useNavigation();
+    const { goBack, navigate } = useNavigation();
 
     const state = useSelector<RootState, CoursesState>(store => store.courses);
 
@@ -488,7 +488,7 @@ const useCourses = () => {
             msg: 'Haz actualizado el curso correctamente.'
         });
 
-        navigate('CoursesTopTabsNavigation' as never);
+        goBack();
     }
 
     const updateLesson = async (lessonValues: LessonFormValues) => {
@@ -514,7 +514,7 @@ const useCourses = () => {
             msg: 'Haz actualizado la clase correctamente.'
         });
 
-        navigate('LessonsScreen' as never);
+        goBack();
     }
 
     return {

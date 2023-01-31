@@ -4,7 +4,7 @@ import { useNavigation } from '@react-navigation/native';
 
 import CoursesTopTabsNavigation from './CoursesTopTabsNavigation';
 
-import { AddOrEditCourse, AddOrEditLesson, CourseDetail, Lessons } from '../../screens/courses';
+import { AddOrEditCourse, AddOrEditLesson, CourseDetail, LessonDetail, Lessons } from '../../screens/courses';
 
 import { BackButton, HeaderButtons } from '../../components/ui';
 
@@ -121,6 +121,29 @@ const CoursesStackNavigation = () => {
                 options={{
                     headerLeft: ({ onPress }) => <BackButton onPress={ onPress } />,
                     title: 'Clases'
+                }}
+            />
+
+            <Stack.Screen
+                component={ LessonDetail }
+                name="LessonDetailScreen"
+                options={{
+                    headerLeft: ({ onPress }) => <BackButton onPress={ onPress } />,
+                    headerRight: () => (
+                        <HeaderButtons
+                            deleteButton={ true }
+                            deleteModalText="¿Estás seguro de eliminar está clase?"
+                            isDeleteModalLoading={ isLessonDeleting }
+                            onCloseDeleteModal={ () => setShowDeleteLessonModal(false) }
+                            onConfirmDeleteModal={ handleDeleteLesson }
+                            onShowDeleteModal={ () => setShowDeleteLessonModal(true) }
+                            showDeleteModal={ showDeleteLessonModal }
+
+                            editButton={ !selectedCourse.finished || !selectedLesson.done }
+                            onPressEditButton={ () => navigate('AddOrEditLessonScreen' as never) }
+                        />
+                    ),
+                    title: `Clase con ${ selectedCourse.person_name }`
                 }}
             />
         </Stack.Navigator>

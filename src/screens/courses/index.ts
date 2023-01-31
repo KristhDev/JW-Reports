@@ -5,5 +5,6 @@ export { CourseDetail } from './CourseDetail';
 export { Courses } from './Courses';
 export { FinishOrStartCourseModal } from './FinishOrStartCourseModal';
 export { FinishOrStartLessonModal } from './FinishOrStartLessonModal';
+export { LessonDetail } from './LessonDetail';
 export { Lessons } from './Lessons';
 export { PassToCourseModal } from './PassToCourseModal';

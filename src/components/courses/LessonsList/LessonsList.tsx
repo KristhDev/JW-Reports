@@ -73,7 +73,7 @@ export const LessonsList = () => {
         addListener('blur', () => {
             const { index } = getState();
 
-            if (index !== 2) {
+            if (index !== 2 && index !== 3) {
                 setLessonsPagination({ from: 0, to: 9 });
                 removeLessons();
             }
