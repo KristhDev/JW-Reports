@@ -260,6 +260,14 @@ const courseSlice = createSlice({
         },
 
         updateLesson: (state, action: PayloadAction<LessonPayload>) => {
+            state.courses = state.courses.map(c =>
+                (c.last_lesson && c.id === action.payload.lesson.course_id)
+                    ? { ...c, last_lesson: action.payload.lesson }
+                    : c
+            );
+            state.selectedCourse = (state.selectedCourse.last_lesson && state.selectedCourse.id === action.payload.lesson.course_id)
+                ? { ...state.selectedCourse, last_lesson: action.payload.lesson }
+                : state.selectedCourse;
             state.lessons = state.lessons.map(lesson =>
                 (lesson.id === action.payload.lesson.id)
                     ? action.payload.lesson

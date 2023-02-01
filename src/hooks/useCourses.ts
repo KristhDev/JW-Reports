@@ -339,10 +339,7 @@ const useCourses = () => {
         setIsCoursesLoading(true);
 
         const coursesPromise = supabase.from('courses')
-            .select(`
-                *,
-                lessons (*)
-            `)
+            .select('*, lessons (*)')
             .eq('user_id', user.id)
 
         if (filter === 'active') {
@@ -404,11 +401,13 @@ const useCourses = () => {
             lessonsPromise.ilike('description', `%${ search }%`);
         }
 
-        const { data, error, status } = await lessonsPromise.order('next_lesson', { ascending: false })
+        lessonsPromise.order('next_lesson', { ascending: false })
             .range(
                 (refresh) ? 0 : state.lessonsPagination.from,
                 (refresh) ? 9 : state.lessonsPagination.to
             );
+
+        const { data, error, status } = await lessonsPromise;
 
         const next = setSupabaseError(error, status, () => setIsLessonsLoading(false));
         if (next) return;
@@ -465,15 +464,8 @@ const useCourses = () => {
             })
             .select();
 
-        const next = setSupabaseError(error, status, () => {
-            dispatch(setIsLessonLoading({ isLoading: false }));
-        });
-
+        const next = setSupabaseError(error, status, () => dispatch(setIsLessonLoading({ isLoading: false })));
         if (next) return;
-
-        if (state.lessons.length > 0) {
-
-        }
 
         dispatch(setIsLessonLoading({ isLoading: false }));
         dispatch(addLesson({ lesson: data![0] }));
