@@ -18,6 +18,8 @@ import { useStatus } from './';
 
 import { AuthState, Login, Profile, Register, User } from '../interfaces/auth';
 
+import { SITIE_URL } from '@env';
+
 const useAuth = () => {
     const dispatch = useAppDispatch();
 
@@ -92,7 +94,7 @@ const useAuth = () => {
         dispatch(setIsAuthLoading({ isLoading: true }));
 
         const { error } = await supabase.auth.resetPasswordForEmail(email, {
-            redirectTo: 'http://localhost:3000/reset-password'
+            redirectTo: `${ SITIE_URL }/reset-password`
         });
 
         const next = setSupabaseError(error, 400, () => dispatch(setIsAuthLoading({ isLoading: false })));
