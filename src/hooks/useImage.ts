@@ -82,10 +82,11 @@ const useImage = () => {
     const uploadImage = async (photo: Image) => {
         const file = photo.path.split('/')[photo.path.split('/').length - 1];
         const [ fileName, fileExt ] = file.split('.');
+        const id = Math.floor(Math.random()).toString(16);
 
         const result = await supabase.storage
             .from(SUPABASE_BUCKET)
-            .upload(`${ SUPABASE_REVISITS_FOLDER }/${ fileName }.${ fileExt }`, decode(photo.data!), {
+            .upload(`${ SUPABASE_REVISITS_FOLDER }/${ id }-${ fileName }.${ fileExt }`, decode(photo.data!), {
                 contentType: photo.mime
             });
 
