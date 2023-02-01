@@ -2,24 +2,22 @@ import React from 'react';
 import { View } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
-import { LoginForm } from '../../../components/auth';
-import { ThemeBtn, Title } from '../../../components/ui';
+import { ForgotPasswordForm } from '../../../components/auth';
+import { Title } from '../../../components/ui';
 
-const Login = () => {
+const ForgotPassword = () => {
     return (
         <KeyboardAwareScrollView
             contentContainerStyle={{ flexGrow: 1 }}
             overScrollMode="never"
         >
             <View style={{ alignItems: 'center', flex: 1 }}>
-                <Title text="Ingresar" />
+                <Title text="Olvide mi contraseña" />
 
-                <ThemeBtn />
-
-                <LoginForm />
+                <ForgotPasswordForm />
             </View>
         </KeyboardAwareScrollView>
     );
 }
 
-export default Login;
+export default ForgotPassword;

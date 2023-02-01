@@ -1,6 +1,7 @@
 export type AuthStackParamsList = {
     LoginScreen: undefined,
-    RegisterScreen: undefined
+    RegisterScreen: undefined,
+    ForgotPasswordScreen: undefined
 }
 
 export interface AuthState {

@@ -13,9 +13,7 @@ const Register = () => {
             overScrollMode="never"
         >
             <View style={{ flex: 1, alignItems: 'center' }}>
-                <Title
-                    text="Crear cuenta"
-                />
+                <Title text="Crear cuenta" />
 
                 <RegisterForm />
             </View>

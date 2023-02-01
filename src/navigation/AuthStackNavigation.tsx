@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { CardStyleInterpolators, createStackNavigator } from '@react-navigation/stack';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
-import { Login, Register } from '../screens/auth';
+import { ForgotPassword, Login, Register } from '../screens/auth';
 
 import { useAuth, useTheme } from '../hooks';
 
@@ -39,6 +39,11 @@ const AuthStackNavigation = () => {
             <Stack.Screen
                 name="RegisterScreen"
                 component={ Register }
+            />
+
+            <Stack.Screen
+                name="ForgotPasswordScreen"
+                component={ ForgotPassword }
             />
         </Stack.Navigator>
     );

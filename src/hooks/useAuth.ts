@@ -47,6 +47,28 @@ const useAuth = () => {
         }));
     }
 
+    const resetPassword = async ({ email }: { email: string }) => {
+        dispatch(setIsAuthLoading({ isLoading: true }));
+
+        const { error } = await supabase.auth.resetPasswordForEmail(email, {
+            redirectTo: 'http://localhost:3000/reset-password'
+        });
+
+        if (error) {
+            console.log(error);
+            dispatch(setIsAuthLoading({ isLoading: false }));
+            setStatus({ code: 400, msg: error.message });
+
+            return;
+        }
+
+        let msg = `Hemos enviado un correo de restablecimiento de contraseña a ${ email }. `;
+        msg += 'Por favor revísalo y sigue los pasos para recuperar tu cuenta.';
+
+        dispatch(setIsAuthLoading({ isLoading: false }));
+        setStatus({ code: 200, msg });
+    }
+
     const register = async ({ name, surname, email, password }: Register) => {
         dispatch(setIsAuthLoading({ isLoading: true }));
 
@@ -202,6 +224,7 @@ const useAuth = () => {
         logout,
         register,
         renew,
+        resetPassword,
         updateEmail,
         updatePassword,
         updateProfile

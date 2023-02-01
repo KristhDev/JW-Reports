@@ -1,47 +1,56 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { View, Text, TouchableOpacity, useWindowDimensions, ActivityIndicator } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { Formik } from 'formik';
 import { object, string } from 'yup';
 import Icon from 'react-native-vector-icons/Ionicons';
 
-import { Button, EyeBtn, FormField } from '../../ui';
+import { Button, FormField } from '../../ui';
 
 import { useAuth, useStatus, useTheme } from '../../../hooks';
 
 import { styles as themeStyles } from '../../../theme';
 
-export const LoginForm = () => {
-    const [ showPassword, setShowPassword ] = useState<boolean>(false);
-
+export const ForgotPasswordForm = () => {
     const { navigate } = useNavigation();
     const { width } = useWindowDimensions();
 
-    const { state: { isAuthLoading }, login } = useAuth();
+    const { state: { isAuthLoading }, resetPassword } = useAuth();
     const { setErrorForm } = useStatus();
     const { state: { colors } } = useTheme();
 
-    const loginFormSchema = object().shape({
+    const forgotPasswordFormSchema = object().shape({
         email: string()
             .email('Correo electrónico inválido.')
-            .required('El correo electrónico es requerido.'),
-        password: string()
-            .min(6, 'La contraseña debe tener al menos 6 caracteres.')
-            .required('La contraseña es requerida.')
+            .required('El correo electrónico es requerido.')
     });
+
+    const handleResetPassword = (values: { email: string }, resetForm: ()  => void) => {
+        resetPassword(values);
+        resetForm();
+    }
 
     return (
         <Formik
-            initialValues={{
-                email: '',
-                password: ''
-            }}
-            onSubmit={ login }
-            validationSchema={ loginFormSchema }
+            initialValues={{ email: '' }}
+            onSubmit={ (values, { resetForm }) => handleResetPassword(values, resetForm) }
+            validationSchema={ forgotPasswordFormSchema }
             validateOnMount
         >
             { ({ handleSubmit, isValid, errors }) => (
                 <View style={ themeStyles.formContainer }>
+                    <View style={{ ...themeStyles.btnLink, marginBottom: 30, marginTop: 60, width: width * 0.9 }}>
+                        <Text
+                            style={{
+                                ...themeStyles.formText,
+                                color: colors.titleText,
+                                fontSize: 18
+                            }}
+                        >
+                            Ingresa tu correo electrónico para restablecer tu contraseña y recuperar tu cuenta.
+                        </Text>
+                    </View>
+
                     <FormField
                         autoCapitalize="none"
                         icon={
@@ -57,20 +66,6 @@ export const LoginForm = () => {
                         placeholder="Ingrese su correo"
                     />
 
-                    <FormField
-                        autoCapitalize="none"
-                        icon={
-                            <EyeBtn
-                                onToggle={ setShowPassword }
-                                value={ showPassword }
-                            />
-                        }
-                        label="Contraseña:"
-                        name="password"
-                        placeholder="Ingrese su contraseña"
-                        secureTextEntry={ !showPassword }
-                    />
-
                     <Button
                         disabled={ isAuthLoading }
                         icon={
@@ -83,23 +78,14 @@ export const LoginForm = () => {
                             )
                         }
                         onPress={ (isValid) ? handleSubmit : () => setErrorForm(errors)  }
-                        text="Ingresar"
+                        text="Restablecer contraseña"
                         touchableStyle={{ paddingHorizontal: 20, marginTop: 30 }}
                     />
 
-                    <View style={{ ...themeStyles.btnLink, width: width * 0.9 }}>
-                        <Text
-                            style={{
-                                ...themeStyles.formText,
-                                color: colors.titleText
-                            }}
-                        >
-                            ¿No tienes cuenta?
-                        </Text>
-
+                    <View style={{ ...themeStyles.btnLink, marginBottom: 100, width: width * 0.9 }}>
                         <TouchableOpacity
                             activeOpacity={ 0.75 }
-                            onPress={ () => navigate('RegisterScreen' as never) }
+                            onPress={ () => navigate('LoginScreen' as never) }
                         >
                             <Text
                                 style={{
@@ -107,26 +93,12 @@ export const LoginForm = () => {
                                     color: colors.linkText
                                 }}
                             >
-                                Crea una aquí
+                                Ingresar con mi cuenta
                             </Text>
                         </TouchableOpacity>
                     </View>
 
-                    <View style={{ ...themeStyles.btnLink, marginTop: 10, width: width * 0.9 }}>
-                        <TouchableOpacity
-                            activeOpacity={ 0.75 }
-                            onPress={ () => navigate('ForgotPasswordScreen' as never) }
-                        >
-                            <Text
-                                style={{
-                                    ...themeStyles.formLink,
-                                    color: colors.linkText
-                                }}
-                            >
-                                Olvide mi contraseña
-                            </Text>
-                        </TouchableOpacity>
-                    </View>
+                    <View style={{ flex: 1 }} />
                 </View>
             ) }
         </Formik>
