@@ -56,7 +56,6 @@ const RevisitModal: FC<ModalProps> = ({ isOpen, onClose }) => {
                     person_name: selectedRevisit.person_name
                 },
                 back: false,
-                imageUri: selectedRevisit.photo,
                 onFinish: onClose
             });
         }

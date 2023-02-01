@@ -62,7 +62,6 @@ export interface RevisitFormValues {
 export interface SaveRevisitOptions {
     back?: boolean;
     image?: Image;
-    imageUri?: string;
     onFinish?: () => void;
     revisitValues: RevisitFormValues;
 }

@@ -43,12 +43,12 @@ export const LessonsList = () => {
         setSearchTerm('');
         setLessonsPagination({ from: 0, to: 9 });
         removeLessons();
-        loadLessons('', true);
+        loadLessons({ refresh: true });
     }
 
     const handleEndReach = () => {
         if (!hasMoreLessons || isLessonsLoading) return;
-        loadLessons(searchTerm, false, true);
+        loadLessons({ search: searchTerm, loadMore: true });
     }
 
     const handleShowModal = (lesson: Lesson, setShowModal: (value: boolean) => void) => {
@@ -76,7 +76,7 @@ export const LessonsList = () => {
         if (searchTerm.trim().length > 0) {
             setLessonsPagination({ from: 0, to: 9 });
             removeLessons();
-            loadLessons(searchTerm, true);
+            loadLessons({ search: searchTerm, refresh: true });
             setIsRefreshing(false);
         }
     }, [ searchTerm ]);

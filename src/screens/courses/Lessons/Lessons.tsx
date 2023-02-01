@@ -27,7 +27,7 @@ const Lessons = () => {
     }
 
     useEffect(() => {
-        loadLessons();
+        loadLessons({});
     }, []);
 
     return (

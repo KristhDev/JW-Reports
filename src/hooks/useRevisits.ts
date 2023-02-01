@@ -91,11 +91,10 @@ const useRevisits = () => {
         (loadMore) ? addRevisits(data!) : setRevisits(data!);
     }
 
-    const saveRevisit = async ({ revisitValues, back  = true, image, imageUri, onFinish }: SaveRevisitOptions) => {
-        // revisitValues: RevisitFormValues, imageUri?: string, image?: Image, back: boolean = true, onFinish?: () => void
+    const saveRevisit = async ({ revisitValues, back  = true, image, onFinish }: SaveRevisitOptions) => {
         dispatch(setIsRevisitLoading({ isLoading: true }));
 
-        let photo = imageUri || null;
+        let photo = null;
 
         if (image) {
             const { data, error } = await uploadImage(image);
