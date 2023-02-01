@@ -10,6 +10,7 @@ import {
     setIsAuthLoading,
     updateUser
 } from '../features/auth';
+import { clearCourses } from '../features/courses';
 import { clearPreaching } from '../features/preaching';
 import { clearRevisits } from '../features/revisits';
 
@@ -20,20 +21,15 @@ import { AuthState, Login, Profile, Register, User } from '../interfaces/auth';
 const useAuth = () => {
     const dispatch = useAppDispatch();
 
-    const { setStatus } = useStatus();
+    const { setStatus, setSupabaseError } = useStatus();
 
     const state = useSelector<RootState, AuthState>(store => store.auth);
 
     const clearAuth = () => dispatch(clearAuthAction());
 
     const setUser = ({ data: { user, session }, error }: AuthResponse) => {
-        if (error) {
-            console.log(error);
-            dispatch(clearAuthAction());
-            setStatus({ code: 400, msg: error.message });
-
-            return;
-        }
+        const next = setSupabaseError(error, 400, () => dispatch(clearAuthAction()));
+        if (next) return;
 
         dispatch(setUserAction({
             token: session?.refresh_token!,
@@ -47,26 +43,24 @@ const useAuth = () => {
         }));
     }
 
-    const resetPassword = async ({ email }: { email: string }) => {
+    const login = async ({ email, password }: Login) => {
         dispatch(setIsAuthLoading({ isLoading: true }));
 
-        const { error } = await supabase.auth.resetPasswordForEmail(email, {
-            redirectTo: 'http://localhost:3000/reset-password'
-        });
+        const result = await supabase.auth.signInWithPassword({ email, password });
+        setUser(result);
+    }
 
-        if (error) {
-            console.log(error);
-            dispatch(setIsAuthLoading({ isLoading: false }));
-            setStatus({ code: 400, msg: error.message });
+    const logout = async () => {
+        if (!state.isAuthenticated) return;
+        const { error } = await supabase.auth.signOut();
 
-            return;
-        }
+        const next = setSupabaseError(error, 500);
+        if (next) return;
 
-        let msg = `Hemos enviado un correo de restablecimiento de contraseña a ${ email }. `;
-        msg += 'Por favor revísalo y sigue los pasos para recuperar tu cuenta.';
-
-        dispatch(setIsAuthLoading({ isLoading: false }));
-        setStatus({ code: 200, msg });
+        dispatch(clearCourses());
+        dispatch(clearPreaching());
+        dispatch(clearRevisits());
+        dispatch(clearAuthAction());
     }
 
     const register = async ({ name, surname, email, password }: Register) => {
@@ -88,54 +82,27 @@ const useAuth = () => {
         setUser(result);
     }
 
-    const login = async ({ email, password }: Login) => {
-        dispatch(setIsAuthLoading({ isLoading: true }));
-
-        const result = await supabase.auth.signInWithPassword({ email, password });
-        setUser(result);
-    }
-
     const renew = async () => {
         if (state.token?.trim().length <= 0) return;
         const result = await supabase.auth.refreshSession({ refresh_token: state.token });
         setUser(result);
     }
 
-    const logout = async () => {
-        if (!state.isAuthenticated) return;
-        const { error } = await supabase.auth.signOut();
-
-        if (error) {
-            console.log(error);
-            setStatus({ code: 400, msg: error.message });
-
-            return;
-        }
-
-        dispatch(clearPreaching());
-        dispatch(clearRevisits());
-        dispatch(clearAuthAction());
-    }
-
-    const updateProfile = async (values: Profile) => {
+    const resetPassword = async ({ email }: { email: string }) => {
         dispatch(setIsAuthLoading({ isLoading: true }));
 
-        const { error } = await supabase.auth.updateUser({ data: { ...values } });
-
-        if (error) {
-            console.log(error);
-            dispatch(setIsAuthLoading({ isLoading: false }));
-            setStatus({ code: 400, msg: error.message });
-
-            return;
-        }
-
-        dispatch(updateUser({ user: { ...state.user, ...values } }));
-
-        setStatus({
-            code: 200,
-            msg: 'Haz actualizado tu perfil correctamente.'
+        const { error } = await supabase.auth.resetPasswordForEmail(email, {
+            redirectTo: 'http://localhost:3000/reset-password'
         });
+
+        const next = setSupabaseError(error, 400, () => dispatch(setIsAuthLoading({ isLoading: false })));
+        if (next) return;
+
+        let msg = `Hemos enviado un correo de restablecimiento de contraseña a ${ email }. `;
+        msg += 'Por favor revísalo y sigue los pasos para recuperar tu cuenta.';
+
+        dispatch(setIsAuthLoading({ isLoading: false }));
+        setStatus({ code: 200, msg });
     }
 
     const updateEmail = async ({ email }: { email: string }, onFinish?: () => void) => {
@@ -155,15 +122,12 @@ const useAuth = () => {
 
         const { error } = await supabase.auth.updateUser({ email });
 
-        if (error) {
-            console.log(error);
-
+        const next = setSupabaseError(error, 400, () => {
             dispatch(setIsAuthLoading({ isLoading: false }));
             onFinish && onFinish();
-            setStatus({ code: 400, msg: error.message });
+        });
 
-            return;
-        }
+        if (next) return;
 
         dispatch(setIsAuthLoading({ isLoading: false }));
         onFinish && onFinish();
@@ -192,15 +156,12 @@ const useAuth = () => {
 
         const { error } = await supabase.auth.updateUser({ password });
 
-        if (error) {
-            console.log(error);
-
+        const next = setSupabaseError(error, 400, () => {
             dispatch(setIsAuthLoading({ isLoading: false }));
             onFinish && onFinish();
-            setStatus({ code: 400, msg: error.message });
+        });
 
-            return;
-        }
+        if (next) return;
 
         dispatch(setIsAuthLoading({ isLoading: false }));
         onFinish && onFinish();
@@ -208,6 +169,22 @@ const useAuth = () => {
         setStatus({
             code: 200,
             msg: 'Haz actualizado tu contraseña correctamente.'
+        });
+    }
+
+    const updateProfile = async (values: Profile) => {
+        dispatch(setIsAuthLoading({ isLoading: true }));
+
+        const { error } = await supabase.auth.updateUser({ data: { ...values } });
+
+        const next = setSupabaseError(error, 400, () => dispatch(setIsAuthLoading({ isLoading: false })));
+        if (next) return;
+
+        dispatch(updateUser({ user: { ...state.user, ...values } }));
+
+        setStatus({
+            code: 200,
+            msg: 'Haz actualizado tu perfil correctamente.'
         });
     }
 
