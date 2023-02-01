@@ -50,12 +50,12 @@ export const RevisitsList: FC<RevisitsListProps> = ({ filter, title, emptyMessag
         setSearchTerm('');
         setRevisitsPagination({ from: 0, to: 9 });
         removeRevisits();
-        loadRevisits(filter, '', true);
+        loadRevisits({ filter, refresh: true });
     }
 
     const handleEndReach = () => {
         if (!hasMoreRevisits || isRevisitsLoading) return;
-        loadRevisits(filter, searchTerm, true);
+        loadRevisits({ filter, search: searchTerm, loadMore: true });
     }
 
     const handleShowModal = (revisit: Revisit, setShowModal: (value: boolean) => void) => {
@@ -83,7 +83,7 @@ export const RevisitsList: FC<RevisitsListProps> = ({ filter, title, emptyMessag
         if (searchTerm.trim().length > 0) {
             setRevisitsPagination({ from: 0, to: 9 });
             removeRevisits();
-            loadRevisits(filter, searchTerm, true);
+            loadRevisits({ filter, search: searchTerm, refresh: true });
             setIsRefreshing(false);
         }
     }, [ searchTerm ]);
@@ -100,7 +100,7 @@ export const RevisitsList: FC<RevisitsListProps> = ({ filter, title, emptyMessag
     useEffect(() => {
         if (isFocused() && refreshRevisits) {
             removeRevisits();
-            loadRevisits(filter, searchTerm, true);
+            loadRevisits({ filter, search: searchTerm, refresh: true });
         }
     }, [ refreshRevisits, index ]);
 

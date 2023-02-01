@@ -49,7 +49,7 @@ const StatusModal = () => {
                             <Button
                                 containerStyle={{ paddingHorizontal: 12 }}
                                 onPress={ clearStatus }
-                                text="Cancelar"
+                                text="CANCELAR"
                                 textStyle={{ color: colors.button, fontSize: 16 }}
                                 touchableStyle={{ backgroundColor: 'transparent', marginRight: 5 }}
                                 underlayColor={ BUTTON_TRANSLUCENT_COLOR }

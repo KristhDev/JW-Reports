@@ -8,7 +8,7 @@ import { Button, DatetimeField, FormField } from '../../ui';
 
 import { useImage, useRevisits, useStatus, useTheme } from '../../../hooks';
 
-import { RevisitFormValues } from './interfaces';
+import { RevisitFormValues } from '../../../interfaces/revisits';
 
 import { styles as themeStyles } from '../../../theme';
 
@@ -24,10 +24,10 @@ export const RevisitForm = () => {
     const { setErrorForm } = useStatus();
     const { state: { colors } } = useTheme();
 
-    const handleSaveOrUpdate = (formValues: RevisitFormValues) => {
+    const handleSaveOrUpdate = (revisitValues: RevisitFormValues) => {
         (selectedRevisit.id === '')
-            ? saveRevisit(formValues, undefined, isChangeImage() ? image : undefined)
-            : updateRevisit(formValues, isChangeImage() ? image : undefined);
+            ? saveRevisit({ revisitValues, image: isChangeImage() ? image : undefined })
+            : updateRevisit(revisitValues, isChangeImage() ? image : undefined);
     }
 
     const revisitFormSchema = object().shape({

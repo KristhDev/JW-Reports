@@ -48,12 +48,12 @@ export const CoursesList: FC<CoursesListProps> = ({ filter, title, emptyMessage 
         setSearchTerm('');
         setCoursesPagination({ from: 0, to: 9 });
         removeCourses();
-        loadCourses(filter, '', true);
+        loadCourses({ filter, refresh: true });
     }
 
     const handleEndReach = () => {
         if (!hasMoreCourses || isCoursesLoading) return;
-        loadCourses(filter, searchTerm, false, true);
+        loadCourses({ filter, search: searchTerm, loadMore: true });
     }
 
     const handleShowModal = (course: Course, setShowModal: (value: boolean) => void) => {
@@ -78,7 +78,7 @@ export const CoursesList: FC<CoursesListProps> = ({ filter, title, emptyMessage 
         if (searchTerm.trim().length > 0) {
             setCoursesPagination({ from: 0, to: 9 });
             removeCourses();
-            loadCourses(filter, searchTerm, true);
+            loadCourses({ filter, search: searchTerm, refresh: true });
             setIsRefreshing(false);
         }
     }, [ searchTerm ]);
@@ -95,7 +95,7 @@ export const CoursesList: FC<CoursesListProps> = ({ filter, title, emptyMessage 
     useEffect(() => {
         if (isFocused() && refreshCourses) {
             removeCourses();
-            loadCourses(filter, searchTerm, true);
+            loadCourses({ filter, search: searchTerm, refresh: true });
         }
     }, [ refreshCourses, index ]);
 

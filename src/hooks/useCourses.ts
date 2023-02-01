@@ -40,10 +40,8 @@ import {
 
 import { useAuth, useStatus } from './';
 
-import { Course, CourseFilter, CoursesState, Lesson } from '../interfaces/courses';
-import { Pagination } from '../interfaces/ui';
-import { CourseFormValues } from '../components/courses/CourseForm/interfaces';
-import { LessonFormValues } from '../components/courses/LessonForm/interfaces';
+import { Course, CourseFormValues, CoursesState, Lesson, LessonFormValues, loadCoursesOptions } from '../interfaces/courses';
+import { LoadResourcesOptions, Pagination } from '../interfaces/ui';
 
 const useCourses = () => {
     const dispatch = useAppDispatch();
@@ -97,7 +95,7 @@ const useCourses = () => {
             return;
         }
 
-        const { data, error } = await supabase.from('courses')
+        const { data, error, status } = await supabase.from('courses')
             .update({
                 suspended: !state.selectedCourse.suspended,
                 updated_at: dayjs().format('YYYY-MM-DD HH:mm:ss.SSSSSS')
@@ -106,7 +104,7 @@ const useCourses = () => {
             .eq('user_id', user.id)
             .select();
 
-        const next = setSupabaseError(error, () => {
+        const next = setSupabaseError(error, status, () => {
             dispatch(setIsCourseLoading({ isLoading: false }));
             onFinish && onFinish();
         });
@@ -139,23 +137,23 @@ const useCourses = () => {
             return;
         }
 
-        const { error: lessonsError } = await supabase.from('lessons')
+        const { error: lessonsError, status: lessonsStatus } = await supabase.from('lessons')
             .delete()
             .eq('course_id', state.selectedCourse.id);
 
-        const nextLesson = setSupabaseError(lessonsError, () => {
+        const nextLesson = setSupabaseError(lessonsError, lessonsStatus, () => {
             onFinish && onFinish();
             dispatch(setIsCourseDeleting({ isDeleting: false }));
         });
 
         if (nextLesson) return;
 
-        const { error } = await supabase.from('courses')
+        const { error, status } = await supabase.from('courses')
             .delete()
             .eq('id', state.selectedCourse.id)
             .eq('user_id', user.id);
 
-        const next = setSupabaseError(error, () => {
+        const next = setSupabaseError(error, status, () => {
             onFinish && onFinish();
             dispatch(setIsCourseDeleting({ isDeleting: false }));
         });
@@ -201,11 +199,11 @@ const useCourses = () => {
             return;
         }
 
-        const { error } = await supabase.from('lessons')
+        const { error, status } = await supabase.from('lessons')
             .delete()
             .eq('id', state.selectedLesson.id);
 
-        const next = setSupabaseError(error, () => {
+        const next = setSupabaseError(error, status, () => {
             onFinish && onFinish();
             dispatch(setIsLessonDeleting({ isDeleting: false }));
         });
@@ -254,7 +252,7 @@ const useCourses = () => {
             return;
         }
 
-        const { data, error } = await supabase.from('courses')
+        const { data, error, status } = await supabase.from('courses')
             .update({
                 finished: !state.selectedCourse.finished,
                 updated_at: dayjs().format('YYYY-MM-DD HH:mm:ss.SSSSSS')
@@ -263,7 +261,7 @@ const useCourses = () => {
             .eq('user_id', user.id)
             .select();
 
-        const next = setSupabaseError(error, () => {
+        const next = setSupabaseError(error, status, () => {
             dispatch(setIsCourseLoading({ isLoading: false }));
             onFinish && onFinish();
         });
@@ -308,7 +306,7 @@ const useCourses = () => {
             return;
         }
 
-        const { data, error } = await supabase.from('lessons')
+        const { data, error, status } = await supabase.from('lessons')
             .update({
                 done: !state.selectedLesson.done,
                 next_lesson: dayjs(next_lesson).format('YYYY-MM-DD HH:mm:ss.SSSSSS'),
@@ -318,7 +316,7 @@ const useCourses = () => {
             .eq('course_id', state.selectedCourse.id)
             .select();
 
-        const next = setSupabaseError(error, () => {
+        const next = setSupabaseError(error, status, () => {
             dispatch(setIsLessonLoading({ isLoading: false }));
             onFinish && onFinish();
         });
@@ -336,7 +334,7 @@ const useCourses = () => {
         setStatus({ code: 200, msg });
     }
 
-    const loadCourses = async (filter: CourseFilter, search: string = '', refresh: boolean = false, loadMore: boolean = false) => {
+    const loadCourses = async ({ filter, loadMore = false, refresh = false, search = '' }: loadCoursesOptions) => {
         dispatch(setCourseFilter({ filter }));
         setIsCoursesLoading(true);
 
@@ -374,9 +372,9 @@ const useCourses = () => {
                 (refresh) ? 9 : state.coursesPagination.to
             )
 
-        const { data, error } = await coursesPromise;
+        const { data, error, status } = await coursesPromise;
 
-        const next = setSupabaseError(error, () => setIsCoursesLoading(false));
+        const next = setSupabaseError(error, status, () => setIsCoursesLoading(false));
         if (next) return;
 
         if (data!.length >= 10) {
@@ -395,7 +393,7 @@ const useCourses = () => {
         (loadMore) ? addCourses(courses!) : setCourses(courses!);
     }
 
-    const loadLessons = async (search: string = '', refresh: boolean = false, loadMore: boolean = false) => {
+    const loadLessons = async ({ loadMore = false, refresh = false, search = '' }: LoadResourcesOptions) => {
         setIsLessonsLoading(true);
 
         const lessonsPromise = supabase.from('lessons')
@@ -406,13 +404,13 @@ const useCourses = () => {
             lessonsPromise.ilike('description', `%${ search }%`);
         }
 
-        const { data, error } = await lessonsPromise.order('next_lesson', { ascending: false })
+        const { data, error, status } = await lessonsPromise.order('next_lesson', { ascending: false })
             .range(
                 (refresh) ? 0 : state.lessonsPagination.from,
                 (refresh) ? 9 : state.lessonsPagination.to
             );
 
-        const next = setSupabaseError(error, () => setIsLessonsLoading(false));
+        const next = setSupabaseError(error, status, () => setIsLessonsLoading(false));
         if (next) return;
 
         if (data!.length >= 10) {
@@ -429,11 +427,11 @@ const useCourses = () => {
     const saveCourse = async (courseValues: CourseFormValues, onFinish?: () => void) => {
         dispatch(setIsCourseLoading({ isLoading: true }));
 
-        const { data, error } = await supabase.from('courses')
+        const { data, error, status } = await supabase.from('courses')
             .insert({ ...courseValues, user_id: user.id })
             .select();
 
-        const next = setSupabaseError(error, () => {
+        const next = setSupabaseError(error, status, () => {
             dispatch(setIsCourseLoading({ isLoading: false }));
             onFinish && onFinish();
         });
@@ -459,7 +457,7 @@ const useCourses = () => {
     const saveLesson = async (lessonValues: LessonFormValues) => {
         dispatch(setIsLessonLoading({ isLoading: true }));
 
-        const { data, error } = await supabase.from('lessons')
+        const { data, error, status } = await supabase.from('lessons')
             .insert({
                 course_id: state.selectedCourse.id,
                 description: lessonValues.description,
@@ -467,7 +465,7 @@ const useCourses = () => {
             })
             .select();
 
-        const next = setSupabaseError(error, () => {
+        const next = setSupabaseError(error, status, () => {
             dispatch(setIsLessonLoading({ isLoading: false }));
         });
 
@@ -491,7 +489,7 @@ const useCourses = () => {
     const updateCourse = async (courseValues: CourseFormValues) => {
         dispatch(setIsCourseLoading({ isLoading: true }));
 
-        const { data, error } = await supabase.from('courses')
+        const { data, error, status } = await supabase.from('courses')
             .update({
                 ...courseValues,
                 updated_at: dayjs().format('YYYY-MM-DD HH:mm:ss.SSSSSS')
@@ -500,7 +498,7 @@ const useCourses = () => {
             .eq('user_id', user.id)
             .select();
 
-        const next = setSupabaseError(error, () => dispatch(setIsCourseLoading({ isLoading: false })));
+        const next = setSupabaseError(error, status, () => dispatch(setIsCourseLoading({ isLoading: false })));
         if (next) return;
 
         dispatch(updateCourseAction({ course: data![0] }));
@@ -516,7 +514,7 @@ const useCourses = () => {
     const updateLesson = async (lessonValues: LessonFormValues) => {
         dispatch(setIsLessonLoading({ isLoading: true }));
 
-        const { data, error } = await supabase.from('lessons')
+        const { data, error, status } = await supabase.from('lessons')
             .update({
                 ...lessonValues,
                 next_lesson: dayjs(lessonValues.next_lesson).format('YYYY-MM-DD HH:mm:ss.SSSSSS'),
@@ -526,7 +524,7 @@ const useCourses = () => {
             .eq('course_id', state.selectedCourse.id)
             .select();
 
-        const next = setSupabaseError(error, () => dispatch(setIsLessonLoading({ isLoading: false })));
+        const next = setSupabaseError(error, status, () => dispatch(setIsLessonLoading({ isLoading: false })));
         if (next) return;
 
         dispatch(updateLessonAction({ lesson: data![0] }));
@@ -564,7 +562,7 @@ const useCourses = () => {
         saveCourse,
         saveLesson,
         updateCourse,
-        updateLesson,
+        updateLesson
     }
 }
 

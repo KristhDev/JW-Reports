@@ -130,9 +130,7 @@ const useAuth = () => {
             return;
         }
 
-        dispatch(updateUser({
-            user: { ...state.user, ...values }
-        }));
+        dispatch(updateUser({ user: { ...state.user, ...values } }));
 
         setStatus({
             code: 200,

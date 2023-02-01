@@ -44,7 +44,7 @@ const usePreaching = () => {
         const init_date = dayjs(date).startOf('month').format('YYYY-MM-DD');
         const final_date = dayjs(date).endOf('month').format('YYYY-MM-DD');
 
-        const { data, error } = await supabase.from('preachings')
+        const { data, error, status } = await supabase.from('preachings')
             .select()
             .eq('user_id', user.id)
             .gte('day', init_date)
@@ -52,7 +52,7 @@ const usePreaching = () => {
             .order('day', { ascending: true })
             .order('init_hour', { ascending: true });
 
-        const next = setSupabaseError(error, () => setIsPreachingsLoading(false));
+        const next = setSupabaseError(error, status, () => setIsPreachingsLoading(false));
         if (next) return;
 
         dispatch(setPreachings({ preachings: data! }));
@@ -61,7 +61,7 @@ const usePreaching = () => {
     const savePreaching = async (preachingValues: PreachingFormValues) => {
         dispatch(setIsPreachingLoading({ isLoading: true }));
 
-        const { data, error } = await supabase.from('preachings')
+        const { data, error, status } = await supabase.from('preachings')
             .insert({
                 ...preachingValues,
                 day: dayjs(preachingValues.day).format('YYYY-MM-DD'),
@@ -71,7 +71,7 @@ const usePreaching = () => {
             })
             .select();
 
-        const next = setSupabaseError(error, () => dispatch(setIsPreachingLoading({ isLoading: false })));
+        const next = setSupabaseError(error, status, () => dispatch(setIsPreachingLoading({ isLoading: false })));
         if (next) return;
 
         if (dayjs(data![0].day).format('MMMM') === dayjs(state.selectedDate).format('MMMM')) {
@@ -89,7 +89,7 @@ const usePreaching = () => {
     const updatePreaching = async (preachingValues: PreachingFormValues) => {
         dispatch(setIsPreachingLoading({ isLoading: true }));
 
-        const { data, error } = await supabase.from('preachings')
+        const { data, error, status } = await supabase.from('preachings')
             .update({
                 ...preachingValues,
                 day: dayjs(preachingValues.day).format('YYYY-MM-DD'),
@@ -101,7 +101,7 @@ const usePreaching = () => {
             .eq('user_id', user.id)
             .select();
 
-        const next = setSupabaseError(error, () => dispatch(setIsPreachingLoading({ isLoading: false })));
+        const next = setSupabaseError(error, status, () => dispatch(setIsPreachingLoading({ isLoading: false })));
         if (next) return;
 
         dispatch(updatePreachingAction({ preaching: data![0] }));
@@ -129,12 +129,12 @@ const usePreaching = () => {
             return;
         }
 
-        const { error } = await supabase.from('preachings')
+        const { error, status } = await supabase.from('preachings')
             .delete()
             .eq('id', state.seletedPreaching.id)
             .eq('user_id', user.id);
 
-        const next = setSupabaseError(error, () => {
+        const next = setSupabaseError(error, status, () => {
             onFinish && onFinish();
             dispatch(setIsPreachingDeleting({ isDeleting: false }));
         });

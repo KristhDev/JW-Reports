@@ -50,10 +50,15 @@ const RevisitModal: FC<ModalProps> = ({ isOpen, onClose }) => {
         else if (values?.next_visit) {
             setRevisitPerson(false);
             saveRevisit({
-                ...values,
-                address: selectedRevisit.address,
-                person_name: selectedRevisit.person_name
-            }, selectedRevisit.photo, undefined, false, onClose);
+                revisitValues: {
+                    ...values,
+                    address: selectedRevisit.address,
+                    person_name: selectedRevisit.person_name
+                },
+                back: false,
+                imageUri: selectedRevisit.photo,
+                onFinish: onClose
+            });
         }
     }
 

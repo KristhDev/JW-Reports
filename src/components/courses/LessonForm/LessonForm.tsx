@@ -8,7 +8,7 @@ import { Button, DatetimeField, FormField } from '../../ui';
 
 import { useCourses, useStatus, useTheme } from '../../../hooks';
 
-import { LessonFormValues } from './interfaces';
+import { LessonFormValues } from '../../../interfaces/courses';
 
 import { styles as themeStyles } from '../../../theme';
 

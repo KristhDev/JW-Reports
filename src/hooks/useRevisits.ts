@@ -28,8 +28,7 @@ import {
 
 import { useAuth, useImage, useStatus } from './';
 
-import { Revisit, RevisitFilter, RevisitsState } from '../interfaces/revisits';
-import { RevisitFormValues } from '../components/revisits/RevisitForm/interfaces';
+import { Revisit, RevisitFormValues, RevisitsState, SaveRevisitOptions, loadRevisitsOptions } from '../interfaces/revisits';
 import { Pagination } from '../interfaces/ui';
 
 const useRevisits = () => {
@@ -52,7 +51,7 @@ const useRevisits = () => {
     const setRevisitsPagination = (pagination: Pagination) => dispatch(setRevisitsPaginationAction({ pagination }));
     const setSelectedRevisit = (revisit: Revisit) => dispatch(setSelectedRevisitAction({ revisit }));
 
-    const loadRevisits = async (filter: RevisitFilter, search: string = '', refresh: boolean = false, loadMore: boolean = false) => {
+    const loadRevisits = async ({ filter, loadMore = false, refresh = false, search = '' }: loadRevisitsOptions) => {
         dispatch(setRevisitFilter({ filter }));
         setIsRevisitsLoading(true);
 
@@ -76,9 +75,9 @@ const useRevisits = () => {
                 (refresh) ? 9 : state.revisitsPagination.to
             )
 
-        const { data, error } = await revisitsPromise;
+        const { data, error, status } = await revisitsPromise;
 
-        const next = setSupabaseError(error, () => setIsRevisitsLoading(false));
+        const next = setSupabaseError(error, status, () => setIsRevisitsLoading(false));
         if (next) return;
 
         if (data!.length >= 10) {
@@ -92,7 +91,8 @@ const useRevisits = () => {
         (loadMore) ? addRevisits(data!) : setRevisits(data!);
     }
 
-    const saveRevisit = async (revisitValues: RevisitFormValues, imageUri?: string, image?: Image, back: boolean = true, onFinish?: () => void) => {
+    const saveRevisit = async ({ revisitValues, back  = true, image, imageUri, onFinish }: SaveRevisitOptions) => {
+        // revisitValues: RevisitFormValues, imageUri?: string, image?: Image, back: boolean = true, onFinish?: () => void
         dispatch(setIsRevisitLoading({ isLoading: true }));
 
         let photo = imageUri || null;
@@ -100,7 +100,7 @@ const useRevisits = () => {
         if (image) {
             const { data, error } = await uploadImage(image);
 
-            const next = setSupabaseError(error, () => {
+            const next = setSupabaseError(error, 400, () => {
                 dispatch(setIsRevisitLoading({ isLoading: false }));
                 onFinish && onFinish();
             });
@@ -110,7 +110,7 @@ const useRevisits = () => {
             photo = data!.publicUrl;
         }
 
-        const { data, error } = await supabase.from('revisits')
+        const { data, error, status } = await supabase.from('revisits')
             .insert({
                 ...revisitValues,
                 photo,
@@ -119,7 +119,7 @@ const useRevisits = () => {
             })
             .select();
 
-        const next = setSupabaseError(error, () => {
+        const next = setSupabaseError(error, status, () => {
             dispatch(setIsRevisitLoading({ isLoading: false }));
             onFinish && onFinish();
         });
@@ -133,7 +133,7 @@ const useRevisits = () => {
             ? 'Haz agregado tu revisita correctamente.'
             : `Haz agregado correctamente a ${ data![0].person_name } para volverla a visitar.`
 
-        setStatus({ code: 201, msg: successMsg });
+        setStatus({ code: status, msg: successMsg });
 
         back && navigate('RevisitsTopTabsNavigation' as never);
     }
@@ -147,19 +147,19 @@ const useRevisits = () => {
             if (photo) {
                 const { error: errorDelete } = await deleteImage(photo);
 
-                const next = setSupabaseError(errorDelete, () => dispatch(setIsRevisitLoading({ isLoading: false })));
+                const next = setSupabaseError(errorDelete, 400, () => dispatch(setIsRevisitLoading({ isLoading: false })));
                 if (next) return;
             }
 
             const { data: dataImage, error: errorImage } = await uploadImage(image);
 
-            const next = setSupabaseError(errorImage, () => dispatch(setIsRevisitLoading({ isLoading: false })));
+            const next = setSupabaseError(errorImage, 400, () => dispatch(setIsRevisitLoading({ isLoading: false })));
             if (next) return;
 
             photo = dataImage!.publicUrl;
         }
 
-        const { data, error } = await supabase.from('revisits')
+        const { data, error, status } = await supabase.from('revisits')
             .update({
                 ...revisitValues,
                 photo,
@@ -170,7 +170,7 @@ const useRevisits = () => {
             .eq('user_id', user.id)
             .select();
 
-        const next = setSupabaseError(error, () => dispatch(setIsRevisitLoading({ isLoading: false })));
+        const next = setSupabaseError(error, status, () => dispatch(setIsRevisitLoading({ isLoading: false })));
         if (next) return;
 
         dispatch(updateRevisitAction({ revisit: data![0] }));
@@ -201,7 +201,7 @@ const useRevisits = () => {
         if (state.selectedRevisit.photo) {
             const { error: errorDelete } = await deleteImage(state.selectedRevisit.photo);
 
-            const next = setSupabaseError(errorDelete, () => {
+            const next = setSupabaseError(errorDelete, 400, () => {
                 onFinish && onFinish();
                 dispatch(setIsRevisitDeleting({ isDeleting: false }));
             });
@@ -209,12 +209,12 @@ const useRevisits = () => {
             if (next) return;
         }
 
-        const { error } = await supabase.from('revisits')
+        const { error, status } = await supabase.from('revisits')
             .delete()
             .eq('id', state.selectedRevisit.id)
             .eq('user_id', user.id);
 
-        const next = setSupabaseError(error, () => {
+        const next = setSupabaseError(error, status, () => {
             onFinish && onFinish();
             dispatch(setIsRevisitDeleting({ isDeleting: false }));
         });

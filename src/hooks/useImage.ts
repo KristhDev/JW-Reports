@@ -106,7 +106,7 @@ const useImage = () => {
 
         const result = await supabase.storage
             .from('jw-reports')
-            .remove([ `revisits/${ imageId }` ]);
+            .remove([ `${ SUPABASE_REVISITS_FOLDER }/${ imageId }` ]);
 
         return result;
     }

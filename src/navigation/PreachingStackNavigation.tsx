@@ -31,7 +31,7 @@ const PreachingStackNavigation = () => {
 
     useEffect(() => {
         setSelectedDate(new Date());
-        loadCourses('all');
+        loadCourses({ filter: 'all' });
     }, []);
 
     useEffect(() => {

@@ -1,4 +1,4 @@
-import { Pagination } from './ui';
+import { LoadResourcesOptions, Pagination } from './ui';
 
 export type CoursesStackParamsList = {
     CoursesTopTabsNavigation: undefined;
@@ -75,6 +75,22 @@ export interface Lesson {
     done: boolean;
     created_at: string;
     updated_at: string;
+}
+
+export interface CourseFormValues {
+    person_name: string;
+    person_about: string;
+    person_address: string;
+    publication: string;
+}
+
+export interface LessonFormValues {
+    description: string;
+    next_lesson: Date;
+}
+
+export interface loadCoursesOptions extends LoadResourcesOptions {
+    filter: CourseFilter;
 }
 
 export type CourseFilter = 'all' | 'active' | 'suspended' | 'finished';

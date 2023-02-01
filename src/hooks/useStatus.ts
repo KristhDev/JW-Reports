@@ -29,12 +29,12 @@ const useStatus = () => {
         });
     }
 
-    const setSupabaseError = (error: AuthError | PostgrestError | StorageError |  null, onDispatch?: () => void) => {
+    const setSupabaseError = (error: AuthError | PostgrestError | StorageError |  null, status: number, onDispatch?: () => void) => {
         if (error) {
             console.log(error);
 
             onDispatch && onDispatch();
-            setStatus({ code: 400, msg: error.message });
+            setStatus({ code: status, msg: error.message });
 
             return true;
         }

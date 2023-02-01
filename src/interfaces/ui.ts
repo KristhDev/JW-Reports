@@ -12,6 +12,12 @@ export type MainTabsBottomParamsList = {
     CoursesStackNavigation: undefined;
 }
 
+export interface LoadResourcesOptions {
+    loadMore?: boolean;
+    refresh?: boolean;
+    search?: string;
+}
+
 export interface Pagination {
     from: number;
     to: number;

@@ -1,4 +1,6 @@
-import { Pagination } from './ui';
+import { Image } from 'react-native-image-crop-picker';
+
+import { LoadResourcesOptions, Pagination } from './ui';
 
 export type RevisitsStackParamsList = {
     RevisitsTopTabsNavigation: undefined;
@@ -48,6 +50,25 @@ export interface Revisit {
     done: boolean;
     created_at: string;
     updated_at: string;
+}
+
+export interface RevisitFormValues {
+    person_name: string;
+    about: string;
+    address: string;
+    next_visit: Date;
+}
+
+export interface SaveRevisitOptions {
+    back?: boolean;
+    image?: Image;
+    imageUri?: string;
+    onFinish?: () => void;
+    revisitValues: RevisitFormValues;
+}
+
+export interface loadRevisitsOptions extends LoadResourcesOptions {
+    filter: RevisitFilter;
 }
 
 export type RevisitFilter = 'all' | 'visited' | 'unvisited';
