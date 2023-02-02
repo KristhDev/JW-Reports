@@ -5,6 +5,7 @@ import { combineReducers } from 'redux';
 import { useDispatch } from 'react-redux';
 import reduxFlipper from 'redux-flipper';
 
+/* Reducers */
 import { authReducer } from './auth';
 import { coursesReducer } from './courses';
 import { permissionsReducer } from './permissions';
@@ -12,6 +13,7 @@ import { preachingReducer } from './preaching';
 import { revisitsReducer } from './revisits';
 import { statusReducer } from './status';
 
+/* Combining all the reducers into one reducer. */
 const reducers = combineReducers({
     auth: authReducer,
     courses: coursesReducer,
@@ -21,6 +23,7 @@ const reducers = combineReducers({
     status: statusReducer
 });
 
+/* Setting the key and storage for the persistor. */
 const persistConfig = {
     key: 'jw-reports-root',
     storage: AsyncStorage,
@@ -28,6 +31,7 @@ const persistConfig = {
 
 const reducer = persistReducer(persistConfig, reducers);
 
+/* Creating the store. */
 const store = configureStore({
     reducer,
     devTools: false,
@@ -36,6 +40,8 @@ const store = configureStore({
             serializableCheck: false
         });
 
+        /* Checking if the app is in development mode. If it is, it will add the reduxFlipper
+        middleware to the store. */
         if (__DEV__) {
             middleware.push(reduxFlipper());
         }

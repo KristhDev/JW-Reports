@@ -1,8 +1,10 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
+/* Interfaces */
 import { AuthState, SetUserPayload, User, UserPayload } from '../../interfaces/auth';
 import { SetIsLoadingPayload } from '../../interfaces/features';
 
+/* Initial state */
 const INITIAL_STATE: AuthState = {
     user: {
         id: '',
@@ -18,6 +20,7 @@ const INITIAL_STATE: AuthState = {
     token: ''
 }
 
+/* Slice of management state */
 const authSlice = createSlice({
     name: 'auth',
     initialState: INITIAL_STATE,

@@ -1,12 +1,15 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
+/* Interfaces */
 import { StatusState, SetStatusPayload } from '../../interfaces/status';
 
+/* Initial state */
 const INITIAL_STATE: StatusState = {
     code: 200,
     msg: ''
 }
 
+/* Slice of management state */
 const statusSlice = createSlice({
     name: 'status',
     initialState: INITIAL_STATE,

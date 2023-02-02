@@ -1,5 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
+/* Interfaces */
 import {
     RevisitPayload,
     RevisitsState,
@@ -18,6 +19,7 @@ import {
     HasMorePayload
 } from '../../interfaces/features';
 
+/* Initial revisit */
 export const INIT_REVISIT: Revisit = {
     id: '',
     user_id: '',
@@ -29,7 +31,7 @@ export const INIT_REVISIT: Revisit = {
     created_at: new Date().toString(),
     updated_at: new Date().toString()
 }
-
+/* Initial state */
 const INITIAL_STATE: RevisitsState = {
     hasMoreRevisits: true,
     isRevisitDeleting: false,
@@ -46,20 +48,23 @@ const INITIAL_STATE: RevisitsState = {
     selectedRevisit: INIT_REVISIT
 }
 
+/**
+ * It takes a list of revisits and a filter, and returns a filtered list of revisits
+ * @param {Revisit[]} revisits - Revisit[]
+ * @param {RevisitFilter} filter - RevisitFilter
+ * @returns A function that returns the filtered revisits.
+ */
 const filterRevisits = (revisits: Revisit[], filter: RevisitFilter) => {
-    let revisitsFiltered: Revisit[] = [];
-
-    if (filter === 'visited') {
-        revisitsFiltered = revisits.filter(c => c.done);
+    const revisitsFiltereds = {
+        all: () => revisits,
+        unvisited: () => revisits.filter(c => !c.done),
+        visited: () => revisits.filter(c => c.done),
     }
-    else if (filter === 'unvisited') {
-        revisitsFiltered = revisits.filter(c => !c.done);
-    }
-    else revisitsFiltered = revisits;
 
-    return revisitsFiltered;
+    return revisitsFiltereds[filter]();
 }
 
+/* Slice of management state */
 const revisitsSlice = createSlice({
     name: 'revisits',
     initialState: INITIAL_STATE,

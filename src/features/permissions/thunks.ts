@@ -1,6 +1,7 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { check, PERMISSIONS } from 'react-native-permissions';
 
+/* Creating a thunk that will check the permissions of the app. */
 export const checkPermissions = createAsyncThunk(
     'permissions/checkPermissions',
     async () => {

@@ -1,5 +1,6 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 
+/* Interfaces */
 import {
     Course,
     CourseFilter,
@@ -21,6 +22,7 @@ import {
     SetIsLoadingPayload
 } from '../../interfaces/features';
 
+/* Initial lesson */
 export const INIT_LESSON: Lesson = {
     id: '',
     course_id: '',
@@ -31,6 +33,7 @@ export const INIT_LESSON: Lesson = {
     updated_at: new Date().toString(),
 }
 
+/* Initial course */
 export const INIT_COURSE: Course = {
     id: '',
     user_id: '',
@@ -45,6 +48,7 @@ export const INIT_COURSE: Course = {
     updated_at: new Date().toString()
 }
 
+/* Initial state */
 const INITIAL_STATE: CoursesState = {
     courseFilter: 'all',
     courses: [],
@@ -72,23 +76,25 @@ const INITIAL_STATE: CoursesState = {
     selectedLesson: INIT_LESSON,
 }
 
-const filterCourses = (courses: Course[], filter: CourseFilter) => {
-    let coursesFiltered: Course[] = [];
+/**
+ * It takes a list of courses and a filter, and returns a filtered list of courses
+ * @param {Course[]} courses - Course[]
+ * @param {CourseFilter} filter - CourseFilter = 'active' | 'all' | 'finished' | 'suspended'
+ * @returns A function that returns the filtered courses.
+ */
+const filterCoursesBy = (courses: Course[], filter: CourseFilter) => {
+    const coursesFiltereds = {
+        active: () => courses.filter(c => !c.suspended && !c.finished),
+        all: () => courses,
+        finished: () => courses.filter(c => !c.suspended && c.finished),
+        suspended: () => courses.filter(c => c.suspended && !c.finished)
+    }
 
-    if (filter === 'active') {
-        coursesFiltered = courses.filter(c => !c.suspended && !c.finished);
-    }
-    else if (filter === 'suspended') {
-        coursesFiltered = courses.filter(c => c.suspended && !c.finished);
-    }
-    else if (filter === 'finished') {
-        coursesFiltered = courses.filter(c => !c.suspended && c.finished);
-    }
-    else coursesFiltered = courses;
-
-    return coursesFiltered;
+    return coursesFiltereds[filter]();
 }
 
+
+/* Slice of management state */
 const courseSlice = createSlice({
     name: 'courses',
     initialState: INITIAL_STATE,
@@ -247,7 +253,7 @@ const courseSlice = createSlice({
         },
 
         updateCourse: (state, action: PayloadAction<CoursePayload>) => {
-            state.courses = filterCourses(state.courses.map(course =>
+            state.courses = filterCoursesBy(state.courses.map(course =>
                 (course.id === action.payload.course.id)
                     ? action.payload.course
                     : course
