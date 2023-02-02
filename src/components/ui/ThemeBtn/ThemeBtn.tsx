@@ -1,10 +1,16 @@
 import React from 'react';
 import Icon from 'react-native-vector-icons/Ionicons';
 
+/* Components */
 import { Fab } from '../Fab';
 
+/* Hooks */
 import { useTheme } from '../../../hooks';
 
+/**
+ * This component is responsible for render button to change
+ * app theme
+ */
 export const ThemeBtn = () => {
     const { state: { selectedTheme, colors }, setTheme } = useTheme();
 

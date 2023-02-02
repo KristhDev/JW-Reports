@@ -4,14 +4,23 @@ import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import { useField } from 'formik';
 import dayjs from 'dayjs';
 
+/* Components */
 import { Button } from '../Button';
 
+/* Hooks */
 import { useTheme } from '../../../hooks';
 
+/* Interfaces */
 import { DatetimeFieldProps } from './interfaces';
 
+/* Theme */
 import { styles as themeStyles } from '../../../theme';
 
+/**
+ * This component is responsible for displaying a field to select a
+ * Date type data, be it a date or time
+ * @param {DatetimeFieldProps} props - { controlStyle, icon, inputDateFormat, inputStyle, label, labelStyle, mode, name, style, ...rest }
+ */
 export const DatetimeField: FC<DatetimeFieldProps> = ({
     controlStyle,
     icon,
@@ -30,11 +39,20 @@ export const DatetimeField: FC<DatetimeFieldProps> = ({
     const [ field, meta, helpers ] = useField({ name });
     const { state: { colors } } = useTheme();
 
+    /**
+     * The function handleConfirm takes a date as an argument and sets the state of open to false and
+     * sets the value of the date to the date that was passed in.
+     * @param {Date} date - The date that was selected
+     */
     const handleConfirm = (date: Date) => {
         setOpen(false);
         helpers.setValue(date);
     }
 
+    /**
+     * When the user clicks the cancel button, the modal closes and the form field is no longer
+     * touched.
+     */
     const handleCancel = () => {
         setOpen(false);
         helpers.setTouched(!meta.touched);
@@ -48,6 +66,8 @@ export const DatetimeField: FC<DatetimeFieldProps> = ({
                 ...style as any
             }}
         >
+
+            {/* Field label */}
             <Text
                 style={[
                     { ...themeStyles.formLabel, color: colors.titleText },
@@ -57,6 +77,7 @@ export const DatetimeField: FC<DatetimeFieldProps> = ({
                 { label }
             </Text>
 
+            {/* Field control container */}
             <View style={{ flexDirection: 'row', width: '100%', alignItems: 'center' }}>
                 <View
                     style={[
@@ -64,6 +85,8 @@ export const DatetimeField: FC<DatetimeFieldProps> = ({
                         controlStyle
                     ]}
                 >
+
+                    {/* Field input */}
                     <TextInput
                         autoCorrect={ false }
                         placeholderTextColor={ colors.icon }
@@ -78,6 +101,7 @@ export const DatetimeField: FC<DatetimeFieldProps> = ({
                     />
                 </View>
 
+                {/* Field button */}
                 <Button
                     containerStyle={{ paddingHorizontal: 10 }}
                     icon={ icon }
@@ -87,6 +111,7 @@ export const DatetimeField: FC<DatetimeFieldProps> = ({
                 />
             </View>
 
+            {/* Modal to pick datetime */}
             <DateTimePickerModal
                 accentColor={ colors.button }
                 date={ field.value }

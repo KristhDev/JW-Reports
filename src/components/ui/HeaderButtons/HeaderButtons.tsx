@@ -4,14 +4,36 @@ import { useNavigation } from '@react-navigation/native';
 import MonthPicker from 'react-native-month-year-picker';
 import Icon from 'react-native-vector-icons/Ionicons';
 
+/* Screens */
 import { DeleteModal } from '../../../screens/ui';
 
+/* Components */
 import { Fab } from '../Fab';
 
+/* Hooks */
 import { useAuth, usePreaching, useTheme } from '../../../hooks';
 
+/* Interfaces */
 import { HeaderButtonsProps } from './interfaces';
 
+/**
+ * This component is responsible for displaying various buttons that will be in the
+ * headers of the screens, they are sent the condition with which they will appear
+ * and the action that will be performed
+ * @param {HeaderButtonsProps} props - {
+ *      logoutButton: boolean,
+ *      changeMonthButton: boolean,
+ *      settingsButton: boolean,
+ *      editButton: boolean,
+ *      onPressEditButton: () => void,
+ *      deleteButton: boolean,
+ *      deleteModalText: string,
+ *      isDeleteModalLoading: boolean,
+ *      onCloseDeleteModal: () => void,
+ *      onConfirmDeleteModal: () => void,
+ *      onShowDeleteModal: () => void,
+ *      showDeleteModal: boolean,
+ */
 export const HeaderButtons: FC<HeaderButtonsProps> = ({
     logoutButton = false,
     changeMonthButton = false,
@@ -35,6 +57,11 @@ export const HeaderButtons: FC<HeaderButtonsProps> = ({
     const { setSelectedDate, state: { selectedDate } } = usePreaching();
     const { state: { colors }, BUTTON_TRANSPARENT_COLOR } = useTheme();
 
+    /**
+     * When the user selects a date, hide the month picker and set the selected date to the date the
+     * user selected.
+     * @param {Date} date - Date - The date that was selected
+     */
     const handleOnChange = (date: Date) => {
         setShowMonthPicker(false);
         if (date) setSelectedDate(date);

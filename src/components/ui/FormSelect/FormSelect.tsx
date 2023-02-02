@@ -3,14 +3,22 @@ import { View, Text, useWindowDimensions, TouchableHighlight } from 'react-nativ
 import { useField } from 'formik';
 import Icon from 'react-native-vector-icons/Ionicons';
 
+/* Screens */
 import { OptionsModal } from '../../../screens/ui';
 
+/* Hooks */
 import { useTheme } from '../../../hooks';
 
+/* Interfaces */
 import { FormSelectProps } from './interfaces';
 
+/* Theme */
 import { styles as themeStyles } from '../../../theme';
 
+/**This component is responsible for displaying a field to select a value among
+ * several through a modal and then displays the value in the input
+ * @param {FormSelectProps} - props { controlStyle, inputContainerStyle, inputTextStyle, items, label, labelStyle, name, placeholder, style, title }
+ */
 export const FormSelect: FC<FormSelectProps> = ({
     controlStyle,
     inputContainerStyle,
@@ -32,17 +40,28 @@ export const FormSelect: FC<FormSelectProps> = ({
 
     const { state: { colors } } = useTheme();
 
+    /**
+    * When the user clicks on the button, the modal will show and the input will be focused.
+    */
     const handleShowModal = () => {
         setShowModal(true);
         setIsFocused(true);
     }
 
+    /**
+     * When the user clicks the button, the modal will close and the input will be marked as touched.
+     */
     const handleHideModal = () => {
         helpers.setTouched(!meta.touched);
         setIsFocused(false);
         setShowModal(false);
     }
 
+    /**
+     * When the user clicks on a button, the value of the button is set to the value of the input
+     * field, and the modal is hidden.
+     * @param {string} value - string - the value of the input
+     */
     const handleChangeValue = (value: string) => {
         helpers.setValue(value);
         handleHideModal();
@@ -57,6 +76,8 @@ export const FormSelect: FC<FormSelectProps> = ({
                     ...style as any
                 }}
             >
+
+                {/* Field label */}
                 <Text
                     style={[
                         { ...themeStyles.formLabel, color: colors.titleText },
@@ -78,6 +99,8 @@ export const FormSelect: FC<FormSelectProps> = ({
                             borderColor: (!isFocused) ? colors.text : colors.focus
                         }}
                     >
+
+                        {/* Field control */}
                         <View
                             style={[
                                 {
@@ -89,6 +112,8 @@ export const FormSelect: FC<FormSelectProps> = ({
                                 controlStyle
                             ]}
                         >
+
+                            {/* Field input (touchable with appareance text input) */}
                             <TouchableHighlight
                                 activeOpacity={ 1 }
                                 onPress={ handleShowModal }
@@ -117,6 +142,7 @@ export const FormSelect: FC<FormSelectProps> = ({
                 </View>
             </View>
 
+            {/* Modal to show options for select */}
             <OptionsModal
                 isOpen={ showModal }
                 items={ items }

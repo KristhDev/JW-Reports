@@ -4,25 +4,39 @@ import { Formik } from 'formik';
 import { object, string } from 'yup';
 import Icon from 'react-native-vector-icons/Ionicons';
 
+/* Components */
 import { Button, FormField } from '../../ui';
 
+/* Hooks */
 import { useCourses, useStatus, useTheme } from '../../../hooks';
 
+/* Interfaces */
 import { CourseFormValues } from '../../../interfaces/courses';
 
+/* Theme */
 import { styles as themeStyles } from '../../../theme';
 
+/**
+ * This component is responsible for rendering the fields to create
+ * or edit a course
+ */
 export const CourseForm = () => {
     const { state: { isCourseLoading, selectedCourse }, saveCourse, updateCourse } = useCourses();
     const { setErrorForm } = useStatus();
     const { state: { colors } } = useTheme();
 
+    /**
+     * If the selectedCourse.id is an empty string, then save the formValues, otherwise update the
+     * formValues.
+     * @param {CourseFormValues} formValues - CourseFormValues
+     */
     const handleSaveOrUpdate = (formValues: CourseFormValues) => {
         (selectedCourse.id === '')
             ? saveCourse(formValues)
             : updateCourse(formValues);
     }
 
+    /* Validation schema for course */
     const courseFormSchema = object().shape({
         person_name: string()
             .min(2, 'El nombre de la persona debe tener al menoss 2 caracteres.')
@@ -52,6 +66,8 @@ export const CourseForm = () => {
         >
             { ({ handleSubmit, errors, isValid }) => (
                 <View style={{ ...themeStyles.formContainer, paddingTop: 30, paddingBottom: 40 }}>
+
+                    {/* Person name field */}
                     <FormField
                         icon={
                             <Icon
@@ -65,6 +81,7 @@ export const CourseForm = () => {
                         placeholder="Ingrese el nombre"
                     />
 
+                    {/* Person about field */}
                     <FormField
                         label="Información del estudiante:"
                         multiline
@@ -73,6 +90,7 @@ export const CourseForm = () => {
                         placeholder="Ingrese datos sobre la persona, temas de interés, preferencias, aspectos importantes, etc..."
                     />
 
+                    {/* Person address field */}
                     <FormField
                         label="Dirección:"
                         multiline
@@ -81,6 +99,7 @@ export const CourseForm = () => {
                         placeholder="Ingrese la dirección"
                     />
 
+                    {/* Publication field */}
                     <FormField
                         icon={
                             <Icon
@@ -94,6 +113,7 @@ export const CourseForm = () => {
                         placeholder="Ingrese la publicación"
                     />
 
+                    {/* Submit button */}
                     <Button
                         disabled={ isCourseLoading }
                         icon={

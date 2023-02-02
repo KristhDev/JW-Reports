@@ -6,14 +6,23 @@ import { useNavigation } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import dayjs from 'dayjs';
 
+/* Components */
 import { Fab } from '../../ui';
 
+/* Hooks */
 import { useCourses, useTheme } from '../../../hooks';
 
+/* Interfaces */
 import { LessonCardProps } from './interfaces';
 
+/* Styles */
 import styles from './styles';
 
+/**
+ * This component is responsible for rendering part of the information of a
+ * lesson in the form of a card
+ * @param {LessonCardProps} props - { lesson, onDelete, onFinish }
+ */
 export const LessonCard: FC<LessonCardProps> = ({ lesson, onDelete, onFinish }) => {
     const [ isOpen, setIsOpen ] = useState<boolean>(false);
     const { navigate } = useNavigation();
@@ -23,17 +32,29 @@ export const LessonCard: FC<LessonCardProps> = ({ lesson, onDelete, onFinish }) 
 
     const nextVisit = dayjs(lesson.next_lesson);
 
+    /**
+     * When the user clicks on a lesson, the lesson is set as the selected lesson and the user is
+     * navigated to the LessonDetailScreen.
+     */
     const handleLessonDetail = () => {
         setSelectedLesson(lesson);
         navigate('LessonDetailScreen' as never);
     }
 
+    /**
+     * When the user clicks the edit button, close the modal, set the selected lesson to the current
+     * lesson, and navigate to the AddOrEditLessonScreen.
+     */
     const handleEdit = () => {
         setIsOpen(false);
         setSelectedLesson(lesson);
         navigate('AddOrEditLessonScreen' as never);
     }
 
+    /**
+     * The function takes a function as an argument and calls it.
+     * @param onSelect - () => void
+     */
     const handleSelect = (onSelect: () => void) => {
         setIsOpen(false);
         onSelect();
@@ -47,6 +68,8 @@ export const LessonCard: FC<LessonCardProps> = ({ lesson, onDelete, onFinish }) 
             style={ styles.touchable }
         >
             <View style={{ ...styles.container, backgroundColor: colors.card }}>
+
+                {/* Lesson status  */}
                 <Text style={{ ...styles.textDate, color: colors.icon }}>
                     {
                         (lesson.done)
@@ -55,6 +78,7 @@ export const LessonCard: FC<LessonCardProps> = ({ lesson, onDelete, onFinish }) 
                     }
                 </Text>
 
+                {/* Text */}
                 <Text style={{ ...styles.textDescription, color: colors.text }}>
                     { (lesson.description.length > 200) ? lesson.description.substring(0, 200) + '...' : lesson.description }
                 </Text>
@@ -74,6 +98,7 @@ export const LessonCard: FC<LessonCardProps> = ({ lesson, onDelete, onFinish }) 
                     touchColor={ BUTTON_TRANSPARENT_COLOR }
                 />
 
+                {/* Menu context */}
                 <Menu
                     onBackdropPress={ () => setIsOpen(false) }
                     opened={ isOpen }
@@ -82,23 +107,23 @@ export const LessonCard: FC<LessonCardProps> = ({ lesson, onDelete, onFinish }) 
                     <MenuTrigger text="" />
 
                     <MenuOptions optionsContainerStyle={{ backgroundColor: colors.card, borderRadius: 5, width: 220 }}>
-                        {
-                            (!lesson.done) && (
-                                <>
-                                    <MenuOption onSelect={ handleEdit }>
-                                        <Text
-                                            style={{
-                                                color: colors.text,
-                                                ...styles.textMenuOpt
-                                            }}
-                                        >
-                                            Editar
-                                        </Text>
-                                    </MenuOption>
 
-                                </>
-                            )
-                        }
+                        {/* Then lesson.done is false show this option */}
+                        {/* The lesson can only be edited if lesson.done is false */}
+                        { (!lesson.done) && (
+                            <>
+                                <MenuOption onSelect={ handleEdit }>
+                                    <Text
+                                        style={{
+                                            color: colors.text,
+                                            ...styles.textMenuOpt
+                                        }}
+                                    >
+                                        Editar
+                                    </Text>
+                                </MenuOption>
+                            </>
+                        ) }
 
                         <MenuOption onSelect={ () => handleSelect(onFinish) }>
                             <Text

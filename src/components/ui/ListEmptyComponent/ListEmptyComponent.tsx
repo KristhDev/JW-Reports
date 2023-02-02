@@ -1,21 +1,24 @@
 import React, { FC } from 'react';
 import { useWindowDimensions } from 'react-native';
 
+/* Components */
 import { InfoText } from '../../ui';
 
-import { useRevisits } from '../../../hooks';
-
+/* Interfaces */
 import { ListEmptyComponentProps } from './interfaces';
 
-export const ListEmptyComponent: FC<ListEmptyComponentProps> = ({ msg }) => {
+/**
+ * This component is responsible for displaying a message when the list of
+ * FlatList elements is empty and meets other conditions
+ * @param {ListEmptyComponentProps} props - { msg, showLoader }
+ */
+export const ListEmptyComponent: FC<ListEmptyComponentProps> = ({ msg, showLoader }) => {
     const { height } = useWindowDimensions();
-
-    const { state: { revisits, isRevisitsLoading } } = useRevisits();
 
     return (
         <>
             {
-                (!isRevisitsLoading && revisits.length === 0) && (
+                (showLoader) && (
                     <InfoText
                         containerStyle={{ marginTop: height * 0.20 }}
                         text={ msg }

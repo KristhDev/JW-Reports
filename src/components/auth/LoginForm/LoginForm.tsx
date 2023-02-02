@@ -5,12 +5,19 @@ import { Formik } from 'formik';
 import { object, string } from 'yup';
 import Icon from 'react-native-vector-icons/Ionicons';
 
+/* Components */
 import { Button, EyeBtn, FormField } from '../../ui';
 
+/* Hooks */
 import { useAuth, useStatus, useTheme } from '../../../hooks';
 
+/* Theme */
 import { styles as themeStyles } from '../../../theme';
 
+/**
+ * This component is responsible for rendering the fields so that a user
+ * can log in with their account
+ */
 export const LoginForm = () => {
     const [ showPassword, setShowPassword ] = useState<boolean>(false);
 
@@ -21,6 +28,7 @@ export const LoginForm = () => {
     const { setErrorForm } = useStatus();
     const { state: { colors } } = useTheme();
 
+    /* Validation schema for login values (email and password) */
     const loginFormSchema = object().shape({
         email: string()
             .email('Correo electrónico inválido.')
@@ -42,6 +50,8 @@ export const LoginForm = () => {
         >
             { ({ handleSubmit, isValid, errors }) => (
                 <View style={ themeStyles.formContainer }>
+
+                    {/* Email field */}
                     <FormField
                         autoCapitalize="none"
                         icon={
@@ -57,6 +67,7 @@ export const LoginForm = () => {
                         placeholder="Ingrese su correo"
                     />
 
+                    {/* Password field */}
                     <FormField
                         autoCapitalize="none"
                         icon={
@@ -71,6 +82,7 @@ export const LoginForm = () => {
                         secureTextEntry={ !showPassword }
                     />
 
+                    {/* Submit button */}
                     <Button
                         disabled={ isAuthLoading }
                         icon={
@@ -87,6 +99,7 @@ export const LoginForm = () => {
                         touchableStyle={{ paddingHorizontal: 20, marginTop: 30 }}
                     />
 
+                    {/* Sign up link */}
                     <View style={{ ...themeStyles.btnLink, width: width * 0.9 }}>
                         <Text
                             style={{
@@ -112,6 +125,7 @@ export const LoginForm = () => {
                         </TouchableOpacity>
                     </View>
 
+                    {/* Forgot password link */}
                     <View style={{ ...themeStyles.btnLink, marginTop: 10, width: width * 0.9 }}>
                         <TouchableOpacity
                             activeOpacity={ 0.75 }

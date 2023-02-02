@@ -2,12 +2,20 @@ import React, { FC, useEffect, useState } from 'react';
 import { Keyboard, View } from 'react-native';
 import { BottomTabBarProps } from '@react-navigation/bottom-tabs';
 
-import { TabBarButton } from '../TabBarButton';
+/* Components */
+import { TabBarBtn } from '../TabBarBtn';
 
+/* Hooks */
 import { useTheme } from '../../../hooks';
 
+/* Styles */
 import styles from './styles';
 
+/**
+ * This component is responsible for displaying a custom navigation bar
+ * for the app
+ * @param {BottomTabBarProps} props - { navigation, state, descriptors }
+ */
 export const TabBar: FC<BottomTabBarProps> = ({ navigation, state, descriptors }) => {
     const [ hideTabBar, setHideTabBar ] = useState<boolean>(false);
     const { state: { colors } } = useTheme();
@@ -16,6 +24,9 @@ export const TabBar: FC<BottomTabBarProps> = ({ navigation, state, descriptors }
 
     const { navigate } = navigation;
 
+    /**
+     * Effect to show or hide tabbar when the keyboard is shown or hidden
+     */
     useEffect(() => {
         Keyboard.addListener('keyboardDidShow', () => {
             setHideTabBar(true);
@@ -43,7 +54,7 @@ export const TabBar: FC<BottomTabBarProps> = ({ navigation, state, descriptors }
                     >
                         {
                             state.routes.map((route, index) => (
-                                <TabBarButton
+                                <TabBarBtn
                                     active={ state.index === index }
                                     key={ route.key }
                                     onPress={ () => navigate(route.name) }

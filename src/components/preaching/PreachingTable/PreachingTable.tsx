@@ -3,16 +3,25 @@ import { TouchableHighlight, View, useWindowDimensions } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import dayjs from 'dayjs';
 
+/* Components */
 import { TableCell } from '../../ui';
 
+/* Hooks */
 import { usePreaching, useTheme } from '../../../hooks';
 
+/* Interfaces */
 import { Preaching } from '../../../interfaces/preaching';
 
+/* Utils */
 import { sumHours, sumNumbers, TABLE_PREACHING_HEADERS } from '../../../utils';
 
+/* Styles */
 import styles from './styles';
 
+/**
+ * This component is responsible for displaying a table that contains the data
+ * of the preaching days of the selectedDate
+ */
 export const PreachingTable = () => {
     const { navigate } = useNavigation();
     const { width } = useWindowDimensions();
@@ -20,6 +29,11 @@ export const PreachingTable = () => {
     const { state: { preachings }, setSelectedPreaching } = usePreaching();
     const { state: { selectedTheme, colors } } = useTheme();
 
+    /**
+     * I'm going to navigate to a screen called AddOrEditPreachingScreen, and I'm going to pass it a
+     * preaching object.
+     * @param {Preaching} preaching - Preaching
+     */
     const handleGoToEditPreaching = (preaching: Preaching) => {
         setSelectedPreaching(preaching);
         navigate('AddOrEditPreachingScreen' as never);
@@ -27,6 +41,8 @@ export const PreachingTable = () => {
 
     return (
         <View style={{ ...styles.table, borderColor: colors.background }}>
+
+            {/* Table header */}
             <View style={ styles.tableRow }>
                 {
                     Children.toArray(TABLE_PREACHING_HEADERS.map(head => (
@@ -37,6 +53,8 @@ export const PreachingTable = () => {
                     )))
                 }
             </View>
+
+            {/* Table body */}
 
             {
                 Children.toArray(preachings.map((preaching) => (
@@ -79,6 +97,7 @@ export const PreachingTable = () => {
                 )))
             }
 
+            {/* Table footer */}
             <View style={ styles.tableRow }>
                 <TableCell
                     text="Total"

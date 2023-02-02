@@ -1,15 +1,20 @@
 import React, { useState } from 'react';
+import { View, ActivityIndicator } from 'react-native';
 import { Formik } from 'formik';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { object, ref, string } from 'yup';
 import Icon from 'react-native-vector-icons/Ionicons';
 
-import { View, ActivityIndicator } from 'react-native';
-
+/* Components */
 import { Button, EyeBtn, FormField } from '../../ui';
 
+/* Hooks */
 import { useAuth, useStatus, useTheme } from '../../../hooks';
 
+/**
+ * This component is responsible for rendering the fields to change the credentials
+ * of an authenticated user (email and password)
+ */
 export const CredentialsForm = () => {
     const [ loadingEmail, setLoadingEmail ] = useState<boolean>(false);
     const [ loadingPassword, setLoadingPassword ] = useState<boolean>(false);
@@ -21,6 +26,7 @@ export const CredentialsForm = () => {
     const { setErrorForm } = useStatus();
     const { state: { colors } } = useTheme();
 
+    /* Validation schema for new email */
     const emailFormSchema = object().shape({
         email: string()
             .email('Correo electrónico inválido.')
@@ -28,6 +34,7 @@ export const CredentialsForm = () => {
             .required('El correo electrónico es requerido.')
     });
 
+    /* Validation schema for new password */
     const passwordFormSchema = object().shape({
         password: string()
             .min(6, 'La nueva contraseña debe tener al menos 6 caracteres.')
@@ -37,11 +44,22 @@ export const CredentialsForm = () => {
             .required('La confirmación de la contraseña es requerida.'),
     });
 
+    /**
+     * The function takes an object with a property called email, and returns a function that takes no
+     * arguments and returns nothing.
+     * @param values - { email: string }
+     */
     const handleUpdateEmail = (values: { email: string }) => {
         setLoadingEmail(true);
         updateEmail(values, () => setLoadingEmail(false));
     }
 
+    /**
+     * handleUpdatePassword is a function that takes two arguments, values and resetForm, and returns
+     * a function that takes no arguments and returns a promise that calls resetForm.
+     * @param values - { password: string, confirmPassword: string }
+     * @param resetForm - () => void
+     */
     const handleUpdatePassword = (values: { password: string, confirmPassword: string }, resetForm: () => void) => {
         setLoadingPassword(true);
         updatePassword({ password: values.password }, () => setLoadingPassword(false))
@@ -60,6 +78,8 @@ export const CredentialsForm = () => {
             >
                 { ({ errors, handleSubmit, isValid }) => (
                     <View style={{ alignItems: 'center', justifyContent: 'flex-start', paddingBottom: top }}>
+
+                        {/* Email field */}
                         <FormField
                             autoCapitalize="none"
                             icon={
@@ -75,6 +95,7 @@ export const CredentialsForm = () => {
                             placeholder="Ingrese su correo"
                         />
 
+                        {/* Submit button */}
                         <Button
                             disabled={ isAuthLoading && loadingEmail }
                             icon={
@@ -105,6 +126,8 @@ export const CredentialsForm = () => {
             >
                 { ({ errors, handleSubmit, isValid }) => (
                     <View style={{ alignItems: 'center', justifyContent: 'flex-start', paddingBottom: top }}>
+
+                        {/* New password field */}
                         <FormField
                             autoCapitalize="none"
                             icon={
@@ -119,6 +142,7 @@ export const CredentialsForm = () => {
                             secureTextEntry={ !showPassword }
                         />
 
+                        {/* Confirm password field */}
                         <FormField
                             autoCapitalize="none"
                             icon={
@@ -133,6 +157,7 @@ export const CredentialsForm = () => {
                             secureTextEntry={ !showConfirmPassword }
                         />
 
+                        {/* Submit button */}
                         <Button
                             disabled={ isAuthLoading && loadingPassword }
                             icon={

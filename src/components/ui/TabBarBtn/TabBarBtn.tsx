@@ -2,16 +2,27 @@ import React, { useEffect, useState, FC } from 'react';
 import { Text, TouchableRipple } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/Ionicons';
 
+/* Hooks */
 import { useTheme } from '../../../hooks';
 
-import { TabBarButtonProps } from './interfaces';
+/* Interfaces */
+import { TabBarBtnProps } from './interfaces';
 
+/* Styles */
 import styles from './styles';
 
-export const TabBarButton: FC<TabBarButtonProps> = ({ active, color, iconName, onPress, title }) => {
+/**
+ * This component is responsible for displaying a button for the navigation bar
+ * @param {TabBarBtnProps} props - { active, color, iconName, onPress, title }
+ */
+export const TabBarBtn: FC<TabBarBtnProps> = ({ active, color, iconName, onPress, title }) => {
     const { state: { selectedTheme }, BUTTON_TRANSLUCENT_COLOR, BUTTON_TRANSPARENT_COLOR } = useTheme();
     const [ pressColor, setPressColor ] = useState<string>(BUTTON_TRANSPARENT_COLOR);
 
+    /**
+     * Effect to change pressColor when the button is pressed
+     * or change app theme
+     */
     useEffect(() => {
         const timeout = setTimeout(() => {
             setPressColor((active) ? BUTTON_TRANSLUCENT_COLOR : BUTTON_TRANSPARENT_COLOR);

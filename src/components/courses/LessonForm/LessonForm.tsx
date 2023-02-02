@@ -4,25 +4,38 @@ import { Formik } from 'formik';
 import { date, object, string } from 'yup';
 import Icon from 'react-native-vector-icons/Ionicons';
 
+/* Components */
 import { Button, DatetimeField, FormField } from '../../ui';
 
+/* Hooks */
 import { useCourses, useStatus, useTheme } from '../../../hooks';
 
+/* Interfaces */
 import { LessonFormValues } from '../../../interfaces/courses';
 
+/* Theme */
 import { styles as themeStyles } from '../../../theme';
 
+/**
+ * This component is responsible for rendering the fields to create
+ * or edit a lesson
+ */
 export const LessonForm = () => {
     const { state: { isLessonLoading, selectedLesson }, saveLesson, updateLesson } = useCourses();
     const { setErrorForm } = useStatus();
     const { state: { colors } } = useTheme();
 
+    /**
+     * If the selectedLesson.id is an empty string, then saveLesson, otherwise updateLesson.
+     * @param {LessonFormValues} formValues - LessonFormValues
+     */
     const handleSaveOrUpdate = (formValues: LessonFormValues) => {
         (selectedLesson.id === '')
             ? saveLesson(formValues)
             : updateLesson(formValues);
     }
 
+    /* Validation schema for lesson */
     const lessonFormSchema = object().shape({
         description: string()
             .min(10, 'El contenido de la clase debe tener al menos 10 caracteres.')
@@ -43,6 +56,8 @@ export const LessonForm = () => {
         >
             { ({ handleSubmit, errors, isValid }) => (
                 <View style={{ ...themeStyles.formContainer, paddingTop: 30, paddingBottom: 40 }}>
+
+                    {/* Description field */}
                     <FormField
                         label="¿Qué verán la próxima clase?"
                         multiline
@@ -51,6 +66,7 @@ export const LessonForm = () => {
                         placeholder="Ingrese el tema que se estudiará en la siguiente clase"
                     />
 
+                    {/* Next lesson field */}
                     <DatetimeField
                         icon={
                             <Icon
@@ -69,6 +85,7 @@ export const LessonForm = () => {
 
                     <View style={{ flex: 1 }} />
 
+                    {/* Submit button */}
                     <Button
                         disabled={ isLessonLoading }
                         icon={

@@ -21,8 +21,7 @@ import {
 
 import { useAuth, useStatus } from './';
 
-import { Preaching, PreachingState } from '../interfaces/preaching';
-import { PreachingFormValues } from '../components/preaching/PreachingForm/interfaces';
+import { Preaching, PreachingFormValues, PreachingState } from '../interfaces/preaching';
 
 const usePreaching = () => {
     const dispatch = useAppDispatch();

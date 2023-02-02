@@ -2,11 +2,18 @@ import React, { FC } from 'react';
 import { View, Text } from 'react-native';
 import { TouchableRipple } from 'react-native-paper';
 
+/* Hooks */
 import { useTheme } from '../../../hooks';
 
-import { SectionButtonProps } from './interfaces';
+/* Interfaces */
+import { SectionBtnProps } from './interfaces';
 
-export const SectionButton: FC<SectionButtonProps> = ({ onPress, subText, text }) => {
+/**
+ * This component is responsible for showing the section button that
+ * occupies the entire length of the screen
+ * @param {SectionBtnProps} props - { onPress, subText, text }
+ */
+export const SectionBtn: FC<SectionBtnProps> = ({ onPress, subText, text }) => {
     const { state: { colors }, BUTTON_TRANSPARENT_COLOR } = useTheme();
 
     return (

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useNavigation } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/Ionicons';
 
@@ -14,7 +14,7 @@ import { styles as themeStyles } from '../../../theme';
 const Lessons = () => {
     const { navigate } = useNavigation();
 
-    const { setSelectedLesson, loadLessons } = useCourses();
+    const { setSelectedLesson } = useCourses();
     const { state: { colors } } = useTheme();
 
     const handleNavigate = () => {
@@ -25,10 +25,6 @@ const Lessons = () => {
 
         navigate('AddOrEditLessonScreen' as never);
     }
-
-    useEffect(() => {
-        loadLessons({});
-    }, []);
 
     return (
         <>

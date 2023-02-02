@@ -5,7 +5,7 @@ import dayjs from 'dayjs';
 
 import { REPOSITORY_URL } from '@env';
 
-import { SectionButton, SectionContent } from '../../../components/ui';
+import { SectionBtn, SectionContent } from '../../../components/ui';
 
 import { useStatus, useTheme } from '../../../hooks';
 
@@ -31,13 +31,13 @@ const Settings = () => {
         <>
             <ScrollView overScrollMode="never">
                 <SectionContent title="MI CUENTA">
-                    <SectionButton
+                    <SectionBtn
                         onPress={ () => navigate('ProfileScreen' as never) }
                         subText="Actualice sus datos personales"
                         text="Perfil"
                     />
 
-                    <SectionButton
+                    <SectionBtn
                         onPress={ () => navigate('CredentialsScreen' as never) }
                         subText="Cambie sus credenciales (correo y contraseña)"
                         text="Credenciales"
@@ -45,7 +45,7 @@ const Settings = () => {
                 </SectionContent>
 
                 <SectionContent title="PANTALLA">
-                    <SectionButton
+                    <SectionBtn
                         onPress={ () => setShowThemeModal(true) }
                         subText={ THEME_OPTIONS.find(t => t.value === theme)?.label || '' }
                         text="Apariencia"
@@ -53,7 +53,7 @@ const Settings = () => {
                 </SectionContent>
 
                 <SectionContent title="PRIVACIDAD">
-                    <SectionButton
+                    <SectionBtn
                         onPress={ () => Linking.openSettings() }
                         subText="Admita o rechace los permisos de la aplicación (tenga en cuenta que ciertas funcionalidades se verán afectadas)."
                         text="Permisos"
@@ -64,19 +64,19 @@ const Settings = () => {
                     containerStyle={{ borderBottomWidth: 0 }}
                     title="SOBRE"
                 >
-                    <SectionButton
+                    <SectionBtn
                         onPress={ () => {} }
                         subText="1.0.0"
                         text="Versión"
                     />
 
-                    <SectionButton
+                    <SectionBtn
                         onPress={ () => Linking.openURL(REPOSITORY_URL) }
                         subText="Código fuente de la aplicación"
                         text="Repositorio"
                     />
 
-                    <SectionButton
+                    <SectionBtn
                         onPress={ handleMoreInfo }
                         subText="Obtenga información sobre la aplicación o deje sus comentarios"
                         text="Más información"

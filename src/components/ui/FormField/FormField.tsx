@@ -2,13 +2,30 @@ import React, { useState, FC } from 'react';
 import { View, Text, TextInput, useWindowDimensions } from 'react-native';
 import { useField } from 'formik';
 
+/* Hooks */
 import { useTheme } from '../../../hooks';
 
+/* Interfaces */
 import { FormFieldProps } from './interfaces';
 
+/* Theme */
 import { styles as themeStyles } from '../../../theme';
 
-export const FormField: FC<FormFieldProps> = ({ icon, label, style, controlStyle, inputStyle, labelStyle, name, ...rest }) => {
+/**
+ * This component is responsible for displaying fields for forms of
+ * different types but as long as it has to do with texts
+ * @param {FormFieldProps} props - { icon, label, style, controlStyle, inputStyle, labelStyle, name, ...rest` }
+ */
+export const FormField: FC<FormFieldProps> = ({
+    icon,
+    label,
+    style,
+    controlStyle,
+    inputStyle,
+    labelStyle,
+    name,
+    ...rest
+}) => {
     const { width } = useWindowDimensions();
 
     const [ field, meta, helpers ] = useField({ name });
@@ -29,6 +46,8 @@ export const FormField: FC<FormFieldProps> = ({ icon, label, style, controlStyle
                 ...style as any
             }}
         >
+
+            {/* Field label */}
             <Text
                 style={[
                     { ...themeStyles.formLabel, color: colors.titleText },
@@ -49,6 +68,8 @@ export const FormField: FC<FormFieldProps> = ({ icon, label, style, controlStyle
                         borderColor: (!isFocused) ? colors.text : colors.focus
                     }}
                 >
+
+                    {/* Input container */}
                     <View
                         style={[
                             {
@@ -59,6 +80,8 @@ export const FormField: FC<FormFieldProps> = ({ icon, label, style, controlStyle
                             controlStyle
                         ]}
                     >
+
+                        {/* Text input */}
                         <TextInput
                             autoCorrect={ false }
                             cursorColor={ colors.button }

@@ -6,14 +6,23 @@ import { Menu, MenuOption, MenuOptions, MenuTrigger } from 'react-native-popup-m
 import Icon from 'react-native-vector-icons/Ionicons';
 import dayjs from 'dayjs';
 
+/* Components */
 import { Fab } from '../../ui';
 
+/* Hooks */
 import { useRevisits, useTheme } from '../../../hooks';
 
+/* Interfaces */
 import { RevisitCardProps } from './interfaces';
 
+/* Styles */
 import styles from './styles';
 
+/**
+ * This component is responsible for rendering part of the information of a
+ * revisit in the form of a card
+ * @param {RevisitCardProps} props - { onDelete, onRevisit, onPass, revisit }
+ */
 export const RevisitCard: FC<RevisitCardProps> = ({ onDelete, onRevisit, onPass, revisit }) => {
     const [ isOpen, setIsOpen ] = useState<boolean>(false);
     const { navigate } = useNavigation();
@@ -23,17 +32,30 @@ export const RevisitCard: FC<RevisitCardProps> = ({ onDelete, onRevisit, onPass,
 
     const nextVisit = dayjs(revisit.next_visit);
 
+    /**
+     * When the user clicks on a revisit, set the selected revisit to the revisit that was clicked on
+     * and navigate to the RevisitDetailScreen.
+     */
     const handleRevisitDetail = () => {
         setSelectedRevisit(revisit);
         navigate('RevisitDetailScreen' as never);
     }
 
+    /**
+     * When the user clicks the edit button, the modal closes, the selected revisit is set to the
+     * current revisit, and the user is navigated to the AddOrEditRevisitScreen.
+     */
     const handleEdit = () => {
         setIsOpen(false);
         setSelectedRevisit(revisit);
         navigate('AddOrEditRevisitScreen' as never);
     }
 
+    /**
+     * The function takes a function as an argument and returns a function that calls the argument
+     * function.
+     * @param onAction - The function to call when the user clicks the action button.
+     */
     const handleAction = (onAction: () => void) => {
         setIsOpen(false);
         onAction();
@@ -46,9 +68,9 @@ export const RevisitCard: FC<RevisitCardProps> = ({ onDelete, onRevisit, onPass,
             rippleColor={ BUTTON_TRANSPARENT_COLOR  }
             style={ styles.touchable }
         >
-            <View
-                style={{ ...styles.container, backgroundColor: colors.card }}
-            >
+            <View style={{ ...styles.container, backgroundColor: colors.card }}>
+
+                {/* Revisit status or date for next visit */}
                 <Text style={{ ...styles.textDate, color: colors.icon }}>
                     {
                         (revisit.done)
@@ -57,8 +79,10 @@ export const RevisitCard: FC<RevisitCardProps> = ({ onDelete, onRevisit, onPass,
                     }
                 </Text>
 
+                {/* Text person name */}
                 <Text style={{ ...styles.textName, color: colors.text }}>{ revisit.person_name }</Text>
 
+                {/* Text about person */}
                 <Text style={{ ...styles.textDescription, color: colors.text }}>
                     { (revisit.about.length > 200) ? revisit.about.substring(0, 200) + '...' : revisit.about }
                 </Text>
@@ -78,6 +102,7 @@ export const RevisitCard: FC<RevisitCardProps> = ({ onDelete, onRevisit, onPass,
                     touchColor={ BUTTON_TRANSPARENT_COLOR }
                 />
 
+                {/* Context menu */}
                 <Menu
                     onBackdropPress={ () => setIsOpen(false) }
                     opened={ isOpen }

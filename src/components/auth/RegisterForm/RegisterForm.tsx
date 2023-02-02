@@ -5,12 +5,19 @@ import { Formik } from 'formik';
 import { object, ref, string } from 'yup';
 import Icon from 'react-native-vector-icons/Ionicons';
 
+/* Components */
 import { Button, EyeBtn, FormField } from '../../ui';
 
+/* Hooks */
 import { useAuth, useStatus, useTheme } from '../../../hooks';
 
+/* Theme */
 import { styles as themeStyles } from '../../../theme';
 
+/**
+ * This component is responsible for rendering the fields so that a user
+ * can register in the app
+ */
 export const RegisterForm = () => {
     const [ showPassword, setShowPassword ] = useState<boolean>(false);
     const [ showConfirmPassword, setShowConfirmPassword ] = useState<boolean>(false);
@@ -22,6 +29,7 @@ export const RegisterForm = () => {
     const { setErrorForm } = useStatus();
     const { state: { colors } } = useTheme();
 
+    /* Validation schema for register values */
     const registerFormSchema = object().shape({
         name: string()
             .min(2, 'El nombre debe tener al menos 2 caracteres.')
@@ -55,6 +63,8 @@ export const RegisterForm = () => {
         >
             { ({ handleSubmit, isValid, errors }) => (
                 <View style={ themeStyles.formContainer }>
+
+                    {/* Name field */}
                     <FormField
                         autoCapitalize="none"
                         icon={
@@ -69,6 +79,7 @@ export const RegisterForm = () => {
                         placeholder="Ingrese su nombre"
                     />
 
+                    {/* Surname field */}
                     <FormField
                         autoCapitalize="none"
                         icon={
@@ -83,6 +94,7 @@ export const RegisterForm = () => {
                         placeholder="Ingrese su apellido"
                     />
 
+                    {/* Email field */}
                     <FormField
                         autoCapitalize="none"
                         icon={
@@ -98,6 +110,7 @@ export const RegisterForm = () => {
                         placeholder="Ingrese su correo"
                     />
 
+                    {/* Password field */}
                     <FormField
                         autoCapitalize="none"
                         icon={
@@ -112,6 +125,7 @@ export const RegisterForm = () => {
                         secureTextEntry={ !showPassword }
                     />
 
+                    {/* Confirm password field */}
                     <FormField
                         autoCapitalize="none"
                         icon={
@@ -126,6 +140,7 @@ export const RegisterForm = () => {
                         secureTextEntry={ !showConfirmPassword }
                     />
 
+                    {/* Submit button */}
                     <Button
                         disabled={ isAuthLoading }
                         icon={
@@ -142,6 +157,7 @@ export const RegisterForm = () => {
                         touchableStyle={{ marginTop: 30 }}
                     />
 
+                    {/* Sign in link */}
                     <View style={{ ...themeStyles.btnLink, width: width * 0.9 }}>
                         <Text
                             style={{

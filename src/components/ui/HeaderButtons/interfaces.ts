@@ -1,3 +1,4 @@
+/* Defining the props that the component will receive. */
 export interface HeaderButtonsProps {
     logoutButton?: boolean;
     changeMonthButton?: boolean;
