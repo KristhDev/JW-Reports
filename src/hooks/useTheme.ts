@@ -1,8 +1,13 @@
 import { useContext } from 'react';
 import hexToRgba from 'hex-to-rgba';
 
+/* Context */
 import { ThemeContext } from '../theme/context';
 
+/**
+ * This hook is to provide the functions, state and constants in relation
+ * to the theme context.
+ */
 const useTheme = () => {
     const context = useContext(ThemeContext);
 
@@ -20,6 +25,6 @@ const useTheme = () => {
         BUTTON_TRANSLUCENT_COLOR,
         BUTTON_TRANSPARENT_COLOR
     }
-};
+}
 
 export default useTheme;

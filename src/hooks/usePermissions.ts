@@ -21,9 +21,8 @@ const usePermissions = () => {
     const state = useSelector<RootState, PermissionsState>(store => store.permissions);
 
     /**
-     * "It asks for a permission and if the permission is not available it sets a status message."
-     * </code>
-     * @param permission - keyof Permissions
+     * It asks for a permission and if the permission is not available it sets a status message.
+     * @param {keyof Permissions} permission - keyof Permissions
      */
     const askPermission = async (permission: keyof Permissions) => {
         const askPermissions = {

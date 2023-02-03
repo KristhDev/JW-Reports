@@ -23,3 +23,8 @@ export type PaginationPayload = {
 export type HasMorePayload = {
     hasMore: boolean;
 }
+
+
+export type RefreshPayload = {
+    refresh: boolean;
+}

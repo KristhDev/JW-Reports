@@ -2,8 +2,10 @@ import { useSelector } from 'react-redux';
 import { useNavigation } from '@react-navigation/native';
 import dayjs from 'dayjs';
 
+/* Supabase - config */
 import { supabase } from '../supabase/config';
 
+/* Features */
 import { RootState, useAppDispatch } from '../features/store';
 import {
     INIT_COURSE,
@@ -38,11 +40,16 @@ import {
     updateLesson as updateLessonAction
 } from '../features/courses';
 
+/* Hooks */
 import { useAuth, useStatus } from './';
 
+/* Interfaces */
 import { Course, CourseFormValues, CoursesState, Lesson, LessonFormValues, loadCoursesOptions } from '../interfaces/courses';
 import { LoadResourcesOptions, Pagination } from '../interfaces/ui';
 
+/**
+ * Hook to management courses of store with state and actions
+ */
 const useCourses = () => {
     const dispatch = useAppDispatch();
     const { goBack, navigate } = useNavigation();
@@ -68,9 +75,14 @@ const useCourses = () => {
     const setSelectedCourse = (course: Course) => dispatch(setSelectedCourseAction({ course }));
     const setSelectedLesson = (lesson: Lesson) => dispatch(setSelectedLessonAction({ lesson }));
 
+    /**
+     * This function is responsible for activating or suspending a course.
+     * @param {Function} onFinish - This callback executed when the process is finished (success or failure)
+     */
     const activeOrSuspendCourse = async (onFinish?: () => void) => {
         dispatch(setIsCourseLoading({ isLoading: true }));
 
+        /* Should not update if selectedCourse.id is an empty string */
         if (state.selectedCourse.id === '') {
             dispatch(setIsCourseLoading({ isLoading: false }));
             onFinish && onFinish();
@@ -83,6 +95,7 @@ const useCourses = () => {
             return;
         }
 
+        /* If the selectedCourse is finished it should not be updated */
         if (state.selectedCourse.finished) {
             dispatch(setIsCourseLoading({ isLoading: false }));
             onFinish && onFinish();
@@ -122,9 +135,15 @@ const useCourses = () => {
         setStatus({ code: 200, msg });
     }
 
+    /**
+     * It deletes a course and all its lessons from the database.
+     * @param {boolean} back - This parameter allows you to return to the previous screen, by default it is `false`
+     * @param {Function} onFinish - This callback executed when the process is finished (success or failure)
+     */
     const deleteCourse = async (back: boolean = false, onFinish?: () => void) => {
         dispatch(setIsCourseDeleting({ isDeleting: true }));
 
+        /* Should not delete if selectedCourse.id is an empty string */
         if (state.selectedCourse.id === '') {
             onFinish && onFinish();
             dispatch(setIsCourseDeleting({ isDeleting: false }));
@@ -172,9 +191,15 @@ const useCourses = () => {
         });
     }
 
+    /**
+     * It deletes a lesson from the database and updates the state of the app.
+     * @param {boolean} back - This parameter allows you to return to the previous screen, by default it is `false`
+     * @param {Function} onFinish - This callback executed when the process is finished (success or failure)
+     */
     const deleteLesson = async (back: boolean = false, onFinish?: () => void) => {
         dispatch(setIsLessonDeleting({ isDeleting: true }));
 
+        /* Should not delete if selectedLesson.id is an empty string */
         if (state.selectedLesson.id === '') {
             onFinish && onFinish();
             dispatch(setIsLessonDeleting({ isDeleting: false }));
@@ -187,6 +212,7 @@ const useCourses = () => {
             return;
         }
 
+        /* Cannot delete a class if the selectedCourse.user_id is different from user.id */
         if (state.selectedCourse.user_id !== user.id) {
             onFinish && onFinish();
             dispatch(setIsLessonDeleting({ isDeleting: false }));
@@ -225,9 +251,14 @@ const useCourses = () => {
         });
     }
 
+    /**
+     * This function is to finish or start a course again.
+     * @param {Function} onFinish - This callback executed when the process is finished (success or failure)
+     */
     const finishOrStartCourse = async (onFinish?: () => void) => {
         dispatch(setIsCourseLoading({ isLoading: true }));
 
+        /* Should not update if selectedCourse.id is an empty string */
         if (state.selectedCourse.id === '') {
             dispatch(setIsCourseLoading({ isLoading: false }));
             onFinish && onFinish();
@@ -240,6 +271,7 @@ const useCourses = () => {
             return;
         }
 
+        /* If the selectedCourse is suspended it should not be updated */
         if (state.selectedCourse.suspended) {
             dispatch(setIsCourseLoading({ isLoading: false }));
             onFinish && onFinish();
@@ -279,9 +311,15 @@ const useCourses = () => {
         setStatus({ code: 200, msg });
     }
 
+    /**
+     * This function is to finish or start a lesson again.
+     * @param {Date} next_lesson - This is date of next lesson
+     * @param {Function} onFinish - This callback executed when the process is finished (success or failure)
+     */
     const finishOrStartLesson = async (next_lesson: Date, onFinish?: () => void) => {
         dispatch(setIsLessonLoading({ isLoading: true }));
 
+        /* Should not update if selectedLesson.id is an empty string */
         if (state.selectedLesson.id === '') {
             dispatch(setIsLessonLoading({ isLoading: false }));
             onFinish && onFinish();
@@ -294,6 +332,7 @@ const useCourses = () => {
             return;
         }
 
+        /* If the selectedCourse is suspended or finished it should not be updated */
         if (state.selectedCourse.suspended || state.selectedCourse.finished) {
             dispatch(setIsLessonLoading({ isLoading: false }));
             onFinish && onFinish();
@@ -334,6 +373,15 @@ const useCourses = () => {
         setStatus({ code: 200, msg });
     }
 
+    /**
+     * This function is to load the courses using the options that are passed by parameter, you can
+     * load them for pagination or not.
+     * @param {loadCoursesOptions} { filter: CourseFilter, loadMore: boolean, refresh: boolean, search: string } - They are the options that are used to load the courses:
+     * - filter: It is the filter of the courses to show them are: `all`, `active`, `suspended`, `finished`
+     * - loadMore: This flag is used to add or set the courses that are requested, default is `false`
+     * - refresh: This flag is to reset the pagination of the courses, default is `false`
+     * - search: This is a search text to search courses, default is empty `string`
+     */
     const loadCourses = async ({ filter, loadMore = false, refresh = false, search = '' }: loadCoursesOptions) => {
         dispatch(setCourseFilter({ filter }));
         setIsCoursesLoading(true);
@@ -390,6 +438,14 @@ const useCourses = () => {
         (loadMore) ? addCourses(courses!) : setCourses(courses!);
     }
 
+    /**
+     * This function is to load the lessons using the options that are passed by parameter, you can
+     * load them for pagination or not.
+     * @param {LoadResourcesOptions} { loadMore: boolean, refresh: boolean, search: string } - They are the options that are used to load the lessons:
+     * - loadMore: This flag is used to add or set the lessons that are requested, default is `false`
+     * - refresh: This flag is to reset the pagination of the lessons, default is `false`
+     * - search: This is a search text to search lessons, default is empty `string`
+     */
     const loadLessons = async ({ loadMore = false, refresh = false, search = '' }: LoadResourcesOptions) => {
         setIsLessonsLoading(true);
 
@@ -423,6 +479,12 @@ const useCourses = () => {
         (loadMore) ? addLessons(data!) : setLessons(data!);
     }
 
+    /**
+     * This function saves a course to the database and then navigates to the CoursesTopTabsNavigation
+     * screen.
+     * @param {CourseFormValues} courseValues - This is a values for save course
+     * @param {Function} onFinish - This callback executed when the process is finished (success or failure)
+     */
     const saveCourse = async (courseValues: CourseFormValues, onFinish?: () => void) => {
         dispatch(setIsCourseLoading({ isLoading: true }));
 
@@ -453,6 +515,10 @@ const useCourses = () => {
         } as never);
     }
 
+    /**
+     * This function saves a lesson to the database and then navigates to the LessonsScreen.
+     * @param {LessonFormValues} lessonValues - This is a values for save lesson
+     */
     const saveLesson = async (lessonValues: LessonFormValues) => {
         dispatch(setIsLessonLoading({ isLoading: true }));
 
@@ -478,6 +544,11 @@ const useCourses = () => {
         navigate('LessonsScreen' as never);
     }
 
+    /**
+     * This function updates a course in the database and then updates the state with the updated
+     * course.
+     * @param {CourseFormValues} courseValues - This is a values for update course
+     */
     const updateCourse = async (courseValues: CourseFormValues) => {
         dispatch(setIsCourseLoading({ isLoading: true }));
 
@@ -503,6 +574,10 @@ const useCourses = () => {
         goBack();
     }
 
+    /**
+     * It updates a lesson in the database and then updates the state with the updated lesson.
+     * @param {LessonFormValues} lessonValues - This is a values for update lesson
+     */
     const updateLesson = async (lessonValues: LessonFormValues) => {
         dispatch(setIsLessonLoading({ isLoading: true }));
 

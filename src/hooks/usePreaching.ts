@@ -2,8 +2,10 @@ import { useSelector } from 'react-redux';
 import { useNavigation } from '@react-navigation/native';
 import dayjs from 'dayjs';
 
+/* Supabase - config */
 import { supabase } from '../supabase/config';
 
+/* Features */
 import { RootState, useAppDispatch } from '../features/store';
 import {
     INIT_PREACHING,
@@ -19,10 +21,15 @@ import {
     updatePreaching as updatePreachingAction,
 } from '../features/preaching';
 
+/* Hooks */
 import { useAuth, useStatus } from './';
 
+/* Interfaces */
 import { Preaching, PreachingFormValues, PreachingState } from '../interfaces/preaching';
 
+/**
+ * Hook to management preaching of store with state and actions
+ */
 const usePreaching = () => {
     const dispatch = useAppDispatch();
     const { goBack } = useNavigation();
@@ -37,6 +44,10 @@ const usePreaching = () => {
     const setSelectedDate = (date: Date) => dispatch(setSelectedDateAction({ selectedDate: date }));
     const setSelectedPreaching = (preaching: Preaching) => dispatch(setSelectedPreachingAction({ preaching }));
 
+    /**
+     * Load preachings from the database and set them in the state.
+     * @param {Date} date - Date of preaching (month)
+     */
     const loadPreachings = async (date: Date) => {
         setIsPreachingsLoading(true);
 
@@ -57,6 +68,10 @@ const usePreaching = () => {
         dispatch(setPreachings({ preachings: data! }));
     }
 
+    /**
+     * This function is to save the preaching day and return to the previous screen.
+     * @param {PreachingFormValues} preachingValues - The values for save preaching day
+     */
     const savePreaching = async (preachingValues: PreachingFormValues) => {
         dispatch(setIsPreachingLoading({ isLoading: true }));
 
@@ -85,6 +100,10 @@ const usePreaching = () => {
         goBack();
     }
 
+    /**
+     * This function is to update the preaching day and return to the previous screen.
+     * @param {PreachingFormValues} preachingValues - Values to update preaching day
+     */
     const updatePreaching = async (preachingValues: PreachingFormValues) => {
         dispatch(setIsPreachingLoading({ isLoading: true }));
 
@@ -113,6 +132,10 @@ const usePreaching = () => {
         goBack();
     }
 
+    /**
+     * This function is to delete a preaching day and return to the previous screen.
+     * @param {Function} onFinish - This callback executed when the process is finished (success or failure)
+     */
     const deletePreaching = async (onFinish?: () => void) => {
         dispatch(setIsPreachingDeleting({ isDeleting: true }));
 

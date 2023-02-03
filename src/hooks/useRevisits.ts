@@ -3,8 +3,10 @@ import { useNavigation } from '@react-navigation/native';
 import { Image } from 'react-native-image-crop-picker';
 import dayjs from 'dayjs';
 
+/* Supabase - config */
 import { supabase } from '../supabase/config';
 
+/* Features */
 import { RootState, useAppDispatch } from '../features/store';
 import {
     INIT_REVISIT,
@@ -26,11 +28,16 @@ import {
     removeRevisit,
 } from '../features/revisits';
 
+/* Hooks */
 import { useAuth, useImage, useStatus } from './';
 
+/* Interfaces */
 import { Revisit, RevisitFormValues, RevisitsState, SaveRevisitOptions, loadRevisitsOptions } from '../interfaces/revisits';
 import { Pagination } from '../interfaces/ui';
 
+/**
+ * Hook to management revisits of store with state and actions
+ */
 const useRevisits = () => {
     const dispatch = useAppDispatch();
     const { goBack, navigate } = useNavigation();
@@ -51,6 +58,15 @@ const useRevisits = () => {
     const setRevisitsPagination = (pagination: Pagination) => dispatch(setRevisitsPaginationAction({ pagination }));
     const setSelectedRevisit = (revisit: Revisit) => dispatch(setSelectedRevisitAction({ revisit }));
 
+    /**
+     * This function is to load the revisits using the options that are passed by parameter, you can
+     * load them for pagination or not.
+     * @param {loadRevisitsOptions} { filter: RevisitFilter, loadMore: boolean, refresh: boolean, search: string } - They are the options that are used to load the revisits:
+     * - filter: It is the filter of the revisits to show them are: `all`, `unvisited`, `visited`
+     * - loadMore: This flag is used to add or set the revisits that are requested, default is `false`
+     * - refresh: This flag is to reset the pagination of the revisits, default is `false`
+     * - search: This is a search text to search revisits, default is empty `string`
+     */
     const loadRevisits = async ({ filter, loadMore = false, refresh = false, search = '' }: loadRevisitsOptions) => {
         dispatch(setRevisitFilter({ filter }));
         setIsRevisitsLoading(true);
@@ -91,11 +107,21 @@ const useRevisits = () => {
         (loadMore) ? addRevisits(data!) : setRevisits(data!);
     }
 
-    const saveRevisit = async ({ revisitValues, back  = true, image, onFinish }: SaveRevisitOptions) => {
+    /**
+     * This function is to save a revisit according to the options that are sent to you.
+     * @param {SaveRevisitOptions} { revisitValues: RevisitFormValues, back: boolean, image: Image, onFinish: Function } - This
+     * is a options for save revisit.
+     * - revisitValues: This is a values for save revisits
+     * - back: This flag is used to navigate for previus screen, default is `true`
+     * - image: This is a image for upload and save uri in revisit, default is `undefined`
+     * - onFinish: This callback executed when the process is finished (success or failure), default is `undefined`
+     */
+    const saveRevisit = async ({ revisitValues, back = true, image, onFinish }: SaveRevisitOptions) => {
         dispatch(setIsRevisitLoading({ isLoading: true }));
 
         let photo = null;
 
+        /* If image is other than undefined, an attempt is made to upload */
         if (image) {
             const { data, error } = await uploadImage(image);
 
@@ -137,12 +163,20 @@ const useRevisits = () => {
         back && navigate('RevisitsTopTabsNavigation' as never);
     }
 
+    /**
+     * This function is responsible for updating a revisit and returns to the previous screen.
+     * @param {RevisitFormValues} revisitValues - Revisit values to update
+     * @param {Image} image - Image to upload, default is `undefined`
+     */
     const updateRevisit = async (revisitValues: RevisitFormValues, image?: Image) => {
         dispatch(setIsRevisitLoading({ isLoading: true }));
 
         let photo = state.selectedRevisit.photo;
 
+        /* If image is other than undefined, an attempt is made to upload */
         if (image) {
+
+            /* If revisit has an image you have to delete it to update it with the new one */
             if (photo) {
                 const { error: errorDelete } = await deleteImage(photo);
 
@@ -182,9 +216,15 @@ const useRevisits = () => {
         goBack();
     }
 
+    /**
+     * This function is to delete a revisit.
+     * @param {boolean} back - This is a flag to indicate whether to navigate to the previous screen or not, default is `false`
+     * @param {Function} onFinish - This callback executed when the process is finished (success or failure), default is `undefined`
+     */
     const deleteRevisit = async (back: boolean = false, onFinish?: () => void) => {
         dispatch(setIsRevisitDeleting({ isDeleting: true }));
 
+        /* Should not delete if selectedRevisit.id is an empty string */
         if (state.selectedRevisit.id === '') {
             onFinish && onFinish();
             dispatch(setIsRevisitDeleting({ isDeleting: false }));
@@ -197,6 +237,7 @@ const useRevisits = () => {
             return;
         }
 
+        /* If revisit has a photo you have to delete it */
         if (state.selectedRevisit.photo) {
             const { error: errorDelete } = await deleteImage(state.selectedRevisit.photo);
 
@@ -232,9 +273,14 @@ const useRevisits = () => {
         });
     }
 
+    /**
+     * This function is to mark a revisit as complete.
+     * @param {Function} onFailFinish - This callback executed when the process is failed
+     */
     const completeRevisit = async (onFailFinish?: () => void) => {
         dispatch(setIsRevisitLoading({ isLoading: true }));
 
+        /* Should not update if selectedRevisit.id is an empty string */
         if (state.selectedRevisit.id === '') {
             onFailFinish && onFailFinish();
             dispatch(setIsRevisitDeleting({ isDeleting: false }));

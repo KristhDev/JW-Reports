@@ -10,13 +10,13 @@ import {
     LessonPayload,
     SetCoursesPayload,
     SetLessonsPayload,
-    SetRefreshCoursesPayload,
 } from '../../interfaces/courses';
 
 import {
     HasMorePayload,
     HistoryPayload,
     PaginationPayload,
+    RefreshPayload,
     RemoveResourcePayload,
     SetIsDeletingPayload,
     SetIsLoadingPayload
@@ -234,11 +234,11 @@ const courseSlice = createSlice({
             state.lessonsPagination = action.payload.pagination;
         },
 
-        setRefreshCourses: (state, action: PayloadAction<SetRefreshCoursesPayload>) => {
+        setRefreshCourses: (state, action: PayloadAction<RefreshPayload>) => {
             state.refreshCourses = action.payload.refresh;
         },
 
-        setRefreshLessons: (state, action: PayloadAction<SetRefreshCoursesPayload>) => {
+        setRefreshLessons: (state, action: PayloadAction<RefreshPayload>) => {
             state.refreshLessons = action.payload.refresh;
         },
 
