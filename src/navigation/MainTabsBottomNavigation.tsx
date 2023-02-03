@@ -1,18 +1,25 @@
 import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
+/* Navigations */
 import { PreachingStackNavigation } from './';
 import { CoursesStackNavigation } from './courses';
 import { RevistsStackNavigation } from './revisits';
 
+/* Components */
 import { TabBar } from '../components/ui';
 
+/* Hooks */
 import { useTheme } from '../hooks';
 
+/* Interfaces */
 import { MainTabsBottomParamsList } from '../interfaces/ui';
 
 const Tabs = createBottomTabNavigator<MainTabsBottomParamsList>();
 
+/**
+ * This is a main tabs bottom navigation.
+ */
 const MainTabsBottomNavigation = () => {
     const { state: { colors } } = useTheme();
 

@@ -7,6 +7,12 @@ type ThemeAction =
     | { type: '[Theme] set is loaded theme', payload: { isLoaded: boolean } }
     | { type: '[Theme] set device theme', payload: { theme: Theme } }
 
+/**
+ * This reducer is used to manage the theme state.
+ * @param {ThemeState} state - ThemeState - the current state of the reducer
+ * @param {ThemeAction} action - ThemeAction
+ * @returns The state is being returned.
+ */
 const themeReducer = (state: ThemeState, action: ThemeAction): ThemeState => {
     switch (action.type) {
         case '[Theme] set theme':

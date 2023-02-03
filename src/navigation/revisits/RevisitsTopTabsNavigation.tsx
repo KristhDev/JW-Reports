@@ -1,14 +1,20 @@
 import React from 'react';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 
+/* Screens */
 import { Revisits } from '../../screens/revisits';
 
+/* Hooks */
 import { useTheme } from '../../hooks';
 
+/* Interfaces */
 import { RevistsTopTabsParamsList } from '../../interfaces/revisits';
 
 const Tabs = createMaterialTopTabNavigator<RevistsTopTabsParamsList>();
 
+/**
+ * This is a top taps navigation for the revisits.
+ */
 const RevisitsTopTabsNavigation = () => {
     const { state: { colors }, BUTTON_TRANSLUCENT_COLOR, BUTTON_TRANSPARENT_COLOR } = useTheme();
 

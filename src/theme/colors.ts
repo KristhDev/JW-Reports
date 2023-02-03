@@ -1,5 +1,6 @@
 import { Colors } from '../interfaces/theme';
 
+/* Exporting the object `lightColors` as a constant. */
 export const lightColors: Colors = {
     background: '#F1F1F1',
     bottom: '#D8D8D8',
@@ -21,6 +22,7 @@ export const lightColors: Colors = {
     titleText: '#292929',
 }
 
+/* Exporting the object `darkColors` as a constant. */
 export const darkColors: Colors = {
     background: '#000000',
     bottom: '#292929',
@@ -42,6 +44,7 @@ export const darkColors: Colors = {
     titleText: '#FFFFFF',
 }
 
+/* A fallback for when the theme is not defined. */
 export const undefinedColors: Colors = {
     background: 'transparent',
     bottom: 'transparent',

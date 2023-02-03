@@ -2,14 +2,20 @@ import React from 'react';
 import { useWindowDimensions } from 'react-native';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 
+/* Screens */
 import { Courses } from '../../screens/courses';
 
+/* Hooks */
 import { useTheme } from '../../hooks';
 
+/* Interfaces */
 import { CoursesTopTabsParamsList } from '../../interfaces/courses';
 
 const Tabs = createMaterialTopTabNavigator<CoursesTopTabsParamsList>();
 
+/**
+ * This is a top taps navigation for the courses.
+ */
 const CoursesTopTabsNavigation = () => {
     const { width } = useWindowDimensions();
     const { state: { colors }, BUTTON_TRANSLUCENT_COLOR, BUTTON_TRANSPARENT_COLOR } = useTheme();

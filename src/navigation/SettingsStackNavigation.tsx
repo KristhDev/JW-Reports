@@ -1,15 +1,21 @@
 import React from 'react';
 import { CardStyleInterpolators, createStackNavigator } from '@react-navigation/stack';
 
+/* Screens */
 import { Profile, Credentials } from '../screens/auth';
 import { Settings } from '../screens/ui';
 
+/* Components */
 import { BackButton } from '../components/ui';
 
+/* Hooks */
 import { useTheme } from '../hooks';
 
 const Stack = createStackNavigator();
 
+/**
+ * This is a stack navigation for settings
+ */
 const SettingsStackNavigation = () => {
     const { state: { colors } } = useTheme();
 

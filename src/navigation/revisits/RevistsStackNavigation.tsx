@@ -2,18 +2,26 @@ import React, { useState } from 'react';
 import { CardStyleInterpolators, createStackNavigator } from '@react-navigation/stack';
 import { useNavigation } from '@react-navigation/native';
 
+/* Navigation */
 import RevisitsTopTabsNavigation from './RevisitsTopTabsNavigation';
 
+/* Screens */
 import { AddOrEditRevisit, RevisitDetail } from '../../screens/revisits';
 
+/* Components */
 import { BackButton, HeaderButtons } from '../../components/ui';
 
+/* Hooks */
 import { useRevisits, useTheme } from '../../hooks';
 
+/* Interfaces */
 import { RevisitsStackParamsList } from '../../interfaces/revisits';
 
 const Stack = createStackNavigator<RevisitsStackParamsList>();
 
+/**
+ * This is a stack navigation for the revisits.
+ */
 const RevisitsStackNavigation = () => {
     const [ showDeleteModal, setShowDeleteModal ] = useState<boolean>(false);
     const { navigate } = useNavigation();
@@ -23,6 +31,9 @@ const RevisitsStackNavigation = () => {
 
     const revisitDetailTitle = `Revisita ${ selectedRevisit.person_name }`;
 
+    /**
+     * If the user confirms the delete, then delete the revisit and close the modal.
+     */
     const handleDeleteConfirm = () => {
         deleteRevisit(true, () => setShowDeleteModal(false));
     }

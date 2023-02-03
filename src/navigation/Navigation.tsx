@@ -2,34 +2,49 @@ import React, { useEffect } from 'react';
 import { AppState, StatusBar } from 'react-native';
 import { CardStyleInterpolators, createStackNavigator } from '@react-navigation/stack';
 
+/* Navigation */
 import { AuthStackNavigation, MainTabsBottomNavigation, SettingsStackNavigation } from './';
 
+/* Screens */
 import { StatusModal } from '../screens/status';
 
-import { useAuth, useCourses, usePermissions, useRevisits, useStatus, useTheme } from '../hooks';
+/* Hooks */
+import { useAuth, useCourses, usePermissions, usePreaching, useRevisits, useStatus, useTheme } from '../hooks';
 
+/* Interfaces */
 import { NavigationParamsList } from '../interfaces/ui';
 
 const Stack = createStackNavigator<NavigationParamsList>();
 
+/**
+ * This a main navigation for app.
+ */
 const Navigation = () => {
     const { state: { isAuthenticated }, renew } = useAuth();
     const { checkPermissions } = usePermissions();
     const { clearCourses } = useCourses();
+    const { clearPreaching } = usePreaching();
     const { clearRevisits } = useRevisits();
     const { clearStatus } = useStatus();
     const { state: { selectedTheme, } } = useTheme();
 
+    /**
+     * Effect to clear store when mount component.
+     */
     useEffect(() => {
         checkPermissions();
         clearStatus();
 
         clearCourses();
+        clearPreaching();
         clearRevisits();
 
         renew();
     }, []);
 
+    /**
+     * Effect to check permissions when change AppState.
+     */
     useEffect(() => {
         const unSubscribreAppState = AppState.addEventListener('change', async (state) => {
             if (state !== 'active') return;

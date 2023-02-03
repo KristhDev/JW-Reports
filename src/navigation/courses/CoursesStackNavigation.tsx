@@ -2,32 +2,58 @@ import React, { useState } from 'react';
 import { CardStyleInterpolators, createStackNavigator } from '@react-navigation/stack';
 import { useNavigation } from '@react-navigation/native';
 
+/* Navigation */
 import CoursesTopTabsNavigation from './CoursesTopTabsNavigation';
 
+/* Screens */
 import { AddOrEditCourse, AddOrEditLesson, CourseDetail, LessonDetail, Lessons } from '../../screens/courses';
 
+/* Components */
 import { BackButton, HeaderButtons } from '../../components/ui';
 
+/* Hooks */
 import { useCourses, useTheme } from '../../hooks';
 
+/* Interfaces */
 import { CoursesStackParamsList } from '../../interfaces/courses';
 
 const Stack = createStackNavigator<CoursesStackParamsList>();
 
+/**
+ * This is a stack navigation for the courses.
+ */
 const CoursesStackNavigation = () => {
     const [ showDeleteCourseModal, setShowDeleteCourseModal ] = useState<boolean>(false);
     const [ showDeleteLessonModal, setShowDeleteLessonModal ] = useState<boolean>(false);
     const { navigate } = useNavigation();
 
-    const { state: { isCourseDeleting, selectedCourse, selectedLesson, isLessonDeleting }, deleteCourse, deleteLesson } = useCourses();
+    const {
+        state: {
+            isCourseDeleting,
+            selectedCourse,
+            selectedLesson,
+            isLessonDeleting
+        },
+        deleteCourse,
+        deleteLesson
+    } = useCourses();
+
     const { state: { colors } } = useTheme();
 
     const courseDetailTitle = `Curso a ${ selectedCourse.person_name }`;
 
+    /**
+     * When the user clicks the delete button, the deleteCourse function is called, which sets the
+     * showDeleteCourseModal state to false.
+     */
     const handleDeleteCourse = () => {
         deleteCourse(true, () => setShowDeleteCourseModal(false));
     }
 
+    /**
+     * When the user clicks the delete button, show the delete modal, and when the user clicks the
+     * delete button in the modal, delete the lesson.
+     */
     const handleDeleteLesson = () => {
         deleteLesson(true, () => setShowDeleteLessonModal(false));
     }

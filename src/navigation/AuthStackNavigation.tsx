@@ -2,20 +2,29 @@ import React, { useEffect } from 'react';
 import { CardStyleInterpolators, createStackNavigator } from '@react-navigation/stack';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
+/* Screens */
 import { ForgotPassword, Login, Register } from '../screens/auth';
 
+/* Hooks */
 import { useAuth, useTheme } from '../hooks';
 
+/* Interfaces */
 import { AuthStackParamsList } from '../interfaces/auth';
 
 const Stack = createStackNavigator<AuthStackParamsList>();
 
+/**
+ * This is a stack navigation for authentication.
+ */
 const AuthStackNavigation = () => {
     const { top } = useSafeAreaInsets();
 
     const { clearAuth } = useAuth();
     const { state: { colors } } = useTheme();
 
+    /**
+     * Effect to clean authentication when mount component.
+     */
     useEffect(() => {
         clearAuth();
     }, []);
