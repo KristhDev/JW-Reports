@@ -3,18 +3,27 @@ import { ScrollView, Text, TouchableOpacity, View } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import dayjs from 'dayjs';
 
+/* Features */
 import { INIT_COURSE } from '../../../features/courses';
 
+/* Screens */
 import { ActiveOrSuspendCourseModal } from '../ActiveOrSuspendCourseModal';
 import { FinishOrStartCourseModal }  from '../FinishOrStartCourseModal';
 
+/* Components */
 import { InfoText, Title } from '../../../components/ui';
 
+/* Hooks */
 import { useCourses, useTheme } from '../../../hooks';
 
+/* Styles */
 import { styles as themeStyles } from '../../../theme';
 import styles from './styles';
 
+/**
+ * This screen is responsible for grouping the components to
+ * show the detail of a course.
+ */
 const CourseDetail = () => {
     const [ showASModal, setShowASModal ] = useState<boolean>(false);
     const [ showFSModal, setShowFSModal ] = useState<boolean>(false);
@@ -29,6 +38,10 @@ const CourseDetail = () => {
             ? 'Suspendido'
             : 'En curso';
 
+    /**
+     * When the user clicks the button, navigate to the AddOrEditLessonScreen screen and pass the
+     * selectedLesson object as a prop.
+     */
     const handleAddLesson = () => {
         setSelectedLesson({
             ...selectedLesson,
@@ -38,10 +51,17 @@ const CourseDetail = () => {
         navigate('AddOrEditLessonScreen' as never);
     }
 
+    /**
+     * The function handleLessonsList() is a function that navigates to the LessonsScreen.
+     */
     const handleLessonsList = () => {
         navigate('LessonsScreen' as never);
     }
 
+    /**
+     * Effect to reset selectedCourse when index of navigation
+     * is zero.
+     */
     useEffect(() => {
         addListener('blur', () => {
             const { index } = getState();
@@ -61,18 +81,22 @@ const CourseDetail = () => {
                 overScrollMode="never"
                 style={{ flex: 1 }}
             >
+
+                {/* Title of detail */}
                 <Title
                     containerStyle={ themeStyles.titleContainer }
                     text={ selectedCourse.person_name.toUpperCase() }
                     textStyle={{ fontSize: 24 }}
                 />
 
+                {/* Text publication */}
                 <InfoText
                     containerStyle={{ paddingHorizontal: 20, width: '100%' }}
                     text={ selectedCourse.publication.toUpperCase() }
                     textStyle={{ fontSize: 16, fontWeight: 'bold', textAlign: 'left' }}
                 />
 
+                {/* Course status */}
                 <View style={ styles.sectionStyle }>
                     <Text
                         style={{
@@ -107,6 +131,7 @@ const CourseDetail = () => {
                     }
                 </View>
 
+                {/* Text person about */}
                 <View style={ styles.sectionStyle }>
                     <Text
                         style={{
@@ -122,6 +147,7 @@ const CourseDetail = () => {
                     </Text>
                 </View>
 
+                {/* Text person address */}
                 <View style={ styles.sectionStyle }>
                     <Text
                         style={{
@@ -137,6 +163,7 @@ const CourseDetail = () => {
                     </Text>
                 </View>
 
+                {/* Course last lesson */}
                 <View style={ styles.sectionStyle }>
                     <Text
                         style={{
@@ -147,42 +174,41 @@ const CourseDetail = () => {
                         Última clase:
                     </Text>
 
-                    {
-                        (selectedCourse?.last_lesson) && (
-                            <View
-                                style={{
-                                    ...styles.cardContainer,
-                                    borderColor: colors.text,
-                                }}
-                            >
-                                <View style={{ backgroundColor: colors.header }}>
-                                    <Text
-                                        style={{
-                                            ...styles.cardHeaderText,
-                                            color: colors.text
-                                        }}
-                                    >
-                                        {
-                                            (selectedCourse.last_lesson.done)
-                                                ? 'Clase impartida'
-                                                : `Próxima clase ${ dayjs(selectedCourse.last_lesson.next_lesson).format('DD/MM/YYYY') }`
-                                            }
-                                    </Text>
-                                </View>
-
-                                <View>
-                                    <Text
-                                        style={{
-                                            ...styles.cardContentText,
-                                            color: colors.text,
-                                        }}
-                                    >
-                                        { selectedCourse.last_lesson.description }
-                                    </Text>
-                                </View>
+                    {/* Card of last lesson */}
+                    { (selectedCourse?.last_lesson) && (
+                        <View
+                            style={{
+                                ...styles.cardContainer,
+                                borderColor: colors.text,
+                            }}
+                        >
+                            <View style={{ backgroundColor: colors.header }}>
+                                <Text
+                                    style={{
+                                        ...styles.cardHeaderText,
+                                        color: colors.text
+                                    }}
+                                >
+                                    {
+                                        (selectedCourse.last_lesson.done)
+                                            ? 'Clase impartida'
+                                            : `Próxima clase ${ dayjs(selectedCourse.last_lesson.next_lesson).format('DD/MM/YYYY') }`
+                                        }
+                                </Text>
                             </View>
-                        )
-                    }
+
+                            <View>
+                                <Text
+                                    style={{
+                                        ...styles.cardContentText,
+                                        color: colors.text,
+                                    }}
+                                >
+                                    { selectedCourse.last_lesson.description }
+                                </Text>
+                            </View>
+                        </View>
+                    ) }
 
                     <TouchableOpacity
                         activeOpacity={ 0.75 }
@@ -205,6 +231,7 @@ const CourseDetail = () => {
                     </TouchableOpacity>
                 </View>
 
+                {/* Date of create course */}
                 <Text style={{ ...styles.dateCreatedText, color: colors.modalText }}>
                     { dayjs(selectedCourse.created_at).format('DD/MM/YYYY') }
                 </Text>

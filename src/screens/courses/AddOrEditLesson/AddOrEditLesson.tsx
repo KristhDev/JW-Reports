@@ -2,13 +2,20 @@ import React from 'react';
 import { View } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
+/* Components */
 import { LessonForm } from '../../../components/courses';
 import { Title } from '../../../components/ui';
 
+/* Hooks */
 import { useCourses } from '../../../hooks';
 
+/* Theme */
 import { styles as themeStyles } from '../../../theme';
 
+/**
+ * This screen is responsible for grouping the components
+ * to add or edit a lesson.
+ */
 const AddOrEditLesson = () => {
     const { state: { selectedLesson } } = useCourses();
 

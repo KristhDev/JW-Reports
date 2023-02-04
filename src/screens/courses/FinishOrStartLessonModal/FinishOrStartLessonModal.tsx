@@ -3,17 +3,27 @@ import { ActivityIndicator, Text, View } from 'react-native';
 import { Formik } from 'formik';
 import Icon from 'react-native-vector-icons/Ionicons';
 
+/* Screens */
 import { Modal } from '../../ui';
 
+/* Components */
 import { ModalActions } from './ModalActions';
 import { DatetimeField } from '../../../components/ui';
 
+/* Hooks */
 import { useCourses, useTheme } from '../../../hooks';
 
+/* Interfaces */
 import { ModalProps } from '../../../interfaces/ui';
 
+/* Theme */
 import { styles as themeStyles } from '../../../theme';
 
+/**
+ * This modal is responsible for grouping the components to finish
+ * or start a lesson again.
+ * @param {ModalProps} { isOpen: boolean, onClose: () => void }
+ */
 const FinishOrStartLessonModal: FC<ModalProps> = ({ isOpen, onClose }) => {
     const [ reschedule, setReschedule ] = useState<boolean>(false);
 
@@ -24,11 +34,20 @@ const FinishOrStartLessonModal: FC<ModalProps> = ({ isOpen, onClose }) => {
         ? '¿Está seguro de reprogramar esta clase?'
         : '¿Está seguro de terminar esta clase?';
 
+    /**
+     * When the user clicks the close button, the modal will close and the onClose function will be
+     * called.
+     */
     const handleClose = () => {
         setReschedule(false);
         onClose();
     }
 
+    /**
+     * This is the confirmation function of the modal that executes one or another function
+     * depending on selectdLesson, the reschedule state or the function parameters.
+     * @param {{ next_lesson: Date }} values - This is the values with next_lesson property to lesson
+     */
     const handleConfirm = (values?: { next_lesson: Date }) => {
         if (!reschedule && !selectedLesson.done) {
             finishOrStartLesson(new Date(selectedLesson.next_lesson), handleClose);
@@ -54,6 +73,8 @@ const FinishOrStartLessonModal: FC<ModalProps> = ({ isOpen, onClose }) => {
                         {
                             (!reschedule) ? (
                                 <>
+
+                                    {/* Modal title  */}
                                     <Text
                                         style={{
                                             ...themeStyles.modalText,
@@ -63,6 +84,7 @@ const FinishOrStartLessonModal: FC<ModalProps> = ({ isOpen, onClose }) => {
                                         { modalMsg }
                                     </Text>
 
+                                    {/* Modal actions */}
                                     <ModalActions
                                         onClose={ handleClose }
                                         onConfirm={ handleConfirm }
@@ -78,6 +100,8 @@ const FinishOrStartLessonModal: FC<ModalProps> = ({ isOpen, onClose }) => {
                                 >
                                     { ({ handleSubmit }) => (
                                         <>
+
+                                            {/* Modal title in form */}
                                             <Text
                                                 style={{
                                                     ...themeStyles.modalText,
@@ -87,6 +111,7 @@ const FinishOrStartLessonModal: FC<ModalProps> = ({ isOpen, onClose }) => {
                                                 Por favor ingrese la fecha en la se dará la clase
                                             </Text>
 
+                                            {/* Next lesson field */}
                                             <DatetimeField
                                                 icon={
                                                     <Icon
@@ -104,6 +129,7 @@ const FinishOrStartLessonModal: FC<ModalProps> = ({ isOpen, onClose }) => {
                                                 style={{ width: '100%' }}
                                             />
 
+                                            {/* Modal actions */}
                                             <ModalActions
                                                 onClose={ handleClose }
                                                 onConfirm={ handleSubmit }

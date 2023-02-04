@@ -1,5 +1,6 @@
 import { ItemOption } from '../../../interfaces/ui';
 
+/* Defining the props that the component will receive. */
 export interface OptionsModalProps {
     isOpen: boolean;
     items: ItemOption[];

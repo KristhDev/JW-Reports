@@ -1,16 +1,26 @@
 import React, { FC } from 'react';
 import { ActivityIndicator, Text, View } from 'react-native';
 
+/* Screens */
 import { Modal } from '../../ui';
 
+/* Components */
 import { Button } from '../../../components/ui';
 
+/* Hooks */
 import { useCourses, useTheme } from '../../../hooks';
 
+/* Interfaces */
 import { ModalProps } from '../../../interfaces/ui';
 
+/* Theme */
 import { styles as themeStyles } from '../../../theme';
 
+/**
+ * This modal is responsible for grouping the components to finish
+ * or start a course again.
+ * @param {ModalProps} { isOpen: boolean, onClose: () => void }
+ */
 const FinishOrStartCourseModal: FC<ModalProps> = ({ isOpen, onClose }) => {
     const { state: { selectedCourse, isCourseLoading }, finishOrStartCourse } = useCourses();
     const { state: { colors }, BUTTON_TRANSLUCENT_COLOR } = useTheme();
@@ -21,6 +31,10 @@ const FinishOrStartCourseModal: FC<ModalProps> = ({ isOpen, onClose }) => {
 
     const confirmTextButton = (selectedCourse.finished) ? 'COMENZAR' : 'TERMINAR';
 
+    /**
+     * HandleConfirm() is a function that calls the finishOrStartCourse() function and passes the
+     * onClose() function as an argument.
+     */
     const handleConfirm = () => {
         finishOrStartCourse(onClose);
     }

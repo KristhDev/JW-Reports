@@ -2,9 +2,14 @@ import React from 'react';
 import { View } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
+/* Components */
 import { LoginForm } from '../../../components/auth';
 import { ThemeBtn, Title } from '../../../components/ui';
 
+/**
+ * This screen is to display the form to login with
+ * an account.
+ */
 const Login = () => {
     return (
         <KeyboardAwareScrollView

@@ -2,13 +2,20 @@ import React from 'react';
 import { View } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
+/* Components */
 import { RevisitForm } from '../../../components/revisits';
 import { Title } from '../../../components/ui';
 
+/* Hooks */
 import { useRevisits } from '../../../hooks';
 
+/* Theme */
 import { styles as themeStyles } from '../../../theme';
 
+/**
+ * This screen is responsible for grouping the components to add or
+ * edit a revisit.
+ */
 const AddOrEditRevisit = () => {
     const { state: { selectedRevisit } } = useRevisits();
 

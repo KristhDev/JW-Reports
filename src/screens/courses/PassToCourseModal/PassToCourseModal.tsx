@@ -3,17 +3,27 @@ import { View, ActivityIndicator, Text } from 'react-native';
 import { Formik } from 'formik';
 import Icon from 'react-native-vector-icons/Ionicons';
 
+/* Screens */
 import { Modal } from '../../ui';
 
+/* Components */
 import { ModalActions } from './ModalActions';
 import { FormField } from '../../../components/ui';
 
+/* Hooks */
 import { useCourses, useRevisits, useStatus, useTheme } from '../../../hooks';
 
+/* Interfaces */
 import { ModalProps } from '../../../interfaces/ui';
 
+/* Theme */
 import { styles as themeStyles } from '../../../theme';
 
+/**
+ * This modal is responsible for grouping the components to
+ * revisit a course.
+ * @param {ModalProps} { isOpen: boolean, onClose: () => void }
+ */
 const PassToCourseModal: FC<ModalProps> = ({ isOpen, onClose }) => {
     const [ startCourse, setStartCourse ] = useState<boolean>(false);
 
@@ -22,6 +32,11 @@ const PassToCourseModal: FC<ModalProps> = ({ isOpen, onClose }) => {
     const { setStatus } = useStatus();
     const { state: { colors } } = useTheme();
 
+    /**
+     * This is the confirmation function of the modal that executes one or another function
+     * depending on startCourse or the function parameters.
+     * @param {{ publication: string }} values - This is the values with publication property to create course
+     */
     const handleConfirm = (values?: { publication: string }) => {
         if (startCourse) {
             if (values?.publication && values?.publication.length >= 5) {
@@ -48,6 +63,10 @@ const PassToCourseModal: FC<ModalProps> = ({ isOpen, onClose }) => {
         }
     }
 
+    /**
+     * When the user clicks the close button, the modal closes and the startCourse state is set to
+     * false.
+     */
     const handleClose = () => {
         onClose();
         setStartCourse(false);
@@ -66,6 +85,8 @@ const PassToCourseModal: FC<ModalProps> = ({ isOpen, onClose }) => {
                         {
                             (!startCourse) ? (
                                 <>
+
+                                    {/* Modal title */}
                                     <Text
                                         style={{
                                             ...themeStyles.modalText,
@@ -75,6 +96,7 @@ const PassToCourseModal: FC<ModalProps> = ({ isOpen, onClose }) => {
                                         ¿Está seguro de comenzar un curso bíblico con { selectedRevisit.person_name }?
                                     </Text>
 
+                                    {/* Modal actions */}
                                     <ModalActions
                                         onClose={ handleClose }
                                         onConfirm={ handleConfirm }
@@ -87,6 +109,8 @@ const PassToCourseModal: FC<ModalProps> = ({ isOpen, onClose }) => {
                                 >
                                     { ({ handleSubmit }) => (
                                         <>
+
+                                            {/* Modal title in form */}
                                             <Text
                                                 style={{
                                                     ...themeStyles.modalText,
@@ -96,6 +120,7 @@ const PassToCourseModal: FC<ModalProps> = ({ isOpen, onClose }) => {
                                                 Por favor ingrese el nombre de la publicación de estudio
                                             </Text>
 
+                                            {/* Publication field */}
                                             <FormField
                                                 icon={
                                                     <Icon
@@ -110,6 +135,7 @@ const PassToCourseModal: FC<ModalProps> = ({ isOpen, onClose }) => {
                                                 style={{ width: '100%' }}
                                             />
 
+                                            {/* Modal actions in form */}
                                             <ModalActions
                                                 onClose={ handleClose }
                                                 onConfirm={ handleSubmit }
@@ -119,7 +145,6 @@ const PassToCourseModal: FC<ModalProps> = ({ isOpen, onClose }) => {
                                 </Formik>
                             )
                         }
-
                     </View>
                 ) : (
                     <ActivityIndicator

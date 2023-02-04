@@ -9,6 +9,10 @@ import { ModalActionProps } from './interfaces';
 
 import { styles as themeStyles } from '../../../theme';
 
+/**
+ * This component is responsible for grouping actions for modal.
+ * @param {ModalActionProps} { onClose: () => void, onConfirm: () => void, reschedule: boolean, revisitPerson: boolean }
+ */
 export const ModalActions: FC<ModalActionProps> = ({ onClose, onConfirm, revisitPerson }) => {
     const { state: { selectedRevisit } } = useRevisits();
     const { state: { colors }, BUTTON_TRANSLUCENT_COLOR } = useTheme();
@@ -21,6 +25,8 @@ export const ModalActions: FC<ModalActionProps> = ({ onClose, onConfirm, revisit
 
     return (
         <View style={{ ...themeStyles.modalActions, alignSelf: 'flex-end' }}>
+
+            {/* Cancel button */}
             <Button
                 containerStyle={{ paddingHorizontal: 12 }}
                 onPress={ onClose }
@@ -30,6 +36,7 @@ export const ModalActions: FC<ModalActionProps> = ({ onClose, onConfirm, revisit
                 underlayColor={ BUTTON_TRANSLUCENT_COLOR }
             />
 
+            {/* Confirm button */}
             <Button
                 containerStyle={{ paddingHorizontal: 12 }}
                 onPress={ onConfirm }

@@ -3,16 +3,25 @@ import { Linking, ScrollView, Text } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import dayjs from 'dayjs';
 
+/* Env */
 import { REPOSITORY_URL } from '@env';
 
+/* Components */
 import { SectionBtn, SectionContent } from '../../../components/ui';
 
+/* Hooks */
 import { useStatus, useTheme } from '../../../hooks';
 
+/* Screens */
 import { ThemeModal } from '../../../theme/screens';
 
+/* Utils */
 import { THEME_OPTIONS } from '../../../utils';
 
+/**
+ * This screen is responsible for displaying all the app's settings through
+ * sections that direct it to other screens, modals or actions.
+ */
 const Settings = () => {
     const [ showThemeModal, setShowThemeModal ] = useState<boolean>(false);
     const { navigate } = useNavigation();
@@ -20,6 +29,11 @@ const Settings = () => {
     const { setStatus } = useStatus();
     const { state: { colors, theme } } = useTheme();
 
+    /**
+     * When the user clicks the button, set the status to a new object with a code of 200 and a msg of
+     * 'Para más información o dejar sus comentarios acerca de la aplicación, escriba al correo:
+     * kristhdev@gmail.com'.
+     */
     const handleMoreInfo = () => {
         setStatus({
             code: 200,
@@ -30,6 +44,8 @@ const Settings = () => {
     return (
         <>
             <ScrollView overScrollMode="never">
+
+                {/* Acount secction */}
                 <SectionContent title="MI CUENTA">
                     <SectionBtn
                         onPress={ () => navigate('ProfileScreen' as never) }
@@ -44,6 +60,7 @@ const Settings = () => {
                     />
                 </SectionContent>
 
+                {/* Screen section */}
                 <SectionContent title="PANTALLA">
                     <SectionBtn
                         onPress={ () => setShowThemeModal(true) }
@@ -52,6 +69,7 @@ const Settings = () => {
                     />
                 </SectionContent>
 
+                {/* Privacy section */}
                 <SectionContent title="PRIVACIDAD">
                     <SectionBtn
                         onPress={ () => Linking.openSettings() }
@@ -60,6 +78,7 @@ const Settings = () => {
                     />
                 </SectionContent>
 
+                {/* About section */}
                 <SectionContent
                     containerStyle={{ borderBottomWidth: 0 }}
                     title="SOBRE"
@@ -83,6 +102,7 @@ const Settings = () => {
                     />
                 </SectionContent>
 
+                {/* Copyright text */}
                 <Text style={{ color: colors.icon, fontSize: 14, padding: 20 }}>
                     Copyright © { dayjs().year() }
                 </Text>

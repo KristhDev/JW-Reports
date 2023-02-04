@@ -4,17 +4,27 @@ import { useNavigation } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import dayjs from 'dayjs';
 
+/* Features */
 import { INIT_PREACHING } from '../../../features/preaching';
 
+/* Screens */
 import { ReportModal } from '../ReportModal';
 
+/* Components */
 import { PreachingTable } from '../../../components/preaching';
 import { Fab, InfoText, Title } from '../../../components/ui';
 
+/* Hooks */
 import { usePreaching, useTheme } from '../../../hooks';
 
+/* Theme */
 import { styles as themeStyles } from '../../../theme';
 
+/**
+ * This screen is in charge of grouping the components to list the preaching days by
+ * selectedDate, in addition to being the main screen that is shown to the
+ * authenticated user.
+ */
 const Home = () => {
     const [ isRefreshing, setIsRefreshing ] = useState<boolean>(false);
     const [ showModal, setShowModal ] = useState<boolean>(false);
@@ -27,6 +37,10 @@ const Home = () => {
     const month = dayjs(selectedDate).format('MMMM').toUpperCase();
     const year = dayjs(selectedDate).get('year');
 
+    /**
+     * I'm trying to set the state of the selectedPreaching object to the INIT_PREACHING object, but I
+     * want to change the day, init_hour and final_hour properties to the current date
+     */
     const handleNavigate = () => {
         setSelectedPreaching({
             ...INIT_PREACHING,
@@ -38,6 +52,10 @@ const Home = () => {
         navigate('AddOrEditPreachingScreen' as never);
     }
 
+    /**
+     * When the user swipes down to refresh, load the preachings for the selected date and set the
+     * refreshing state to false.
+     */
     const handleRefreshing = () => {
         loadPreachings(selectedDate);
         setIsRefreshing(false);
@@ -63,30 +81,27 @@ const Home = () => {
                     textStyle={{ fontSize: 24 }}
                 />
 
-                {
-                    (isPreachingsLoading) && (
-                        <ActivityIndicator
-                            color={ colors.button }
-                            size={ 50 }
-                            style={{ marginTop: height * 0.32 }}
-                        />
-                    )
-                }
+                {/* If the preachings are loading, show a loading indicator */}
+                { (isPreachingsLoading) && (
+                    <ActivityIndicator
+                        color={ colors.button }
+                        size={ 50 }
+                        style={{ marginTop: height * 0.32 }}
+                    />
+                ) }
 
-                {
-                    (!isPreachingsLoading && preachings.length > 0) && (
-                        <PreachingTable />
-                    )
-                }
+                {/* If the preachings are not loading, show the preachings */}
+                { (!isPreachingsLoading && preachings.length > 0) && (
+                    <PreachingTable />
+                ) }
 
-                {
-                    (!isPreachingsLoading && preachings.length === 0) && (
-                        <InfoText
-                            containerStyle={{ marginTop: height * 0.30 }}
-                            text="No haz agregado ningún día de predicación para el informe de este mes."
-                        />
-                    )
-                }
+                {/* If the preachings are not loading and there are no preachings, show a message */}
+                { (!isPreachingsLoading && preachings.length === 0) && (
+                    <InfoText
+                        containerStyle={{ marginTop: height * 0.30 }}
+                        text="No haz agregado ningún día de predicación para el informe de este mes."
+                    />
+                ) }
             </ScrollView>
 
             <Fab
@@ -118,6 +133,7 @@ const Home = () => {
                 touchColor="rgba(0, 0, 0, 0.15)"
             />
 
+            {/* Modal for show report */}
             <ReportModal
                 isOpen={ showModal }
                 month={ month.toLowerCase() }

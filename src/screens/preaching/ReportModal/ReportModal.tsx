@@ -2,19 +2,30 @@ import React, { FC, useState } from 'react';
 import { KeyboardAvoidingView, ScrollView, View, Text, Share, TextInput, useWindowDimensions } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
+/* Screens */
 import { Modal } from '../../ui';
 
+/* Components */
 import { Button } from '../../../components/ui';
 
+/* Hooks */
 import { useAuth, useCourses, usePreaching, useTheme } from '../../../hooks';
 
+/* Utils */
 import { sumHours, sumNumbers, getRestMins } from '../../../utils';
 
+/* Interfaces */
 import { ReportModalProps } from './interfaces';
 
+/* Styles */
 import { styles as themeStyles } from '../../../theme';
 import styles from './styles';
 
+/**
+ * This modal is responsible for grouping all the components to display and deliver
+ * the report of the month.
+ * @param {ReportModalProps} { isOpen: boolean, month: string, onClose: () => void }
+ */
 const ReportModal: FC<ReportModalProps> = ({ isOpen, month, onClose }) => {
     const [ comment, setComment ] = useState<string>('');
     const [ isFocused, setIsFocused ] = useState<boolean>(false);
@@ -39,6 +50,10 @@ const ReportModal: FC<ReportModalProps> = ({ isOpen, month, onClose }) => {
     const totalCourses = courses.filter(c => !c.suspended && !c.finished)?.length;
     const restMins = getRestMins(preachings.map(p => ({ init: p.init_hour, finish: p.final_hour })));
 
+    /**
+     * When the user clicks the button, the function will close the modal, create a report string, and
+     * then share the report string with the user's preferred sharing method.
+     */
     const handleDeliver = async () => {
         onClose();
 
@@ -60,6 +75,9 @@ const ReportModal: FC<ReportModalProps> = ({ isOpen, month, onClose }) => {
         if (action === 'sharedAction') setComment('');
     }
 
+    /**
+     * When the user clicks the close button, the comment is cleared and the modal is closed.
+     */
     const handleClose = () => {
         onClose();
         setComment('');
@@ -122,6 +140,7 @@ const ReportModal: FC<ReportModalProps> = ({ isOpen, month, onClose }) => {
                                 <Text style={{ ...styles.reportText, color: colors.modalText }}>{ totalCourses }</Text>
                             </View>
 
+                            {/* Comment section */}
                             <View style={{ flexDirection: 'column' }}>
                                 <Text style={{ ...styles.reportText, color: colors.text, marginBottom: 5 }}>Comentarios: </Text>
 
@@ -181,6 +200,7 @@ const ReportModal: FC<ReportModalProps> = ({ isOpen, month, onClose }) => {
                             )
                         }
 
+                        {/* Modal actions */}
                         <View style={{ flexDirection: 'row', justifyContent: 'flex-end', marginTop: 20 }}>
                             <Button
                                 containerStyle={{ paddingHorizontal: 12 }}

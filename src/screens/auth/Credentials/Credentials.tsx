@@ -2,11 +2,17 @@ import React from 'react';
 import { View } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
+/* Components */
 import { CredentialsForm } from '../../../components/auth';
 import { Title } from '../../../components/ui';
 
+/* Theme */
 import { styles as themeStyles } from '../../../theme';
 
+/**
+ * This screen is to display the form to change the credentials
+ * of the authenticated user.
+ */
 const Credentials = () => {
     return (
         <KeyboardAwareScrollView

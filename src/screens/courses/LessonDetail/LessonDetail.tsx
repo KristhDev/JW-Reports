@@ -3,17 +3,26 @@ import { ScrollView, Text, TouchableOpacity, View } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import dayjs from 'dayjs';
 
+/* Features */
 import { INIT_LESSON } from '../../../features/courses';
 
+/* Screens */
 import { FinishOrStartLessonModal } from '../FinishOrStartLessonModal';
 
+/* Components */
 import { InfoText, Title } from '../../../components/ui';
 
+/* Hooks */
 import { useCourses, useTheme } from '../../../hooks';
 
+/* Styles */
 import { styles as themeStyles } from '../../../theme';
 import styles from './styles';
 
+/**
+ * This screen is responsible for grouping the components to
+ * show the detail of a lesson.
+ */
 const LessonDetail = () => {
     const [ showFSModal, setShowFSModal ] = useState<boolean>(false);
     const { addListener, getState, removeListener } = useNavigation();
@@ -24,6 +33,10 @@ const LessonDetail = () => {
     const statusLessonText = (selectedLesson.done) ? 'Impartida' : 'Por impartir';
     const nextVisit = dayjs(selectedLesson.next_lesson);
 
+    /**
+     * Effect to reset selectedLesson when index in navigation
+     * is different from 4.
+     */
     useEffect(() => {
         addListener('blur', () => {
             const { index } = getState();
@@ -47,18 +60,22 @@ const LessonDetail = () => {
                 overScrollMode="never"
                 style={{ flex: 1 }}
             >
+
+                {/* Title of detail */}
                 <Title
                     containerStyle={ themeStyles.titleContainer }
                     text={ `CLASE DEL CURSO CON ${ selectedCourse.person_name.toUpperCase() }` }
                     textStyle={{ fontSize: 24 }}
                 />
 
+                {/* Text publication */}
                 <InfoText
                     containerStyle={{ paddingHorizontal: 20, width: '100%' }}
                     text={ selectedCourse.publication.toUpperCase() }
                     textStyle={{ fontSize: 16, fontWeight: 'bold', textAlign: 'left' }}
                 />
 
+                {/* Lesson status */}
                 <View style={ styles.sectionStyle }>
                     <Text
                         style={{
@@ -80,6 +97,7 @@ const LessonDetail = () => {
                     </TouchableOpacity>
                 </View>
 
+                {/* Lesson description */}
                 <View style={ styles.sectionStyle }>
                     <Text
                         style={{
@@ -99,6 +117,7 @@ const LessonDetail = () => {
                     </Text>
                 </View>
 
+                {/* Lesson create date */}
                 <View style={ styles.sectionStyle }>
                     <Text
                         style={{
