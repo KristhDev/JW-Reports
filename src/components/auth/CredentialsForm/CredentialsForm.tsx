@@ -13,7 +13,7 @@ import { useAuth, useStatus, useTheme } from '../../../hooks';
 
 /**
  * This component is responsible for rendering the fields to change the credentials
- * of an authenticated user (email and password)
+ * of an authenticated user (email and password).
  */
 export const CredentialsForm = () => {
     const [ loadingEmail, setLoadingEmail ] = useState<boolean>(false);

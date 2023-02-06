@@ -16,7 +16,7 @@ import { styles as themeStyles } from '../../../theme';
 
 /**
  * This component is responsible for rendering the fields to request a user's
- * password reset to recover their account
+ * password reset to recover their account.
  */
 export const ForgotPasswordForm = () => {
     const { navigate } = useNavigation();

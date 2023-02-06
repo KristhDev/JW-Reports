@@ -9,7 +9,7 @@ import { useTheme } from '../../../hooks';
 
 /**
  * This component is responsible for render button to change
- * app theme
+ * app theme.
  */
 export const ThemeBtn = () => {
     const { state: { selectedTheme, colors }, setTheme } = useTheme();

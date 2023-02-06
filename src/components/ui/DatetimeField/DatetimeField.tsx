@@ -18,8 +18,28 @@ import { styles as themeStyles } from '../../../theme';
 
 /**
  * This component is responsible for displaying a field to select a
- * Date type data, be it a date or time
- * @param {DatetimeFieldProps} props - { controlStyle, icon, inputDateFormat, inputStyle, label, labelStyle, mode, name, style, ...rest }
+ * Date type data, be it a date or time.
+ * @param {DatetimeFieldProps} props {
+ *      controlStyle: StyleProp<ViewStyle>,
+ *      icon: ReactNode,
+ *      inputDateFormat: string,
+ *      inputStyle: StyleProp<TextStyle>,
+ *      label: string,
+ *      labelStyle: StyleProp<TextStyle>,
+ *      mode: 'date' | 'time' | 'datetime',
+ *      name: string,
+ *      style: StyleProp<TextStyle>,
+ *      ...rest
+ *  } - This is a props for functionality of the component
+ * - controlStyle: The style of the control field
+ * - icon: The icon to be displayed on the right side of the field
+ * - inputDateFormat: The format of the input field
+ * - inputStyle: The style of the input field
+ * - label: The label of the field
+ * - labelStyle: The style of the label
+ * - mode: The mode of the field
+ * - name: The name of the field
+ * - style: The style of the field
  */
 export const DatetimeField: FC<DatetimeFieldProps> = ({
     controlStyle,

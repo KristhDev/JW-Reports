@@ -19,7 +19,7 @@ import { HeaderButtonsProps } from './interfaces';
 /**
  * This component is responsible for displaying various buttons that will be in the
  * headers of the screens, they are sent the condition with which they will appear
- * and the action that will be performed
+ * and the action that will be performed.
  * @param {HeaderButtonsProps} props - {
  *      logoutButton: boolean,
  *      changeMonthButton: boolean,
@@ -33,6 +33,7 @@ import { HeaderButtonsProps } from './interfaces';
  *      onConfirmDeleteModal: () => void,
  *      onShowDeleteModal: () => void,
  *      showDeleteModal: boolean,
+ *  }
  */
 export const HeaderButtons: FC<HeaderButtonsProps> = ({
     logoutButton = false,

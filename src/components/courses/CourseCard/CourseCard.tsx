@@ -19,8 +19,13 @@ import styles from './styles';
 
 /**
  * This component is responsible for rendering part of the information of a
- * course in the form of a card
- * @param {CourseCardProps} props - { course, onActiveOrSuspend, onDelete, onFinishOrStart }
+ * course in the form of a card.
+ * @param {CourseCardProps} props { course: Course, onActiveOrSuspend: () => void, onDelete: () =>, onFinishOrStart: () => void } - This a props
+ * to functionality of the component
+ * - course: Its course object that render in the card
+ * - onActiveOrSuspend: Function to active or suspend the course
+ * - onDelete: Function to delete the course
+ * - onFinishOrStart: Function to finish or start again the course
  */
 export const CourseCard: FC<CourseCardProps> = ({ course, onActiveOrSuspend, onDelete, onFinishOrStart }) => {
     const [ isOpen, setIsOpen ] = useState<boolean>(false);

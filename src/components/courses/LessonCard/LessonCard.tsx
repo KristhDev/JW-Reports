@@ -20,8 +20,12 @@ import styles from './styles';
 
 /**
  * This component is responsible for rendering part of the information of a
- * lesson in the form of a card
- * @param {LessonCardProps} props - { lesson, onDelete, onFinish }
+ * lesson in the form of a card.
+ * @param {LessonCardProps} props { lesson: Lesson, onDelete: () => void, onFinish: () => void } - This is a props
+ * to functionality of the component
+ * - lesson: This is a lesson object that render in the card
+ * - onDelete: This is a function to delete the lesson
+ * - onFinish: This is a function to finish the lesson
  */
 export const LessonCard: FC<LessonCardProps> = ({ lesson, onDelete, onFinish }) => {
     const [ isOpen, setIsOpen ] = useState<boolean>(false);

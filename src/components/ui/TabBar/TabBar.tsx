@@ -14,7 +14,8 @@ import styles from './styles';
 /**
  * This component is responsible for displaying a custom navigation bar
  * for the app
- * @param {BottomTabBarProps} props - { navigation, state, descriptors }
+ * @param {BottomTabBarProps} props { navigation, state, descriptors } - This is the
+ * props for functionality of the component
  */
 export const TabBar: FC<BottomTabBarProps> = ({ navigation, state, descriptors }) => {
     const [ hideTabBar, setHideTabBar ] = useState<boolean>(false);

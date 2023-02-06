@@ -23,10 +23,14 @@ import { Course } from '../../../interfaces/courses';
 /**
  * This component is responsible for rendering a list of courses based
  * on a filter that is passed from the screens, in addition to the
- * search for courses
- * @param {CoursesListProps} props - { filter, title, emptyMessage }
+ * search for courses.
+ * @param {CoursesListProps} props { filter: CourseFilter, title: string, emptyMessage: string } - This is a props
+ * to functionality of the component
+ * - emptyMessage: This string is a message to display if there are no courses
+ * - filter: This string is a filter to load courses
+ * - title: This string is a title of screen
  */
-export const CoursesList: FC<CoursesListProps> = ({ filter, title, emptyMessage }) => {
+export const CoursesList: FC<CoursesListProps> = ({ emptyMessage, filter, title }) => {
     const [ searchTerm, setSearchTerm ] = useState<string>('');
     const [ isRefreshing, setIsRefreshing ] = useState<boolean>(false);
     const [ showDeleteModal, setShowDeleteModal ] = useState<boolean>(false);

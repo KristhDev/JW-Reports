@@ -18,7 +18,7 @@ import { styles as themeStyles } from '../../../theme';
 
 /**
  * This component is responsible for rendering the fields to create
- * or edit a lesson
+ * or edit a lesson.
  */
 export const LessonForm = () => {
     const { state: { isLessonLoading, selectedLesson }, saveLesson, updateLesson } = useCourses();

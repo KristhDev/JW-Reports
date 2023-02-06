@@ -13,17 +13,33 @@ import { styles as themeStyles } from '../../../theme';
 
 /**
  * This component is responsible for displaying fields for forms of
- * different types but as long as it has to do with texts
- * @param {FormFieldProps} props - { icon, label, style, controlStyle, inputStyle, labelStyle, name, ...rest` }
+ * different types but as long as it has to do with texts.
+ * @param {FormFieldProps} props {
+ *      controlStyle: StyleProp<ViewStyle>,
+ *      icon: ReactNode,
+ *      inputStyle: StyleProp<TextStyle>,
+ *      label: string,
+ *      labelStyle: StyleProp<TextStyle>,
+ *      name: string,
+ *      style: StyleProp<ViewStyle>,
+ *      ...rest
+ *  } - This is a props for functionality of the component
+ * - controlStyle: The style of the control field
+ * - icon: The icon to be displayed on the right side of the field
+ * - inputStyle: The style of the input field
+ * - label: The label of the field
+ * - labelStyle: The style of the label
+ * - name: The name of the field
+ * - style: The style of the field
  */
 export const FormField: FC<FormFieldProps> = ({
-    icon,
-    label,
-    style,
     controlStyle,
+    icon,
     inputStyle,
+    label,
     labelStyle,
     name,
+    style,
     ...rest
 }) => {
     const { width } = useWindowDimensions();

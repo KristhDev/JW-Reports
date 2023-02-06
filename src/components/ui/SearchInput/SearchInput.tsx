@@ -13,6 +13,16 @@ import { SearchInputProps } from './interfaces';
 import { styles as themeStyles } from '../../../theme';
 import styles from './styles';
 
+/**
+ * This component is responsible for displaying a text box to perform searches
+ * depending on the props that are sent to it.
+ * @param {SearchInputProps} props { onClean: () => void, onSearch: () => void, refreshing: boolean, searchTerm: string } - This
+ * is the props for functionality of the component
+ * - onClean: This is the function to be called when the text box is cleared
+ * - onSearch: This is the function to be called when onSubmitEditing is called
+ * - refreshing: This is the value of the refreshing state
+ * - searchTerm: This is the value of the search term
+ */
 export const SearchInput: FC<SearchInputProps> = ({ onClean, onSearch, refreshing, searchTerm }) => {
     const [ searchText, setSearchText ] = useState<string>(searchTerm);
     const [ isFocused, setIsFocused ] = useState<boolean>(false);

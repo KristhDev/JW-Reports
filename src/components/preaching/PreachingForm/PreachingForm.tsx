@@ -19,7 +19,7 @@ import { styles as themeStyles } from '../../../theme';
 
 /**
  * This component is responsible for rendering the fields to create
- * or edit a preaching
+ * or edit a preaching.
  */
 export const PreachingForm = () => {
     const { setErrorForm } = useStatus();

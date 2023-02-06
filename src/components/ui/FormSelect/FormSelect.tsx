@@ -15,9 +15,31 @@ import { FormSelectProps } from './interfaces';
 /* Theme */
 import { styles as themeStyles } from '../../../theme';
 
-/**This component is responsible for displaying a field to select a value among
- * several through a modal and then displays the value in the input
- * @param {FormSelectProps} - props { controlStyle, inputContainerStyle, inputTextStyle, items, label, labelStyle, name, placeholder, style, title }
+/**
+ * This component is responsible for displaying a field to select a value among
+ * several through a modal and then displays the value in the input.
+ * @param {FormSelectProps} props {
+ *      controlStyle: StyleProp<ViewStyle>,
+ *      inputContainerStyle: StyleProp<ViewStyle>,
+ *      inputTextStyle: StyleProp<TextStyle>,
+ *      items: ItemOption[],
+ *      label: string,
+ *      labelStyle: StyleProp<TextStyle>,
+ *      name: string,
+ *      placeholder: string,
+ *      style: StyleProp<ViewStyle>,
+ *      title: string
+ *  } - This is a props for functionality of the component
+ * - controlStyle: The style of the control field
+ * - inputContainerStyle: The style of the container of the input field
+ * - inputTextStyle: The style of the input field
+ * - items: The options of the field
+ * - label: The label of the field
+ * - labelStyle: The style of the label
+ * - name: The name of the field
+ * - placeholder: The placeholder of the field
+ * - style: The style of the field
+ * - title: The title of the field modal
  */
 export const FormSelect: FC<FormSelectProps> = ({
     controlStyle,

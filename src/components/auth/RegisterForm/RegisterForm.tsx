@@ -16,7 +16,7 @@ import { styles as themeStyles } from '../../../theme';
 
 /**
  * This component is responsible for rendering the fields so that a user
- * can register in the app
+ * can register in the app.
  */
 export const RegisterForm = () => {
     const [ showPassword, setShowPassword ] = useState<boolean>(false);

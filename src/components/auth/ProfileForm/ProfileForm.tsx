@@ -19,7 +19,7 @@ import { styles as themeStyles } from '../../../theme';
 
 /**
  * This component is responsible for rendering the fields so that an
- * authenticated user can update their profile data
+ * authenticated user can update their profile data.
  */
 export const ProfileForm = () => {
     const { top } = useSafeAreaInsets();

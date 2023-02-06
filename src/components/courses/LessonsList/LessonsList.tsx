@@ -21,7 +21,7 @@ import { Lesson } from '../../../interfaces/courses';
 
 /**
  * This component is responsible for rendering a list of lessons
- * based on selectedCourse
+ * based on selectedCourse.
  */
 export const LessonsList = () => {
     const [ searchTerm, setSearchTerm ] = useState<string>('');

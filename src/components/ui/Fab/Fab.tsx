@@ -9,8 +9,19 @@ import styles from './styles';
 
 /**
  * This component is responsible for displaying a floating action
- * button to perform different actions in the app
- * @param {FabProps} props - { color, icon, onPress, touchColor, style }
+ * button to perform different actions in the app.
+ * @param {FabProps} props {
+ *      color: string,
+ *      icon: ReactNode,
+ *      onPress: () => void,
+ *      touchColor: string,
+ *      style: StyleProp<ViewStyle>
+ *  } - This is the props for functionality of the component
+ * - color: This is the color of the fab
+ * - icon: This is the icon of the fab
+ * - onPress: This is a function to perform the action
+ * - touchColor: This is the color of the touchable ripple
+ * - style: This is the style of the fab, default is `undefined`
  */
 export const Fab: FC<FabProps> = ({ color, icon, onPress, touchColor, style }) => {
     return (
@@ -18,11 +29,10 @@ export const Fab: FC<FabProps> = ({ color, icon, onPress, touchColor, style }) =
             borderless
             onPress= { onPress }
             rippleColor={ touchColor }
-            style={{
-                ...styles.fab,
-                backgroundColor: color,
-                ...style as any
-            }}
+            style={[
+                { ...styles.fab, backgroundColor: color },
+                style
+            ]}
         >
             { icon }
         </TouchableRipple>

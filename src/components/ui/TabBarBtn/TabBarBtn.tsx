@@ -12,8 +12,19 @@ import { TabBarBtnProps } from './interfaces';
 import styles from './styles';
 
 /**
- * This component is responsible for displaying a button for the navigation bar
- * @param {TabBarBtnProps} props - { active, color, iconName, onPress, title }
+ * This component is responsible for displaying a button for the navigation bar.
+ * @param {TabBarBtnProps} props {
+ *      active: boolean,
+ *      color: string,
+ *      iconName: string,
+ *      onPress: () => void,
+ *      title: string
+ *  } - This is the propsprops for functionality of the component
+ * - active: This is the active state of the button
+ * - color: This is the color of the button
+ * - iconName: This is the icon name of the button
+ * - onPress: This is the function to be called when the button is pressed
+ * - title: This is the title of the button
  */
 export const TabBarBtn: FC<TabBarBtnProps> = ({ active, color, iconName, onPress, title }) => {
     const { state: { selectedTheme }, BUTTON_TRANSLUCENT_COLOR, BUTTON_TRANSPARENT_COLOR } = useTheme();

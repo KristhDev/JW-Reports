@@ -20,7 +20,7 @@ const defaultRevisit = require('../../../assets/revisit-default.jpg');
 
 /**
  * This component is responsible for rendering the fields to create
- * or edit a revisit
+ * or edit a revisit.
  */
 export const RevisitForm = () => {
     const [ imageHeight, setImageHeight ] = useState<number>(0);

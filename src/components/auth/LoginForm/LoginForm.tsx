@@ -16,7 +16,7 @@ import { styles as themeStyles } from '../../../theme';
 
 /**
  * This component is responsible for rendering the fields so that a user
- * can log in with their account
+ * can log in with their account.
  */
 export const LoginForm = () => {
     const [ showPassword, setShowPassword ] = useState<boolean>(false);

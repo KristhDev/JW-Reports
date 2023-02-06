@@ -15,8 +15,12 @@ import styles from './styles';
 
 /**
  * This component renders the content of a section with title that
- * describe the content of the section
- * @param {SectionContentProps} props - { containerStyle, children, title }
+ * describe the content of the section.
+ * @param {SectionContentProps} props { containerStyle: StyleProp<ViewStyle>, children: ReactNode, title: string } - This is the
+ * props for functionality of the component
+ * - containerStyle: This is the style of the container, default is `undefined`
+ * - children: This is the children of the section
+ * - title: This is the title of the section
  */
 export const SectionContent: FC<PropsWithChildren<SectionContentProps>> = ({ containerStyle, children, title }) => {
     const { state: { colors } } = useTheme();

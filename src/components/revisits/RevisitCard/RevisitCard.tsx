@@ -20,10 +20,15 @@ import styles from './styles';
 
 /**
  * This component is responsible for rendering part of the information of a
- * revisit in the form of a card
- * @param {RevisitCardProps} props - { onDelete, onRevisit, onPass, revisit }
+ * revisit in the form of a card.
+ * @param {RevisitCardProps} props { onDelete: () => void, onPass: () => void, onRevisit: () => void, revisit: Revisit } - This a props
+ * to functionality of the component
+ * - onDelete: This is a function to delete the revisit
+ * - onPass: This is a function to pass the revisit to course
+ * - onRevisit: This is a function to mark as complete and revisit again
+ * - revisit: This is a revisit object that render in the card
  */
-export const RevisitCard: FC<RevisitCardProps> = ({ onDelete, onRevisit, onPass, revisit }) => {
+export const RevisitCard: FC<RevisitCardProps> = ({ onDelete, onPass, onRevisit, revisit }) => {
     const [ isOpen, setIsOpen ] = useState<boolean>(false);
     const { navigate } = useNavigation();
 

@@ -20,7 +20,7 @@ import styles from './styles';
 
 /**
  * This component is responsible for displaying a table that contains the data
- * of the preaching days of the selectedDate
+ * of the preaching days of the selectedDate.
  */
 export const PreachingTable = () => {
     const { navigate } = useNavigation();

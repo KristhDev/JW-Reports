@@ -22,7 +22,7 @@ type RevisitsProps = MaterialTopTabScreenProps<RevistsTopTabsParamsList>;
 /**
  * This screen is responsible for grouping the components to show a list
  * of revisits according to the filter that is sent.
- * @param {RevisitsProps} { route }
+ * @param {RevisitsProps} { route: RouteProp } - This is a params of TopTabNavigation
  */
 const Revisits: FC<RevisitsProps> = ({ route }) => {
     const { navigate, addListener, removeListener, getState } = useNavigation();
