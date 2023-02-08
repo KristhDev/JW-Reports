@@ -24,7 +24,7 @@ export const LoginForm = () => {
     const { navigate } = useNavigation();
     const { width } = useWindowDimensions();
 
-    const { state: { isAuthLoading }, login } = useAuth();
+    const { state: { isAuthLoading }, signIn } = useAuth();
     const { setErrorForm } = useStatus();
     const { state: { colors } } = useTheme();
 
@@ -44,7 +44,7 @@ export const LoginForm = () => {
                 email: '',
                 password: ''
             }}
-            onSubmit={ login }
+            onSubmit={ signIn }
             validationSchema={ loginFormSchema }
             validateOnMount
         >

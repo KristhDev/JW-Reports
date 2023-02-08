@@ -54,7 +54,7 @@ export const HeaderButtons: FC<HeaderButtonsProps> = ({
     const [ showMonthPicker, setShowMonthPicker ] = useState<boolean>(false);
     const { navigate } = useNavigation();
 
-    const { logout } = useAuth();
+    const { signOut } = useAuth();
     const { setSelectedDate, state: { selectedDate } } = usePreaching();
     const { state: { colors }, BUTTON_TRANSPARENT_COLOR } = useTheme();
 
@@ -84,7 +84,7 @@ export const HeaderButtons: FC<HeaderButtonsProps> = ({
                                 />
                             }
                             style={{ marginRight: -2 }}
-                            onPress={ logout }
+                            onPress={ signOut }
                             touchColor={ BUTTON_TRANSPARENT_COLOR }
                         />
                     )

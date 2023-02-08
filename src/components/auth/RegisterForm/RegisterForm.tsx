@@ -25,7 +25,7 @@ export const RegisterForm = () => {
     const { navigate } = useNavigation();
     const { width } = useWindowDimensions();
 
-    const { state: { isAuthLoading }, register } = useAuth();
+    const { state: { isAuthLoading }, signUp } = useAuth();
     const { setErrorForm } = useStatus();
     const { state: { colors } } = useTheme();
 
@@ -57,7 +57,7 @@ export const RegisterForm = () => {
                 password: '',
                 confirmPassword: ''
             }}
-            onSubmit={ register }
+            onSubmit={ signUp }
             validateOnMount
             validationSchema={ registerFormSchema }
         >

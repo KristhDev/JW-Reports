@@ -23,7 +23,7 @@ import { clearRevisits } from '../features/revisits';
 import { useStatus } from './';
 
 /* Interfaces */
-import { AuthState, Login, Profile, Register, User } from '../interfaces/auth';
+import { AuthState, SignIn, Profile, SignUp, User } from '../interfaces/auth';
 
 /**
  * Hook to management authentication of store with state and actions
@@ -43,7 +43,7 @@ const useAuth = () => {
      * @param {AuthResponse}  - AuthResponse - this is the response from the API call.
      * @returns The return type is AuthResponse.
      */
-    const setUser = ({ data: { user, session }, error }: AuthResponse) => {
+    const setUser = ({ data: { user, session }, error }: AuthResponse, isNew: boolean = false) => {
         const next = setSupabaseError(error, 400, () => dispatch(clearAuthAction()));
         if (next) return;
 
@@ -57,59 +57,13 @@ const useAuth = () => {
                 email: user?.email,
             } as User
         }));
-    }
 
-    /**
-     * The function login takes an object with the properties email and password, and returns a promise
-     * that resolves to an object with the properties email, id, and token.
-     * @param {Login} { email: string, password: string } - This is a values for sign in a user
-     */
-    const login = async ({ email, password }: Login) => {
-        dispatch(setIsAuthLoading({ isLoading: true }));
+        if (isNew) {
+            let msg = `Hemos enviado un correo de confirmación a ${ user!.email }. `
+            msg += 'Por favor, revíselo y siga los pasos que se le indiquen.';
 
-        const result = await supabase.auth.signInWithPassword({ email, password });
-        setUser(result);
-    }
-
-    /**
-    * If the user is not authenticated, return. If the user is authenticated, sign them out and clear
-    * the redux store.
-    */
-    const logout = async () => {
-        if (!state.isAuthenticated) return;
-        const { error } = await supabase.auth.signOut();
-
-        const next = setSupabaseError(error, 500);
-        if (next) return;
-
-        dispatch(clearCourses());
-        dispatch(clearPreaching());
-        dispatch(clearRevisits());
-        dispatch(clearAuthAction());
-    }
-
-    /**
-     * This function is to register a new user and authenticate it.
-     * @param {Register} { name: string, surname: string, email: string, password: string } - This is a
-     * values for sign up a new user
-     */
-    const register = async ({ name, surname, email, password }: Register) => {
-        dispatch(setIsAuthLoading({ isLoading: true }));
-
-        const result = await supabase.auth.signUp({ email, password });
-
-        if (result?.data?.user !== null) {
-            result.data.user.user_metadata = {
-                ...result.data.user!.user_metadata,
-                name,
-                surname,
-                precursor: 'ninguno'
-            }
-
-            await supabase.auth.updateUser({ data: { name, surname, precursor: 'ninguno' } });
+            setStatus({ code: 200, msg });
         }
-
-        setUser(result);
     }
 
     /**
@@ -146,6 +100,59 @@ const useAuth = () => {
 
         dispatch(setIsAuthLoading({ isLoading: false }));
         setStatus({ code: 200, msg });
+    }
+
+    /**
+     * The function signIn takes an object with the properties email and password, and returns a promise
+     * that resolves to an object with the properties email, id, and token.
+     * @param {SignIn} { email: string, password: string } - This is a values for sign in a user
+     */
+    const signIn = async ({ email, password }: SignIn) => {
+        dispatch(setIsAuthLoading({ isLoading: true }));
+
+        const result = await supabase.auth.signInWithPassword({ email, password });
+        setUser(result);
+    }
+
+    /**
+    * If the user is not authenticated, return. If the user is authenticated, sign them out and clear
+    * the redux store.
+    */
+    const signOut = async () => {
+        if (!state.isAuthenticated) return;
+        const { error } = await supabase.auth.signOut();
+
+        const next = setSupabaseError(error, 500);
+        if (next) return;
+
+        dispatch(clearCourses());
+        dispatch(clearPreaching());
+        dispatch(clearRevisits());
+        dispatch(clearAuthAction());
+    }
+
+    /**
+     * This function is to register a new user and authenticate it.
+     * @param {SignUp} { name: string, surname: string, email: string, password: string } - This is a
+     * values for sign up a new user
+     */
+    const signUp = async ({ name, surname, email, password }: SignUp) => {
+        dispatch(setIsAuthLoading({ isLoading: true }));
+
+        const result = await supabase.auth.signUp({ email, password });
+
+        if (result?.data?.user !== null) {
+            result.data.user.user_metadata = {
+                ...result.data.user!.user_metadata,
+                name,
+                surname,
+                precursor: 'ninguno'
+            }
+
+            await supabase.auth.updateUser({ data: { name, surname, precursor: 'ninguno' } });
+        }
+
+        setUser(result, true);
     }
 
     /**
@@ -256,11 +263,11 @@ const useAuth = () => {
         clearAuth,
 
         // Functions
-        login,
-        logout,
-        register,
         renew,
         resetPassword,
+        signIn,
+        signOut,
+        signUp,
         updateEmail,
         updatePassword,
         updateProfile

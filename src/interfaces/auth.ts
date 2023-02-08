@@ -39,14 +39,14 @@ export interface Profile {
     precursor: Precursor;
 }
 
-/* Defining the interface of the Login object. */
-export interface Login {
+/* Defining the interface of the SignIn object. */
+export interface SignIn {
     email: string;
     password: string
 }
 
-/* Defining the interface of the Register object. */
-export interface Register {
+/* Defining the interface of the SignUp object. */
+export interface SignUp {
     name: string;
     surname: string;
     email: string;
