@@ -33,6 +33,7 @@ export const Fab: FC<FabProps> = ({ color, icon, onPress, touchColor, style }) =
                 { ...styles.fab, backgroundColor: color },
                 style
             ]}
+            testID="fab-touchable"
         >
             { icon }
         </TouchableRipple>

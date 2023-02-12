@@ -22,12 +22,13 @@ export const Title: FC<TitleProps> = ({ text, containerStyle, textStyle }) => {
     const { state: { colors } } = useTheme();
 
     return (
-        <View style={[ styles.titleContainer, containerStyle,  ]}>
+        <View style={[ styles.titleContainer, containerStyle ]}>
             <Text
                 style={[
                     { ...styles.title, color: colors.titleText },
                     textStyle
                 ]}
+                testID="title-text"
             >
                 { text }
             </Text>

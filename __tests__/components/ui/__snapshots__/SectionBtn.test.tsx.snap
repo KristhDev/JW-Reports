@@ -1,0 +1,62 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Test in <SectionBtn /> component should to match the snapshot 1`] = `
+<View
+  accessibilityState={
+    Object {
+      "disabled": false,
+    }
+  }
+  accessible={true}
+  centered={true}
+  collapsable={false}
+  focusable={true}
+  onBlur={[Function]}
+  onClick={[Function]}
+  onFocus={[Function]}
+  onResponderGrant={[Function]}
+  onResponderMove={[Function]}
+  onResponderRelease={[Function]}
+  onResponderTerminate={[Function]}
+  onResponderTerminationRequest={[Function]}
+  onStartShouldSetResponder={[Function]}
+  style={
+    Array [
+      Object {
+        "overflow": "hidden",
+      },
+      false,
+      Object {
+        "paddingHorizontal": 18,
+        "paddingVertical": 16,
+      },
+    ]
+  }
+  testID="section-btn-touchable"
+>
+  <View>
+    <Text
+      style={
+        Object {
+          "color": "#FFFFFF",
+          "fontSize": 16,
+        }
+      }
+      testID="section-btn-text"
+    >
+      Section text test
+    </Text>
+    <Text
+      style={
+        Object {
+          "color": "#BFBFBF",
+          "fontSize": 14,
+        }
+      }
+      testID="section-btn-sub-text"
+    >
+      Section sub text test
+    </Text>
+  </View>
+</View>
+`;

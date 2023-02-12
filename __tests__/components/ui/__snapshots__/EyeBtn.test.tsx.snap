@@ -1,0 +1,44 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Test in <EyeBtn /> component should to match the snapshot 1`] = `
+<View
+  accessible={true}
+  collapsable={false}
+  focusable={true}
+  onClick={[Function]}
+  onResponderGrant={[Function]}
+  onResponderMove={[Function]}
+  onResponderRelease={[Function]}
+  onResponderTerminate={[Function]}
+  onResponderTerminationRequest={[Function]}
+  onStartShouldSetResponder={[Function]}
+  style={
+    Object {
+      "opacity": 1,
+    }
+  }
+  testID="eye-btn-touchable"
+>
+  <Text
+    allowFontScaling={false}
+    selectable={false}
+    style={
+      Array [
+        Object {
+          "color": "#BFBFBF",
+          "fontSize": 25,
+        },
+        undefined,
+        Object {
+          "fontFamily": "Ionicons",
+          "fontStyle": "normal",
+          "fontWeight": "normal",
+        },
+        Object {},
+      ]
+    }
+  >
+    
+  </Text>
+</View>
+`;

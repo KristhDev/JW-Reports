@@ -1,0 +1,32 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Test in <Title /> component should to match snapshot 1`] = `
+<View
+  style={
+    Array [
+      Object {
+        "alignItems": "flex-start",
+        "padding": 20,
+        "width": "100%",
+      },
+      undefined,
+    ]
+  }
+>
+  <Text
+    style={
+      Array [
+        Object {
+          "color": "#FFFFFF",
+          "fontSize": 38,
+          "fontWeight": "bold",
+        },
+        undefined,
+      ]
+    }
+    testID="title-text"
+  >
+    Title test
+  </Text>
+</View>
+`;

@@ -1,0 +1,30 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Test in <InfoText /> component should to match snapshot 1`] = `
+<View
+  style={
+    Array [
+      Object {
+        "padding": 10,
+      },
+      undefined,
+    ]
+  }
+>
+  <Text
+    style={
+      Array [
+        Object {
+          "color": "#BFBFBF",
+          "fontSize": 17,
+          "textAlign": "center",
+        },
+        undefined,
+      ]
+    }
+    testID="info-text-text"
+  >
+    Info text test
+  </Text>
+</View>
+`;

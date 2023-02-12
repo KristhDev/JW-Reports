@@ -1,0 +1,50 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Test in <SectionContent /> component should to match the snapshot 1`] = `
+<View
+  style={
+    Array [
+      Object {
+        "borderBottomColor": "#292929",
+        "borderBottomWidth": 1,
+        "paddingTop": 15,
+      },
+      undefined,
+    ]
+  }
+>
+  <View
+    style={
+      Array [
+        Object {
+          "padding": 10,
+        },
+        Object {
+          "marginHorizontal": 8,
+        },
+      ]
+    }
+  >
+    <Text
+      style={
+        Array [
+          Object {
+            "color": "#BFBFBF",
+            "fontSize": 17,
+            "textAlign": "center",
+          },
+          Object {
+            "color": "#93A8AB",
+            "fontSize": 15,
+            "fontWeight": "bold",
+            "textAlign": "left",
+          },
+        ]
+      }
+      testID="info-text-text"
+    >
+      Title test
+    </Text>
+  </View>
+</View>
+`;

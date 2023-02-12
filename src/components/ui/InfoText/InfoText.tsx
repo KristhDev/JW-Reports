@@ -24,7 +24,12 @@ export const InfoText: FC<InfoTextProps> = ({ text, containerStyle, textStyle })
 
     return (
         <View style={[ styles.container, containerStyle ]}>
-            <Text style={[ { ...styles.text, color: colors.icon }, textStyle ]}>{ text }</Text>
+            <Text
+                style={[ { ...styles.text, color: colors.icon }, textStyle ]}
+                testID="info-text-text"
+            >
+                { text }
+            </Text>
         </View>
     );
 }

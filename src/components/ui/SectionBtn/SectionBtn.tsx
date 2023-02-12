@@ -22,15 +22,27 @@ export const SectionBtn: FC<SectionBtnProps> = ({ onPress, subText, text }) => {
 
     return (
         <TouchableRipple
-            onPress={ onPress }
-            centered
             borderless
-            style={{ paddingHorizontal: 18, paddingVertical: 16 }}
+            centered
+            onPress={ onPress }
             rippleColor={ BUTTON_TRANSPARENT_COLOR }
+            style={{ paddingHorizontal: 18, paddingVertical: 16 }}
+            testID="section-btn-touchable"
         >
             <View>
-                <Text style={{ color: colors.text, fontSize: 16 }}>{ text }</Text>
-                <Text style={{ color: colors.icon, fontSize: 14 }}>{ subText }</Text>
+                <Text
+                    style={{ color: colors.text, fontSize: 16 }}
+                    testID="section-btn-text"
+                >
+                    { text }
+                </Text>
+
+                <Text
+                    style={{ color: colors.icon, fontSize: 14 }}
+                    testID="section-btn-sub-text"
+                >
+                    { subText }
+                </Text>
             </View>
         </TouchableRipple>
     );

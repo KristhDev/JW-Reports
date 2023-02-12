@@ -27,7 +27,12 @@ export const TableCell: FC<TableCellProps> = ({ text, style }) => {
                 style
             ]}
         >
-            <Text style={ styles.tableCellText }>{ text }</Text>
+            <Text
+                style={ styles.tableCellText }
+                testID="table-cell-text"
+            >
+                { text }
+            </Text>
         </View>
     );
 }
