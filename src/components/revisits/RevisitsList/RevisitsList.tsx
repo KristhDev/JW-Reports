@@ -211,7 +211,7 @@ export const RevisitsList: FC<RevisitsListProps> = ({ emptyMessage, filter, titl
                                 ? `No se encontraron revisitas con la busqueda: ${ searchTerm.trim() }`
                                 : emptyMessage
                         }
-                        showLoader={ !isRevisitsLoading && revisits.length === 0 }
+                        showMsg={ !isRevisitsLoading && revisits.length === 0 }
                     />
                 }
                 ListHeaderComponentStyle={{ alignSelf: 'flex-start' }}

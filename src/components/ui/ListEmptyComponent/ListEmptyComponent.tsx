@@ -10,24 +10,22 @@ import { ListEmptyComponentProps } from './interfaces';
 /**
  * This component is responsible for displaying a message when the list of
  * FlatList elements is empty and meets other conditions
- * @param {ListEmptyComponentProps} props { msg: string, showLoader: boolean } - This is the props
+ * @param {ListEmptyComponentProps} props { msg: string, showMsg: boolean } - This is the props
  * for functionality of the component
  * - msg: This is the message that will be displayed
- * - showLoader: This is a boolean to determine whether the loader should be shown or not
+ * - showMsg: This is a boolean to determine whether the message should be shown or not
  */
-export const ListEmptyComponent: FC<ListEmptyComponentProps> = ({ msg, showLoader }) => {
+export const ListEmptyComponent: FC<ListEmptyComponentProps> = ({ msg, showMsg }) => {
     const { height } = useWindowDimensions();
 
     return (
         <>
-            {
-                (showLoader) && (
-                    <InfoText
-                        containerStyle={{ marginTop: height * 0.20 }}
-                        text={ msg }
-                    />
-                )
-            }
+            { (showMsg) && (
+                <InfoText
+                    containerStyle={{ marginTop: height * 0.20 }}
+                    text={ msg }
+                />
+            ) }
         </>
     );
 }

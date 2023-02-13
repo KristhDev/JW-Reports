@@ -1,0 +1,73 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Test in <ThemeBtn /> component should to match snapshot 1`] = `
+<View
+  accessibilityState={
+    Object {
+      "disabled": false,
+    }
+  }
+  accessible={true}
+  collapsable={false}
+  focusable={true}
+  onBlur={[Function]}
+  onClick={[Function]}
+  onFocus={[Function]}
+  onResponderGrant={[Function]}
+  onResponderMove={[Function]}
+  onResponderRelease={[Function]}
+  onResponderTerminate={[Function]}
+  onResponderTerminationRequest={[Function]}
+  onStartShouldSetResponder={[Function]}
+  style={
+    Array [
+      Object {
+        "overflow": "hidden",
+      },
+      false,
+      Array [
+        Object {
+          "alignItems": "center",
+          "backgroundColor": "#C0A7E1",
+          "borderRadius": 50,
+          "height": 42,
+          "justifyContent": "center",
+          "margin": 5,
+          "width": 42,
+        },
+        Object {
+          "position": "absolute",
+          "right": 20,
+          "top": 20,
+        },
+      ],
+    ]
+  }
+  testID="fab-touchable"
+>
+  <Text
+    allowFontScaling={false}
+    selectable={false}
+    style={
+      Array [
+        Object {
+          "color": "#121212",
+          "fontSize": 35,
+        },
+        Object {
+          "marginBottom": 1,
+          "marginLeft": 2,
+        },
+        Object {
+          "fontFamily": "Ionicons",
+          "fontStyle": "normal",
+          "fontWeight": "normal",
+        },
+        Object {},
+      ]
+    }
+  >
+    
+  </Text>
+</View>
+`;

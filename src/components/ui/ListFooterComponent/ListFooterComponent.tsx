@@ -27,6 +27,7 @@ export const ListFooterComponent: FC<ListFooterComponentProps> = ({ marginTopPlu
                     color={ colors.button }
                     size="large"
                     style={{ marginTop: height * ((marginTopPlus) ? 0.22 : 0.10)  }}
+                    testID="loader"
                 />
             ) }
         </>

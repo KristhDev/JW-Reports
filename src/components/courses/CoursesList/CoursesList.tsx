@@ -205,7 +205,7 @@ export const CoursesList: FC<CoursesListProps> = ({ emptyMessage, filter, title 
                                 ? `No se encontraron cursos con la busqueda: ${ searchTerm.trim() }`
                                 : emptyMessage
                         }
-                        showLoader={ !isCoursesLoading && courses.length === 0 }
+                        showMsg={ !isCoursesLoading && courses.length === 0 }
                     />
                 }
                 ListHeaderComponentStyle={{ alignSelf: 'flex-start' }}

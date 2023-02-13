@@ -178,7 +178,7 @@ export const LessonsList = () => {
                                 ? `No se encontraron resultados para: ${ searchTerm.trim() }`
                                 : 'No haz agregado clases a este curso.'
                         }
-                        showLoader={ !isLessonsLoading && lessons.length === 0 }
+                        showMsg={ !isLessonsLoading && lessons.length === 0 }
                     />
                 }
                 ListHeaderComponentStyle={{ alignSelf: 'flex-start' }}

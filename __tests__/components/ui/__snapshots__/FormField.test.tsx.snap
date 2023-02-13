@@ -1,0 +1,121 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Test in <FormField /> component should to match snapshot 1`] = `
+<View
+  style={
+    Object {
+      "display": "flex",
+      "padding": 10,
+      "width": 675,
+    }
+  }
+>
+  <Text
+    style={
+      Array [
+        Object {
+          "color": "#FFFFFF",
+          "fontSize": 18,
+          "marginBottom": 5,
+          "padding": 5,
+        },
+        undefined,
+      ]
+    }
+    testID="form-field-label"
+  >
+    Nombre:
+  </Text>
+  <View
+    style={
+      Object {
+        "borderColor": "transparent",
+        "borderRadius": 7,
+        "borderWidth": 1,
+      }
+    }
+  >
+    <View
+      style={
+        Object {
+          "borderColor": "#FFFFFF",
+          "borderRadius": 5,
+          "borderWidth": 0.5,
+        }
+      }
+    >
+      <View
+        style={
+          Array [
+            Object {
+              "alignItems": "center",
+              "borderColor": "transparent",
+              "borderRadius": 5,
+              "borderWidth": 1.5,
+              "flexDirection": "row",
+              "paddingRight": 10,
+            },
+            undefined,
+          ]
+        }
+      >
+        <TextInput
+          autoCapitalize="none"
+          autoCorrect={false}
+          cursorColor="#C0A7E1"
+          onBlur={[Function]}
+          onChangeText={[Function]}
+          onFocus={[Function]}
+          onSelectionChange={[Function]}
+          placeholder="Ingrese su nombre"
+          placeholderTextColor="#BFBFBF"
+          selection={
+            Object {
+              "end": 0,
+              "start": 0,
+            }
+          }
+          selectionColor="#A0B9E2"
+          style={
+            Array [
+              Object {
+                "color": "#FFFFFF",
+                "flex": 1,
+                "fontSize": 17,
+                "paddingLeft": 10,
+                "paddingRight": 5,
+                "textAlignVertical": "center",
+              },
+              undefined,
+            ]
+          }
+          testID="form-field-text-input"
+          value=""
+        />
+        <Text
+          allowFontScaling={false}
+          selectable={false}
+          style={
+            Array [
+              Object {
+                "color": "#BFBFBF",
+                "fontSize": 25,
+              },
+              undefined,
+              Object {
+                "fontFamily": "Ionicons",
+                "fontStyle": "normal",
+                "fontWeight": "normal",
+              },
+              Object {},
+            ]
+          }
+          testID="form-field-icon"
+        >
+          
+        </Text>
+      </View>
+    </View>
+  </View>
+</View>
+`;

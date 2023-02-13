@@ -1,0 +1,108 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Test in <RadioBtn /> component should to match snapshot 1`] = `
+<View
+  style={
+    Object {
+      "alignItems": "center",
+      "flexDirection": "row",
+      "padding": 5,
+    }
+  }
+>
+  <View
+    accessibilityLiveRegion="polite"
+    accessibilityRole="radio"
+    accessibilityState={
+      Object {
+        "checked": false,
+        "disabled": false,
+      }
+    }
+    accessible={true}
+    collapsable={false}
+    color="#C0A7E1"
+    focusable={true}
+    onBlur={[Function]}
+    onClick={[Function]}
+    onFocus={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      Array [
+        Object {
+          "overflow": "hidden",
+        },
+        false,
+        Object {
+          "borderRadius": 18,
+          "padding": 6,
+        },
+      ]
+    }
+    uncheckedColor="#BFBFBF"
+  >
+    <View
+      style={
+        Object {
+          "opacity": 0,
+        }
+      }
+    >
+      <Text
+        accessibilityElementsHidden={true}
+        allowFontScaling={false}
+        importantForAccessibility="no-hide-descendants"
+        pointerEvents="none"
+        selectable={false}
+        style={
+          Array [
+            Object {
+              "color": "#C0A7E1",
+              "fontSize": 24,
+            },
+            Array [
+              Object {
+                "lineHeight": 24,
+                "transform": Array [
+                  Object {
+                    "scaleX": 1,
+                  },
+                ],
+              },
+              Object {
+                "backgroundColor": "transparent",
+              },
+            ],
+            Object {
+              "fontFamily": "Material Design Icons",
+              "fontStyle": "normal",
+              "fontWeight": "normal",
+            },
+            Object {},
+          ]
+        }
+      >
+        󰄬
+      </Text>
+    </View>
+  </View>
+  <Text
+    onPress={[MockFunction]}
+    style={
+      Object {
+        "color": "#FFFFFF",
+        "fontSize": 18,
+        "marginLeft": 15,
+      }
+    }
+    testID="radio-btn-text"
+  >
+    Label test
+  </Text>
+</View>
+`;

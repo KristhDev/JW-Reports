@@ -34,6 +34,7 @@ export const RadioBtn: FC<RadioBtnProps> = ({ label, onPress, value }) => {
             <Text
                 onPress={ onPress }
                 style={{ ...styles.radioLabel, color: colors.text }}
+                testID="radio-btn-text"
             >
                 { label }
             </Text>

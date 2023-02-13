@@ -1,0 +1,68 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Test in <BackButton /> component should to match snapshot 1`] = `
+<View
+  accessibilityState={
+    Object {
+      "disabled": false,
+    }
+  }
+  accessible={true}
+  collapsable={false}
+  focusable={true}
+  onBlur={[Function]}
+  onClick={[Function]}
+  onFocus={[Function]}
+  onResponderGrant={[Function]}
+  onResponderMove={[Function]}
+  onResponderRelease={[Function]}
+  onResponderTerminate={[Function]}
+  onResponderTerminationRequest={[Function]}
+  onStartShouldSetResponder={[Function]}
+  style={
+    Array [
+      Object {
+        "overflow": "hidden",
+      },
+      false,
+      Array [
+        Object {
+          "alignItems": "center",
+          "backgroundColor": "transparent",
+          "borderRadius": 50,
+          "height": 42,
+          "justifyContent": "center",
+          "margin": 5,
+          "width": 42,
+        },
+        undefined,
+      ],
+    ]
+  }
+  testID="fab-touchable"
+>
+  <Text
+    allowFontScaling={false}
+    selectable={false}
+    style={
+      Array [
+        Object {
+          "color": "#C0A7E1",
+          "fontSize": 28,
+        },
+        Object {
+          "marginLeft": 1,
+        },
+        Object {
+          "fontFamily": "Ionicons",
+          "fontStyle": "normal",
+          "fontWeight": "normal",
+        },
+        Object {},
+      ]
+    }
+  >
+    
+  </Text>
+</View>
+`;

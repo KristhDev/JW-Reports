@@ -67,9 +67,11 @@ export const FormField: FC<FormFieldProps> = ({
             <Text
                 style={[
                     { ...themeStyles.formLabel, color: colors.titleText },
-                    labelStyle ]}
-                >
-                    { label }
+                    labelStyle
+                ]}
+                testID="form-field-label"
+            >
+                { label }
             </Text>
 
             <View
@@ -124,6 +126,7 @@ export const FormField: FC<FormFieldProps> = ({
                                 setIsFocused(false);
                             } }
                             onFocus={ () => setIsFocused(true) }
+                            testID="form-field-text-input"
                         />
 
                         { icon }
