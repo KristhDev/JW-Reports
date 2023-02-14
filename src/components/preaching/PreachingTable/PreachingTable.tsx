@@ -60,6 +60,7 @@ export const PreachingTable = () => {
                 Children.toArray(preachings.map((preaching) => (
                     <TouchableHighlight
                         onPress={ () => handleGoToEditPreaching(preaching) }
+                        testID="preaching-table-row"
                         underlayColor={ (selectedTheme === 'dark') ? 'rgba(255, 255, 255, 0.15)' : 'rgba(0, 0, 0, 0.15)' }
                     >
                         <View style={{ ...styles.tableRow }}>

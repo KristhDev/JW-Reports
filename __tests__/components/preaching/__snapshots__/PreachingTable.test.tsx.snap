@@ -1,0 +1,2592 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Test in <PreachingTable /> component should to match snapshot 1`] = `
+<View
+  style={
+    Object {
+      "alignItems": "center",
+      "borderColor": "#000000",
+      "borderWidth": 1,
+      "margin": 20,
+    }
+  }
+>
+  <View
+    style={
+      Object {
+        "alignItems": "center",
+        "flexDirection": "row",
+        "width": "100%",
+      }
+    }
+  >
+    <View
+      style={
+        Array [
+          Object {
+            "backgroundColor": "#3C3547",
+            "borderColor": "#000000",
+            "borderWidth": 1,
+            "height": 60,
+            "justifyContent": "center",
+          },
+          Object {
+            "width": 112.5,
+          },
+        ]
+      }
+    >
+      <Text
+        style={
+          Object {
+            "color": "#FFFFFF",
+            "fontSize": 16,
+            "marginLeft": 10,
+          }
+        }
+        testID="table-cell-text"
+      >
+        Día
+      </Text>
+    </View>
+    <View
+      style={
+        Array [
+          Object {
+            "backgroundColor": "#3C3547",
+            "borderColor": "#000000",
+            "borderWidth": 1,
+            "height": 60,
+            "justifyContent": "center",
+          },
+          Object {
+            "width": 112.5,
+          },
+        ]
+      }
+    >
+      <Text
+        style={
+          Object {
+            "color": "#FFFFFF",
+            "fontSize": 16,
+            "marginLeft": 10,
+          }
+        }
+        testID="table-cell-text"
+      >
+        H/I
+      </Text>
+    </View>
+    <View
+      style={
+        Array [
+          Object {
+            "backgroundColor": "#3C3547",
+            "borderColor": "#000000",
+            "borderWidth": 1,
+            "height": 60,
+            "justifyContent": "center",
+          },
+          Object {
+            "width": 112.5,
+          },
+        ]
+      }
+    >
+      <Text
+        style={
+          Object {
+            "color": "#FFFFFF",
+            "fontSize": 16,
+            "marginLeft": 10,
+          }
+        }
+        testID="table-cell-text"
+      >
+        H/F
+      </Text>
+    </View>
+    <View
+      style={
+        Array [
+          Object {
+            "backgroundColor": "#3C3547",
+            "borderColor": "#000000",
+            "borderWidth": 1,
+            "height": 60,
+            "justifyContent": "center",
+          },
+          Object {
+            "width": 112.5,
+          },
+        ]
+      }
+    >
+      <Text
+        style={
+          Object {
+            "color": "#FFFFFF",
+            "fontSize": 16,
+            "marginLeft": 10,
+          }
+        }
+        testID="table-cell-text"
+      >
+        Pub
+      </Text>
+    </View>
+    <View
+      style={
+        Array [
+          Object {
+            "backgroundColor": "#3C3547",
+            "borderColor": "#000000",
+            "borderWidth": 1,
+            "height": 60,
+            "justifyContent": "center",
+          },
+          Object {
+            "width": 112.5,
+          },
+        ]
+      }
+    >
+      <Text
+        style={
+          Object {
+            "color": "#FFFFFF",
+            "fontSize": 16,
+            "marginLeft": 10,
+          }
+        }
+        testID="table-cell-text"
+      >
+        Vid
+      </Text>
+    </View>
+    <View
+      style={
+        Array [
+          Object {
+            "backgroundColor": "#3C3547",
+            "borderColor": "#000000",
+            "borderWidth": 1,
+            "height": 60,
+            "justifyContent": "center",
+          },
+          Object {
+            "width": 112.5,
+          },
+        ]
+      }
+    >
+      <Text
+        style={
+          Object {
+            "color": "#FFFFFF",
+            "fontSize": 16,
+            "marginLeft": 10,
+          }
+        }
+        testID="table-cell-text"
+      >
+        Rev
+      </Text>
+    </View>
+  </View>
+  <View
+    accessible={true}
+    focusable={true}
+    onClick={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    testID="preaching-table-row"
+  >
+    <View
+      style={
+        Object {
+          "alignItems": "center",
+          "flexDirection": "row",
+          "width": "100%",
+        }
+      }
+    >
+      <View
+        style={
+          Array [
+            Object {
+              "backgroundColor": "#3C3547",
+              "borderColor": "#000000",
+              "borderWidth": 1,
+              "height": 60,
+              "justifyContent": "center",
+            },
+            Object {
+              "backgroundColor": "#746C84",
+              "width": 112.5,
+            },
+          ]
+        }
+      >
+        <Text
+          style={
+            Object {
+              "color": "#FFFFFF",
+              "fontSize": 16,
+              "marginLeft": 10,
+            }
+          }
+          testID="table-cell-text"
+        >
+          12
+        </Text>
+      </View>
+      <View
+        style={
+          Array [
+            Object {
+              "backgroundColor": "#3C3547",
+              "borderColor": "#000000",
+              "borderWidth": 1,
+              "height": 60,
+              "justifyContent": "center",
+            },
+            Object {
+              "backgroundColor": "#746C84",
+              "width": 112.5,
+            },
+          ]
+        }
+      >
+        <Text
+          style={
+            Object {
+              "color": "#FFFFFF",
+              "fontSize": 16,
+              "marginLeft": 10,
+            }
+          }
+          testID="table-cell-text"
+        >
+          13:00
+        </Text>
+      </View>
+      <View
+        style={
+          Array [
+            Object {
+              "backgroundColor": "#3C3547",
+              "borderColor": "#000000",
+              "borderWidth": 1,
+              "height": 60,
+              "justifyContent": "center",
+            },
+            Object {
+              "backgroundColor": "#746C84",
+              "width": 112.5,
+            },
+          ]
+        }
+      >
+        <Text
+          style={
+            Object {
+              "color": "#FFFFFF",
+              "fontSize": 16,
+              "marginLeft": 10,
+            }
+          }
+          testID="table-cell-text"
+        >
+          16:00
+        </Text>
+      </View>
+      <View
+        style={
+          Array [
+            Object {
+              "backgroundColor": "#3C3547",
+              "borderColor": "#000000",
+              "borderWidth": 1,
+              "height": 60,
+              "justifyContent": "center",
+            },
+            Object {
+              "backgroundColor": "#746C84",
+              "width": 112.5,
+            },
+          ]
+        }
+      >
+        <Text
+          style={
+            Object {
+              "color": "#FFFFFF",
+              "fontSize": 16,
+              "marginLeft": 10,
+            }
+          }
+          testID="table-cell-text"
+        >
+          4
+        </Text>
+      </View>
+      <View
+        style={
+          Array [
+            Object {
+              "backgroundColor": "#3C3547",
+              "borderColor": "#000000",
+              "borderWidth": 1,
+              "height": 60,
+              "justifyContent": "center",
+            },
+            Object {
+              "backgroundColor": "#746C84",
+              "width": 112.5,
+            },
+          ]
+        }
+      >
+        <Text
+          style={
+            Object {
+              "color": "#FFFFFF",
+              "fontSize": 16,
+              "marginLeft": 10,
+            }
+          }
+          testID="table-cell-text"
+        >
+          0
+        </Text>
+      </View>
+      <View
+        style={
+          Array [
+            Object {
+              "backgroundColor": "#3C3547",
+              "borderColor": "#000000",
+              "borderWidth": 1,
+              "height": 60,
+              "justifyContent": "center",
+            },
+            Object {
+              "backgroundColor": "#746C84",
+              "width": 112.5,
+            },
+          ]
+        }
+      >
+        <Text
+          style={
+            Object {
+              "color": "#FFFFFF",
+              "fontSize": 16,
+              "marginLeft": 10,
+            }
+          }
+          testID="table-cell-text"
+        >
+          2
+        </Text>
+      </View>
+    </View>
+  </View>
+  <View
+    accessible={true}
+    focusable={true}
+    onClick={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    testID="preaching-table-row"
+  >
+    <View
+      style={
+        Object {
+          "alignItems": "center",
+          "flexDirection": "row",
+          "width": "100%",
+        }
+      }
+    >
+      <View
+        style={
+          Array [
+            Object {
+              "backgroundColor": "#3C3547",
+              "borderColor": "#000000",
+              "borderWidth": 1,
+              "height": 60,
+              "justifyContent": "center",
+            },
+            Object {
+              "backgroundColor": "#746C84",
+              "width": 112.5,
+            },
+          ]
+        }
+      >
+        <Text
+          style={
+            Object {
+              "color": "#FFFFFF",
+              "fontSize": 16,
+              "marginLeft": 10,
+            }
+          }
+          testID="table-cell-text"
+        >
+          12
+        </Text>
+      </View>
+      <View
+        style={
+          Array [
+            Object {
+              "backgroundColor": "#3C3547",
+              "borderColor": "#000000",
+              "borderWidth": 1,
+              "height": 60,
+              "justifyContent": "center",
+            },
+            Object {
+              "backgroundColor": "#746C84",
+              "width": 112.5,
+            },
+          ]
+        }
+      >
+        <Text
+          style={
+            Object {
+              "color": "#FFFFFF",
+              "fontSize": 16,
+              "marginLeft": 10,
+            }
+          }
+          testID="table-cell-text"
+        >
+          13:00
+        </Text>
+      </View>
+      <View
+        style={
+          Array [
+            Object {
+              "backgroundColor": "#3C3547",
+              "borderColor": "#000000",
+              "borderWidth": 1,
+              "height": 60,
+              "justifyContent": "center",
+            },
+            Object {
+              "backgroundColor": "#746C84",
+              "width": 112.5,
+            },
+          ]
+        }
+      >
+        <Text
+          style={
+            Object {
+              "color": "#FFFFFF",
+              "fontSize": 16,
+              "marginLeft": 10,
+            }
+          }
+          testID="table-cell-text"
+        >
+          16:00
+        </Text>
+      </View>
+      <View
+        style={
+          Array [
+            Object {
+              "backgroundColor": "#3C3547",
+              "borderColor": "#000000",
+              "borderWidth": 1,
+              "height": 60,
+              "justifyContent": "center",
+            },
+            Object {
+              "backgroundColor": "#746C84",
+              "width": 112.5,
+            },
+          ]
+        }
+      >
+        <Text
+          style={
+            Object {
+              "color": "#FFFFFF",
+              "fontSize": 16,
+              "marginLeft": 10,
+            }
+          }
+          testID="table-cell-text"
+        >
+          4
+        </Text>
+      </View>
+      <View
+        style={
+          Array [
+            Object {
+              "backgroundColor": "#3C3547",
+              "borderColor": "#000000",
+              "borderWidth": 1,
+              "height": 60,
+              "justifyContent": "center",
+            },
+            Object {
+              "backgroundColor": "#746C84",
+              "width": 112.5,
+            },
+          ]
+        }
+      >
+        <Text
+          style={
+            Object {
+              "color": "#FFFFFF",
+              "fontSize": 16,
+              "marginLeft": 10,
+            }
+          }
+          testID="table-cell-text"
+        >
+          0
+        </Text>
+      </View>
+      <View
+        style={
+          Array [
+            Object {
+              "backgroundColor": "#3C3547",
+              "borderColor": "#000000",
+              "borderWidth": 1,
+              "height": 60,
+              "justifyContent": "center",
+            },
+            Object {
+              "backgroundColor": "#746C84",
+              "width": 112.5,
+            },
+          ]
+        }
+      >
+        <Text
+          style={
+            Object {
+              "color": "#FFFFFF",
+              "fontSize": 16,
+              "marginLeft": 10,
+            }
+          }
+          testID="table-cell-text"
+        >
+          2
+        </Text>
+      </View>
+    </View>
+  </View>
+  <View
+    accessible={true}
+    focusable={true}
+    onClick={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    testID="preaching-table-row"
+  >
+    <View
+      style={
+        Object {
+          "alignItems": "center",
+          "flexDirection": "row",
+          "width": "100%",
+        }
+      }
+    >
+      <View
+        style={
+          Array [
+            Object {
+              "backgroundColor": "#3C3547",
+              "borderColor": "#000000",
+              "borderWidth": 1,
+              "height": 60,
+              "justifyContent": "center",
+            },
+            Object {
+              "backgroundColor": "#746C84",
+              "width": 112.5,
+            },
+          ]
+        }
+      >
+        <Text
+          style={
+            Object {
+              "color": "#FFFFFF",
+              "fontSize": 16,
+              "marginLeft": 10,
+            }
+          }
+          testID="table-cell-text"
+        >
+          12
+        </Text>
+      </View>
+      <View
+        style={
+          Array [
+            Object {
+              "backgroundColor": "#3C3547",
+              "borderColor": "#000000",
+              "borderWidth": 1,
+              "height": 60,
+              "justifyContent": "center",
+            },
+            Object {
+              "backgroundColor": "#746C84",
+              "width": 112.5,
+            },
+          ]
+        }
+      >
+        <Text
+          style={
+            Object {
+              "color": "#FFFFFF",
+              "fontSize": 16,
+              "marginLeft": 10,
+            }
+          }
+          testID="table-cell-text"
+        >
+          13:00
+        </Text>
+      </View>
+      <View
+        style={
+          Array [
+            Object {
+              "backgroundColor": "#3C3547",
+              "borderColor": "#000000",
+              "borderWidth": 1,
+              "height": 60,
+              "justifyContent": "center",
+            },
+            Object {
+              "backgroundColor": "#746C84",
+              "width": 112.5,
+            },
+          ]
+        }
+      >
+        <Text
+          style={
+            Object {
+              "color": "#FFFFFF",
+              "fontSize": 16,
+              "marginLeft": 10,
+            }
+          }
+          testID="table-cell-text"
+        >
+          16:00
+        </Text>
+      </View>
+      <View
+        style={
+          Array [
+            Object {
+              "backgroundColor": "#3C3547",
+              "borderColor": "#000000",
+              "borderWidth": 1,
+              "height": 60,
+              "justifyContent": "center",
+            },
+            Object {
+              "backgroundColor": "#746C84",
+              "width": 112.5,
+            },
+          ]
+        }
+      >
+        <Text
+          style={
+            Object {
+              "color": "#FFFFFF",
+              "fontSize": 16,
+              "marginLeft": 10,
+            }
+          }
+          testID="table-cell-text"
+        >
+          4
+        </Text>
+      </View>
+      <View
+        style={
+          Array [
+            Object {
+              "backgroundColor": "#3C3547",
+              "borderColor": "#000000",
+              "borderWidth": 1,
+              "height": 60,
+              "justifyContent": "center",
+            },
+            Object {
+              "backgroundColor": "#746C84",
+              "width": 112.5,
+            },
+          ]
+        }
+      >
+        <Text
+          style={
+            Object {
+              "color": "#FFFFFF",
+              "fontSize": 16,
+              "marginLeft": 10,
+            }
+          }
+          testID="table-cell-text"
+        >
+          0
+        </Text>
+      </View>
+      <View
+        style={
+          Array [
+            Object {
+              "backgroundColor": "#3C3547",
+              "borderColor": "#000000",
+              "borderWidth": 1,
+              "height": 60,
+              "justifyContent": "center",
+            },
+            Object {
+              "backgroundColor": "#746C84",
+              "width": 112.5,
+            },
+          ]
+        }
+      >
+        <Text
+          style={
+            Object {
+              "color": "#FFFFFF",
+              "fontSize": 16,
+              "marginLeft": 10,
+            }
+          }
+          testID="table-cell-text"
+        >
+          2
+        </Text>
+      </View>
+    </View>
+  </View>
+  <View
+    accessible={true}
+    focusable={true}
+    onClick={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    testID="preaching-table-row"
+  >
+    <View
+      style={
+        Object {
+          "alignItems": "center",
+          "flexDirection": "row",
+          "width": "100%",
+        }
+      }
+    >
+      <View
+        style={
+          Array [
+            Object {
+              "backgroundColor": "#3C3547",
+              "borderColor": "#000000",
+              "borderWidth": 1,
+              "height": 60,
+              "justifyContent": "center",
+            },
+            Object {
+              "backgroundColor": "#746C84",
+              "width": 112.5,
+            },
+          ]
+        }
+      >
+        <Text
+          style={
+            Object {
+              "color": "#FFFFFF",
+              "fontSize": 16,
+              "marginLeft": 10,
+            }
+          }
+          testID="table-cell-text"
+        >
+          12
+        </Text>
+      </View>
+      <View
+        style={
+          Array [
+            Object {
+              "backgroundColor": "#3C3547",
+              "borderColor": "#000000",
+              "borderWidth": 1,
+              "height": 60,
+              "justifyContent": "center",
+            },
+            Object {
+              "backgroundColor": "#746C84",
+              "width": 112.5,
+            },
+          ]
+        }
+      >
+        <Text
+          style={
+            Object {
+              "color": "#FFFFFF",
+              "fontSize": 16,
+              "marginLeft": 10,
+            }
+          }
+          testID="table-cell-text"
+        >
+          13:00
+        </Text>
+      </View>
+      <View
+        style={
+          Array [
+            Object {
+              "backgroundColor": "#3C3547",
+              "borderColor": "#000000",
+              "borderWidth": 1,
+              "height": 60,
+              "justifyContent": "center",
+            },
+            Object {
+              "backgroundColor": "#746C84",
+              "width": 112.5,
+            },
+          ]
+        }
+      >
+        <Text
+          style={
+            Object {
+              "color": "#FFFFFF",
+              "fontSize": 16,
+              "marginLeft": 10,
+            }
+          }
+          testID="table-cell-text"
+        >
+          16:00
+        </Text>
+      </View>
+      <View
+        style={
+          Array [
+            Object {
+              "backgroundColor": "#3C3547",
+              "borderColor": "#000000",
+              "borderWidth": 1,
+              "height": 60,
+              "justifyContent": "center",
+            },
+            Object {
+              "backgroundColor": "#746C84",
+              "width": 112.5,
+            },
+          ]
+        }
+      >
+        <Text
+          style={
+            Object {
+              "color": "#FFFFFF",
+              "fontSize": 16,
+              "marginLeft": 10,
+            }
+          }
+          testID="table-cell-text"
+        >
+          4
+        </Text>
+      </View>
+      <View
+        style={
+          Array [
+            Object {
+              "backgroundColor": "#3C3547",
+              "borderColor": "#000000",
+              "borderWidth": 1,
+              "height": 60,
+              "justifyContent": "center",
+            },
+            Object {
+              "backgroundColor": "#746C84",
+              "width": 112.5,
+            },
+          ]
+        }
+      >
+        <Text
+          style={
+            Object {
+              "color": "#FFFFFF",
+              "fontSize": 16,
+              "marginLeft": 10,
+            }
+          }
+          testID="table-cell-text"
+        >
+          0
+        </Text>
+      </View>
+      <View
+        style={
+          Array [
+            Object {
+              "backgroundColor": "#3C3547",
+              "borderColor": "#000000",
+              "borderWidth": 1,
+              "height": 60,
+              "justifyContent": "center",
+            },
+            Object {
+              "backgroundColor": "#746C84",
+              "width": 112.5,
+            },
+          ]
+        }
+      >
+        <Text
+          style={
+            Object {
+              "color": "#FFFFFF",
+              "fontSize": 16,
+              "marginLeft": 10,
+            }
+          }
+          testID="table-cell-text"
+        >
+          2
+        </Text>
+      </View>
+    </View>
+  </View>
+  <View
+    accessible={true}
+    focusable={true}
+    onClick={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    testID="preaching-table-row"
+  >
+    <View
+      style={
+        Object {
+          "alignItems": "center",
+          "flexDirection": "row",
+          "width": "100%",
+        }
+      }
+    >
+      <View
+        style={
+          Array [
+            Object {
+              "backgroundColor": "#3C3547",
+              "borderColor": "#000000",
+              "borderWidth": 1,
+              "height": 60,
+              "justifyContent": "center",
+            },
+            Object {
+              "backgroundColor": "#746C84",
+              "width": 112.5,
+            },
+          ]
+        }
+      >
+        <Text
+          style={
+            Object {
+              "color": "#FFFFFF",
+              "fontSize": 16,
+              "marginLeft": 10,
+            }
+          }
+          testID="table-cell-text"
+        >
+          12
+        </Text>
+      </View>
+      <View
+        style={
+          Array [
+            Object {
+              "backgroundColor": "#3C3547",
+              "borderColor": "#000000",
+              "borderWidth": 1,
+              "height": 60,
+              "justifyContent": "center",
+            },
+            Object {
+              "backgroundColor": "#746C84",
+              "width": 112.5,
+            },
+          ]
+        }
+      >
+        <Text
+          style={
+            Object {
+              "color": "#FFFFFF",
+              "fontSize": 16,
+              "marginLeft": 10,
+            }
+          }
+          testID="table-cell-text"
+        >
+          13:00
+        </Text>
+      </View>
+      <View
+        style={
+          Array [
+            Object {
+              "backgroundColor": "#3C3547",
+              "borderColor": "#000000",
+              "borderWidth": 1,
+              "height": 60,
+              "justifyContent": "center",
+            },
+            Object {
+              "backgroundColor": "#746C84",
+              "width": 112.5,
+            },
+          ]
+        }
+      >
+        <Text
+          style={
+            Object {
+              "color": "#FFFFFF",
+              "fontSize": 16,
+              "marginLeft": 10,
+            }
+          }
+          testID="table-cell-text"
+        >
+          16:00
+        </Text>
+      </View>
+      <View
+        style={
+          Array [
+            Object {
+              "backgroundColor": "#3C3547",
+              "borderColor": "#000000",
+              "borderWidth": 1,
+              "height": 60,
+              "justifyContent": "center",
+            },
+            Object {
+              "backgroundColor": "#746C84",
+              "width": 112.5,
+            },
+          ]
+        }
+      >
+        <Text
+          style={
+            Object {
+              "color": "#FFFFFF",
+              "fontSize": 16,
+              "marginLeft": 10,
+            }
+          }
+          testID="table-cell-text"
+        >
+          4
+        </Text>
+      </View>
+      <View
+        style={
+          Array [
+            Object {
+              "backgroundColor": "#3C3547",
+              "borderColor": "#000000",
+              "borderWidth": 1,
+              "height": 60,
+              "justifyContent": "center",
+            },
+            Object {
+              "backgroundColor": "#746C84",
+              "width": 112.5,
+            },
+          ]
+        }
+      >
+        <Text
+          style={
+            Object {
+              "color": "#FFFFFF",
+              "fontSize": 16,
+              "marginLeft": 10,
+            }
+          }
+          testID="table-cell-text"
+        >
+          0
+        </Text>
+      </View>
+      <View
+        style={
+          Array [
+            Object {
+              "backgroundColor": "#3C3547",
+              "borderColor": "#000000",
+              "borderWidth": 1,
+              "height": 60,
+              "justifyContent": "center",
+            },
+            Object {
+              "backgroundColor": "#746C84",
+              "width": 112.5,
+            },
+          ]
+        }
+      >
+        <Text
+          style={
+            Object {
+              "color": "#FFFFFF",
+              "fontSize": 16,
+              "marginLeft": 10,
+            }
+          }
+          testID="table-cell-text"
+        >
+          2
+        </Text>
+      </View>
+    </View>
+  </View>
+  <View
+    accessible={true}
+    focusable={true}
+    onClick={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    testID="preaching-table-row"
+  >
+    <View
+      style={
+        Object {
+          "alignItems": "center",
+          "flexDirection": "row",
+          "width": "100%",
+        }
+      }
+    >
+      <View
+        style={
+          Array [
+            Object {
+              "backgroundColor": "#3C3547",
+              "borderColor": "#000000",
+              "borderWidth": 1,
+              "height": 60,
+              "justifyContent": "center",
+            },
+            Object {
+              "backgroundColor": "#746C84",
+              "width": 112.5,
+            },
+          ]
+        }
+      >
+        <Text
+          style={
+            Object {
+              "color": "#FFFFFF",
+              "fontSize": 16,
+              "marginLeft": 10,
+            }
+          }
+          testID="table-cell-text"
+        >
+          12
+        </Text>
+      </View>
+      <View
+        style={
+          Array [
+            Object {
+              "backgroundColor": "#3C3547",
+              "borderColor": "#000000",
+              "borderWidth": 1,
+              "height": 60,
+              "justifyContent": "center",
+            },
+            Object {
+              "backgroundColor": "#746C84",
+              "width": 112.5,
+            },
+          ]
+        }
+      >
+        <Text
+          style={
+            Object {
+              "color": "#FFFFFF",
+              "fontSize": 16,
+              "marginLeft": 10,
+            }
+          }
+          testID="table-cell-text"
+        >
+          13:00
+        </Text>
+      </View>
+      <View
+        style={
+          Array [
+            Object {
+              "backgroundColor": "#3C3547",
+              "borderColor": "#000000",
+              "borderWidth": 1,
+              "height": 60,
+              "justifyContent": "center",
+            },
+            Object {
+              "backgroundColor": "#746C84",
+              "width": 112.5,
+            },
+          ]
+        }
+      >
+        <Text
+          style={
+            Object {
+              "color": "#FFFFFF",
+              "fontSize": 16,
+              "marginLeft": 10,
+            }
+          }
+          testID="table-cell-text"
+        >
+          16:00
+        </Text>
+      </View>
+      <View
+        style={
+          Array [
+            Object {
+              "backgroundColor": "#3C3547",
+              "borderColor": "#000000",
+              "borderWidth": 1,
+              "height": 60,
+              "justifyContent": "center",
+            },
+            Object {
+              "backgroundColor": "#746C84",
+              "width": 112.5,
+            },
+          ]
+        }
+      >
+        <Text
+          style={
+            Object {
+              "color": "#FFFFFF",
+              "fontSize": 16,
+              "marginLeft": 10,
+            }
+          }
+          testID="table-cell-text"
+        >
+          4
+        </Text>
+      </View>
+      <View
+        style={
+          Array [
+            Object {
+              "backgroundColor": "#3C3547",
+              "borderColor": "#000000",
+              "borderWidth": 1,
+              "height": 60,
+              "justifyContent": "center",
+            },
+            Object {
+              "backgroundColor": "#746C84",
+              "width": 112.5,
+            },
+          ]
+        }
+      >
+        <Text
+          style={
+            Object {
+              "color": "#FFFFFF",
+              "fontSize": 16,
+              "marginLeft": 10,
+            }
+          }
+          testID="table-cell-text"
+        >
+          0
+        </Text>
+      </View>
+      <View
+        style={
+          Array [
+            Object {
+              "backgroundColor": "#3C3547",
+              "borderColor": "#000000",
+              "borderWidth": 1,
+              "height": 60,
+              "justifyContent": "center",
+            },
+            Object {
+              "backgroundColor": "#746C84",
+              "width": 112.5,
+            },
+          ]
+        }
+      >
+        <Text
+          style={
+            Object {
+              "color": "#FFFFFF",
+              "fontSize": 16,
+              "marginLeft": 10,
+            }
+          }
+          testID="table-cell-text"
+        >
+          2
+        </Text>
+      </View>
+    </View>
+  </View>
+  <View
+    accessible={true}
+    focusable={true}
+    onClick={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    testID="preaching-table-row"
+  >
+    <View
+      style={
+        Object {
+          "alignItems": "center",
+          "flexDirection": "row",
+          "width": "100%",
+        }
+      }
+    >
+      <View
+        style={
+          Array [
+            Object {
+              "backgroundColor": "#3C3547",
+              "borderColor": "#000000",
+              "borderWidth": 1,
+              "height": 60,
+              "justifyContent": "center",
+            },
+            Object {
+              "backgroundColor": "#746C84",
+              "width": 112.5,
+            },
+          ]
+        }
+      >
+        <Text
+          style={
+            Object {
+              "color": "#FFFFFF",
+              "fontSize": 16,
+              "marginLeft": 10,
+            }
+          }
+          testID="table-cell-text"
+        >
+          12
+        </Text>
+      </View>
+      <View
+        style={
+          Array [
+            Object {
+              "backgroundColor": "#3C3547",
+              "borderColor": "#000000",
+              "borderWidth": 1,
+              "height": 60,
+              "justifyContent": "center",
+            },
+            Object {
+              "backgroundColor": "#746C84",
+              "width": 112.5,
+            },
+          ]
+        }
+      >
+        <Text
+          style={
+            Object {
+              "color": "#FFFFFF",
+              "fontSize": 16,
+              "marginLeft": 10,
+            }
+          }
+          testID="table-cell-text"
+        >
+          13:00
+        </Text>
+      </View>
+      <View
+        style={
+          Array [
+            Object {
+              "backgroundColor": "#3C3547",
+              "borderColor": "#000000",
+              "borderWidth": 1,
+              "height": 60,
+              "justifyContent": "center",
+            },
+            Object {
+              "backgroundColor": "#746C84",
+              "width": 112.5,
+            },
+          ]
+        }
+      >
+        <Text
+          style={
+            Object {
+              "color": "#FFFFFF",
+              "fontSize": 16,
+              "marginLeft": 10,
+            }
+          }
+          testID="table-cell-text"
+        >
+          16:00
+        </Text>
+      </View>
+      <View
+        style={
+          Array [
+            Object {
+              "backgroundColor": "#3C3547",
+              "borderColor": "#000000",
+              "borderWidth": 1,
+              "height": 60,
+              "justifyContent": "center",
+            },
+            Object {
+              "backgroundColor": "#746C84",
+              "width": 112.5,
+            },
+          ]
+        }
+      >
+        <Text
+          style={
+            Object {
+              "color": "#FFFFFF",
+              "fontSize": 16,
+              "marginLeft": 10,
+            }
+          }
+          testID="table-cell-text"
+        >
+          4
+        </Text>
+      </View>
+      <View
+        style={
+          Array [
+            Object {
+              "backgroundColor": "#3C3547",
+              "borderColor": "#000000",
+              "borderWidth": 1,
+              "height": 60,
+              "justifyContent": "center",
+            },
+            Object {
+              "backgroundColor": "#746C84",
+              "width": 112.5,
+            },
+          ]
+        }
+      >
+        <Text
+          style={
+            Object {
+              "color": "#FFFFFF",
+              "fontSize": 16,
+              "marginLeft": 10,
+            }
+          }
+          testID="table-cell-text"
+        >
+          0
+        </Text>
+      </View>
+      <View
+        style={
+          Array [
+            Object {
+              "backgroundColor": "#3C3547",
+              "borderColor": "#000000",
+              "borderWidth": 1,
+              "height": 60,
+              "justifyContent": "center",
+            },
+            Object {
+              "backgroundColor": "#746C84",
+              "width": 112.5,
+            },
+          ]
+        }
+      >
+        <Text
+          style={
+            Object {
+              "color": "#FFFFFF",
+              "fontSize": 16,
+              "marginLeft": 10,
+            }
+          }
+          testID="table-cell-text"
+        >
+          2
+        </Text>
+      </View>
+    </View>
+  </View>
+  <View
+    accessible={true}
+    focusable={true}
+    onClick={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    testID="preaching-table-row"
+  >
+    <View
+      style={
+        Object {
+          "alignItems": "center",
+          "flexDirection": "row",
+          "width": "100%",
+        }
+      }
+    >
+      <View
+        style={
+          Array [
+            Object {
+              "backgroundColor": "#3C3547",
+              "borderColor": "#000000",
+              "borderWidth": 1,
+              "height": 60,
+              "justifyContent": "center",
+            },
+            Object {
+              "backgroundColor": "#746C84",
+              "width": 112.5,
+            },
+          ]
+        }
+      >
+        <Text
+          style={
+            Object {
+              "color": "#FFFFFF",
+              "fontSize": 16,
+              "marginLeft": 10,
+            }
+          }
+          testID="table-cell-text"
+        >
+          12
+        </Text>
+      </View>
+      <View
+        style={
+          Array [
+            Object {
+              "backgroundColor": "#3C3547",
+              "borderColor": "#000000",
+              "borderWidth": 1,
+              "height": 60,
+              "justifyContent": "center",
+            },
+            Object {
+              "backgroundColor": "#746C84",
+              "width": 112.5,
+            },
+          ]
+        }
+      >
+        <Text
+          style={
+            Object {
+              "color": "#FFFFFF",
+              "fontSize": 16,
+              "marginLeft": 10,
+            }
+          }
+          testID="table-cell-text"
+        >
+          13:00
+        </Text>
+      </View>
+      <View
+        style={
+          Array [
+            Object {
+              "backgroundColor": "#3C3547",
+              "borderColor": "#000000",
+              "borderWidth": 1,
+              "height": 60,
+              "justifyContent": "center",
+            },
+            Object {
+              "backgroundColor": "#746C84",
+              "width": 112.5,
+            },
+          ]
+        }
+      >
+        <Text
+          style={
+            Object {
+              "color": "#FFFFFF",
+              "fontSize": 16,
+              "marginLeft": 10,
+            }
+          }
+          testID="table-cell-text"
+        >
+          16:00
+        </Text>
+      </View>
+      <View
+        style={
+          Array [
+            Object {
+              "backgroundColor": "#3C3547",
+              "borderColor": "#000000",
+              "borderWidth": 1,
+              "height": 60,
+              "justifyContent": "center",
+            },
+            Object {
+              "backgroundColor": "#746C84",
+              "width": 112.5,
+            },
+          ]
+        }
+      >
+        <Text
+          style={
+            Object {
+              "color": "#FFFFFF",
+              "fontSize": 16,
+              "marginLeft": 10,
+            }
+          }
+          testID="table-cell-text"
+        >
+          4
+        </Text>
+      </View>
+      <View
+        style={
+          Array [
+            Object {
+              "backgroundColor": "#3C3547",
+              "borderColor": "#000000",
+              "borderWidth": 1,
+              "height": 60,
+              "justifyContent": "center",
+            },
+            Object {
+              "backgroundColor": "#746C84",
+              "width": 112.5,
+            },
+          ]
+        }
+      >
+        <Text
+          style={
+            Object {
+              "color": "#FFFFFF",
+              "fontSize": 16,
+              "marginLeft": 10,
+            }
+          }
+          testID="table-cell-text"
+        >
+          0
+        </Text>
+      </View>
+      <View
+        style={
+          Array [
+            Object {
+              "backgroundColor": "#3C3547",
+              "borderColor": "#000000",
+              "borderWidth": 1,
+              "height": 60,
+              "justifyContent": "center",
+            },
+            Object {
+              "backgroundColor": "#746C84",
+              "width": 112.5,
+            },
+          ]
+        }
+      >
+        <Text
+          style={
+            Object {
+              "color": "#FFFFFF",
+              "fontSize": 16,
+              "marginLeft": 10,
+            }
+          }
+          testID="table-cell-text"
+        >
+          2
+        </Text>
+      </View>
+    </View>
+  </View>
+  <View
+    accessible={true}
+    focusable={true}
+    onClick={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    testID="preaching-table-row"
+  >
+    <View
+      style={
+        Object {
+          "alignItems": "center",
+          "flexDirection": "row",
+          "width": "100%",
+        }
+      }
+    >
+      <View
+        style={
+          Array [
+            Object {
+              "backgroundColor": "#3C3547",
+              "borderColor": "#000000",
+              "borderWidth": 1,
+              "height": 60,
+              "justifyContent": "center",
+            },
+            Object {
+              "backgroundColor": "#746C84",
+              "width": 112.5,
+            },
+          ]
+        }
+      >
+        <Text
+          style={
+            Object {
+              "color": "#FFFFFF",
+              "fontSize": 16,
+              "marginLeft": 10,
+            }
+          }
+          testID="table-cell-text"
+        >
+          12
+        </Text>
+      </View>
+      <View
+        style={
+          Array [
+            Object {
+              "backgroundColor": "#3C3547",
+              "borderColor": "#000000",
+              "borderWidth": 1,
+              "height": 60,
+              "justifyContent": "center",
+            },
+            Object {
+              "backgroundColor": "#746C84",
+              "width": 112.5,
+            },
+          ]
+        }
+      >
+        <Text
+          style={
+            Object {
+              "color": "#FFFFFF",
+              "fontSize": 16,
+              "marginLeft": 10,
+            }
+          }
+          testID="table-cell-text"
+        >
+          13:00
+        </Text>
+      </View>
+      <View
+        style={
+          Array [
+            Object {
+              "backgroundColor": "#3C3547",
+              "borderColor": "#000000",
+              "borderWidth": 1,
+              "height": 60,
+              "justifyContent": "center",
+            },
+            Object {
+              "backgroundColor": "#746C84",
+              "width": 112.5,
+            },
+          ]
+        }
+      >
+        <Text
+          style={
+            Object {
+              "color": "#FFFFFF",
+              "fontSize": 16,
+              "marginLeft": 10,
+            }
+          }
+          testID="table-cell-text"
+        >
+          16:00
+        </Text>
+      </View>
+      <View
+        style={
+          Array [
+            Object {
+              "backgroundColor": "#3C3547",
+              "borderColor": "#000000",
+              "borderWidth": 1,
+              "height": 60,
+              "justifyContent": "center",
+            },
+            Object {
+              "backgroundColor": "#746C84",
+              "width": 112.5,
+            },
+          ]
+        }
+      >
+        <Text
+          style={
+            Object {
+              "color": "#FFFFFF",
+              "fontSize": 16,
+              "marginLeft": 10,
+            }
+          }
+          testID="table-cell-text"
+        >
+          4
+        </Text>
+      </View>
+      <View
+        style={
+          Array [
+            Object {
+              "backgroundColor": "#3C3547",
+              "borderColor": "#000000",
+              "borderWidth": 1,
+              "height": 60,
+              "justifyContent": "center",
+            },
+            Object {
+              "backgroundColor": "#746C84",
+              "width": 112.5,
+            },
+          ]
+        }
+      >
+        <Text
+          style={
+            Object {
+              "color": "#FFFFFF",
+              "fontSize": 16,
+              "marginLeft": 10,
+            }
+          }
+          testID="table-cell-text"
+        >
+          0
+        </Text>
+      </View>
+      <View
+        style={
+          Array [
+            Object {
+              "backgroundColor": "#3C3547",
+              "borderColor": "#000000",
+              "borderWidth": 1,
+              "height": 60,
+              "justifyContent": "center",
+            },
+            Object {
+              "backgroundColor": "#746C84",
+              "width": 112.5,
+            },
+          ]
+        }
+      >
+        <Text
+          style={
+            Object {
+              "color": "#FFFFFF",
+              "fontSize": 16,
+              "marginLeft": 10,
+            }
+          }
+          testID="table-cell-text"
+        >
+          2
+        </Text>
+      </View>
+    </View>
+  </View>
+  <View
+    accessible={true}
+    focusable={true}
+    onClick={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    testID="preaching-table-row"
+  >
+    <View
+      style={
+        Object {
+          "alignItems": "center",
+          "flexDirection": "row",
+          "width": "100%",
+        }
+      }
+    >
+      <View
+        style={
+          Array [
+            Object {
+              "backgroundColor": "#3C3547",
+              "borderColor": "#000000",
+              "borderWidth": 1,
+              "height": 60,
+              "justifyContent": "center",
+            },
+            Object {
+              "backgroundColor": "#746C84",
+              "width": 112.5,
+            },
+          ]
+        }
+      >
+        <Text
+          style={
+            Object {
+              "color": "#FFFFFF",
+              "fontSize": 16,
+              "marginLeft": 10,
+            }
+          }
+          testID="table-cell-text"
+        >
+          12
+        </Text>
+      </View>
+      <View
+        style={
+          Array [
+            Object {
+              "backgroundColor": "#3C3547",
+              "borderColor": "#000000",
+              "borderWidth": 1,
+              "height": 60,
+              "justifyContent": "center",
+            },
+            Object {
+              "backgroundColor": "#746C84",
+              "width": 112.5,
+            },
+          ]
+        }
+      >
+        <Text
+          style={
+            Object {
+              "color": "#FFFFFF",
+              "fontSize": 16,
+              "marginLeft": 10,
+            }
+          }
+          testID="table-cell-text"
+        >
+          13:00
+        </Text>
+      </View>
+      <View
+        style={
+          Array [
+            Object {
+              "backgroundColor": "#3C3547",
+              "borderColor": "#000000",
+              "borderWidth": 1,
+              "height": 60,
+              "justifyContent": "center",
+            },
+            Object {
+              "backgroundColor": "#746C84",
+              "width": 112.5,
+            },
+          ]
+        }
+      >
+        <Text
+          style={
+            Object {
+              "color": "#FFFFFF",
+              "fontSize": 16,
+              "marginLeft": 10,
+            }
+          }
+          testID="table-cell-text"
+        >
+          16:00
+        </Text>
+      </View>
+      <View
+        style={
+          Array [
+            Object {
+              "backgroundColor": "#3C3547",
+              "borderColor": "#000000",
+              "borderWidth": 1,
+              "height": 60,
+              "justifyContent": "center",
+            },
+            Object {
+              "backgroundColor": "#746C84",
+              "width": 112.5,
+            },
+          ]
+        }
+      >
+        <Text
+          style={
+            Object {
+              "color": "#FFFFFF",
+              "fontSize": 16,
+              "marginLeft": 10,
+            }
+          }
+          testID="table-cell-text"
+        >
+          4
+        </Text>
+      </View>
+      <View
+        style={
+          Array [
+            Object {
+              "backgroundColor": "#3C3547",
+              "borderColor": "#000000",
+              "borderWidth": 1,
+              "height": 60,
+              "justifyContent": "center",
+            },
+            Object {
+              "backgroundColor": "#746C84",
+              "width": 112.5,
+            },
+          ]
+        }
+      >
+        <Text
+          style={
+            Object {
+              "color": "#FFFFFF",
+              "fontSize": 16,
+              "marginLeft": 10,
+            }
+          }
+          testID="table-cell-text"
+        >
+          0
+        </Text>
+      </View>
+      <View
+        style={
+          Array [
+            Object {
+              "backgroundColor": "#3C3547",
+              "borderColor": "#000000",
+              "borderWidth": 1,
+              "height": 60,
+              "justifyContent": "center",
+            },
+            Object {
+              "backgroundColor": "#746C84",
+              "width": 112.5,
+            },
+          ]
+        }
+      >
+        <Text
+          style={
+            Object {
+              "color": "#FFFFFF",
+              "fontSize": 16,
+              "marginLeft": 10,
+            }
+          }
+          testID="table-cell-text"
+        >
+          2
+        </Text>
+      </View>
+    </View>
+  </View>
+  <View
+    accessible={true}
+    focusable={true}
+    onClick={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    testID="preaching-table-row"
+  >
+    <View
+      style={
+        Object {
+          "alignItems": "center",
+          "flexDirection": "row",
+          "width": "100%",
+        }
+      }
+    >
+      <View
+        style={
+          Array [
+            Object {
+              "backgroundColor": "#3C3547",
+              "borderColor": "#000000",
+              "borderWidth": 1,
+              "height": 60,
+              "justifyContent": "center",
+            },
+            Object {
+              "backgroundColor": "#746C84",
+              "width": 112.5,
+            },
+          ]
+        }
+      >
+        <Text
+          style={
+            Object {
+              "color": "#FFFFFF",
+              "fontSize": 16,
+              "marginLeft": 10,
+            }
+          }
+          testID="table-cell-text"
+        >
+          12
+        </Text>
+      </View>
+      <View
+        style={
+          Array [
+            Object {
+              "backgroundColor": "#3C3547",
+              "borderColor": "#000000",
+              "borderWidth": 1,
+              "height": 60,
+              "justifyContent": "center",
+            },
+            Object {
+              "backgroundColor": "#746C84",
+              "width": 112.5,
+            },
+          ]
+        }
+      >
+        <Text
+          style={
+            Object {
+              "color": "#FFFFFF",
+              "fontSize": 16,
+              "marginLeft": 10,
+            }
+          }
+          testID="table-cell-text"
+        >
+          13:00
+        </Text>
+      </View>
+      <View
+        style={
+          Array [
+            Object {
+              "backgroundColor": "#3C3547",
+              "borderColor": "#000000",
+              "borderWidth": 1,
+              "height": 60,
+              "justifyContent": "center",
+            },
+            Object {
+              "backgroundColor": "#746C84",
+              "width": 112.5,
+            },
+          ]
+        }
+      >
+        <Text
+          style={
+            Object {
+              "color": "#FFFFFF",
+              "fontSize": 16,
+              "marginLeft": 10,
+            }
+          }
+          testID="table-cell-text"
+        >
+          16:00
+        </Text>
+      </View>
+      <View
+        style={
+          Array [
+            Object {
+              "backgroundColor": "#3C3547",
+              "borderColor": "#000000",
+              "borderWidth": 1,
+              "height": 60,
+              "justifyContent": "center",
+            },
+            Object {
+              "backgroundColor": "#746C84",
+              "width": 112.5,
+            },
+          ]
+        }
+      >
+        <Text
+          style={
+            Object {
+              "color": "#FFFFFF",
+              "fontSize": 16,
+              "marginLeft": 10,
+            }
+          }
+          testID="table-cell-text"
+        >
+          4
+        </Text>
+      </View>
+      <View
+        style={
+          Array [
+            Object {
+              "backgroundColor": "#3C3547",
+              "borderColor": "#000000",
+              "borderWidth": 1,
+              "height": 60,
+              "justifyContent": "center",
+            },
+            Object {
+              "backgroundColor": "#746C84",
+              "width": 112.5,
+            },
+          ]
+        }
+      >
+        <Text
+          style={
+            Object {
+              "color": "#FFFFFF",
+              "fontSize": 16,
+              "marginLeft": 10,
+            }
+          }
+          testID="table-cell-text"
+        >
+          0
+        </Text>
+      </View>
+      <View
+        style={
+          Array [
+            Object {
+              "backgroundColor": "#3C3547",
+              "borderColor": "#000000",
+              "borderWidth": 1,
+              "height": 60,
+              "justifyContent": "center",
+            },
+            Object {
+              "backgroundColor": "#746C84",
+              "width": 112.5,
+            },
+          ]
+        }
+      >
+        <Text
+          style={
+            Object {
+              "color": "#FFFFFF",
+              "fontSize": 16,
+              "marginLeft": 10,
+            }
+          }
+          testID="table-cell-text"
+        >
+          2
+        </Text>
+      </View>
+    </View>
+  </View>
+  <View
+    style={
+      Object {
+        "alignItems": "center",
+        "flexDirection": "row",
+        "width": "100%",
+      }
+    }
+  >
+    <View
+      style={
+        Array [
+          Object {
+            "backgroundColor": "#3C3547",
+            "borderColor": "#000000",
+            "borderWidth": 1,
+            "height": 60,
+            "justifyContent": "center",
+          },
+          Object {
+            "backgroundColor": "#544C63",
+            "width": 112.5,
+          },
+        ]
+      }
+    >
+      <Text
+        style={
+          Object {
+            "color": "#FFFFFF",
+            "fontSize": 16,
+            "marginLeft": 10,
+          }
+        }
+        testID="table-cell-text"
+      >
+        Total
+      </Text>
+    </View>
+    <View
+      style={
+        Array [
+          Object {
+            "backgroundColor": "#3C3547",
+            "borderColor": "#000000",
+            "borderWidth": 1,
+            "height": 60,
+            "justifyContent": "center",
+          },
+          Object {
+            "backgroundColor": "#544C63",
+            "width": 225,
+          },
+        ]
+      }
+    >
+      <Text
+        style={
+          Object {
+            "color": "#FFFFFF",
+            "fontSize": 16,
+            "marginLeft": 10,
+          }
+        }
+        testID="table-cell-text"
+      >
+        33H
+      </Text>
+    </View>
+    <View
+      style={
+        Array [
+          Object {
+            "backgroundColor": "#3C3547",
+            "borderColor": "#000000",
+            "borderWidth": 1,
+            "height": 60,
+            "justifyContent": "center",
+          },
+          Object {
+            "backgroundColor": "#544C63",
+            "width": 112.5,
+          },
+        ]
+      }
+    >
+      <Text
+        style={
+          Object {
+            "color": "#FFFFFF",
+            "fontSize": 16,
+            "marginLeft": 10,
+          }
+        }
+        testID="table-cell-text"
+      >
+        44
+      </Text>
+    </View>
+    <View
+      style={
+        Array [
+          Object {
+            "backgroundColor": "#3C3547",
+            "borderColor": "#000000",
+            "borderWidth": 1,
+            "height": 60,
+            "justifyContent": "center",
+          },
+          Object {
+            "backgroundColor": "#544C63",
+            "width": 112.5,
+          },
+        ]
+      }
+    >
+      <Text
+        style={
+          Object {
+            "color": "#FFFFFF",
+            "fontSize": 16,
+            "marginLeft": 10,
+          }
+        }
+        testID="table-cell-text"
+      >
+        0
+      </Text>
+    </View>
+    <View
+      style={
+        Array [
+          Object {
+            "backgroundColor": "#3C3547",
+            "borderColor": "#000000",
+            "borderWidth": 1,
+            "height": 60,
+            "justifyContent": "center",
+          },
+          Object {
+            "backgroundColor": "#544C63",
+            "width": 112.5,
+          },
+        ]
+      }
+    >
+      <Text
+        style={
+          Object {
+            "color": "#FFFFFF",
+            "fontSize": 16,
+            "marginLeft": 10,
+          }
+        }
+        testID="table-cell-text"
+      >
+        22
+      </Text>
+    </View>
+  </View>
+</View>
+`;
