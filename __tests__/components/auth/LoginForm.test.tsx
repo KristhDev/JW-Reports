@@ -1,0 +1,120 @@
+import React from 'react';
+import { act, render, screen, waitFor, fireEvent } from '@testing-library/react-native';
+
+import { LoginForm } from '../../../src/components/auth';
+
+import { useAuth, useStatus, useTheme } from '../../../src/hooks';
+
+import { darkColors } from '../../../src/theme';
+
+import { navigateMock } from '../../../jest.setup';
+
+const signInMock = jest.fn();
+const setErrorFormMock = jest.fn();
+
+jest.mock('../../../src/hooks/useAuth.ts');
+jest.mock('../../../src/hooks/useStatus.ts');
+jest.mock('../../../src/hooks/useTheme.ts');
+
+describe('Test in <LoginForm /> component', () => {
+    beforeEach(() => {
+        jest.clearAllMocks();
+    });
+
+    (useAuth as jest.Mock).mockReturnValue({
+        state: { isAuthLoading: false },
+        signIn: signInMock
+    });
+
+    (useStatus as jest.Mock).mockReturnValue({
+        setErrorForm: setErrorFormMock
+    });
+
+    (useTheme as jest.Mock).mockReturnValue({
+        state: { colors: darkColors }
+    });
+
+    it('should to match snapshot', async () => {
+        await waitFor(() => {
+            render(<LoginForm />);
+        });
+
+        await act(() => {
+            expect(screen.toJSON()).toMatchSnapshot();
+        });
+    });
+
+    it('should call setErrorForm when the form is empty or invalid', async () => {
+        await waitFor(() => {
+            render(<LoginForm />);
+        });
+
+        await waitFor(() => {
+            const touchable = screen.getByTestId('button-touchable');
+            fireEvent.press(touchable);
+
+            expect(setErrorFormMock).toHaveBeenCalledTimes(1);
+        });
+    });
+
+    it('should call signIn when the form is valid', async () => {
+        await waitFor(() => {
+            render(<LoginForm />);
+        });
+
+        const email = 'tester@gmail.com';
+        const password = 'testerpass1234';
+
+
+        await act(async() => {
+            await waitFor(() => {
+                const inputsText = screen.getAllByTestId('form-field-text-input');
+                fireEvent(inputsText[0], 'onChangeText', email);
+                fireEvent(inputsText[1], 'onChangeText', password);
+
+                const touchable = screen.getByTestId('button-touchable');
+                fireEvent.press(touchable);
+
+                expect(signInMock).toHaveBeenCalledTimes(1);
+            });
+        });
+    });
+
+    it('should call navigate of useNavigation with respective values', async () => {
+        await waitFor(() => {
+            render(<LoginForm />);
+        });
+
+        await act(async() => {
+            await waitFor(() => {
+                const touchableSignUp = screen.getByTestId('login-form-sign-up');
+                fireEvent.press(touchableSignUp);
+
+                expect(navigateMock).toHaveBeenCalledWith('RegisterScreen');
+
+                const touchableForgotPass = screen.getByTestId('login-form-forgor-pass');
+                fireEvent.press(touchableForgotPass);
+
+                expect(navigateMock).toHaveBeenCalledWith('ForgotPasswordScreen');
+            });
+        });
+    });
+
+    it('should disabled button then isAuthLoading is true', async () => {
+        (useAuth as jest.Mock).mockReturnValue({
+            state: { isAuthLoading: true },
+            signIn: signInMock
+        });
+
+        await waitFor(() => {
+            render(<LoginForm />);
+        });
+
+        await act(async() => {
+            await waitFor(() => {
+                const touchable = screen.getByTestId('button-touchable');
+                expect(touchable.props.accessibilityState.disabled).toBeTruthy();
+            });
+        });
+    });
+});

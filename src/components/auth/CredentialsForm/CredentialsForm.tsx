@@ -69,9 +69,7 @@ export const CredentialsForm = () => {
     return (
         <View style={{ paddingVertical: top }}>
             <Formik
-                initialValues={{
-                    email: user.email
-                }}
+                initialValues={{ email: user.email }}
                 onSubmit={ handleUpdateEmail }
                 validateOnMount
                 validationSchema={ emailFormSchema }

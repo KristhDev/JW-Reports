@@ -171,6 +171,7 @@ export const RegisterForm = () => {
                         <TouchableOpacity
                             activeOpacity={ 0.75 }
                             onPress={ () => navigate('LoginScreen' as never) }
+                            testID="register-form-sign-in"
                         >
                             <Text
                                 style={{
