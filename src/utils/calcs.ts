@@ -1,12 +1,15 @@
 import dayjs from 'dayjs';
 
 /**
- * It takes an array of numbers and returns the sum of all the numbers in the array.
- * @param {number[]} numbers - number[] - an array of numbers
- * @returns The sum of the numbers in the array.
+ * It takes an array of objects with two properties, init and finish, and returns the sum of the
+ * difference between the init and finish properties.
+ * @param {{ init: string, finish: string }[]} dates - { init: string, finish: string }[]
+ * @returns The restMins value from the sumMins function.
  */
-export const sumNumbers = (numbers: number[]) => {
-    return numbers.reduce((total, number) => total + number, 0);
+export const getRestMins = (dates: { init: string, finish: string }[]) => {
+    const { restMins } = sumMins(dates);
+
+    return restMins;
 }
 
 /**
@@ -28,18 +31,6 @@ export const sumHours = (dates: { init: string, finish: string }[]) => {
     return (minHours >= 1)
         ? minHours + sumNumbers(hours)
         : sumNumbers(hours);
-}
-
-/**
- * It takes an array of objects with two properties, init and finish, and returns the sum of the
- * difference between the init and finish properties.
- * @param {{ init: string, finish: string }[]} dates - { init: string, finish: string }[]
- * @returns The restMins value from the sumMins function.
- */
-export const getRestMins = (dates: { init: string, finish: string }[]) => {
-    const { restMins } = sumMins(dates);
-
-    return restMins;
 }
 
 /**
@@ -68,4 +59,13 @@ export const sumMins = (dates: { init: string, finish: string }[]) => {
         hours: Math.floor(totalMins / 60),
         restMins
     }
+}
+
+/**
+ * It takes an array of numbers and returns the sum of all the numbers in the array.
+ * @param {number[]} numbers - number[] - an array of numbers
+ * @returns The sum of the numbers in the array.
+ */
+export const sumNumbers = (numbers: number[]) => {
+    return numbers.reduce((total, number) => total + number, 0);
 }
