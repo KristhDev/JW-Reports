@@ -1,5 +1,17 @@
 import 'react-native-gesture-handler/jestSetup';
 
+jest.mock('react-native-onesignal', () => ({
+    setLogLevel: jest.fn(),
+    setAppId: jest.fn(),
+    promptForPushNotificationsWithUserResponse: jest.fn(),
+    setNotificationWillShowInForegroundHandler: jest.fn().mockImplementation({
+        thengetNotification: jest.fn(),
+        complete: jest.fn()
+    }),
+    setExternalUserId: jest.fn(),
+    removeExternalUserId: jest.fn(),
+}));
+
 jest.mock('react-native-reanimated', () => {
     const Reanimated = require('react-native-reanimated/mock');
     Reanimated.default.call = () => {};

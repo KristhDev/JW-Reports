@@ -1,5 +1,6 @@
 import { useSelector } from 'react-redux';
 import { AuthResponse } from '@supabase/supabase-js';
+import OneSignal from 'react-native-onesignal';
 
 /* Env */
 import { SITIE_URL } from '@env';
@@ -44,7 +45,11 @@ const useAuth = () => {
      * @returns The return type is AuthResponse.
      */
     const setUser = ({ data: { user, session }, error }: AuthResponse, isNew: boolean = false) => {
-        const next = setSupabaseError(error, 400, () => dispatch(clearAuthAction()));
+        const next = setSupabaseError(error, 400, () => {
+            dispatch(clearAuthAction());
+            OneSignal.removeExternalUserId();
+        });
+
         if (next) return;
 
         dispatch(setUserAction({
@@ -122,6 +127,7 @@ const useAuth = () => {
     const signOut = async () => {
         if (!state.isAuthenticated) return;
         const { error } = await supabase.auth.signOut();
+        OneSignal.removeExternalUserId();
 
         const next = setSupabaseError(error, 500);
         if (next) return;

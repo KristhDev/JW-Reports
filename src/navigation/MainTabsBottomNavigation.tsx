@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import OneSignal from 'react-native-onesignal';
 
 /* Navigations */
 import { PreachingStackNavigation } from './';
@@ -10,7 +11,7 @@ import { RevistsStackNavigation } from './revisits';
 import { TabBar } from '../components/ui';
 
 /* Hooks */
-import { useTheme } from '../hooks';
+import { useAuth, useTheme } from '../hooks';
 
 /* Interfaces */
 import { MainTabsBottomParamsList } from '../interfaces/ui';
@@ -21,7 +22,15 @@ const Tabs = createBottomTabNavigator<MainTabsBottomParamsList>();
  * This is a main tabs bottom navigation.
  */
 const MainTabsBottomNavigation = () => {
+    const { state: { user } } = useAuth();
     const { state: { colors } } = useTheme();
+
+    /**
+     * Effect to set the external user id for push notifications.
+     */
+    useEffect(() => {
+        OneSignal.setExternalUserId(user.id);
+    }, []);
 
     return (
         <Tabs.Navigator
