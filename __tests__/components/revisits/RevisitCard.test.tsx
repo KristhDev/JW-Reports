@@ -1,6 +1,6 @@
 import React from 'react';
-import { MenuProvider } from 'react-native-popup-menu';
 import { fireEvent, render, screen } from '@testing-library/react-native';
+import { MenuProvider } from 'react-native-popup-menu';
 import dayjs from 'dayjs';
 
 import { selectedRevisitState } from '../../features/revisits';

@@ -65,7 +65,6 @@ describe('Test in <LoginForm /> component', () => {
         const email = 'tester@gmail.com';
         const password = 'testerpass1234';
 
-
         await act(async() => {
             await waitFor(() => {
                 const inputsText = screen.getAllByTestId('form-field-text-input');
