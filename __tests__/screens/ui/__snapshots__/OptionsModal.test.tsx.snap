@@ -1,0 +1,595 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Test in <OptionsModal /> screen should to match snapshot 1`] = `
+<Modal
+  animationType="fade"
+  hardwareAccelerated={false}
+  statusBarTranslucent={true}
+  transparent={true}
+  visible={true}
+>
+  <View
+    style={
+      Object {
+        "alignItems": "center",
+        "backgroundColor": "rgba(0, 0, 0, 0.5)",
+        "flex": 1,
+        "justifyContent": "center",
+        "zIndex": 999,
+      }
+    }
+  >
+    <View
+      style={
+        Object {
+          "backgroundColor": "#292929",
+          "borderRadius": 10,
+          "justifyContent": "space-between",
+          "padding": 15,
+          "width": "87%",
+        }
+      }
+    >
+      <View
+        style={
+          Array [
+            Object {
+              "padding": 10,
+            },
+            Object {
+              "marginBottom": 10,
+              "marginLeft": 5,
+              "padding": 0,
+            },
+          ]
+        }
+      >
+        <Text
+          style={
+            Array [
+              Object {
+                "color": "#BFBFBF",
+                "fontSize": 17,
+                "textAlign": "center",
+              },
+              Object {
+                "color": "#FFFFFF",
+                "fontSize": 20,
+                "fontWeight": "bold",
+                "textAlign": "left",
+              },
+            ]
+          }
+          testID="info-text-text"
+        >
+          Select an option
+        </Text>
+      </View>
+      <View
+        accessibilityRole="radiogroup"
+      >
+        <View
+          style={
+            Object {
+              "alignItems": "center",
+              "flexDirection": "row",
+              "padding": 5,
+            }
+          }
+          testID="radio-btn-container"
+        >
+          <View
+            accessibilityLiveRegion="polite"
+            accessibilityRole="radio"
+            accessibilityState={
+              Object {
+                "checked": true,
+                "disabled": false,
+              }
+            }
+            accessible={true}
+            collapsable={false}
+            color="#C0A7E1"
+            focusable={true}
+            onBlur={[Function]}
+            onClick={[Function]}
+            onFocus={[Function]}
+            onResponderGrant={[Function]}
+            onResponderMove={[Function]}
+            onResponderRelease={[Function]}
+            onResponderTerminate={[Function]}
+            onResponderTerminationRequest={[Function]}
+            onStartShouldSetResponder={[Function]}
+            style={
+              Array [
+                Object {
+                  "overflow": "hidden",
+                },
+                false,
+                Object {
+                  "borderRadius": 18,
+                  "padding": 6,
+                },
+              ]
+            }
+            uncheckedColor="#BFBFBF"
+          >
+            <View
+              style={
+                Object {
+                  "opacity": 1,
+                }
+              }
+            >
+              <Text
+                accessibilityElementsHidden={true}
+                allowFontScaling={false}
+                importantForAccessibility="no-hide-descendants"
+                pointerEvents="none"
+                selectable={false}
+                style={
+                  Array [
+                    Object {
+                      "color": "#C0A7E1",
+                      "fontSize": 24,
+                    },
+                    Array [
+                      Object {
+                        "lineHeight": 24,
+                        "transform": Array [
+                          Object {
+                            "scaleX": 1,
+                          },
+                        ],
+                      },
+                      Object {
+                        "backgroundColor": "transparent",
+                      },
+                    ],
+                    Object {
+                      "fontFamily": "Material Design Icons",
+                      "fontStyle": "normal",
+                      "fontWeight": "normal",
+                    },
+                    Object {},
+                  ]
+                }
+              >
+                󰄬
+              </Text>
+            </View>
+          </View>
+          <Text
+            onPress={[Function]}
+            style={
+              Object {
+                "color": "#FFFFFF",
+                "fontSize": 18,
+                "marginLeft": 15,
+              }
+            }
+            testID="radio-btn-text"
+          >
+            Test option 1
+          </Text>
+        </View>
+        <View
+          style={
+            Object {
+              "alignItems": "center",
+              "flexDirection": "row",
+              "padding": 5,
+            }
+          }
+          testID="radio-btn-container"
+        >
+          <View
+            accessibilityLiveRegion="polite"
+            accessibilityRole="radio"
+            accessibilityState={
+              Object {
+                "checked": false,
+                "disabled": false,
+              }
+            }
+            accessible={true}
+            collapsable={false}
+            color="#C0A7E1"
+            focusable={true}
+            onBlur={[Function]}
+            onClick={[Function]}
+            onFocus={[Function]}
+            onResponderGrant={[Function]}
+            onResponderMove={[Function]}
+            onResponderRelease={[Function]}
+            onResponderTerminate={[Function]}
+            onResponderTerminationRequest={[Function]}
+            onStartShouldSetResponder={[Function]}
+            style={
+              Array [
+                Object {
+                  "overflow": "hidden",
+                },
+                false,
+                Object {
+                  "borderRadius": 18,
+                  "padding": 6,
+                },
+              ]
+            }
+            uncheckedColor="#BFBFBF"
+          >
+            <View
+              style={
+                Object {
+                  "opacity": 0,
+                }
+              }
+            >
+              <Text
+                accessibilityElementsHidden={true}
+                allowFontScaling={false}
+                importantForAccessibility="no-hide-descendants"
+                pointerEvents="none"
+                selectable={false}
+                style={
+                  Array [
+                    Object {
+                      "color": "#C0A7E1",
+                      "fontSize": 24,
+                    },
+                    Array [
+                      Object {
+                        "lineHeight": 24,
+                        "transform": Array [
+                          Object {
+                            "scaleX": 1,
+                          },
+                        ],
+                      },
+                      Object {
+                        "backgroundColor": "transparent",
+                      },
+                    ],
+                    Object {
+                      "fontFamily": "Material Design Icons",
+                      "fontStyle": "normal",
+                      "fontWeight": "normal",
+                    },
+                    Object {},
+                  ]
+                }
+              >
+                󰄬
+              </Text>
+            </View>
+          </View>
+          <Text
+            onPress={[Function]}
+            style={
+              Object {
+                "color": "#FFFFFF",
+                "fontSize": 18,
+                "marginLeft": 15,
+              }
+            }
+            testID="radio-btn-text"
+          >
+            Test option 2
+          </Text>
+        </View>
+        <View
+          style={
+            Object {
+              "alignItems": "center",
+              "flexDirection": "row",
+              "padding": 5,
+            }
+          }
+          testID="radio-btn-container"
+        >
+          <View
+            accessibilityLiveRegion="polite"
+            accessibilityRole="radio"
+            accessibilityState={
+              Object {
+                "checked": false,
+                "disabled": false,
+              }
+            }
+            accessible={true}
+            collapsable={false}
+            color="#C0A7E1"
+            focusable={true}
+            onBlur={[Function]}
+            onClick={[Function]}
+            onFocus={[Function]}
+            onResponderGrant={[Function]}
+            onResponderMove={[Function]}
+            onResponderRelease={[Function]}
+            onResponderTerminate={[Function]}
+            onResponderTerminationRequest={[Function]}
+            onStartShouldSetResponder={[Function]}
+            style={
+              Array [
+                Object {
+                  "overflow": "hidden",
+                },
+                false,
+                Object {
+                  "borderRadius": 18,
+                  "padding": 6,
+                },
+              ]
+            }
+            uncheckedColor="#BFBFBF"
+          >
+            <View
+              style={
+                Object {
+                  "opacity": 0,
+                }
+              }
+            >
+              <Text
+                accessibilityElementsHidden={true}
+                allowFontScaling={false}
+                importantForAccessibility="no-hide-descendants"
+                pointerEvents="none"
+                selectable={false}
+                style={
+                  Array [
+                    Object {
+                      "color": "#C0A7E1",
+                      "fontSize": 24,
+                    },
+                    Array [
+                      Object {
+                        "lineHeight": 24,
+                        "transform": Array [
+                          Object {
+                            "scaleX": 1,
+                          },
+                        ],
+                      },
+                      Object {
+                        "backgroundColor": "transparent",
+                      },
+                    ],
+                    Object {
+                      "fontFamily": "Material Design Icons",
+                      "fontStyle": "normal",
+                      "fontWeight": "normal",
+                    },
+                    Object {},
+                  ]
+                }
+              >
+                󰄬
+              </Text>
+            </View>
+          </View>
+          <Text
+            onPress={[Function]}
+            style={
+              Object {
+                "color": "#FFFFFF",
+                "fontSize": 18,
+                "marginLeft": 15,
+              }
+            }
+            testID="radio-btn-text"
+          >
+            Test option 3
+          </Text>
+        </View>
+        <View
+          style={
+            Object {
+              "alignItems": "center",
+              "flexDirection": "row",
+              "padding": 5,
+            }
+          }
+          testID="radio-btn-container"
+        >
+          <View
+            accessibilityLiveRegion="polite"
+            accessibilityRole="radio"
+            accessibilityState={
+              Object {
+                "checked": false,
+                "disabled": false,
+              }
+            }
+            accessible={true}
+            collapsable={false}
+            color="#C0A7E1"
+            focusable={true}
+            onBlur={[Function]}
+            onClick={[Function]}
+            onFocus={[Function]}
+            onResponderGrant={[Function]}
+            onResponderMove={[Function]}
+            onResponderRelease={[Function]}
+            onResponderTerminate={[Function]}
+            onResponderTerminationRequest={[Function]}
+            onStartShouldSetResponder={[Function]}
+            style={
+              Array [
+                Object {
+                  "overflow": "hidden",
+                },
+                false,
+                Object {
+                  "borderRadius": 18,
+                  "padding": 6,
+                },
+              ]
+            }
+            uncheckedColor="#BFBFBF"
+          >
+            <View
+              style={
+                Object {
+                  "opacity": 0,
+                }
+              }
+            >
+              <Text
+                accessibilityElementsHidden={true}
+                allowFontScaling={false}
+                importantForAccessibility="no-hide-descendants"
+                pointerEvents="none"
+                selectable={false}
+                style={
+                  Array [
+                    Object {
+                      "color": "#C0A7E1",
+                      "fontSize": 24,
+                    },
+                    Array [
+                      Object {
+                        "lineHeight": 24,
+                        "transform": Array [
+                          Object {
+                            "scaleX": 1,
+                          },
+                        ],
+                      },
+                      Object {
+                        "backgroundColor": "transparent",
+                      },
+                    ],
+                    Object {
+                      "fontFamily": "Material Design Icons",
+                      "fontStyle": "normal",
+                      "fontWeight": "normal",
+                    },
+                    Object {},
+                  ]
+                }
+              >
+                󰄬
+              </Text>
+            </View>
+          </View>
+          <Text
+            onPress={[Function]}
+            style={
+              Object {
+                "color": "#FFFFFF",
+                "fontSize": 18,
+                "marginLeft": 15,
+              }
+            }
+            testID="radio-btn-text"
+          >
+            Test option 4
+          </Text>
+        </View>
+      </View>
+      <View
+        style={
+          Object {
+            "flexDirection": "row",
+            "justifyContent": "flex-end",
+            "marginTop": 20,
+          }
+        }
+      >
+        <View
+          accessibilityState={
+            Object {
+              "disabled": false,
+            }
+          }
+          accessible={true}
+          collapsable={false}
+          focusable={true}
+          onBlur={[Function]}
+          onClick={[Function]}
+          onFocus={[Function]}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          style={
+            Array [
+              Object {
+                "overflow": "hidden",
+              },
+              false,
+              Array [
+                Object {
+                  "backgroundColor": "#C0A7E1",
+                  "borderRadius": 10,
+                },
+                Object {
+                  "backgroundColor": "transparent",
+                  "marginRight": 5,
+                },
+              ],
+            ]
+          }
+          testID="button-touchable"
+        >
+          <View
+            style={
+              Array [
+                Object {
+                  "alignItems": "center",
+                  "flexDirection": "row",
+                  "justifyContent": "center",
+                  "paddingHorizontal": 20,
+                  "paddingVertical": 8,
+                },
+                Object {
+                  "paddingHorizontal": 12,
+                },
+              ]
+            }
+          >
+            <Text
+              style={
+                Array [
+                  Object {
+                    "textAlign": "left",
+                  },
+                  Object {
+                    "color": "rgba(28, 27, 31, 1)",
+                    "fontFamily": "System",
+                    "fontWeight": "400",
+                    "letterSpacing": 0,
+                  },
+                  Object {
+                    "writingDirection": "ltr",
+                  },
+                  Array [
+                    Object {
+                      "color": "#121212",
+                      "fontSize": 18,
+                      "fontWeight": "bold",
+                      "marginBottom": 2,
+                      "textAlign": "center",
+                    },
+                    Object {
+                      "color": "#C0A7E1",
+                      "fontSize": 16,
+                    },
+                  ],
+                ]
+              }
+              testID="button-text"
+            >
+              CANCELAR
+            </Text>
+          </View>
+        </View>
+      </View>
+    </View>
+  </View>
+</Modal>
+`;

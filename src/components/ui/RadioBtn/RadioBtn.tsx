@@ -24,7 +24,10 @@ export const RadioBtn: FC<RadioBtnProps> = ({ label, onPress, value }) => {
     const { state: { colors } } = useTheme();
 
     return (
-        <View style={ styles.radioContainer }>
+        <View
+            style={ styles.radioContainer }
+            testID="radio-btn-container"
+        >
             <RadioButton
                 value={ value }
                 color={ colors.button }

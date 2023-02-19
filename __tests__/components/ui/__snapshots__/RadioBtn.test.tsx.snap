@@ -9,6 +9,7 @@ exports[`Test in <RadioBtn /> component should to match snapshot 1`] = `
       "padding": 5,
     }
   }
+  testID="radio-btn-container"
 >
   <View
     accessibilityLiveRegion="polite"
