@@ -63,8 +63,8 @@ export const FormSelect: FC<FormSelectProps> = ({
     const { state: { colors } } = useTheme();
 
     /**
-    * When the user clicks on the button, the modal will show and the input will be focused.
-    */
+     * When the user clicks on the button, the modal will show and the input will be focused.
+     */
     const handleShowModal = () => {
         setShowModal(true);
         setIsFocused(true);
@@ -105,6 +105,7 @@ export const FormSelect: FC<FormSelectProps> = ({
                         { ...themeStyles.formLabel, color: colors.titleText },
                         labelStyle
                     ]}
+                    testID="form-select-label"
                 >
                     { label }
                 </Text>
@@ -141,6 +142,7 @@ export const FormSelect: FC<FormSelectProps> = ({
                                 onPress={ handleShowModal }
                                 style={{ borderRadius: 5, flex: 1 }}
                                 underlayColor="transparent"
+                                testID="form-select-touchable"
                             >
                                 <View style={[ themeStyles.formSelectTouchableContainer, inputContainerStyle ]}>
                                     <Text
@@ -148,6 +150,7 @@ export const FormSelect: FC<FormSelectProps> = ({
                                             { ...themeStyles.formInputText, color: colors.inputText },
                                             inputTextStyle
                                         ]}
+                                        testID="form-select-text-value"
                                     >
                                         { String(items.find(i => i.value === field?.value)?.label || placeholder) }
                                     </Text>

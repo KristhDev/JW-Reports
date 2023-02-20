@@ -1,0 +1,476 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Test in <ProfileForm /> component should to match snapshot 1`] = `
+<View
+  style={
+    Object {
+      "alignItems": "center",
+      "flex": 1,
+      "justifyContent": "flex-start",
+      "paddingTop": 20,
+    }
+  }
+>
+  <View
+    style={
+      Object {
+        "display": "flex",
+        "padding": 10,
+        "width": 675,
+      }
+    }
+  >
+    <Text
+      style={
+        Array [
+          Object {
+            "color": "#FFFFFF",
+            "fontSize": 18,
+            "marginBottom": 5,
+            "padding": 5,
+          },
+          undefined,
+        ]
+      }
+      testID="form-field-label"
+    >
+      Nombre:
+    </Text>
+    <View
+      style={
+        Object {
+          "borderColor": "transparent",
+          "borderRadius": 7,
+          "borderWidth": 1,
+        }
+      }
+    >
+      <View
+        style={
+          Object {
+            "borderColor": "#FFFFFF",
+            "borderRadius": 5,
+            "borderWidth": 0.5,
+          }
+        }
+      >
+        <View
+          style={
+            Array [
+              Object {
+                "alignItems": "center",
+                "borderColor": "transparent",
+                "borderRadius": 5,
+                "borderWidth": 1.5,
+                "flexDirection": "row",
+                "paddingRight": 10,
+              },
+              undefined,
+            ]
+          }
+        >
+          <TextInput
+            autoCapitalize="none"
+            autoCorrect={false}
+            cursorColor="#C0A7E1"
+            onBlur={[Function]}
+            onChangeText={[Function]}
+            onFocus={[Function]}
+            onSelectionChange={[Function]}
+            placeholder="Ingrese su nombre"
+            placeholderTextColor="#BFBFBF"
+            selection={
+              Object {
+                "end": 9,
+                "start": 9,
+              }
+            }
+            selectionColor="#A0B9E2"
+            style={
+              Array [
+                Object {
+                  "color": "#FFFFFF",
+                  "flex": 1,
+                  "fontSize": 17,
+                  "paddingLeft": 10,
+                  "paddingRight": 5,
+                  "textAlignVertical": "center",
+                },
+                undefined,
+              ]
+            }
+            testID="form-field-text-input"
+            value="Celestino"
+          />
+          <Text
+            allowFontScaling={false}
+            selectable={false}
+            style={
+              Array [
+                Object {
+                  "color": "#BFBFBF",
+                  "fontSize": 25,
+                },
+                undefined,
+                Object {
+                  "fontFamily": "Ionicons",
+                  "fontStyle": "normal",
+                  "fontWeight": "normal",
+                },
+                Object {},
+              ]
+            }
+          >
+            
+          </Text>
+        </View>
+      </View>
+    </View>
+  </View>
+  <View
+    style={
+      Object {
+        "display": "flex",
+        "padding": 10,
+        "width": 675,
+      }
+    }
+  >
+    <Text
+      style={
+        Array [
+          Object {
+            "color": "#FFFFFF",
+            "fontSize": 18,
+            "marginBottom": 5,
+            "padding": 5,
+          },
+          undefined,
+        ]
+      }
+      testID="form-field-label"
+    >
+      Apellidos:
+    </Text>
+    <View
+      style={
+        Object {
+          "borderColor": "transparent",
+          "borderRadius": 7,
+          "borderWidth": 1,
+        }
+      }
+    >
+      <View
+        style={
+          Object {
+            "borderColor": "#FFFFFF",
+            "borderRadius": 5,
+            "borderWidth": 0.5,
+          }
+        }
+      >
+        <View
+          style={
+            Array [
+              Object {
+                "alignItems": "center",
+                "borderColor": "transparent",
+                "borderRadius": 5,
+                "borderWidth": 1.5,
+                "flexDirection": "row",
+                "paddingRight": 10,
+              },
+              undefined,
+            ]
+          }
+        >
+          <TextInput
+            autoCapitalize="none"
+            autoCorrect={false}
+            cursorColor="#C0A7E1"
+            onBlur={[Function]}
+            onChangeText={[Function]}
+            onFocus={[Function]}
+            onSelectionChange={[Function]}
+            placeholder="Ingrese su apellido"
+            placeholderTextColor="#BFBFBF"
+            selection={
+              Object {
+                "end": 9,
+                "start": 9,
+              }
+            }
+            selectionColor="#A0B9E2"
+            style={
+              Array [
+                Object {
+                  "color": "#FFFFFF",
+                  "flex": 1,
+                  "fontSize": 17,
+                  "paddingLeft": 10,
+                  "paddingRight": 5,
+                  "textAlignVertical": "center",
+                },
+                undefined,
+              ]
+            }
+            testID="form-field-text-input"
+            value="Wilderman"
+          />
+          <Text
+            allowFontScaling={false}
+            selectable={false}
+            style={
+              Array [
+                Object {
+                  "color": "#BFBFBF",
+                  "fontSize": 25,
+                },
+                undefined,
+                Object {
+                  "fontFamily": "Ionicons",
+                  "fontStyle": "normal",
+                  "fontWeight": "normal",
+                },
+                Object {},
+              ]
+            }
+          >
+            
+          </Text>
+        </View>
+      </View>
+    </View>
+  </View>
+  <View
+    style={
+      Object {
+        "display": "flex",
+        "padding": 10,
+        "width": 675,
+      }
+    }
+  >
+    <Text
+      style={
+        Array [
+          Object {
+            "color": "#FFFFFF",
+            "fontSize": 18,
+            "marginBottom": 5,
+            "padding": 5,
+          },
+          undefined,
+        ]
+      }
+      testID="form-select-label"
+    >
+      Precursor:
+    </Text>
+    <View
+      style={
+        Object {
+          "borderColor": "transparent",
+          "borderRadius": 7,
+          "borderWidth": 1,
+        }
+      }
+    >
+      <View
+        style={
+          Object {
+            "borderColor": "#FFFFFF",
+            "borderRadius": 5,
+            "borderWidth": 0.5,
+          }
+        }
+      >
+        <View
+          style={
+            Array [
+              Object {
+                "alignItems": "center",
+                "borderColor": "transparent",
+                "borderRadius": 5,
+                "borderWidth": 1.5,
+                "flexDirection": "row",
+                "paddingRight": 0,
+              },
+              undefined,
+            ]
+          }
+        >
+          <View
+            accessible={true}
+            focusable={true}
+            onClick={[Function]}
+            onResponderGrant={[Function]}
+            onResponderMove={[Function]}
+            onResponderRelease={[Function]}
+            onResponderTerminate={[Function]}
+            onResponderTerminationRequest={[Function]}
+            onStartShouldSetResponder={[Function]}
+            style={
+              Object {
+                "borderRadius": 5,
+                "flex": 1,
+              }
+            }
+            testID="form-select-touchable"
+          >
+            <View
+              style={
+                Array [
+                  Object {
+                    "alignItems": "center",
+                    "flexDirection": "row",
+                    "padding": 10,
+                  },
+                  undefined,
+                ]
+              }
+            >
+              <Text
+                style={
+                  Array [
+                    Object {
+                      "color": "#FFFFFF",
+                      "flex": 1,
+                      "fontSize": 17,
+                    },
+                    undefined,
+                  ]
+                }
+                testID="form-select-text-value"
+              >
+                Ninguno
+              </Text>
+              <Text
+                allowFontScaling={false}
+                selectable={false}
+                style={
+                  Array [
+                    Object {
+                      "color": "#BFBFBF",
+                      "fontSize": 25,
+                    },
+                    undefined,
+                    Object {
+                      "fontFamily": "Ionicons",
+                      "fontStyle": "normal",
+                      "fontWeight": "normal",
+                    },
+                    Object {},
+                  ]
+                }
+              >
+                
+              </Text>
+            </View>
+          </View>
+        </View>
+      </View>
+    </View>
+  </View>
+  <Modal
+    animationType="fade"
+    hardwareAccelerated={false}
+    statusBarTranslucent={true}
+    transparent={true}
+    visible={false}
+  />
+  <View
+    style={
+      Object {
+        "flex": 1,
+      }
+    }
+  />
+  <View
+    accessibilityState={
+      Object {
+        "disabled": false,
+      }
+    }
+    accessible={true}
+    collapsable={false}
+    focusable={true}
+    onBlur={[Function]}
+    onClick={[Function]}
+    onFocus={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      Array [
+        Object {
+          "overflow": "hidden",
+        },
+        false,
+        Array [
+          Object {
+            "backgroundColor": "#C0A7E1",
+            "borderRadius": 10,
+          },
+          Object {
+            "marginVertical": 30,
+            "paddingHorizontal": 20,
+          },
+        ],
+      ]
+    }
+    testID="button-touchable"
+  >
+    <View
+      style={
+        Array [
+          Object {
+            "alignItems": "center",
+            "flexDirection": "row",
+            "justifyContent": "center",
+            "paddingHorizontal": 20,
+            "paddingVertical": 8,
+          },
+          undefined,
+        ]
+      }
+    >
+      <Text
+        style={
+          Array [
+            Object {
+              "textAlign": "left",
+            },
+            Object {
+              "color": "rgba(28, 27, 31, 1)",
+              "fontFamily": "System",
+              "fontWeight": "400",
+              "letterSpacing": 0,
+            },
+            Object {
+              "writingDirection": "ltr",
+            },
+            Array [
+              Object {
+                "color": "#121212",
+                "fontSize": 18,
+                "fontWeight": "bold",
+                "marginBottom": 2,
+                "textAlign": "center",
+              },
+              undefined,
+            ],
+          ]
+        }
+        testID="button-text"
+      >
+        Guardar
+      </Text>
+    </View>
+  </View>
+</View>
+`;

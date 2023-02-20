@@ -93,6 +93,7 @@ export const DatetimeField: FC<DatetimeFieldProps> = ({
                     { ...themeStyles.formLabel, color: colors.titleText },
                     labelStyle
                 ]}
+                testID="datetimefield-label"
             >
                 { label }
             </Text>

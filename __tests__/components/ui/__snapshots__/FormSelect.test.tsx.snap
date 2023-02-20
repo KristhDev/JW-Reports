@@ -1,0 +1,143 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Test in <FormSelect /> component should to match snapshot 1`] = `
+Array [
+  <View
+    style={
+      Object {
+        "display": "flex",
+        "padding": 10,
+        "width": 675,
+      }
+    }
+  >
+    <Text
+      style={
+        Array [
+          Object {
+            "color": "#FFFFFF",
+            "fontSize": 18,
+            "marginBottom": 5,
+            "padding": 5,
+          },
+          undefined,
+        ]
+      }
+      testID="form-select-label"
+    >
+      Opciones:
+    </Text>
+    <View
+      style={
+        Object {
+          "borderColor": "transparent",
+          "borderRadius": 7,
+          "borderWidth": 1,
+        }
+      }
+    >
+      <View
+        style={
+          Object {
+            "borderColor": "#FFFFFF",
+            "borderRadius": 5,
+            "borderWidth": 0.5,
+          }
+        }
+      >
+        <View
+          style={
+            Array [
+              Object {
+                "alignItems": "center",
+                "borderColor": "transparent",
+                "borderRadius": 5,
+                "borderWidth": 1.5,
+                "flexDirection": "row",
+                "paddingRight": 0,
+              },
+              undefined,
+            ]
+          }
+        >
+          <View
+            accessible={true}
+            focusable={true}
+            onClick={[Function]}
+            onResponderGrant={[Function]}
+            onResponderMove={[Function]}
+            onResponderRelease={[Function]}
+            onResponderTerminate={[Function]}
+            onResponderTerminationRequest={[Function]}
+            onStartShouldSetResponder={[Function]}
+            style={
+              Object {
+                "borderRadius": 5,
+                "flex": 1,
+              }
+            }
+            testID="form-select-touchable"
+          >
+            <View
+              style={
+                Array [
+                  Object {
+                    "alignItems": "center",
+                    "flexDirection": "row",
+                    "padding": 10,
+                  },
+                  undefined,
+                ]
+              }
+            >
+              <Text
+                style={
+                  Array [
+                    Object {
+                      "color": "#FFFFFF",
+                      "flex": 1,
+                      "fontSize": 17,
+                    },
+                    undefined,
+                  ]
+                }
+                testID="form-select-text-value"
+              >
+                Test option 1
+              </Text>
+              <Text
+                allowFontScaling={false}
+                selectable={false}
+                style={
+                  Array [
+                    Object {
+                      "color": "#BFBFBF",
+                      "fontSize": 25,
+                    },
+                    undefined,
+                    Object {
+                      "fontFamily": "Ionicons",
+                      "fontStyle": "normal",
+                      "fontWeight": "normal",
+                    },
+                    Object {},
+                  ]
+                }
+              >
+                
+              </Text>
+            </View>
+          </View>
+        </View>
+      </View>
+    </View>
+  </View>,
+  <Modal
+    animationType="fade"
+    hardwareAccelerated={false}
+    statusBarTranslucent={true}
+    transparent={true}
+    visible={false}
+  />,
+]
+`;
