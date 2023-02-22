@@ -116,6 +116,7 @@ export const DatetimeField: FC<DatetimeFieldProps> = ({
                             { ...themeStyles.formInput, color: colors.inputText },
                             inputStyle
                         ]}
+                        testID="datetimefield-text-input"
                         value={ dayjs(field.value).format(inputDateFormat) }
                         { ...rest }
                         editable={ false }

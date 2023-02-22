@@ -19,7 +19,7 @@ describe('Test in <DatetimeField /> component', () => {
     const renderComponent = () => {
         render(
             <Formik
-                initialValues={{ day: new Date() }}
+                initialValues={{ day: new Date('2022-12-29 00:00:00') }}
                 onSubmit={ () => {} }
             >
                 { () => (

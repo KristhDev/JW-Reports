@@ -67,7 +67,8 @@ exports[`Test in <DatetimeField /> component should to match snapshot 1`] = `
             undefined,
           ]
         }
-        value="19"
+        testID="datetimefield-text-input"
+        value="29"
       />
     </View>
     <View

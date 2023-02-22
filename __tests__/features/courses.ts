@@ -61,7 +61,7 @@ export const courses: Course[] = [
         person_about: 'Voluptatem dolorem neque quia omnis odit quos non. Sed rerum est est rem et. Ut aut repellat expedita commodi ipsum. In quisquam excepturi rerum debitis. Beatae rem saepe aut molestiae.',
         person_address: 'Non ut fuga dolores. Laborum veniam quae minus consequuntur quisquam temporibus et. Est accusamus omnis facere facilis labore.',
         publication: 'animi voluptas omnis',
-        last_lesson: lessons[0],
+        last_lesson: lessons[1],
         suspended: false,
         finished: false,
         created_at: '2021-08-26T15:00:00.000Z',
@@ -74,7 +74,7 @@ export const courses: Course[] = [
         person_about: 'Voluptatem dolorem neque quia omnis odit quos non. Sed rerum est est rem et. Ut aut repellat expedita commodi ipsum. In quisquam excepturi rerum debitis. Beatae rem saepe aut molestiae.',
         person_address: 'Non ut fuga dolores. Laborum veniam quae minus consequuntur quisquam temporibus et. Est accusamus omnis facere facilis labore.',
         publication: 'animi voluptas omnis',
-        last_lesson: lessons[0],
+        last_lesson: lessons[2],
         suspended: false,
         finished: false,
         created_at: '2021-08-26T15:00:00.000Z',
@@ -87,7 +87,7 @@ export const courses: Course[] = [
         person_about: 'Voluptatem dolorem neque quia omnis odit quos non. Sed rerum est est rem et. Ut aut repellat expedita commodi ipsum. In quisquam excepturi rerum debitis. Beatae rem saepe aut molestiae.',
         person_address: 'Non ut fuga dolores. Laborum veniam quae minus consequuntur quisquam temporibus et. Est accusamus omnis facere facilis labore.',
         publication: 'animi voluptas omnis',
-        last_lesson: lessons[0],
+        last_lesson: lessons[3],
         suspended: false,
         finished: false,
         created_at: '2021-08-26T15:00:00.000Z',
@@ -174,4 +174,58 @@ export const courseSelectedState: CoursesState = {
     refreshLessons: false,
     selectedCourse: courses[0],
     selectedLesson: INIT_LESSON
+}
+
+export const lessonsState: CoursesState = {
+    courseFilter: 'all',
+    courses: courses,
+    coursesPagination: {
+        from: 0,
+        to: 9
+    },
+    coursesScreenHistory: [],
+    hasMoreCourses: false,
+    hasMoreLessons: false,
+    isCourseDeleting: false,
+    isCourseLoading: false,
+    isCoursesLoading: false,
+    isLessonDeleting: false,
+    isLessonLoading: false,
+    isLessonsLoading: false,
+    lessons: [ lessons[0] ],
+    lessonsPagination: {
+        from: 0,
+        to: 9
+    },
+    refreshCourses: false,
+    refreshLessons: false,
+    selectedCourse: courses[0],
+    selectedLesson: INIT_LESSON
+}
+
+export const lessonSelectedState: CoursesState = {
+    courseFilter: 'all',
+    courses: courses,
+    coursesPagination: {
+        from: 0,
+        to: 9
+    },
+    coursesScreenHistory: [],
+    hasMoreCourses: false,
+    hasMoreLessons: false,
+    isCourseDeleting: false,
+    isCourseLoading: false,
+    isCoursesLoading: false,
+    isLessonDeleting: false,
+    isLessonLoading: false,
+    isLessonsLoading: false,
+    lessons: [ lessons[0] ],
+    lessonsPagination: {
+        from: 0,
+        to: 9
+    },
+    refreshCourses: false,
+    refreshLessons: false,
+    selectedCourse: courses[0],
+    selectedLesson: lessons[0]
 }
