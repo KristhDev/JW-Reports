@@ -12,6 +12,14 @@ jest.mock('react-native-onesignal', () => ({
     removeExternalUserId: jest.fn(),
 }));
 
+jest.mock('react-native-keyboard-aware-scroll-view', () => {
+    return {
+        KeyboardAwareScrollView: jest
+            .fn()
+            .mockImplementation(({ children }) => children)
+    }
+})
+
 jest.mock('react-native-reanimated', () => {
     const Reanimated = require('react-native-reanimated/mock');
     Reanimated.default.call = () => {};
