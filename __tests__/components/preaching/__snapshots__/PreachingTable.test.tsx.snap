@@ -10,6 +10,7 @@ exports[`Test in <PreachingTable /> component should to match snapshot 1`] = `
       "margin": 20,
     }
   }
+  testID="preaching-table"
 >
   <View
     style={

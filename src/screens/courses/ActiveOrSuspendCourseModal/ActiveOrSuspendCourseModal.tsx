@@ -58,6 +58,7 @@ const ActiveOrSuspendCourseModal: FC<ModalProps> = ({ onClose, isOpen }) => {
                                 ...themeStyles.modalText,
                                 color: colors.modalText
                             }}
+                            testID="modal-text"
                         >
                             { modalMsg }
                         </Text>
@@ -87,6 +88,7 @@ const ActiveOrSuspendCourseModal: FC<ModalProps> = ({ onClose, isOpen }) => {
                     <ActivityIndicator
                         color={ colors.button }
                         size={ 50 }
+                        testID="modal-loading"
                     />
                 )
             }

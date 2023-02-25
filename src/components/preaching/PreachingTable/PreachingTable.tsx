@@ -40,7 +40,10 @@ export const PreachingTable = () => {
     }
 
     return (
-        <View style={{ ...styles.table, borderColor: colors.background }}>
+        <View
+            style={{ ...styles.table, borderColor: colors.background }}
+            testID="preaching-table"
+        >
 
             {/* Table header */}
             <View style={ styles.tableRow }>
