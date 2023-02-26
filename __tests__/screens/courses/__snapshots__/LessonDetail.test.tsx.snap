@@ -1,0 +1,229 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Test in <LessonDetail /> screen should to match snapshot 1`] = `
+Array [
+  <RCTScrollView
+    contentContainerStyle={
+      Object {
+        "alignItems": "center",
+        "flexGrow": 1,
+        "paddingBottom": 100,
+      }
+    }
+    overScrollMode="never"
+    style={
+      Object {
+        "flex": 1,
+      }
+    }
+  >
+    <View>
+      <View
+        style={
+          Array [
+            Object {
+              "alignItems": "flex-start",
+              "padding": 20,
+              "width": "100%",
+            },
+            Object {
+              "paddingBottom": 0,
+              "paddingTop": 30,
+            },
+          ]
+        }
+      >
+        <Text
+          style={
+            Array [
+              Object {
+                "color": "#FFFFFF",
+                "fontSize": 38,
+                "fontWeight": "bold",
+              },
+              Object {
+                "fontSize": 24,
+              },
+            ]
+          }
+          testID="title-text"
+        >
+          CLASE DEL CURSO CON FRED CREMIN
+        </Text>
+      </View>
+      <View
+        style={
+          Array [
+            Object {
+              "padding": 10,
+            },
+            Object {
+              "paddingHorizontal": 20,
+              "width": "100%",
+            },
+          ]
+        }
+      >
+        <Text
+          style={
+            Array [
+              Object {
+                "color": "#BFBFBF",
+                "fontSize": 17,
+                "textAlign": "center",
+              },
+              Object {
+                "fontSize": 16,
+                "fontWeight": "bold",
+                "textAlign": "left",
+              },
+            ]
+          }
+          testID="info-text-text"
+        >
+          ANIMI VOLUPTAS OMNIS
+        </Text>
+      </View>
+      <View
+        style={
+          Object {
+            "paddingHorizontal": 20,
+            "paddingVertical": 16,
+            "width": "100%",
+          }
+        }
+        testID="lesson-detail-status-section"
+      >
+        <Text
+          style={
+            Object {
+              "color": "#FFFFFF",
+              "fontSize": 19,
+              "fontWeight": "bold",
+              "marginBottom": 0,
+            }
+          }
+        >
+          Estado de la clase: 
+          Por impartir
+        </Text>
+        <View
+          accessible={true}
+          collapsable={false}
+          focusable={true}
+          onClick={[Function]}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          style={
+            Object {
+              "opacity": 1,
+            }
+          }
+        >
+          <Text
+            style={
+              Object {
+                "color": "#A0B9E2",
+                "fontSize": 19,
+              }
+            }
+          >
+            ¿Terminar clase?
+          </Text>
+        </View>
+      </View>
+      <View
+        style={
+          Object {
+            "paddingHorizontal": 20,
+            "paddingVertical": 16,
+            "width": "100%",
+          }
+        }
+        testID="lesson-detail-description-section"
+      >
+        <Text
+          style={
+            Object {
+              "color": "#FFFFFF",
+              "fontSize": 19,
+              "fontWeight": "bold",
+              "marginBottom": 10,
+            }
+          }
+        >
+          Se analizará:
+        </Text>
+        <Text
+          style={
+            Object {
+              "color": "#FFFFFF",
+              "fontSize": 19,
+            }
+          }
+        >
+          Nemo et et non nesciunt ipsum sed rerum vero. Nostrum quae officiis qui nihil dignissimos consectetur aperiam. Vel harum ex. Ipsum ratione necessitatibus eum sint vero enim et consequatur. Ab autem rerum numquam ut. Laboriosam nihil est exercitationem unde aut reiciendis odit.
+        </Text>
+      </View>
+      <View
+        style={
+          Object {
+            "paddingHorizontal": 20,
+            "paddingVertical": 16,
+            "width": "100%",
+          }
+        }
+      >
+        <Text
+          style={
+            Object {
+              "color": "#FFFFFF",
+              "fontSize": 19,
+              "fontWeight": "bold",
+              "marginBottom": 10,
+            }
+          }
+        >
+          Fecha:
+        </Text>
+        <Text
+          style={
+            Object {
+              "color": "#FFFFFF",
+              "fontSize": 19,
+            }
+          }
+          testID="lesson-detail-next-visit-text"
+        >
+          31 de December del 2020
+        </Text>
+      </View>
+      <Text
+        style={
+          Object {
+            "bottom": 20,
+            "color": "#B4B4B4",
+            "fontSize": 16,
+            "position": "absolute",
+            "right": 20,
+          }
+        }
+        testID="lesson-detail-date-created-text"
+      >
+        31/12/2020
+      </Text>
+    </View>
+  </RCTScrollView>,
+  <Modal
+    animationType="fade"
+    hardwareAccelerated={false}
+    statusBarTranslucent={true}
+    transparent={true}
+    visible={false}
+  />,
+]
+`;

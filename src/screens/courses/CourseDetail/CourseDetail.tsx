@@ -104,6 +104,7 @@ const CourseDetail = () => {
                             color: colors.text,
                             marginBottom: 0
                         }}
+                        testID="course-detail-status"
                     >
                         Estado del curso: { statusCourseText }
                     </Text>
@@ -113,6 +114,7 @@ const CourseDetail = () => {
                             <TouchableOpacity
                                 activeOpacity={ 0.75 }
                                 onPress={ () => setShowASModal(true) }
+                                testID="course-detail-status-touchable"
                             >
                                 <Text style={{ color: colors.linkText, fontSize: 19 }}>
                                     { (selectedCourse.suspended) ? '¿Continuar?' : '¿Suspender?' }
@@ -122,6 +124,7 @@ const CourseDetail = () => {
                             <TouchableOpacity
                                 activeOpacity={ 0.75 }
                                 onPress={ () => setShowFSModal(true) }
+                                testID="course-detail-status-touchable"
                             >
                                 <Text style={{ color: colors.linkText, fontSize: 19 }}>
                                     ¿Comenzar de nuevo?
@@ -132,7 +135,10 @@ const CourseDetail = () => {
                 </View>
 
                 {/* Text person about */}
-                <View style={ styles.sectionStyle }>
+                <View
+                    style={ styles.sectionStyle }
+                    testID="course-detail-about-section"
+                >
                     <Text
                         style={{
                             ...styles.sectionSubTitle,
@@ -148,7 +154,10 @@ const CourseDetail = () => {
                 </View>
 
                 {/* Text person address */}
-                <View style={ styles.sectionStyle }>
+                <View
+                    style={ styles.sectionStyle }
+                    testID="course-detail-address-section"
+                >
                     <Text
                         style={{
                             ...styles.sectionSubTitle,
@@ -188,6 +197,7 @@ const CourseDetail = () => {
                                         ...styles.cardHeaderText,
                                         color: colors.text
                                     }}
+                                    testID="course-detail-last-lesson-status"
                                 >
                                     {
                                         (selectedCourse.last_lesson.done)
@@ -203,6 +213,7 @@ const CourseDetail = () => {
                                         ...styles.cardContentText,
                                         color: colors.text,
                                     }}
+                                    testID="course-detail-last-lesson-description"
                                 >
                                     { selectedCourse.last_lesson.description }
                                 </Text>
@@ -214,6 +225,7 @@ const CourseDetail = () => {
                         activeOpacity={ 0.75 }
                         onPress={ handleLessonsList }
                         style={{ marginTop: 20 }}
+                        testID="course-detail-lessons-touchable"
                     >
                         <Text style={{ color: colors.linkText, fontSize: 19 }}>
                             Ver todas las clases
@@ -224,6 +236,7 @@ const CourseDetail = () => {
                         activeOpacity={ 0.75 }
                         onPress={ handleAddLesson }
                         style={{ marginTop: 5 }}
+                        testID="course-detail-add-lesson-touchable"
                     >
                         <Text style={{ color: colors.linkText, fontSize: 19 }}>
                             Agregar clase
@@ -232,7 +245,10 @@ const CourseDetail = () => {
                 </View>
 
                 {/* Date of create course */}
-                <Text style={{ ...styles.dateCreatedText, color: colors.modalText }}>
+                <Text
+                    style={{ ...styles.dateCreatedText, color: colors.modalText }}
+                    testID="course-detail-text-date"
+                >
                     { dayjs(selectedCourse.created_at).format('DD/MM/YYYY') }
                 </Text>
             </ScrollView>

@@ -76,7 +76,10 @@ const LessonDetail = () => {
                 />
 
                 {/* Lesson status */}
-                <View style={ styles.sectionStyle }>
+                <View
+                    style={ styles.sectionStyle }
+                    testID="lesson-detail-status-section"
+                >
                     <Text
                         style={{
                             ...styles.sectionSubTitle,
@@ -98,7 +101,10 @@ const LessonDetail = () => {
                 </View>
 
                 {/* Lesson description */}
-                <View style={ styles.sectionStyle }>
+                <View
+                    style={ styles.sectionStyle }
+                    testID="lesson-detail-description-section"
+                >
                     <Text
                         style={{
                             ...styles.sectionSubTitle,
@@ -128,12 +134,18 @@ const LessonDetail = () => {
                         Fecha:
                     </Text>
 
-                    <Text style={{ color: colors.text, fontSize: 19 }}>
+                    <Text
+                        style={{ color: colors.text, fontSize: 19 }}
+                        testID="lesson-detail-next-visit-text"
+                    >
                         { `${ nextVisit.format('DD') } de ${ nextVisit.format('MMMM') } del ${ nextVisit.format('YYYY') }` }
                     </Text>
                 </View>
 
-                <Text style={{ ...styles.dateCreatedText, color: colors.modalText }}>
+                <Text
+                    style={{ ...styles.dateCreatedText, color: colors.modalText }}
+                    testID="lesson-detail-date-created-text"
+                >
                     { dayjs(selectedLesson.created_at).format('DD/MM/YYYY') }
                 </Text>
             </ScrollView>

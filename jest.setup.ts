@@ -52,7 +52,10 @@ jest.mock('react-native-image-crop-picker', () => ({
     openCamera: jest.fn()
 }));
 
+export const addListenerNavigateMock = jest.fn();
+export const getStateNavigateMock = jest.fn().mockImplementation(() => ({ index: 1 }));
 export const navigateMock = jest.fn();
+export const removeListenerNavigateMock = jest.fn();
 
 jest.doMock('@react-navigation/native', () => {
     const actual = jest.requireActual('@react-navigation/native');
@@ -60,7 +63,10 @@ jest.doMock('@react-navigation/native', () => {
     return {
         ...actual,
         useNavigation: () => ({
-            navigate: navigateMock
+            addListener: addListenerNavigateMock,
+            getState: getStateNavigateMock,
+            navigate: navigateMock,
+            removeListener: removeListenerNavigateMock,
         })
     }
 });
