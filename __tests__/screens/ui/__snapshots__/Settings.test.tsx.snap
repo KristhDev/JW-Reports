@@ -1,0 +1,624 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Test in <Settings /> screen should to match snapshot 1`] = `
+Array [
+  <RCTScrollView
+    overScrollMode="never"
+  >
+    <View>
+      <View
+        style={
+          Array [
+            Object {
+              "borderBottomColor": "#292929",
+              "borderBottomWidth": 1,
+              "paddingTop": 15,
+            },
+            undefined,
+          ]
+        }
+      >
+        <View
+          style={
+            Array [
+              Object {
+                "padding": 10,
+              },
+              Object {
+                "marginHorizontal": 8,
+              },
+            ]
+          }
+        >
+          <Text
+            style={
+              Array [
+                Object {
+                  "color": "#BFBFBF",
+                  "fontSize": 17,
+                  "textAlign": "center",
+                },
+                Object {
+                  "color": "#93A8AB",
+                  "fontSize": 15,
+                  "fontWeight": "bold",
+                  "textAlign": "left",
+                },
+              ]
+            }
+            testID="info-text-text"
+          >
+            MI CUENTA
+          </Text>
+        </View>
+        <View
+          accessibilityState={
+            Object {
+              "disabled": false,
+            }
+          }
+          accessible={true}
+          centered={true}
+          collapsable={false}
+          focusable={true}
+          onBlur={[Function]}
+          onClick={[Function]}
+          onFocus={[Function]}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          style={
+            Array [
+              Object {
+                "overflow": "hidden",
+              },
+              false,
+              Object {
+                "paddingHorizontal": 18,
+                "paddingVertical": 16,
+              },
+            ]
+          }
+          testID="section-btn-touchable"
+        >
+          <View>
+            <Text
+              style={
+                Object {
+                  "color": "#FFFFFF",
+                  "fontSize": 16,
+                }
+              }
+              testID="section-btn-text"
+            >
+              Perfil
+            </Text>
+            <Text
+              style={
+                Object {
+                  "color": "#BFBFBF",
+                  "fontSize": 14,
+                }
+              }
+              testID="section-btn-sub-text"
+            >
+              Actualice sus datos personales
+            </Text>
+          </View>
+        </View>
+        <View
+          accessibilityState={
+            Object {
+              "disabled": false,
+            }
+          }
+          accessible={true}
+          centered={true}
+          collapsable={false}
+          focusable={true}
+          onBlur={[Function]}
+          onClick={[Function]}
+          onFocus={[Function]}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          style={
+            Array [
+              Object {
+                "overflow": "hidden",
+              },
+              false,
+              Object {
+                "paddingHorizontal": 18,
+                "paddingVertical": 16,
+              },
+            ]
+          }
+          testID="section-btn-touchable"
+        >
+          <View>
+            <Text
+              style={
+                Object {
+                  "color": "#FFFFFF",
+                  "fontSize": 16,
+                }
+              }
+              testID="section-btn-text"
+            >
+              Credenciales
+            </Text>
+            <Text
+              style={
+                Object {
+                  "color": "#BFBFBF",
+                  "fontSize": 14,
+                }
+              }
+              testID="section-btn-sub-text"
+            >
+              Cambie sus credenciales (correo y contraseña)
+            </Text>
+          </View>
+        </View>
+      </View>
+      <View
+        style={
+          Array [
+            Object {
+              "borderBottomColor": "#292929",
+              "borderBottomWidth": 1,
+              "paddingTop": 15,
+            },
+            undefined,
+          ]
+        }
+      >
+        <View
+          style={
+            Array [
+              Object {
+                "padding": 10,
+              },
+              Object {
+                "marginHorizontal": 8,
+              },
+            ]
+          }
+        >
+          <Text
+            style={
+              Array [
+                Object {
+                  "color": "#BFBFBF",
+                  "fontSize": 17,
+                  "textAlign": "center",
+                },
+                Object {
+                  "color": "#93A8AB",
+                  "fontSize": 15,
+                  "fontWeight": "bold",
+                  "textAlign": "left",
+                },
+              ]
+            }
+            testID="info-text-text"
+          >
+            PANTALLA
+          </Text>
+        </View>
+        <View
+          accessibilityState={
+            Object {
+              "disabled": false,
+            }
+          }
+          accessible={true}
+          centered={true}
+          collapsable={false}
+          focusable={true}
+          onBlur={[Function]}
+          onClick={[Function]}
+          onFocus={[Function]}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          style={
+            Array [
+              Object {
+                "overflow": "hidden",
+              },
+              false,
+              Object {
+                "paddingHorizontal": 18,
+                "paddingVertical": 16,
+              },
+            ]
+          }
+          testID="section-btn-touchable"
+        >
+          <View>
+            <Text
+              style={
+                Object {
+                  "color": "#FFFFFF",
+                  "fontSize": 16,
+                }
+              }
+              testID="section-btn-text"
+            >
+              Apariencia
+            </Text>
+            <Text
+              style={
+                Object {
+                  "color": "#BFBFBF",
+                  "fontSize": 14,
+                }
+              }
+              testID="section-btn-sub-text"
+            >
+              Modo oscuro
+            </Text>
+          </View>
+        </View>
+      </View>
+      <View
+        style={
+          Array [
+            Object {
+              "borderBottomColor": "#292929",
+              "borderBottomWidth": 1,
+              "paddingTop": 15,
+            },
+            undefined,
+          ]
+        }
+      >
+        <View
+          style={
+            Array [
+              Object {
+                "padding": 10,
+              },
+              Object {
+                "marginHorizontal": 8,
+              },
+            ]
+          }
+        >
+          <Text
+            style={
+              Array [
+                Object {
+                  "color": "#BFBFBF",
+                  "fontSize": 17,
+                  "textAlign": "center",
+                },
+                Object {
+                  "color": "#93A8AB",
+                  "fontSize": 15,
+                  "fontWeight": "bold",
+                  "textAlign": "left",
+                },
+              ]
+            }
+            testID="info-text-text"
+          >
+            PRIVACIDAD
+          </Text>
+        </View>
+        <View
+          accessibilityState={
+            Object {
+              "disabled": false,
+            }
+          }
+          accessible={true}
+          centered={true}
+          collapsable={false}
+          focusable={true}
+          onBlur={[Function]}
+          onClick={[Function]}
+          onFocus={[Function]}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          style={
+            Array [
+              Object {
+                "overflow": "hidden",
+              },
+              false,
+              Object {
+                "paddingHorizontal": 18,
+                "paddingVertical": 16,
+              },
+            ]
+          }
+          testID="section-btn-touchable"
+        >
+          <View>
+            <Text
+              style={
+                Object {
+                  "color": "#FFFFFF",
+                  "fontSize": 16,
+                }
+              }
+              testID="section-btn-text"
+            >
+              Permisos
+            </Text>
+            <Text
+              style={
+                Object {
+                  "color": "#BFBFBF",
+                  "fontSize": 14,
+                }
+              }
+              testID="section-btn-sub-text"
+            >
+              Admita o rechace los permisos de la aplicación (tenga en cuenta que ciertas funcionalidades se verán afectadas).
+            </Text>
+          </View>
+        </View>
+      </View>
+      <View
+        style={
+          Array [
+            Object {
+              "borderBottomColor": "#292929",
+              "borderBottomWidth": 1,
+              "paddingTop": 15,
+            },
+            Object {
+              "borderBottomWidth": 0,
+            },
+          ]
+        }
+      >
+        <View
+          style={
+            Array [
+              Object {
+                "padding": 10,
+              },
+              Object {
+                "marginHorizontal": 8,
+              },
+            ]
+          }
+        >
+          <Text
+            style={
+              Array [
+                Object {
+                  "color": "#BFBFBF",
+                  "fontSize": 17,
+                  "textAlign": "center",
+                },
+                Object {
+                  "color": "#93A8AB",
+                  "fontSize": 15,
+                  "fontWeight": "bold",
+                  "textAlign": "left",
+                },
+              ]
+            }
+            testID="info-text-text"
+          >
+            SOBRE
+          </Text>
+        </View>
+        <View
+          accessibilityState={
+            Object {
+              "disabled": false,
+            }
+          }
+          accessible={true}
+          centered={true}
+          collapsable={false}
+          focusable={true}
+          onBlur={[Function]}
+          onClick={[Function]}
+          onFocus={[Function]}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          style={
+            Array [
+              Object {
+                "overflow": "hidden",
+              },
+              false,
+              Object {
+                "paddingHorizontal": 18,
+                "paddingVertical": 16,
+              },
+            ]
+          }
+          testID="section-btn-touchable"
+        >
+          <View>
+            <Text
+              style={
+                Object {
+                  "color": "#FFFFFF",
+                  "fontSize": 16,
+                }
+              }
+              testID="section-btn-text"
+            >
+              Versión
+            </Text>
+            <Text
+              style={
+                Object {
+                  "color": "#BFBFBF",
+                  "fontSize": 14,
+                }
+              }
+              testID="section-btn-sub-text"
+            >
+              1.0.0
+            </Text>
+          </View>
+        </View>
+        <View
+          accessibilityState={
+            Object {
+              "disabled": false,
+            }
+          }
+          accessible={true}
+          centered={true}
+          collapsable={false}
+          focusable={true}
+          onBlur={[Function]}
+          onClick={[Function]}
+          onFocus={[Function]}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          style={
+            Array [
+              Object {
+                "overflow": "hidden",
+              },
+              false,
+              Object {
+                "paddingHorizontal": 18,
+                "paddingVertical": 16,
+              },
+            ]
+          }
+          testID="section-btn-touchable"
+        >
+          <View>
+            <Text
+              style={
+                Object {
+                  "color": "#FFFFFF",
+                  "fontSize": 16,
+                }
+              }
+              testID="section-btn-text"
+            >
+              Repositorio
+            </Text>
+            <Text
+              style={
+                Object {
+                  "color": "#BFBFBF",
+                  "fontSize": 14,
+                }
+              }
+              testID="section-btn-sub-text"
+            >
+              Código fuente de la aplicación
+            </Text>
+          </View>
+        </View>
+        <View
+          accessibilityState={
+            Object {
+              "disabled": false,
+            }
+          }
+          accessible={true}
+          centered={true}
+          collapsable={false}
+          focusable={true}
+          onBlur={[Function]}
+          onClick={[Function]}
+          onFocus={[Function]}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          style={
+            Array [
+              Object {
+                "overflow": "hidden",
+              },
+              false,
+              Object {
+                "paddingHorizontal": 18,
+                "paddingVertical": 16,
+              },
+            ]
+          }
+          testID="section-btn-touchable"
+        >
+          <View>
+            <Text
+              style={
+                Object {
+                  "color": "#FFFFFF",
+                  "fontSize": 16,
+                }
+              }
+              testID="section-btn-text"
+            >
+              Más información
+            </Text>
+            <Text
+              style={
+                Object {
+                  "color": "#BFBFBF",
+                  "fontSize": 14,
+                }
+              }
+              testID="section-btn-sub-text"
+            >
+              Obtenga información sobre la aplicación o deje sus comentarios
+            </Text>
+          </View>
+        </View>
+      </View>
+      <Text
+        style={
+          Object {
+            "color": "#BFBFBF",
+            "fontSize": 14,
+            "padding": 20,
+          }
+        }
+        testID="settings-copyright-text"
+      >
+        Copyright © 
+        2023
+      </Text>
+    </View>
+  </RCTScrollView>,
+  <Modal
+    animationType="fade"
+    hardwareAccelerated={false}
+    statusBarTranslucent={true}
+    transparent={true}
+    visible={false}
+  />,
+]
+`;

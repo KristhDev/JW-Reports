@@ -103,7 +103,10 @@ const Settings = () => {
                 </SectionContent>
 
                 {/* Copyright text */}
-                <Text style={{ color: colors.icon, fontSize: 14, padding: 20 }}>
+                <Text
+                    style={{ color: colors.icon, fontSize: 14, padding: 20 }}
+                    testID="settings-copyright-text"
+                >
                     Copyright © { dayjs().year() }
                 </Text>
             </ScrollView>

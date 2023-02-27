@@ -32,7 +32,7 @@ const RevisitDetail = () => {
     const { state: { selectedRevisit }, setSelectedRevisit } = useRevisits();
     const { state: { colors } } = useTheme();
 
-    const nextVist = dayjs(selectedRevisit.next_visit);
+    const nextVisit = dayjs(selectedRevisit.next_visit);
 
     /**
      * Effect to set imageHeight when changing the selectedRevisit.photo
@@ -96,8 +96,11 @@ const RevisitDetail = () => {
                                 Próxima visita:
                             </Text>
 
-                            <Text style={{ color: colors.text, fontSize: 19 }}>
-                                { ` ${ nextVist.format('DD') } de ${ nextVist.format('MMMM') } del ${ nextVist.format('YYYY') }` }
+                            <Text
+                                style={{ color: colors.text, fontSize: 19 }}
+                                testID="revisit-detail-next-visit"
+                            >
+                                { ` ${ nextVisit.format('DD') } de ${ nextVisit.format('MMMM') } del ${ nextVisit.format('YYYY') }` }
                             </Text >
                         </View>
 
@@ -111,7 +114,10 @@ const RevisitDetail = () => {
                         </TouchableOpacity>
                     </View>
                 ) : (
-                    <View style={{ ...styles.sectionStyle, flexDirection: 'row' }}>
+                    <View
+                        style={{ ...styles.sectionStyle, flexDirection: 'row' }}
+                        testID="revisit-detail-revisit-again-section"
+                    >
                         <Text style={{ color: colors.text, fontSize: 19, marginRight: 10 }}>
                             Revisita realizada
                         </Text>
@@ -128,7 +134,10 @@ const RevisitDetail = () => {
                 ) }
 
                 {/* About section of revisit */}
-                <View style={ styles.sectionStyle }>
+                <View
+                    style={ styles.sectionStyle }
+                    testID="revisit-detail-about-section"
+                >
                     <Text
                         style={{
                             ...styles.sectionSubTitle,
@@ -144,7 +153,10 @@ const RevisitDetail = () => {
                 </View>
 
                 {/* Address section of revisit */}
-                <View style={ styles.sectionStyle }>
+                <View
+                    style={ styles.sectionStyle }
+                    testID="revisit-detail-address-section"
+                >
                     <Text
                         style={{
                             ...styles.sectionSubTitle,
@@ -174,16 +186,23 @@ const RevisitDetail = () => {
                         <Image
                             style={{ height: imageHeight, width: '100%' }}
                             source={{ uri: selectedRevisit.photo }}
+                            testID="revisit-detail-photo-image"
                         />
 
-                        <Text style={{ ...styles.imageText, color: colors.modalText }}>
+                        <Text
+                            style={{ ...styles.imageText, color: colors.modalText }}
+                            testID="revisit-detail-photo-text"
+                        >
                             La foto es para ayudarte a recordar el lugar de residencia de { selectedRevisit.person_name }
                         </Text>
                     </View>
                 ) }
 
                 {/* Date create revisit */}
-                <Text style={{ ...styles.dateCreatedText, color: colors.modalText }}>
+                <Text
+                    style={{ ...styles.dateCreatedText, color: colors.modalText }}
+                    testID="revisit-detail-created-date"
+                >
                     { dayjs(selectedRevisit.created_at).format('DD/MM/YYYY') }
                 </Text>
             </ScrollView>
