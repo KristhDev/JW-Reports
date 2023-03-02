@@ -34,7 +34,7 @@ const usePermissions = () => {
 
         if (result === 'unavailable') {
             dispatch(setStatus({
-                msg: 'Lo sentimos pero su dispositivo no soporta está funcionalidad',
+                msg: 'Lo sentimos pero su dispositivo no soporta está funcionalidad.',
                 code: 418
             }));
         }

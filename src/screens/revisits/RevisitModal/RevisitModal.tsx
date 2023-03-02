@@ -119,6 +119,7 @@ const RevisitModal: FC<ModalProps> = ({ isOpen, onClose }) => {
                                         ...themeStyles.modalText,
                                         color: colors.modalText
                                     }}
+                                    testID="revisit-modal-complete-msg"
                                 >
                                     { completeMsg }
                                 </Text>
@@ -132,6 +133,7 @@ const RevisitModal: FC<ModalProps> = ({ isOpen, onClose }) => {
                                             ...themeStyles.modalText,
                                             color: colors.modalText
                                         }}
+                                        testID="revisit-modal-title"
                                     >
                                         { modalTitle }
                                     </Text>
@@ -151,6 +153,7 @@ const RevisitModal: FC<ModalProps> = ({ isOpen, onClose }) => {
                                             ...themeStyles.modalText,
                                             color: colors.modalText
                                         }}
+                                        testID="revisit-modal-title"
                                     >
                                         Por favor verifica los siguientes datos.
                                     </Text>
@@ -211,6 +214,7 @@ const RevisitModal: FC<ModalProps> = ({ isOpen, onClose }) => {
                         <ActivityIndicator
                             color={ colors.button }
                             size={ 50 }
+                            testID="revisit-modal-loading"
                         />
                     ) }
                 </ScrollView>
