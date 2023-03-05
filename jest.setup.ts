@@ -47,9 +47,12 @@ jest.mock('reduxjs-toolkit-persist', () => {
 
 jest.mock('react-native-permissions', () => require('react-native-permissions/mock'));
 
-jest.mock('react-native-image-crop-picker', () => ({
-    openPicker: jest.fn(),
-    openCamera: jest.fn()
+export const openPickerMock = jest.fn();
+export const openCameraMock = jest.fn();
+
+jest.doMock('react-native-image-crop-picker', () => ({
+    openPicker: openPickerMock,
+    openCamera: openCameraMock
 }));
 
 export const addListenerNavigateMock = jest.fn();

@@ -146,17 +146,27 @@ const useAuth = () => {
     const signUp = async ({ name, surname, email, password }: SignUp) => {
         dispatch(setIsAuthLoading({ isLoading: true }));
 
-        const result = await supabase.auth.signUp({ email, password });
-
-        if (result?.data?.user !== null) {
-            result.data.user.user_metadata = {
-                ...result.data.user!.user_metadata,
-                name,
-                surname,
-                precursor: 'ninguno'
+        const result = await supabase.auth.signUp({
+            email,
+            password,
+            options: {
+                data: {
+                    name,
+                    surname,
+                    precursor: 'ninguno'
+                }
             }
+        });
 
-            await supabase.auth.updateUser({ data: { name, surname, precursor: 'ninguno' } });
+        if (result?.data?.user?.identities?.length === 0) {
+            dispatch(setIsAuthLoading({ isLoading: false }));
+
+            setStatus({
+                code: 400,
+                msg: 'Lo sentimos, pero este correo ya está registrado.'
+            });
+
+            return;
         }
 
         setUser(result, true);
