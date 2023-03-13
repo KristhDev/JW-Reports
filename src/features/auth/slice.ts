@@ -4,17 +4,19 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { AuthState, SetUserPayload, User, UserPayload } from '../../interfaces/auth';
 import { SetIsLoadingPayload } from '../../interfaces/features';
 
+export const INIT_USER: User = {
+    id: '',
+    name: '',
+    surname: '',
+    email: '',
+    precursor: 'ninguno',
+    createdAt: Date.now().toString(),
+    updatedAt: Date.now().toString()
+}
+
 /* Initial state */
 const INITIAL_STATE: AuthState = {
-    user: {
-        id: '',
-        name: '',
-        surname: '',
-        email: '',
-        precursor: 'ninguno',
-        createdAt: Date.now().toString(),
-        updatedAt: Date.now().toString(),
-    },
+    user: INIT_USER,
     isAuthenticated: false,
     isAuthLoading: false,
     token: ''
@@ -26,7 +28,7 @@ const authSlice = createSlice({
     initialState: INITIAL_STATE,
     reducers: {
         clearAuth: (state) => {
-            state.user = {} as User;
+            state.user = INIT_USER;
             state.token = '';
             state.isAuthenticated = false;
             state.isAuthLoading = false;

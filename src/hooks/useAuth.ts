@@ -41,7 +41,8 @@ const useAuth = () => {
     /**
      * If the response is an error, set the error and return, otherwise
      * set the user.
-     * @param {AuthResponse}  - AuthResponse - this is the response from the API call.
+     * @param {AuthResponse} AuthResponse - this is the response from the API call.
+     * @param {boolean} isNew - this is a flag indicating whether the user is a new user or not.
      * @returns The return type is AuthResponse.
      */
     const setUser = ({ data: { user, session }, error }: AuthResponse, isNew: boolean = false) => {
@@ -181,6 +182,18 @@ const useAuth = () => {
      */
     const updateEmail = async ({ email }: { email: string }, onFinish?: () => void) => {
         dispatch(setIsAuthLoading({ isLoading: true }));
+
+        if (email.trim().length === 0) {
+            dispatch(setIsAuthLoading({ isLoading: false }));
+            onFinish && onFinish();
+
+            setStatus({
+                code: 400,
+                msg: 'El correo no puede estar vacío.'
+            });
+
+            return;
+        }
 
         if (state.user.email === email) {
             dispatch(setIsAuthLoading({ isLoading: false }));
