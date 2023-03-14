@@ -534,7 +534,7 @@ const useCourses = () => {
         if (next) return;
 
         dispatch(setIsLessonLoading({ isLoading: false }));
-        dispatch(addLesson({ lesson: data![0] }));
+        if (state.lessons.length > 0) dispatch(addLesson({ lesson: data![0] }));
 
         setStatus({
             code: 201,

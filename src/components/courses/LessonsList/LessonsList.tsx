@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { FlatList } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
 
 /* Features */
 import { INIT_LESSON } from '../../../features/courses';
@@ -28,8 +27,6 @@ export const LessonsList = () => {
     const [ isRefreshing, setIsRefreshing ] = useState<boolean>(false);
     const [ showDeleteModal, setShowDeleteModal ] = useState<boolean>(false);
     const [ showFSModal, setShowFSModal ] = useState<boolean>(false);
-
-    const { addListener, getState, removeListener } = useNavigation();
 
     const {
         state: {
@@ -123,25 +120,6 @@ export const LessonsList = () => {
             setIsRefreshing(false);
         }
     }, [ searchTerm ]);
-
-    /**
-     * Effect to remove classes depending on the screen index
-     * when browsing
-     */
-    useEffect(() => {
-        addListener('blur', () => {
-            const { index } = getState();
-
-            if (index !== 2 && index !== 3) {
-                setLessonsPagination({ from: 0, to: 9 });
-                removeLessons();
-            }
-        });
-
-        return () => {
-            removeListener('blur', () => {});
-        }
-    }, []);
 
     return (
         <>

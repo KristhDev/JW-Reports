@@ -42,19 +42,22 @@ export const CoursesList: FC<CoursesListProps> = ({ emptyMessage, filter, title 
 
     const {
         state: {
+            courses,
+            coursesScreenHistory,
             hasMoreCourses,
             isCourseDeleting,
             isCoursesLoading,
+            lessons,
             refreshCourses,
-            courses,
-            coursesScreenHistory
         },
         deleteCourse,
-        removeCourses,
-        setRefreshCourses,
-        setCoursesPagination,
-        setSelectedCourse,
         loadCourses,
+        removeCourses,
+        removeLessons,
+        setCoursesPagination,
+        setLessonsPagination,
+        setRefreshCourses,
+        setSelectedCourse,
     } = useCourses();
 
     /**
@@ -166,6 +169,16 @@ export const CoursesList: FC<CoursesListProps> = ({ emptyMessage, filter, title 
             loadCourses({ filter, search: searchTerm, refresh: true });
         }
     }, [ refreshCourses, index ]);
+
+    /**
+     * Effect to remove lessons of selectedCourse
+     */
+    useEffect(() => {
+        if (isFocused() && lessons.length > 0) {
+            setLessonsPagination({ from: 0, to: 9 });
+            removeLessons();
+        }
+    }, [ isFocused() ]);
 
     return (
         <>

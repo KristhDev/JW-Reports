@@ -4,7 +4,7 @@ import { useNavigation } from '@react-navigation/native';
 import dayjs from 'dayjs';
 
 /* Features */
-import { INIT_COURSE } from '../../../features/courses';
+import { INIT_COURSE, INIT_LESSON } from '../../../features/courses';
 
 /* Screens */
 import { ActiveOrSuspendCourseModal } from '../ActiveOrSuspendCourseModal';
@@ -29,7 +29,7 @@ const CourseDetail = () => {
     const [ showFSModal, setShowFSModal ] = useState<boolean>(false);
     const { addListener, getState, navigate, removeListener } = useNavigation();
 
-    const { state: { selectedCourse, selectedLesson }, setSelectedCourse, setSelectedLesson } = useCourses();
+    const { state: { selectedCourse }, setSelectedCourse, setSelectedLesson } = useCourses();
     const { state: { colors } } = useTheme();
 
     const statusCourseText = (selectedCourse.finished)
@@ -44,7 +44,7 @@ const CourseDetail = () => {
      */
     const handleAddLesson = () => {
         setSelectedLesson({
-            ...selectedLesson,
+            ...INIT_LESSON,
             next_lesson: new Date().toString()
         });
 
