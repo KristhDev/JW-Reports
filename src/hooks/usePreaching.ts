@@ -151,6 +151,18 @@ const usePreaching = () => {
             return;
         }
 
+        if (state.seletedPreaching.user_id !== user.id) {
+            onFinish && onFinish();
+            dispatch(setIsPreachingDeleting({ isDeleting: false }));
+
+            setStatus({
+                code: 400,
+                msg: 'Lo sentimos, pero no puedes realizar está acción.'
+            });
+
+            return;
+        }
+
         const { error, status } = await supabase.from('preachings')
             .delete()
             .eq('id', state.seletedPreaching.id)
