@@ -54,12 +54,22 @@ const useStatus = () => {
         return false;
     }
 
+    const setUnauthenticatedError = (onDispatch?: () => void) => {
+        onDispatch && onDispatch();
+
+        setStatus({
+            code: 401,
+            msg: 'Para realizar está acción debe iniciar sesión.'
+        });
+    }
+
     return {
         state,
         clearStatus,
-        setSupabaseError,
         setErrorForm,
-        setStatus
+        setStatus,
+        setSupabaseError,
+        setUnauthenticatedError
     }
 }
 

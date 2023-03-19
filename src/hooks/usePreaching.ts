@@ -34,8 +34,8 @@ const usePreaching = () => {
     const dispatch = useAppDispatch();
     const { goBack } = useNavigation();
 
-    const { state: { user } } = useAuth();
-    const { setStatus, setSupabaseError } = useStatus();
+    const { state: { user, isAuthenticated } } = useAuth();
+    const { setStatus, setSupabaseError, setUnauthenticatedError } = useStatus();
 
     const state = useSelector<RootState, PreachingState>(store => store.preaching);
 
@@ -50,6 +50,11 @@ const usePreaching = () => {
      */
     const loadPreachings = async (date: Date) => {
         setIsPreachingsLoading(true);
+
+        if (!isAuthenticated) {
+            setUnauthenticatedError(() => setIsPreachingsLoading(false));
+            return;
+        }
 
         const init_date = dayjs(date).startOf('month').format('YYYY-MM-DD');
         const final_date = dayjs(date).endOf('month').format('YYYY-MM-DD');
@@ -74,6 +79,11 @@ const usePreaching = () => {
      */
     const savePreaching = async (preachingValues: PreachingFormValues) => {
         dispatch(setIsPreachingLoading({ isLoading: true }));
+
+        if (!isAuthenticated) {
+            setUnauthenticatedError(() => dispatch(setIsPreachingLoading({ isLoading: false })));
+            return;
+        }
 
         const { data, error, status } = await supabase.from('preachings')
             .insert({
@@ -107,13 +117,29 @@ const usePreaching = () => {
     const updatePreaching = async (preachingValues: PreachingFormValues) => {
         dispatch(setIsPreachingLoading({ isLoading: true }));
 
+        if (!isAuthenticated) {
+            setUnauthenticatedError(() => dispatch(setIsPreachingLoading({ isLoading: false })));
+            return;
+        }
+
+        if (state.seletedPreaching.id === '') {
+            dispatch(setIsPreachingLoading({ isLoading: false }));
+
+            setStatus({
+                code: 400,
+                msg: 'No hay un día de predicación seleccionado para actualizar.'
+            });
+
+            return;
+        }
+
         const { data, error, status } = await supabase.from('preachings')
             .update({
                 ...preachingValues,
                 day: dayjs(preachingValues.day).format('YYYY-MM-DD'),
                 init_hour: dayjs(preachingValues.init_hour).format('YYYY-MM-DD HH:mm:ss.SSSSSS'),
                 final_hour: dayjs(preachingValues.final_hour).format('YYYY-MM-DD HH:mm:ss.SSSSSS'),
-                updated_at:dayjs().format('YYYY-MM-DD HH:mm:ss.SSSSSS')
+                updated_at: dayjs().format('YYYY-MM-DD HH:mm:ss.SSSSSS')
             })
             .eq('id', state.seletedPreaching.id)
             .eq('user_id', user.id)
@@ -125,8 +151,15 @@ const usePreaching = () => {
         dispatch(updatePreachingAction({ preaching: data![0] }));
 
         setStatus({
-            code: 201,
+            code: 200,
             msg: 'Haz actualizado tu día de predicación correctamente.'
+        });
+
+        setSelectedPreaching({
+            ...INIT_PREACHING,
+            day: new Date().toString(),
+            init_hour: new Date().toString(),
+            final_hour: new Date().toString()
         });
 
         goBack();
@@ -138,6 +171,15 @@ const usePreaching = () => {
      */
     const deletePreaching = async (onFinish?: () => void) => {
         dispatch(setIsPreachingDeleting({ isDeleting: true }));
+
+        if (!isAuthenticated) {
+            setUnauthenticatedError(() => {
+                onFinish && onFinish();
+                dispatch(setIsPreachingDeleting({ isDeleting: false }));
+            });
+
+            return;
+        }
 
         if (state.seletedPreaching.id === '') {
             onFinish && onFinish();

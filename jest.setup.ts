@@ -86,3 +86,5 @@ jest.mock('react-native-safe-area-context', () => {
         })
     }
 });
+
+jest.setTimeout(30 * 1000);

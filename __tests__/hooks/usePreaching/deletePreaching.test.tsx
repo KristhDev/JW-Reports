@@ -24,7 +24,6 @@ describe('Test usePreaching hook deletePreaching', () => {
 
         const { result } = render(mockStore);
 
-
         await act(async () => {
             await result.current.useAuth.signIn(testCredentials);
         });
@@ -133,8 +132,8 @@ describe('Test usePreaching hook deletePreaching', () => {
         expect(onFinishMock).toHaveBeenCalledTimes(1);
 
         expect(result.current.useStatus.state).toEqual({
-            code: 400,
-            msg: expect.any(String)
+            code: 401,
+            msg: 'Para realizar está acción debes iniciar sesión.'
         });
 
         expect(result.current.usePreaching.state).toEqual({
