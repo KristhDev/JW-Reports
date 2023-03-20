@@ -125,6 +125,27 @@ export const revisits: Revisit[] = [
     }
 ];
 
+export const initialState: RevisitsState = {
+    hasMoreRevisits: true,
+    isRevisitDeleting: false,
+    isRevisitLoading: false,
+    isRevisitsLoading: false,
+    refreshRevisits: false,
+    revisitFilter: 'all',
+    revisits: [],
+    revisitsPagination: {
+        from: 0,
+        to: 9
+    },
+    revisitsScreenHistory: [],
+    selectedRevisit: {
+        ...INIT_REVISIT,
+        next_visit: '2023-03-19',
+        created_at: '2023-03-19T00:00:00.000Z',
+        updated_at: '2023-03-19T00:00:00.000Z'
+    },
+}
+
 export const revisitsState: RevisitsState = {
     hasMoreRevisits: true,
     isRevisitDeleting: false,
