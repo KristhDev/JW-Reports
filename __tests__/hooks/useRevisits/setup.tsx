@@ -19,7 +19,6 @@ import { CoursesState } from '../../../src/interfaces/courses';
 import { PreachingState } from '../../../src/interfaces/preaching';
 import { RevisitsState } from '../../../src/interfaces/revisits';
 import { StatusState } from '../../../src/interfaces/status';
-
 export interface InitialState {
     auth: AuthState;
     revisits: RevisitsState;
@@ -35,6 +34,13 @@ export interface InitialStateComplete {
 }
 
 export const onFinishMock = jest.fn();
+
+export const testRevisit = {
+    about: 'Itaque quidem enim neque laudantium ducimus nesciunt provident consequuntur.',
+    address: 'Ut non et similique aliquam quaerat consequatur iste ut quod.',
+    next_visit: new Date('2023-03-20T00:00:00.000Z'),
+    person_name: 'Karlee Senger'
+}
 
 export const getMockStore = ({ auth, revisits, status }: InitialState) => {
     return configureStore({

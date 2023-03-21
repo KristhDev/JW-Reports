@@ -42,9 +42,9 @@ const useRevisits = () => {
     const dispatch = useAppDispatch();
     const { goBack, navigate } = useNavigation();
 
-    const { state: { user } } = useAuth();
+    const { state: { isAuthenticated, user } } = useAuth();
     const { uploadImage, deleteImage } = useImage();
-    const { setStatus, setSupabaseError } = useStatus();
+    const { setStatus, setSupabaseError, setUnauthenticatedError } = useStatus();
 
     const state = useSelector<RootState, RevisitsState>(store => store.revisits);
 
@@ -119,6 +119,15 @@ const useRevisits = () => {
     const saveRevisit = async ({ revisitValues, back = true, image, onFinish }: SaveRevisitOptions) => {
         dispatch(setIsRevisitLoading({ isLoading: true }));
 
+        if (!isAuthenticated) {
+            setUnauthenticatedError(() => {
+                dispatch(setIsRevisitLoading({ isLoading: false }));
+                onFinish && onFinish();
+            });
+
+            return;
+        }
+
         let photo = null;
 
         /* If image is other than undefined, an attempt is made to upload */
@@ -170,6 +179,22 @@ const useRevisits = () => {
      */
     const updateRevisit = async (revisitValues: RevisitFormValues, image?: Image) => {
         dispatch(setIsRevisitLoading({ isLoading: true }));
+
+        if (!isAuthenticated) {
+            setUnauthenticatedError(() => dispatch(setIsRevisitLoading({ isLoading: false })));
+            return;
+        }
+
+        if (state.selectedRevisit.id === '') {
+            dispatch(setIsRevisitLoading({ isLoading: false }));
+
+            setStatus({
+                code: 400,
+                msg: 'No hay una revisita seleccionada para actualizar.'
+            });
+
+            return;
+        }
 
         let photo = state.selectedRevisit.photo;
 
@@ -223,6 +248,15 @@ const useRevisits = () => {
      */
     const deleteRevisit = async (back: boolean = false, onFinish?: () => void) => {
         dispatch(setIsRevisitDeleting({ isDeleting: true }));
+
+        if (!isAuthenticated) {
+            setUnauthenticatedError(() => {
+                onFinish && onFinish();
+                dispatch(setIsRevisitDeleting({ isDeleting: false }));
+            });
+
+            return;
+        }
 
         /* Should not delete if selectedRevisit.id is an empty string */
         if (state.selectedRevisit.id === '') {
@@ -280,10 +314,19 @@ const useRevisits = () => {
     const completeRevisit = async (onFailFinish?: () => void) => {
         dispatch(setIsRevisitLoading({ isLoading: true }));
 
+        if (!isAuthenticated) {
+            setUnauthenticatedError(() => {
+                onFailFinish && onFailFinish();
+                dispatch(setIsRevisitLoading({ isLoading: false }));
+            });
+
+            return;
+        }
+
         /* Should not update if selectedRevisit.id is an empty string */
         if (state.selectedRevisit.id === '') {
             onFailFinish && onFailFinish();
-            dispatch(setIsRevisitDeleting({ isDeleting: false }));
+            dispatch(setIsRevisitLoading({ isLoading: false }));
 
             setStatus({
                 code: 400,
@@ -296,7 +339,7 @@ const useRevisits = () => {
         const { data, error } = await supabase.from('revisits')
             .update({
                 done: true,
-                updated_at:dayjs().format('YYYY-MM-DD HH:mm:ss.SSSSSS')
+                updated_at: dayjs().format('YYYY-MM-DD HH:mm:ss.SSSSSS')
             })
             .eq('id', state.selectedRevisit.id)
             .eq('user_id', user.id)
@@ -305,7 +348,7 @@ const useRevisits = () => {
         if (error) {
             console.log(error);
             onFailFinish && onFailFinish();
-            dispatch(setIsRevisitDeleting({ isDeleting: false }));
+            dispatch(setIsRevisitLoading({ isLoading: false }));
             setStatus({ code: 400, msg: error.message });
 
             return '';
