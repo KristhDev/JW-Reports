@@ -71,6 +71,11 @@ const useRevisits = () => {
         dispatch(setRevisitFilter({ filter }));
         setIsRevisitsLoading(true);
 
+        if (!isAuthenticated) {
+            setUnauthenticatedError(() => setIsRevisitsLoading(false));
+            return;
+        }
+
         const revisitsPromise = supabase.from('revisits').select().eq('user_id', user.id);
 
         if (filter === 'visited') revisitsPromise.eq('done', true);
