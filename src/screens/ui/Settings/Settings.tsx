@@ -13,7 +13,7 @@ import { SectionBtn, SectionContent } from '../../../components/ui';
 import { useStatus, useTheme } from '../../../hooks';
 
 /* Screens */
-import { ThemeModal } from '../../../theme/screens';
+import { ThemeModal } from '../../../theme';
 
 /* Utils */
 import { THEME_OPTIONS } from '../../../utils';

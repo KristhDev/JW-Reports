@@ -1,4 +1,3 @@
-import { useSelector } from 'react-redux';
 import { useNavigation } from '@react-navigation/native';
 import { Image } from 'react-native-image-crop-picker';
 import dayjs from 'dayjs';
@@ -7,7 +6,7 @@ import dayjs from 'dayjs';
 import { supabase } from '../supabase/config';
 
 /* Features */
-import { RootState, useAppDispatch } from '../features/store';
+import { useAppDispatch, useAppSelector } from '../features';
 import {
     INIT_REVISIT,
     addRevisit,
@@ -32,7 +31,7 @@ import {
 import { useAuth, useImage, useStatus } from './';
 
 /* Interfaces */
-import { Revisit, RevisitFormValues, RevisitsState, SaveRevisitOptions, loadRevisitsOptions } from '../interfaces/revisits';
+import { Revisit, RevisitFormValues, SaveRevisitOptions, loadRevisitsOptions } from '../interfaces/revisits';
 import { Pagination } from '../interfaces/ui';
 
 /**
@@ -46,7 +45,7 @@ const useRevisits = () => {
     const { uploadImage, deleteImage } = useImage();
     const { setStatus, setSupabaseError, setUnauthenticatedError } = useStatus();
 
-    const state = useSelector<RootState, RevisitsState>(store => store.revisits);
+    const state = useAppSelector(store => store.revisits);
 
     const addRevisits = (revisits: Revisit[]) => dispatch(addRevisitsAction({ revisits }));
     const clearRevisits = () => dispatch(clearRevisitsAction());

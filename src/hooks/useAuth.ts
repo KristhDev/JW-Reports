@@ -1,4 +1,3 @@
-import { useSelector } from 'react-redux';
 import { AuthResponse } from '@supabase/supabase-js';
 import OneSignal from 'react-native-onesignal';
 
@@ -9,7 +8,7 @@ import { SITIE_URL } from '@env';
 import { supabase } from '../supabase/config';
 
 /* Features */
-import { RootState, useAppDispatch } from '../features/store';
+import { useAppDispatch, useAppSelector } from '../features';
 import {
     setUser as setUserAction,
     clearAuth as clearAuthAction,
@@ -24,7 +23,7 @@ import { clearRevisits } from '../features/revisits';
 import { useStatus } from './';
 
 /* Interfaces */
-import { AuthState, SignIn, Profile, SignUp, User } from '../interfaces/auth';
+import { SignIn, Profile, SignUp, User } from '../interfaces/auth';
 
 /**
  * Hook to management authentication of store with state and actions
@@ -34,7 +33,7 @@ const useAuth = () => {
 
     const { setStatus, setSupabaseError } = useStatus();
 
-    const state = useSelector<RootState, AuthState>(store => store.auth);
+    const state = useAppSelector(store => store.auth);
 
     const clearAuth = () => dispatch(clearAuthAction());
 

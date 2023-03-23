@@ -1,4 +1,3 @@
-import { useSelector } from 'react-redux';
 import { useNavigation } from '@react-navigation/native';
 import dayjs from 'dayjs';
 
@@ -6,7 +5,7 @@ import dayjs from 'dayjs';
 import { supabase } from '../supabase/config';
 
 /* Features */
-import { RootState, useAppDispatch } from '../features/store';
+import { useAppDispatch, useAppSelector } from '../features';
 import {
     INIT_PREACHING,
     addPreaching,
@@ -25,7 +24,7 @@ import {
 import { useAuth, useStatus } from './';
 
 /* Interfaces */
-import { Preaching, PreachingFormValues, PreachingState } from '../interfaces/preaching';
+import { Preaching, PreachingFormValues } from '../interfaces/preaching';
 
 /**
  * Hook to management preaching of store with state and actions
@@ -37,7 +36,7 @@ const usePreaching = () => {
     const { state: { user, isAuthenticated } } = useAuth();
     const { setStatus, setSupabaseError, setUnauthenticatedError } = useStatus();
 
-    const state = useSelector<RootState, PreachingState>(store => store.preaching);
+    const state = useAppSelector(store => store.preaching);
 
     const clearPreaching = () => dispatch(clearPreachingAction());
     const setIsPreachingsLoading = (isLoading: boolean) => dispatch(setIsPreachingsLoadingAction({ isLoading }));

@@ -1,15 +1,14 @@
-import { useSelector } from 'react-redux';
 import { request, PERMISSIONS } from 'react-native-permissions';
 
 /* Store */
-import { RootState, useAppDispatch } from '../features/store';
+import { useAppDispatch, useAppSelector } from '../features';
 
 /* Features - actions */
 import { checkPermissions as checkPermissionsThunk, setPermission } from '../features/permissions';
 import { setStatus } from '../features/status';
 
 /* Interfaces */
-import { Permissions, PermissionsState } from '../interfaces/permissions';
+import { Permissions } from '../interfaces/permissions';
 
 /**
  * Hook to management permissions of store
@@ -18,7 +17,7 @@ import { Permissions, PermissionsState } from '../interfaces/permissions';
 const usePermissions = () => {
     const dispatch = useAppDispatch();
 
-    const state = useSelector<RootState, PermissionsState>(store => store.permissions);
+    const state = useAppSelector(store => store.permissions);
 
     /**
      * It asks for a permission and if the permission is not available it sets a status message.

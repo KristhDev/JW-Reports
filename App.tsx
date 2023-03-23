@@ -13,10 +13,10 @@ import 'dayjs/locale/es';
 import { ONESIGNAL_APP_ID } from '@env';
 
 /* Features */
-import store, { persistor } from './src/features/store';
+import { store, persistor } from './src/features';
 
 /* Context */
-import { ThemeProvider } from './src/theme/context';
+import { ThemeProvider } from './src/theme';
 
 /* Navigation */
 import { Navigation } from './src/navigation';

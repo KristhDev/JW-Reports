@@ -2,7 +2,7 @@ import React from 'react';
 import { fireEvent, render, screen } from '@testing-library/react-native';
 import hexToRgba from 'hex-to-rgba';
 
-import { ThemeModal } from '../../../src/theme/screens';
+import { ThemeModal } from '../../../src/theme';
 
 import { useTheme } from '../../../src/hooks';
 

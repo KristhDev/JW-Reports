@@ -1,4 +1,3 @@
-import { useSelector } from 'react-redux';
 import { useNavigation } from '@react-navigation/native';
 import dayjs from 'dayjs';
 
@@ -6,7 +5,7 @@ import dayjs from 'dayjs';
 import { supabase } from '../supabase/config';
 
 /* Features */
-import { RootState, useAppDispatch } from '../features/store';
+import { useAppDispatch, useAppSelector } from '../features';
 import {
     INIT_COURSE,
     INIT_LESSON,
@@ -44,7 +43,7 @@ import {
 import { useAuth, useStatus } from './';
 
 /* Interfaces */
-import { Course, CourseFormValues, CoursesState, Lesson, LessonFormValues, loadCoursesOptions } from '../interfaces/courses';
+import { Course, CourseFormValues, Lesson, LessonFormValues, loadCoursesOptions } from '../interfaces/courses';
 import { LoadResourcesOptions, Pagination } from '../interfaces/ui';
 
 /**
@@ -54,7 +53,7 @@ const useCourses = () => {
     const dispatch = useAppDispatch();
     const { goBack, navigate } = useNavigation();
 
-    const state = useSelector<RootState, CoursesState>(store => store.courses);
+    const state = useAppSelector(store => store.courses);
 
     const { state: { user } } = useAuth();
     const { setStatus, setSupabaseError } = useStatus();
