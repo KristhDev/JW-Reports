@@ -95,6 +95,42 @@ export const courses: Course[] = [
     }
 ];
 
+export const initialState: CoursesState = {
+    courseFilter: 'all',
+    courses: [],
+    coursesPagination: {
+        from: 0,
+        to: 9
+    },
+    coursesScreenHistory: [],
+    hasMoreCourses: true,
+    hasMoreLessons: true,
+    isCourseDeleting: false,
+    isCourseLoading: false,
+    isCoursesLoading: false,
+    isLessonDeleting: false,
+    isLessonLoading: false,
+    isLessonsLoading: false,
+    lessons: [],
+    lessonsPagination: {
+        from: 0,
+        to: 9
+    },
+    refreshCourses: false,
+    refreshLessons: false,
+    selectedCourse: {
+        ...INIT_COURSE,
+        created_at: '2021-08-26T15:00:00.000Z',
+        updated_at: '2021-08-26T15:00:00.000Z'
+    },
+    selectedLesson: {
+        ...INIT_LESSON,
+        next_lesson: '2021-08-26T15:00:00.000Z',
+        created_at: '2021-08-26T15:00:00.000Z',
+        updated_at: '2021-08-26T15:00:00.000Z'
+    }
+}
+
 export const coursesState: CoursesState = {
     courseFilter: 'all',
     courses: courses,
