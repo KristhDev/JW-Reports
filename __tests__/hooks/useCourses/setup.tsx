@@ -36,11 +36,16 @@ export interface InitialStateComplete {
 
 export const onFinishMock = jest.fn();
 
-export const testRevisit = {
-    about: 'Itaque quidem enim neque laudantium ducimus nesciunt provident consequuntur.',
-    address: 'Ut non et similique aliquam quaerat consequatur iste ut quod.',
-    next_visit: new Date('2023-03-20T00:00:00.000Z'),
-    person_name: 'Karlee Senger'
+export const testCourse = {
+    person_about: 'Itaque quidem enim neque laudantium ducimus nesciunt provident consequuntur.',
+    person_address: 'Ut non et similique aliquam quaerat consequatur iste ut quod.',
+    person_name: 'Karlee Senger',
+    publication: 'dolorem ut non'
+}
+
+export const testLesson = {
+    description: 'Temporibus ut dignissimos aliquam dignissimos facere recusandae. Illo a provident quasi iusto quidem qui tempora vel adipisci. Quia eum ut recusandae laudantium quidem. Quisquam non fugiat dicta qui voluptatem.',
+    next_lesson: new Date('2023-03-20T00:00:00.000Z')
 }
 
 export const getMockStore = ({ auth, courses, status }: InitialState) => {

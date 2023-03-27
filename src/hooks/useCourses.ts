@@ -55,8 +55,8 @@ const useCourses = () => {
 
     const state = useAppSelector(store => store.courses);
 
-    const { state: { user } } = useAuth();
-    const { setStatus, setSupabaseError } = useStatus();
+    const { state: { isAuthenticated, user } } = useAuth();
+    const { setStatus, setSupabaseError, setUnauthenticatedError } = useStatus();
 
     const addCourses = (courses: Course[]) => dispatch(addCoursesAction({ courses }));
     const addLessons = (lessons: Lesson[]) => dispatch(addLessonsAction({ lessons }));
@@ -142,6 +142,15 @@ const useCourses = () => {
     const deleteCourse = async (back: boolean = false, onFinish?: () => void) => {
         dispatch(setIsCourseDeleting({ isDeleting: true }));
 
+        if (!isAuthenticated) {
+            setUnauthenticatedError(() => {
+                onFinish && onFinish();
+                dispatch(setIsCourseDeleting({ isDeleting: false }));
+            });
+
+            return;
+        }
+
         /* Should not delete if selectedCourse.id is an empty string */
         if (state.selectedCourse.id === '') {
             onFinish && onFinish();
@@ -197,6 +206,15 @@ const useCourses = () => {
      */
     const deleteLesson = async (back: boolean = false, onFinish?: () => void) => {
         dispatch(setIsLessonDeleting({ isDeleting: true }));
+
+        if (!isAuthenticated) {
+            setUnauthenticatedError(() => {
+                onFinish && onFinish();
+                dispatch(setIsLessonDeleting({ isDeleting: false }));
+            });
+
+            return;
+        }
 
         /* Should not delete if selectedLesson.id is an empty string */
         if (state.selectedLesson.id === '') {
@@ -486,6 +504,15 @@ const useCourses = () => {
      */
     const saveCourse = async (courseValues: CourseFormValues, onFinish?: () => void) => {
         dispatch(setIsCourseLoading({ isLoading: true }));
+
+        if (!isAuthenticated) {
+            setUnauthenticatedError(() => {
+                onFinish && onFinish();
+                dispatch(setIsCourseLoading({ isLoading: false }));
+            });
+
+            return;
+        }
 
         const { data, error, status } = await supabase.from('courses')
             .insert({ ...courseValues, user_id: user.id })
