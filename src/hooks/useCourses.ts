@@ -548,6 +548,14 @@ const useCourses = () => {
     const saveLesson = async (lessonValues: LessonFormValues) => {
         dispatch(setIsLessonLoading({ isLoading: true }));
 
+        if (!isAuthenticated) {
+            setUnauthenticatedError(() => {
+                dispatch(setIsLessonLoading({ isLoading: false }));
+            });
+
+            return;
+        }
+
         const { data, error, status } = await supabase.from('lessons')
             .insert({
                 course_id: state.selectedCourse.id,
@@ -578,6 +586,25 @@ const useCourses = () => {
     const updateCourse = async (courseValues: CourseFormValues) => {
         dispatch(setIsCourseLoading({ isLoading: true }));
 
+        if (!isAuthenticated) {
+            setUnauthenticatedError(() => {
+                dispatch(setIsCourseLoading({ isLoading: false }));
+            });
+
+            return;
+        }
+
+        if (state.selectedCourse.id === '') {
+            dispatch(setIsCourseLoading({ isLoading: false }));
+
+            setStatus({
+                code: 400,
+                msg: 'No hay un curso seleccionado para actualizar.'
+            });
+
+            return;
+        }
+
         const { data, error, status } = await supabase.from('courses')
             .update({
                 ...courseValues,
@@ -606,6 +633,25 @@ const useCourses = () => {
      */
     const updateLesson = async (lessonValues: LessonFormValues) => {
         dispatch(setIsLessonLoading({ isLoading: true }));
+
+        if (!isAuthenticated) {
+            setUnauthenticatedError(() => {
+                dispatch(setIsLessonLoading({ isLoading: false }));
+            });
+
+            return;
+        }
+
+        if (state.selectedLesson.id === '') {
+            dispatch(setIsLessonLoading({ isLoading: false }));
+
+            setStatus({
+                code: 400,
+                msg: 'No hay una clase seleccionada para actualizar.'
+            });
+
+            return;
+        }
 
         const { data, error, status } = await supabase.from('lessons')
             .update({
