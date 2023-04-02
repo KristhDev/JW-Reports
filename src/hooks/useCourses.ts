@@ -81,6 +81,16 @@ const useCourses = () => {
     const activeOrSuspendCourse = async (onFinish?: () => void) => {
         dispatch(setIsCourseLoading({ isLoading: true }));
 
+        if (!isAuthenticated) {
+            setUnauthenticatedError(() => {
+                dispatch(setIsCourseLoading({ isLoading: false }));
+                onFinish && onFinish();
+            });
+
+            return;
+        }
+
+
         /* Should not update if selectedCourse.id is an empty string */
         if (state.selectedCourse.id === '') {
             dispatch(setIsCourseLoading({ isLoading: false }));
@@ -94,8 +104,11 @@ const useCourses = () => {
             return;
         }
 
+        console.log('Selected course: ', state.selectedCourse.finished);
+
         /* If the selectedCourse is finished it should not be updated */
         if (state.selectedCourse.finished) {
+            console.log('No puedes activar o suspendir un curso terminado.');
             dispatch(setIsCourseLoading({ isLoading: false }));
             onFinish && onFinish();
 
@@ -274,6 +287,15 @@ const useCourses = () => {
      */
     const finishOrStartCourse = async (onFinish?: () => void) => {
         dispatch(setIsCourseLoading({ isLoading: true }));
+
+        if (!isAuthenticated) {
+            setUnauthenticatedError(() => {
+                dispatch(setIsCourseLoading({ isLoading: false }));
+                onFinish && onFinish();
+            });
+
+            return;
+        }
 
         /* Should not update if selectedCourse.id is an empty string */
         if (state.selectedCourse.id === '') {
