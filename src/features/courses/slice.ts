@@ -196,13 +196,13 @@ const courseSlice = createSlice({
             state.isLessonsLoading = false;
 
             state.courses = state.courses.map(c =>
-                (c.id === state.lessons[0].course_id && (!c.last_lesson || c.last_lesson.id !== state.lessons[0].id))
+                (state.lessons.length > 0 && c.id === state.lessons[0].course_id && (!c.last_lesson || c.last_lesson.id !== state.lessons[0].id))
                     ? { ...c, last_lesson: state.lessons[0] }
                     : c
             );
 
             state.selectedCourse =
-                (state.selectedCourse.id === state.lessons[0].course_id
+                (state.lessons.length > 0 && state.selectedCourse.id === state.lessons[0].course_id
                     && (!state.selectedCourse.last_lesson || state.selectedCourse.last_lesson.id !== state.lessons[0].id)
                 )
                     ? { ...state.selectedCourse, last_lesson: state.lessons[0] }

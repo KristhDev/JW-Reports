@@ -358,6 +358,15 @@ const useCourses = () => {
     const finishOrStartLesson = async (next_lesson: Date, onFinish?: () => void) => {
         dispatch(setIsLessonLoading({ isLoading: true }));
 
+        if (!isAuthenticated) {
+            setUnauthenticatedError(() => {
+                dispatch(setIsLessonLoading({ isLoading: false }));
+                onFinish && onFinish();
+            });
+
+            return;
+        }
+
         /* Should not update if selectedLesson.id is an empty string */
         if (state.selectedLesson.id === '') {
             dispatch(setIsLessonLoading({ isLoading: false }));
@@ -425,6 +434,11 @@ const useCourses = () => {
         dispatch(setCourseFilter({ filter }));
         setIsCoursesLoading(true);
 
+        if (!isAuthenticated) {
+            setUnauthenticatedError(() => setIsCoursesLoading(false));
+            return;
+        }
+
         const coursesPromise = supabase.from('courses')
             .select('*, lessons (*)')
             .eq('user_id', user.id)
@@ -487,6 +501,23 @@ const useCourses = () => {
      */
     const loadLessons = async ({ loadMore = false, refresh = false, search = '' }: LoadResourcesOptions) => {
         setIsLessonsLoading(true);
+
+        if (!isAuthenticated) {
+            setUnauthenticatedError(() => setIsLessonsLoading(false));
+            return;
+        }
+
+         /* Should not update if selectedCourse .id is an empty string */
+        if (state.selectedCourse.id === '') {
+            setIsLessonsLoading(false);
+
+            setStatus({
+                code: 400,
+                msg: 'No hay un curso seleccionado.'
+            });
+
+            return;
+        }
 
         const lessonsPromise = supabase.from('lessons')
             .select()
