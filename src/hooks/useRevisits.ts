@@ -324,7 +324,7 @@ const useRevisits = () => {
                 dispatch(setIsRevisitLoading({ isLoading: false }));
             });
 
-            return;
+            return '';
         }
 
         /* Should not update if selectedRevisit.id is an empty string */

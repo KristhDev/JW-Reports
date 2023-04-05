@@ -1,0 +1,2602 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Test in <Revisits /> screen should to match snapshot 1`] = `
+<View
+  onLayout={[Function]}
+  style={
+    Object {
+      "flex": 1,
+    }
+  }
+>
+  <View
+    style={
+      Array [
+        Object {
+          "flex": 1,
+        },
+        undefined,
+        undefined,
+        undefined,
+      ]
+    }
+  >
+    <RCTScrollView
+      ListEmptyComponent={
+        <ListEmptyComponent
+          msg="No haz agregado ninguna revisita."
+          showMsg={false}
+        />
+      }
+      ListFooterComponent={
+        <ListFooterComponent
+          marginTopPlus={false}
+          showLoader={false}
+        />
+      }
+      ListHeaderComponent={
+        <React.Fragment>
+          <Title
+            containerStyle={
+              Object {
+                "paddingBottom": 20,
+                "paddingTop": 30,
+              }
+            }
+            text="TODAS MIS REVISITAS"
+            textStyle={
+              Object {
+                "fontSize": 24,
+              }
+            }
+          />
+          <SearchInput
+            onClean={[Function]}
+            onSearch={[Function]}
+            refreshing={false}
+            searchTerm=""
+          />
+        </React.Fragment>
+      }
+      ListHeaderComponentStyle={
+        Object {
+          "alignSelf": "flex-start",
+        }
+      }
+      contentContainerStyle={
+        Object {
+          "alignItems": "center",
+          "flexGrow": 1,
+          "paddingBottom": 100,
+        }
+      }
+      data={
+        Array [
+          Object {
+            "about": "Ratione quae debitis pariatur tempora magnam est voluptatibus. Eveniet ipsum omnis maxime et soluta iusto. Autem aut ducimus dolore et recusandae et inventore. Enim autem in hic optio.",
+            "address": "Voluptatem ratione velit officia qui non ab aut atque. Voluptate possimus dolor ex commodi aut numquam voluptatem sit. Molestiae ut tempora unde sapiente. Soluta culpa repellat et voluptatibus odit eveniet dolore harum.",
+            "created_at": "2021-12-10T00:00:00.000Z",
+            "done": false,
+            "id": "7345fc2b-b5d3-4000-ba17-a85ae1d5a85d",
+            "next_visit": "2021-12-10T00:00:00.000Z",
+            "person_name": "Dariana Hand",
+            "updated_at": "2021-12-10T00:00:00.000Z",
+            "user_id": "39d71118-57b7-4c4a-8643-0956e5f9350e",
+          },
+          Object {
+            "about": "Ratione quae debitis pariatur tempora magnam est voluptatibus. Eveniet ipsum omnis maxime et soluta iusto. Autem aut ducimus dolore et recusandae et inventore. Enim autem in hic optio.",
+            "address": "Voluptatem ratione velit officia qui non ab aut atque. Voluptate possimus dolor ex commodi aut numquam voluptatem sit. Molestiae ut tempora unde sapiente. Soluta culpa repellat et voluptatibus odit eveniet dolore harum.",
+            "created_at": "2021-12-10T00:00:00.000Z",
+            "done": false,
+            "id": "0d48444f-93eb-46d1-ab92-ed75893bd84d",
+            "next_visit": "2021-12-10T00:00:00.000Z",
+            "person_name": "Dariana Hand",
+            "updated_at": "2021-12-10T00:00:00.000Z",
+            "user_id": "39d71118-57b7-4c4a-8643-0956e5f9350e",
+          },
+          Object {
+            "about": "Ratione quae debitis pariatur tempora magnam est voluptatibus. Eveniet ipsum omnis maxime et soluta iusto. Autem aut ducimus dolore et recusandae et inventore. Enim autem in hic optio.",
+            "address": "Voluptatem ratione velit officia qui non ab aut atque. Voluptate possimus dolor ex commodi aut numquam voluptatem sit. Molestiae ut tempora unde sapiente. Soluta culpa repellat et voluptatibus odit eveniet dolore harum.",
+            "created_at": "2021-12-10T00:00:00.000Z",
+            "done": false,
+            "id": "fcbc1dca-0d97-493c-974d-df65069b5f97",
+            "next_visit": "2021-12-10T00:00:00.000Z",
+            "person_name": "Dariana Hand",
+            "updated_at": "2021-12-10T00:00:00.000Z",
+            "user_id": "39d71118-57b7-4c4a-8643-0956e5f9350e",
+          },
+          Object {
+            "about": "Ratione quae debitis pariatur tempora magnam est voluptatibus. Eveniet ipsum omnis maxime et soluta iusto. Autem aut ducimus dolore et recusandae et inventore. Enim autem in hic optio.",
+            "address": "Voluptatem ratione velit officia qui non ab aut atque. Voluptate possimus dolor ex commodi aut numquam voluptatem sit. Molestiae ut tempora unde sapiente. Soluta culpa repellat et voluptatibus odit eveniet dolore harum.",
+            "created_at": "2021-12-10T00:00:00.000Z",
+            "done": false,
+            "id": "24d9bbf8-dafd-4e95-96f7-246b3bd3c4e8",
+            "next_visit": "2021-12-10T00:00:00.000Z",
+            "person_name": "Dariana Hand",
+            "updated_at": "2021-12-10T00:00:00.000Z",
+            "user_id": "39d71118-57b7-4c4a-8643-0956e5f9350e",
+          },
+          Object {
+            "about": "Ratione quae debitis pariatur tempora magnam est voluptatibus. Eveniet ipsum omnis maxime et soluta iusto. Autem aut ducimus dolore et recusandae et inventore. Enim autem in hic optio.",
+            "address": "Voluptatem ratione velit officia qui non ab aut atque. Voluptate possimus dolor ex commodi aut numquam voluptatem sit. Molestiae ut tempora unde sapiente. Soluta culpa repellat et voluptatibus odit eveniet dolore harum.",
+            "created_at": "2021-12-10T00:00:00.000Z",
+            "done": false,
+            "id": "a9274022-5367-4396-87c7-3e68cd7a2334",
+            "next_visit": "2021-12-10T00:00:00.000Z",
+            "person_name": "Dariana Hand",
+            "updated_at": "2021-12-10T00:00:00.000Z",
+            "user_id": "39d71118-57b7-4c4a-8643-0956e5f9350e",
+          },
+          Object {
+            "about": "Ratione quae debitis pariatur tempora magnam est voluptatibus. Eveniet ipsum omnis maxime et soluta iusto. Autem aut ducimus dolore et recusandae et inventore. Enim autem in hic optio.",
+            "address": "Voluptatem ratione velit officia qui non ab aut atque. Voluptate possimus dolor ex commodi aut numquam voluptatem sit. Molestiae ut tempora unde sapiente. Soluta culpa repellat et voluptatibus odit eveniet dolore harum.",
+            "created_at": "2021-12-10T00:00:00.000Z",
+            "done": false,
+            "id": "5bbcdb1f-c2c1-40e1-9a06-f07c28711479",
+            "next_visit": "2021-12-10T00:00:00.000Z",
+            "person_name": "Dariana Hand",
+            "updated_at": "2021-12-10T00:00:00.000Z",
+            "user_id": "39d71118-57b7-4c4a-8643-0956e5f9350e",
+          },
+          Object {
+            "about": "Ratione quae debitis pariatur tempora magnam est voluptatibus. Eveniet ipsum omnis maxime et soluta iusto. Autem aut ducimus dolore et recusandae et inventore. Enim autem in hic optio.",
+            "address": "Voluptatem ratione velit officia qui non ab aut atque. Voluptate possimus dolor ex commodi aut numquam voluptatem sit. Molestiae ut tempora unde sapiente. Soluta culpa repellat et voluptatibus odit eveniet dolore harum.",
+            "created_at": "2021-12-10T00:00:00.000Z",
+            "done": false,
+            "id": "38007bef-ee92-4062-bb13-c269fb6d7bfa",
+            "next_visit": "2021-12-10T00:00:00.000Z",
+            "person_name": "Dariana Hand",
+            "updated_at": "2021-12-10T00:00:00.000Z",
+            "user_id": "39d71118-57b7-4c4a-8643-0956e5f9350e",
+          },
+          Object {
+            "about": "Ratione quae debitis pariatur tempora magnam est voluptatibus. Eveniet ipsum omnis maxime et soluta iusto. Autem aut ducimus dolore et recusandae et inventore. Enim autem in hic optio.",
+            "address": "Voluptatem ratione velit officia qui non ab aut atque. Voluptate possimus dolor ex commodi aut numquam voluptatem sit. Molestiae ut tempora unde sapiente. Soluta culpa repellat et voluptatibus odit eveniet dolore harum.",
+            "created_at": "2021-12-10T00:00:00.000Z",
+            "done": false,
+            "id": "1d0a72b8-cf2a-4136-b4db-e4538d2e877a",
+            "next_visit": "2021-12-10T00:00:00.000Z",
+            "person_name": "Dariana Hand",
+            "updated_at": "2021-12-10T00:00:00.000Z",
+            "user_id": "39d71118-57b7-4c4a-8643-0956e5f9350e",
+          },
+          Object {
+            "about": "Ratione quae debitis pariatur tempora magnam est voluptatibus. Eveniet ipsum omnis maxime et soluta iusto. Autem aut ducimus dolore et recusandae et inventore. Enim autem in hic optio.",
+            "address": "Voluptatem ratione velit officia qui non ab aut atque. Voluptate possimus dolor ex commodi aut numquam voluptatem sit. Molestiae ut tempora unde sapiente. Soluta culpa repellat et voluptatibus odit eveniet dolore harum.",
+            "created_at": "2021-12-10T00:00:00.000Z",
+            "done": false,
+            "id": "f3d84fc8-f064-412a-81d5-538f9228f2f7",
+            "next_visit": "2021-12-10T00:00:00.000Z",
+            "person_name": "Dariana Hand",
+            "updated_at": "2021-12-10T00:00:00.000Z",
+            "user_id": "39d71118-57b7-4c4a-8643-0956e5f9350e",
+          },
+          Object {
+            "about": "Ratione quae debitis pariatur tempora magnam est voluptatibus. Eveniet ipsum omnis maxime et soluta iusto. Autem aut ducimus dolore et recusandae et inventore. Enim autem in hic optio.",
+            "address": "Voluptatem ratione velit officia qui non ab aut atque. Voluptate possimus dolor ex commodi aut numquam voluptatem sit. Molestiae ut tempora unde sapiente. Soluta culpa repellat et voluptatibus odit eveniet dolore harum.",
+            "created_at": "2021-12-10T00:00:00.000Z",
+            "done": false,
+            "id": "2e67ba8f-deb9-4a7b-8f1a-e1351df52f7e",
+            "next_visit": "2021-12-10T00:00:00.000Z",
+            "person_name": "Dariana Hand",
+            "updated_at": "2021-12-10T00:00:00.000Z",
+            "user_id": "39d71118-57b7-4c4a-8643-0956e5f9350e",
+          },
+          Object {
+            "about": "Ratione quae debitis pariatur tempora magnam est voluptatibus. Eveniet ipsum omnis maxime et soluta iusto. Autem aut ducimus dolore et recusandae et inventore. Enim autem in hic optio.",
+            "address": "Voluptatem ratione velit officia qui non ab aut atque. Voluptate possimus dolor ex commodi aut numquam voluptatem sit. Molestiae ut tempora unde sapiente. Soluta culpa repellat et voluptatibus odit eveniet dolore harum.",
+            "created_at": "2021-12-10T00:00:00.000Z",
+            "done": false,
+            "id": "7e8c4963-126d-4657-a1c6-ea8028152198",
+            "next_visit": "2021-12-10T00:00:00.000Z",
+            "person_name": "Dariana Hand",
+            "updated_at": "2021-12-10T00:00:00.000Z",
+            "user_id": "39d71118-57b7-4c4a-8643-0956e5f9350e",
+          },
+        ]
+      }
+      getItem={[Function]}
+      getItemCount={[Function]}
+      keyExtractor={[Function]}
+      onContentSizeChange={[Function]}
+      onEndReached={[Function]}
+      onEndReachedThreshold={0.5}
+      onLayout={[Function]}
+      onMomentumScrollBegin={[Function]}
+      onMomentumScrollEnd={[Function]}
+      onRefresh={[Function]}
+      onScroll={[Function]}
+      onScrollBeginDrag={[Function]}
+      onScrollEndDrag={[Function]}
+      overScrollMode="never"
+      refreshControl={
+        <RefreshControlMock
+          onRefresh={[Function]}
+          refreshing={false}
+        />
+      }
+      refreshing={false}
+      removeClippedSubviews={false}
+      renderItem={[Function]}
+      scrollEventThrottle={50}
+      stickyHeaderIndices={Array []}
+      viewabilityConfigCallbackPairs={Array []}
+    >
+      <RCTRefreshControl />
+      <View>
+        <View
+          onLayout={[Function]}
+          style={
+            Object {
+              "alignSelf": "flex-start",
+            }
+          }
+        >
+          <View
+            style={
+              Array [
+                Object {
+                  "alignItems": "flex-start",
+                  "padding": 20,
+                  "width": "100%",
+                },
+                Object {
+                  "paddingBottom": 20,
+                  "paddingTop": 30,
+                },
+              ]
+            }
+          >
+            <Text
+              style={
+                Array [
+                  Object {
+                    "color": "#FFFFFF",
+                    "fontSize": 38,
+                    "fontWeight": "bold",
+                  },
+                  Object {
+                    "fontSize": 24,
+                  },
+                ]
+              }
+              testID="title-text"
+            >
+              TODAS MIS REVISITAS
+            </Text>
+          </View>
+          <View
+            style={
+              Object {
+                "alignItems": "center",
+                "flexDirection": "row",
+                "marginBottom": 30,
+                "paddingHorizontal": 30,
+                "width": "100%",
+              }
+            }
+          >
+            <Text
+              allowFontScaling={false}
+              selectable={false}
+              style={
+                Array [
+                  Object {
+                    "color": "#BFBFBF",
+                    "fontSize": 25,
+                  },
+                  undefined,
+                  Object {
+                    "fontFamily": "Ionicons",
+                    "fontStyle": "normal",
+                    "fontWeight": "normal",
+                  },
+                  Object {},
+                ]
+              }
+            >
+              
+            </Text>
+            <View
+              style={
+                Object {
+                  "alignItems": "center",
+                  "borderBottomWidth": 1,
+                  "borderColor": "#BFBFBF",
+                  "flex": 1,
+                  "flexDirection": "row",
+                }
+              }
+              testID="search-input-text-input-container"
+            >
+              <TextInput
+                autoCorrect={false}
+                cursorColor="#C0A7E1"
+                onBlur={[Function]}
+                onChangeText={[Function]}
+                onFocus={[Function]}
+                onSubmitEditing={[Function]}
+                placeholder="Buscar"
+                placeholderTextColor="#BFBFBF"
+                returnKeyType="search"
+                style={
+                  Object {
+                    "color": "#FFFFFF",
+                    "flex": 1,
+                    "fontSize": 17,
+                    "paddingLeft": 10,
+                  }
+                }
+                testID="search-input-text-input"
+                value=""
+              />
+              <View
+                accessibilityState={
+                  Object {
+                    "disabled": true,
+                  }
+                }
+                accessible={true}
+                centered={true}
+                collapsable={false}
+                focusable={true}
+                onBlur={[Function]}
+                onClick={[Function]}
+                onFocus={[Function]}
+                onResponderGrant={[Function]}
+                onResponderMove={[Function]}
+                onResponderRelease={[Function]}
+                onResponderTerminate={[Function]}
+                onResponderTerminationRequest={[Function]}
+                onStartShouldSetResponder={[Function]}
+                style={
+                  Array [
+                    Object {
+                      "overflow": "hidden",
+                    },
+                    false,
+                    Object {
+                      "alignItems": "center",
+                      "borderRadius": 999,
+                      "height": 40,
+                      "justifyContent": "center",
+                      "width": 40,
+                    },
+                  ]
+                }
+                testID="search-input-clear-btn"
+              >
+                <Text
+                  allowFontScaling={false}
+                  selectable={false}
+                  style={
+                    Array [
+                      Object {
+                        "color": "transparent",
+                        "fontSize": 30,
+                      },
+                      undefined,
+                      Object {
+                        "fontFamily": "Ionicons",
+                        "fontStyle": "normal",
+                        "fontWeight": "normal",
+                      },
+                      Object {},
+                    ]
+                  }
+                >
+                  
+                </Text>
+              </View>
+            </View>
+          </View>
+        </View>
+        <View
+          onLayout={[Function]}
+          style={null}
+        >
+          <View
+            accessibilityState={
+              Object {
+                "disabled": false,
+              }
+            }
+            accessible={true}
+            collapsable={false}
+            focusable={true}
+            onBlur={[Function]}
+            onClick={[Function]}
+            onFocus={[Function]}
+            onResponderGrant={[Function]}
+            onResponderMove={[Function]}
+            onResponderRelease={[Function]}
+            onResponderTerminate={[Function]}
+            onResponderTerminationRequest={[Function]}
+            onStartShouldSetResponder={[Function]}
+            style={
+              Array [
+                Object {
+                  "overflow": "hidden",
+                },
+                false,
+                Object {
+                  "marginVertical": 10,
+                  "minWidth": "95%",
+                  "width": "95%",
+                },
+              ]
+            }
+            testID="revisit-card-touchable"
+          >
+            <View
+              style={
+                Object {
+                  "backgroundColor": "#292929",
+                  "padding": 15,
+                }
+              }
+            >
+              <Text
+                style={
+                  Object {
+                    "color": "#BFBFBF",
+                    "fontSize": 14,
+                    "marginBottom": 15,
+                  }
+                }
+                testID="revisit-card-next-visit-text"
+              >
+                Visitar el 09 de December del 2021
+              </Text>
+              <Text
+                style={
+                  Object {
+                    "color": "#FFFFFF",
+                    "fontSize": 18,
+                    "fontWeight": "bold",
+                    "marginBottom": 5,
+                  }
+                }
+                testID="revisit-card-person-name-text"
+              >
+                Dariana Hand
+              </Text>
+              <Text
+                style={
+                  Object {
+                    "color": "#FFFFFF",
+                    "fontSize": 16,
+                  }
+                }
+                testID="revisit-card-about-text"
+              >
+                Ratione quae debitis pariatur tempora magnam est voluptatibus. Eveniet ipsum omnis maxime et soluta iusto. Autem aut ducimus dolore et recusandae et inventore. Enim autem in hic optio.
+              </Text>
+              <View
+                accessibilityState={
+                  Object {
+                    "disabled": false,
+                  }
+                }
+                accessible={true}
+                collapsable={false}
+                focusable={true}
+                onBlur={[Function]}
+                onClick={[Function]}
+                onFocus={[Function]}
+                onResponderGrant={[Function]}
+                onResponderMove={[Function]}
+                onResponderRelease={[Function]}
+                onResponderTerminate={[Function]}
+                onResponderTerminationRequest={[Function]}
+                onStartShouldSetResponder={[Function]}
+                style={
+                  Array [
+                    Object {
+                      "overflow": "hidden",
+                    },
+                    false,
+                    Array [
+                      Object {
+                        "alignItems": "center",
+                        "backgroundColor": "transparent",
+                        "borderRadius": 50,
+                        "height": 42,
+                        "justifyContent": "center",
+                        "margin": 5,
+                        "width": 42,
+                      },
+                      Object {
+                        "height": 35,
+                        "position": "absolute",
+                        "right": -2.5,
+                        "top": 5,
+                        "width": 35,
+                      },
+                    ],
+                  ]
+                }
+                testID="fab-touchable"
+              >
+                <Text
+                  allowFontScaling={false}
+                  selectable={false}
+                  style={
+                    Array [
+                      Object {
+                        "color": "#C0A7E1",
+                        "fontSize": 20,
+                      },
+                      Object {
+                        "marginLeft": 2,
+                      },
+                      Object {
+                        "fontFamily": "Ionicons",
+                        "fontStyle": "normal",
+                        "fontWeight": "normal",
+                      },
+                      Object {},
+                    ]
+                  }
+                >
+                  
+                </Text>
+              </View>
+              <View
+                style={
+                  Object {
+                    "position": "absolute",
+                    "right": 20,
+                    "top": 30,
+                  }
+                }
+              >
+                <View
+                  collapsable={false}
+                >
+                  <View
+                    accessible={true}
+                    focusable={true}
+                    onClick={[Function]}
+                    onResponderGrant={[Function]}
+                    onResponderMove={[Function]}
+                    onResponderRelease={[Function]}
+                    onResponderTerminate={[Function]}
+                    onResponderTerminationRequest={[Function]}
+                    onStartShouldSetResponder={[Function]}
+                  >
+                    <View
+                      ctx={
+                        Object {
+                          "menuActions": Object {
+                            "_getOpenedMenu": [Function],
+                            "_notify": [Function],
+                            "closeMenu": [Function],
+                            "isMenuOpen": [Function],
+                            "openMenu": [Function],
+                            "toggleMenu": [Function],
+                          },
+                          "menuRegistry": Object {
+                            "getAll": [Function],
+                            "getMenu": [Function],
+                            "setOptionsCustomStyles": [Function],
+                            "subscribe": [Function],
+                            "unsubscribe": [Function],
+                            "updateLayoutInfo": [Function],
+                          },
+                        }
+                      }
+                      style={
+                        Array [
+                          undefined,
+                          undefined,
+                        ]
+                      }
+                    />
+                  </View>
+                </View>
+              </View>
+            </View>
+          </View>
+        </View>
+        <View
+          onLayout={[Function]}
+          style={null}
+        >
+          <View
+            accessibilityState={
+              Object {
+                "disabled": false,
+              }
+            }
+            accessible={true}
+            collapsable={false}
+            focusable={true}
+            onBlur={[Function]}
+            onClick={[Function]}
+            onFocus={[Function]}
+            onResponderGrant={[Function]}
+            onResponderMove={[Function]}
+            onResponderRelease={[Function]}
+            onResponderTerminate={[Function]}
+            onResponderTerminationRequest={[Function]}
+            onStartShouldSetResponder={[Function]}
+            style={
+              Array [
+                Object {
+                  "overflow": "hidden",
+                },
+                false,
+                Object {
+                  "marginVertical": 10,
+                  "minWidth": "95%",
+                  "width": "95%",
+                },
+              ]
+            }
+            testID="revisit-card-touchable"
+          >
+            <View
+              style={
+                Object {
+                  "backgroundColor": "#292929",
+                  "padding": 15,
+                }
+              }
+            >
+              <Text
+                style={
+                  Object {
+                    "color": "#BFBFBF",
+                    "fontSize": 14,
+                    "marginBottom": 15,
+                  }
+                }
+                testID="revisit-card-next-visit-text"
+              >
+                Visitar el 09 de December del 2021
+              </Text>
+              <Text
+                style={
+                  Object {
+                    "color": "#FFFFFF",
+                    "fontSize": 18,
+                    "fontWeight": "bold",
+                    "marginBottom": 5,
+                  }
+                }
+                testID="revisit-card-person-name-text"
+              >
+                Dariana Hand
+              </Text>
+              <Text
+                style={
+                  Object {
+                    "color": "#FFFFFF",
+                    "fontSize": 16,
+                  }
+                }
+                testID="revisit-card-about-text"
+              >
+                Ratione quae debitis pariatur tempora magnam est voluptatibus. Eveniet ipsum omnis maxime et soluta iusto. Autem aut ducimus dolore et recusandae et inventore. Enim autem in hic optio.
+              </Text>
+              <View
+                accessibilityState={
+                  Object {
+                    "disabled": false,
+                  }
+                }
+                accessible={true}
+                collapsable={false}
+                focusable={true}
+                onBlur={[Function]}
+                onClick={[Function]}
+                onFocus={[Function]}
+                onResponderGrant={[Function]}
+                onResponderMove={[Function]}
+                onResponderRelease={[Function]}
+                onResponderTerminate={[Function]}
+                onResponderTerminationRequest={[Function]}
+                onStartShouldSetResponder={[Function]}
+                style={
+                  Array [
+                    Object {
+                      "overflow": "hidden",
+                    },
+                    false,
+                    Array [
+                      Object {
+                        "alignItems": "center",
+                        "backgroundColor": "transparent",
+                        "borderRadius": 50,
+                        "height": 42,
+                        "justifyContent": "center",
+                        "margin": 5,
+                        "width": 42,
+                      },
+                      Object {
+                        "height": 35,
+                        "position": "absolute",
+                        "right": -2.5,
+                        "top": 5,
+                        "width": 35,
+                      },
+                    ],
+                  ]
+                }
+                testID="fab-touchable"
+              >
+                <Text
+                  allowFontScaling={false}
+                  selectable={false}
+                  style={
+                    Array [
+                      Object {
+                        "color": "#C0A7E1",
+                        "fontSize": 20,
+                      },
+                      Object {
+                        "marginLeft": 2,
+                      },
+                      Object {
+                        "fontFamily": "Ionicons",
+                        "fontStyle": "normal",
+                        "fontWeight": "normal",
+                      },
+                      Object {},
+                    ]
+                  }
+                >
+                  
+                </Text>
+              </View>
+              <View
+                style={
+                  Object {
+                    "position": "absolute",
+                    "right": 20,
+                    "top": 30,
+                  }
+                }
+              >
+                <View
+                  collapsable={false}
+                >
+                  <View
+                    accessible={true}
+                    focusable={true}
+                    onClick={[Function]}
+                    onResponderGrant={[Function]}
+                    onResponderMove={[Function]}
+                    onResponderRelease={[Function]}
+                    onResponderTerminate={[Function]}
+                    onResponderTerminationRequest={[Function]}
+                    onStartShouldSetResponder={[Function]}
+                  >
+                    <View
+                      ctx={
+                        Object {
+                          "menuActions": Object {
+                            "_getOpenedMenu": [Function],
+                            "_notify": [Function],
+                            "closeMenu": [Function],
+                            "isMenuOpen": [Function],
+                            "openMenu": [Function],
+                            "toggleMenu": [Function],
+                          },
+                          "menuRegistry": Object {
+                            "getAll": [Function],
+                            "getMenu": [Function],
+                            "setOptionsCustomStyles": [Function],
+                            "subscribe": [Function],
+                            "unsubscribe": [Function],
+                            "updateLayoutInfo": [Function],
+                          },
+                        }
+                      }
+                      style={
+                        Array [
+                          undefined,
+                          undefined,
+                        ]
+                      }
+                    />
+                  </View>
+                </View>
+              </View>
+            </View>
+          </View>
+        </View>
+        <View
+          onLayout={[Function]}
+          style={null}
+        >
+          <View
+            accessibilityState={
+              Object {
+                "disabled": false,
+              }
+            }
+            accessible={true}
+            collapsable={false}
+            focusable={true}
+            onBlur={[Function]}
+            onClick={[Function]}
+            onFocus={[Function]}
+            onResponderGrant={[Function]}
+            onResponderMove={[Function]}
+            onResponderRelease={[Function]}
+            onResponderTerminate={[Function]}
+            onResponderTerminationRequest={[Function]}
+            onStartShouldSetResponder={[Function]}
+            style={
+              Array [
+                Object {
+                  "overflow": "hidden",
+                },
+                false,
+                Object {
+                  "marginVertical": 10,
+                  "minWidth": "95%",
+                  "width": "95%",
+                },
+              ]
+            }
+            testID="revisit-card-touchable"
+          >
+            <View
+              style={
+                Object {
+                  "backgroundColor": "#292929",
+                  "padding": 15,
+                }
+              }
+            >
+              <Text
+                style={
+                  Object {
+                    "color": "#BFBFBF",
+                    "fontSize": 14,
+                    "marginBottom": 15,
+                  }
+                }
+                testID="revisit-card-next-visit-text"
+              >
+                Visitar el 09 de December del 2021
+              </Text>
+              <Text
+                style={
+                  Object {
+                    "color": "#FFFFFF",
+                    "fontSize": 18,
+                    "fontWeight": "bold",
+                    "marginBottom": 5,
+                  }
+                }
+                testID="revisit-card-person-name-text"
+              >
+                Dariana Hand
+              </Text>
+              <Text
+                style={
+                  Object {
+                    "color": "#FFFFFF",
+                    "fontSize": 16,
+                  }
+                }
+                testID="revisit-card-about-text"
+              >
+                Ratione quae debitis pariatur tempora magnam est voluptatibus. Eveniet ipsum omnis maxime et soluta iusto. Autem aut ducimus dolore et recusandae et inventore. Enim autem in hic optio.
+              </Text>
+              <View
+                accessibilityState={
+                  Object {
+                    "disabled": false,
+                  }
+                }
+                accessible={true}
+                collapsable={false}
+                focusable={true}
+                onBlur={[Function]}
+                onClick={[Function]}
+                onFocus={[Function]}
+                onResponderGrant={[Function]}
+                onResponderMove={[Function]}
+                onResponderRelease={[Function]}
+                onResponderTerminate={[Function]}
+                onResponderTerminationRequest={[Function]}
+                onStartShouldSetResponder={[Function]}
+                style={
+                  Array [
+                    Object {
+                      "overflow": "hidden",
+                    },
+                    false,
+                    Array [
+                      Object {
+                        "alignItems": "center",
+                        "backgroundColor": "transparent",
+                        "borderRadius": 50,
+                        "height": 42,
+                        "justifyContent": "center",
+                        "margin": 5,
+                        "width": 42,
+                      },
+                      Object {
+                        "height": 35,
+                        "position": "absolute",
+                        "right": -2.5,
+                        "top": 5,
+                        "width": 35,
+                      },
+                    ],
+                  ]
+                }
+                testID="fab-touchable"
+              >
+                <Text
+                  allowFontScaling={false}
+                  selectable={false}
+                  style={
+                    Array [
+                      Object {
+                        "color": "#C0A7E1",
+                        "fontSize": 20,
+                      },
+                      Object {
+                        "marginLeft": 2,
+                      },
+                      Object {
+                        "fontFamily": "Ionicons",
+                        "fontStyle": "normal",
+                        "fontWeight": "normal",
+                      },
+                      Object {},
+                    ]
+                  }
+                >
+                  
+                </Text>
+              </View>
+              <View
+                style={
+                  Object {
+                    "position": "absolute",
+                    "right": 20,
+                    "top": 30,
+                  }
+                }
+              >
+                <View
+                  collapsable={false}
+                >
+                  <View
+                    accessible={true}
+                    focusable={true}
+                    onClick={[Function]}
+                    onResponderGrant={[Function]}
+                    onResponderMove={[Function]}
+                    onResponderRelease={[Function]}
+                    onResponderTerminate={[Function]}
+                    onResponderTerminationRequest={[Function]}
+                    onStartShouldSetResponder={[Function]}
+                  >
+                    <View
+                      ctx={
+                        Object {
+                          "menuActions": Object {
+                            "_getOpenedMenu": [Function],
+                            "_notify": [Function],
+                            "closeMenu": [Function],
+                            "isMenuOpen": [Function],
+                            "openMenu": [Function],
+                            "toggleMenu": [Function],
+                          },
+                          "menuRegistry": Object {
+                            "getAll": [Function],
+                            "getMenu": [Function],
+                            "setOptionsCustomStyles": [Function],
+                            "subscribe": [Function],
+                            "unsubscribe": [Function],
+                            "updateLayoutInfo": [Function],
+                          },
+                        }
+                      }
+                      style={
+                        Array [
+                          undefined,
+                          undefined,
+                        ]
+                      }
+                    />
+                  </View>
+                </View>
+              </View>
+            </View>
+          </View>
+        </View>
+        <View
+          onLayout={[Function]}
+          style={null}
+        >
+          <View
+            accessibilityState={
+              Object {
+                "disabled": false,
+              }
+            }
+            accessible={true}
+            collapsable={false}
+            focusable={true}
+            onBlur={[Function]}
+            onClick={[Function]}
+            onFocus={[Function]}
+            onResponderGrant={[Function]}
+            onResponderMove={[Function]}
+            onResponderRelease={[Function]}
+            onResponderTerminate={[Function]}
+            onResponderTerminationRequest={[Function]}
+            onStartShouldSetResponder={[Function]}
+            style={
+              Array [
+                Object {
+                  "overflow": "hidden",
+                },
+                false,
+                Object {
+                  "marginVertical": 10,
+                  "minWidth": "95%",
+                  "width": "95%",
+                },
+              ]
+            }
+            testID="revisit-card-touchable"
+          >
+            <View
+              style={
+                Object {
+                  "backgroundColor": "#292929",
+                  "padding": 15,
+                }
+              }
+            >
+              <Text
+                style={
+                  Object {
+                    "color": "#BFBFBF",
+                    "fontSize": 14,
+                    "marginBottom": 15,
+                  }
+                }
+                testID="revisit-card-next-visit-text"
+              >
+                Visitar el 09 de December del 2021
+              </Text>
+              <Text
+                style={
+                  Object {
+                    "color": "#FFFFFF",
+                    "fontSize": 18,
+                    "fontWeight": "bold",
+                    "marginBottom": 5,
+                  }
+                }
+                testID="revisit-card-person-name-text"
+              >
+                Dariana Hand
+              </Text>
+              <Text
+                style={
+                  Object {
+                    "color": "#FFFFFF",
+                    "fontSize": 16,
+                  }
+                }
+                testID="revisit-card-about-text"
+              >
+                Ratione quae debitis pariatur tempora magnam est voluptatibus. Eveniet ipsum omnis maxime et soluta iusto. Autem aut ducimus dolore et recusandae et inventore. Enim autem in hic optio.
+              </Text>
+              <View
+                accessibilityState={
+                  Object {
+                    "disabled": false,
+                  }
+                }
+                accessible={true}
+                collapsable={false}
+                focusable={true}
+                onBlur={[Function]}
+                onClick={[Function]}
+                onFocus={[Function]}
+                onResponderGrant={[Function]}
+                onResponderMove={[Function]}
+                onResponderRelease={[Function]}
+                onResponderTerminate={[Function]}
+                onResponderTerminationRequest={[Function]}
+                onStartShouldSetResponder={[Function]}
+                style={
+                  Array [
+                    Object {
+                      "overflow": "hidden",
+                    },
+                    false,
+                    Array [
+                      Object {
+                        "alignItems": "center",
+                        "backgroundColor": "transparent",
+                        "borderRadius": 50,
+                        "height": 42,
+                        "justifyContent": "center",
+                        "margin": 5,
+                        "width": 42,
+                      },
+                      Object {
+                        "height": 35,
+                        "position": "absolute",
+                        "right": -2.5,
+                        "top": 5,
+                        "width": 35,
+                      },
+                    ],
+                  ]
+                }
+                testID="fab-touchable"
+              >
+                <Text
+                  allowFontScaling={false}
+                  selectable={false}
+                  style={
+                    Array [
+                      Object {
+                        "color": "#C0A7E1",
+                        "fontSize": 20,
+                      },
+                      Object {
+                        "marginLeft": 2,
+                      },
+                      Object {
+                        "fontFamily": "Ionicons",
+                        "fontStyle": "normal",
+                        "fontWeight": "normal",
+                      },
+                      Object {},
+                    ]
+                  }
+                >
+                  
+                </Text>
+              </View>
+              <View
+                style={
+                  Object {
+                    "position": "absolute",
+                    "right": 20,
+                    "top": 30,
+                  }
+                }
+              >
+                <View
+                  collapsable={false}
+                >
+                  <View
+                    accessible={true}
+                    focusable={true}
+                    onClick={[Function]}
+                    onResponderGrant={[Function]}
+                    onResponderMove={[Function]}
+                    onResponderRelease={[Function]}
+                    onResponderTerminate={[Function]}
+                    onResponderTerminationRequest={[Function]}
+                    onStartShouldSetResponder={[Function]}
+                  >
+                    <View
+                      ctx={
+                        Object {
+                          "menuActions": Object {
+                            "_getOpenedMenu": [Function],
+                            "_notify": [Function],
+                            "closeMenu": [Function],
+                            "isMenuOpen": [Function],
+                            "openMenu": [Function],
+                            "toggleMenu": [Function],
+                          },
+                          "menuRegistry": Object {
+                            "getAll": [Function],
+                            "getMenu": [Function],
+                            "setOptionsCustomStyles": [Function],
+                            "subscribe": [Function],
+                            "unsubscribe": [Function],
+                            "updateLayoutInfo": [Function],
+                          },
+                        }
+                      }
+                      style={
+                        Array [
+                          undefined,
+                          undefined,
+                        ]
+                      }
+                    />
+                  </View>
+                </View>
+              </View>
+            </View>
+          </View>
+        </View>
+        <View
+          onLayout={[Function]}
+          style={null}
+        >
+          <View
+            accessibilityState={
+              Object {
+                "disabled": false,
+              }
+            }
+            accessible={true}
+            collapsable={false}
+            focusable={true}
+            onBlur={[Function]}
+            onClick={[Function]}
+            onFocus={[Function]}
+            onResponderGrant={[Function]}
+            onResponderMove={[Function]}
+            onResponderRelease={[Function]}
+            onResponderTerminate={[Function]}
+            onResponderTerminationRequest={[Function]}
+            onStartShouldSetResponder={[Function]}
+            style={
+              Array [
+                Object {
+                  "overflow": "hidden",
+                },
+                false,
+                Object {
+                  "marginVertical": 10,
+                  "minWidth": "95%",
+                  "width": "95%",
+                },
+              ]
+            }
+            testID="revisit-card-touchable"
+          >
+            <View
+              style={
+                Object {
+                  "backgroundColor": "#292929",
+                  "padding": 15,
+                }
+              }
+            >
+              <Text
+                style={
+                  Object {
+                    "color": "#BFBFBF",
+                    "fontSize": 14,
+                    "marginBottom": 15,
+                  }
+                }
+                testID="revisit-card-next-visit-text"
+              >
+                Visitar el 09 de December del 2021
+              </Text>
+              <Text
+                style={
+                  Object {
+                    "color": "#FFFFFF",
+                    "fontSize": 18,
+                    "fontWeight": "bold",
+                    "marginBottom": 5,
+                  }
+                }
+                testID="revisit-card-person-name-text"
+              >
+                Dariana Hand
+              </Text>
+              <Text
+                style={
+                  Object {
+                    "color": "#FFFFFF",
+                    "fontSize": 16,
+                  }
+                }
+                testID="revisit-card-about-text"
+              >
+                Ratione quae debitis pariatur tempora magnam est voluptatibus. Eveniet ipsum omnis maxime et soluta iusto. Autem aut ducimus dolore et recusandae et inventore. Enim autem in hic optio.
+              </Text>
+              <View
+                accessibilityState={
+                  Object {
+                    "disabled": false,
+                  }
+                }
+                accessible={true}
+                collapsable={false}
+                focusable={true}
+                onBlur={[Function]}
+                onClick={[Function]}
+                onFocus={[Function]}
+                onResponderGrant={[Function]}
+                onResponderMove={[Function]}
+                onResponderRelease={[Function]}
+                onResponderTerminate={[Function]}
+                onResponderTerminationRequest={[Function]}
+                onStartShouldSetResponder={[Function]}
+                style={
+                  Array [
+                    Object {
+                      "overflow": "hidden",
+                    },
+                    false,
+                    Array [
+                      Object {
+                        "alignItems": "center",
+                        "backgroundColor": "transparent",
+                        "borderRadius": 50,
+                        "height": 42,
+                        "justifyContent": "center",
+                        "margin": 5,
+                        "width": 42,
+                      },
+                      Object {
+                        "height": 35,
+                        "position": "absolute",
+                        "right": -2.5,
+                        "top": 5,
+                        "width": 35,
+                      },
+                    ],
+                  ]
+                }
+                testID="fab-touchable"
+              >
+                <Text
+                  allowFontScaling={false}
+                  selectable={false}
+                  style={
+                    Array [
+                      Object {
+                        "color": "#C0A7E1",
+                        "fontSize": 20,
+                      },
+                      Object {
+                        "marginLeft": 2,
+                      },
+                      Object {
+                        "fontFamily": "Ionicons",
+                        "fontStyle": "normal",
+                        "fontWeight": "normal",
+                      },
+                      Object {},
+                    ]
+                  }
+                >
+                  
+                </Text>
+              </View>
+              <View
+                style={
+                  Object {
+                    "position": "absolute",
+                    "right": 20,
+                    "top": 30,
+                  }
+                }
+              >
+                <View
+                  collapsable={false}
+                >
+                  <View
+                    accessible={true}
+                    focusable={true}
+                    onClick={[Function]}
+                    onResponderGrant={[Function]}
+                    onResponderMove={[Function]}
+                    onResponderRelease={[Function]}
+                    onResponderTerminate={[Function]}
+                    onResponderTerminationRequest={[Function]}
+                    onStartShouldSetResponder={[Function]}
+                  >
+                    <View
+                      ctx={
+                        Object {
+                          "menuActions": Object {
+                            "_getOpenedMenu": [Function],
+                            "_notify": [Function],
+                            "closeMenu": [Function],
+                            "isMenuOpen": [Function],
+                            "openMenu": [Function],
+                            "toggleMenu": [Function],
+                          },
+                          "menuRegistry": Object {
+                            "getAll": [Function],
+                            "getMenu": [Function],
+                            "setOptionsCustomStyles": [Function],
+                            "subscribe": [Function],
+                            "unsubscribe": [Function],
+                            "updateLayoutInfo": [Function],
+                          },
+                        }
+                      }
+                      style={
+                        Array [
+                          undefined,
+                          undefined,
+                        ]
+                      }
+                    />
+                  </View>
+                </View>
+              </View>
+            </View>
+          </View>
+        </View>
+        <View
+          onLayout={[Function]}
+          style={null}
+        >
+          <View
+            accessibilityState={
+              Object {
+                "disabled": false,
+              }
+            }
+            accessible={true}
+            collapsable={false}
+            focusable={true}
+            onBlur={[Function]}
+            onClick={[Function]}
+            onFocus={[Function]}
+            onResponderGrant={[Function]}
+            onResponderMove={[Function]}
+            onResponderRelease={[Function]}
+            onResponderTerminate={[Function]}
+            onResponderTerminationRequest={[Function]}
+            onStartShouldSetResponder={[Function]}
+            style={
+              Array [
+                Object {
+                  "overflow": "hidden",
+                },
+                false,
+                Object {
+                  "marginVertical": 10,
+                  "minWidth": "95%",
+                  "width": "95%",
+                },
+              ]
+            }
+            testID="revisit-card-touchable"
+          >
+            <View
+              style={
+                Object {
+                  "backgroundColor": "#292929",
+                  "padding": 15,
+                }
+              }
+            >
+              <Text
+                style={
+                  Object {
+                    "color": "#BFBFBF",
+                    "fontSize": 14,
+                    "marginBottom": 15,
+                  }
+                }
+                testID="revisit-card-next-visit-text"
+              >
+                Visitar el 09 de December del 2021
+              </Text>
+              <Text
+                style={
+                  Object {
+                    "color": "#FFFFFF",
+                    "fontSize": 18,
+                    "fontWeight": "bold",
+                    "marginBottom": 5,
+                  }
+                }
+                testID="revisit-card-person-name-text"
+              >
+                Dariana Hand
+              </Text>
+              <Text
+                style={
+                  Object {
+                    "color": "#FFFFFF",
+                    "fontSize": 16,
+                  }
+                }
+                testID="revisit-card-about-text"
+              >
+                Ratione quae debitis pariatur tempora magnam est voluptatibus. Eveniet ipsum omnis maxime et soluta iusto. Autem aut ducimus dolore et recusandae et inventore. Enim autem in hic optio.
+              </Text>
+              <View
+                accessibilityState={
+                  Object {
+                    "disabled": false,
+                  }
+                }
+                accessible={true}
+                collapsable={false}
+                focusable={true}
+                onBlur={[Function]}
+                onClick={[Function]}
+                onFocus={[Function]}
+                onResponderGrant={[Function]}
+                onResponderMove={[Function]}
+                onResponderRelease={[Function]}
+                onResponderTerminate={[Function]}
+                onResponderTerminationRequest={[Function]}
+                onStartShouldSetResponder={[Function]}
+                style={
+                  Array [
+                    Object {
+                      "overflow": "hidden",
+                    },
+                    false,
+                    Array [
+                      Object {
+                        "alignItems": "center",
+                        "backgroundColor": "transparent",
+                        "borderRadius": 50,
+                        "height": 42,
+                        "justifyContent": "center",
+                        "margin": 5,
+                        "width": 42,
+                      },
+                      Object {
+                        "height": 35,
+                        "position": "absolute",
+                        "right": -2.5,
+                        "top": 5,
+                        "width": 35,
+                      },
+                    ],
+                  ]
+                }
+                testID="fab-touchable"
+              >
+                <Text
+                  allowFontScaling={false}
+                  selectable={false}
+                  style={
+                    Array [
+                      Object {
+                        "color": "#C0A7E1",
+                        "fontSize": 20,
+                      },
+                      Object {
+                        "marginLeft": 2,
+                      },
+                      Object {
+                        "fontFamily": "Ionicons",
+                        "fontStyle": "normal",
+                        "fontWeight": "normal",
+                      },
+                      Object {},
+                    ]
+                  }
+                >
+                  
+                </Text>
+              </View>
+              <View
+                style={
+                  Object {
+                    "position": "absolute",
+                    "right": 20,
+                    "top": 30,
+                  }
+                }
+              >
+                <View
+                  collapsable={false}
+                >
+                  <View
+                    accessible={true}
+                    focusable={true}
+                    onClick={[Function]}
+                    onResponderGrant={[Function]}
+                    onResponderMove={[Function]}
+                    onResponderRelease={[Function]}
+                    onResponderTerminate={[Function]}
+                    onResponderTerminationRequest={[Function]}
+                    onStartShouldSetResponder={[Function]}
+                  >
+                    <View
+                      ctx={
+                        Object {
+                          "menuActions": Object {
+                            "_getOpenedMenu": [Function],
+                            "_notify": [Function],
+                            "closeMenu": [Function],
+                            "isMenuOpen": [Function],
+                            "openMenu": [Function],
+                            "toggleMenu": [Function],
+                          },
+                          "menuRegistry": Object {
+                            "getAll": [Function],
+                            "getMenu": [Function],
+                            "setOptionsCustomStyles": [Function],
+                            "subscribe": [Function],
+                            "unsubscribe": [Function],
+                            "updateLayoutInfo": [Function],
+                          },
+                        }
+                      }
+                      style={
+                        Array [
+                          undefined,
+                          undefined,
+                        ]
+                      }
+                    />
+                  </View>
+                </View>
+              </View>
+            </View>
+          </View>
+        </View>
+        <View
+          onLayout={[Function]}
+          style={null}
+        >
+          <View
+            accessibilityState={
+              Object {
+                "disabled": false,
+              }
+            }
+            accessible={true}
+            collapsable={false}
+            focusable={true}
+            onBlur={[Function]}
+            onClick={[Function]}
+            onFocus={[Function]}
+            onResponderGrant={[Function]}
+            onResponderMove={[Function]}
+            onResponderRelease={[Function]}
+            onResponderTerminate={[Function]}
+            onResponderTerminationRequest={[Function]}
+            onStartShouldSetResponder={[Function]}
+            style={
+              Array [
+                Object {
+                  "overflow": "hidden",
+                },
+                false,
+                Object {
+                  "marginVertical": 10,
+                  "minWidth": "95%",
+                  "width": "95%",
+                },
+              ]
+            }
+            testID="revisit-card-touchable"
+          >
+            <View
+              style={
+                Object {
+                  "backgroundColor": "#292929",
+                  "padding": 15,
+                }
+              }
+            >
+              <Text
+                style={
+                  Object {
+                    "color": "#BFBFBF",
+                    "fontSize": 14,
+                    "marginBottom": 15,
+                  }
+                }
+                testID="revisit-card-next-visit-text"
+              >
+                Visitar el 09 de December del 2021
+              </Text>
+              <Text
+                style={
+                  Object {
+                    "color": "#FFFFFF",
+                    "fontSize": 18,
+                    "fontWeight": "bold",
+                    "marginBottom": 5,
+                  }
+                }
+                testID="revisit-card-person-name-text"
+              >
+                Dariana Hand
+              </Text>
+              <Text
+                style={
+                  Object {
+                    "color": "#FFFFFF",
+                    "fontSize": 16,
+                  }
+                }
+                testID="revisit-card-about-text"
+              >
+                Ratione quae debitis pariatur tempora magnam est voluptatibus. Eveniet ipsum omnis maxime et soluta iusto. Autem aut ducimus dolore et recusandae et inventore. Enim autem in hic optio.
+              </Text>
+              <View
+                accessibilityState={
+                  Object {
+                    "disabled": false,
+                  }
+                }
+                accessible={true}
+                collapsable={false}
+                focusable={true}
+                onBlur={[Function]}
+                onClick={[Function]}
+                onFocus={[Function]}
+                onResponderGrant={[Function]}
+                onResponderMove={[Function]}
+                onResponderRelease={[Function]}
+                onResponderTerminate={[Function]}
+                onResponderTerminationRequest={[Function]}
+                onStartShouldSetResponder={[Function]}
+                style={
+                  Array [
+                    Object {
+                      "overflow": "hidden",
+                    },
+                    false,
+                    Array [
+                      Object {
+                        "alignItems": "center",
+                        "backgroundColor": "transparent",
+                        "borderRadius": 50,
+                        "height": 42,
+                        "justifyContent": "center",
+                        "margin": 5,
+                        "width": 42,
+                      },
+                      Object {
+                        "height": 35,
+                        "position": "absolute",
+                        "right": -2.5,
+                        "top": 5,
+                        "width": 35,
+                      },
+                    ],
+                  ]
+                }
+                testID="fab-touchable"
+              >
+                <Text
+                  allowFontScaling={false}
+                  selectable={false}
+                  style={
+                    Array [
+                      Object {
+                        "color": "#C0A7E1",
+                        "fontSize": 20,
+                      },
+                      Object {
+                        "marginLeft": 2,
+                      },
+                      Object {
+                        "fontFamily": "Ionicons",
+                        "fontStyle": "normal",
+                        "fontWeight": "normal",
+                      },
+                      Object {},
+                    ]
+                  }
+                >
+                  
+                </Text>
+              </View>
+              <View
+                style={
+                  Object {
+                    "position": "absolute",
+                    "right": 20,
+                    "top": 30,
+                  }
+                }
+              >
+                <View
+                  collapsable={false}
+                >
+                  <View
+                    accessible={true}
+                    focusable={true}
+                    onClick={[Function]}
+                    onResponderGrant={[Function]}
+                    onResponderMove={[Function]}
+                    onResponderRelease={[Function]}
+                    onResponderTerminate={[Function]}
+                    onResponderTerminationRequest={[Function]}
+                    onStartShouldSetResponder={[Function]}
+                  >
+                    <View
+                      ctx={
+                        Object {
+                          "menuActions": Object {
+                            "_getOpenedMenu": [Function],
+                            "_notify": [Function],
+                            "closeMenu": [Function],
+                            "isMenuOpen": [Function],
+                            "openMenu": [Function],
+                            "toggleMenu": [Function],
+                          },
+                          "menuRegistry": Object {
+                            "getAll": [Function],
+                            "getMenu": [Function],
+                            "setOptionsCustomStyles": [Function],
+                            "subscribe": [Function],
+                            "unsubscribe": [Function],
+                            "updateLayoutInfo": [Function],
+                          },
+                        }
+                      }
+                      style={
+                        Array [
+                          undefined,
+                          undefined,
+                        ]
+                      }
+                    />
+                  </View>
+                </View>
+              </View>
+            </View>
+          </View>
+        </View>
+        <View
+          onLayout={[Function]}
+          style={null}
+        >
+          <View
+            accessibilityState={
+              Object {
+                "disabled": false,
+              }
+            }
+            accessible={true}
+            collapsable={false}
+            focusable={true}
+            onBlur={[Function]}
+            onClick={[Function]}
+            onFocus={[Function]}
+            onResponderGrant={[Function]}
+            onResponderMove={[Function]}
+            onResponderRelease={[Function]}
+            onResponderTerminate={[Function]}
+            onResponderTerminationRequest={[Function]}
+            onStartShouldSetResponder={[Function]}
+            style={
+              Array [
+                Object {
+                  "overflow": "hidden",
+                },
+                false,
+                Object {
+                  "marginVertical": 10,
+                  "minWidth": "95%",
+                  "width": "95%",
+                },
+              ]
+            }
+            testID="revisit-card-touchable"
+          >
+            <View
+              style={
+                Object {
+                  "backgroundColor": "#292929",
+                  "padding": 15,
+                }
+              }
+            >
+              <Text
+                style={
+                  Object {
+                    "color": "#BFBFBF",
+                    "fontSize": 14,
+                    "marginBottom": 15,
+                  }
+                }
+                testID="revisit-card-next-visit-text"
+              >
+                Visitar el 09 de December del 2021
+              </Text>
+              <Text
+                style={
+                  Object {
+                    "color": "#FFFFFF",
+                    "fontSize": 18,
+                    "fontWeight": "bold",
+                    "marginBottom": 5,
+                  }
+                }
+                testID="revisit-card-person-name-text"
+              >
+                Dariana Hand
+              </Text>
+              <Text
+                style={
+                  Object {
+                    "color": "#FFFFFF",
+                    "fontSize": 16,
+                  }
+                }
+                testID="revisit-card-about-text"
+              >
+                Ratione quae debitis pariatur tempora magnam est voluptatibus. Eveniet ipsum omnis maxime et soluta iusto. Autem aut ducimus dolore et recusandae et inventore. Enim autem in hic optio.
+              </Text>
+              <View
+                accessibilityState={
+                  Object {
+                    "disabled": false,
+                  }
+                }
+                accessible={true}
+                collapsable={false}
+                focusable={true}
+                onBlur={[Function]}
+                onClick={[Function]}
+                onFocus={[Function]}
+                onResponderGrant={[Function]}
+                onResponderMove={[Function]}
+                onResponderRelease={[Function]}
+                onResponderTerminate={[Function]}
+                onResponderTerminationRequest={[Function]}
+                onStartShouldSetResponder={[Function]}
+                style={
+                  Array [
+                    Object {
+                      "overflow": "hidden",
+                    },
+                    false,
+                    Array [
+                      Object {
+                        "alignItems": "center",
+                        "backgroundColor": "transparent",
+                        "borderRadius": 50,
+                        "height": 42,
+                        "justifyContent": "center",
+                        "margin": 5,
+                        "width": 42,
+                      },
+                      Object {
+                        "height": 35,
+                        "position": "absolute",
+                        "right": -2.5,
+                        "top": 5,
+                        "width": 35,
+                      },
+                    ],
+                  ]
+                }
+                testID="fab-touchable"
+              >
+                <Text
+                  allowFontScaling={false}
+                  selectable={false}
+                  style={
+                    Array [
+                      Object {
+                        "color": "#C0A7E1",
+                        "fontSize": 20,
+                      },
+                      Object {
+                        "marginLeft": 2,
+                      },
+                      Object {
+                        "fontFamily": "Ionicons",
+                        "fontStyle": "normal",
+                        "fontWeight": "normal",
+                      },
+                      Object {},
+                    ]
+                  }
+                >
+                  
+                </Text>
+              </View>
+              <View
+                style={
+                  Object {
+                    "position": "absolute",
+                    "right": 20,
+                    "top": 30,
+                  }
+                }
+              >
+                <View
+                  collapsable={false}
+                >
+                  <View
+                    accessible={true}
+                    focusable={true}
+                    onClick={[Function]}
+                    onResponderGrant={[Function]}
+                    onResponderMove={[Function]}
+                    onResponderRelease={[Function]}
+                    onResponderTerminate={[Function]}
+                    onResponderTerminationRequest={[Function]}
+                    onStartShouldSetResponder={[Function]}
+                  >
+                    <View
+                      ctx={
+                        Object {
+                          "menuActions": Object {
+                            "_getOpenedMenu": [Function],
+                            "_notify": [Function],
+                            "closeMenu": [Function],
+                            "isMenuOpen": [Function],
+                            "openMenu": [Function],
+                            "toggleMenu": [Function],
+                          },
+                          "menuRegistry": Object {
+                            "getAll": [Function],
+                            "getMenu": [Function],
+                            "setOptionsCustomStyles": [Function],
+                            "subscribe": [Function],
+                            "unsubscribe": [Function],
+                            "updateLayoutInfo": [Function],
+                          },
+                        }
+                      }
+                      style={
+                        Array [
+                          undefined,
+                          undefined,
+                        ]
+                      }
+                    />
+                  </View>
+                </View>
+              </View>
+            </View>
+          </View>
+        </View>
+        <View
+          onLayout={[Function]}
+          style={null}
+        >
+          <View
+            accessibilityState={
+              Object {
+                "disabled": false,
+              }
+            }
+            accessible={true}
+            collapsable={false}
+            focusable={true}
+            onBlur={[Function]}
+            onClick={[Function]}
+            onFocus={[Function]}
+            onResponderGrant={[Function]}
+            onResponderMove={[Function]}
+            onResponderRelease={[Function]}
+            onResponderTerminate={[Function]}
+            onResponderTerminationRequest={[Function]}
+            onStartShouldSetResponder={[Function]}
+            style={
+              Array [
+                Object {
+                  "overflow": "hidden",
+                },
+                false,
+                Object {
+                  "marginVertical": 10,
+                  "minWidth": "95%",
+                  "width": "95%",
+                },
+              ]
+            }
+            testID="revisit-card-touchable"
+          >
+            <View
+              style={
+                Object {
+                  "backgroundColor": "#292929",
+                  "padding": 15,
+                }
+              }
+            >
+              <Text
+                style={
+                  Object {
+                    "color": "#BFBFBF",
+                    "fontSize": 14,
+                    "marginBottom": 15,
+                  }
+                }
+                testID="revisit-card-next-visit-text"
+              >
+                Visitar el 09 de December del 2021
+              </Text>
+              <Text
+                style={
+                  Object {
+                    "color": "#FFFFFF",
+                    "fontSize": 18,
+                    "fontWeight": "bold",
+                    "marginBottom": 5,
+                  }
+                }
+                testID="revisit-card-person-name-text"
+              >
+                Dariana Hand
+              </Text>
+              <Text
+                style={
+                  Object {
+                    "color": "#FFFFFF",
+                    "fontSize": 16,
+                  }
+                }
+                testID="revisit-card-about-text"
+              >
+                Ratione quae debitis pariatur tempora magnam est voluptatibus. Eveniet ipsum omnis maxime et soluta iusto. Autem aut ducimus dolore et recusandae et inventore. Enim autem in hic optio.
+              </Text>
+              <View
+                accessibilityState={
+                  Object {
+                    "disabled": false,
+                  }
+                }
+                accessible={true}
+                collapsable={false}
+                focusable={true}
+                onBlur={[Function]}
+                onClick={[Function]}
+                onFocus={[Function]}
+                onResponderGrant={[Function]}
+                onResponderMove={[Function]}
+                onResponderRelease={[Function]}
+                onResponderTerminate={[Function]}
+                onResponderTerminationRequest={[Function]}
+                onStartShouldSetResponder={[Function]}
+                style={
+                  Array [
+                    Object {
+                      "overflow": "hidden",
+                    },
+                    false,
+                    Array [
+                      Object {
+                        "alignItems": "center",
+                        "backgroundColor": "transparent",
+                        "borderRadius": 50,
+                        "height": 42,
+                        "justifyContent": "center",
+                        "margin": 5,
+                        "width": 42,
+                      },
+                      Object {
+                        "height": 35,
+                        "position": "absolute",
+                        "right": -2.5,
+                        "top": 5,
+                        "width": 35,
+                      },
+                    ],
+                  ]
+                }
+                testID="fab-touchable"
+              >
+                <Text
+                  allowFontScaling={false}
+                  selectable={false}
+                  style={
+                    Array [
+                      Object {
+                        "color": "#C0A7E1",
+                        "fontSize": 20,
+                      },
+                      Object {
+                        "marginLeft": 2,
+                      },
+                      Object {
+                        "fontFamily": "Ionicons",
+                        "fontStyle": "normal",
+                        "fontWeight": "normal",
+                      },
+                      Object {},
+                    ]
+                  }
+                >
+                  
+                </Text>
+              </View>
+              <View
+                style={
+                  Object {
+                    "position": "absolute",
+                    "right": 20,
+                    "top": 30,
+                  }
+                }
+              >
+                <View
+                  collapsable={false}
+                >
+                  <View
+                    accessible={true}
+                    focusable={true}
+                    onClick={[Function]}
+                    onResponderGrant={[Function]}
+                    onResponderMove={[Function]}
+                    onResponderRelease={[Function]}
+                    onResponderTerminate={[Function]}
+                    onResponderTerminationRequest={[Function]}
+                    onStartShouldSetResponder={[Function]}
+                  >
+                    <View
+                      ctx={
+                        Object {
+                          "menuActions": Object {
+                            "_getOpenedMenu": [Function],
+                            "_notify": [Function],
+                            "closeMenu": [Function],
+                            "isMenuOpen": [Function],
+                            "openMenu": [Function],
+                            "toggleMenu": [Function],
+                          },
+                          "menuRegistry": Object {
+                            "getAll": [Function],
+                            "getMenu": [Function],
+                            "setOptionsCustomStyles": [Function],
+                            "subscribe": [Function],
+                            "unsubscribe": [Function],
+                            "updateLayoutInfo": [Function],
+                          },
+                        }
+                      }
+                      style={
+                        Array [
+                          undefined,
+                          undefined,
+                        ]
+                      }
+                    />
+                  </View>
+                </View>
+              </View>
+            </View>
+          </View>
+        </View>
+        <View
+          onLayout={[Function]}
+          style={null}
+        >
+          <View
+            accessibilityState={
+              Object {
+                "disabled": false,
+              }
+            }
+            accessible={true}
+            collapsable={false}
+            focusable={true}
+            onBlur={[Function]}
+            onClick={[Function]}
+            onFocus={[Function]}
+            onResponderGrant={[Function]}
+            onResponderMove={[Function]}
+            onResponderRelease={[Function]}
+            onResponderTerminate={[Function]}
+            onResponderTerminationRequest={[Function]}
+            onStartShouldSetResponder={[Function]}
+            style={
+              Array [
+                Object {
+                  "overflow": "hidden",
+                },
+                false,
+                Object {
+                  "marginVertical": 10,
+                  "minWidth": "95%",
+                  "width": "95%",
+                },
+              ]
+            }
+            testID="revisit-card-touchable"
+          >
+            <View
+              style={
+                Object {
+                  "backgroundColor": "#292929",
+                  "padding": 15,
+                }
+              }
+            >
+              <Text
+                style={
+                  Object {
+                    "color": "#BFBFBF",
+                    "fontSize": 14,
+                    "marginBottom": 15,
+                  }
+                }
+                testID="revisit-card-next-visit-text"
+              >
+                Visitar el 09 de December del 2021
+              </Text>
+              <Text
+                style={
+                  Object {
+                    "color": "#FFFFFF",
+                    "fontSize": 18,
+                    "fontWeight": "bold",
+                    "marginBottom": 5,
+                  }
+                }
+                testID="revisit-card-person-name-text"
+              >
+                Dariana Hand
+              </Text>
+              <Text
+                style={
+                  Object {
+                    "color": "#FFFFFF",
+                    "fontSize": 16,
+                  }
+                }
+                testID="revisit-card-about-text"
+              >
+                Ratione quae debitis pariatur tempora magnam est voluptatibus. Eveniet ipsum omnis maxime et soluta iusto. Autem aut ducimus dolore et recusandae et inventore. Enim autem in hic optio.
+              </Text>
+              <View
+                accessibilityState={
+                  Object {
+                    "disabled": false,
+                  }
+                }
+                accessible={true}
+                collapsable={false}
+                focusable={true}
+                onBlur={[Function]}
+                onClick={[Function]}
+                onFocus={[Function]}
+                onResponderGrant={[Function]}
+                onResponderMove={[Function]}
+                onResponderRelease={[Function]}
+                onResponderTerminate={[Function]}
+                onResponderTerminationRequest={[Function]}
+                onStartShouldSetResponder={[Function]}
+                style={
+                  Array [
+                    Object {
+                      "overflow": "hidden",
+                    },
+                    false,
+                    Array [
+                      Object {
+                        "alignItems": "center",
+                        "backgroundColor": "transparent",
+                        "borderRadius": 50,
+                        "height": 42,
+                        "justifyContent": "center",
+                        "margin": 5,
+                        "width": 42,
+                      },
+                      Object {
+                        "height": 35,
+                        "position": "absolute",
+                        "right": -2.5,
+                        "top": 5,
+                        "width": 35,
+                      },
+                    ],
+                  ]
+                }
+                testID="fab-touchable"
+              >
+                <Text
+                  allowFontScaling={false}
+                  selectable={false}
+                  style={
+                    Array [
+                      Object {
+                        "color": "#C0A7E1",
+                        "fontSize": 20,
+                      },
+                      Object {
+                        "marginLeft": 2,
+                      },
+                      Object {
+                        "fontFamily": "Ionicons",
+                        "fontStyle": "normal",
+                        "fontWeight": "normal",
+                      },
+                      Object {},
+                    ]
+                  }
+                >
+                  
+                </Text>
+              </View>
+              <View
+                style={
+                  Object {
+                    "position": "absolute",
+                    "right": 20,
+                    "top": 30,
+                  }
+                }
+              >
+                <View
+                  collapsable={false}
+                >
+                  <View
+                    accessible={true}
+                    focusable={true}
+                    onClick={[Function]}
+                    onResponderGrant={[Function]}
+                    onResponderMove={[Function]}
+                    onResponderRelease={[Function]}
+                    onResponderTerminate={[Function]}
+                    onResponderTerminationRequest={[Function]}
+                    onStartShouldSetResponder={[Function]}
+                  >
+                    <View
+                      ctx={
+                        Object {
+                          "menuActions": Object {
+                            "_getOpenedMenu": [Function],
+                            "_notify": [Function],
+                            "closeMenu": [Function],
+                            "isMenuOpen": [Function],
+                            "openMenu": [Function],
+                            "toggleMenu": [Function],
+                          },
+                          "menuRegistry": Object {
+                            "getAll": [Function],
+                            "getMenu": [Function],
+                            "setOptionsCustomStyles": [Function],
+                            "subscribe": [Function],
+                            "unsubscribe": [Function],
+                            "updateLayoutInfo": [Function],
+                          },
+                        }
+                      }
+                      style={
+                        Array [
+                          undefined,
+                          undefined,
+                        ]
+                      }
+                    />
+                  </View>
+                </View>
+              </View>
+            </View>
+          </View>
+        </View>
+        <View
+          style={
+            Object {
+              "height": 0,
+            }
+          }
+        />
+        <View
+          onLayout={[Function]}
+        />
+      </View>
+    </RCTScrollView>
+    <Modal
+      animationType="fade"
+      hardwareAccelerated={false}
+      statusBarTranslucent={true}
+      transparent={true}
+      visible={false}
+    />
+    <Modal
+      animationType="fade"
+      hardwareAccelerated={false}
+      statusBarTranslucent={true}
+      transparent={true}
+      visible={false}
+    />
+    <Modal
+      animationType="fade"
+      hardwareAccelerated={false}
+      statusBarTranslucent={true}
+      transparent={true}
+      visible={false}
+    />
+    <View
+      accessibilityState={
+        Object {
+          "disabled": false,
+        }
+      }
+      accessible={true}
+      collapsable={false}
+      focusable={true}
+      onBlur={[Function]}
+      onClick={[Function]}
+      onFocus={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      style={
+        Array [
+          Object {
+            "overflow": "hidden",
+          },
+          false,
+          Array [
+            Object {
+              "alignItems": "center",
+              "backgroundColor": "#C0A7E1",
+              "borderRadius": 50,
+              "height": 42,
+              "justifyContent": "center",
+              "margin": 5,
+              "width": 42,
+            },
+            Object {
+              "bottom": 5,
+              "height": 60,
+              "position": "absolute",
+              "right": 10,
+              "width": 60,
+            },
+          ],
+        ]
+      }
+      testID="fab-touchable"
+    >
+      <Text
+        allowFontScaling={false}
+        selectable={false}
+        style={
+          Array [
+            Object {
+              "color": "#121212",
+              "fontSize": 40,
+            },
+            Object {
+              "marginLeft": 3,
+            },
+            Object {
+              "fontFamily": "Ionicons",
+              "fontStyle": "normal",
+              "fontWeight": "normal",
+            },
+            Object {},
+          ]
+        }
+      >
+        
+      </Text>
+    </View>
+  </View>
+  <RCTSafeAreaView
+    pointerEvents="box-none"
+    style={
+      Object {
+        "bottom": 0,
+        "left": 0,
+        "position": "absolute",
+        "right": 0,
+        "top": 0,
+      }
+    }
+  >
+    <View
+      collapsable={false}
+      onLayout={[Function]}
+      pointerEvents="box-none"
+      style={
+        Object {
+          "flex": 1,
+        }
+      }
+    />
+  </RCTSafeAreaView>
+</View>
+`;
