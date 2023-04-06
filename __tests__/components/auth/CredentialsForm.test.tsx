@@ -1,14 +1,21 @@
 import React from 'react';
 import { act, fireEvent, render, screen, waitFor } from '@testing-library/react-native';
 
+/* Components */
 import { CredentialsForm } from '../../../src/components/auth';
 
+/* Hooks */
 import { useAuth, useStatus, useTheme } from '../../../src/hooks';
 
+/* Interfaces */
 import { User } from '../../../src/interfaces/auth';
 
+/* Theme */
 import { darkColors } from '../../../src/theme';
 
+/* `const testUser` is defining a mock user object with properties such as `id`, `name`, `email`,
+`createdAt`, etc. This object is used in the tests to simulate a user and test the functionality of
+the `CredentialsForm` component. */
 const testUser: User = {
     id: '05ef0d0c-0f7a-4512-b705-6da279d88503',
     name: 'Celestino',
@@ -23,6 +30,7 @@ const updateEmailMock = jest.fn();
 const updatePasswordMock = jest.fn().mockImplementation(() => Promise.resolve());
 const setErrorFormMock = jest.fn();
 
+/* Mocked hooks */
 jest.mock('../../../src/hooks/useAuth.ts');
 jest.mock('../../../src/hooks/useStatus.ts');
 jest.mock('../../../src/hooks/useTheme.ts');
@@ -63,6 +71,10 @@ describe('Test in <CredentialsForm /> component', () => {
 
         await act(async() => {
             await waitFor(() => {
+                /**
+                 * This code is testing that the `CredentialsForm` component is rendering
+                 * the user's email correctly in the email input field.
+                 */
                 const inputsText = screen.getAllByTestId('form-field-text-input');
                 expect(inputsText[0].props.value).toBe(testUser.email);
             });
@@ -76,9 +88,12 @@ describe('Test in <CredentialsForm /> component', () => {
 
         await act(async() => {
             await waitFor(() => {
+
+                /* Find touchable to submit form */
                 const touchables = screen.getAllByTestId('button-touchable');
                 fireEvent.press(touchables[0]);
 
+                /* Check if setErrorForm is called one time */
                 expect(setErrorFormMock).toHaveBeenCalledTimes(1);
             });
         });
@@ -93,20 +108,29 @@ describe('Test in <CredentialsForm /> component', () => {
 
         await act(async() => {
             await waitFor(() => {
+
+                /* Get input text of email to type new email */
                 const inputsText = screen.getAllByTestId('form-field-text-input');
                 fireEvent(inputsText[0], 'onChangeText', newEmail);
 
+                /* Get touchable submit to send request of change email */
                 const touchables = screen.getAllByTestId('button-touchable');
                 fireEvent.press(touchables[0]);
 
+                /* Check if updateEmail is called one time */
                 expect(updateEmailMock).toHaveBeenCalledTimes(1);
             });
 
+            /**
+             * Check if updateEmail is called with respective args
+             */
             expect(updateEmailMock).toHaveBeenCalledWith({ email: newEmail }, expect.any(Function));
         });
     });
 
     it('should disabled button when isAuthLoading and loadingEmail is true', async () => {
+
+        /* Mock data of useAuth  */
         (useAuth as jest.Mock).mockReturnValue({
             state: { isAuthLoading: true, user: testUser },
             updateEmail: updateEmailMock,
@@ -121,12 +145,16 @@ describe('Test in <CredentialsForm /> component', () => {
 
         await act(async() => {
             await waitFor(() => {
+
+                /* Get input text of email to type new email */
                 const inputsText = screen.getAllByTestId('form-field-text-input');
                 fireEvent(inputsText[0], 'onChangeText', newEmail);
 
+                /* Get touchable submit to send request of change email */
                 const touchables = screen.getAllByTestId('button-touchable');
                 fireEvent.press(touchables[0]);
 
+                /* Check if touchable is disabled */
                 expect(touchables[0].props.accessibilityState.disabled).toBeTruthy();
             });
         });
@@ -139,9 +167,12 @@ describe('Test in <CredentialsForm /> component', () => {
 
         await act(async() => {
             await waitFor(() => {
+
+                /* Get touchable submit to send request of change password */
                 const touchables = screen.getAllByTestId('button-touchable');
                 fireEvent.press(touchables[1]);
 
+                /* Check if setErrorForm is called one time */
                 expect(setErrorFormMock).toHaveBeenCalledTimes(1);
             });
         });
@@ -156,21 +187,28 @@ describe('Test in <CredentialsForm /> component', () => {
 
         await act(async() => {
             await waitFor(() => {
+
+                /* Get text inputs of change passowrd */
                 const inputsText = screen.getAllByTestId('form-field-text-input');
                 fireEvent(inputsText[1], 'onChangeText', newPass);
                 fireEvent(inputsText[2], 'onChangeText', newPass);
 
+                /* Get touchable submit to send request of change password */
                 const touchables = screen.getAllByTestId('button-touchable');
                 fireEvent.press(touchables[1]);
 
+                /* Check if updatedPassword is called one time */
                 expect(updatePasswordMock).toHaveBeenCalledTimes(1);
             });
 
+            /* Check if updatedPassword is called with respective args */
             expect(updatePasswordMock).toHaveBeenCalledWith({ password: newPass }, expect.any(Function));
         });
     });
 
     it('should disabled button when isAuthLoading and loadingPassword is true', async () => {
+
+        /* Mock data of useAuth  */
         (useAuth as jest.Mock).mockReturnValue({
             state: { isAuthLoading: true, user: testUser },
             updateEmail: updateEmailMock,
@@ -185,13 +223,17 @@ describe('Test in <CredentialsForm /> component', () => {
 
         await act(async() => {
             await waitFor(() => {
+
+                /* Get text inputs of change passowrd */
                 const inputsText = screen.getAllByTestId('form-field-text-input');
                 fireEvent(inputsText[1], 'onChangeText', newPass);
                 fireEvent(inputsText[2], 'onChangeText', newPass);
 
+                /* Get touchable submit to send request of change password */
                 const touchables = screen.getAllByTestId('button-touchable');
                 fireEvent.press(touchables[1]);
 
+                /* Check if submit touchable is disabled */
                 expect(touchables[1].props.accessibilityState.disabled).toBeTruthy();
             });
         });

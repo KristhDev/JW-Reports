@@ -1,14 +1,22 @@
 import React from 'react';
 import { act, fireEvent, render, screen, waitFor } from '@testing-library/react-native';
 
+/* Components */
 import { ProfileForm } from '../../../src/components/auth';
 
+/* Hooks */
 import { useAuth, useStatus, useTheme } from '../../../src/hooks';
 
+/* Interfaces */
 import { User } from '../../../src/interfaces/auth';
 
+/* Theme */
 import { darkColors } from '../../../src/theme';
 
+/* `const testUser: User` is defining a constant variable `testUser` of type `User`, which is an
+interface defined in the `auth` module. The object assigned to `testUser` contains properties such
+as `id`, `name`, `surname`, `email`, `precursor`, `createdAt`, and `updatedAt`, which represent the
+user's information. This object is used in the tests to simulate a user's data. */
 const testUser: User = {
     id: '05ef0d0c-0f7a-4512-b705-6da279d88503',
     name: 'Celestino',
@@ -22,6 +30,7 @@ const testUser: User = {
 const updateProfileMock = jest.fn();
 const setErrorFormMock = jest.fn();
 
+/* Hooks */
 jest.mock('../../../src/hooks/useAuth.ts');
 jest.mock('../../../src/hooks/useStatus.ts');
 jest.mock('../../../src/hooks/useTheme.ts');
@@ -61,12 +70,16 @@ describe('Test in <ProfileForm /> component', () => {
 
         await act(async () => {
             await waitFor(() => {
+
+                /* Get text inputs to type empty content */
                 const inputsText = screen.getAllByTestId('form-field-text-input');
                 fireEvent(inputsText[0], 'onChangeText', '');
 
+                /* Get touchable to submit form */
                 const touchable = screen.getByTestId('button-touchable');
                 fireEvent.press(touchable);
 
+                /* Check if setErrorForm is called one time */
                 expect(setErrorFormMock).toHaveBeenCalledTimes(1);
             });
         });
@@ -79,12 +92,16 @@ describe('Test in <ProfileForm /> component', () => {
 
         await act(async () => {
             await waitFor(() => {
+
+                /* Get touchable to submit form */
                 const touchable = screen.getByTestId('button-touchable');
                 fireEvent.press(touchable);
 
+                /* Check if updateProfile is called one time */
                 expect(updateProfileMock).toHaveBeenCalledTimes(1);
             });
 
+            /* Check if updateProfile is called with respective args */
             expect(updateProfileMock).toHaveBeenCalledWith({
                 name: testUser.name,
                 surname: testUser.surname,
