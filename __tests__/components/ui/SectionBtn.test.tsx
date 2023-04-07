@@ -1,16 +1,20 @@
 import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react-native';
 
+/* Components */
 import { SectionBtn } from '../../../src/components/ui';
 
+/* Hooks */
 import { useTheme } from '../../../src/hooks';
 
+/* Theme */
 import { darkColors } from '../../../src/theme';
 
 const text = 'Section text test';
 const subText = 'Section sub text test';
 const onPressMock = jest.fn();
 
+/* Mock hooks */
 jest.mock('../../../src/hooks/useTheme.ts');
 
 describe('Test in <SectionBtn /> component', () => {
@@ -36,9 +40,12 @@ describe('Test in <SectionBtn /> component', () => {
     });
 
     it('should render respective props', () => {
+
+        /* Get elements with props of component */
         const textElement = screen.getByTestId('section-btn-text');
         const subTextElement = screen.getByTestId('section-btn-sub-text');
 
+        /* Check if elemets exists and containt props */
         expect(textElement).toBeTruthy();
         expect(textElement.props.children).toBe(text);
         expect(subTextElement).toBeTruthy();
@@ -46,9 +53,12 @@ describe('Test in <SectionBtn /> component', () => {
     });
 
     it('should call onPress when pressed', () => {
+
+        /* Get touchable */
         const touchable = screen.getByTestId('section-btn-touchable');
         fireEvent.press(touchable);
 
+        /* Check if onPress is called one time */
         expect(onPressMock).toHaveBeenCalledTimes(1);
     });
 });

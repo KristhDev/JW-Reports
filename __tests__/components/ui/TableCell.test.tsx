@@ -1,14 +1,18 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react-native';
 
+/* Components */
 import { TableCell } from '../../../src/components/ui';
 
+/* Hooks */
 import { useTheme } from '../../../src/hooks';
 
+/* Theme */
 import { darkColors } from '../../../src/theme';
 
 const text = 'Cell';
 
+/* Mock hooks */
 jest.mock('../../../src/hooks/useTheme.ts');
 
 describe('Test in <TableCell /> component', () => {
@@ -25,8 +29,11 @@ describe('Test in <TableCell /> component', () => {
     });
 
     it('should render text in cell', () => {
+
+        /* Get text of cell */
         const cellText = screen.getByTestId('table-cell-text');
 
+        /* Check if text exists and contain respective value */
         expect(cellText).toBeTruthy();
         expect(cellText.props.children).toBe(text);
     });

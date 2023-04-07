@@ -2,14 +2,18 @@ import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 
+/* Components */
 import { Fab } from '../../../src/components/ui';
 
+/* Hooks */
 import { useTheme } from '../../../src/hooks';
 
+/* Theme */
 import { darkColors } from '../../../src/theme';
 
 const onPressMock = jest.fn();
 
+/* Mock hooks */
 jest.mock('../../../src/hooks/useTheme.ts');
 
 describe('Test in <Fab /> component', () => {
@@ -41,17 +45,23 @@ describe('Test in <Fab /> component', () => {
     });
 
     it('should render respective props', () => {
+
+        /* Get tochable and icon */
         const touchable = screen.getByTestId('fab-touchable');
         const icon = screen.getByTestId('fab-icon');
 
+        /* Check values of elements */
         expect(touchable.props.style[2][0].backgroundColor).toBe(darkColors.button);
         expect(icon).toBeTruthy();
     });
 
     it('should call onPress when pressed', () => {
+
+        /* Get touchable */
         const touchable = screen.getByTestId('fab-touchable');
         fireEvent.press(touchable);
 
+        /* Check if onPress is called one time */
         expect(onPressMock).toHaveBeenCalledTimes(1);
     });
 });

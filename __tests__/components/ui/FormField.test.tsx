@@ -3,12 +3,16 @@ import { act, fireEvent, render, screen } from '@testing-library/react-native';
 import { Formik } from 'formik';
 import Icon from 'react-native-vector-icons/Ionicons';
 
+/* Components */
 import { FormField } from '../../../src/components/ui';
 
+/* Hooks */
 import { useTheme } from '../../../src/hooks';
 
+/* Theme */
 import { darkColors } from '../../../src/theme';
 
+/* Mock hooks */
 jest.mock('../../../src/hooks/useTheme.ts');
 
 const fieldLabel = 'Nombre:';
@@ -54,10 +58,12 @@ describe('Test in <FormField /> component', () => {
     it('should render respective props', () => {
         renderComponent();
 
+        /* Get elements with props of component */
         const label = screen.getByTestId('form-field-label');
         const input = screen.getByTestId('form-field-text-input');
         const icon = screen.getByTestId('form-field-icon');
 
+        /* Check if exists this elemets and has props */
         expect(label).toBeTruthy();
         expect(label.props.children).toBe(fieldLabel);
         expect(input).toBeTruthy();
@@ -69,12 +75,16 @@ describe('Test in <FormField /> component', () => {
     it('should change value of text input', async () => {
         renderComponent();
 
+        /* Get text input */
         const input = screen.getByTestId('form-field-text-input');
 
         await act(() => {
+
+            /* Change value of input */
             fireEvent(input, 'onChangeText', textValue);
         });
 
+        /* Check if change value of input */
         expect(input.props.value).toBe(textValue);
     });
 });

@@ -1,14 +1,18 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react-native';
 
+/* Components */
 import { Title } from '../../../src/components/ui';
 
+/* Hooks */
 import { useTheme } from '../../../src/hooks';
 
+/* Theme */
 import { darkColors } from '../../../src/theme';
 
 const titleText = 'Title test';
 
+/* Mock hooks */
 jest.mock('../../../src/hooks/useTheme.ts');
 
 describe('Test in <Title /> component', () => {
@@ -25,8 +29,11 @@ describe('Test in <Title /> component', () => {
     });
 
     it('should render respective props', () => {
+
+        /* Get text of title */
         const title = screen.getByTestId('title-text');
 
+        /* Check if title exists and contain value pass by props */
         expect(title).toBeTruthy();
         expect(title.props.children).toBe(titleText);
     });

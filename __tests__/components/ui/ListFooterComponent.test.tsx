@@ -1,12 +1,16 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react-native';
 
+/* Components */
 import { ListFooterComponent } from '../../../src/components/ui';
 
+/* Hooks */
 import { useTheme } from '../../../src/hooks';
 
+/* Theme */
 import { darkColors } from '../../../src/theme';
 
+/* Mock hooks */
 jest.mock('../../../src/hooks/useTheme.ts');
 
 describe('Test in <ListFooterComponent /> component', () => {
@@ -28,8 +32,9 @@ describe('Test in <ListFooterComponent /> component', () => {
     });
 
     it('should render loader', () => {
-        const loader = screen.getByTestId('loader');
 
+        /* Get loader and check if exists */
+        const loader = screen.getByTestId('loader');
         expect(loader).toBeTruthy();
     });
 
@@ -41,6 +46,7 @@ describe('Test in <ListFooterComponent /> component', () => {
             />
         );
 
+        /* Check if content of component is null */
         expect(screen.toJSON()).toBeNull();
     });
 });
