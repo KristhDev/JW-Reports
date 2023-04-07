@@ -1,13 +1,17 @@
 import React from 'react';
 import { act, fireEvent, render, screen, waitFor } from '@testing-library/react-native';
 
+/* Components */
 import { PreachingForm } from '../../../src/components/preaching';
 
+/* Features */
 import { INIT_PREACHING } from '../../../src/features/preaching';
 import { preachingSelectedState, preachingsState } from '../../features/preaching';
 
+/* Hooks */
 import { usePreaching, useStatus, useTheme } from '../../../src/hooks';
 
+/* Theme */
 import { darkColors } from '../../../src/theme';
 
 const savePreachingMock = jest.fn();
@@ -18,6 +22,7 @@ const preachingDay = '2022-12-29 00:00:00';
 const initHour = '2022-12-30 09:00:00';
 const finalHour = '2022-12-30 11:30:00';
 
+/* Mock hooks */
 jest.mock('../../../src/hooks/usePreaching.ts');
 jest.mock('../../../src/hooks/useStatus.ts');
 jest.mock('../../../src/hooks/useTheme.ts');
@@ -62,6 +67,8 @@ describe('Test in <PreachingForm /> component', () => {
     });
 
     it('should call setErrorForm when form is invalid', async () => {
+
+        /* Mock data of usePreaching */
         (usePreaching as jest.Mock).mockReturnValue({
             state: {
                 ...preachingsState,
@@ -82,15 +89,20 @@ describe('Test in <PreachingForm /> component', () => {
 
         await act(async () => {
             await waitFor(() => {
+
+                /* Get submit touchable */
                 const touchable = screen.getAllByTestId('button-touchable')[3];
                 fireEvent.press(touchable);
 
+                /* Check if setErrorForm is called one time */
                 expect(setErrorFormMock).toHaveBeenCalledTimes(1);
             });
         });
     });
 
     it('should call savePreaching when form is valid and selectedPreaching is empty', async () => {
+
+        /* Mock data of usePreaching */
         (usePreaching as jest.Mock).mockReturnValue({
             state: {
                 ...preachingsState,
@@ -111,14 +123,22 @@ describe('Test in <PreachingForm /> component', () => {
 
         await act(async () => {
             await waitFor(() => {
+
+                /* Get submit touchable */
                 const touchable = screen.getAllByTestId('button-touchable')[3];
                 fireEvent.press(touchable);
 
+                /* Check if savePreaching is called one time */
                 expect(savePreachingMock).toHaveBeenCalledTimes(1);
             });
 
+            /* Get text of submit touchable */
             const btnText = screen.getAllByTestId('button-text')[3];
 
+            /**
+             * Check if text of submit touchable is equal to Guardar and savePreaching
+             * is called with respective args
+             */
             expect(btnText.props.children).toBe('Guardar');
             expect(savePreachingMock).toHaveBeenCalledWith({
                 day: new Date(preachingDay),
@@ -132,6 +152,8 @@ describe('Test in <PreachingForm /> component', () => {
     });
 
     it('should call updatePreaching when form is valid and selectedPreaching isnt empty', async () => {
+
+        /* Mock data of usePreaching */
         (usePreaching as jest.Mock).mockReturnValue({
             state: preachingSelectedState,
             savePreaching: savePreachingMock,
@@ -144,14 +166,22 @@ describe('Test in <PreachingForm /> component', () => {
 
         await act(async () => {
             await waitFor(() => {
+
+                /* Get submit touchable */
                 const touchable = screen.getAllByTestId('button-touchable')[3];
                 fireEvent.press(touchable);
 
+                /* Check if updatePreaching is called one time */
                 expect(updatePreachingMock).toHaveBeenCalledTimes(1);
             });
 
+            /* Get text of submit touchable */
             const btnText = screen.getAllByTestId('button-text')[3];
 
+            /**
+             * Check if text of submit touchable is equal to Actualizar and updatePreaching
+             * is called with respective args
+             */
             expect(btnText.props.children).toBe('Actualizar');
             expect(updatePreachingMock).toHaveBeenCalledWith({
                 day: new Date(preachingSelectedState.seletedPreaching.day),

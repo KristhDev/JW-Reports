@@ -3,20 +3,26 @@ import { fireEvent, render, screen } from '@testing-library/react-native';
 import { MenuProvider } from 'react-native-popup-menu';
 import dayjs from 'dayjs';
 
+/* Components */
 import { LessonCard } from '../../../src/components/courses';
 
+/* Features */
 import { lessons } from '../../features/courses';
 
+/* Hooks */
 import { useCourses, useTheme } from '../../../src/hooks';
 
+/* Theme */
 import { darkColors } from '../../../src/theme';
 
+/* Setup */
 import { navigateMock } from '../../../jest.setup';
 
 const lesson = lessons[0];
 
 const setSelectedLessonMock = jest.fn();
 
+/* Mock hooks */
 jest.mock('../../../src/hooks/useCourses.ts');
 jest.mock('../../../src/hooks/useTheme.ts');
 
@@ -49,11 +55,14 @@ describe('Test in <LessonCard /> component', () => {
     });
 
     it('should render data of lesson', () => {
+
+        /* Get elements with data of lesson */
         const statusText = screen.getByTestId('lesson-card-status-text');
         const descriptionText = screen.getByTestId('lesson-card-description-text');
 
         const nextVisit = dayjs(lesson.next_lesson);
 
+        /* Check if elemets exists and containt content of lesson */
         expect(statusText).toBeTruthy();
         expect(statusText.props.children).toBe(`Clase para el ${ nextVisit.format('DD') } de ${ nextVisit.format('MMMM') } del ${ nextVisit.format('YYYY') }`);
         expect(descriptionText).toBeTruthy();
@@ -61,9 +70,15 @@ describe('Test in <LessonCard /> component', () => {
     });
 
     it('should call setSelectedLesson and navigate when card is pressed', () => {
+
+        /* Get touchable card */
         const touchable = screen.getByTestId('lesson-card-touchable');
         fireEvent.press(touchable);
 
+        /**
+         * Check if setSelectedLesson and navigate are called one time
+         * with respective args
+         */
         expect(setSelectedLessonMock).toHaveBeenCalledTimes(1);
         expect(setSelectedLessonMock).toHaveBeenCalledWith(lesson);
         expect(navigateMock).toHaveBeenCalledTimes(1);

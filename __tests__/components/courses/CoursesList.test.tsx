@@ -2,12 +2,16 @@ import React from 'react';
 import { fireEvent, render, screen } from '@testing-library/react-native';
 import { MenuProvider } from 'react-native-popup-menu';
 
-import { CoursesList } from '../../../src/components/courses';
-
+/* Features */
 import { initialState as coursesInitState, coursesState } from '../../features/courses';
 
+/* Components */
+import { CoursesList } from '../../../src/components/courses';
+
+/* Hooks */
 import { useCourses, useTheme } from '../../../src/hooks';
 
+/* Theme */
 import { darkColors } from '../../../src/theme';
 
 const setSelectedCourseMock = jest.fn();
@@ -22,6 +26,7 @@ const setRefreshCoursesMock = jest.fn();
 const emptyMessageTest = 'No hay cursos disponibles';
 const titleTest = 'Mis Cursos';
 
+/* Mock hooks */
 jest.mock('../../../src/hooks/useCourses.ts');
 jest.mock('../../../src/hooks/useTheme.ts');
 
@@ -75,11 +80,14 @@ describe('Test in <CoursesList /> component', () => {
             </MenuProvider>
         );
 
+        /* Get title of list and check if is text pass for props */
         const titleText = getByTestId('title-text');
         expect(titleText.props.children).toBe(titleTest);
     });
 
     it('should render message when courses is empty', () => {
+
+        /* Mock data of useCourses */
         (useCourses as jest.Mock).mockReturnValue({
             state: coursesInitState,
             activeOrSuspendCourse: jest.fn(),
@@ -105,11 +113,14 @@ describe('Test in <CoursesList /> component', () => {
             </MenuProvider>
         );
 
+        /* Get empty message of list and check if is text pass for props */
         const emptyMsgText = getByTestId('info-text-text');
         expect(emptyMsgText.props.children).toBe(emptyMessageTest);
     });
 
     it('should render loading when isCoursesLoading is true', () => {
+
+        /* Mock data of useCourses */
         (useCourses as jest.Mock).mockReturnValue({
             state: {
                 ...coursesInitState,
@@ -138,15 +149,22 @@ describe('Test in <CoursesList /> component', () => {
             </MenuProvider>
         );
 
+        /* Get loader and check if exists in component */
         const loader = getByTestId('loader');
         expect(loader).toBeTruthy();
     });
 
     it('should search when searchInput is submit', () => {
+
+        /* Get search input text, type search and submit */
         const searchInput = screen.getByTestId('search-input-text-input');
         fireEvent(searchInput, 'onChangeText', 'Test search');
         fireEvent(searchInput, 'onSubmitEditing');
 
+        /**
+         * Check if setCoursesPagination, removeCourses and loadCourses is called
+         * one time with respective args
+         */
         expect(setCoursesPaginationMock).toHaveBeenCalledTimes(1);
         expect(setCoursesPaginationMock).toHaveBeenCalledWith({ from: 0, to: 9 });
         expect(removeCoursesMock).toHaveBeenCalledTimes(1);
