@@ -2,12 +2,16 @@ import React from 'react';
 import { Image } from 'react-native-image-crop-picker';
 import { act, fireEvent, render, screen, waitFor } from '@testing-library/react-native';
 
-import { RevisitForm } from '../../../src/components/revisits';
-
-import { useImage, useRevisits, useStatus, useTheme } from '../../../src/hooks';
-
+/* Features */
 import { revisitsState, selectedRevisitState  } from '../../features/revisits';
 
+/* Components */
+import { RevisitForm } from '../../../src/components/revisits';
+
+/* Hooks */
+import { useImage, useRevisits, useStatus, useTheme } from '../../../src/hooks';
+
+/* Theme */
 import { darkColors } from '../../../src/theme';
 
 const setErrorFormMock = jest.fn();
@@ -28,6 +32,7 @@ const personName = 'Clifton DAmore';
 const about = 'Possimus magnam cum quo saepe et accusamus consectetur molestiae. Eos et et nobis dolor. Enim repellat quia officia fuga qui. Cumque delectus unde possimus consequatur ducimus.';
 const direction = 'Et fuga eaque voluptatum est. Et ad quos sit id ducimus a hic. Perferendis deserunt eius aut harum nisi doloremque consequuntur maiores. Aut voluptas corrupti facere sed ut. Enim qui quaerat quos quia quia expedita et.';
 
+/* Mock hooks */
 jest.mock('../../../src/hooks/useImage.ts');
 jest.mock('../../../src/hooks/useRevisits.ts');
 jest.mock('../../../src/hooks/useStatus.ts');
@@ -82,9 +87,12 @@ describe('Test in <RevisitForm /> component', () => {
 
         await act(async () => {
             await waitFor(() => {
+
+                /* Get submit touchable */
                 const touchable = screen.getAllByTestId('button-touchable')[3];
                 fireEvent.press(touchable);
 
+                /* Check if setErrorForm is called one time */
                 expect(setErrorFormMock).toHaveBeenCalledTimes(1);
             });
         });
@@ -97,19 +105,28 @@ describe('Test in <RevisitForm /> component', () => {
 
         await act(async () => {
             await waitFor(() => {
+
+                /* Get text inputs to type person name, about and direction */
                 const inputs = screen.getAllByTestId('form-field-text-input');
                 fireEvent(inputs[0], 'onChangeText', personName);
                 fireEvent(inputs[1], 'onChangeText', about);
                 fireEvent(inputs[2], 'onChangeText', direction);
 
+                /* Get submit touchable */
                 const touchable = screen.getAllByTestId('button-touchable')[3];
                 fireEvent.press(touchable);
 
+                /* Check if setErrorForm is called one time */
                 expect(saveRevisitMock).toHaveBeenCalledTimes(1);
             });
 
+            /* Get text of submit touchable */
             const btnText = screen.getAllByTestId('button-text')[3];
 
+            /**
+             * Check if text of submit touchable is equal to Guardar and saveRevisit
+             * is called with respective args
+             */
             expect(btnText.props.children).toBe('Guardar');
             expect(saveRevisitMock).toHaveBeenCalledWith({
                 revisitValues: {
@@ -124,6 +141,8 @@ describe('Test in <RevisitForm /> component', () => {
     });
 
     it('should call updateRevisit when form is valid and selectedRevisit isnt empty', async () => {
+
+        /* Mock data of useRevisits */
         (useRevisits as jest.Mock).mockReturnValue({
             state: selectedRevisitState,
             saveRevisit: saveRevisitMock,
@@ -136,17 +155,26 @@ describe('Test in <RevisitForm /> component', () => {
 
         await act(async () => {
             await waitFor(() => {
+
+                /* Get text input to type new content of about */
                 const inputs = screen.getAllByTestId('form-field-text-input');
                 fireEvent(inputs[1], 'onChangeText', about);
 
+                /* Get submit touchable */
                 const touchable = screen.getAllByTestId('button-touchable')[3];
                 fireEvent.press(touchable);
 
+                /* Check if updateRevisit is called one time */
                 expect(updateRevisitMock).toHaveBeenCalledTimes(1);
             });
 
+            /* Get text of submit touchable */
             const btnText = screen.getAllByTestId('button-text')[3];
 
+            /**
+             * Check if text of submit touchable is equal to Actualizar and
+             * updateRevisit is called with respective args
+             */
             expect(btnText.props.children).toBe('Actualizar');
             expect(updateRevisitMock).toHaveBeenCalledWith(
                 {
@@ -167,9 +195,12 @@ describe('Test in <RevisitForm /> component', () => {
 
         await act(async () => {
             await waitFor(() => {
+
+                /* Get gallery touchable */
                 const touchable = screen.getAllByTestId('button-touchable')[0];
                 fireEvent.press(touchable);
 
+                /* Check if takeImageToGallery is called one time */
                 expect(takeImageToGalleryMock).toHaveBeenCalledTimes(1);
             });
         });
@@ -182,9 +213,12 @@ describe('Test in <RevisitForm /> component', () => {
 
         await act(async () => {
             await waitFor(() => {
+
+                /* Get camera touchable */
                 const touchable = screen.getAllByTestId('button-touchable')[1];
                 fireEvent.press(touchable);
 
+                /* Check if takePhoto is called one time */
                 expect(takePhotoMock).toHaveBeenCalledTimes(1);
             });
         });
