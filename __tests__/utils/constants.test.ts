@@ -1,3 +1,5 @@
+
+/* Utils */
 import { PRECURSORS_OPTIONS, TABLE_PREACHING_HEADERS, THEME_OPTIONS } from '../../src/utils';
 
 describe('Test in Constants util', () => {

@@ -1,3 +1,5 @@
+
+/* Utils */
 import { getRestMins, sumHours, sumMins, sumNumbers } from '../../src/utils';
 
 describe('Test in calc utils', () => {
@@ -6,6 +8,7 @@ describe('Test in calc utils', () => {
         const expectedSum = 10;
         const result = sumNumbers(numbers);
 
+        /* Check if result is equal to expectedSum */
         expect(result).toBe(expectedSum);
     });
 
@@ -15,6 +18,7 @@ describe('Test in calc utils', () => {
             { init: '2022-01-02T08:00:00', finish: '2022-01-02T09:00:00' },
         ];
 
+        /* Check if sum of hours is three */
         expect(sumHours(dates)).toBe(3);
     });
 
@@ -24,6 +28,7 @@ describe('Test in calc utils', () => {
             { init: '2022-01-02T08:00:00', finish: '2022-01-02T09:30:00' },
         ];
 
+        /* Check if rest of minutes is 30 */
         expect(getRestMins(dates)).toBe(30);
     });
 
@@ -33,6 +38,10 @@ describe('Test in calc utils', () => {
             { init: '2022-01-02T08:00:00', finish: '2022-01-02T09:30:00' },
         ];
 
+        /**
+         * Check if sum of minutes is object with props hour and restMins
+         * with values 0 and 30
+         */
         expect(sumMins(dates)).toEqual({ hours: 0, restMins: 30 });
     });
 });

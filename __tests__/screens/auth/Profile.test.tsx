@@ -1,12 +1,16 @@
 import React from 'react';
 import { act, render, screen, waitFor } from '@testing-library/react-native';
 
+/* Screens */
 import { Profile } from '../../../src/screens/auth';
 
+/* Hooks */
 import { useAuth, useStatus, useTheme } from '../../../src/hooks';
 
+/* Interfaces */
 import { User } from '../../../src/interfaces/auth';
 
+/* Theme */
 import { darkColors } from '../../../src/theme';
 
 const testUser: User = {
@@ -19,6 +23,7 @@ const testUser: User = {
     updatedAt: '2021-03-10T12:00:00.000Z',
 }
 
+/* Mock hooks */
 jest.mock('../../../src/hooks/useAuth.ts');
 jest.mock('../../../src/hooks/useStatus.ts');
 jest.mock('../../../src/hooks/useTheme.ts');
@@ -54,8 +59,11 @@ describe('Test in <Profile /> screen', () => {
 
         await act(async () => {
             await waitFor(() => {
+
+                /* Get title */
                 const title = screen.getByTestId('title-text');
 
+                /* Check if title exists and contain value pass by props */
                 expect(title).toBeTruthy();
                 expect(title.props.children).toBe('Mi perfil');
             });

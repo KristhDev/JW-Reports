@@ -1,3 +1,5 @@
+
+/* Theme */
 import { darkColors, lightColors, undefinedColors } from '../../src/theme';
 
 describe('Test in colors of theme', () => {
