@@ -1,14 +1,19 @@
 import React from 'react';
 import { act, render, screen, waitFor } from '@testing-library/react-native';
 
+/* Screens */
 import { AddOrEditLesson } from '../../../src/screens/courses';
 
+/* Features */
 import { courseSelectedState, lessonSelectedState } from '../../features/courses';
 
+/* Hooks */
 import { useCourses, useStatus, useTheme } from '../../../src/hooks';
 
+/* Theme */
 import { darkColors } from '../../../src/theme';
 
+/* Mock hooks */
 jest.mock('../../../src/hooks/useCourses.ts');
 jest.mock('../../../src/hooks/useStatus.ts');
 jest.mock('../../../src/hooks/useTheme.ts');
@@ -53,8 +58,11 @@ describe('Test in <AddOrEditLesson /> screen', () => {
 
         await act(async () => {
             await waitFor(() => {
+
+                /* Get title */
                 const title = screen.getByTestId('title-text');
 
+                /* Check if title exists and contain value pass by props */
                 expect(title).toBeTruthy();
                 expect(title.props.children).toBe('Agregar clase para el curso');
             });
@@ -62,6 +70,8 @@ describe('Test in <AddOrEditLesson /> screen', () => {
     });
 
     it('should render respective title when seletedLesson isnt empty', async () => {
+
+        /* Mock data of useCourses */
         (useCourses as jest.Mock).mockReturnValue({
             state: lessonSelectedState,
             saveCourse: jest.fn(),
@@ -74,8 +84,11 @@ describe('Test in <AddOrEditLesson /> screen', () => {
 
         await act(async () => {
             await waitFor(() => {
+
+                /* Get title */
                 const title = screen.getByTestId('title-text');
 
+                /* Check if title exists and contain value pass by props */
                 expect(title).toBeTruthy();
                 expect(title.props.children).toBe('Editar clase del curso');
             });

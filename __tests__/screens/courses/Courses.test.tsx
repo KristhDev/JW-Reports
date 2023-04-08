@@ -2,18 +2,23 @@ import React from 'react';
 import { fireEvent, render, screen } from '@testing-library/react-native';
 import { MenuProvider } from 'react-native-popup-menu';
 
+/* Features */
 import { INIT_COURSE } from '../../../src/features/courses';
 import { coursesState } from '../../features/courses';
 
+/* Screens */
 import { Courses } from '../../../src/screens/courses';
 
+/* Hooks */
 import { useCourses, useTheme } from '../../../src/hooks';
 
+/* Theme */
 import { darkColors } from '../../../src/theme';
 
 const setCoursesScreenHistoryMock = jest.fn();
 const setSelectedCourseMock = jest.fn();
 
+/* Mock hooks */
 jest.mock('../../../src/hooks/useCourses.ts');
 jest.mock('../../../src/hooks/useTheme.ts');
 
@@ -80,19 +85,25 @@ describe('Test in <Courses /> screen', () => {
     });
 
     it('should render add button when route name is CoursesScreen', () => {
+
+        /* Get touchable */
         const fabs = screen.getAllByTestId('fab-touchable');
         const addBtn = fabs[fabs.length - 1];
 
+        /* Check if button is rendered */
         expect(addBtn).toBeTruthy();
         expect(addBtn.props.children[0].props.name).toBe('add-circle-outline');
     });
 
     it('should call setSelectedCourse when add button is pressed', () => {
+
+        /* Get touchable */
         const fabs = screen.getAllByTestId('fab-touchable');
         const addBtn = fabs[fabs.length - 1];
 
         fireEvent.press(addBtn);
 
+        /* Check if setSelectedCourse is called one time with respective args */
         expect(setSelectedCourseMock).toHaveBeenCalledTimes(1);
         expect(setSelectedCourseMock).toHaveBeenCalledWith(INIT_COURSE)
     });
