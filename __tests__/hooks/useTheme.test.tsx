@@ -3,10 +3,13 @@ import { renderHook, waitFor } from '@testing-library/react-native';
 import hexToRgba from 'hex-to-rgba';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
+/* Hooks */
 import { useTheme } from '../../src/hooks';
 
+/* Context */
 import { ThemeProvider } from '../../src/theme/context';
 
+/* Features */
 import { darkState, defaultThemeState } from '../features/theme';
 
 const render = () => {
@@ -33,6 +36,7 @@ describe('Test in useTheme hook', () => {
                 ? 'rgba(255, 255, 255, 0.15)'
                 : 'rgba(0, 0, 0, 0.15)';
 
+            /* Check properties returned by hook */
             expect(result.current).toEqual({
                 state: defaultThemeState,
                 setTheme: expect.any(Function),
@@ -58,15 +62,18 @@ describe('Test in useTheme hook', () => {
                 ? 'rgba(255, 255, 255, 0.15)'
                 : 'rgba(0, 0, 0, 0.15)';
 
+            /* Check if deviceTheme changed */
             expect(result.current.state).toEqual({
                 ...darkState,
                 deviceTheme: 'default'
             });
 
+            /* Check if BUTTON_TRANSLUCENT_COLOR and BUTTON_TRANSPARENT_COLOR changed value */
             expect(result.current.BUTTON_TRANSLUCENT_COLOR).toBe(BUTTON_TRANSLUCENT_COLOR);
             expect(result.current.BUTTON_TRANSPARENT_COLOR).toBe(BUTTON_TRANSPARENT_COLOR);
         });
 
+        /* Check if AsyncStorage.setItem is called with respective args */
         expect(AsyncStorage.setItem).toHaveBeenCalled();
         expect(AsyncStorage.setItem).toHaveBeenCalledWith('jw-reports-theme', 'dark');
     });
@@ -77,9 +84,11 @@ describe('Test in useTheme hook', () => {
         await waitFor(async () => {
             result.current.setDefaultTheme();
 
+            /* Check if state is equal to defaultThemeState */
             expect(result.current.state).toEqual(defaultThemeState);
         });
 
+        /* Check if AsyncStorage.setItem is called with respective args */
         expect(AsyncStorage.setItem).toHaveBeenCalled();
         expect(AsyncStorage.setItem).toHaveBeenCalledWith('jw-reports-theme', 'default');
     });

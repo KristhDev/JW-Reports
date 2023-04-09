@@ -3,11 +3,14 @@ import { Provider } from 'react-redux';
 import { act, renderHook } from '@testing-library/react-native';
 import { configureStore } from '@reduxjs/toolkit';
 
+/* Hooks */
 import { useStatus } from '../../src/hooks';
 
+/* Features */
 import { statusReducer } from '../../src/features/status';
 import { errorState, initialState as statusInitState, successState } from '../features/status';
 
+/* Interfaces */
 import { StatusState } from '../../src/interfaces/status';
 
 const getMockStore = (initialState: StatusState) => {
@@ -32,6 +35,7 @@ describe('Test in useStatus hook', () => {
         const mockStore = getMockStore({ ...statusInitState });
         const { result } = render(mockStore);
 
+        /* Check if hook return respective properties */
         expect(result.current).toEqual({
             state: statusInitState,
             clearStatus: expect.any(Function),
@@ -45,12 +49,14 @@ describe('Test in useStatus hook', () => {
         const mockStore = getMockStore({ ...statusInitState });
         const { result } = render(mockStore);
 
+        /* Check if state is equal to initial state */
         expect(result.current.state).toEqual(statusInitState);
 
         act(() => {
             result.current.setStatus({ ...successState });
         });
 
+        /* Check if state is updated */
         expect(result.current.state).toEqual(successState);
     });
 
@@ -58,12 +64,14 @@ describe('Test in useStatus hook', () => {
         const mockStore = getMockStore({ ...statusInitState });
         const { result } = render(mockStore);
 
+        /* Check if state is equal to initial state */
         expect(result.current.state).toEqual(statusInitState);
 
         act(() => {
             result.current.setErrorForm({ name: 'El nombre es obligatorio' });
         });
 
+        /* Check if state is updated */
         expect(result.current.state).toEqual({
             msg: 'El nombre es obligatorio',
             code: 400
@@ -74,12 +82,14 @@ describe('Test in useStatus hook', () => {
         const mockStore = getMockStore({ ...errorState });
         const { result } = render(mockStore);
 
+        /* Check if state is equal to error state */
         expect(result.current.state).toEqual(errorState);
 
         act(() => {
             result.current.clearStatus();
         });
 
+        /* Check if state is cleaning */
         expect(result.current.state).toEqual(statusInitState);
     });
 });

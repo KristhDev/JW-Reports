@@ -4,14 +4,18 @@ import { configureStore } from '@reduxjs/toolkit';
 import { Provider } from 'react-redux';
 import { request } from 'react-native-permissions';
 
+/* Features */
 import { statusReducer } from '../../src/features/status';
 import { permissionsReducer } from '../../src/features/permissions';
 
+/* Hooks */
 import { useStatus, usePermissions } from '../../src/hooks';
 
+/* Features test */
 import { initialState as statusInitState, } from '../features/status';
 import { grantedState, initialState as permissionsInitState, } from '../features/permissions';
 
+/* Interfaces */
 import { StatusState } from '../../src/interfaces/status';
 import { PermissionsState } from '../../src/interfaces/permissions';
 
@@ -44,6 +48,7 @@ describe('Test in usePermissions hook', () => {
         const mockStore = getMockStore({ permissions: permissionsInitState, status: statusInitState });
         const { result } = render(mockStore);
 
+        /* Check if hook return respective properties */
         expect(result.current.usePermissions).toEqual({
             state: permissionsInitState,
             checkPermissions: expect.any(Function),
@@ -59,6 +64,7 @@ describe('Test in usePermissions hook', () => {
             await result.current.usePermissions.checkPermissions();
         });
 
+        /* Check if permissions are updated */
         expect(result.current.usePermissions.state).toEqual(grantedState);
     });
 
@@ -72,6 +78,7 @@ describe('Test in usePermissions hook', () => {
             await result.current.usePermissions.askPermission('mediaLibrary');
         });
 
+        /* Check if permissions are updated in property mediaLibrary */
         expect(result.current.usePermissions.state).toEqual({
             permissions: {
                 ...permissionsInitState.permissions,
@@ -90,6 +97,10 @@ describe('Test in usePermissions hook', () => {
             await result.current.usePermissions.askPermission('camera');
         });
 
+        /**
+         * Check if premissions is equal to initial state and status
+         * is update with respective data
+         */
         expect(result.current.usePermissions.state).toEqual(permissionsInitState);
         expect(result.current.useStatus.state).toEqual({
             msg: 'Lo sentimos pero su dispositivo no soporta está funcionalidad.',

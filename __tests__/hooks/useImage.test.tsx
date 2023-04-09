@@ -2,23 +2,28 @@ import React from 'react';
 import { act, renderHook } from '@testing-library/react-native';
 import { Provider } from 'react-redux';
 import { Image } from 'react-native-image-crop-picker';
-
 import { configureStore } from '@reduxjs/toolkit';
 
+/* Features */
 import { deniedState, grantedState, unavailableState } from '../features/permissions';
 import { initialState as statusInitState } from '../features/status';
 import { permissionsReducer } from '../../src/features/permissions';
 import { statusReducer } from '../../src/features/status';
 
+/* Hooks */
 import { useImage, usePermissions, useStatus, useTheme } from '../../src/hooks';
 
+/* Interfaces */
 import { PermissionsState } from '../../src/interfaces/permissions';
 import { StatusState } from '../../src/interfaces/status';
 
+/* Theme */
 import { darkColors } from '../../src/theme/colors';
 
+/* Setup */
 import { openCameraMock, openPickerMock } from '../../jest.setup';
 
+/* Mock hooks */
 jest.mock('../../src/hooks/useTheme.ts');
 
 interface InitialState {
@@ -71,6 +76,7 @@ describe('Test in useImage hook', () => {
         const mockStore = getMockStore({ permissions: grantedState, status: statusInitState });
         const { result } = render(mockStore);
 
+        /* Check if hook return respective properties */
         expect(result.current.useImage).toEqual({
             image: {},
             setImage: expect.any(Function),
@@ -91,6 +97,7 @@ describe('Test in useImage hook', () => {
             result.current.useImage.takeImageToGallery();
         });
 
+        /* Check if openPicker is called one time and image is equal to mock */
         expect(openPickerMock).toBeCalledTimes(1);
         expect(result.current.useImage.image).toEqual(mockImage);
     });
@@ -104,6 +111,7 @@ describe('Test in useImage hook', () => {
             result.current.useImage.takeImageToGallery();
         });
 
+        /* Check if openPicker isnt called and image is empty */
         expect(openPickerMock).not.toHaveBeenCalled();
         expect(result.current.useImage.image).toEqual({});
     });
@@ -116,6 +124,7 @@ describe('Test in useImage hook', () => {
             result.current.useImage.takeImageToGallery();
         });
 
+        /* Check if openPicker isnt called and image is empty */
         expect(openPickerMock).not.toHaveBeenCalled();
         expect(result.current.useImage.image).toEqual({});
     });
@@ -130,6 +139,7 @@ describe('Test in useImage hook', () => {
             result.current.useImage.takePhoto();
         });
 
+        /* Check if openCamera is called one time and image is equal to mock */
         expect(openCameraMock).toBeCalledTimes(1);
         expect(result.current.useImage.image).toEqual(mockImage);
     });
@@ -143,6 +153,7 @@ describe('Test in useImage hook', () => {
             result.current.useImage.takePhoto();
         });
 
+        /* Check if openCamera isnt called and image is empty */
         expect(openCameraMock).not.toHaveBeenCalled();
         expect(result.current.useImage.image).toEqual({});
     });
@@ -155,6 +166,7 @@ describe('Test in useImage hook', () => {
             result.current.useImage.takePhoto();
         });
 
+        /* Check if openCamera isnt called and image is empty */
         expect(openCameraMock).not.toHaveBeenCalled();
         expect(result.current.useImage.image).toEqual({});
     });
