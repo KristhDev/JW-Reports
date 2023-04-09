@@ -2,17 +2,22 @@ import React from 'react';
 import { render, screen } from '@testing-library/react-native';
 import dayjs from 'dayjs';
 
+/* Screens */
 import { RevisitDetail } from '../../../src/screens/revisits';
 
+/* Features */
 import { selectedRevisitState } from '../../features/revisits';
 
+/* Hooks */
 import { useRevisits, useStatus, useTheme } from '../../../src/hooks';
 
+/* Theme */
 import { darkColors } from '../../../src/theme';
 
 const setSelectedRevisitMock = jest.fn();
 const revisitPhoto = 'https://img.freepik.com/free-vector/nature-scene-with-river-hills-forest-mountain-landscape-flat-cartoon-style-illustration_1150-37326.jpg';
 
+/* Mock hooks */
 jest.mock('../../../src/hooks/useRevisits.ts');
 jest.mock('../../../src/hooks/useStatus.ts');
 jest.mock('../../../src/hooks/useTheme.ts');
@@ -45,35 +50,45 @@ describe('Test in <RevistDetail /> screen', () => {
     it('should render revisit date', () => {
         const selectedRevisit = selectedRevisitState.selectedRevisit;
 
+        /* Get elements with data of revisit */
         const title = screen.getByTestId('title-text');
         const aboutSection = screen.getByTestId('revisit-detail-about-section');
         const addressSection = screen.getByTestId('revisit-detail-address-section');
         const createdDate = screen.getByTestId('revisit-detail-created-date');
 
+        /* Check if title exists and contain respective values */
         expect(title).toBeTruthy();
         expect(title.props.children).toBe(selectedRevisit.person_name.toUpperCase());
 
+        /* Check if about section exists and contain respective value */
         expect(aboutSection).toBeTruthy();
         expect(aboutSection.props.children[0].props.children.join('')).toBe(`Información de ${ selectedRevisit.person_name }:`);
         expect(aboutSection.props.children[1].props.children).toBe(selectedRevisit.about);
 
+        /* Check if address section exists and contain respective value */
         expect(addressSection).toBeTruthy();
         expect(addressSection.props.children[0].props.children).toBe('Dirección:');
         expect(addressSection.props.children[1].props.children).toBe(selectedRevisit.address);
 
+        /* Check if date exists and contain respective value */
         expect(createdDate).toBeTruthy();
         expect(createdDate.props.children).toBe(dayjs(selectedRevisit.created_at).format('DD/MM/YYYY'));
     });
 
     it('should render next visit when selectedRevisit.done is false', () => {
         const nextVisit = dayjs(selectedRevisitState.selectedRevisit.next_visit);
+
+        /* Get next visit text */
         const nextVisitText = screen.getByTestId('revisit-detail-next-visit');
 
+        /* Check if next visit text exists and contain respective value */
         expect(nextVisitText).toBeTruthy();
         expect(nextVisitText.props.children).toBe(` ${ nextVisit.format('DD') } de ${ nextVisit.format('MMMM') } del ${ nextVisit.format('YYYY') }`);
     });
 
     it('should render revisit again section when selectedRevisit.done is true', () => {
+
+        /* Mock data of useRevisits */
         (useRevisits as jest.Mock).mockReturnValue({
             state: {
                 ...selectedRevisitState,
@@ -89,12 +104,14 @@ describe('Test in <RevistDetail /> screen', () => {
 
         render(<RevisitDetail />);
 
+        /* Get again section and check if exists */
         const revisitAgainSection = screen.getByTestId('revisit-detail-revisit-again-section');
-
         expect(revisitAgainSection).toBeTruthy();
     });
 
     it('should call image if exisit in revisit', () => {
+
+        /* Mock data of useRevisits */
         (useRevisits as jest.Mock).mockReturnValue({
             state: {
                 ...selectedRevisitState,
@@ -115,9 +132,11 @@ describe('Test in <RevistDetail /> screen', () => {
             photo: revisitPhoto
         }
 
+        /* Get image and text image */
         const photoImage = screen.getByTestId('revisit-detail-photo-image');
         const photoText = screen.getByTestId('revisit-detail-photo-text');
 
+        /* Check if image photo and image text exists and contain respective value */
         expect(photoImage).toBeTruthy();
         expect(photoImage.props.source.uri).toBe(revisitPhoto);
         expect(photoText).toBeTruthy();
@@ -125,6 +144,8 @@ describe('Test in <RevistDetail /> screen', () => {
     });
 
     it('should not call setSelectedRevisit when index of navigation is different of 0', () => {
+
+        /* Check if setSelectedRevisit isnt called */
         expect(setSelectedRevisitMock).not.toHaveBeenCalled();
     });
 });

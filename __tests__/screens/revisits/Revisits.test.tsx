@@ -2,18 +2,23 @@ import React from 'react';
 import { fireEvent, render, screen } from '@testing-library/react-native';
 import { MenuProvider } from 'react-native-popup-menu';
 
+/* Features */
 import { INIT_REVISIT } from '../../../src/features/revisits';
 import { coursesState } from '../../features/courses';
 import { revisitsState } from '../../features/revisits';
 
+/* Screens */
 import { Revisits } from '../../../src/screens/revisits';
 
+/* Hooks */
 import { useCourses, useRevisits, useStatus, useTheme } from '../../../src/hooks';
 
+/* Theme */
 import { darkColors } from '../../../src/theme';
 
 const setSelectedRevisitMock = jest.fn();
 
+/* Mock hooks */
 jest.mock('../../../src/hooks/useCourses.ts');
 jest.mock('../../../src/hooks/useRevisits.ts');
 jest.mock('../../../src/hooks/useStatus.ts');
@@ -87,19 +92,25 @@ describe('Test in <Revisits /> screen', () => {
     });
 
     it('should render add button when route name is RevisitsScreen', () => {
+
+        /* Get touchable */
         const fabs = screen.getAllByTestId('fab-touchable');
         const addBtn = fabs[fabs.length - 1];
 
+        /* Check if fab exists and contain respective icon */
         expect(addBtn).toBeTruthy();
         expect(addBtn.props.children[0].props.name).toBe('add-circle-outline');
     });
 
     it('should call setSelectedRevisit when add button is pressed', () => {
+
+        /* Get touchable */
         const fabs = screen.getAllByTestId('fab-touchable');
         const addBtn = fabs[fabs.length - 1];
 
         fireEvent.press(addBtn);
 
+        /* Check if setSelectedRevisit is called one time with respective value */
         expect(setSelectedRevisitMock).toHaveBeenCalledTimes(1);
         expect(setSelectedRevisitMock).toHaveBeenCalledWith({
             ...INIT_REVISIT,

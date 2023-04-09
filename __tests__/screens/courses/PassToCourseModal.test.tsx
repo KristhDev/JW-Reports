@@ -1,18 +1,23 @@
 import React from 'react';
 import { act, render, screen, waitFor, fireEvent } from '@testing-library/react-native';
 
+/* Screens */
 import { PassToCourseModal } from '../../../src/screens/courses';
 
+/* Features */
 import { selectedRevisitState } from '../../features/revisits';
 
+/* Hooks */
 import { useCourses, useRevisits, useStatus, useTheme } from '../../../src/hooks';
 
+/* Theme */
 import { darkColors } from '../../../src/theme';
 
 const saveCourseMock = jest.fn();
 const setStatusMock = jest.fn();
 const onCloseMock = jest.fn();
 
+/* Mock hooks */
 jest.mock('../../../src/hooks/useCourses.ts');
 jest.mock('../../../src/hooks/useRevisits.ts');
 jest.mock('../../../src/hooks/useStatus.ts');
@@ -64,8 +69,11 @@ describe('Test in <PassToCourseModal />', () => {
 
         await act(async () => {
             await waitFor(() => {
+
+                /* Get modal title */
                 const title = screen.getByTestId('modal-text');
 
+                /* Check if title exists and contain respective value */
                 expect(title).toBeTruthy();
                 expect(title.props.children.join('')).toBe(`¿Está seguro de comenzar un curso bíblico con ${ selectedRevisitState.selectedRevisit.person_name }?`);
             });
@@ -84,9 +92,12 @@ describe('Test in <PassToCourseModal />', () => {
 
         await act(async () => {
             await waitFor(() => {
+
+                /* Get touchable */
                 const touchable = screen.getAllByTestId('button-touchable')[1];
                 fireEvent.press(touchable);
 
+                /* Check if setStatus is called one time */
                 expect(setStatusMock).toHaveBeenCalledTimes(1);
             });
         });
@@ -106,18 +117,24 @@ describe('Test in <PassToCourseModal />', () => {
 
         await act(async () => {
             await waitFor(() => {
+
+                /* Get touchable */
                 const touchable = screen.getAllByTestId('button-touchable')[1];
                 fireEvent.press(touchable);
 
+                /* Get text input and type new value */
                 const input = screen.getByTestId('form-field-text-input');
                 fireEvent(input, 'onChangeText', pubName);
 
+                /* Get confirm touchable */
                 const touchableConfirm = screen.getAllByTestId('button-touchable')[1];
                 fireEvent.press(touchableConfirm);
 
+                /* Check if saveCourse is called */
                 expect(saveCourseMock).toHaveBeenCalled();
             });
 
+            /* Check if saveCourse is called with respective values */
             expect(saveCourseMock).toHaveBeenCalledWith({
                 person_name: selectedRevisitState.selectedRevisit.person_name,
                 person_about: selectedRevisitState.selectedRevisit.about,

@@ -2,17 +2,22 @@ import React from 'react';
 import { fireEvent, render, screen } from '@testing-library/react-native';
 import { MenuProvider } from 'react-native-popup-menu';
 
+/* Features */
 import { INIT_LESSON } from '../../../src/features/courses';
 import { lessonsState } from '../../features/courses';
 
+/* Screens */
 import { Lessons } from '../../../src/screens/courses';
 
+/* Hooks */
 import { useCourses, useTheme } from '../../../src/hooks';
 
+/* Theme */
 import { darkColors } from '../../../src/theme';
 
 const setSelectedLessonMock = jest.fn();
 
+/* Mock hooks */
 jest.mock('../../../src/hooks/useCourses.ts');
 jest.mock('../../../src/hooks/useTheme.ts');
 
@@ -47,11 +52,14 @@ describe('Test in <Lessons /> screen', () => {
     });
 
     it('should call setSelectedLesson when add button is pressed', () => {
+
+        /* Get fabs and add button */
         const fabs = screen.getAllByTestId('fab-touchable');
         const addBtn = fabs[fabs.length - 1];
 
         fireEvent.press(addBtn);
 
+        /* Check if setSelectedLesson is called one time with respective values */
         expect(setSelectedLessonMock).toHaveBeenCalledTimes(1);
         expect(setSelectedLessonMock).toHaveBeenCalledWith({
             ...INIT_LESSON,

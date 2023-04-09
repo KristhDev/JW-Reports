@@ -2,12 +2,16 @@ import React from 'react';
 import { act, render, screen, waitFor } from '@testing-library/react-native';
 import { Image } from 'react-native-image-crop-picker';
 
+/* Screens */
 import { AddOrEditRevisit } from '../../../src/screens/revisits';
 
+/* Features */
 import { revisitsState, selectedRevisitState } from '../../features/revisits';
 
+/* Hooks */
 import { useImage, useRevisits, useStatus, useTheme } from '../../../src/hooks';
 
+/* Theme */
 import { darkColors } from '../../../src/theme';
 
 const image: Image = {
@@ -18,6 +22,7 @@ const image: Image = {
     width: 200
 }
 
+/* Mock hooks */
 jest.mock('../../../src/hooks/useImage.ts');
 jest.mock('../../../src/hooks/useRevisits.ts');
 jest.mock('../../../src/hooks/useStatus.ts');
@@ -68,8 +73,11 @@ describe('Test in <AddOrEditRevisit /> screen', () => {
 
         await act(async () => {
             await waitFor(() => {
+
+                /* Get title */
                 const title = screen.getByTestId('title-text');
 
+                /* Check if title exists and contain value pass by props */
                 expect(title).toBeTruthy();
                 expect(title.props.children).toBe('Agregar revisita');
             });
@@ -77,6 +85,8 @@ describe('Test in <AddOrEditRevisit /> screen', () => {
     });
 
     it('should render respective title when seletedPreaching isnt empty', async () => {
+
+        /* Mock data of useRevisits */
         (useRevisits as jest.Mock).mockReturnValue({
             state: selectedRevisitState,
             saveRevisit: jest.fn(),
@@ -89,8 +99,11 @@ describe('Test in <AddOrEditRevisit /> screen', () => {
 
         await act(async () => {
             await waitFor(() => {
+
+                /* Get title */
                 const title = screen.getByTestId('title-text');
 
+                /* Check if title exists and contain value pass by props */
                 expect(title).toBeTruthy();
                 expect(title.props.children).toBe('Editar revisita');
             });

@@ -1,15 +1,20 @@
 import React from 'react';
 import { act, render, screen, waitFor } from '@testing-library/react-native';
 
+/* Screens */
 import { AddOrEditPreaching } from '../../../src/screens/preaching';
 
+/* Features */
 import { INIT_PREACHING } from '../../../src/features/preaching';
 import { preachingsState } from '../../features/preaching';
 
+/* Hooks */
 import { usePreaching, useStatus, useTheme } from '../../../src/hooks';
 
+/* Theme */
 import { darkColors } from '../../../src/theme';
 
+/* Mock hooks */
 jest.mock('../../../src/hooks/usePreaching.ts');
 jest.mock('../../../src/hooks/useStatus.ts');
 jest.mock('../../../src/hooks/useTheme.ts');
@@ -56,8 +61,11 @@ describe('Test in <AddOrEditPreaching /> screen', () => {
 
         await act(async () => {
             await waitFor(() => {
+
+                /* Get title */
                 const title = screen.getByTestId('title-text');
 
+                /* Check if title exists and contain value pass by props */
                 expect(title).toBeTruthy();
                 expect(title.props.children).toBe('Agregar día de predicación');
             });
@@ -65,6 +73,8 @@ describe('Test in <AddOrEditPreaching /> screen', () => {
     });
 
     it('should render respective title when seletedPreaching isnt empty', async () => {
+
+        /* Mock data in usePreaching */
         (usePreaching as jest.Mock).mockReturnValue({
             state: {
                 ...preachingsState,
@@ -87,8 +97,11 @@ describe('Test in <AddOrEditPreaching /> screen', () => {
 
         await act(async () => {
             await waitFor(() => {
+
+                /* Get title */
                 const title = screen.getByTestId('title-text');
 
+                /* Check if title exists and contain value pass by props */
                 expect(title).toBeTruthy();
                 expect(title.props.children).toBe('Editar día de predicación');
             });

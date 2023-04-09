@@ -2,12 +2,16 @@ import React from 'react';
 import hexToRgba from 'hex-to-rgba';
 import { render, screen, fireEvent } from '@testing-library/react-native';
 
+/* Screens */
 import { OptionsModal } from '../../../src/screens/ui';
 
+/* Hooks */
 import { useTheme } from '../../../src/hooks';
 
+/* Interfaces */
 import { ItemOption } from '../../../src/interfaces/ui';
 
+/* Theme */
 import { darkColors } from '../../../src/theme';
 
 const modalTitle = 'Select an option';
@@ -22,6 +26,7 @@ const itemsOptions: ItemOption[] = [
 const onCancelMock = jest.fn();
 const onChangeValueMock = jest.fn();
 
+/* Mock hooks */
 jest.mock('../../../src/hooks/useTheme.ts');
 
 describe('Test in <OptionsModal /> screen', () => {
@@ -50,30 +55,40 @@ describe('Test in <OptionsModal /> screen', () => {
     });
 
     it('should render modal title', () => {
+
+        /* Get title */
         const title = screen.getByTestId('info-text-text');
 
+        /* Check if title exists and contain value pass by props */
         expect(title).toBeTruthy();
         expect(title.props.children).toBe(modalTitle);
     });
 
     it('should render all options of items', () => {
-        const options = screen.getAllByTestId('radio-btn-container');
 
+        /* Get optionsm and check that length is equal to length of itemOptions */
+        const options = screen.getAllByTestId('radio-btn-container');
         expect(options).toHaveLength(itemsOptions.length);
     });
 
     it('should call onChangeValue with respective value when any option is pressed', () => {
+
+        /* Get options */
         const options = screen.getAllByTestId('radio-btn-text');
         fireEvent.press(options[1]);
 
+        /* Check if onChangeValue was called one time with respective value */
         expect(onChangeValueMock).toHaveBeenCalledTimes(1);
         expect(onChangeValueMock).toHaveBeenCalledWith(itemsOptions[1].value);
     });
 
     it('should call onCancel when cancel button is pressed', () => {
+
+        /* Get cancel touchable */
         const touchable = screen.getByTestId('button-touchable');
         fireEvent.press(touchable);
 
+        /* Check if onCancel was called one time */
         expect(onCancelMock).toHaveBeenCalledTimes(1);
     });
 });

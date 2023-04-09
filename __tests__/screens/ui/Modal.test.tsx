@@ -2,6 +2,7 @@ import React from 'react';
 import { View } from 'react-native';
 import { render, screen } from '@testing-library/react-native';
 
+/* Screens */
 import { Modal } from '../../../src/screens/ui';
 
 describe('Test in <Modal /> screen', () => {
@@ -25,6 +26,8 @@ describe('Test in <Modal /> screen', () => {
     });
 
     it('should render children', () => {
+
+        /* Get child and check if exists */
         const children = screen.getByTestId('modal-content');
         expect(children).toBeTruthy();
     });
