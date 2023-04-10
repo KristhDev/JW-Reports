@@ -35,15 +35,6 @@ describe('Test usePreaching hook loadPreachings', () => {
                 revisits: 0,
                 videos: 0
             });
-
-            await result.current.usePreaching.savePreaching({
-                day: new Date(),
-                init_hour: new Date(),
-                final_hour: new Date(),
-                publications: 2,
-                revisits: 0,
-                videos: 0
-            });
         });
 
         await act(async () => {
@@ -70,18 +61,6 @@ describe('Test usePreaching hook loadPreachings', () => {
                     videos: expect.any(Number),
                     created_at: expect.any(String),
                     updated_at: expect.any(String)
-                },
-                {
-                    id: expect.any(String),
-                    user_id: expect.any(String),
-                    day: expect.any(String),
-                    init_hour: expect.any(String),
-                    final_hour: expect.any(String),
-                    publications: expect.any(Number),
-                    revisits: expect.any(Number),
-                    videos: expect.any(Number),
-                    created_at: expect.any(String),
-                    updated_at: expect.any(String)
                 }
             ],
             seletedPreaching: {
@@ -96,11 +75,6 @@ describe('Test usePreaching hook loadPreachings', () => {
                 created_at: expect.any(String),
                 updated_at: expect.any(String)
             }
-        });
-
-        await act(async () => {
-            await result.current.usePreaching.setSelectedPreaching(result.current.usePreaching.state.preachings[0]);
-            await result.current.usePreaching.deletePreaching();
         });
 
         await act(async () => {

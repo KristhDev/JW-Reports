@@ -61,7 +61,8 @@ describe('Test in useStatus hook', () => {
             clearStatus: expect.any(Function),
             setErrorForm: expect.any(Function),
             setStatus: expect.any(Function),
-            setSupabaseError: expect.any(Function)
+            setSupabaseError: expect.any(Function),
+            setUnauthenticatedError: expect.any(Function)
         });
     });
 

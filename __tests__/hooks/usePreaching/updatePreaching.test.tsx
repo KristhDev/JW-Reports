@@ -144,7 +144,7 @@ describe('Test in usePreaching updatePreaching', () => {
         /* Check if status state is equal to respective object */
         expect(result.current.useStatus.state).toEqual({
             code: 401,
-            msg: 'Para realizar está acción debes iniciar sesión.'
+            msg: 'Para realizar está acción debe iniciar sesión.'
         });
     });
 

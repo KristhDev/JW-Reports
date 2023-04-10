@@ -19,7 +19,10 @@ describe('Test usePreaching hook deletePreaching', () => {
         const mockStore = getMockStoreComplete({
             auth: authInitState,
             courses: coursesState,
-            preaching: preachingInitState,
+            preaching: {
+                ...preachingInitState,
+                selectedDate: new Date()
+            },
             revisits: revisitsState,
             status: statusInitState
         });
@@ -143,7 +146,7 @@ describe('Test usePreaching hook deletePreaching', () => {
         /* Check if status state is equal to respective object */
         expect(result.current.useStatus.state).toEqual({
             code: 401,
-            msg: 'Para realizar está acción debes iniciar sesión.'
+            msg: 'Para realizar está acción debe iniciar sesión.'
         });
 
         /* Check if state is equal to preachings state */

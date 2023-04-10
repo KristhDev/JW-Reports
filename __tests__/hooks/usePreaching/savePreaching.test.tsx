@@ -121,7 +121,7 @@ describe('Test in usePreaching hook savePreaching', () => {
         /* Check if status state is equal to respective object */
         expect(result.current.useStatus.state).toEqual({
             code: 401,
-            msg: 'Para realizar está acción debes iniciar sesión.'
+            msg: 'Para realizar está acción debe iniciar sesión.'
         });
 
         /* Check if goBack is called one time */
