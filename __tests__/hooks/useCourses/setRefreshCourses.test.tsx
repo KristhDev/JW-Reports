@@ -1,9 +1,11 @@
 import { act } from '@testing-library/react-native';
 
+/* Features */
 import { initialState as authInitState } from '../../features/auth';
 import { initialState as coursesInitState } from '../../features/courses';
 import { initialState as statusInitState } from '../../features/status';
 
+/* Setup */
 import { getMockStore, render } from './setup';
 
 describe('Test useCourses hook setRefreshCourses', () => {
@@ -15,6 +17,7 @@ describe('Test useCourses hook setRefreshCourses', () => {
             await result.current.useCourses.setRefreshCourses(true);
         });
 
+        /* Check if refreshCourses is changed */
         expect(result.current.useCourses.state).toEqual({
             ...coursesInitState,
             refreshCourses: true
@@ -24,6 +27,7 @@ describe('Test useCourses hook setRefreshCourses', () => {
             await result.current.useCourses.setRefreshCourses(false);
         });
 
+        /* Check if courses state is equal to initial state */
         expect(result.current.useCourses.state).toEqual(coursesInitState);
     });
 });

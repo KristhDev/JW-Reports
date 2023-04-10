@@ -19,11 +19,26 @@ import { grantedState, initialState as permissionsInitState, } from '../features
 import { StatusState } from '../../src/interfaces/status';
 import { PermissionsState } from '../../src/interfaces/permissions';
 
+/* The `interface InitialState` is defining the shape of an object that contains the initial state for
+the `permissions` and `status` features in the Redux store. This interface is used in the
+`getMockStore` function to create a Redux store with the initial state for these features. */
 interface InitialState {
     permissions: PermissionsState;
     status: StatusState;
 }
 
+/**
+ * The function returns a configured Redux store with preloaded state for permissions and status
+ * reducers.
+ * @param {InitialState}  - The `getMockStore` function takes an object with two properties as its
+ * parameter: `permissions` and `status`. These properties represent the initial state of the
+ * `permissions` and `status` slices of the Redux store. The function returns a configured Redux store
+ * with the initial state set to the values passed
+ * @returns The function `getMockStore` is returning a configured Redux store with two reducers
+ * (`permissionsReducer` and `statusReducer`) and an initial state object containing `permissions` and
+ * `status` properties. The initial state is passed as `preloadedState` to the `configureStore`
+ * function from the Redux Toolkit library.
+ */
 const getMockStore = ({ permissions, status }: InitialState) => {
     return configureStore({
         reducer: {
@@ -37,6 +52,18 @@ const getMockStore = ({ permissions, status }: InitialState) => {
     });
 }
 
+/**
+ * This function renders a React component with hooks that use the store and provider.
+ * @param {any} store - The `store` parameter is an object that represents the Redux store. It contains
+ * the state of the application and provides methods to update the state and subscribe to changes. The
+ * `render` function uses this store to create a `Provider` component that wraps the children
+ * components and makes the store available to them
+ * @returns The `render` function is returning the result of calling the `renderHook` function with two
+ * arguments: a function that returns an object with two properties (`useStatus` and `usePermissions`)
+ * and an options object that includes a `wrapper` property. The `wrapper` property is an anonymous
+ * function that takes a `children` argument and returns a JSX expression that wraps the `children` in
+ * a
+ */
 const render = (store: any) => {
     return renderHook(() => ({ useStatus: useStatus(), usePermissions: usePermissions() }) , {
         wrapper: ({ children }) => <Provider store={ store }>{ children }</Provider>

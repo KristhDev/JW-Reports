@@ -1,9 +1,11 @@
 import { act } from '@testing-library/react-native';
 
+/* Features */
 import { initialState as authInitState, testCredentials } from '../../features/auth';
 import { initialState as coursesInitState } from '../../features/courses';
 import { initialState as statusInitState } from '../../features/status';
 
+/* Setup */
 import { getMockStore, render, testCourse } from './setup';
 import { goBackMock } from '../../../jest.setup';
 
@@ -35,6 +37,7 @@ describe('Test useCourses hook updateCourse', () => {
             });
         });
 
+        /* Check if selectedCourse and courses are updated */
         expect(result.current.useCourses.state).toEqual({
             ...coursesInitState,
             selectedCourse: {
@@ -59,11 +62,13 @@ describe('Test useCourses hook updateCourse', () => {
             }]
         });
 
+        /* Check if status state is equal to respective status */
         expect(result.current.useStatus.state).toEqual({
             code: 200,
             msg: 'Haz actualizado el curso correctamente.'
         });
 
+        /* Check if goBack is called one time */
         expect(goBackMock).toHaveBeenCalledTimes(1);
 
         await act(async () => {
@@ -86,8 +91,10 @@ describe('Test useCourses hook updateCourse', () => {
             });
         });
 
+        /* Check if courses state inst changed */
         expect(result.current.useCourses.state).toEqual(coursesInitState);
 
+        /* Check if status state is equal to respective status */
         expect(result.current.useStatus.state).toEqual({
             code: 401,
             msg: 'Para realizar está acción debe iniciar sesión.'
@@ -113,6 +120,7 @@ describe('Test useCourses hook updateCourse', () => {
             });
         });
 
+        /* Check if courses state contain courses */
         expect(result.current.useCourses.state).toEqual({
             ...coursesInitState,
             courses: [{
@@ -126,6 +134,7 @@ describe('Test useCourses hook updateCourse', () => {
             }]
         });
 
+        /* Check if status state is equal to respective status */
         expect(result.current.useStatus.state).toEqual({
             code: 400,
             msg: 'No hay un curso seleccionado para actualizar.'
@@ -167,6 +176,7 @@ describe('Test useCourses hook updateCourse', () => {
             });
         });
 
+        /* Check if courses state contain selectedCourse and courses */
         expect(result.current.useCourses.state).toEqual({
             ...coursesInitState,
             selectedCourse: {
@@ -189,6 +199,7 @@ describe('Test useCourses hook updateCourse', () => {
             }]
         });
 
+        /* Check if status state is equal to respective status */
         expect(result.current.useStatus.state).toEqual({
             code: expect.any(Number),
             msg: expect.any(String)

@@ -1,15 +1,20 @@
 import { act } from '@testing-library/react-native';
 
+/* Features */
 import { initialState as authInitState } from '../../features/auth';
 import { initialState as revisitsInitState, revisitsState } from '../../features/revisits';
 import { initialState as statusInitState } from '../../features/status';
 
+/* Hooks */
 import { useTheme } from '../../../src/hooks';
 
+/* Setup */
 import { getMockStore, render } from './setup';
 
+/* Theme */
 import { darkColors } from '../../../src/theme';
 
+/* Mock hooks */
 jest.mock('../../../src/hooks/useTheme.ts')
 
 describe('Test useRevisits hook clearRevisits', () => {
@@ -21,6 +26,7 @@ describe('Test useRevisits hook clearRevisits', () => {
         const mockStore = getMockStore({ auth: authInitState, revisits: revisitsState, status: statusInitState });
         const { result } = render(mockStore);
 
+        /* Check is revisits state containt revisits values */
         expect(result.current.useRevisits.state).toEqual({
             ...revisitsState,
             selectedRevisit: {
@@ -35,6 +41,7 @@ describe('Test useRevisits hook clearRevisits', () => {
             await result.current.useRevisits.clearRevisits();
         });
 
+        /* Check if revisits state is cleanen */
         expect(result.current.useRevisits.state).toEqual({
             ...revisitsInitState,
             selectedRevisit: {

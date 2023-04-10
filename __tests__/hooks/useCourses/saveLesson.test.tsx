@@ -1,9 +1,11 @@
 import { act } from '@testing-library/react-native';
 
+/* Features */
 import { initialState as authInitState, testCredentials } from '../../features/auth';
 import { initialState as coursesInitState } from '../../features/courses';
 import { initialState as statusInitState } from '../../features/status';
 
+/* Setup */
 import { getMockStore, onFinishMock, render, testCourse, testLesson } from './setup';
 import { navigateMock } from '../../../jest.setup';
 
@@ -32,6 +34,7 @@ describe('Test useCourses hook saveLesson', () => {
             await result.current.useCourses.saveLesson(testLesson);
         });
 
+        /* Check if courses state contain selectedCouerse and courses */
         expect(result.current.useCourses.state).toEqual({
             ...coursesInitState,
             selectedCourse: {
@@ -54,11 +57,13 @@ describe('Test useCourses hook saveLesson', () => {
             }]
         });
 
+        /* Check if status state is equal to respective status */
         expect(result.current.useStatus.state).toEqual({
             code: 201,
             msg: 'Haz agregado una clase al curso correctamente.'
         });
 
+        /* Check if navigate is called two times with respectve args */
         expect(navigateMock).toHaveBeenCalledTimes(2);
         expect(navigateMock).toHaveBeenCalledWith('LessonsScreen');
 
@@ -79,13 +84,16 @@ describe('Test useCourses hook saveLesson', () => {
             await result.current.useCourses.saveLesson(testLesson);
         });
 
+        /* Check if courses state is equal to initial state */
         expect(result.current.useCourses.state).toEqual(coursesInitState);
 
+        /* Check if status state is equal to respective status */
         expect(result.current.useStatus.state).toEqual({
             code: 401,
             msg: 'Para realizar está acción debe iniciar sesión.'
         });
 
+        /* Check if navigate isnt called */
         expect(navigateMock).not.toHaveBeenCalled();
     });
 
@@ -105,6 +113,7 @@ describe('Test useCourses hook saveLesson', () => {
             await result.current.useCourses.saveLesson(testLesson);
         });
 
+        /* Check if courses state contain courses */
         expect(result.current.useCourses.state).toEqual({
             ...coursesInitState,
             courses: [{
@@ -118,6 +127,7 @@ describe('Test useCourses hook saveLesson', () => {
             }]
         });
 
+        /* Check if status state is equal to respective status */
         expect(result.current.useStatus.state).toEqual({
             code: expect.any(Number),
             msg: expect.any(String),
@@ -159,6 +169,7 @@ describe('Test useCourses hook saveLesson', () => {
             });
         });
 
+        /* Check if courses state contain selectedCourse and courses */
         expect(result.current.useCourses.state).toEqual({
             ...coursesInitState,
             selectedCourse: {
@@ -181,6 +192,7 @@ describe('Test useCourses hook saveLesson', () => {
             }]
         });
 
+        /* Check if status state is equal to respective status */
         expect(result.current.useStatus.state).toEqual({
             code: expect.any(Number),
             msg: expect.any(String),

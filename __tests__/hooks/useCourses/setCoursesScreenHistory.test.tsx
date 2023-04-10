@@ -1,9 +1,11 @@
 import { act } from '@testing-library/react-native';
 
+/* Features */
 import { initialState as authInitState } from '../../features/auth';
 import { initialState as coursesInitState } from '../../features/courses';
 import { initialState as statusInitState } from '../../features/status';
 
+/* Setup */
 import { getMockStore, render } from './setup';
 
 describe('Test useCourses hook setCoursesScreenHistory ', () => {
@@ -15,6 +17,7 @@ describe('Test useCourses hook setCoursesScreenHistory ', () => {
             await result.current.useCourses.setCoursesScreenHistory('AllCoursesScreen');
         });
 
+        /* Check if coursesScreenHistory is changed */
         expect(result.current.useCourses.state).toEqual({
             ...coursesInitState,
             coursesScreenHistory: [ 'AllCoursesScreen' ]
@@ -24,6 +27,7 @@ describe('Test useCourses hook setCoursesScreenHistory ', () => {
             await result.current.useCourses.setCoursesScreenHistory('CompleteCoursesScreen');
         });
 
+        /* Check if coursesScreenHistory is changed */
         expect(result.current.useCourses.state).toEqual({
             ...coursesInitState,
             coursesScreenHistory: [ 'AllCoursesScreen', 'CompleteCoursesScreen' ]

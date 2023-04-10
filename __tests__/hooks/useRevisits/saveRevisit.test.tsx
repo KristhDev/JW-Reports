@@ -1,17 +1,23 @@
 import { act } from '@testing-library/react-native';
 
+/* Features */
 import { initialState as authInitState, testCredentials } from '../../features/auth';
 import { initialState as revisitsInitState } from '../../features/revisits';
 import { initialState as statusInitState } from '../../features/status';
 
+/* Hooks */
 import { useTheme } from '../../../src/hooks';
 
+/* Setup */
 import { getMockStore, onFinishMock, render, testRevisit } from './setup';
 
+/* Theme */
 import { darkColors } from '../../../src/theme';
 
+/* Setup */
 import { navigateMock } from '../../../jest.setup';
 
+/* Mock hooks */
 jest.mock('../../../src/hooks/useTheme.ts');
 
 describe('Test useRevisits hook saveRevisit', () => {
@@ -39,6 +45,7 @@ describe('Test useRevisits hook saveRevisit', () => {
             });
         });
 
+        /* Check if revisits state contain new revisit */
         expect(result.current.useRevisits.state).toEqual({
             ...revisitsInitState,
             revisits: [{
@@ -53,11 +60,13 @@ describe('Test useRevisits hook saveRevisit', () => {
             }]
         });
 
+        /* Check if status state is equal to respective status */
         expect(result.current.useStatus.state).toEqual({
             code: 201,
             msg: 'Haz agregado tu revisita correctamente.'
         });
 
+        /* Check if onFinish and navigate is called one time with respective arg */
         expect(onFinishMock).toHaveBeenCalledTimes(1);
         expect(navigateMock).toHaveBeenCalledTimes(1);
         expect(navigateMock).toHaveBeenCalledWith('RevisitsTopTabsNavigation');
@@ -91,6 +100,7 @@ describe('Test useRevisits hook saveRevisit', () => {
             });
         });
 
+        /* Check if revisits state contain new revisit */
         expect(result.current.useRevisits.state).toEqual({
             ...revisitsInitState,
             revisits: [{
@@ -105,11 +115,13 @@ describe('Test useRevisits hook saveRevisit', () => {
             }]
         });
 
+        /* Check if status state is equal to respective status */
         expect(result.current.useStatus.state).toEqual({
             code: 201,
             msg: `Haz agregado correctamente a ${ testRevisit.person_name } para volverla a visitar.`
         });
 
+        /* Check if onFinish is called one time and navigate inst called */
         expect(onFinishMock).toHaveBeenCalledTimes(1);
         expect(navigateMock).not.toHaveBeenCalled();
 
@@ -138,13 +150,16 @@ describe('Test useRevisits hook saveRevisit', () => {
             });
         });
 
+        /* Check if revisits state is equal to initial state */
         expect(result.current.useRevisits.state).toEqual(revisitsInitState);
 
+        /* Check if status state is equal to respective status */
         expect(result.current.useStatus.state).toEqual({
             code: 401,
             msg: 'Para realizar está acción debe iniciar sesión.'
         });
 
+        /* Check if onFinish is called one time */
         expect(onFinishMock).toHaveBeenCalledTimes(1);
     });
 
@@ -167,13 +182,16 @@ describe('Test useRevisits hook saveRevisit', () => {
             });
         });
 
+        /* Check if revisits state is equal to initial state */
         expect(result.current.useRevisits.state).toEqual(revisitsInitState);
 
+        /* Check if status state is equal to respective status */
         expect(result.current.useStatus.state).toEqual({
             code: expect.any(Number),
             msg: expect.any(String)
         });
 
+        /* Check if onFinish is called one time */
         expect(onFinishMock).toHaveBeenCalledTimes(1);
 
         await act(async () => {

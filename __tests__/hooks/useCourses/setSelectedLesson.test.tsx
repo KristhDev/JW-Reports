@@ -1,9 +1,11 @@
 import { act } from '@testing-library/react-native';
 
+/* Features */
 import { initialState as authInitState } from '../../features/auth';
 import { initialState as coursesInitState } from '../../features/courses';
 import { initialState as statusInitState } from '../../features/status';
 
+/* Setup */
 import { getMockStore, render } from './setup';
 
 describe('Test useCourses hook setSelectedLesson', () => {
@@ -23,6 +25,7 @@ describe('Test useCourses hook setSelectedLesson', () => {
             });
         });
 
+        /* Check if selectedLesson is changed */
         expect(result.current.useCourses.state).toEqual({
             ...coursesInitState,
             selectedLesson: {

@@ -1,9 +1,11 @@
 import { act } from '@testing-library/react-native';
 
+/* Features */
 import { initialState as authInitState } from '../../features/auth';
 import { initialState as coursesInitState } from '../../features/courses';
 import { initialState as statusInitState } from '../../features/status';
 
+/* Setup */
 import { getMockStore, render } from './setup';
 
 describe('Test useCourses hook setLessonsPagination ', () => {
@@ -18,6 +20,7 @@ describe('Test useCourses hook setLessonsPagination ', () => {
             });
         });
 
+        /* Check if lessonsPagination is changed */
         expect(result.current.useCourses.state).toEqual({
             ...coursesInitState,
             lessonsPagination: {
@@ -33,6 +36,7 @@ describe('Test useCourses hook setLessonsPagination ', () => {
             });
         });
 
+        /* Check if lessonsPagination is changed */
         expect(result.current.useCourses.state).toEqual({
             ...coursesInitState,
             lessonsPagination: {

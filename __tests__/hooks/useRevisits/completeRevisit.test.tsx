@@ -1,15 +1,20 @@
 import { act } from '@testing-library/react-native';
 
+/* Features */
 import { initialState as authInitState, testCredentials } from '../../features/auth';
 import { initialState as revisitsInitState } from '../../features/revisits';
 import { initialState as statusInitState } from '../../features/status';
 
+/* Hooks */
 import { useTheme } from '../../../src/hooks';
 
+/* Setup */
 import { getMockStore, onFinishMock, render, testRevisit } from './setup';
 
+/* Theme */
 import { darkColors } from '../../../src/theme';
 
+/* Mock hooks */
 jest.mock('../../../src/hooks/useTheme.ts');
 
 describe('Test useRevisits hook completeRevisit', () => {
@@ -44,6 +49,7 @@ describe('Test useRevisits hook completeRevisit', () => {
             await result.current.useRevisits.completeRevisit(onFinishMock);
         });
 
+        /* Check if selectedRevisit and revisits are changed */
         expect(result.current.useRevisits.state).toEqual({
             ...revisitsInitState,
             selectedRevisit: {
@@ -62,6 +68,7 @@ describe('Test useRevisits hook completeRevisit', () => {
             }]
         });
 
+        /* Check if length of revisits is more than one and onFinish isnt called */
         expect(result.current.useRevisits.state.revisits).toHaveLength(1);
         expect(onFinishMock).not.toHaveBeenCalled();
 
@@ -78,9 +85,14 @@ describe('Test useRevisits hook completeRevisit', () => {
             await result.current.useRevisits.completeRevisit(onFinishMock);
         });
 
+        /**
+         * Check if revisits state is equal to initial state and onFinish
+         * is called one time
+         */
         expect(result.current.useRevisits.state).toEqual(revisitsInitState);
         expect(onFinishMock).toHaveBeenCalledTimes(1);
 
+        /* Check if status state is equal to respective status */
         expect(result.current.useStatus.state).toEqual({
             code: 401,
             msg: 'Para realizar está acción debe iniciar sesión.'
@@ -99,9 +111,14 @@ describe('Test useRevisits hook completeRevisit', () => {
             await result.current.useRevisits.completeRevisit(onFinishMock);
         });
 
+        /**
+         * Check if revisits state is equal to initial state and onFinish
+         * is called one time
+         */
         expect(result.current.useRevisits.state).toEqual(revisitsInitState);
         expect(onFinishMock).toHaveBeenCalledTimes(1);
 
+        /* Check if status state is equal to respective status */
         expect(result.current.useStatus.state).toEqual({
             code: 400,
             msg: 'No hay una revisita seleccionada para completar.'

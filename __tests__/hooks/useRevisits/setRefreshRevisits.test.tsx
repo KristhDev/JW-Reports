@@ -1,15 +1,20 @@
 import { act } from '@testing-library/react-native';
 
+/* Features */
 import { initialState as authInitState } from '../../features/auth';
 import { initialState as revisitsInitState } from '../../features/revisits';
 import { initialState as statusInitState } from '../../features/status';
 
+/* Hooks */
 import { useTheme } from '../../../src/hooks';
 
+/* Setup */
 import { getMockStore, render } from './setup';
 
+/* Theme */
 import { darkColors } from '../../../src/theme';
 
+/* Mock hooks */
 jest.mock('../../../src/hooks/useTheme.ts')
 
 describe('Test useRevisits hook setRefreshRevisits', () => {
@@ -25,6 +30,7 @@ describe('Test useRevisits hook setRefreshRevisits', () => {
             await result.current.useRevisits.setRefreshRevisits(true);
         });
 
+        /* Check if refreshRevisits is changed */
         expect(result.current.useRevisits.state).toEqual({
             ...revisitsInitState,
             refreshRevisits: true
@@ -34,6 +40,7 @@ describe('Test useRevisits hook setRefreshRevisits', () => {
             await result.current.useRevisits.setRefreshRevisits(false);
         });
 
+        /* Check if refreshRevisits is changed */
         expect(result.current.useRevisits.state).toEqual({
             ...revisitsInitState,
             refreshRevisits: false

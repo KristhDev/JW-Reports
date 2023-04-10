@@ -12,6 +12,14 @@ import { ThemeProvider } from '../../src/theme/context';
 /* Features */
 import { darkState, defaultThemeState } from '../features/theme';
 
+/**
+ * This function uses the `renderHook` method to render a React component wrapped in a `ThemeProvider`
+ * component that uses a `useTheme` hook.
+ * @returns The `render` function is returning the result of calling the `renderHook` function with two
+ * arguments: a function that returns the result of calling the `useTheme` hook, and an options object
+ * that includes a `wrapper` property with a function that returns a `ThemeProvider` component with its
+ * children as the `children` prop. The `renderHook` function is a utility function from the `
+ */
 const render = () => {
     return renderHook(() => useTheme(), {
         wrapper: ({ children }) => <ThemeProvider>{ children }</ThemeProvider>

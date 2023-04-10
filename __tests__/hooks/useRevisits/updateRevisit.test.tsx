@@ -1,17 +1,23 @@
 import { act } from '@testing-library/react-native';
 
+/* Features */
 import { initialState as authInitState, testCredentials } from '../../features/auth';
 import { initialState as revisitsInitState } from '../../features/revisits';
 import { initialState as statusInitState } from '../../features/status';
 
+/* Hooks */
 import { useTheme } from '../../../src/hooks';
 
+/* Setup */
 import { getMockStore, onFinishMock, render, testRevisit } from './setup';
 
+/* Theme */
 import { darkColors } from '../../../src/theme';
 
+/* Setup */
 import { goBackMock } from '../../../jest.setup';
 
+/* Mock hooks */
 jest.mock('../../../src/hooks/useTheme.ts');
 
 describe('Test useRevisits hook updateRevisit', () => {
@@ -47,6 +53,7 @@ describe('Test useRevisits hook updateRevisit', () => {
             await result.current.useRevisits.updateRevisit({ ...testRevisit, person_name: 'Chris Frami' });
         });
 
+        /* Check if revisits and selectedRevisit is updated */
         expect(result.current.useRevisits.state).toEqual({
             ...revisitsInitState,
             revisits: [{
@@ -73,11 +80,13 @@ describe('Test useRevisits hook updateRevisit', () => {
             }
         });
 
+        /* Check if status state is equal to respective status */
         expect(result.current.useStatus.state).toEqual({
             code: 200,
             msg: 'Haz actualizado tu revisita correctamente.'
         });
 
+        /* Check if goBack is called one time */
         expect(goBackMock).toHaveBeenCalledTimes(1);
 
         await act(async () => {
@@ -97,8 +106,10 @@ describe('Test useRevisits hook updateRevisit', () => {
             await result.current.useRevisits.updateRevisit(testRevisit);
         });
 
+        /* Check if revisits state inst changed */
         expect(result.current.useRevisits.state).toEqual(revisitsInitState);
 
+        /* Check if status state is equal to respective status */
         expect(result.current.useStatus.state).toEqual({
             code: 401,
             msg: 'Para realizar está acción debe iniciar sesión.'
@@ -117,8 +128,10 @@ describe('Test useRevisits hook updateRevisit', () => {
             await result.current.useRevisits.updateRevisit(testRevisit);
         });
 
+        /* Check if revisits state inst changed */
         expect(result.current.useRevisits.state).toEqual(revisitsInitState);
 
+        /* Check if status state is equal to respective status */
         expect(result.current.useStatus.state).toEqual({
             code: 400,
             msg: 'No hay una revisita seleccionada para actualizar.'
@@ -149,6 +162,7 @@ describe('Test useRevisits hook updateRevisit', () => {
             await result.current.useRevisits.updateRevisit({ ...testRevisit, next_visit: new Date('invalid') });
         });
 
+        /* Check if revisits and selectedRevisits inst updated */
         expect(result.current.useRevisits.state).toEqual({
             ...revisitsInitState,
             revisits: [{
@@ -173,11 +187,13 @@ describe('Test useRevisits hook updateRevisit', () => {
             }
         });
 
+        /* Check if status state is equal to respective status */
         expect(result.current.useStatus.state).toEqual({
             code: expect.any(Number),
             msg: expect.any(String)
         });
 
+        /* Check if goBack inst called */
         expect(goBackMock).not.toHaveBeenCalled();
 
         await act(async () => {

@@ -1,13 +1,19 @@
+
+/* Features */
 import { initialState as authInitState } from '../../features/auth';
 import { initialState as revisitsInitState } from '../../features/revisits';
 import { initialState as statusInitState } from '../../features/status';
 
+/* Hooks */
 import { useTheme } from '../../../src/hooks';
 
+/* Setup */
 import { getMockStore, render } from './setup';
 
+/* Theme */
 import { darkColors } from '../../../src/theme';
 
+/* Mock hooks */
 jest.mock('../../../src/hooks/useTheme.ts')
 
 describe('Test useRevisits hook', () => {
@@ -19,6 +25,7 @@ describe('Test useRevisits hook', () => {
         const mockStore = getMockStore({ auth: authInitState, revisits: revisitsInitState, status: statusInitState });
         const { result } = render(mockStore);
 
+        /* Check if the hook return respective properties */
         expect(result.current.useRevisits).toEqual({
             state: revisitsInitState,
             clearRevisits: expect.any(Function),
