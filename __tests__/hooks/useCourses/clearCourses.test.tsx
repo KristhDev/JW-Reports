@@ -1,9 +1,11 @@
 import { act } from '@testing-library/react-native';
 
+/* Features */
 import { initialState as authInitState } from '../../features/auth';
 import { initialState as coursesInitState, coursesState } from '../../features/courses';
 import { initialState as statusInitState } from '../../features/status';
 
+/* Setup */
 import { getMockStore, render } from './setup';
 
 describe('Test useCourses hook clearCourses', () => {
@@ -15,6 +17,7 @@ describe('Test useCourses hook clearCourses', () => {
             await result.current.useCourses.clearCourses();
         });
 
+        /* Check if courses state is equal to initial state */
         expect(result.current.useCourses.state).toEqual({
             ...coursesInitState,
             selectedCourse: {

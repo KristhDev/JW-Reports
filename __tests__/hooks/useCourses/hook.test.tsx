@@ -1,7 +1,10 @@
+
+/* Features */
 import { initialState as authInitState } from '../../features/auth';
 import { initialState as coursesInitState } from '../../features/courses';
 import { initialState as statusInitState } from '../../features/status';
 
+/* Setup */
 import { getMockStore, render } from './setup';
 
 describe('Test useCourses hook', () => {
@@ -9,6 +12,7 @@ describe('Test useCourses hook', () => {
         const mockStore = getMockStore({ auth: authInitState, courses: coursesInitState, status: statusInitState });
         const { result } = render(mockStore);
 
+        /* Check if hook return respective properties */
         expect(result.current.useCourses).toEqual({
             state: coursesInitState,
             clearCourses: expect.any(Function),

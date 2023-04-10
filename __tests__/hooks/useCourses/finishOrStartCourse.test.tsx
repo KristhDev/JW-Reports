@@ -1,9 +1,11 @@
 import { act } from '@testing-library/react-native';
 
+/* Features */
 import { initialState as authInitState, testCredentials } from '../../features/auth';
 import { initialState as coursesInitState } from '../../features/courses';
 import { initialState as statusInitState } from '../../features/status';
 
+/* Setup */
 import { getMockStore, onFinishMock, render, testCourse } from './setup';
 
 describe('Test useCourses hook finishOrStartCourse', () => {
@@ -31,6 +33,7 @@ describe('Test useCourses hook finishOrStartCourse', () => {
             await result.current.useCourses.finishOrStartCourse(onFinishMock);
         });
 
+        /* Check is courses state contain courses and selectedCourse */
         expect(result.current.useCourses.state).toEqual({
             ...coursesInitState,
             courses: [{
@@ -61,11 +64,13 @@ describe('Test useCourses hook finishOrStartCourse', () => {
             }
         });
 
+        /* Check if status state is equal to respective status */
         expect(result.current.useStatus.state).toEqual({
             code: 200,
             msg: 'Haz terminado el curso correctamente.'
         });
 
+        /* Check if onFinish is called one time */
         expect(onFinishMock).toHaveBeenCalledTimes(1);
 
         await act(async () => {
@@ -85,9 +90,14 @@ describe('Test useCourses hook finishOrStartCourse', () => {
             await result.current.useCourses.finishOrStartCourse(onFinishMock);
         });
 
+        /**
+         * Check if courses state is equal to initial state and
+         * onFinish is called one time
+         */
         expect(result.current.useCourses.state).toEqual(coursesInitState);
         expect(onFinishMock).toHaveBeenCalledTimes(1);
 
+        /* Check if status state is equal to respective status */
         expect(result.current.useStatus.state).toEqual({
             code: 401,
             msg: 'Para realizar está acción debe iniciar sesión.'
@@ -106,9 +116,14 @@ describe('Test useCourses hook finishOrStartCourse', () => {
             await result.current.useCourses.finishOrStartCourse(onFinishMock);
         });
 
+        /**
+         * Check if courses state is equal to initial state and
+         * onFinish is called one time
+         */
         expect(result.current.useCourses.state).toEqual(coursesInitState);
         expect(onFinishMock).toHaveBeenCalledTimes(1);
 
+        /* Check if status state is equal to respective status */
         expect(result.current.useStatus.state).toEqual({
             code: 400,
             msg: 'No hay un curso seleccionado.'
@@ -143,6 +158,7 @@ describe('Test useCourses hook finishOrStartCourse', () => {
             await result.current.useCourses.finishOrStartCourse(onFinishMock);
         });
 
+        /* Check if courses state contain courses and selectedCourse */
         expect(result.current.useCourses.state).toEqual({
             ...coursesInitState,
             courses: [{
@@ -173,8 +189,10 @@ describe('Test useCourses hook finishOrStartCourse', () => {
             }
         });
 
+        /* Check if onFinish is called one time */
         expect(onFinishMock).toHaveBeenCalledTimes(1);
 
+        /* Check if status state is equal to respective status */
         expect(result.current.useStatus.state).toEqual({
             code: 400,
             msg: 'No pudes terminar o comenzar de nuevo un curso suspendido.'

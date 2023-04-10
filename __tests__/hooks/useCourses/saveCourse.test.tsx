@@ -1,9 +1,11 @@
 import { act } from '@testing-library/react-native';
 
+/* Features */
 import { initialState as authInitState, testCredentials } from '../../features/auth';
 import { initialState as coursesInitState } from '../../features/courses';
 import { initialState as statusInitState } from '../../features/status';
 
+/* Setup */
 import { getMockStore, onFinishMock, render, testCourse } from './setup';
 import { navigateMock } from '../../../jest.setup';
 
@@ -24,6 +26,7 @@ describe('Test useCourses hook saveCourse', () => {
             await result.current.useCourses.saveCourse(testCourse, onFinishMock);
         });
 
+        /* Check if courses state contain new course added */
         expect(result.current.useCourses.state).toEqual({
             ...coursesInitState,
             courses: [{
@@ -37,11 +40,13 @@ describe('Test useCourses hook saveCourse', () => {
             }]
         });
 
+        /* Check if status state is equal to respective status */
         expect(result.current.useStatus.state).toEqual({
             code: 201,
             msg: 'Haz agregado un curso correctamente.'
         });
 
+        /* Check if onFinish and navigate is called one time with respective arg */
         expect(onFinishMock).toHaveBeenCalledTimes(1);
         expect(navigateMock).toHaveBeenCalledTimes(1);
         expect(navigateMock).toHaveBeenCalledWith({
@@ -72,13 +77,16 @@ describe('Test useCourses hook saveCourse', () => {
             await result.current.useCourses.saveCourse(testCourse, onFinishMock);
         });
 
+        /* Check if courses state is equal to initial state */
         expect(result.current.useCourses.state).toEqual(coursesInitState);
 
+        /* Check if status state is equal to respective status */
         expect(result.current.useStatus.state).toEqual({
             code: 401,
             msg: 'Para realizar está acción debe iniciar sesión.'
         });
 
+        /* Check if onFinish called one time and navigate not called */
         expect(onFinishMock).toHaveBeenCalledTimes(1);
         expect(navigateMock).not.toHaveBeenCalled();
     });
@@ -98,8 +106,10 @@ describe('Test useCourses hook saveCourse', () => {
             }, onFinishMock);
         });
 
+        /* Check if courses state is equal to initial state */
         expect(result.current.useCourses.state).toEqual(coursesInitState);
 
+        /* Check if status state is equal to respective status */
         expect(result.current.useStatus.state).toEqual({
             code: expect.any(Number),
             msg: expect.any(String),

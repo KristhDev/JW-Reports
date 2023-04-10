@@ -1,9 +1,11 @@
 import { act } from '@testing-library/react-native';
 
+/* Features */
 import { initialState as authInitState, testCredentials } from '../../features/auth';
 import { initialState as coursesInitState } from '../../features/courses';
 import { initialState as statusInitState } from '../../features/status';
 
+/* Setup */
 import { getMockStore, onFinishMock, render, testCourse } from './setup';
 import { navigateMock } from '../../../jest.setup';
 
@@ -32,6 +34,7 @@ describe('Test useCourses hook deleteCourse', () => {
             await result.current.useCourses.deleteCourse(true, onFinishMock);
         });
 
+        /* Check is state contain selectedCourse */
         expect(result.current.useCourses.state).toEqual({
             ...coursesInitState,
             selectedCourse: {
@@ -41,11 +44,13 @@ describe('Test useCourses hook deleteCourse', () => {
             }
         });
 
+        /* Check if status state is equal to respective status */
         expect(result.current.useStatus.state).toEqual({
             code: 200,
             msg: 'Haz eliminado el curso correctamente.'
         });
 
+        /* Check if onFinish and navigate is called with respective arg */
         expect(onFinishMock).toHaveBeenCalledTimes(2);
         expect(navigateMock).toHaveBeenCalledTimes(2);
         expect(navigateMock).toHaveBeenCalledWith('CoursesScreen');
@@ -63,9 +68,14 @@ describe('Test useCourses hook deleteCourse', () => {
             await result.current.useCourses.deleteCourse(true, onFinishMock);
         });
 
+        /**
+         * Check if courses state is equal to initial state and if
+         *  onFinish is called one time
+         */
         expect(result.current.useCourses.state).toEqual(coursesInitState);
         expect(onFinishMock).toHaveBeenCalledTimes(1);
 
+        /* Check if status state is equal to respective status */
         expect(result.current.useStatus.state).toEqual({
             code: 401,
             msg: 'Para realizar está acción debe iniciar sesión.'
@@ -84,9 +94,14 @@ describe('Test useCourses hook deleteCourse', () => {
             await result.current.useCourses.deleteCourse(true, onFinishMock);
         });
 
+        /**
+         * Check if courses state is equal to initial state and if
+         *  onFinish is called one time
+         */
         expect(result.current.useCourses.state).toEqual(coursesInitState);
         expect(onFinishMock).toHaveBeenCalledTimes(1);
 
+        /* Check if status state is equal to respective status */
         expect(result.current.useStatus.state).toEqual({
             code: 400,
             msg: 'No hay un curso seleccionado para eliminar.'

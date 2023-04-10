@@ -1,9 +1,11 @@
 import { act } from '@testing-library/react-native';
 
+/* Features */
 import { initialState as authInitState, testCredentials } from '../../features/auth';
 import { initialState as coursesInitState } from '../../features/courses';
 import { initialState as statusInitState } from '../../features/status';
 
+/* Setup */
 import { getMockStore, render } from './setup';
 
 describe('Test useCourses hook loadCourses', () => {
@@ -24,6 +26,7 @@ describe('Test useCourses hook loadCourses', () => {
             await result.current.useCourses.loadCourses({ filter: 'all' });
         });
 
+        /* Check if courses state is equal to initial state */
         expect(result.current.useCourses.state).toEqual({
             ...coursesInitState,
             hasMoreCourses: false
@@ -42,6 +45,10 @@ describe('Test useCourses hook loadCourses', () => {
             await result.current.useCourses.loadCourses({ filter: 'all' });
         });
 
+        /**
+         * Check if courses state is equal to initial state and status
+         * state is equal to respective status
+         */
         expect(result.current.useCourses.state).toEqual(coursesInitState);
         expect(result.current.useStatus.state).toEqual({
             code: 401,

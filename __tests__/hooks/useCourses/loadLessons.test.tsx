@@ -1,9 +1,11 @@
 import { act } from '@testing-library/react-native';
 
+/* Features */
 import { initialState as authInitState, testCredentials } from '../../features/auth';
 import { initialState as coursesInitState } from '../../features/courses';
 import { initialState as statusInitState } from '../../features/status';
 
+/* Setup */
 import { getMockStore, render, testCourse } from './setup';
 
 describe('Test useCourses hook loadLessons', () => {
@@ -31,6 +33,7 @@ describe('Test useCourses hook loadLessons', () => {
             await result.current.useCourses.loadLessons({});
         });
 
+        /* Check if courses state contain courses and selectedLesson */
         expect(result.current.useCourses.state).toEqual({
             ...coursesInitState,
             hasMoreLessons: false,
@@ -79,6 +82,10 @@ describe('Test useCourses hook loadLessons', () => {
             await result.current.useCourses.loadLessons({});
         });
 
+        /**
+         * Check if courses state is equal to initial state and status
+         * state is equal to respective status
+         */
         expect(result.current.useCourses.state).toEqual(coursesInitState);
         expect(result.current.useStatus.state).toEqual({
             code: 401,
@@ -98,6 +105,10 @@ describe('Test useCourses hook loadLessons', () => {
             await result.current.useCourses.loadLessons({});
         });
 
+        /**
+         * Check if courses state is equal to initial state and status
+         * state is equal to respective status
+         */
         expect(result.current.useCourses.state).toEqual(coursesInitState);
         expect(result.current.useStatus.state).toEqual({
             code: 400,
