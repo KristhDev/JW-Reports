@@ -1,11 +1,13 @@
 import { act } from '@testing-library/react-native';
 
+/* Features */
 import { initialState as authInitState, testCredentials } from '../../features/auth';
 import { coursesState } from '../../features/courses';
 import { initialState as preachingInitState } from '../../features/preaching';
 import { revisitsState } from '../../features/revisits';
 import { initialState as statusInitState } from '../../features/status';
 
+/* Setup */
 import { getMockStoreComplete, render } from './setup';
 
 describe('Test usePreaching hook loadPreachings', () => {
@@ -52,6 +54,7 @@ describe('Test usePreaching hook loadPreachings', () => {
             await result.current.usePreaching.loadPreachings(new Date());
         });
 
+        /* Check if state is equal to preachings state */
         expect(result.current.usePreaching.state).toEqual({
             ...preachingInitState,
             selectedDate: expect.any(Date),
@@ -125,8 +128,10 @@ describe('Test usePreaching hook loadPreachings', () => {
             await result.current.usePreaching.loadPreachings(new Date());
         });
 
+        /* Check if state is equal to initial state */
         expect(result.current.usePreaching.state).toEqual(preachingInitState);
 
+        /* Check if status state is equal to respective object */
         expect(result.current.useStatus.state).toEqual({
             code: 401,
             msg: 'Para realizar está acción debe iniciar sesión.'

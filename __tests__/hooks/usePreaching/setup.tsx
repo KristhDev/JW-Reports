@@ -3,14 +3,17 @@ import { Provider } from 'react-redux';
 import { configureStore } from '@reduxjs/toolkit';
 import { renderHook } from '@testing-library/react-native';
 
+/* Features */
 import { authReducer } from '../../../src/features/auth';
 import { coursesReducer } from '../../../src/features/courses';
 import { preachingReducer } from '../../../src/features/preaching';
 import { revisitsReducer } from '../../../src/features/revisits';
 import { statusReducer } from '../../../src/features/status';
 
+/* Hooks */
 import { useAuth, usePreaching, useStatus } from '../../../src/hooks';
 
+/* Interfaces */
 import { AuthState } from '../../../src/interfaces/auth';
 import { CoursesState } from '../../../src/interfaces/courses';
 import { PreachingState } from '../../../src/interfaces/preaching';

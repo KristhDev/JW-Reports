@@ -1,9 +1,10 @@
 import { act } from '@testing-library/react-native';
 
+/* Setup */
 import { getMockStoreComplete, render } from './setup';
-
 import { goBackMock } from '../../../jest.setup';
 
+/* Features */
 import { initialState as authInitState, testCredentials } from '../../features/auth';
 import { coursesState } from '../../features/courses';
 import { initialState as preachingInitState } from '../../features/preaching';
@@ -44,6 +45,7 @@ describe('Test in usePreaching hook savePreaching', () => {
             });
         });
 
+        /* Check if state is equal to initial state */
         expect(result.current.usePreaching.state).toEqual({
             ...preachingInitState,
             selectedDate: expect.any(Date),
@@ -63,11 +65,13 @@ describe('Test in usePreaching hook savePreaching', () => {
 
         expect(result.current.usePreaching.state.preachings).toHaveLength(1);
 
+        /* Check if status state is equal to respective object */
         expect(result.current.useStatus.state).toEqual({
             code: 201,
             msg: 'Haz agregado tu día de predicación correctamente.'
         });
 
+        /* Check if goBack is called one time */
         expect(goBackMock).toHaveBeenCalledTimes(1);
 
         await act(async () => {
@@ -108,16 +112,19 @@ describe('Test in usePreaching hook savePreaching', () => {
             });
         });
 
+        /* Check if state is equal to initial state */
         expect(result.current.usePreaching.state).toEqual({
             ...preachingInitState,
             selectedDate: expect.any(Date)
         });
 
+        /* Check if status state is equal to respective object */
         expect(result.current.useStatus.state).toEqual({
             code: 401,
             msg: 'Para realizar está acción debes iniciar sesión.'
         });
 
+        /* Check if goBack is called one time */
         expect(goBackMock).not.toHaveBeenCalled();
     });
 
@@ -151,16 +158,19 @@ describe('Test in usePreaching hook savePreaching', () => {
             });
         });
 
+        /* Check if state is equal to initial state */
         expect(result.current.usePreaching.state).toEqual({
             ...preachingInitState,
             selectedDate: expect.any(Date)
         });
 
+        /* Check if status state is equal to respective object */
         expect(result.current.useStatus.state).toEqual({
             code: expect.any(Number),
             msg: expect.any(String)
         });
 
+        /* Check if goBack isnt called */
         expect(goBackMock).not.toHaveBeenCalled();
 
         await act(async () => {

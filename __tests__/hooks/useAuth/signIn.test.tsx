@@ -1,8 +1,10 @@
 import { act } from '@testing-library/react-native';
 
+/* Features */
 import { initialState as authInitState, testCredentials } from '../../features/auth';
 import { initialState as statusInitState } from '../../features/status';
 
+/* Setup */
 import { getMockStore, render } from './setup';
 
 describe('Test in useAuth hook signIp', () => {
@@ -14,6 +16,7 @@ describe('Test in useAuth hook signIp', () => {
             await result.current.useAuth.signIn(testCredentials);
         });
 
+        /* Check if state is equal to initial state */
         expect(result.current.useAuth.state).toEqual({
             ...authInitState,
             isAuthenticated: true,
@@ -38,6 +41,7 @@ describe('Test in useAuth hook signIp', () => {
             await result.current.useAuth.signIn({ ...testCredentials, password: 'tutu' });
         });
 
+        /* Check if state is equal to initial state */
         expect(result.current.useAuth.state).toEqual({
             ...authInitState,
             user: {
@@ -47,6 +51,7 @@ describe('Test in useAuth hook signIp', () => {
             }
         });
 
+        /* Check if status state is equal to respective object */
         expect(result.current.useStatus.state).toEqual({
             code: 400,
             msg: expect.any(String)

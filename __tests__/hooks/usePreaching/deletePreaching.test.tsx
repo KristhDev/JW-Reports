@@ -1,11 +1,13 @@
 import { act } from '@testing-library/react-native';
 
+/* Features */
 import { initialState as authInitState, testCredentials } from '../../features/auth';
 import { coursesState } from '../../features/courses';
 import { initialState as preachingInitState, preachingSelectedState } from '../../features/preaching';
 import { revisitsState } from '../../features/revisits';
 import { initialState as statusInitState } from '../../features/status';
 
+/* Setup */
 import { getMockStoreComplete, onFinishMock, render } from './setup';
 
 describe('Test usePreaching hook deletePreaching', () => {
@@ -45,8 +47,10 @@ describe('Test usePreaching hook deletePreaching', () => {
             await result.current.usePreaching.deletePreaching(onFinishMock);
         });
 
+        /* Check if onFinish is called one time */
         expect(onFinishMock).toHaveBeenCalledTimes(1);
 
+        /* Check if state is equal to preachings state */
         expect(result.current.usePreaching.state).toEqual({
             ...preachingInitState,
             selectedDate: expect.any(Date),
@@ -60,6 +64,7 @@ describe('Test usePreaching hook deletePreaching', () => {
             }
         });
 
+        /* Check if status state is equal to respective object */
         expect(result.current.useStatus.state).toEqual({
             code: 200,
             msg: 'Haz eliminado tu día de predicación correctamente.'
@@ -89,13 +94,16 @@ describe('Test usePreaching hook deletePreaching', () => {
             await result.current.usePreaching.deletePreaching(onFinishMock);
         });
 
+        /* Check if onFinish is called one time */
         expect(onFinishMock).toHaveBeenCalledTimes(1);
 
+        /* Check if status state is equal to respective object */
         expect(result.current.useStatus.state).toEqual({
             code: 400,
             msg: 'No hay un día de predicación seleccionado para eliminar.'
         });
 
+        /* Check if state is equal to preachings state */
         expect(result.current.usePreaching.state).toEqual({
             ...preachingInitState,
             selectedDate: expect.any(Date),
@@ -129,13 +137,16 @@ describe('Test usePreaching hook deletePreaching', () => {
             await result.current.usePreaching.deletePreaching(onFinishMock);
         });
 
+        /* Check if onFinish is called one time */
         expect(onFinishMock).toHaveBeenCalledTimes(1);
 
+        /* Check if status state is equal to respective object */
         expect(result.current.useStatus.state).toEqual({
             code: 401,
             msg: 'Para realizar está acción debes iniciar sesión.'
         });
 
+        /* Check if state is equal to preachings state */
         expect(result.current.usePreaching.state).toEqual({
             ...preachingSelectedState,
             selectedDate: expect.any(Date),
@@ -169,13 +180,16 @@ describe('Test usePreaching hook deletePreaching', () => {
             await result.current.usePreaching.deletePreaching(onFinishMock);
         });
 
+        /* Check if onFinish is called one time */
         expect(onFinishMock).toHaveBeenCalledTimes(1);
 
+        /* Check if status state is equal to respective object */
         expect(result.current.useStatus.state).toEqual({
             code: 400,
             msg: 'Lo sentimos, pero no puedes realizar está acción.'
         });
 
+        /* Check if state is equal to preachings state */
         expect(result.current.usePreaching.state).toEqual({
             ...preachingSelectedState,
             selectedDate: expect.any(Date),

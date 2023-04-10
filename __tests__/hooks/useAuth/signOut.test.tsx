@@ -1,11 +1,13 @@
 import { act } from '@testing-library/react-native';
 
+/* Features */
 import { initialState as authInitState, authenticateState, testCredentials } from '../../features/auth';
 import { coursesState } from '../../features/courses';
 import { initialState as statusInitState } from '../../features/status';
 import { preachingsState } from '../../features/preaching';
 import { revisitsState } from '../../features/revisits';
 
+/* Setup */
 import { getMockStoreComplete, renderComplete } from './setup';
 
 describe('Test in useAuth hook signOut', () => {
@@ -28,6 +30,7 @@ describe('Test in useAuth hook signOut', () => {
             await result.current.useAuth.signOut();
         });
 
+        /* Check if state is equal to initial state */
         expect(result.current.useAuth.state).toEqual({
             ...authInitState,
             user: {
@@ -56,6 +59,7 @@ describe('Test in useAuth hook signOut', () => {
             await result.current.useAuth.signOut();
         });
 
+        /* Check if state is equal to authenticated state */
         expect(result.current.useAuth.state).toEqual({
             ...authenticateState,
             isAuthenticated: false

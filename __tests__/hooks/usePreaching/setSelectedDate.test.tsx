@@ -1,9 +1,11 @@
 import { act } from '@testing-library/react-native';
 
+/* Features */
 import { initialState as authInitState } from '../../features/auth';
 import { initialState as preachingInitState } from '../../features/preaching';
 import { initialState as statusInitState } from '../../features/status';
 
+/* Setup */
 import { getMockStore, render } from './setup';
 
 describe('Test usePreaching hook setSelectedDate', () => {
@@ -15,6 +17,7 @@ describe('Test usePreaching hook setSelectedDate', () => {
             await result.current.usePreaching.setSelectedDate(new Date('2023-03-17'));
         });
 
+        /* Check if selectedDate is changed */
         expect(result.current.usePreaching.state).toEqual({
             ...preachingInitState,
             selectedDate: new Date('2023-03-17')

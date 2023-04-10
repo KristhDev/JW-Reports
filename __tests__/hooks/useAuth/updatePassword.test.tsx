@@ -1,8 +1,10 @@
 import { act } from '@testing-library/react-native';
 
+/* Features */
 import { initialState as authInitState, authenticateState, testCredentials } from '../../features/auth';
 import { initialState as statusInitState } from '../../features/status';
 
+/* Setup */
 import { getMockStore, onFinishMock, render } from './setup';
 
 describe('Test in useAuth hook updatePassword', () => {
@@ -24,6 +26,7 @@ describe('Test in useAuth hook updatePassword', () => {
             await result.current.useAuth.updatePassword({ password: newPassword }, onFinishMock);
         });
 
+        /* Check if state is equal to authenticated state */
         expect(result.current.useAuth.state).toEqual({
             ...authenticateState,
             token: expect.any(String),
@@ -38,8 +41,10 @@ describe('Test in useAuth hook updatePassword', () => {
             }
         });
 
+        /* Check if onFinish is called one time */
         expect(onFinishMock).toHaveBeenCalledTimes(1);
 
+        /* Check if status state is equal to respective object */
         expect(result.current.useStatus.state).toEqual({
             code: 200,
             msg: 'Haz actualizado tu contraseña correctamente.'
@@ -63,6 +68,7 @@ describe('Test in useAuth hook updatePassword', () => {
             await result.current.useAuth.updatePassword({ password: '' }, onFinishMock);
         });
 
+        /* Check if state is equal to authenticated state */
         expect(result.current.useAuth.state).toEqual({
             ...authenticateState,
             token: expect.any(String),
@@ -77,8 +83,10 @@ describe('Test in useAuth hook updatePassword', () => {
             }
         });
 
+        /* Check if onFinish is called one time */
         expect(onFinishMock).toHaveBeenCalledTimes(1);
 
+        /* Check if status state is equal to respective object */
         expect(result.current.useStatus.state).toEqual({
             code: 400,
             msg: 'La contraseña no puede estar vacía.'
@@ -101,6 +109,7 @@ describe('Test in useAuth hook updatePassword', () => {
             await result.current.useAuth.updatePassword({ password: 'inv' }, onFinishMock);
         });
 
+        /* Check if state is equal to authenticated state */
         expect(result.current.useAuth.state).toEqual({
             ...authenticateState,
             token: expect.any(String),
@@ -115,8 +124,10 @@ describe('Test in useAuth hook updatePassword', () => {
             }
         });
 
+        /* Check if onFinish is called one time */
         expect(onFinishMock).toHaveBeenCalledTimes(1);
 
+        /* Check if status state is equal to respective object */
         expect(result.current.useStatus.state).toEqual({
             code: 400,
             msg: expect.any(String)

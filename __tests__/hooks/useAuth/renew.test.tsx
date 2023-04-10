@@ -1,8 +1,10 @@
 import { act } from '@testing-library/react-native';
 
+/* Features */
 import { initialState as authInitState, testCredentials } from '../../features/auth';
 import { initialState as statusInitState } from '../../features/status';
 
+/* Setup */
 import { getMockStore, render } from './setup';
 
 describe('Test in useAuth hook renew', () => {
@@ -15,6 +17,7 @@ describe('Test in useAuth hook renew', () => {
             await result.current.useAuth.renew();
         });
 
+        /* Check if state is equal to authenticated state */
         expect(result.current.useAuth.state).toEqual({
             ...authInitState,
             isAuthenticated: true,
@@ -39,6 +42,7 @@ describe('Test in useAuth hook renew', () => {
             await result.current.useAuth.renew();
         });
 
+        /* Check if state is equal to initial state */
         expect(result.current.useAuth.state).toEqual({
             ...authInitState,
             user: {
@@ -48,6 +52,7 @@ describe('Test in useAuth hook renew', () => {
             }
         });
 
+        /* Check if status state is equal to initial state */
         expect(result.current.useStatus.state).toEqual(statusInitState);
     });
 
@@ -59,6 +64,7 @@ describe('Test in useAuth hook renew', () => {
             await result.current.useAuth.renew();
         });
 
+        /* Check if state is equal to authenticated state */
         expect(result.current.useAuth.state).toEqual({
             ...authInitState,
             user: {
@@ -68,6 +74,7 @@ describe('Test in useAuth hook renew', () => {
             }
         });
 
+        /* Check if status state is updated */
         expect(result.current.useStatus.state).toEqual({
             code: 400,
             msg: expect.any(String)

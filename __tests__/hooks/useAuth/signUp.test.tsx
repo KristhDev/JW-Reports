@@ -1,10 +1,13 @@
 import { act } from '@testing-library/react-native';
 
+/* Supabase admin client */
 import { supabase } from '../../supabase';
 
+/* Features */
 import { initialState as authInitState, newUserData } from '../../features/auth';
 import { initialState as statusInitState } from '../../features/status';
 
+/* Setup */
 import { getMockStore, render } from './setup';
 
 describe('Test in useAuth hook signUp', () => {
@@ -16,6 +19,7 @@ describe('Test in useAuth hook signUp', () => {
             await result.current.useAuth.signUp(newUserData);
         });
 
+        /* Check if state is equal to initial state */
         expect(result.current.useAuth.state).toEqual({
             ...authInitState,
             isAuthenticated: true,
@@ -31,6 +35,7 @@ describe('Test in useAuth hook signUp', () => {
             }
         });
 
+        /* Check if status state is equal to respective object */
         expect(result.current.useStatus.state).toEqual({
             code: 200,
             msg: `Hemos enviado un correo de confirmación a ${ newUserData.email }. Por favor, revíselo y siga los pasos que se le indiquen.`
@@ -47,6 +52,7 @@ describe('Test in useAuth hook signUp', () => {
             await result.current.useAuth.signUp({ ...newUserData, email: 'invalid' });
         });
 
+        /* Check if state is equal to initial state */
         expect(result.current.useAuth.state).toEqual({
             ...authInitState,
             user: {
@@ -56,6 +62,7 @@ describe('Test in useAuth hook signUp', () => {
             }
         });
 
+        /* Check if status state is equal to respective object */
         expect(result.current.useStatus.state).toEqual({
             code: 400,
             msg: expect.any(String)
@@ -70,6 +77,7 @@ describe('Test in useAuth hook signUp', () => {
             await result.current.useAuth.signUp({ ...newUserData, email: 'andredev@gmail.com' });
         });
 
+        /* Check if state is equal to initial state */
         expect(result.current.useAuth.state).toEqual({
             ...authInitState,
             user: {
@@ -79,6 +87,7 @@ describe('Test in useAuth hook signUp', () => {
             }
         });
 
+        /* Check if status state is equal to respective object */
         expect(result.current.useStatus.state).toEqual({
             code: 400,
             msg: expect.any(String)
@@ -93,6 +102,7 @@ describe('Test in useAuth hook signUp', () => {
             await result.current.useAuth.signUp({ ...newUserData, password: 'inv' });
         });
 
+        /* Check if state is equal to initial state */
         expect(result.current.useAuth.state).toEqual({
             ...authInitState,
             user: {
@@ -102,6 +112,7 @@ describe('Test in useAuth hook signUp', () => {
             }
         });
 
+        /* Check if status state is equal to respective object */
         expect(result.current.useStatus.state).toEqual({
             code: 400,
             msg: expect.any(String)
