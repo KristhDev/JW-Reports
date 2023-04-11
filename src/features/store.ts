@@ -32,7 +32,7 @@ const persistConfig = {
 const reducer = persistReducer(persistConfig, reducers);
 
 /* Creating the store. */
-const store = configureStore({
+export const store = configureStore({
     reducer,
     devTools: false,
     middleware: (getDefaultMiddleware) => {
@@ -42,7 +42,7 @@ const store = configureStore({
 
         /* Checking if the app is in development mode. If it is, it will add the reduxFlipper
         middleware to the store. */
-        if (__DEV__) {
+        if (__DEV__ && !process.env.JEST_WORKER_ID) {
             middleware.push(reduxFlipper());
         }
 
@@ -56,5 +56,3 @@ export type RootState = ReturnType<typeof reducers>;
 export type AppDispatch = typeof store.dispatch;
 
 export const useAppDispatch = () => useDispatch<AppDispatch>();
-
-export default store;

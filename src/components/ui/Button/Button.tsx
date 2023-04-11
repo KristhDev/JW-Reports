@@ -51,9 +51,10 @@ export const Button: FC<ButtonProps> = ({
             onPress={ onPress }
             rippleColor={ underlayColor || 'rgba(0, 0, 0, 0.30)' }
             style={[
-                { ...styles.buttonTouchable, backgroundColor: colors.button },
-                touchableStyle
-            ]}
+                    { ...styles.buttonTouchable, backgroundColor: colors.button },
+                    touchableStyle
+                ]}
+            testID="button-touchable"
         >
             <View style={[ styles.buttonContainer, containerStyle ]}>
                 <Text
@@ -61,6 +62,7 @@ export const Button: FC<ButtonProps> = ({
                         { ...styles.buttonText, color: colors.contentHeader },
                         textStyle
                     ]}
+                    testID="button-text"
                 >
                     { text }
                 </Text>

@@ -92,6 +92,7 @@ const PassToCourseModal: FC<ModalProps> = ({ isOpen, onClose }) => {
                                             ...themeStyles.modalText,
                                             color: colors.modalText
                                         }}
+                                        testID="modal-text"
                                     >
                                         ¿Está seguro de comenzar un curso bíblico con { selectedRevisit.person_name }?
                                     </Text>

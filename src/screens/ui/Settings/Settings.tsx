@@ -13,7 +13,7 @@ import { SectionBtn, SectionContent } from '../../../components/ui';
 import { useStatus, useTheme } from '../../../hooks';
 
 /* Screens */
-import { ThemeModal } from '../../../theme/screens';
+import { ThemeModal } from '../../../theme';
 
 /* Utils */
 import { THEME_OPTIONS } from '../../../utils';
@@ -103,7 +103,10 @@ const Settings = () => {
                 </SectionContent>
 
                 {/* Copyright text */}
-                <Text style={{ color: colors.icon, fontSize: 14, padding: 20 }}>
+                <Text
+                    style={{ color: colors.icon, fontSize: 14, padding: 20 }}
+                    testID="settings-copyright-text"
+                >
                     Copyright © { dayjs().year() }
                 </Text>
             </ScrollView>

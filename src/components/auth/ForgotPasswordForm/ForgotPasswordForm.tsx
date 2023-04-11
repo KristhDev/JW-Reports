@@ -103,6 +103,7 @@ export const ForgotPasswordForm = () => {
                         <TouchableOpacity
                             activeOpacity={ 0.75 }
                             onPress={ () => navigate('LoginScreen' as never) }
+                            testID="forgot-pass-form-sign-in"
                         >
                             <Text
                                 style={{

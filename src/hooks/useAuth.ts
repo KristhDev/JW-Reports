@@ -1,4 +1,3 @@
-import { useSelector } from 'react-redux';
 import { AuthResponse } from '@supabase/supabase-js';
 import OneSignal from 'react-native-onesignal';
 
@@ -9,7 +8,7 @@ import { SITIE_URL } from '@env';
 import { supabase } from '../supabase/config';
 
 /* Features */
-import { RootState, useAppDispatch } from '../features/store';
+import { useAppDispatch, useAppSelector } from '../features';
 import {
     setUser as setUserAction,
     clearAuth as clearAuthAction,
@@ -24,7 +23,7 @@ import { clearRevisits } from '../features/revisits';
 import { useStatus } from './';
 
 /* Interfaces */
-import { AuthState, SignIn, Profile, SignUp, User } from '../interfaces/auth';
+import { SignIn, Profile, SignUp, User } from '../interfaces/auth';
 
 /**
  * Hook to management authentication of store with state and actions
@@ -34,14 +33,15 @@ const useAuth = () => {
 
     const { setStatus, setSupabaseError } = useStatus();
 
-    const state = useSelector<RootState, AuthState>(store => store.auth);
+    const state = useAppSelector(store => store.auth);
 
     const clearAuth = () => dispatch(clearAuthAction());
 
     /**
      * If the response is an error, set the error and return, otherwise
      * set the user.
-     * @param {AuthResponse}  - AuthResponse - this is the response from the API call.
+     * @param {AuthResponse} AuthResponse - this is the response from the API call.
+     * @param {boolean} isNew - this is a flag indicating whether the user is a new user or not.
      * @returns The return type is AuthResponse.
      */
     const setUser = ({ data: { user, session }, error }: AuthResponse, isNew: boolean = false) => {
@@ -146,17 +146,27 @@ const useAuth = () => {
     const signUp = async ({ name, surname, email, password }: SignUp) => {
         dispatch(setIsAuthLoading({ isLoading: true }));
 
-        const result = await supabase.auth.signUp({ email, password });
-
-        if (result?.data?.user !== null) {
-            result.data.user.user_metadata = {
-                ...result.data.user!.user_metadata,
-                name,
-                surname,
-                precursor: 'ninguno'
+        const result = await supabase.auth.signUp({
+            email,
+            password,
+            options: {
+                data: {
+                    name,
+                    surname,
+                    precursor: 'ninguno'
+                }
             }
+        });
 
-            await supabase.auth.updateUser({ data: { name, surname, precursor: 'ninguno' } });
+        if (result?.data?.user?.identities?.length === 0) {
+            dispatch(setIsAuthLoading({ isLoading: false }));
+
+            setStatus({
+                code: 400,
+                msg: 'Lo sentimos, pero este correo ya está registrado.'
+            });
+
+            return;
         }
 
         setUser(result, true);
@@ -171,6 +181,18 @@ const useAuth = () => {
      */
     const updateEmail = async ({ email }: { email: string }, onFinish?: () => void) => {
         dispatch(setIsAuthLoading({ isLoading: true }));
+
+        if (email.trim().length === 0) {
+            dispatch(setIsAuthLoading({ isLoading: false }));
+            onFinish && onFinish();
+
+            setStatus({
+                code: 400,
+                msg: 'El correo no puede estar vacío.'
+            });
+
+            return;
+        }
 
         if (state.user.email === email) {
             dispatch(setIsAuthLoading({ isLoading: false }));

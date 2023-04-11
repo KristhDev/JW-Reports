@@ -46,6 +46,7 @@ const DeleteModal: FC<DeleteModalProps> = ({ text, isLoading, isOpen, onClose, o
                                 ...themeStyles.modalText,
                                 color: colors.modalText
                             }}
+                            testID="delete-modal-title"
                         >
                             { text }
                         </Text>
@@ -78,6 +79,7 @@ const DeleteModal: FC<DeleteModalProps> = ({ text, isLoading, isOpen, onClose, o
                     <ActivityIndicator
                         color={ colors.button }
                         size={ 50 }
+                        testID="delete-modal-loading"
                     />
                 )
             }

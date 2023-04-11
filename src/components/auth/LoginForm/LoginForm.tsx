@@ -113,6 +113,7 @@ export const LoginForm = () => {
                         <TouchableOpacity
                             activeOpacity={ 0.75 }
                             onPress={ () => navigate('RegisterScreen' as never) }
+                            testID="login-form-sign-up"
                         >
                             <Text
                                 style={{
@@ -130,6 +131,7 @@ export const LoginForm = () => {
                         <TouchableOpacity
                             activeOpacity={ 0.75 }
                             onPress={ () => navigate('ForgotPasswordScreen' as never) }
+                            testID="login-form-forgor-pass"
                         >
                             <Text
                                 style={{

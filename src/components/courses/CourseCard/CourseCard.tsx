@@ -95,11 +95,15 @@ export const CourseCard: FC<CourseCardProps> = ({ course, onActiveOrSuspend, onD
             onPress={ handleCourseDetail }
             rippleColor={ BUTTON_TRANSPARENT_COLOR }
             style={ styles.touchable }
+            testID="course-card-touchable"
         >
             <View style={{ ...styles.container, backgroundColor: colors.card }}>
 
                 {/* Course status */}
-                <Text style={{ ...styles.textDate, color: colors.icon }}>
+                <Text
+                    style={{ ...styles.textDate, color: colors.icon }}
+                    testID="course-card-status-text"
+                >
                     {
                         (course.finished)
                             ? 'Terminado'
@@ -110,11 +114,25 @@ export const CourseCard: FC<CourseCardProps> = ({ course, onActiveOrSuspend, onD
                 </Text>
 
                 {/* Name of person and study publication */}
-                <Text style={{ ...styles.textName, color: colors.text }}>{ course.person_name }</Text>
-                <Text style={{ ...styles.textBook, color: colors.icon }}>{ course.publication }</Text>
+                <Text
+                    style={{ ...styles.textName, color: colors.text }}
+                    testID="course-card-name-text"
+                >
+                    { course.person_name }
+                </Text>
+
+                <Text
+                    style={{ ...styles.textBook, color: colors.icon }}
+                    testID="course-card-publication-text"
+                >
+                    { course.publication }
+                </Text>
 
                 {/* Text of about person */}
-                <Text style={{ ...styles.textDescription, color: colors.text }}>
+                <Text
+                    style={{ ...styles.textDescription, color: colors.text }}
+                    testID="course-card-about-text"
+                >
                     { (course.person_about.length > 200) ? course.person_about.substring(0, 200) + '...' : course.person_about }
                 </Text>
 
@@ -210,7 +228,7 @@ export const CourseCard: FC<CourseCardProps> = ({ course, onActiveOrSuspend, onD
                             </>
                         ) }
 
-                        <MenuOption onSelect={  () => handleSelect(onDelete) }>
+                        <MenuOption onSelect={ () => handleSelect(onDelete) }>
                             <Text
                                 style={{
                                     color: colors.text,

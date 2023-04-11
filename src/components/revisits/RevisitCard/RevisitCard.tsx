@@ -72,11 +72,15 @@ export const RevisitCard: FC<RevisitCardProps> = ({ onDelete, onPass, onRevisit,
             onPress={ handleRevisitDetail }
             rippleColor={ BUTTON_TRANSPARENT_COLOR  }
             style={ styles.touchable }
+            testID="revisit-card-touchable"
         >
             <View style={{ ...styles.container, backgroundColor: colors.card }}>
 
                 {/* Revisit status or date for next visit */}
-                <Text style={{ ...styles.textDate, color: colors.icon }}>
+                <Text
+                    style={{ ...styles.textDate, color: colors.icon }}
+                    testID="revisit-card-next-visit-text"
+                >
                     {
                         (revisit.done)
                             ? 'Visita hecha'
@@ -85,10 +89,18 @@ export const RevisitCard: FC<RevisitCardProps> = ({ onDelete, onPass, onRevisit,
                 </Text>
 
                 {/* Text person name */}
-                <Text style={{ ...styles.textName, color: colors.text }}>{ revisit.person_name }</Text>
+                <Text
+                    style={{ ...styles.textName, color: colors.text }}
+                    testID="revisit-card-person-name-text"
+                >
+                    { revisit.person_name }
+                </Text>
 
                 {/* Text about person */}
-                <Text style={{ ...styles.textDescription, color: colors.text }}>
+                <Text
+                    style={{ ...styles.textDescription, color: colors.text }}
+                    testID="revisit-card-about-text"
+                >
                     { (revisit.about.length > 200) ? revisit.about.substring(0, 200) + '...' : revisit.about }
                 </Text>
 
@@ -115,7 +127,9 @@ export const RevisitCard: FC<RevisitCardProps> = ({ onDelete, onPass, onRevisit,
                 >
                     <MenuTrigger text="" />
 
-                    <MenuOptions optionsContainerStyle={{ backgroundColor: colors.card, borderRadius: 5, width: 220 }}>
+                    <MenuOptions
+                        optionsContainerStyle={{ backgroundColor: colors.card, borderRadius: 5, width: 220 }}
+                    >
                         <MenuOption onSelect={ handleEdit }>
                             <Text
                                 style={{

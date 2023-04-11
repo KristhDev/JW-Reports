@@ -1,12 +1,11 @@
-import { useSelector } from 'react-redux';
 import { AuthError, PostgrestError } from '@supabase/supabase-js';
 
 /* Features */
-import { RootState, useAppDispatch } from '../features/store';
+import { useAppDispatch, useAppSelector } from '../features';
 import { clearStatus as clearStatusAction, setStatus as setStatusAction } from '../features/status';
 
 /* Interfaces */
-import { SetStatusPayload, StatusState } from '../interfaces/status';
+import { SetStatusPayload } from '../interfaces/status';
 import { StorageError } from '../interfaces/ui';
 
 /**
@@ -14,7 +13,7 @@ import { StorageError } from '../interfaces/ui';
  */
 const useStatus = () => {
     const dispatch = useAppDispatch();
-    const state = useSelector<RootState, StatusState>(store => store.status);
+    const state = useAppSelector(store => store.status);
 
     const setStatus = (status: SetStatusPayload) => dispatch(setStatusAction(status));
     const clearStatus = () => dispatch(clearStatusAction());
@@ -54,12 +53,22 @@ const useStatus = () => {
         return false;
     }
 
+    const setUnauthenticatedError = (onDispatch?: () => void) => {
+        onDispatch && onDispatch();
+
+        setStatus({
+            code: 401,
+            msg: 'Para realizar está acción debe iniciar sesión.'
+        });
+    }
+
     return {
         state,
         clearStatus,
-        setSupabaseError,
         setErrorForm,
-        setStatus
+        setStatus,
+        setSupabaseError,
+        setUnauthenticatedError
     }
 }
 

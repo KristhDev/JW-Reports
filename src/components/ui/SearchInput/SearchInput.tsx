@@ -41,7 +41,7 @@ export const SearchInput: FC<SearchInputProps> = ({ onClean, onSearch, refreshin
 
     /**
      * Effect to clear text input then change refreshing
-    */
+     */
     useEffect(() => {
         if (refreshing) handleClearInput();
     }, [ refreshing ]);
@@ -62,6 +62,7 @@ export const SearchInput: FC<SearchInputProps> = ({ onClean, onSearch, refreshin
                     ...styles.inputContainer,
                     borderColor: (isFocused) ? colors.button : colors.icon
                 }}
+                testID="search-input-text-input-container"
             >
 
                 {/* Text input */}
@@ -80,6 +81,7 @@ export const SearchInput: FC<SearchInputProps> = ({ onClean, onSearch, refreshin
                         color: colors.inputText,
                         flex: 1
                     }}
+                    testID="search-input-text-input"
                     value={ searchText }
                 />
 
@@ -91,6 +93,7 @@ export const SearchInput: FC<SearchInputProps> = ({ onClean, onSearch, refreshin
                     onPress={ handleClearInput }
                     rippleColor={ BUTTON_TRANSPARENT_COLOR }
                     style={ styles.cleanBtn }
+                    testID="search-input-clear-btn"
                 >
                     <Icon
                         color={ (searchText.length === 0) ? 'transparent' : colors.icon }

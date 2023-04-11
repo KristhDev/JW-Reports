@@ -29,10 +29,12 @@ export const LessonForm = () => {
      * If the selectedLesson.id is an empty string, then saveLesson, otherwise updateLesson.
      * @param {LessonFormValues} formValues - LessonFormValues
      */
-    const handleSaveOrUpdate = (formValues: LessonFormValues) => {
-        (selectedLesson.id === '')
-            ? saveLesson(formValues)
-            : updateLesson(formValues);
+    const handleSaveOrUpdate = async (formValues: LessonFormValues, resetForm: () => void) => {
+        if (selectedLesson.id === '') {
+            await saveLesson(formValues);
+            resetForm();
+        }
+        else updateLesson(formValues);
     }
 
     /* Validation schema for lesson */
@@ -50,7 +52,7 @@ export const LessonForm = () => {
                 description: selectedLesson.description,
                 next_lesson: new Date(selectedLesson.next_lesson)
             }}
-            onSubmit={ handleSaveOrUpdate }
+            onSubmit={ (values, { resetForm }) => handleSaveOrUpdate(values, resetForm) }
             validateOnMount
             validationSchema={ lessonFormSchema }
         >

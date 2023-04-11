@@ -87,6 +87,7 @@ const Home = () => {
                         color={ colors.button }
                         size={ 50 }
                         style={{ marginTop: height * 0.32 }}
+                        testID="home-loading"
                     />
                 ) }
 

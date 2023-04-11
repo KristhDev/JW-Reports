@@ -23,6 +23,7 @@ export const EyeBtn: FC<EyeBtnProps> = ({ onToggle, value }) => {
         <TouchableOpacity
             activeOpacity={ 0.75 }
             onPress={ () => onToggle(!value) }
+            testID="eye-btn-touchable"
         >
             <Icon
                 color={ colors.icon }

@@ -70,11 +70,15 @@ export const LessonCard: FC<LessonCardProps> = ({ lesson, onDelete, onFinish }) 
             onPress={ handleLessonDetail }
             rippleColor={ BUTTON_TRANSPARENT_COLOR }
             style={ styles.touchable }
+            testID="lesson-card-touchable"
         >
             <View style={{ ...styles.container, backgroundColor: colors.card }}>
 
                 {/* Lesson status  */}
-                <Text style={{ ...styles.textDate, color: colors.icon }}>
+                <Text
+                    style={{ ...styles.textDate, color: colors.icon }}
+                    testID="lesson-card-status-text"
+                >
                     {
                         (lesson.done)
                             ? 'Clase impartida'
@@ -83,7 +87,10 @@ export const LessonCard: FC<LessonCardProps> = ({ lesson, onDelete, onFinish }) 
                 </Text>
 
                 {/* Text */}
-                <Text style={{ ...styles.textDescription, color: colors.text }}>
+                <Text
+                    style={{ ...styles.textDescription, color: colors.text }}
+                    testID="lesson-card-description-text"
+                >
                     { (lesson.description.length > 200) ? lesson.description.substring(0, 200) + '...' : lesson.description }
                 </Text>
 

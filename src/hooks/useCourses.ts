@@ -1,4 +1,3 @@
-import { useSelector } from 'react-redux';
 import { useNavigation } from '@react-navigation/native';
 import dayjs from 'dayjs';
 
@@ -6,7 +5,7 @@ import dayjs from 'dayjs';
 import { supabase } from '../supabase/config';
 
 /* Features */
-import { RootState, useAppDispatch } from '../features/store';
+import { useAppDispatch, useAppSelector } from '../features';
 import {
     INIT_COURSE,
     INIT_LESSON,
@@ -44,7 +43,7 @@ import {
 import { useAuth, useStatus } from './';
 
 /* Interfaces */
-import { Course, CourseFormValues, CoursesState, Lesson, LessonFormValues, loadCoursesOptions } from '../interfaces/courses';
+import { Course, CourseFormValues, Lesson, LessonFormValues, loadCoursesOptions } from '../interfaces/courses';
 import { LoadResourcesOptions, Pagination } from '../interfaces/ui';
 
 /**
@@ -54,10 +53,10 @@ const useCourses = () => {
     const dispatch = useAppDispatch();
     const { goBack, navigate } = useNavigation();
 
-    const state = useSelector<RootState, CoursesState>(store => store.courses);
+    const state = useAppSelector(store => store.courses);
 
-    const { state: { user } } = useAuth();
-    const { setStatus, setSupabaseError } = useStatus();
+    const { state: { isAuthenticated, user } } = useAuth();
+    const { setStatus, setSupabaseError, setUnauthenticatedError } = useStatus();
 
     const addCourses = (courses: Course[]) => dispatch(addCoursesAction({ courses }));
     const addLessons = (lessons: Lesson[]) => dispatch(addLessonsAction({ lessons }));
@@ -82,6 +81,16 @@ const useCourses = () => {
     const activeOrSuspendCourse = async (onFinish?: () => void) => {
         dispatch(setIsCourseLoading({ isLoading: true }));
 
+        if (!isAuthenticated) {
+            setUnauthenticatedError(() => {
+                dispatch(setIsCourseLoading({ isLoading: false }));
+                onFinish && onFinish();
+            });
+
+            return;
+        }
+
+
         /* Should not update if selectedCourse.id is an empty string */
         if (state.selectedCourse.id === '') {
             dispatch(setIsCourseLoading({ isLoading: false }));
@@ -95,8 +104,11 @@ const useCourses = () => {
             return;
         }
 
+        console.log('Selected course: ', state.selectedCourse.finished);
+
         /* If the selectedCourse is finished it should not be updated */
         if (state.selectedCourse.finished) {
+            console.log('No puedes activar o suspendir un curso terminado.');
             dispatch(setIsCourseLoading({ isLoading: false }));
             onFinish && onFinish();
 
@@ -142,6 +154,15 @@ const useCourses = () => {
      */
     const deleteCourse = async (back: boolean = false, onFinish?: () => void) => {
         dispatch(setIsCourseDeleting({ isDeleting: true }));
+
+        if (!isAuthenticated) {
+            setUnauthenticatedError(() => {
+                onFinish && onFinish();
+                dispatch(setIsCourseDeleting({ isDeleting: false }));
+            });
+
+            return;
+        }
 
         /* Should not delete if selectedCourse.id is an empty string */
         if (state.selectedCourse.id === '') {
@@ -198,6 +219,15 @@ const useCourses = () => {
      */
     const deleteLesson = async (back: boolean = false, onFinish?: () => void) => {
         dispatch(setIsLessonDeleting({ isDeleting: true }));
+
+        if (!isAuthenticated) {
+            setUnauthenticatedError(() => {
+                onFinish && onFinish();
+                dispatch(setIsLessonDeleting({ isDeleting: false }));
+            });
+
+            return;
+        }
 
         /* Should not delete if selectedLesson.id is an empty string */
         if (state.selectedLesson.id === '') {
@@ -257,6 +287,15 @@ const useCourses = () => {
      */
     const finishOrStartCourse = async (onFinish?: () => void) => {
         dispatch(setIsCourseLoading({ isLoading: true }));
+
+        if (!isAuthenticated) {
+            setUnauthenticatedError(() => {
+                dispatch(setIsCourseLoading({ isLoading: false }));
+                onFinish && onFinish();
+            });
+
+            return;
+        }
 
         /* Should not update if selectedCourse.id is an empty string */
         if (state.selectedCourse.id === '') {
@@ -318,6 +357,15 @@ const useCourses = () => {
      */
     const finishOrStartLesson = async (next_lesson: Date, onFinish?: () => void) => {
         dispatch(setIsLessonLoading({ isLoading: true }));
+
+        if (!isAuthenticated) {
+            setUnauthenticatedError(() => {
+                dispatch(setIsLessonLoading({ isLoading: false }));
+                onFinish && onFinish();
+            });
+
+            return;
+        }
 
         /* Should not update if selectedLesson.id is an empty string */
         if (state.selectedLesson.id === '') {
@@ -386,6 +434,11 @@ const useCourses = () => {
         dispatch(setCourseFilter({ filter }));
         setIsCoursesLoading(true);
 
+        if (!isAuthenticated) {
+            setUnauthenticatedError(() => setIsCoursesLoading(false));
+            return;
+        }
+
         const coursesPromise = supabase.from('courses')
             .select('*, lessons (*)')
             .eq('user_id', user.id)
@@ -449,6 +502,23 @@ const useCourses = () => {
     const loadLessons = async ({ loadMore = false, refresh = false, search = '' }: LoadResourcesOptions) => {
         setIsLessonsLoading(true);
 
+        if (!isAuthenticated) {
+            setUnauthenticatedError(() => setIsLessonsLoading(false));
+            return;
+        }
+
+         /* Should not update if selectedCourse .id is an empty string */
+        if (state.selectedCourse.id === '') {
+            setIsLessonsLoading(false);
+
+            setStatus({
+                code: 400,
+                msg: 'No hay un curso seleccionado.'
+            });
+
+            return;
+        }
+
         const lessonsPromise = supabase.from('lessons')
             .select()
             .eq('course_id', state.selectedCourse.id);
@@ -488,6 +558,15 @@ const useCourses = () => {
     const saveCourse = async (courseValues: CourseFormValues, onFinish?: () => void) => {
         dispatch(setIsCourseLoading({ isLoading: true }));
 
+        if (!isAuthenticated) {
+            setUnauthenticatedError(() => {
+                onFinish && onFinish();
+                dispatch(setIsCourseLoading({ isLoading: false }));
+            });
+
+            return;
+        }
+
         const { data, error, status } = await supabase.from('courses')
             .insert({ ...courseValues, user_id: user.id })
             .select();
@@ -522,6 +601,14 @@ const useCourses = () => {
     const saveLesson = async (lessonValues: LessonFormValues) => {
         dispatch(setIsLessonLoading({ isLoading: true }));
 
+        if (!isAuthenticated) {
+            setUnauthenticatedError(() => {
+                dispatch(setIsLessonLoading({ isLoading: false }));
+            });
+
+            return;
+        }
+
         const { data, error, status } = await supabase.from('lessons')
             .insert({
                 course_id: state.selectedCourse.id,
@@ -534,7 +621,7 @@ const useCourses = () => {
         if (next) return;
 
         dispatch(setIsLessonLoading({ isLoading: false }));
-        dispatch(addLesson({ lesson: data![0] }));
+        if (state.lessons.length > 0) dispatch(addLesson({ lesson: data![0] }));
 
         setStatus({
             code: 201,
@@ -551,6 +638,25 @@ const useCourses = () => {
      */
     const updateCourse = async (courseValues: CourseFormValues) => {
         dispatch(setIsCourseLoading({ isLoading: true }));
+
+        if (!isAuthenticated) {
+            setUnauthenticatedError(() => {
+                dispatch(setIsCourseLoading({ isLoading: false }));
+            });
+
+            return;
+        }
+
+        if (state.selectedCourse.id === '') {
+            dispatch(setIsCourseLoading({ isLoading: false }));
+
+            setStatus({
+                code: 400,
+                msg: 'No hay un curso seleccionado para actualizar.'
+            });
+
+            return;
+        }
 
         const { data, error, status } = await supabase.from('courses')
             .update({
@@ -580,6 +686,25 @@ const useCourses = () => {
      */
     const updateLesson = async (lessonValues: LessonFormValues) => {
         dispatch(setIsLessonLoading({ isLoading: true }));
+
+        if (!isAuthenticated) {
+            setUnauthenticatedError(() => {
+                dispatch(setIsLessonLoading({ isLoading: false }));
+            });
+
+            return;
+        }
+
+        if (state.selectedLesson.id === '') {
+            dispatch(setIsLessonLoading({ isLoading: false }));
+
+            setStatus({
+                code: 400,
+                msg: 'No hay una clase seleccionada para actualizar.'
+            });
+
+            return;
+        }
 
         const { data, error, status } = await supabase.from('lessons')
             .update({
