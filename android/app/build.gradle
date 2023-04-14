@@ -99,9 +99,9 @@ android {
     buildToolsVersion "27.0.3"
     compileSdkVersion rootProject.ext.compileSdkVersion
 
-    namespace "com.jwreports"
+    namespace "com.kristhdev.jwreports"
     defaultConfig {
-        applicationId "com.jwreports"
+        applicationId "com.kristhdev.jwreports"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1

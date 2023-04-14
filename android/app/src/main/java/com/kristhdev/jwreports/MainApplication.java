@@ -1,4 +1,4 @@
-package com.jwreports;
+package com.kristhdev.jwreports;
 
 import android.app.Application;
 import com.facebook.react.PackageList;

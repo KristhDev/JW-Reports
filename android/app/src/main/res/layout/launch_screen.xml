@@ -7,10 +7,10 @@
     android:orientation="vertical">
 
     <FrameLayout
-        android:layout_width="180dp"
-        android:layout_height="180dp"
+        android:layout_width="140dp"
+        android:layout_height="140dp"
         android:layout_gravity="center"
-        android:background="@mipmap/ic_launcher">
+        android:background="@drawable/play_store_512">
 
     </FrameLayout>
 </LinearLayout>
