@@ -108,7 +108,7 @@ const useRevisits = () => {
         }
 
         dispatch(setHasMoreRevisits({ hasMore: (data!.length >= 10) }));
-        (loadMore) ? addRevisits(data!) : setRevisits(data!);
+        (loadMore) ? addRevisits(data as any) : setRevisits(data as any);
     }
 
     /**
@@ -164,7 +164,7 @@ const useRevisits = () => {
 
         if (next) return;
 
-        dispatch(addRevisit({ revisit: data![0] }));
+        dispatch(addRevisit({ revisit: (data as any)![0] }));
         onFinish && onFinish();
 
         const successMsg = (back)
@@ -235,7 +235,7 @@ const useRevisits = () => {
         const next = setSupabaseError(error, status, () => dispatch(setIsRevisitLoading({ isLoading: false })));
         if (next) return;
 
-        dispatch(updateRevisitAction({ revisit: data![0] }));
+        dispatch(updateRevisitAction({ revisit: (data as any)![0] }));
 
         setStatus({
             code: 200,
@@ -358,8 +358,8 @@ const useRevisits = () => {
             return '';
         }
 
-        dispatch(updateRevisitAction({ revisit: data[0] }));
-        setSelectedRevisit(data[0]);
+        dispatch(updateRevisitAction({ revisit: (data as any)[0] }));
+        setSelectedRevisit((data as any)[0]);
 
         return 'Haz marcado como completa tu revista correctamente.';
     }

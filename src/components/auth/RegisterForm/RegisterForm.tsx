@@ -44,7 +44,7 @@ export const RegisterForm = () => {
             .min(6, 'La contraseña debe tener al menos 6 caracteres.')
             .required('La contraseña es requerida.'),
         confirmPassword: string()
-            .oneOf([ ref('password'), null ], 'Las contraseñas no coinciden.')
+            .oneOf([ ref('password'), undefined ], 'Las contraseñas no coinciden.')
             .required('La confirmación de la contraseña es requerida.'),
     });
 

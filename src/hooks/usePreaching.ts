@@ -69,7 +69,7 @@ const usePreaching = () => {
         const next = setSupabaseError(error, status, () => setIsPreachingsLoading(false));
         if (next) return;
 
-        dispatch(setPreachings({ preachings: data! }));
+        dispatch(setPreachings({ preachings: (data as any[])! }));
     }
 
     /**
@@ -98,7 +98,7 @@ const usePreaching = () => {
         if (next) return;
 
         if (dayjs(data![0].day).format('MMMM') === dayjs(state.selectedDate).format('MMMM')) {
-            dispatch(addPreaching({ preaching: data![0] }));
+            dispatch(addPreaching({ preaching: (data as any)![0] }));
         }
 
         setStatus({
@@ -147,7 +147,7 @@ const usePreaching = () => {
         const next = setSupabaseError(error, status, () => dispatch(setIsPreachingLoading({ isLoading: false })));
         if (next) return;
 
-        dispatch(updatePreachingAction({ preaching: data![0] }));
+        dispatch(updatePreachingAction({ preaching: (data as any)![0] }));
 
         setStatus({
             code: 200,

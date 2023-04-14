@@ -5,6 +5,7 @@ import { NavigationContainer, useNavigationContainerRef } from '@react-navigatio
 import { useFlipper } from '@react-navigation/devtools';
 import { MenuProvider } from 'react-native-popup-menu';
 import { Provider as PaperProvider } from 'react-native-paper';
+import SplashScreen from 'react-native-splash-screen';
 import OneSignal from 'react-native-onesignal';
 import dayjs from 'dayjs';
 import 'dayjs/locale/es';
@@ -52,6 +53,10 @@ const App = () => {
       const notification = notificationReceivedEvent.getNotification();
       notificationReceivedEvent.complete(notification);
     });
+  }, []);
+
+  useEffect(() => {
+    SplashScreen.hide();
   }, []);
 
   return (

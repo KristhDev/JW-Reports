@@ -1,5 +1,4 @@
 {
     "editor.tabCompletion": "on",
-    "diffEditor.codeLens": true,
-    "dotenv.enableAutocloaking": false
+    "diffEditor.codeLens": true
 }

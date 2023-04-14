@@ -140,7 +140,7 @@ const useCourses = () => {
             ? 'Haz suspendido el curso correctamente.'
             : 'Haz renovado el curso correctamente.'
 
-        dispatch(updateCourseAction({ course: data![0] }));
+        dispatch(updateCourseAction({ course: (data as any)![0] }));
 
         onFinish && onFinish();
 
@@ -343,7 +343,7 @@ const useCourses = () => {
             ? 'Haz terminado el curso correctamente.'
             : 'Haz comenzado de nuevo el curso correctamente.'
 
-        dispatch(updateCourseAction({ course: data![0] }));
+        dispatch(updateCourseAction({ course: (data as any)![0] }));
 
         onFinish && onFinish();
 
@@ -414,7 +414,7 @@ const useCourses = () => {
             ? 'Haz terminado la clase correctamente.'
             : 'Haz reprogrado la clase correctamente.'
 
-        dispatch(updateLessonAction({ lesson: data![0] }));
+        dispatch(updateLessonAction({ lesson: (data as any)![0] }));
 
         onFinish && onFinish();
 
@@ -485,7 +485,7 @@ const useCourses = () => {
         const courses = data!.map(({ lessons, ...rest }) => ({
             ...rest,
             last_lesson: lessons[0]
-        }));
+        })) as any[];
 
         dispatch(setHasMoreCourses({ hasMore: (courses!.length >= 10) }));
         (loadMore) ? addCourses(courses!) : setCourses(courses!);
@@ -546,7 +546,7 @@ const useCourses = () => {
         }
 
         dispatch(setHasMoreLessons({ hasMore: (data!.length >= 10) }));
-        (loadMore) ? addLessons(data!) : setLessons(data!);
+        (loadMore) ? addLessons(data as any) : setLessons(data as any);
     }
 
     /**
@@ -578,7 +578,7 @@ const useCourses = () => {
 
         if (next) return;
 
-        dispatch(addCourse({ course: data![0] }));
+        dispatch(addCourse({ course: (data as any)![0] }));
         onFinish && onFinish();
 
         setStatus({
@@ -621,7 +621,7 @@ const useCourses = () => {
         if (next) return;
 
         dispatch(setIsLessonLoading({ isLoading: false }));
-        if (state.lessons.length > 0) dispatch(addLesson({ lesson: data![0] }));
+        if (state.lessons.length > 0) dispatch(addLesson({ lesson: (data as any)![0] }));
 
         setStatus({
             code: 201,
@@ -670,7 +670,7 @@ const useCourses = () => {
         const next = setSupabaseError(error, status, () => dispatch(setIsCourseLoading({ isLoading: false })));
         if (next) return;
 
-        dispatch(updateCourseAction({ course: data![0] }));
+        dispatch(updateCourseAction({ course: (data as any)![0] }));
 
         setStatus({
             code: 200,
@@ -719,7 +719,7 @@ const useCourses = () => {
         const next = setSupabaseError(error, status, () => dispatch(setIsLessonLoading({ isLoading: false })));
         if (next) return;
 
-        dispatch(updateLessonAction({ lesson: data![0] }));
+        dispatch(updateLessonAction({ lesson: (data as any)![0] }));
 
         setStatus({
             code: 200,
