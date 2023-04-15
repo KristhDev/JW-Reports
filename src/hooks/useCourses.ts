@@ -127,7 +127,7 @@ const useCourses = () => {
             })
             .eq('id', state.selectedCourse.id)
             .eq('user_id', user.id)
-            .select();
+            .select<'*', Course>();
 
         const next = setSupabaseError(error, status, () => {
             dispatch(setIsCourseLoading({ isLoading: false }));
@@ -140,7 +140,7 @@ const useCourses = () => {
             ? 'Haz suspendido el curso correctamente.'
             : 'Haz renovado el curso correctamente.'
 
-        dispatch(updateCourseAction({ course: (data as any)![0] }));
+        dispatch(updateCourseAction({ course: data![0] }));
 
         onFinish && onFinish();
 
@@ -330,7 +330,7 @@ const useCourses = () => {
             })
             .eq('id', state.selectedCourse.id)
             .eq('user_id', user.id)
-            .select();
+            .select<'*', Course>();
 
         const next = setSupabaseError(error, status, () => {
             dispatch(setIsCourseLoading({ isLoading: false }));
@@ -343,7 +343,7 @@ const useCourses = () => {
             ? 'Haz terminado el curso correctamente.'
             : 'Haz comenzado de nuevo el curso correctamente.'
 
-        dispatch(updateCourseAction({ course: (data as any)![0] }));
+        dispatch(updateCourseAction({ course: data![0] }));
 
         onFinish && onFinish();
 
@@ -401,7 +401,7 @@ const useCourses = () => {
             })
             .eq('id', state.selectedLesson.id)
             .eq('course_id', state.selectedCourse.id)
-            .select();
+            .select<'*', Lesson>();
 
         const next = setSupabaseError(error, status, () => {
             dispatch(setIsLessonLoading({ isLoading: false }));
@@ -520,7 +520,7 @@ const useCourses = () => {
         }
 
         const lessonsPromise = supabase.from('lessons')
-            .select()
+            .select<'*', Lesson>()
             .eq('course_id', state.selectedCourse.id);
 
         if (search.trim().length > 0) {
@@ -546,7 +546,7 @@ const useCourses = () => {
         }
 
         dispatch(setHasMoreLessons({ hasMore: (data!.length >= 10) }));
-        (loadMore) ? addLessons(data as any) : setLessons(data as any);
+        (loadMore) ? addLessons(data!) : setLessons(data!);
     }
 
     /**
@@ -615,13 +615,13 @@ const useCourses = () => {
                 description: lessonValues.description,
                 next_lesson: dayjs(lessonValues.next_lesson).format('YYYY-MM-DD HH:mm:ss.SSSSSS')
             })
-            .select();
+            .select<'*', Lesson>();
 
         const next = setSupabaseError(error, status, () => dispatch(setIsLessonLoading({ isLoading: false })));
         if (next) return;
 
         dispatch(setIsLessonLoading({ isLoading: false }));
-        if (state.lessons.length > 0) dispatch(addLesson({ lesson: (data as any)![0] }));
+        if (state.lessons.length > 0) dispatch(addLesson({ lesson: data![0] }));
 
         setStatus({
             code: 201,
@@ -665,12 +665,12 @@ const useCourses = () => {
             })
             .eq('id', state.selectedCourse.id)
             .eq('user_id', user.id)
-            .select();
+            .select<'*', Course>();
 
         const next = setSupabaseError(error, status, () => dispatch(setIsCourseLoading({ isLoading: false })));
         if (next) return;
 
-        dispatch(updateCourseAction({ course: (data as any)![0] }));
+        dispatch(updateCourseAction({ course: data![0] }));
 
         setStatus({
             code: 200,
@@ -714,12 +714,12 @@ const useCourses = () => {
             })
             .eq('id', state.selectedLesson.id)
             .eq('course_id', state.selectedCourse.id)
-            .select();
+            .select<'*', Lesson>();
 
         const next = setSupabaseError(error, status, () => dispatch(setIsLessonLoading({ isLoading: false })));
         if (next) return;
 
-        dispatch(updateLessonAction({ lesson: (data as any)![0] }));
+        dispatch(updateLessonAction({ lesson: data![0] }));
 
         setStatus({
             code: 200,

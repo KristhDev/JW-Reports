@@ -75,7 +75,7 @@ const useRevisits = () => {
             return;
         }
 
-        const revisitsPromise = supabase.from('revisits').select().eq('user_id', user.id);
+        const revisitsPromise = supabase.from('revisits').select<'*', Revisit>().eq('user_id', user.id);
 
         if (filter === 'visited') revisitsPromise.eq('done', true);
         else if (filter === 'unvisited') revisitsPromise.eq('done', false);
@@ -108,7 +108,7 @@ const useRevisits = () => {
         }
 
         dispatch(setHasMoreRevisits({ hasMore: (data!.length >= 10) }));
-        (loadMore) ? addRevisits(data as any) : setRevisits(data as any);
+        (loadMore) ? addRevisits(data!) : setRevisits(data!);
     }
 
     /**
@@ -155,7 +155,7 @@ const useRevisits = () => {
                 next_visit: dayjs(revisitValues.next_visit).format('YYYY-MM-DD HH:mm:ss.SSSSSS'),
                 user_id: user.id
             })
-            .select();
+            .select<'*', Revisit>();
 
         const next = setSupabaseError(error, status, () => {
             dispatch(setIsRevisitLoading({ isLoading: false }));
@@ -164,7 +164,7 @@ const useRevisits = () => {
 
         if (next) return;
 
-        dispatch(addRevisit({ revisit: (data as any)![0] }));
+        dispatch(addRevisit({ revisit: data![0] }));
         onFinish && onFinish();
 
         const successMsg = (back)
@@ -230,12 +230,12 @@ const useRevisits = () => {
             })
             .eq('id', state.selectedRevisit.id)
             .eq('user_id', user.id)
-            .select();
+            .select<'*', Revisit>();
 
         const next = setSupabaseError(error, status, () => dispatch(setIsRevisitLoading({ isLoading: false })));
         if (next) return;
 
-        dispatch(updateRevisitAction({ revisit: (data as any)![0] }));
+        dispatch(updateRevisitAction({ revisit: data![0] }));
 
         setStatus({
             code: 200,
@@ -347,7 +347,7 @@ const useRevisits = () => {
             })
             .eq('id', state.selectedRevisit.id)
             .eq('user_id', user.id)
-            .select();
+            .select<'*', Revisit>();
 
         if (error) {
             console.log(error);
@@ -358,8 +358,8 @@ const useRevisits = () => {
             return '';
         }
 
-        dispatch(updateRevisitAction({ revisit: (data as any)[0] }));
-        setSelectedRevisit((data as any)[0]);
+        dispatch(updateRevisitAction({ revisit: data![0] }));
+        setSelectedRevisit(data![0]);
 
         return 'Haz marcado como completa tu revista correctamente.';
     }
