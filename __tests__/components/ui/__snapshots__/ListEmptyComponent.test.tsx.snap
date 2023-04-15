@@ -3,11 +3,11 @@
 exports[`Test in <ListEmptyComponent /> component should to match snapshot 1`] = `
 <View
   style={
-    Array [
-      Object {
+    [
+      {
         "padding": 10,
       },
-      Object {
+      {
         "marginTop": 266.8,
       },
     ]
@@ -15,8 +15,8 @@ exports[`Test in <ListEmptyComponent /> component should to match snapshot 1`] =
 >
   <Text
     style={
-      Array [
-        Object {
+      [
+        {
           "color": "#BFBFBF",
           "fontSize": 17,
           "textAlign": "center",

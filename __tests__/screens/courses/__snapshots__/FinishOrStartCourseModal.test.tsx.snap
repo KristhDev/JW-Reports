@@ -10,7 +10,7 @@ exports[`Test in <FinishOrStartCourseModal /> screen should to match snapshot 1`
 >
   <View
     style={
-      Object {
+      {
         "alignItems": "center",
         "backgroundColor": "rgba(0, 0, 0, 0.5)",
         "flex": 1,
@@ -21,7 +21,7 @@ exports[`Test in <FinishOrStartCourseModal /> screen should to match snapshot 1`
   >
     <View
       style={
-        Object {
+        {
           "backgroundColor": "#292929",
           "borderRadius": 10,
           "justifyContent": "space-between",
@@ -32,7 +32,7 @@ exports[`Test in <FinishOrStartCourseModal /> screen should to match snapshot 1`
     >
       <Text
         style={
-          Object {
+          {
             "color": "#B4B4B4",
             "fontSize": 19,
             "marginBottom": 10,
@@ -46,7 +46,7 @@ exports[`Test in <FinishOrStartCourseModal /> screen should to match snapshot 1`
       </Text>
       <View
         style={
-          Object {
+          {
             "alignSelf": "flex-end",
             "flexDirection": "row",
             "justifyContent": "flex-end",
@@ -56,8 +56,20 @@ exports[`Test in <FinishOrStartCourseModal /> screen should to match snapshot 1`
       >
         <View
           accessibilityState={
-            Object {
+            {
+              "busy": undefined,
+              "checked": undefined,
               "disabled": false,
+              "expanded": undefined,
+              "selected": undefined,
+            }
+          }
+          accessibilityValue={
+            {
+              "max": undefined,
+              "min": undefined,
+              "now": undefined,
+              "text": undefined,
             }
           }
           accessible={true}
@@ -73,17 +85,17 @@ exports[`Test in <FinishOrStartCourseModal /> screen should to match snapshot 1`
           onResponderTerminationRequest={[Function]}
           onStartShouldSetResponder={[Function]}
           style={
-            Array [
-              Object {
+            [
+              {
                 "overflow": "hidden",
               },
               false,
-              Array [
-                Object {
+              [
+                {
                   "backgroundColor": "#C0A7E1",
                   "borderRadius": 10,
                 },
-                Object {
+                {
                   "backgroundColor": "transparent",
                   "marginRight": 5,
                 },
@@ -94,15 +106,15 @@ exports[`Test in <FinishOrStartCourseModal /> screen should to match snapshot 1`
         >
           <View
             style={
-              Array [
-                Object {
+              [
+                {
                   "alignItems": "center",
                   "flexDirection": "row",
                   "justifyContent": "center",
                   "paddingHorizontal": 20,
                   "paddingVertical": 8,
                 },
-                Object {
+                {
                   "paddingHorizontal": 12,
                 },
               ]
@@ -110,28 +122,28 @@ exports[`Test in <FinishOrStartCourseModal /> screen should to match snapshot 1`
           >
             <Text
               style={
-                Array [
-                  Object {
+                [
+                  {
                     "textAlign": "left",
                   },
-                  Object {
+                  {
                     "color": "rgba(28, 27, 31, 1)",
                     "fontFamily": "System",
                     "fontWeight": "400",
                     "letterSpacing": 0,
                   },
-                  Object {
+                  {
                     "writingDirection": "ltr",
                   },
-                  Array [
-                    Object {
+                  [
+                    {
                       "color": "#121212",
                       "fontSize": 18,
                       "fontWeight": "bold",
                       "marginBottom": 2,
                       "textAlign": "center",
                     },
-                    Object {
+                    {
                       "color": "#C0A7E1",
                       "fontSize": 16,
                     },
@@ -146,8 +158,20 @@ exports[`Test in <FinishOrStartCourseModal /> screen should to match snapshot 1`
         </View>
         <View
           accessibilityState={
-            Object {
+            {
+              "busy": undefined,
+              "checked": undefined,
               "disabled": false,
+              "expanded": undefined,
+              "selected": undefined,
+            }
+          }
+          accessibilityValue={
+            {
+              "max": undefined,
+              "min": undefined,
+              "now": undefined,
+              "text": undefined,
             }
           }
           accessible={true}
@@ -163,17 +187,17 @@ exports[`Test in <FinishOrStartCourseModal /> screen should to match snapshot 1`
           onResponderTerminationRequest={[Function]}
           onStartShouldSetResponder={[Function]}
           style={
-            Array [
-              Object {
+            [
+              {
                 "overflow": "hidden",
               },
               false,
-              Array [
-                Object {
+              [
+                {
                   "backgroundColor": "#C0A7E1",
                   "borderRadius": 10,
                 },
-                Object {
+                {
                   "backgroundColor": "transparent",
                 },
               ],
@@ -183,15 +207,15 @@ exports[`Test in <FinishOrStartCourseModal /> screen should to match snapshot 1`
         >
           <View
             style={
-              Array [
-                Object {
+              [
+                {
                   "alignItems": "center",
                   "flexDirection": "row",
                   "justifyContent": "center",
                   "paddingHorizontal": 20,
                   "paddingVertical": 8,
                 },
-                Object {
+                {
                   "paddingHorizontal": 12,
                 },
               ]
@@ -199,28 +223,28 @@ exports[`Test in <FinishOrStartCourseModal /> screen should to match snapshot 1`
           >
             <Text
               style={
-                Array [
-                  Object {
+                [
+                  {
                     "textAlign": "left",
                   },
-                  Object {
+                  {
                     "color": "rgba(28, 27, 31, 1)",
                     "fontFamily": "System",
                     "fontWeight": "400",
                     "letterSpacing": 0,
                   },
-                  Object {
+                  {
                     "writingDirection": "ltr",
                   },
-                  Array [
-                    Object {
+                  [
+                    {
                       "color": "#121212",
                       "fontSize": 18,
                       "fontWeight": "bold",
                       "marginBottom": 2,
                       "textAlign": "center",
                     },
-                    Object {
+                    {
                       "color": "#C0A7E1",
                       "fontSize": 16,
                     },

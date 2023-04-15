@@ -1,10 +1,10 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Test in <LessonDetail /> screen should to match snapshot 1`] = `
-Array [
+[
   <RCTScrollView
     contentContainerStyle={
-      Object {
+      {
         "alignItems": "center",
         "flexGrow": 1,
         "paddingBottom": 100,
@@ -12,7 +12,7 @@ Array [
     }
     overScrollMode="never"
     style={
-      Object {
+      {
         "flex": 1,
       }
     }
@@ -20,13 +20,13 @@ Array [
     <View>
       <View
         style={
-          Array [
-            Object {
+          [
+            {
               "alignItems": "flex-start",
               "padding": 20,
               "width": "100%",
             },
-            Object {
+            {
               "paddingBottom": 0,
               "paddingTop": 30,
             },
@@ -35,13 +35,13 @@ Array [
       >
         <Text
           style={
-            Array [
-              Object {
+            [
+              {
                 "color": "#FFFFFF",
                 "fontSize": 38,
                 "fontWeight": "bold",
               },
-              Object {
+              {
                 "fontSize": 24,
               },
             ]
@@ -53,11 +53,11 @@ Array [
       </View>
       <View
         style={
-          Array [
-            Object {
+          [
+            {
               "padding": 10,
             },
-            Object {
+            {
               "paddingHorizontal": 20,
               "width": "100%",
             },
@@ -66,13 +66,13 @@ Array [
       >
         <Text
           style={
-            Array [
-              Object {
+            [
+              {
                 "color": "#BFBFBF",
                 "fontSize": 17,
                 "textAlign": "center",
               },
-              Object {
+              {
                 "fontSize": 16,
                 "fontWeight": "bold",
                 "textAlign": "left",
@@ -86,7 +86,7 @@ Array [
       </View>
       <View
         style={
-          Object {
+          {
             "paddingHorizontal": 20,
             "paddingVertical": 16,
             "width": "100%",
@@ -96,7 +96,7 @@ Array [
       >
         <Text
           style={
-            Object {
+            {
               "color": "#FFFFFF",
               "fontSize": 19,
               "fontWeight": "bold",
@@ -108,6 +108,23 @@ Array [
           Por impartir
         </Text>
         <View
+          accessibilityState={
+            {
+              "busy": undefined,
+              "checked": undefined,
+              "disabled": undefined,
+              "expanded": undefined,
+              "selected": undefined,
+            }
+          }
+          accessibilityValue={
+            {
+              "max": undefined,
+              "min": undefined,
+              "now": undefined,
+              "text": undefined,
+            }
+          }
           accessible={true}
           collapsable={false}
           focusable={true}
@@ -119,14 +136,14 @@ Array [
           onResponderTerminationRequest={[Function]}
           onStartShouldSetResponder={[Function]}
           style={
-            Object {
+            {
               "opacity": 1,
             }
           }
         >
           <Text
             style={
-              Object {
+              {
                 "color": "#A0B9E2",
                 "fontSize": 19,
               }
@@ -138,7 +155,7 @@ Array [
       </View>
       <View
         style={
-          Object {
+          {
             "paddingHorizontal": 20,
             "paddingVertical": 16,
             "width": "100%",
@@ -148,7 +165,7 @@ Array [
       >
         <Text
           style={
-            Object {
+            {
               "color": "#FFFFFF",
               "fontSize": 19,
               "fontWeight": "bold",
@@ -160,7 +177,7 @@ Array [
         </Text>
         <Text
           style={
-            Object {
+            {
               "color": "#FFFFFF",
               "fontSize": 19,
             }
@@ -171,7 +188,7 @@ Array [
       </View>
       <View
         style={
-          Object {
+          {
             "paddingHorizontal": 20,
             "paddingVertical": 16,
             "width": "100%",
@@ -180,7 +197,7 @@ Array [
       >
         <Text
           style={
-            Object {
+            {
               "color": "#FFFFFF",
               "fontSize": 19,
               "fontWeight": "bold",
@@ -192,7 +209,7 @@ Array [
         </Text>
         <Text
           style={
-            Object {
+            {
               "color": "#FFFFFF",
               "fontSize": 19,
             }
@@ -204,7 +221,7 @@ Array [
       </View>
       <Text
         style={
-          Object {
+          {
             "bottom": 20,
             "color": "#B4B4B4",
             "fontSize": 16,

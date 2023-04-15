@@ -1,15 +1,15 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Test in <Settings /> screen should to match snapshot 1`] = `
-Array [
+[
   <RCTScrollView
     overScrollMode="never"
   >
     <View>
       <View
         style={
-          Array [
-            Object {
+          [
+            {
               "borderBottomColor": "#292929",
               "borderBottomWidth": 1,
               "paddingTop": 15,
@@ -20,11 +20,11 @@ Array [
       >
         <View
           style={
-            Array [
-              Object {
+            [
+              {
                 "padding": 10,
               },
-              Object {
+              {
                 "marginHorizontal": 8,
               },
             ]
@@ -32,13 +32,13 @@ Array [
         >
           <Text
             style={
-              Array [
-                Object {
+              [
+                {
                   "color": "#BFBFBF",
                   "fontSize": 17,
                   "textAlign": "center",
                 },
-                Object {
+                {
                   "color": "#93A8AB",
                   "fontSize": 15,
                   "fontWeight": "bold",
@@ -53,8 +53,20 @@ Array [
         </View>
         <View
           accessibilityState={
-            Object {
+            {
+              "busy": undefined,
+              "checked": undefined,
               "disabled": false,
+              "expanded": undefined,
+              "selected": undefined,
+            }
+          }
+          accessibilityValue={
+            {
+              "max": undefined,
+              "min": undefined,
+              "now": undefined,
+              "text": undefined,
             }
           }
           accessible={true}
@@ -71,12 +83,12 @@ Array [
           onResponderTerminationRequest={[Function]}
           onStartShouldSetResponder={[Function]}
           style={
-            Array [
-              Object {
+            [
+              {
                 "overflow": "hidden",
               },
               false,
-              Object {
+              {
                 "paddingHorizontal": 18,
                 "paddingVertical": 16,
               },
@@ -87,7 +99,7 @@ Array [
           <View>
             <Text
               style={
-                Object {
+                {
                   "color": "#FFFFFF",
                   "fontSize": 16,
                 }
@@ -98,7 +110,7 @@ Array [
             </Text>
             <Text
               style={
-                Object {
+                {
                   "color": "#BFBFBF",
                   "fontSize": 14,
                 }
@@ -111,8 +123,20 @@ Array [
         </View>
         <View
           accessibilityState={
-            Object {
+            {
+              "busy": undefined,
+              "checked": undefined,
               "disabled": false,
+              "expanded": undefined,
+              "selected": undefined,
+            }
+          }
+          accessibilityValue={
+            {
+              "max": undefined,
+              "min": undefined,
+              "now": undefined,
+              "text": undefined,
             }
           }
           accessible={true}
@@ -129,12 +153,12 @@ Array [
           onResponderTerminationRequest={[Function]}
           onStartShouldSetResponder={[Function]}
           style={
-            Array [
-              Object {
+            [
+              {
                 "overflow": "hidden",
               },
               false,
-              Object {
+              {
                 "paddingHorizontal": 18,
                 "paddingVertical": 16,
               },
@@ -145,7 +169,7 @@ Array [
           <View>
             <Text
               style={
-                Object {
+                {
                   "color": "#FFFFFF",
                   "fontSize": 16,
                 }
@@ -156,7 +180,7 @@ Array [
             </Text>
             <Text
               style={
-                Object {
+                {
                   "color": "#BFBFBF",
                   "fontSize": 14,
                 }
@@ -170,8 +194,8 @@ Array [
       </View>
       <View
         style={
-          Array [
-            Object {
+          [
+            {
               "borderBottomColor": "#292929",
               "borderBottomWidth": 1,
               "paddingTop": 15,
@@ -182,11 +206,11 @@ Array [
       >
         <View
           style={
-            Array [
-              Object {
+            [
+              {
                 "padding": 10,
               },
-              Object {
+              {
                 "marginHorizontal": 8,
               },
             ]
@@ -194,13 +218,13 @@ Array [
         >
           <Text
             style={
-              Array [
-                Object {
+              [
+                {
                   "color": "#BFBFBF",
                   "fontSize": 17,
                   "textAlign": "center",
                 },
-                Object {
+                {
                   "color": "#93A8AB",
                   "fontSize": 15,
                   "fontWeight": "bold",
@@ -215,8 +239,20 @@ Array [
         </View>
         <View
           accessibilityState={
-            Object {
+            {
+              "busy": undefined,
+              "checked": undefined,
               "disabled": false,
+              "expanded": undefined,
+              "selected": undefined,
+            }
+          }
+          accessibilityValue={
+            {
+              "max": undefined,
+              "min": undefined,
+              "now": undefined,
+              "text": undefined,
             }
           }
           accessible={true}
@@ -233,12 +269,12 @@ Array [
           onResponderTerminationRequest={[Function]}
           onStartShouldSetResponder={[Function]}
           style={
-            Array [
-              Object {
+            [
+              {
                 "overflow": "hidden",
               },
               false,
-              Object {
+              {
                 "paddingHorizontal": 18,
                 "paddingVertical": 16,
               },
@@ -249,7 +285,7 @@ Array [
           <View>
             <Text
               style={
-                Object {
+                {
                   "color": "#FFFFFF",
                   "fontSize": 16,
                 }
@@ -260,7 +296,7 @@ Array [
             </Text>
             <Text
               style={
-                Object {
+                {
                   "color": "#BFBFBF",
                   "fontSize": 14,
                 }
@@ -274,8 +310,8 @@ Array [
       </View>
       <View
         style={
-          Array [
-            Object {
+          [
+            {
               "borderBottomColor": "#292929",
               "borderBottomWidth": 1,
               "paddingTop": 15,
@@ -286,11 +322,11 @@ Array [
       >
         <View
           style={
-            Array [
-              Object {
+            [
+              {
                 "padding": 10,
               },
-              Object {
+              {
                 "marginHorizontal": 8,
               },
             ]
@@ -298,13 +334,13 @@ Array [
         >
           <Text
             style={
-              Array [
-                Object {
+              [
+                {
                   "color": "#BFBFBF",
                   "fontSize": 17,
                   "textAlign": "center",
                 },
-                Object {
+                {
                   "color": "#93A8AB",
                   "fontSize": 15,
                   "fontWeight": "bold",
@@ -319,8 +355,20 @@ Array [
         </View>
         <View
           accessibilityState={
-            Object {
+            {
+              "busy": undefined,
+              "checked": undefined,
               "disabled": false,
+              "expanded": undefined,
+              "selected": undefined,
+            }
+          }
+          accessibilityValue={
+            {
+              "max": undefined,
+              "min": undefined,
+              "now": undefined,
+              "text": undefined,
             }
           }
           accessible={true}
@@ -337,12 +385,12 @@ Array [
           onResponderTerminationRequest={[Function]}
           onStartShouldSetResponder={[Function]}
           style={
-            Array [
-              Object {
+            [
+              {
                 "overflow": "hidden",
               },
               false,
-              Object {
+              {
                 "paddingHorizontal": 18,
                 "paddingVertical": 16,
               },
@@ -353,7 +401,7 @@ Array [
           <View>
             <Text
               style={
-                Object {
+                {
                   "color": "#FFFFFF",
                   "fontSize": 16,
                 }
@@ -364,7 +412,7 @@ Array [
             </Text>
             <Text
               style={
-                Object {
+                {
                   "color": "#BFBFBF",
                   "fontSize": 14,
                 }
@@ -378,13 +426,13 @@ Array [
       </View>
       <View
         style={
-          Array [
-            Object {
+          [
+            {
               "borderBottomColor": "#292929",
               "borderBottomWidth": 1,
               "paddingTop": 15,
             },
-            Object {
+            {
               "borderBottomWidth": 0,
             },
           ]
@@ -392,11 +440,11 @@ Array [
       >
         <View
           style={
-            Array [
-              Object {
+            [
+              {
                 "padding": 10,
               },
-              Object {
+              {
                 "marginHorizontal": 8,
               },
             ]
@@ -404,13 +452,13 @@ Array [
         >
           <Text
             style={
-              Array [
-                Object {
+              [
+                {
                   "color": "#BFBFBF",
                   "fontSize": 17,
                   "textAlign": "center",
                 },
-                Object {
+                {
                   "color": "#93A8AB",
                   "fontSize": 15,
                   "fontWeight": "bold",
@@ -425,8 +473,20 @@ Array [
         </View>
         <View
           accessibilityState={
-            Object {
+            {
+              "busy": undefined,
+              "checked": undefined,
               "disabled": false,
+              "expanded": undefined,
+              "selected": undefined,
+            }
+          }
+          accessibilityValue={
+            {
+              "max": undefined,
+              "min": undefined,
+              "now": undefined,
+              "text": undefined,
             }
           }
           accessible={true}
@@ -443,12 +503,12 @@ Array [
           onResponderTerminationRequest={[Function]}
           onStartShouldSetResponder={[Function]}
           style={
-            Array [
-              Object {
+            [
+              {
                 "overflow": "hidden",
               },
               false,
-              Object {
+              {
                 "paddingHorizontal": 18,
                 "paddingVertical": 16,
               },
@@ -459,7 +519,7 @@ Array [
           <View>
             <Text
               style={
-                Object {
+                {
                   "color": "#FFFFFF",
                   "fontSize": 16,
                 }
@@ -470,7 +530,7 @@ Array [
             </Text>
             <Text
               style={
-                Object {
+                {
                   "color": "#BFBFBF",
                   "fontSize": 14,
                 }
@@ -483,8 +543,20 @@ Array [
         </View>
         <View
           accessibilityState={
-            Object {
+            {
+              "busy": undefined,
+              "checked": undefined,
               "disabled": false,
+              "expanded": undefined,
+              "selected": undefined,
+            }
+          }
+          accessibilityValue={
+            {
+              "max": undefined,
+              "min": undefined,
+              "now": undefined,
+              "text": undefined,
             }
           }
           accessible={true}
@@ -501,12 +573,12 @@ Array [
           onResponderTerminationRequest={[Function]}
           onStartShouldSetResponder={[Function]}
           style={
-            Array [
-              Object {
+            [
+              {
                 "overflow": "hidden",
               },
               false,
-              Object {
+              {
                 "paddingHorizontal": 18,
                 "paddingVertical": 16,
               },
@@ -517,7 +589,7 @@ Array [
           <View>
             <Text
               style={
-                Object {
+                {
                   "color": "#FFFFFF",
                   "fontSize": 16,
                 }
@@ -528,7 +600,7 @@ Array [
             </Text>
             <Text
               style={
-                Object {
+                {
                   "color": "#BFBFBF",
                   "fontSize": 14,
                 }
@@ -541,8 +613,20 @@ Array [
         </View>
         <View
           accessibilityState={
-            Object {
+            {
+              "busy": undefined,
+              "checked": undefined,
               "disabled": false,
+              "expanded": undefined,
+              "selected": undefined,
+            }
+          }
+          accessibilityValue={
+            {
+              "max": undefined,
+              "min": undefined,
+              "now": undefined,
+              "text": undefined,
             }
           }
           accessible={true}
@@ -559,12 +643,12 @@ Array [
           onResponderTerminationRequest={[Function]}
           onStartShouldSetResponder={[Function]}
           style={
-            Array [
-              Object {
+            [
+              {
                 "overflow": "hidden",
               },
               false,
-              Object {
+              {
                 "paddingHorizontal": 18,
                 "paddingVertical": 16,
               },
@@ -575,7 +659,7 @@ Array [
           <View>
             <Text
               style={
-                Object {
+                {
                   "color": "#FFFFFF",
                   "fontSize": 16,
                 }
@@ -586,7 +670,7 @@ Array [
             </Text>
             <Text
               style={
-                Object {
+                {
                   "color": "#BFBFBF",
                   "fontSize": 14,
                 }
@@ -600,7 +684,7 @@ Array [
       </View>
       <Text
         style={
-          Object {
+          {
             "color": "#BFBFBF",
             "fontSize": 14,
             "padding": 20,

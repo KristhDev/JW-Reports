@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Test in colors of theme should to match snapshot darkColors 1`] = `
-Object {
+{
   "background": "#000000",
   "bottom": "#292929",
   "button": "#C0A7E1",
@@ -24,7 +24,7 @@ Object {
 `;
 
 exports[`Test in colors of theme should to match snapshot lightColors 1`] = `
-Object {
+{
   "background": "#F1F1F1",
   "bottom": "#D8D8D8",
   "button": "#5A3D86",
@@ -47,7 +47,7 @@ Object {
 `;
 
 exports[`Test in colors of theme should to match snapshot undefinedColors 1`] = `
-Object {
+{
   "background": "transparent",
   "bottom": "transparent",
   "button": "transparent",

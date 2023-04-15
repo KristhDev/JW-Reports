@@ -3,7 +3,7 @@
 exports[`Test in <RadioBtn /> component should to match snapshot 1`] = `
 <View
   style={
-    Object {
+    {
       "alignItems": "center",
       "flexDirection": "row",
       "padding": 5,
@@ -15,9 +15,20 @@ exports[`Test in <RadioBtn /> component should to match snapshot 1`] = `
     accessibilityLiveRegion="polite"
     accessibilityRole="radio"
     accessibilityState={
-      Object {
+      {
+        "busy": undefined,
         "checked": false,
         "disabled": false,
+        "expanded": undefined,
+        "selected": undefined,
+      }
+    }
+    accessibilityValue={
+      {
+        "max": undefined,
+        "min": undefined,
+        "now": undefined,
+        "text": undefined,
       }
     }
     accessible={true}
@@ -34,12 +45,12 @@ exports[`Test in <RadioBtn /> component should to match snapshot 1`] = `
     onResponderTerminationRequest={[Function]}
     onStartShouldSetResponder={[Function]}
     style={
-      Array [
-        Object {
+      [
+        {
           "overflow": "hidden",
         },
         false,
-        Object {
+        {
           "borderRadius": 18,
           "padding": 6,
         },
@@ -49,7 +60,7 @@ exports[`Test in <RadioBtn /> component should to match snapshot 1`] = `
   >
     <View
       style={
-        Object {
+        {
           "opacity": 0,
         }
       }
@@ -61,30 +72,30 @@ exports[`Test in <RadioBtn /> component should to match snapshot 1`] = `
         pointerEvents="none"
         selectable={false}
         style={
-          Array [
-            Object {
+          [
+            {
               "color": "#C0A7E1",
               "fontSize": 24,
             },
-            Array [
-              Object {
+            [
+              {
                 "lineHeight": 24,
-                "transform": Array [
-                  Object {
+                "transform": [
+                  {
                     "scaleX": 1,
                   },
                 ],
               },
-              Object {
+              {
                 "backgroundColor": "transparent",
               },
             ],
-            Object {
+            {
               "fontFamily": "Material Design Icons",
               "fontStyle": "normal",
               "fontWeight": "normal",
             },
-            Object {},
+            {},
           ]
         }
       >
@@ -95,7 +106,7 @@ exports[`Test in <RadioBtn /> component should to match snapshot 1`] = `
   <Text
     onPress={[MockFunction]}
     style={
-      Object {
+      {
         "color": "#FFFFFF",
         "fontSize": 18,
         "marginLeft": 15,

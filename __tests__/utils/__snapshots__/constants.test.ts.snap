@@ -1,20 +1,20 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Test in Constants util should to match snapshot PRECURSORS_OPTIONS 1`] = `
-Array [
-  Object {
+[
+  {
     "label": "Ninguno",
     "value": "ninguno",
   },
-  Object {
+  {
     "label": "Auxiliar",
     "value": "auxiliar",
   },
-  Object {
+  {
     "label": "Regular",
     "value": "regular",
   },
-  Object {
+  {
     "label": "Especial",
     "value": "especial",
   },
@@ -22,7 +22,7 @@ Array [
 `;
 
 exports[`Test in Constants util should to match snapshot TABLE_PREACHING_HEADERS 1`] = `
-Array [
+[
   "Día",
   "H/I",
   "H/F",
@@ -33,16 +33,16 @@ Array [
 `;
 
 exports[`Test in Constants util should to match snapshot THEME_OPTIONS 1`] = `
-Array [
-  Object {
+[
+  {
     "label": "Modo predeterminado",
     "value": "default",
   },
-  Object {
+  {
     "label": "Modo claro",
     "value": "light",
   },
-  Object {
+  {
     "label": "Modo oscuro",
     "value": "dark",
   },

@@ -10,7 +10,7 @@ exports[`Test in <ThemeModal /> screen should to match snapshot 1`] = `
 >
   <View
     style={
-      Object {
+      {
         "alignItems": "center",
         "backgroundColor": "rgba(0, 0, 0, 0.5)",
         "flex": 1,
@@ -21,7 +21,7 @@ exports[`Test in <ThemeModal /> screen should to match snapshot 1`] = `
   >
     <View
       style={
-        Object {
+        {
           "backgroundColor": "#292929",
           "borderRadius": 10,
           "justifyContent": "space-between",
@@ -32,11 +32,11 @@ exports[`Test in <ThemeModal /> screen should to match snapshot 1`] = `
     >
       <View
         style={
-          Array [
-            Object {
+          [
+            {
               "padding": 10,
             },
-            Object {
+            {
               "marginBottom": 10,
               "marginLeft": 5,
               "padding": 0,
@@ -46,13 +46,13 @@ exports[`Test in <ThemeModal /> screen should to match snapshot 1`] = `
       >
         <Text
           style={
-            Array [
-              Object {
+            [
+              {
                 "color": "#BFBFBF",
                 "fontSize": 17,
                 "textAlign": "center",
               },
-              Object {
+              {
                 "color": "#FFFFFF",
                 "fontSize": 20,
                 "fontWeight": "bold",
@@ -70,7 +70,7 @@ exports[`Test in <ThemeModal /> screen should to match snapshot 1`] = `
       >
         <View
           style={
-            Object {
+            {
               "alignItems": "center",
               "flexDirection": "row",
               "padding": 5,
@@ -82,9 +82,20 @@ exports[`Test in <ThemeModal /> screen should to match snapshot 1`] = `
             accessibilityLiveRegion="polite"
             accessibilityRole="radio"
             accessibilityState={
-              Object {
+              {
+                "busy": undefined,
                 "checked": false,
                 "disabled": false,
+                "expanded": undefined,
+                "selected": undefined,
+              }
+            }
+            accessibilityValue={
+              {
+                "max": undefined,
+                "min": undefined,
+                "now": undefined,
+                "text": undefined,
               }
             }
             accessible={true}
@@ -101,12 +112,12 @@ exports[`Test in <ThemeModal /> screen should to match snapshot 1`] = `
             onResponderTerminationRequest={[Function]}
             onStartShouldSetResponder={[Function]}
             style={
-              Array [
-                Object {
+              [
+                {
                   "overflow": "hidden",
                 },
                 false,
-                Object {
+                {
                   "borderRadius": 18,
                   "padding": 6,
                 },
@@ -116,7 +127,7 @@ exports[`Test in <ThemeModal /> screen should to match snapshot 1`] = `
           >
             <View
               style={
-                Object {
+                {
                   "opacity": 0,
                 }
               }
@@ -128,30 +139,30 @@ exports[`Test in <ThemeModal /> screen should to match snapshot 1`] = `
                 pointerEvents="none"
                 selectable={false}
                 style={
-                  Array [
-                    Object {
+                  [
+                    {
                       "color": "#C0A7E1",
                       "fontSize": 24,
                     },
-                    Array [
-                      Object {
+                    [
+                      {
                         "lineHeight": 24,
-                        "transform": Array [
-                          Object {
+                        "transform": [
+                          {
                             "scaleX": 1,
                           },
                         ],
                       },
-                      Object {
+                      {
                         "backgroundColor": "transparent",
                       },
                     ],
-                    Object {
+                    {
                       "fontFamily": "Material Design Icons",
                       "fontStyle": "normal",
                       "fontWeight": "normal",
                     },
-                    Object {},
+                    {},
                   ]
                 }
               >
@@ -162,7 +173,7 @@ exports[`Test in <ThemeModal /> screen should to match snapshot 1`] = `
           <Text
             onPress={[Function]}
             style={
-              Object {
+              {
                 "color": "#FFFFFF",
                 "fontSize": 18,
                 "marginLeft": 15,
@@ -175,7 +186,7 @@ exports[`Test in <ThemeModal /> screen should to match snapshot 1`] = `
         </View>
         <View
           style={
-            Object {
+            {
               "alignItems": "center",
               "flexDirection": "row",
               "padding": 5,
@@ -187,9 +198,20 @@ exports[`Test in <ThemeModal /> screen should to match snapshot 1`] = `
             accessibilityLiveRegion="polite"
             accessibilityRole="radio"
             accessibilityState={
-              Object {
+              {
+                "busy": undefined,
                 "checked": false,
                 "disabled": false,
+                "expanded": undefined,
+                "selected": undefined,
+              }
+            }
+            accessibilityValue={
+              {
+                "max": undefined,
+                "min": undefined,
+                "now": undefined,
+                "text": undefined,
               }
             }
             accessible={true}
@@ -206,12 +228,12 @@ exports[`Test in <ThemeModal /> screen should to match snapshot 1`] = `
             onResponderTerminationRequest={[Function]}
             onStartShouldSetResponder={[Function]}
             style={
-              Array [
-                Object {
+              [
+                {
                   "overflow": "hidden",
                 },
                 false,
-                Object {
+                {
                   "borderRadius": 18,
                   "padding": 6,
                 },
@@ -221,7 +243,7 @@ exports[`Test in <ThemeModal /> screen should to match snapshot 1`] = `
           >
             <View
               style={
-                Object {
+                {
                   "opacity": 0,
                 }
               }
@@ -233,30 +255,30 @@ exports[`Test in <ThemeModal /> screen should to match snapshot 1`] = `
                 pointerEvents="none"
                 selectable={false}
                 style={
-                  Array [
-                    Object {
+                  [
+                    {
                       "color": "#C0A7E1",
                       "fontSize": 24,
                     },
-                    Array [
-                      Object {
+                    [
+                      {
                         "lineHeight": 24,
-                        "transform": Array [
-                          Object {
+                        "transform": [
+                          {
                             "scaleX": 1,
                           },
                         ],
                       },
-                      Object {
+                      {
                         "backgroundColor": "transparent",
                       },
                     ],
-                    Object {
+                    {
                       "fontFamily": "Material Design Icons",
                       "fontStyle": "normal",
                       "fontWeight": "normal",
                     },
-                    Object {},
+                    {},
                   ]
                 }
               >
@@ -267,7 +289,7 @@ exports[`Test in <ThemeModal /> screen should to match snapshot 1`] = `
           <Text
             onPress={[Function]}
             style={
-              Object {
+              {
                 "color": "#FFFFFF",
                 "fontSize": 18,
                 "marginLeft": 15,
@@ -280,7 +302,7 @@ exports[`Test in <ThemeModal /> screen should to match snapshot 1`] = `
         </View>
         <View
           style={
-            Object {
+            {
               "alignItems": "center",
               "flexDirection": "row",
               "padding": 5,
@@ -292,9 +314,20 @@ exports[`Test in <ThemeModal /> screen should to match snapshot 1`] = `
             accessibilityLiveRegion="polite"
             accessibilityRole="radio"
             accessibilityState={
-              Object {
+              {
+                "busy": undefined,
                 "checked": true,
                 "disabled": false,
+                "expanded": undefined,
+                "selected": undefined,
+              }
+            }
+            accessibilityValue={
+              {
+                "max": undefined,
+                "min": undefined,
+                "now": undefined,
+                "text": undefined,
               }
             }
             accessible={true}
@@ -311,12 +344,12 @@ exports[`Test in <ThemeModal /> screen should to match snapshot 1`] = `
             onResponderTerminationRequest={[Function]}
             onStartShouldSetResponder={[Function]}
             style={
-              Array [
-                Object {
+              [
+                {
                   "overflow": "hidden",
                 },
                 false,
-                Object {
+                {
                   "borderRadius": 18,
                   "padding": 6,
                 },
@@ -326,7 +359,7 @@ exports[`Test in <ThemeModal /> screen should to match snapshot 1`] = `
           >
             <View
               style={
-                Object {
+                {
                   "opacity": 1,
                 }
               }
@@ -338,30 +371,30 @@ exports[`Test in <ThemeModal /> screen should to match snapshot 1`] = `
                 pointerEvents="none"
                 selectable={false}
                 style={
-                  Array [
-                    Object {
+                  [
+                    {
                       "color": "#C0A7E1",
                       "fontSize": 24,
                     },
-                    Array [
-                      Object {
+                    [
+                      {
                         "lineHeight": 24,
-                        "transform": Array [
-                          Object {
+                        "transform": [
+                          {
                             "scaleX": 1,
                           },
                         ],
                       },
-                      Object {
+                      {
                         "backgroundColor": "transparent",
                       },
                     ],
-                    Object {
+                    {
                       "fontFamily": "Material Design Icons",
                       "fontStyle": "normal",
                       "fontWeight": "normal",
                     },
-                    Object {},
+                    {},
                   ]
                 }
               >
@@ -372,7 +405,7 @@ exports[`Test in <ThemeModal /> screen should to match snapshot 1`] = `
           <Text
             onPress={[Function]}
             style={
-              Object {
+              {
                 "color": "#FFFFFF",
                 "fontSize": 18,
                 "marginLeft": 15,
@@ -386,7 +419,7 @@ exports[`Test in <ThemeModal /> screen should to match snapshot 1`] = `
       </View>
       <View
         style={
-          Object {
+          {
             "flexDirection": "row",
             "justifyContent": "flex-end",
             "marginTop": 20,
@@ -395,8 +428,20 @@ exports[`Test in <ThemeModal /> screen should to match snapshot 1`] = `
       >
         <View
           accessibilityState={
-            Object {
+            {
+              "busy": undefined,
+              "checked": undefined,
               "disabled": false,
+              "expanded": undefined,
+              "selected": undefined,
+            }
+          }
+          accessibilityValue={
+            {
+              "max": undefined,
+              "min": undefined,
+              "now": undefined,
+              "text": undefined,
             }
           }
           accessible={true}
@@ -412,17 +457,17 @@ exports[`Test in <ThemeModal /> screen should to match snapshot 1`] = `
           onResponderTerminationRequest={[Function]}
           onStartShouldSetResponder={[Function]}
           style={
-            Array [
-              Object {
+            [
+              {
                 "overflow": "hidden",
               },
               false,
-              Array [
-                Object {
+              [
+                {
                   "backgroundColor": "#C0A7E1",
                   "borderRadius": 10,
                 },
-                Object {
+                {
                   "backgroundColor": "transparent",
                   "marginRight": 5,
                 },
@@ -433,15 +478,15 @@ exports[`Test in <ThemeModal /> screen should to match snapshot 1`] = `
         >
           <View
             style={
-              Array [
-                Object {
+              [
+                {
                   "alignItems": "center",
                   "flexDirection": "row",
                   "justifyContent": "center",
                   "paddingHorizontal": 20,
                   "paddingVertical": 8,
                 },
-                Object {
+                {
                   "paddingHorizontal": 12,
                 },
               ]
@@ -449,28 +494,28 @@ exports[`Test in <ThemeModal /> screen should to match snapshot 1`] = `
           >
             <Text
               style={
-                Array [
-                  Object {
+                [
+                  {
                     "textAlign": "left",
                   },
-                  Object {
+                  {
                     "color": "rgba(28, 27, 31, 1)",
                     "fontFamily": "System",
                     "fontWeight": "400",
                     "letterSpacing": 0,
                   },
-                  Object {
+                  {
                     "writingDirection": "ltr",
                   },
-                  Array [
-                    Object {
+                  [
+                    {
                       "color": "#121212",
                       "fontSize": 18,
                       "fontWeight": "bold",
                       "marginBottom": 2,
                       "textAlign": "center",
                     },
-                    Object {
+                    {
                       "color": "#C0A7E1",
                       "fontSize": 16,
                     },

@@ -3,7 +3,7 @@
 exports[`Test in <FormField /> component should to match snapshot 1`] = `
 <View
   style={
-    Object {
+    {
       "display": "flex",
       "padding": 10,
       "width": 675,
@@ -12,8 +12,8 @@ exports[`Test in <FormField /> component should to match snapshot 1`] = `
 >
   <Text
     style={
-      Array [
-        Object {
+      [
+        {
           "color": "#FFFFFF",
           "fontSize": 18,
           "marginBottom": 5,
@@ -28,7 +28,7 @@ exports[`Test in <FormField /> component should to match snapshot 1`] = `
   </Text>
   <View
     style={
-      Object {
+      {
         "borderColor": "transparent",
         "borderRadius": 7,
         "borderWidth": 1,
@@ -37,7 +37,7 @@ exports[`Test in <FormField /> component should to match snapshot 1`] = `
   >
     <View
       style={
-        Object {
+        {
           "borderColor": "#FFFFFF",
           "borderRadius": 5,
           "borderWidth": 0.5,
@@ -46,8 +46,8 @@ exports[`Test in <FormField /> component should to match snapshot 1`] = `
     >
       <View
         style={
-          Array [
-            Object {
+          [
+            {
               "alignItems": "center",
               "borderColor": "transparent",
               "borderRadius": 5,
@@ -70,15 +70,15 @@ exports[`Test in <FormField /> component should to match snapshot 1`] = `
           placeholder="Ingrese su nombre"
           placeholderTextColor="#BFBFBF"
           selection={
-            Object {
+            {
               "end": 0,
               "start": 0,
             }
           }
           selectionColor="#A0B9E2"
           style={
-            Array [
-              Object {
+            [
+              {
                 "color": "#FFFFFF",
                 "flex": 1,
                 "fontSize": 17,
@@ -96,18 +96,18 @@ exports[`Test in <FormField /> component should to match snapshot 1`] = `
           allowFontScaling={false}
           selectable={false}
           style={
-            Array [
-              Object {
+            [
+              {
                 "color": "#BFBFBF",
                 "fontSize": 25,
               },
               undefined,
-              Object {
+              {
                 "fontFamily": "Ionicons",
                 "fontStyle": "normal",
                 "fontWeight": "normal",
               },
-              Object {},
+              {},
             ]
           }
           testID="form-field-icon"

@@ -3,7 +3,7 @@
 exports[`Test in <ProfileForm /> component should to match snapshot 1`] = `
 <View
   style={
-    Object {
+    {
       "alignItems": "center",
       "flex": 1,
       "justifyContent": "flex-start",
@@ -13,7 +13,7 @@ exports[`Test in <ProfileForm /> component should to match snapshot 1`] = `
 >
   <View
     style={
-      Object {
+      {
         "display": "flex",
         "padding": 10,
         "width": 675,
@@ -22,8 +22,8 @@ exports[`Test in <ProfileForm /> component should to match snapshot 1`] = `
   >
     <Text
       style={
-        Array [
-          Object {
+        [
+          {
             "color": "#FFFFFF",
             "fontSize": 18,
             "marginBottom": 5,
@@ -38,7 +38,7 @@ exports[`Test in <ProfileForm /> component should to match snapshot 1`] = `
     </Text>
     <View
       style={
-        Object {
+        {
           "borderColor": "transparent",
           "borderRadius": 7,
           "borderWidth": 1,
@@ -47,7 +47,7 @@ exports[`Test in <ProfileForm /> component should to match snapshot 1`] = `
     >
       <View
         style={
-          Object {
+          {
             "borderColor": "#FFFFFF",
             "borderRadius": 5,
             "borderWidth": 0.5,
@@ -56,8 +56,8 @@ exports[`Test in <ProfileForm /> component should to match snapshot 1`] = `
       >
         <View
           style={
-            Array [
-              Object {
+            [
+              {
                 "alignItems": "center",
                 "borderColor": "transparent",
                 "borderRadius": 5,
@@ -80,15 +80,15 @@ exports[`Test in <ProfileForm /> component should to match snapshot 1`] = `
             placeholder="Ingrese su nombre"
             placeholderTextColor="#BFBFBF"
             selection={
-              Object {
+              {
                 "end": 9,
                 "start": 9,
               }
             }
             selectionColor="#A0B9E2"
             style={
-              Array [
-                Object {
+              [
+                {
                   "color": "#FFFFFF",
                   "flex": 1,
                   "fontSize": 17,
@@ -106,18 +106,18 @@ exports[`Test in <ProfileForm /> component should to match snapshot 1`] = `
             allowFontScaling={false}
             selectable={false}
             style={
-              Array [
-                Object {
+              [
+                {
                   "color": "#BFBFBF",
                   "fontSize": 25,
                 },
                 undefined,
-                Object {
+                {
                   "fontFamily": "Ionicons",
                   "fontStyle": "normal",
                   "fontWeight": "normal",
                 },
-                Object {},
+                {},
               ]
             }
           >
@@ -129,7 +129,7 @@ exports[`Test in <ProfileForm /> component should to match snapshot 1`] = `
   </View>
   <View
     style={
-      Object {
+      {
         "display": "flex",
         "padding": 10,
         "width": 675,
@@ -138,8 +138,8 @@ exports[`Test in <ProfileForm /> component should to match snapshot 1`] = `
   >
     <Text
       style={
-        Array [
-          Object {
+        [
+          {
             "color": "#FFFFFF",
             "fontSize": 18,
             "marginBottom": 5,
@@ -154,7 +154,7 @@ exports[`Test in <ProfileForm /> component should to match snapshot 1`] = `
     </Text>
     <View
       style={
-        Object {
+        {
           "borderColor": "transparent",
           "borderRadius": 7,
           "borderWidth": 1,
@@ -163,7 +163,7 @@ exports[`Test in <ProfileForm /> component should to match snapshot 1`] = `
     >
       <View
         style={
-          Object {
+          {
             "borderColor": "#FFFFFF",
             "borderRadius": 5,
             "borderWidth": 0.5,
@@ -172,8 +172,8 @@ exports[`Test in <ProfileForm /> component should to match snapshot 1`] = `
       >
         <View
           style={
-            Array [
-              Object {
+            [
+              {
                 "alignItems": "center",
                 "borderColor": "transparent",
                 "borderRadius": 5,
@@ -196,15 +196,15 @@ exports[`Test in <ProfileForm /> component should to match snapshot 1`] = `
             placeholder="Ingrese su apellido"
             placeholderTextColor="#BFBFBF"
             selection={
-              Object {
+              {
                 "end": 9,
                 "start": 9,
               }
             }
             selectionColor="#A0B9E2"
             style={
-              Array [
-                Object {
+              [
+                {
                   "color": "#FFFFFF",
                   "flex": 1,
                   "fontSize": 17,
@@ -222,18 +222,18 @@ exports[`Test in <ProfileForm /> component should to match snapshot 1`] = `
             allowFontScaling={false}
             selectable={false}
             style={
-              Array [
-                Object {
+              [
+                {
                   "color": "#BFBFBF",
                   "fontSize": 25,
                 },
                 undefined,
-                Object {
+                {
                   "fontFamily": "Ionicons",
                   "fontStyle": "normal",
                   "fontWeight": "normal",
                 },
-                Object {},
+                {},
               ]
             }
           >
@@ -245,7 +245,7 @@ exports[`Test in <ProfileForm /> component should to match snapshot 1`] = `
   </View>
   <View
     style={
-      Object {
+      {
         "display": "flex",
         "padding": 10,
         "width": 675,
@@ -254,8 +254,8 @@ exports[`Test in <ProfileForm /> component should to match snapshot 1`] = `
   >
     <Text
       style={
-        Array [
-          Object {
+        [
+          {
             "color": "#FFFFFF",
             "fontSize": 18,
             "marginBottom": 5,
@@ -270,7 +270,7 @@ exports[`Test in <ProfileForm /> component should to match snapshot 1`] = `
     </Text>
     <View
       style={
-        Object {
+        {
           "borderColor": "transparent",
           "borderRadius": 7,
           "borderWidth": 1,
@@ -279,7 +279,7 @@ exports[`Test in <ProfileForm /> component should to match snapshot 1`] = `
     >
       <View
         style={
-          Object {
+          {
             "borderColor": "#FFFFFF",
             "borderRadius": 5,
             "borderWidth": 0.5,
@@ -288,8 +288,8 @@ exports[`Test in <ProfileForm /> component should to match snapshot 1`] = `
       >
         <View
           style={
-            Array [
-              Object {
+            [
+              {
                 "alignItems": "center",
                 "borderColor": "transparent",
                 "borderRadius": 5,
@@ -302,6 +302,14 @@ exports[`Test in <ProfileForm /> component should to match snapshot 1`] = `
           }
         >
           <View
+            accessibilityValue={
+              {
+                "max": undefined,
+                "min": undefined,
+                "now": undefined,
+                "text": undefined,
+              }
+            }
             accessible={true}
             focusable={true}
             onClick={[Function]}
@@ -312,7 +320,7 @@ exports[`Test in <ProfileForm /> component should to match snapshot 1`] = `
             onResponderTerminationRequest={[Function]}
             onStartShouldSetResponder={[Function]}
             style={
-              Object {
+              {
                 "borderRadius": 5,
                 "flex": 1,
               }
@@ -321,8 +329,8 @@ exports[`Test in <ProfileForm /> component should to match snapshot 1`] = `
           >
             <View
               style={
-                Array [
-                  Object {
+                [
+                  {
                     "alignItems": "center",
                     "flexDirection": "row",
                     "padding": 10,
@@ -333,8 +341,8 @@ exports[`Test in <ProfileForm /> component should to match snapshot 1`] = `
             >
               <Text
                 style={
-                  Array [
-                    Object {
+                  [
+                    {
                       "color": "#FFFFFF",
                       "flex": 1,
                       "fontSize": 17,
@@ -350,18 +358,18 @@ exports[`Test in <ProfileForm /> component should to match snapshot 1`] = `
                 allowFontScaling={false}
                 selectable={false}
                 style={
-                  Array [
-                    Object {
+                  [
+                    {
                       "color": "#BFBFBF",
                       "fontSize": 25,
                     },
                     undefined,
-                    Object {
+                    {
                       "fontFamily": "Ionicons",
                       "fontStyle": "normal",
                       "fontWeight": "normal",
                     },
-                    Object {},
+                    {},
                   ]
                 }
               >
@@ -382,15 +390,27 @@ exports[`Test in <ProfileForm /> component should to match snapshot 1`] = `
   />
   <View
     style={
-      Object {
+      {
         "flex": 1,
       }
     }
   />
   <View
     accessibilityState={
-      Object {
+      {
+        "busy": undefined,
+        "checked": undefined,
         "disabled": false,
+        "expanded": undefined,
+        "selected": undefined,
+      }
+    }
+    accessibilityValue={
+      {
+        "max": undefined,
+        "min": undefined,
+        "now": undefined,
+        "text": undefined,
       }
     }
     accessible={true}
@@ -406,17 +426,17 @@ exports[`Test in <ProfileForm /> component should to match snapshot 1`] = `
     onResponderTerminationRequest={[Function]}
     onStartShouldSetResponder={[Function]}
     style={
-      Array [
-        Object {
+      [
+        {
           "overflow": "hidden",
         },
         false,
-        Array [
-          Object {
+        [
+          {
             "backgroundColor": "#C0A7E1",
             "borderRadius": 10,
           },
-          Object {
+          {
             "marginVertical": 30,
             "paddingHorizontal": 20,
           },
@@ -427,8 +447,8 @@ exports[`Test in <ProfileForm /> component should to match snapshot 1`] = `
   >
     <View
       style={
-        Array [
-          Object {
+        [
+          {
             "alignItems": "center",
             "flexDirection": "row",
             "justifyContent": "center",
@@ -441,21 +461,21 @@ exports[`Test in <ProfileForm /> component should to match snapshot 1`] = `
     >
       <Text
         style={
-          Array [
-            Object {
+          [
+            {
               "textAlign": "left",
             },
-            Object {
+            {
               "color": "rgba(28, 27, 31, 1)",
               "fontFamily": "System",
               "fontWeight": "400",
               "letterSpacing": 0,
             },
-            Object {
+            {
               "writingDirection": "ltr",
             },
-            Array [
-              Object {
+            [
+              {
                 "color": "#121212",
                 "fontSize": 18,
                 "fontWeight": "bold",

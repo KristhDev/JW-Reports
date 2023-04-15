@@ -3,8 +3,20 @@
 exports[`Test in <Button /> component should to match snapshot 1`] = `
 <View
   accessibilityState={
-    Object {
+    {
+      "busy": undefined,
+      "checked": undefined,
       "disabled": false,
+      "expanded": undefined,
+      "selected": undefined,
+    }
+  }
+  accessibilityValue={
+    {
+      "max": undefined,
+      "min": undefined,
+      "now": undefined,
+      "text": undefined,
     }
   }
   accessible={true}
@@ -20,13 +32,13 @@ exports[`Test in <Button /> component should to match snapshot 1`] = `
   onResponderTerminationRequest={[Function]}
   onStartShouldSetResponder={[Function]}
   style={
-    Array [
-      Object {
+    [
+      {
         "overflow": "hidden",
       },
       false,
-      Array [
-        Object {
+      [
+        {
           "backgroundColor": "#C0A7E1",
           "borderRadius": 10,
         },
@@ -38,8 +50,8 @@ exports[`Test in <Button /> component should to match snapshot 1`] = `
 >
   <View
     style={
-      Array [
-        Object {
+      [
+        {
           "alignItems": "center",
           "flexDirection": "row",
           "justifyContent": "center",
@@ -52,21 +64,21 @@ exports[`Test in <Button /> component should to match snapshot 1`] = `
   >
     <Text
       style={
-        Array [
-          Object {
+        [
+          {
             "textAlign": "left",
           },
-          Object {
+          {
             "color": "rgba(28, 27, 31, 1)",
             "fontFamily": "System",
             "fontWeight": "400",
             "letterSpacing": 0,
           },
-          Object {
+          {
             "writingDirection": "ltr",
           },
-          Array [
-            Object {
+          [
+            {
               "color": "#121212",
               "fontSize": 18,
               "fontWeight": "bold",
@@ -85,18 +97,18 @@ exports[`Test in <Button /> component should to match snapshot 1`] = `
       allowFontScaling={false}
       selectable={false}
       style={
-        Array [
-          Object {
+        [
+          {
             "color": undefined,
             "fontSize": 20,
           },
           undefined,
-          Object {
+          {
             "fontFamily": "Ionicons",
             "fontStyle": "normal",
             "fontWeight": "normal",
           },
-          Object {},
+          {},
         ]
       }
       testID="button-icon"

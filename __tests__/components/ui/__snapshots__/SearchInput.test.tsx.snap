@@ -3,7 +3,7 @@
 exports[`Test in <SearchInput /> component should to match snapshot 1`] = `
 <View
   style={
-    Object {
+    {
       "alignItems": "center",
       "flexDirection": "row",
       "marginBottom": 30,
@@ -16,18 +16,18 @@ exports[`Test in <SearchInput /> component should to match snapshot 1`] = `
     allowFontScaling={false}
     selectable={false}
     style={
-      Array [
-        Object {
+      [
+        {
           "color": "#BFBFBF",
           "fontSize": 25,
         },
         undefined,
-        Object {
+        {
           "fontFamily": "Ionicons",
           "fontStyle": "normal",
           "fontWeight": "normal",
         },
-        Object {},
+        {},
       ]
     }
   >
@@ -35,7 +35,7 @@ exports[`Test in <SearchInput /> component should to match snapshot 1`] = `
   </Text>
   <View
     style={
-      Object {
+      {
         "alignItems": "center",
         "borderBottomWidth": 1,
         "borderColor": "#BFBFBF",
@@ -56,7 +56,7 @@ exports[`Test in <SearchInput /> component should to match snapshot 1`] = `
       placeholderTextColor="#BFBFBF"
       returnKeyType="search"
       style={
-        Object {
+        {
           "color": "#FFFFFF",
           "flex": 1,
           "fontSize": 17,
@@ -68,8 +68,20 @@ exports[`Test in <SearchInput /> component should to match snapshot 1`] = `
     />
     <View
       accessibilityState={
-        Object {
+        {
+          "busy": undefined,
+          "checked": undefined,
           "disabled": true,
+          "expanded": undefined,
+          "selected": undefined,
+        }
+      }
+      accessibilityValue={
+        {
+          "max": undefined,
+          "min": undefined,
+          "now": undefined,
+          "text": undefined,
         }
       }
       accessible={true}
@@ -86,12 +98,12 @@ exports[`Test in <SearchInput /> component should to match snapshot 1`] = `
       onResponderTerminationRequest={[Function]}
       onStartShouldSetResponder={[Function]}
       style={
-        Array [
-          Object {
+        [
+          {
             "overflow": "hidden",
           },
           false,
-          Object {
+          {
             "alignItems": "center",
             "borderRadius": 999,
             "height": 40,
@@ -106,18 +118,18 @@ exports[`Test in <SearchInput /> component should to match snapshot 1`] = `
         allowFontScaling={false}
         selectable={false}
         style={
-          Array [
-            Object {
+          [
+            {
               "color": "transparent",
               "fontSize": 30,
             },
             undefined,
-            Object {
+            {
               "fontFamily": "Ionicons",
               "fontStyle": "normal",
               "fontWeight": "normal",
             },
-            Object {},
+            {},
           ]
         }
       >

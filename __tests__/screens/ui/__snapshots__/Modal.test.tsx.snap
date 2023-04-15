@@ -10,7 +10,7 @@ exports[`Test in <Modal /> screen should to match snapshot 1`] = `
 >
   <View
     style={
-      Object {
+      {
         "alignItems": "center",
         "backgroundColor": "rgba(0, 0, 0, 0.5)",
         "flex": 1,
@@ -21,7 +21,7 @@ exports[`Test in <Modal /> screen should to match snapshot 1`] = `
   >
     <View
       style={
-        Object {
+        {
           "backgroundColor": "#FFF",
           "height": 200,
           "width": 300,

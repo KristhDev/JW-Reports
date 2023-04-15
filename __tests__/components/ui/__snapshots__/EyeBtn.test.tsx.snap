@@ -2,6 +2,23 @@
 
 exports[`Test in <EyeBtn /> component should to match the snapshot 1`] = `
 <View
+  accessibilityState={
+    {
+      "busy": undefined,
+      "checked": undefined,
+      "disabled": undefined,
+      "expanded": undefined,
+      "selected": undefined,
+    }
+  }
+  accessibilityValue={
+    {
+      "max": undefined,
+      "min": undefined,
+      "now": undefined,
+      "text": undefined,
+    }
+  }
   accessible={true}
   collapsable={false}
   focusable={true}
@@ -13,7 +30,7 @@ exports[`Test in <EyeBtn /> component should to match the snapshot 1`] = `
   onResponderTerminationRequest={[Function]}
   onStartShouldSetResponder={[Function]}
   style={
-    Object {
+    {
       "opacity": 1,
     }
   }
@@ -23,18 +40,18 @@ exports[`Test in <EyeBtn /> component should to match the snapshot 1`] = `
     allowFontScaling={false}
     selectable={false}
     style={
-      Array [
-        Object {
+      [
+        {
           "color": "#BFBFBF",
           "fontSize": 25,
         },
         undefined,
-        Object {
+        {
           "fontFamily": "Ionicons",
           "fontStyle": "normal",
           "fontWeight": "normal",
         },
-        Object {},
+        {},
       ]
     }
   >

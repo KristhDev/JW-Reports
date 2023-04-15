@@ -1,10 +1,10 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Test in <FormSelect /> component should to match snapshot 1`] = `
-Array [
+[
   <View
     style={
-      Object {
+      {
         "display": "flex",
         "padding": 10,
         "width": 675,
@@ -13,8 +13,8 @@ Array [
   >
     <Text
       style={
-        Array [
-          Object {
+        [
+          {
             "color": "#FFFFFF",
             "fontSize": 18,
             "marginBottom": 5,
@@ -29,7 +29,7 @@ Array [
     </Text>
     <View
       style={
-        Object {
+        {
           "borderColor": "transparent",
           "borderRadius": 7,
           "borderWidth": 1,
@@ -38,7 +38,7 @@ Array [
     >
       <View
         style={
-          Object {
+          {
             "borderColor": "#FFFFFF",
             "borderRadius": 5,
             "borderWidth": 0.5,
@@ -47,8 +47,8 @@ Array [
       >
         <View
           style={
-            Array [
-              Object {
+            [
+              {
                 "alignItems": "center",
                 "borderColor": "transparent",
                 "borderRadius": 5,
@@ -61,6 +61,14 @@ Array [
           }
         >
           <View
+            accessibilityValue={
+              {
+                "max": undefined,
+                "min": undefined,
+                "now": undefined,
+                "text": undefined,
+              }
+            }
             accessible={true}
             focusable={true}
             onClick={[Function]}
@@ -71,7 +79,7 @@ Array [
             onResponderTerminationRequest={[Function]}
             onStartShouldSetResponder={[Function]}
             style={
-              Object {
+              {
                 "borderRadius": 5,
                 "flex": 1,
               }
@@ -80,8 +88,8 @@ Array [
           >
             <View
               style={
-                Array [
-                  Object {
+                [
+                  {
                     "alignItems": "center",
                     "flexDirection": "row",
                     "padding": 10,
@@ -92,8 +100,8 @@ Array [
             >
               <Text
                 style={
-                  Array [
-                    Object {
+                  [
+                    {
                       "color": "#FFFFFF",
                       "flex": 1,
                       "fontSize": 17,
@@ -109,18 +117,18 @@ Array [
                 allowFontScaling={false}
                 selectable={false}
                 style={
-                  Array [
-                    Object {
+                  [
+                    {
                       "color": "#BFBFBF",
                       "fontSize": 25,
                     },
                     undefined,
-                    Object {
+                    {
                       "fontFamily": "Ionicons",
                       "fontStyle": "normal",
                       "fontWeight": "normal",
                     },
-                    Object {},
+                    {},
                   ]
                 }
               >

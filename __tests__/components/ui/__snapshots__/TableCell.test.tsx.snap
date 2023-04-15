@@ -3,8 +3,8 @@
 exports[`Test in <TableCell /> component should to match snapshot 1`] = `
 <View
   style={
-    Array [
-      Object {
+    [
+      {
         "backgroundColor": "#3C3547",
         "borderColor": "#000000",
         "borderWidth": 1,
@@ -17,7 +17,7 @@ exports[`Test in <TableCell /> component should to match snapshot 1`] = `
 >
   <Text
     style={
-      Object {
+      {
         "color": "#FFFFFF",
         "fontSize": 16,
         "marginLeft": 10,

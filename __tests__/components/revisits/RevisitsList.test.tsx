@@ -31,7 +31,7 @@ jest.mock('../../../src/hooks/useRevisits.ts');
 jest.mock('../../../src/hooks/useStatus.ts');
 jest.mock('../../../src/hooks/useTheme.ts');
 
-describe('Test in <Revisits /> component', () => {
+describe('Test in <RevisitsList /> component', () => {
     (useCourses as jest.Mock).mockReturnValue({
         state: coursesState,
         saveCourse: jest.fn(),

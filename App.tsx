@@ -5,6 +5,7 @@ import { NavigationContainer, useNavigationContainerRef } from '@react-navigatio
 import { useFlipper } from '@react-navigation/devtools';
 import { MenuProvider } from 'react-native-popup-menu';
 import { Provider as PaperProvider } from 'react-native-paper';
+import SplashScreen from 'react-native-splash-screen';
 import OneSignal from 'react-native-onesignal';
 import dayjs from 'dayjs';
 import 'dayjs/locale/es';
@@ -13,10 +14,10 @@ import 'dayjs/locale/es';
 import { ONESIGNAL_APP_ID } from '@env';
 
 /* Features */
-import { store, persistor } from './src/features';
+import { store, persistor } from './src/features/store';
 
 /* Context */
-import { ThemeProvider } from './src/theme';
+import { ThemeProvider } from './src/theme/context';
 
 /* Navigation */
 import { Navigation } from './src/navigation';
@@ -52,6 +53,10 @@ const App = () => {
       const notification = notificationReceivedEvent.getNotification();
       notificationReceivedEvent.complete(notification);
     });
+  }, []);
+
+  useEffect(() => {
+    SplashScreen.hide();
   }, []);
 
   return (
