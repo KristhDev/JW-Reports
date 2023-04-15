@@ -96,7 +96,7 @@ def reactNativeArchitectures() {
 
 android {
     ndkVersion rootProject.ext.ndkVersion
-    buildToolsVersion "27.0.3"
+    // buildToolsVersion "27.0.3"
     compileSdkVersion rootProject.ext.compileSdkVersion
 
     namespace "com.kristhdev.jwreports"
@@ -151,6 +151,12 @@ android {
                         defaultConfig.versionCode * 1000 + versionCodes.get(abi)
             }
 
+        }
+    }
+
+    externalNativeBuild {
+        cmake {
+            version "3.22.1"
         }
     }
 }
