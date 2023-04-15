@@ -59,7 +59,7 @@ const usePreaching = () => {
         const final_date = dayjs(date).endOf('month').format('YYYY-MM-DD');
 
         const { data, error, status } = await supabase.from('preachings')
-            .select()
+            .select<'*', Preaching>()
             .eq('user_id', user.id)
             .gte('day', init_date)
             .lte('day', final_date)
@@ -69,7 +69,7 @@ const usePreaching = () => {
         const next = setSupabaseError(error, status, () => setIsPreachingsLoading(false));
         if (next) return;
 
-        dispatch(setPreachings({ preachings: (data as any[])! }));
+        dispatch(setPreachings({ preachings: data! }));
     }
 
     /**
@@ -92,13 +92,13 @@ const usePreaching = () => {
                 final_hour: dayjs(preachingValues.final_hour).format('YYYY-MM-DD HH:mm:ss.SSSSSS'),
                 user_id: user.id
             })
-            .select();
+            .select<'*', Preaching>();
 
         const next = setSupabaseError(error, status, () => dispatch(setIsPreachingLoading({ isLoading: false })));
         if (next) return;
 
         if (dayjs(data![0].day).format('MMMM') === dayjs(state.selectedDate).format('MMMM')) {
-            dispatch(addPreaching({ preaching: (data as any)![0] }));
+            dispatch(addPreaching({ preaching: data![0] }));
         }
 
         setStatus({
@@ -142,12 +142,12 @@ const usePreaching = () => {
             })
             .eq('id', state.seletedPreaching.id)
             .eq('user_id', user.id)
-            .select();
+            .select<'*', Preaching>();
 
         const next = setSupabaseError(error, status, () => dispatch(setIsPreachingLoading({ isLoading: false })));
         if (next) return;
 
-        dispatch(updatePreachingAction({ preaching: (data as any)![0] }));
+        dispatch(updatePreachingAction({ preaching: data![0] }));
 
         setStatus({
             code: 200,
