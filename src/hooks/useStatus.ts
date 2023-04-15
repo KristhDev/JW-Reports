@@ -8,6 +8,9 @@ import { clearStatus as clearStatusAction, setStatus as setStatusAction } from '
 import { SetStatusPayload } from '../interfaces/status';
 import { StorageError } from '../interfaces/ui';
 
+/* Utils */
+import { translateErrorMsg } from '../utils';
+
 /**
  * Hook to management status of store with state and actions
  */
@@ -43,9 +46,11 @@ const useStatus = () => {
     const setSupabaseError = (error: AuthError | PostgrestError | StorageError |  null, status: number, onDispatch?: () => void) => {
         if (error) {
             console.log(error);
+            console.log(error.message);
+            const msg = translateErrorMsg(error.message);
 
             onDispatch && onDispatch();
-            setStatus({ code: status, msg: error.message });
+            setStatus({ code: status, msg });
 
             return true;
         }
