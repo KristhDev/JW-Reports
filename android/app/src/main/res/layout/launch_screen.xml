@@ -10,7 +10,7 @@
         android:layout_width="140dp"
         android:layout_height="140dp"
         android:layout_gravity="center"
-        android:background="@drawable/play_store_512">
+        android:background="@mipmap/play_store_512">
 
     </FrameLayout>
 </LinearLayout>
