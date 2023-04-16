@@ -1,8 +1,7 @@
 import React, { useEffect } from 'react';
 import { Provider } from 'react-redux';
 import { PersistGate } from 'reduxjs-toolkit-persist/lib/integration/react';
-import { NavigationContainer, useNavigationContainerRef } from '@react-navigation/native';
-import { useFlipper } from '@react-navigation/devtools';
+import { NavigationContainer } from '@react-navigation/native';
 import { MenuProvider } from 'react-native-popup-menu';
 import { Provider as PaperProvider } from 'react-native-paper';
 import SplashScreen from 'react-native-splash-screen';
@@ -30,9 +29,6 @@ dayjs.locale('es');
  * parts for its operation.
  */
 const App = () => {
-  const navigationRef = useNavigationContainerRef();
-
-  useFlipper(navigationRef);
 
   /**
    * Effect to initialize the OneSignal SDK and
@@ -65,7 +61,7 @@ const App = () => {
         <Provider store={ store }>
           <PersistGate loading={ null } persistor={ persistor }>
             <PaperProvider>
-              <NavigationContainer ref={ navigationRef }>
+              <NavigationContainer>
                 <Navigation />
               </NavigationContainer>
             </PaperProvider>

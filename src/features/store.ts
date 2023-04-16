@@ -2,7 +2,6 @@ import { configureStore } from '@reduxjs/toolkit';
 import { persistReducer, persistStore } from 'reduxjs-toolkit-persist';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { combineReducers } from 'redux';
-import reduxFlipper from 'redux-flipper';
 
 /* Reducers */
 import { authReducer } from './auth';
@@ -34,19 +33,9 @@ const reducer = persistReducer(persistConfig, reducers);
 export const store = configureStore({
     reducer,
     devTools: false,
-    middleware: (getDefaultMiddleware) => {
-        const middleware = getDefaultMiddleware({
-            serializableCheck: false
-        });
-
-        /* Checking if the app is in development mode. If it is, it will add the reduxFlipper
-        middleware to the store. */
-        if (__DEV__ && !process.env.JEST_WORKER_ID) {
-            middleware.push(reduxFlipper());
-        }
-
-        return middleware;
-    }
+    middleware: (getDefaultMiddleware) => getDefaultMiddleware({
+        serializableCheck: false
+    })
 });
 
 export const persistor = persistStore(store);
