@@ -5,22 +5,30 @@ import { Formik } from 'formik';
 import { object, string } from 'yup';
 import Icon from 'react-native-vector-icons/Ionicons';
 
+/* Components */
 import { Button, EyeBtn, FormField } from '../../ui';
 
+/* Hooks */
 import { useAuth, useStatus, useTheme } from '../../../hooks';
 
-import styles from './styles';
+/* Theme */
+import { styles as themeStyles } from '../../../theme';
 
+/**
+ * This component is responsible for rendering the fields so that a user
+ * can log in with their account.
+ */
 export const LoginForm = () => {
     const [ showPassword, setShowPassword ] = useState<boolean>(false);
 
     const { navigate } = useNavigation();
     const { width } = useWindowDimensions();
 
-    const { state: { isAuthLoading }, login } = useAuth();
+    const { state: { isAuthLoading }, signIn } = useAuth();
     const { setErrorForm } = useStatus();
     const { state: { colors } } = useTheme();
 
+    /* Validation schema for login values (email and password) */
     const loginFormSchema = object().shape({
         email: string()
             .email('Correo electrónico inválido.')
@@ -36,12 +44,14 @@ export const LoginForm = () => {
                 email: '',
                 password: ''
             }}
-            onSubmit={ login }
+            onSubmit={ signIn }
             validationSchema={ loginFormSchema }
             validateOnMount
         >
             { ({ handleSubmit, isValid, errors }) => (
-                <View style={ styles.loginForm }>
+                <View style={ themeStyles.formContainer }>
+
+                    {/* Email field */}
                     <FormField
                         autoCapitalize="none"
                         icon={
@@ -57,6 +67,7 @@ export const LoginForm = () => {
                         placeholder="Ingrese su correo"
                     />
 
+                    {/* Password field */}
                     <FormField
                         autoCapitalize="none"
                         icon={
@@ -71,6 +82,7 @@ export const LoginForm = () => {
                         secureTextEntry={ !showPassword }
                     />
 
+                    {/* Submit button */}
                     <Button
                         disabled={ isAuthLoading }
                         icon={
@@ -87,30 +99,50 @@ export const LoginForm = () => {
                         touchableStyle={{ paddingHorizontal: 20, marginTop: 30 }}
                     />
 
-                    <View style={{ ...styles.btnLink, width: width * 0.9 }}>
+                    {/* Sign up link */}
+                    <View style={{ ...themeStyles.btnLink, width: width * 0.9 }}>
+                        <Text
+                            style={{
+                                ...themeStyles.formText,
+                                color: colors.titleText
+                            }}
+                        >
+                            ¿No tienes cuenta?
+                        </Text>
+
+                        <TouchableOpacity
+                            activeOpacity={ 0.75 }
+                            onPress={ () => navigate('RegisterScreen' as never) }
+                            testID="login-form-sign-up"
+                        >
                             <Text
                                 style={{
-                                    ...styles.formText,
-                                    color: colors.titleText
+                                    ...themeStyles.formLink,
+                                    color: colors.linkText
                                 }}
                             >
-                                ¿No tienes cuenta?
+                                Crea una aquí
                             </Text>
+                        </TouchableOpacity>
+                    </View>
 
-                            <TouchableOpacity
-                                activeOpacity={ 0.75 }
-                                onPress={ () => navigate('RegisterScreen' as never) }
+                    {/* Forgot password link */}
+                    <View style={{ ...themeStyles.btnLink, marginTop: 10, width: width * 0.9 }}>
+                        <TouchableOpacity
+                            activeOpacity={ 0.75 }
+                            onPress={ () => navigate('ForgotPasswordScreen' as never) }
+                            testID="login-form-forgor-pass"
+                        >
+                            <Text
+                                style={{
+                                    ...themeStyles.formLink,
+                                    color: colors.linkText
+                                }}
                             >
-                                <Text
-                                    style={{
-                                        ...styles.formLink,
-                                        color: colors.linkText
-                                    }}
-                                >
-                                    Crea una aquí
-                                </Text>
-                            </TouchableOpacity>
-                        </View>
+                                Olvide mi contraseña
+                            </Text>
+                        </TouchableOpacity>
+                    </View>
                 </View>
             ) }
         </Formik>

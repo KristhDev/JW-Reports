@@ -1,23 +1,41 @@
 import React, { FC } from 'react';
-import { TouchableHighlight } from 'react-native';
+import { TouchableRipple } from 'react-native-paper';
 
-import { Props } from './interfaces';
+/* Interfaces */
+import { FabProps } from './interfaces';
 
+/* Styles */
 import styles from './styles';
 
-export const Fab: FC<Props> = ({ color, icon, onPress, touchColor, style }) => {
+/**
+ * This component is responsible for displaying a floating action
+ * button to perform different actions in the app.
+ * @param {FabProps} props {
+ *      color: string,
+ *      icon: ReactNode,
+ *      onPress: () => void,
+ *      touchColor: string,
+ *      style: StyleProp<ViewStyle>
+ *  } - This is the props for functionality of the component
+ * - color: This is the color of the fab
+ * - icon: This is the icon of the fab
+ * - onPress: This is a function to perform the action
+ * - touchColor: This is the color of the touchable ripple
+ * - style: This is the style of the fab, default is `undefined`
+ */
+export const Fab: FC<FabProps> = ({ color, icon, onPress, touchColor, style }) => {
     return (
-        <TouchableHighlight
-            activeOpacity={ 1 }
+        <TouchableRipple
+            borderless
             onPress= { onPress }
-            style={{
-                ...styles.fab,
-                backgroundColor: color,
-                ...style as any
-            }}
-            underlayColor={ touchColor }
+            rippleColor={ touchColor }
+            style={[
+                { ...styles.fab, backgroundColor: color },
+                style
+            ]}
+            testID="fab-touchable"
         >
             { icon }
-        </TouchableHighlight>
+        </TouchableRipple>
     );
 }

@@ -1,57 +1,68 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-import {
-    AddPreachingPayload,
-    PreachingState,
-    SetIsPreachingLoadingPayload,
-    SetIsPreachingsLoadingPayload,
-    SetPreachingsPayload,
-    SetSelectedDatePayload,
-    SetSelectedPreachingPayload,
-    UpdatePreachingPayload
-} from '../../interfaces/preaching';
+/* Interfaces */
+import { Preaching, PreachingPayload, PreachingState, SetPreachingsPayload, SetSelectedDatePayload } from '../../interfaces/preaching';
+import { RemoveResourcePayload, SetIsDeletingPayload, SetIsLoadingPayload } from '../../interfaces/features';
 
+/* Initial preaching */
+export const INIT_PREACHING: Preaching = {
+    id: '',
+    user_id: '',
+    day: new Date().toString(),
+    init_hour: new Date().toString(),
+    final_hour: new Date().toString(),
+    publications: 0,
+    videos: 0,
+    revisits: 0,
+    created_at: new Date().toString(),
+    updated_at: new Date().toString()
+}
+
+/* Initial state */
 const INITIAL_STATE: PreachingState = {
+    isPreachingDeleting: false,
     isPreachingsLoading: false,
     isPreachingLoading: false,
     preachings: [],
     selectedDate: new Date(),
-    seletedPreaching: {
-        id: '',
-        user_id: '',
-        day: new Date().toString(),
-        init_hour: new Date().toString(),
-        final_hour: new Date().toString(),
-        posts: 0,
-        videos: 0,
-        revisits: 0,
-        created_at: new Date().toString(),
-        updated_at: new Date().toString()
-    }
+    seletedPreaching: INIT_PREACHING
 }
 
+/* Slice of management state */
 const preachingSlice = createSlice({
     name: 'preaching',
     initialState: INITIAL_STATE,
     reducers: {
-        addPreaching: (state, action: PayloadAction<AddPreachingPayload>) => {
+        addPreaching: (state, action: PayloadAction<PreachingPayload>) => {
             state.preachings = [ ...state.preachings, action.payload.preaching ];
             state.preachings = state.preachings.sort((a, b) => new Date(a.day).getTime() - new Date(b.day).getTime());
             state.isPreachingLoading = false;
         },
 
         clearPreaching: (state) => {
-            state.isPreachingsLoading = false;
-            state.preachings = [];
-            state.selectedDate = new Date();
+            state.isPreachingDeleting = INITIAL_STATE.isPreachingDeleting;
+            state.isPreachingLoading = INITIAL_STATE.isPreachingLoading;
+            state.isPreachingsLoading = INITIAL_STATE.isPreachingsLoading;
+            state.preachings = INITIAL_STATE.preachings;
+            state.selectedDate = INITIAL_STATE.selectedDate;
+            state.seletedPreaching = INITIAL_STATE.seletedPreaching;
         },
 
-        setIsPreachingsLoading: (state, action: PayloadAction<SetIsPreachingsLoadingPayload>) => {
-            state.isPreachingsLoading = action.payload.isLoading;
+        removePreaching: (state, action: PayloadAction<RemoveResourcePayload>) => {
+            state.preachings = state.preachings.filter(p => p.id !== action.payload.id);
+            state.isPreachingDeleting = false;
         },
 
-        setIsPreachingLoading: (state, action: PayloadAction<SetIsPreachingLoadingPayload>) => {
+        setIsPreachingDeleting: (state, action: PayloadAction<SetIsDeletingPayload>) => {
+            state.isPreachingDeleting = action.payload.isDeleting;
+        },
+
+        setIsPreachingLoading: (state, action: PayloadAction<SetIsLoadingPayload>) => {
             state.isPreachingLoading = action.payload.isLoading;
+        },
+
+        setIsPreachingsLoading: (state, action: PayloadAction<SetIsLoadingPayload>) => {
+            state.isPreachingsLoading = action.payload.isLoading;
         },
 
         setPreachings: (state, action: PayloadAction<SetPreachingsPayload>) => {
@@ -63,17 +74,18 @@ const preachingSlice = createSlice({
             state.selectedDate = action.payload.selectedDate;
         },
 
-        setSelectedPreaching: (state, action: PayloadAction<SetSelectedPreachingPayload>) => {
+        setSelectedPreaching: (state, action: PayloadAction<PreachingPayload>) => {
             state.seletedPreaching = action.payload.preaching;
             state.isPreachingLoading = false;
         },
 
-        updatePreaching: (state, action: PayloadAction<UpdatePreachingPayload>) => {
+        updatePreaching: (state, action: PayloadAction<PreachingPayload>) => {
             state.preachings = state.preachings.map(preaching =>
                 (preaching.id === action.payload.preaching.id)
                     ? action.payload.preaching
                     : preaching
             );
+            state.preachings = state.preachings.sort((a, b) => new Date(a.day).getTime() - new Date(b.day).getTime());
             state.isPreachingLoading = false;
         }
     }
@@ -82,6 +94,8 @@ const preachingSlice = createSlice({
 export const {
     addPreaching,
     clearPreaching,
+    removePreaching,
+    setIsPreachingDeleting,
     setIsPreachingLoading,
     setIsPreachingsLoading,
     setPreachings,

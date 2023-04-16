@@ -5,12 +5,19 @@ import { Formik } from 'formik';
 import { object, ref, string } from 'yup';
 import Icon from 'react-native-vector-icons/Ionicons';
 
+/* Components */
 import { Button, EyeBtn, FormField } from '../../ui';
 
+/* Hooks */
 import { useAuth, useStatus, useTheme } from '../../../hooks';
 
-import styles from './styles';
+/* Theme */
+import { styles as themeStyles } from '../../../theme';
 
+/**
+ * This component is responsible for rendering the fields so that a user
+ * can register in the app.
+ */
 export const RegisterForm = () => {
     const [ showPassword, setShowPassword ] = useState<boolean>(false);
     const [ showConfirmPassword, setShowConfirmPassword ] = useState<boolean>(false);
@@ -18,15 +25,16 @@ export const RegisterForm = () => {
     const { navigate } = useNavigation();
     const { width } = useWindowDimensions();
 
-    const { state: { isAuthLoading }, register } = useAuth();
+    const { state: { isAuthLoading }, signUp } = useAuth();
     const { setErrorForm } = useStatus();
     const { state: { colors } } = useTheme();
 
+    /* Validation schema for register values */
     const registerFormSchema = object().shape({
         name: string()
             .min(2, 'El nombre debe tener al menos 2 caracteres.')
             .required('El nombre es requerido.'),
-        surnames: string()
+        surname: string()
             .min(2, 'Los apellidos deben tener al menos 2 caracteres.')
             .required('Los apellidos son requeridos.'),
         email: string()
@@ -36,7 +44,7 @@ export const RegisterForm = () => {
             .min(6, 'La contraseña debe tener al menos 6 caracteres.')
             .required('La contraseña es requerida.'),
         confirmPassword: string()
-            .oneOf([ ref('password'), null ], 'Las contraseñas no coinciden.')
+            .oneOf([ ref('password'), undefined ], 'Las contraseñas no coinciden.')
             .required('La confirmación de la contraseña es requerida.'),
     });
 
@@ -49,12 +57,14 @@ export const RegisterForm = () => {
                 password: '',
                 confirmPassword: ''
             }}
-            onSubmit={ (values) => register({ ...values }) }
+            onSubmit={ signUp }
             validateOnMount
             validationSchema={ registerFormSchema }
         >
             { ({ handleSubmit, isValid, errors }) => (
-                <View style={ styles.registerForm }>
+                <View style={ themeStyles.formContainer }>
+
+                    {/* Name field */}
                     <FormField
                         autoCapitalize="none"
                         icon={
@@ -69,6 +79,7 @@ export const RegisterForm = () => {
                         placeholder="Ingrese su nombre"
                     />
 
+                    {/* Surname field */}
                     <FormField
                         autoCapitalize="none"
                         icon={
@@ -83,6 +94,7 @@ export const RegisterForm = () => {
                         placeholder="Ingrese su apellido"
                     />
 
+                    {/* Email field */}
                     <FormField
                         autoCapitalize="none"
                         icon={
@@ -98,6 +110,7 @@ export const RegisterForm = () => {
                         placeholder="Ingrese su correo"
                     />
 
+                    {/* Password field */}
                     <FormField
                         autoCapitalize="none"
                         icon={
@@ -112,6 +125,7 @@ export const RegisterForm = () => {
                         secureTextEntry={ !showPassword }
                     />
 
+                    {/* Confirm password field */}
                     <FormField
                         autoCapitalize="none"
                         icon={
@@ -123,9 +137,10 @@ export const RegisterForm = () => {
                         label="Confirmar contraseña:"
                         name="confirmPassword"
                         placeholder="Confirme su contraseña"
-                        secureTextEntry={ !showPassword }
+                        secureTextEntry={ !showConfirmPassword }
                     />
 
+                    {/* Submit button */}
                     <Button
                         disabled={ isAuthLoading }
                         icon={
@@ -142,10 +157,11 @@ export const RegisterForm = () => {
                         touchableStyle={{ marginTop: 30 }}
                     />
 
-                    <View style={{ ...styles.btnLink, width: width * 0.9 }}>
+                    {/* Sign in link */}
+                    <View style={{ ...themeStyles.btnLink, width: width * 0.9 }}>
                         <Text
                             style={{
-                                ...styles.formText,
+                                ...themeStyles.formText,
                                 color: colors.titleText
                             }}
                         >
@@ -155,10 +171,11 @@ export const RegisterForm = () => {
                         <TouchableOpacity
                             activeOpacity={ 0.75 }
                             onPress={ () => navigate('LoginScreen' as never) }
+                            testID="register-form-sign-in"
                         >
                             <Text
                                 style={{
-                                    ...styles.formLink,
+                                    ...themeStyles.formLink,
                                     color: colors.linkText
                                 }}
                             >

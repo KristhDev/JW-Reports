@@ -1,2 +1,4 @@
+export { DeleteModal } from './DeleteModal';
 export { Modal } from './Modal';
-export { Search } from './Search';
+export { OptionsModal } from './OptionsModal';
+export { Settings } from './Settings';

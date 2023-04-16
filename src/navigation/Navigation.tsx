@@ -1,34 +1,58 @@
 import React, { useEffect } from 'react';
-import { Appearance, StatusBar } from 'react-native';
-import { createStackNavigator } from '@react-navigation/stack';
+import { AppState, StatusBar } from 'react-native';
+import { CardStyleInterpolators, createStackNavigator } from '@react-navigation/stack';
 
-import AuthNavigation from './AuthNavigation';
-import MainNavigation from './MainNavigation';
+/* Navigation */
+import { AuthStackNavigation, MainTabsBottomNavigation, SettingsStackNavigation } from './';
 
+/* Screens */
 import { StatusModal } from '../screens/status';
 
-import { useAuth, useStatus, useTheme } from '../hooks';
+/* Hooks */
+import { useAuth, useCourses, usePermissions, usePreaching, useRevisits, useStatus, useTheme } from '../hooks';
 
-const Stack = createStackNavigator();
+/* Interfaces */
+import { NavigationParamsList } from '../interfaces/ui';
 
+const Stack = createStackNavigator<NavigationParamsList>();
+
+/**
+ * This a main navigation for app.
+ */
 const Navigation = () => {
     const { state: { isAuthenticated }, renew } = useAuth();
+    const { checkPermissions } = usePermissions();
+    const { clearCourses } = useCourses();
+    const { clearPreaching } = usePreaching();
+    const { clearRevisits } = useRevisits();
     const { clearStatus } = useStatus();
-    const { state: { theme }, setDefaultTheme } = useTheme();
+    const { state: { selectedTheme, } } = useTheme();
 
+    /**
+     * Effect to clear store when mount component.
+     */
     useEffect(() => {
+        checkPermissions();
         clearStatus();
-        setDefaultTheme();
+
+        clearCourses();
+        clearPreaching();
+        clearRevisits();
+
         renew();
     }, []);
 
+    /**
+     * Effect to check permissions when change AppState.
+     */
     useEffect(() => {
-        const unSubscribeTheme = Appearance.addChangeListener(() => {
-            setDefaultTheme();
+        const unSubscribreAppState = AppState.addEventListener('change', async (state) => {
+            if (state !== 'active') return;
+            checkPermissions();
         });
 
         return () => {
-            unSubscribeTheme.remove();
+            unSubscribreAppState.remove();
         }
     }, []);
 
@@ -37,8 +61,8 @@ const Navigation = () => {
             <StatusBar
                 animated
                 backgroundColor="transparent"
+                barStyle={ (selectedTheme === 'dark') ? 'light-content' : 'dark-content' }
                 translucent
-                barStyle={ (theme === 'dark') ? 'light-content' : 'dark-content' }
             />
 
             <StatusModal />
@@ -50,14 +74,24 @@ const Navigation = () => {
             >
                 {
                     (isAuthenticated) ? (
-                        <Stack.Screen
-                            name="MainNavigation"
-                            component={ MainNavigation }
-                        />
+                        <>
+                            <Stack.Screen
+                                component={ MainTabsBottomNavigation }
+                                name="MainTabsBottomNavigation"
+                            />
+
+                            <Stack.Screen
+                                component={ SettingsStackNavigation }
+                                name="SettingsStackNavigation"
+                                options={{
+                                    cardStyleInterpolator: CardStyleInterpolators.forBottomSheetAndroid,
+                                }}
+                            />
+                        </>
                     ) : (
                         <Stack.Screen
-                            name="AuthNavigation"
-                            component={ AuthNavigation }
+                            component={ AuthStackNavigation }
+                            name="AuthStackNavigation"
                         />
                     )
                 }

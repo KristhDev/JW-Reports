@@ -1,13 +1,14 @@
 import { ReactNode } from 'react';
 import { StyleProp, TextStyle, ViewStyle } from 'react-native';
 
-export interface Props {
+/* Defining the interface for the props that the Button component will accept. */
+export interface ButtonProps {
+    containerStyle?: StyleProp<ViewStyle>;
+    disabled?: boolean;
+    icon?: ReactNode;
     onPress: () => void;
     text: string;
-    icon?: ReactNode;
-    disabled?: boolean;
-    underlayColor?: string;
-    touchableStyle?: StyleProp<ViewStyle>;
-    containerStyle?: StyleProp<ViewStyle>;
     textStyle?: StyleProp<TextStyle>;
+    touchableStyle?: StyleProp<ViewStyle>;
+    underlayColor?: string;
 }

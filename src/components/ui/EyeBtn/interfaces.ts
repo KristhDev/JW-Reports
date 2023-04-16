@@ -1,6 +1,7 @@
 import { Dispatch, SetStateAction } from 'react';
 
-export interface Props {
+/* Defining the props that the component will receive. */
+export interface EyeBtnProps {
     onToggle: Dispatch<SetStateAction<boolean>>;
     value: boolean;
 }

@@ -5,42 +5,50 @@ import { object, date, number } from 'yup';
 import dayjs from 'dayjs';
 import Icon from 'react-native-vector-icons/Ionicons';
 
+/* Components */
 import { Button, DatetimeField, FormField } from '../../ui';
 
+/* Hooks */
 import { usePreaching, useStatus, useTheme } from '../../../hooks';
 
-import { PreachingFormValues } from './interfaces';
+/* Interfaces */
+import { PreachingFormValues } from '../../../interfaces/preaching';
 
+/* Theme */
+import { styles as themeStyles } from '../../../theme';
+
+/**
+ * This component is responsible for rendering the fields to create
+ * or edit a preaching.
+ */
 export const PreachingForm = () => {
-    const {
-        state: {
-            isPreachingLoading,
-            seletedPreaching
-        },
-        savePreaching,
-        updatePreaching
-    } = usePreaching();
     const { setErrorForm } = useStatus();
     const { state: { colors } } = useTheme();
+    const { state: { isPreachingLoading, seletedPreaching }, savePreaching, updatePreaching } = usePreaching();
 
+    /* Validation schema for preaching */
     const preachingFormSchema = object().shape({
         day: date()
-            .required('El día no puede estar vacío'),
+            .required('El día no puede estar vacío.'),
         init_hour: date()
-            .required('La hora inicial no puede estar vacía')
-            .test('date-min', 'La hora inicial no puede ser mayor que la hora final', (value, { parent }) => {
+            .required('La hora inicial no puede estar vacía.')
+            .test('date-min', 'La hora inicial no puede ser mayor que la hora final.', (value, { parent }) => {
                 return dayjs(value).isBefore(dayjs(parent.final_hour));
             }),
         final_hour: date()
-            .required('La hora final no puede estar vacía'),
-        posts: number()
-            .min(0, 'El número de publicaciones no puede ser negativo'),
+            .required('La hora final no puede estar vacía.'),
+        publications: number()
+            .min(0, 'El número de publicaciones no puede ser negativo.'),
         videos: number()
-            .min(0, 'El número de videos no puede ser negativo'),
+            .min(0, 'El número de videos no puede ser negativo.'),
         revisits: number()
-            .min(0, 'El número de revisitas no puede ser negativo'),
+            .min(0, 'El número de revisitas no puede ser negativo.'),
     });
 
+    /**
+     * If the selected preaching has an id, then update the preaching, otherwise save the preaching.
+     * @param {PreachingFormValues} formValues - PreachingFormValues
+     */
     const handleSaveOrUpdate = (formValues: PreachingFormValues) => {
         (seletedPreaching.id === '')
             ? savePreaching(formValues)
@@ -53,7 +61,7 @@ export const PreachingForm = () => {
                 day: new Date(seletedPreaching.day),
                 init_hour: new Date(seletedPreaching.init_hour),
                 final_hour: new Date(seletedPreaching.final_hour),
-                posts: seletedPreaching.posts,
+                publications: seletedPreaching.publications,
                 videos: seletedPreaching.videos,
                 revisits: seletedPreaching.revisits
             }}
@@ -62,7 +70,9 @@ export const PreachingForm = () => {
             validateOnMount
         >
             { ({ handleSubmit, errors, isValid }) => (
-                <View style={{ alignItems: 'center', paddingTop: 30, paddingBottom: 40 }}>
+                <View style={{ ...themeStyles.formContainer, paddingTop: 30, paddingBottom: 40 }}>
+
+                    {/* Day field */}
                     <DatetimeField
                         icon={
                             <Icon
@@ -79,6 +89,7 @@ export const PreachingForm = () => {
                         placeholder="Seleccione el día"
                     />
 
+                    {/* Publications field */}
                     <FormField
                         icon={
                             <Icon
@@ -89,10 +100,11 @@ export const PreachingForm = () => {
                         }
                         keyboardType="numeric"
                         label="Publicaciones:"
-                        name="posts"
+                        name="publications"
                         placeholder="Número de publicaciones"
                     />
 
+                    {/* Videos field */}
                     <FormField
                         icon={
                             <Icon
@@ -107,6 +119,7 @@ export const PreachingForm = () => {
                         placeholder="Número de videos"
                     />
 
+                    {/* Revisits field */}
                     <FormField
                         icon={
                             <Icon
@@ -121,6 +134,7 @@ export const PreachingForm = () => {
                         placeholder="Número de revisitas"
                     />
 
+                    {/* Init hour field */}
                     <DatetimeField
                         icon={
                             <Icon
@@ -137,6 +151,7 @@ export const PreachingForm = () => {
                         placeholder="Seleccione la hora"
                     />
 
+                    {/* Final hour field */}
                     <DatetimeField
                         icon={
                             <Icon
@@ -153,6 +168,7 @@ export const PreachingForm = () => {
                         placeholder="Seleccione la hora"
                     />
 
+                    {/* Submit button */}
                     <Button
                         disabled={ isPreachingLoading }
                         icon={

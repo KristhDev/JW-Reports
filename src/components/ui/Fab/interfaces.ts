@@ -1,10 +1,11 @@
 import { ReactNode } from 'react';
 import { StyleProp, ViewStyle } from 'react-native';
 
-export interface Props {
+/* Defining the interface for the Fab component. */
+export interface FabProps {
+    color: string;
+    icon: ReactNode;
     onPress: () => void;
     style?: StyleProp<ViewStyle>;
-    icon: ReactNode;
-    color: string;
     touchColor: string;
 }

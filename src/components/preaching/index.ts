@@ -1,3 +1,2 @@
-export * from './PreachingForm';
-export * from './PreachingTable';
-export * from './RevisitCard';
+export { PreachingForm } from './PreachingForm';
+export { PreachingTable } from './PreachingTable';

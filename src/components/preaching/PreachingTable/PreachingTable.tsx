@@ -3,42 +3,52 @@ import { TouchableHighlight, View, useWindowDimensions } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import dayjs from 'dayjs';
 
+/* Components */
 import { TableCell } from '../../ui';
 
+/* Hooks */
 import { usePreaching, useTheme } from '../../../hooks';
 
+/* Interfaces */
 import { Preaching } from '../../../interfaces/preaching';
 
-import { sumHours, sumNumbers } from '../../../utils';
+/* Utils */
+import { sumHours, sumNumbers, TABLE_PREACHING_HEADERS } from '../../../utils';
 
+/* Styles */
 import styles from './styles';
 
-const tableHeaders = [
-    'Día',
-    'H/I',
-    'H/F',
-    'Pub',
-    'Vid',
-    'Rev'
-];
-
+/**
+ * This component is responsible for displaying a table that contains the data
+ * of the preaching days of the selectedDate.
+ */
 export const PreachingTable = () => {
     const { navigate } = useNavigation();
     const { width } = useWindowDimensions();
 
     const { state: { preachings }, setSelectedPreaching } = usePreaching();
-    const { state: { theme, colors } } = useTheme();
+    const { state: { selectedTheme, colors } } = useTheme();
 
+    /**
+     * I'm going to navigate to a screen called AddOrEditPreachingScreen, and I'm going to pass it a
+     * preaching object.
+     * @param {Preaching} preaching - Preaching
+     */
     const handleGoToEditPreaching = (preaching: Preaching) => {
         setSelectedPreaching(preaching);
         navigate('AddOrEditPreachingScreen' as never);
     }
 
     return (
-        <View style={{ ...styles.table, borderColor: colors.background }}>
+        <View
+            style={{ ...styles.table, borderColor: colors.background }}
+            testID="preaching-table"
+        >
+
+            {/* Table header */}
             <View style={ styles.tableRow }>
                 {
-                    Children.toArray(tableHeaders.map(head => (
+                    Children.toArray(TABLE_PREACHING_HEADERS.map(head => (
                         <TableCell
                             text={ head }
                             style={{ width: width * 0.15 }}
@@ -47,11 +57,14 @@ export const PreachingTable = () => {
                 }
             </View>
 
+            {/* Table body */}
+
             {
                 Children.toArray(preachings.map((preaching) => (
                     <TouchableHighlight
                         onPress={ () => handleGoToEditPreaching(preaching) }
-                        underlayColor={ (theme === 'dark') ? 'rgba(255, 255, 255, 0.15)' : 'rgba(0, 0, 0, 0.15)' }
+                        testID="preaching-table-row"
+                        underlayColor={ (selectedTheme === 'dark') ? 'rgba(255, 255, 255, 0.15)' : 'rgba(0, 0, 0, 0.15)' }
                     >
                         <View style={{ ...styles.tableRow }}>
                             <TableCell
@@ -70,7 +83,7 @@ export const PreachingTable = () => {
                             />
 
                             <TableCell
-                                text={ preaching.posts }
+                                text={ preaching.publications }
                                 style={{ backgroundColor: '#746C84', width: width * 0.15 }}
                             />
 
@@ -88,6 +101,7 @@ export const PreachingTable = () => {
                 )))
             }
 
+            {/* Table footer */}
             <View style={ styles.tableRow }>
                 <TableCell
                     text="Total"
@@ -100,7 +114,7 @@ export const PreachingTable = () => {
                 />
 
                 <TableCell
-                    text={ sumNumbers(preachings.map(p => p.posts)) }
+                    text={ sumNumbers(preachings.map(p => p.publications)) }
                     style={{ backgroundColor: '#544C63', width: width * 0.15 }}
                 />
 

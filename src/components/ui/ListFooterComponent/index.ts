@@ -1,0 +1,1 @@
+export { ListFooterComponent } from './ListFooterComponent';

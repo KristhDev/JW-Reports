@@ -1,44 +1,88 @@
-import React from 'react';
-import { ScrollView } from 'react-native';
+import React, { FC, useEffect } from 'react';
+import { MaterialTopTabScreenProps } from '@react-navigation/material-top-tabs';
+import { useNavigation } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/Ionicons';
 
-import { Fab, Title } from '../../../components/ui';
+/* Features */
+import { INIT_COURSE } from '../../../features/courses';
 
-import { useTheme } from '../../../hooks';
+/* Components */
+import { CoursesList } from '../../../components/courses';
+import { Fab } from '../../../components/ui';
 
-import styles from './styles';
+/* Hooks */
+import { useCourses, useTheme } from '../../../hooks';
 
-const Courses = () => {
+/* Interfaces */
+import { CoursesTopTabsParamsList } from '../../../interfaces/courses';
+
+/* Theme */
+import { styles as themeStyles } from '../../../theme';
+
+type CoursesProps = MaterialTopTabScreenProps<CoursesTopTabsParamsList>;
+
+/**
+ * This screen is responsible for grouping the components to show
+ * a list of courses according to a filter.
+ * @param {CoursesProps} { route: RouteProp } - This is a params of TopTabNavigation
+ */
+const Courses: FC<CoursesProps> = ({ route }) => {
+    const { addListener, removeListener, getState, navigate } = useNavigation();
+
+    const { setCoursesScreenHistory, setSelectedCourse } = useCourses();
     const { state: { colors } } = useTheme();
+
+    /**
+     * The function handleNavigate is a function that takes no parameters and returns nothing. It sets
+     * the selectedCourse to the INIT_COURSE constant and then navigates to the AddOrEditCourseScreen
+     * screen.
+     */
+    const handleNavigate = () => {
+        setSelectedCourse(INIT_COURSE);
+        navigate('AddOrEditCourseScreen' as never);
+    }
+
+    /**
+     * Effect to set coursesScreenHistory when call focus event
+     * in screen.
+     */
+    useEffect(() => {
+        addListener('focus', () => {
+            const { index, routeNames } = getState();
+            setCoursesScreenHistory(routeNames[index]);
+        });
+
+        return () => {
+            removeListener('focus', () => {});
+        }
+    }, []);
 
     return (
         <>
-            <ScrollView
-                contentContainerStyle={{ paddingHorizontal: 10 }}
-                overScrollMode="never"
-                style={{ flex: 1 }}
-            >
-                <Title
-                    containerStyle={ styles.titleContainerStyle }
-                    text="CURSOS QUE DIRIGES"
-                    textStyle={{ fontSize: 24 }}
-                />
-            </ScrollView>
-
-            <Fab
-                color={ colors.button }
-                icon={
-                    <Icon
-                        color={ colors.contentHeader }
-                        name="add-circle-outline"
-                        size={ 40 }
-                        style={{ marginLeft: 3 }}
-                    />
-                }
-                onPress={ () => {} }
-                style={ styles.fab }
-                touchColor={ colors.buttonDark }
+            <CoursesList
+                filter={ route.params.filter }
+                title={ route.params.title }
+                emptyMessage={ route.params.emptyMessage }
             />
+
+            {
+                (route.name === 'CoursesScreen') && (
+                    <Fab
+                        color={ colors.button }
+                        icon={
+                            <Icon
+                                color={ colors.contentHeader }
+                                name="add-circle-outline"
+                                size={ 40 }
+                                style={{ marginLeft: 3 }}
+                            />
+                        }
+                        onPress={ handleNavigate }
+                        style={ themeStyles.fabBottomRight }
+                        touchColor="rgba(0, 0, 0, 0.15)"
+                    />
+                )
+            }
         </>
     );
 }

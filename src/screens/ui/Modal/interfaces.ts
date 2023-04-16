@@ -1,6 +1,7 @@
 import { ReactNode } from 'react';
 
-export interface Props {
+/* Defining the props that the component will take. */
+export interface ModalProps {
     children: ReactNode;
     isOpen: boolean;
 }

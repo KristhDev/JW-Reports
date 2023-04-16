@@ -1,83 +1,108 @@
 import React, { useState } from 'react';
-import { ScrollView, ActivityIndicator, useWindowDimensions } from 'react-native';
+import { ActivityIndicator, ScrollView, useWindowDimensions, RefreshControl } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import dayjs from 'dayjs';
 
+/* Features */
+import { INIT_PREACHING } from '../../../features/preaching';
+
+/* Screens */
 import { ReportModal } from '../ReportModal';
 
+/* Components */
 import { PreachingTable } from '../../../components/preaching';
 import { Fab, InfoText, Title } from '../../../components/ui';
 
+/* Hooks */
 import { usePreaching, useTheme } from '../../../hooks';
 
-import styles from './styles';
+/* Theme */
+import { styles as themeStyles } from '../../../theme';
 
+/**
+ * This screen is in charge of grouping the components to list the preaching days by
+ * selectedDate, in addition to being the main screen that is shown to the
+ * authenticated user.
+ */
 const Home = () => {
+    const [ isRefreshing, setIsRefreshing ] = useState<boolean>(false);
     const [ showModal, setShowModal ] = useState<boolean>(false);
     const { navigate } = useNavigation();
     const { height } = useWindowDimensions();
 
-    const { state: { selectedDate, preachings, isPreachingsLoading }, setSelectedPreaching } = usePreaching();
+    const { state: { selectedDate, preachings, isPreachingsLoading }, setSelectedPreaching, loadPreachings } = usePreaching();
     const { state: { colors } } = useTheme();
 
     const month = dayjs(selectedDate).format('MMMM').toUpperCase();
     const year = dayjs(selectedDate).get('year');
 
+    /**
+     * I'm trying to set the state of the selectedPreaching object to the INIT_PREACHING object, but I
+     * want to change the day, init_hour and final_hour properties to the current date
+     */
     const handleNavigate = () => {
         setSelectedPreaching({
-            id: '',
-            user_id: '',
+            ...INIT_PREACHING,
             day: new Date().toString(),
             init_hour: new Date().toString(),
-            final_hour: new Date().toString(),
-            posts: 0,
-            videos: 0,
-            revisits: 0,
-            created_at: new Date().toString(),
-            updated_at: new Date().toString()
+            final_hour: new Date().toString()
         });
 
         navigate('AddOrEditPreachingScreen' as never);
+    }
+
+    /**
+     * When the user swipes down to refresh, load the preachings for the selected date and set the
+     * refreshing state to false.
+     */
+    const handleRefreshing = () => {
+        loadPreachings(selectedDate);
+        setIsRefreshing(false);
     }
 
     return (
         <>
             <ScrollView
                 contentContainerStyle={{ alignItems: 'center', paddingBottom: 100 }}
-                style={{ flex: 1 }}
                 overScrollMode="never"
+                refreshControl={
+                    <RefreshControl
+                        colors={[ '#000' ]}
+                        onRefresh={ handleRefreshing }
+                        refreshing={ isRefreshing }
+                    />
+                }
+                style={{ flex: 1 }}
             >
                 <Title
-                    containerStyle={ styles.titleContainerStyle }
+                    containerStyle={ themeStyles.titleContainer }
                     text={ `INFORME DE ${ month } ${ year }` }
                     textStyle={{ fontSize: 24 }}
                 />
 
-                {
-                    (isPreachingsLoading) && (
-                        <ActivityIndicator
-                            color={ colors.button }
-                            size="large"
-                            style={{ marginTop: height * 0.32 }}
-                        />
-                    )
-                }
+                {/* If the preachings are loading, show a loading indicator */}
+                { (isPreachingsLoading) && (
+                    <ActivityIndicator
+                        color={ colors.button }
+                        size={ 50 }
+                        style={{ marginTop: height * 0.32 }}
+                        testID="home-loading"
+                    />
+                ) }
 
-                {
-                    (!isPreachingsLoading && preachings.length > 0) && (
-                        <PreachingTable />
-                    )
-                }
+                {/* If the preachings are not loading, show the preachings */}
+                { (!isPreachingsLoading && preachings.length > 0) && (
+                    <PreachingTable />
+                ) }
 
-                {
-                    (!isPreachingsLoading && preachings.length === 0) && (
-                        <InfoText
-                            containerStyle={{ marginTop: height * 0.30 }}
-                            text="No haz agregado ningún día de predicación para el informe de este mes."
-                        />
-                    )
-                }
+                {/* If the preachings are not loading and there are no preachings, show a message */}
+                { (!isPreachingsLoading && preachings.length === 0) && (
+                    <InfoText
+                        containerStyle={{ marginTop: height * 0.30 }}
+                        text="No haz agregado ningún día de predicación para el informe de este mes."
+                    />
+                ) }
             </ScrollView>
 
             <Fab
@@ -90,8 +115,8 @@ const Home = () => {
                     />
                 }
                 onPress={ () => setShowModal(true) }
-                style={{ ...styles.fab, right: 80 }}
-                touchColor={ colors.buttonDark }
+                style={{ ...themeStyles.fabBottomRight, right: 80 }}
+                touchColor="rgba(0, 0, 0, 0.15)"
             />
 
             <Fab
@@ -105,10 +130,11 @@ const Home = () => {
                     />
                 }
                 onPress={ handleNavigate }
-                style={ styles.fab }
-                touchColor={ colors.buttonDark }
+                style={ themeStyles.fabBottomRight }
+                touchColor="rgba(0, 0, 0, 0.15)"
             />
 
+            {/* Modal for show report */}
             <ReportModal
                 isOpen={ showModal }
                 month={ month.toLowerCase() }
