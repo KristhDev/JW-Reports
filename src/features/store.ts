@@ -2,7 +2,6 @@ import { configureStore } from '@reduxjs/toolkit';
 import { persistReducer, persistStore } from 'reduxjs-toolkit-persist';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { combineReducers } from 'redux';
-import { useDispatch } from 'react-redux';
 import reduxFlipper from 'redux-flipper';
 
 /* Reducers */
@@ -54,5 +53,3 @@ export const persistor = persistStore(store);
 
 export type RootState = ReturnType<typeof reducers>;
 export type AppDispatch = typeof store.dispatch;
-
-export const useAppDispatch = () => useDispatch<AppDispatch>();
