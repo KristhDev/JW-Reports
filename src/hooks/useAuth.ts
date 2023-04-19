@@ -20,7 +20,7 @@ import { clearPreaching } from '../features/preaching';
 import { clearRevisits } from '../features/revisits';
 
 /* Hooks */
-import { useStatus } from './';
+import { useNetwork, useStatus } from './';
 
 /* Interfaces */
 import { SignIn, Profile, SignUp, User } from '../interfaces/auth';
@@ -31,7 +31,8 @@ import { SignIn, Profile, SignUp, User } from '../interfaces/auth';
 const useAuth = () => {
     const dispatch = useAppDispatch();
 
-    const { setStatus, setSupabaseError } = useStatus();
+    const { setStatus, setSupabaseError, setNetworkError } = useStatus();
+    const { isConnected } = useNetwork();
 
     const state = useAppSelector(store => store.auth);
 
@@ -77,6 +78,12 @@ const useAuth = () => {
      */
     const renew = async () => {
         if (state.token?.trim().length <= 0) return;
+
+        if (!isConnected) {
+            setNetworkError();
+            return;
+        }
+
         const result = await supabase.auth.refreshSession({ refresh_token: state.token });
         setUser(result);
     }
@@ -91,6 +98,11 @@ const useAuth = () => {
      * to reset password for authenticated user
      */
     const resetPassword = async ({ email }: { email: string }) => {
+        if (!isConnected) {
+            setNetworkError();
+            return;
+        }
+
         dispatch(setIsAuthLoading({ isLoading: true }));
         SITIE_URL;
 
@@ -114,6 +126,11 @@ const useAuth = () => {
      * @param {SignIn} { email: string, password: string } - This is a values for sign in a user
      */
     const signIn = async ({ email, password }: SignIn) => {
+        if (!isConnected) {
+            setNetworkError('Lo sentimos pero no dispones de conexión a Internet.');
+            return;
+        }
+
         dispatch(setIsAuthLoading({ isLoading: true }));
 
         const result = await supabase.auth.signInWithPassword({ email, password });
@@ -126,11 +143,13 @@ const useAuth = () => {
     */
     const signOut = async () => {
         if (!state.isAuthenticated) return;
-        const { error } = await supabase.auth.signOut();
-        OneSignal.removeExternalUserId();
 
-        const next = setSupabaseError(error, 500);
-        if (next) return;
+        if (!isConnected) {
+            const { error } = await supabase.auth.signOut();
+            OneSignal.removeExternalUserId();
+            const next = setSupabaseError(error, 500);
+            if (next) return;
+        }
 
         dispatch(clearCourses());
         dispatch(clearPreaching());
@@ -144,6 +163,11 @@ const useAuth = () => {
      * values for sign up a new user
      */
     const signUp = async ({ name, surname, email, password }: SignUp) => {
+        if (!isConnected) {
+            setNetworkError('Lo sentimos pero no dispones de conexión a Internet.');
+            return;
+        }
+
         dispatch(setIsAuthLoading({ isLoading: true }));
 
         const result = await supabase.auth.signUp({
@@ -180,6 +204,11 @@ const useAuth = () => {
      * @param {Function} onFinish - This callback executed when the process is finished (success or failure)
      */
     const updateEmail = async ({ email }: { email: string }, onFinish?: () => void) => {
+        if (!isConnected) {
+            setNetworkError();
+            return;
+        }
+
         dispatch(setIsAuthLoading({ isLoading: true }));
 
         if (email.trim().length === 0) {
@@ -233,6 +262,11 @@ const useAuth = () => {
      * @param {Function} onFinish - This callback executed when the process is finished (success or failure)
      */
     const updatePassword = async ({ password }: { password: string }, onFinish?: () => void) => {
+        if (!isConnected) {
+            setNetworkError();
+            return;
+        }
+
         dispatch(setIsAuthLoading({ isLoading: true }));
 
         if (password.trim().length === 0) {
@@ -270,6 +304,11 @@ const useAuth = () => {
      * @param {Profile} values - This is a values for update profile
      */
     const updateProfile = async (values: Profile) => {
+        if (!isConnected) {
+            setNetworkError();
+            return;
+        }
+
         dispatch(setIsAuthLoading({ isLoading: true }));
 
         const { error } = await supabase.auth.updateUser({ data: { ...values } });

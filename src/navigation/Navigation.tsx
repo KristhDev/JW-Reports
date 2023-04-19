@@ -9,7 +9,7 @@ import { AuthStackNavigation, MainTabsBottomNavigation, SettingsStackNavigation 
 import { StatusModal } from '../screens/status';
 
 /* Hooks */
-import { useAuth, useCourses, usePermissions, usePreaching, useRevisits, useStatus, useTheme } from '../hooks';
+import { useAuth, useCourses, useNetwork, usePermissions, usePreaching, useRevisits, useStatus, useTheme } from '../hooks';
 
 /* Interfaces */
 import { NavigationParamsList } from '../interfaces/ui';
@@ -27,6 +27,7 @@ const Navigation = () => {
     const { clearRevisits } = useRevisits();
     const { clearStatus } = useStatus();
     const { state: { selectedTheme, } } = useTheme();
+    const { isConnected } = useNetwork();
 
     /**
      * Effect to clear store when mount component.
@@ -35,11 +36,13 @@ const Navigation = () => {
         checkPermissions();
         clearStatus();
 
-        clearCourses();
-        clearPreaching();
-        clearRevisits();
+        if (isConnected) {
+            clearCourses();
+            clearPreaching();
+            clearRevisits();
 
-        renew();
+            renew();
+        }
     }, []);
 
     /**

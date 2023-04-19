@@ -18,6 +18,7 @@ import { store, persistor } from './src/features/store';
 
 /* Context */
 import { ThemeProvider } from './src/theme/context';
+import { NetworkProvider } from './src/context/network';
 
 /* Navigation */
 import { Navigation } from './src/navigation';
@@ -60,19 +61,21 @@ const App = () => {
   }, []);
 
   return (
-    <MenuProvider>
-      <ThemeProvider>
-        <Provider store={ store }>
-          <PersistGate loading={ null } persistor={ persistor }>
-            <PaperProvider>
-              <NavigationContainer ref={ navigationRef }>
-                <Navigation />
-              </NavigationContainer>
-            </PaperProvider>
-          </PersistGate>
-        </Provider>
-      </ThemeProvider>
-    </MenuProvider>
+    <NetworkProvider>
+      <MenuProvider>
+        <ThemeProvider>
+          <Provider store={ store }>
+            <PersistGate loading={ null } persistor={ persistor }>
+              <PaperProvider>
+                <NavigationContainer ref={ navigationRef }>
+                  <Navigation />
+                </NavigationContainer>
+              </PaperProvider>
+            </PersistGate>
+          </Provider>
+        </ThemeProvider>
+      </MenuProvider>
+    </NetworkProvider>
   );
 }
 

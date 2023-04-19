@@ -28,7 +28,7 @@ import {
 } from '../features/revisits';
 
 /* Hooks */
-import { useAuth, useImage, useStatus } from './';
+import { useAuth, useImage, useNetwork, useStatus } from './';
 
 /* Interfaces */
 import { Revisit, RevisitFormValues, SaveRevisitOptions, loadRevisitsOptions } from '../interfaces/revisits';
@@ -43,7 +43,8 @@ const useRevisits = () => {
 
     const { state: { isAuthenticated, user } } = useAuth();
     const { uploadImage, deleteImage } = useImage();
-    const { setStatus, setSupabaseError, setUnauthenticatedError } = useStatus();
+    const { setStatus, setSupabaseError, setUnauthenticatedError, setNetworkError } = useStatus();
+    const { isConnected } = useNetwork();
 
     const state = useAppSelector(store => store.revisits);
 
@@ -68,6 +69,12 @@ const useRevisits = () => {
      */
     const loadRevisits = async ({ filter, loadMore = false, refresh = false, search = '' }: loadRevisitsOptions) => {
         dispatch(setRevisitFilter({ filter }));
+
+        if (!isConnected) {
+            setNetworkError();
+            return;
+        }
+
         setIsRevisitsLoading(true);
 
         if (!isAuthenticated) {
@@ -121,6 +128,11 @@ const useRevisits = () => {
      * - onFinish: This callback executed when the process is finished (success or failure), default is `undefined`
      */
     const saveRevisit = async ({ revisitValues, back = true, image, onFinish }: SaveRevisitOptions) => {
+        if (!isConnected) {
+            setNetworkError();
+            return;
+        }
+
         dispatch(setIsRevisitLoading({ isLoading: true }));
 
         if (!isAuthenticated) {
@@ -182,6 +194,11 @@ const useRevisits = () => {
      * @param {Image} image - Image to upload, default is `undefined`
      */
     const updateRevisit = async (revisitValues: RevisitFormValues, image?: Image) => {
+        if (!isConnected) {
+            setNetworkError();
+            return;
+        }
+
         dispatch(setIsRevisitLoading({ isLoading: true }));
 
         if (!isAuthenticated) {
@@ -251,6 +268,11 @@ const useRevisits = () => {
      * @param {Function} onFinish - This callback executed when the process is finished (success or failure), default is `undefined`
      */
     const deleteRevisit = async (back: boolean = false, onFinish?: () => void) => {
+        if (!isConnected) {
+            setNetworkError();
+            return;
+        }
+
         dispatch(setIsRevisitDeleting({ isDeleting: true }));
 
         if (!isAuthenticated) {
@@ -316,6 +338,11 @@ const useRevisits = () => {
      * @param {Function} onFailFinish - This callback executed when the process is failed
      */
     const completeRevisit = async (onFailFinish?: () => void) => {
+        if (!isConnected) {
+            setNetworkError();
+            return;
+        }
+
         dispatch(setIsRevisitLoading({ isLoading: true }));
 
         if (!isAuthenticated) {
