@@ -5,11 +5,21 @@ import { initialState as authInitState, testCredentials } from '../../features/a
 import { initialState as coursesInitState } from '../../features/courses';
 import { initialState as statusInitState } from '../../features/status';
 
+/* Hooks */
+import { useNetwork } from '../../../src/hooks';
+
 /* Setup */
 import { getMockStore, render, testCourse, testLesson } from './setup';
 import { goBackMock } from '../../../jest.setup';
 
+/* Mock hooks */
+jest.mock('../../../src/hooks/useNetwork.ts');
+
 describe('Test useCourses hook updateLesson', () => {
+    (useNetwork as jest.Mock).mockReturnValue({
+        isConnected: true,
+    });
+
     beforeEach(() => {
         jest.clearAllMocks();
     });

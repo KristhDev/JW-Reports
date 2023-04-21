@@ -6,7 +6,7 @@ import { initialState as revisitsInitState } from '../../features/revisits';
 import { initialState as statusInitState } from '../../features/status';
 
 /* Hooks */
-import { useTheme } from '../../../src/hooks';
+import { useNetwork, useTheme } from '../../../src/hooks';
 
 /* Setup */
 import { getMockStore, onFinishMock, render, testRevisit } from './setup';
@@ -18,9 +18,14 @@ import { darkColors } from '../../../src/theme';
 import { navigateMock } from '../../../jest.setup';
 
 /* Mock hooks */
+jest.mock('../../../src/hooks/useNetwork.ts');
 jest.mock('../../../src/hooks/useTheme.ts');
 
 describe('Test useRevisits hook saveRevisit', () => {
+    (useNetwork as jest.Mock).mockReturnValue({
+        isConnected: true,
+    });
+
     (useTheme as jest.Mock).mockReturnValue({
         state: { colors: darkColors }
     });

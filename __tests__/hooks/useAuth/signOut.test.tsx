@@ -7,10 +7,20 @@ import { initialState as statusInitState } from '../../features/status';
 import { preachingsState } from '../../features/preaching';
 import { revisitsState } from '../../features/revisits';
 
+/* Hooks */
+import { useNetwork } from '../../../src/hooks';
+
 /* Setup */
 import { getMockStoreComplete, renderComplete } from './setup';
 
+/* Mock hooks */
+jest.mock('../../../src/hooks/useNetwork.ts');
+
 describe('Test in useAuth hook signOut', () => {
+    (useNetwork as jest.Mock).mockReturnValue({
+        isConnected: true,
+    });
+
     it('should close session', async () => {
         const mockStore = getMockStoreComplete({
             auth: authInitState,

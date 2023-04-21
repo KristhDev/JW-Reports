@@ -46,7 +46,6 @@ const useStatus = () => {
     const setSupabaseError = (error: AuthError | PostgrestError | StorageError |  null, status: number, onDispatch?: () => void) => {
         if (error) {
             console.log(error);
-            console.log(error.message);
             const msg = translateErrorMsg(error.message);
 
             onDispatch && onDispatch();
@@ -67,13 +66,23 @@ const useStatus = () => {
         });
     }
 
+    const setNetworkError = (msg?: string, onDispatch?: () => void) => {
+        onDispatch && onDispatch();
+
+        setStatus({
+            code: 500,
+            msg: msg || 'Lo sentimos pero no dispones de conexion a Internet. Los datos que hay en la aplicación no son actualizados. Hasta que recuperes la conexión no podras obtener, guardar, editar o eliminar ningún dato.',
+        });
+    }
+
     return {
         state,
         clearStatus,
         setErrorForm,
+        setNetworkError,
         setStatus,
         setSupabaseError,
-        setUnauthenticatedError
+        setUnauthenticatedError,
     }
 }
 

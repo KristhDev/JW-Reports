@@ -14,7 +14,7 @@ import { CourseCard } from '../CourseCard';
 import { ListEmptyComponent, ListFooterComponent, SearchInput, Title } from '../../ui';
 
 /* Hooks */
-import { useCourses } from '../../../hooks';
+import { useCourses, useNetwork } from '../../../hooks';
 
 /* Interfaces */
 import { CoursesListProps } from './interfaces';
@@ -59,6 +59,7 @@ export const CoursesList: FC<CoursesListProps> = ({ emptyMessage, filter, title 
         setRefreshCourses,
         setSelectedCourse,
     } = useCourses();
+    const { isConnected } = useNetwork();
 
     /**
      * When the user refreshes the page, the search term is reset, the pagination is reset, the courses
@@ -66,8 +67,12 @@ export const CoursesList: FC<CoursesListProps> = ({ emptyMessage, filter, title 
      */
     const handleRefreshing = () => {
         setSearchTerm('');
-        setCoursesPagination({ from: 0, to: 9 });
-        removeCourses();
+
+        if (isConnected) {
+            setCoursesPagination({ from: 0, to: 9 });
+            removeCourses();
+        }
+
         loadCourses({ filter, refresh: true });
     }
 
@@ -78,8 +83,11 @@ export const CoursesList: FC<CoursesListProps> = ({ emptyMessage, filter, title 
      */
     const handleResetCourses = (search: string) => {
         if (search.trim().length === 0 && courses.length === 0) {
-            setCoursesPagination({ from: 0, to: 9 });
-            removeCourses();
+            if (isConnected) {
+                setCoursesPagination({ from: 0, to: 9 });
+                removeCourses();
+            }
+
             loadCourses({ filter, search: '', refresh: true });
             setIsRefreshing(false);
         }
@@ -90,7 +98,7 @@ export const CoursesList: FC<CoursesListProps> = ({ emptyMessage, filter, title 
      * Otherwise, load more courses.
      */
     const handleEndReach = () => {
-        if (!hasMoreCourses || isCoursesLoading) return;
+        if (!hasMoreCourses || isCoursesLoading || !isConnected) return;
         loadCourses({ filter, search: searchTerm, loadMore: true });
     }
 
@@ -164,7 +172,7 @@ export const CoursesList: FC<CoursesListProps> = ({ emptyMessage, filter, title 
      * refreshCourses is true
      */
     useEffect(() => {
-        if (isFocused() && refreshCourses) {
+        if (isFocused() && refreshCourses && isConnected) {
             removeCourses();
             loadCourses({ filter, search: searchTerm, refresh: true });
         }

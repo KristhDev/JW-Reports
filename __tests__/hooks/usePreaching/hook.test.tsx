@@ -4,10 +4,20 @@ import { initialState as authInitState } from '../../features/auth';
 import { initialState as preachingInitState } from '../../features/preaching';
 import { initialState as statusInitState } from '../../features/status';
 
+/* Hooks */
+import { useNetwork } from '../../../src/hooks';
+
 /* Setup */
 import { getMockStore, render } from './setup';
 
+/* Mock hooks */
+jest.mock('../../../src/hooks/useNetwork.ts');
+
 describe('Test usePreaching hook', () => {
+    (useNetwork as jest.Mock).mockReturnValue({
+        isConnected: true,
+    });
+
     it('should return respective props', () => {
         const mockStore = getMockStore({ auth: authInitState, preaching: preachingInitState, status: statusInitState });
         const { result } = render(mockStore);

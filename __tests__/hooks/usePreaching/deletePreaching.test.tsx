@@ -7,10 +7,20 @@ import { initialState as preachingInitState, preachingSelectedState } from '../.
 import { revisitsState } from '../../features/revisits';
 import { initialState as statusInitState } from '../../features/status';
 
+/* Hooks */
+import { useNetwork } from '../../../src/hooks';
+
 /* Setup */
 import { getMockStoreComplete, onFinishMock, render } from './setup';
 
+/* Mock hooks */
+jest.mock('../../../src/hooks/useNetwork.ts');
+
 describe('Test usePreaching hook deletePreaching', () => {
+    (useNetwork as jest.Mock).mockReturnValue({
+        isConnected: true,
+    });
+
     beforeEach(() => {
         jest.clearAllMocks();
     });

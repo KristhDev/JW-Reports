@@ -1,5 +1,9 @@
 import 'react-native-gesture-handler/jestSetup';
 
+jest.mock('@react-native-community/netinfo', () => ({
+    addEventListener: jest.fn()
+}));
+
 jest.mock('react-native-onesignal', () => ({
     setLogLevel: jest.fn(),
     setAppId: jest.fn(),

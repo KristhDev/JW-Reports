@@ -40,7 +40,7 @@ import {
 } from '../features/courses';
 
 /* Hooks */
-import { useAuth, useStatus } from './';
+import { useAuth, useStatus, useNetwork } from './';
 
 /* Interfaces */
 import { Course, CourseFormValues, Lesson, LessonFormValues, loadCoursesOptions } from '../interfaces/courses';
@@ -52,11 +52,12 @@ import { LoadResourcesOptions, Pagination } from '../interfaces/ui';
 const useCourses = () => {
     const dispatch = useAppDispatch();
     const { goBack, navigate } = useNavigation();
+    const { isConnected } = useNetwork();
 
     const state = useAppSelector(store => store.courses);
 
     const { state: { isAuthenticated, user } } = useAuth();
-    const { setStatus, setSupabaseError, setUnauthenticatedError } = useStatus();
+    const { setStatus, setSupabaseError, setUnauthenticatedError, setNetworkError } = useStatus();
 
     const addCourses = (courses: Course[]) => dispatch(addCoursesAction({ courses }));
     const addLessons = (lessons: Lesson[]) => dispatch(addLessonsAction({ lessons }));
@@ -79,6 +80,11 @@ const useCourses = () => {
      * @param {Function} onFinish - This callback executed when the process is finished (success or failure)
      */
     const activeOrSuspendCourse = async (onFinish?: () => void) => {
+        if (!isConnected) {
+            setNetworkError();
+            return;
+        }
+
         dispatch(setIsCourseLoading({ isLoading: true }));
 
         if (!isAuthenticated) {
@@ -153,6 +159,11 @@ const useCourses = () => {
      * @param {Function} onFinish - This callback executed when the process is finished (success or failure)
      */
     const deleteCourse = async (back: boolean = false, onFinish?: () => void) => {
+        if (!isConnected) {
+            setNetworkError();
+            return;
+        }
+
         dispatch(setIsCourseDeleting({ isDeleting: true }));
 
         if (!isAuthenticated) {
@@ -218,6 +229,11 @@ const useCourses = () => {
      * @param {Function} onFinish - This callback executed when the process is finished (success or failure)
      */
     const deleteLesson = async (back: boolean = false, onFinish?: () => void) => {
+        if (!isConnected) {
+            setNetworkError();
+            return;
+        }
+
         dispatch(setIsLessonDeleting({ isDeleting: true }));
 
         if (!isAuthenticated) {
@@ -286,6 +302,11 @@ const useCourses = () => {
      * @param {Function} onFinish - This callback executed when the process is finished (success or failure)
      */
     const finishOrStartCourse = async (onFinish?: () => void) => {
+        if (!isConnected) {
+            setNetworkError();
+            return;
+        }
+
         dispatch(setIsCourseLoading({ isLoading: true }));
 
         if (!isAuthenticated) {
@@ -356,6 +377,11 @@ const useCourses = () => {
      * @param {Function} onFinish - This callback executed when the process is finished (success or failure)
      */
     const finishOrStartLesson = async (next_lesson: Date, onFinish?: () => void) => {
+        if (!isConnected) {
+            setNetworkError();
+            return;
+        }
+
         dispatch(setIsLessonLoading({ isLoading: true }));
 
         if (!isAuthenticated) {
@@ -432,6 +458,12 @@ const useCourses = () => {
      */
     const loadCourses = async ({ filter, loadMore = false, refresh = false, search = '' }: loadCoursesOptions) => {
         dispatch(setCourseFilter({ filter }));
+
+        if (!isConnected) {
+            setNetworkError();
+            return;
+        }
+
         setIsCoursesLoading(true);
 
         if (!isAuthenticated) {
@@ -500,6 +532,11 @@ const useCourses = () => {
      * - search: This is a search text to search lessons, default is empty `string`
      */
     const loadLessons = async ({ loadMore = false, refresh = false, search = '' }: LoadResourcesOptions) => {
+        if (!isConnected) {
+            setNetworkError();
+            return;
+        }
+
         setIsLessonsLoading(true);
 
         if (!isAuthenticated) {
@@ -556,6 +593,11 @@ const useCourses = () => {
      * @param {Function} onFinish - This callback executed when the process is finished (success or failure)
      */
     const saveCourse = async (courseValues: CourseFormValues, onFinish?: () => void) => {
+        if (!isConnected) {
+            setNetworkError();
+            return;
+        }
+
         dispatch(setIsCourseLoading({ isLoading: true }));
 
         if (!isAuthenticated) {
@@ -599,6 +641,11 @@ const useCourses = () => {
      * @param {LessonFormValues} lessonValues - This is a values for save lesson
      */
     const saveLesson = async (lessonValues: LessonFormValues) => {
+        if (!isConnected) {
+            setNetworkError();
+            return;
+        }
+
         dispatch(setIsLessonLoading({ isLoading: true }));
 
         if (!isAuthenticated) {
@@ -637,6 +684,11 @@ const useCourses = () => {
      * @param {CourseFormValues} courseValues - This is a values for update course
      */
     const updateCourse = async (courseValues: CourseFormValues) => {
+        if (!isConnected) {
+            setNetworkError();
+            return;
+        }
+
         dispatch(setIsCourseLoading({ isLoading: true }));
 
         if (!isAuthenticated) {
@@ -685,6 +737,11 @@ const useCourses = () => {
      * @param {LessonFormValues} lessonValues - This is a values for update lesson
      */
     const updateLesson = async (lessonValues: LessonFormValues) => {
+        if (!isConnected) {
+            setNetworkError();
+            return;
+        }
+
         dispatch(setIsLessonLoading({ isLoading: true }));
 
         if (!isAuthenticated) {

@@ -1,8 +1,12 @@
-import { authErrorMessages, translateErrorMsg } from '../../src/utils';
+import { authErrorMessages, commonErrorMessages, translateErrorMsg } from '../../src/utils';
 
 describe('Test in util error-messages', () => {
     it('should match snapshot authErrorMessages', () => {
         expect(authErrorMessages).toMatchSnapshot();
+    });
+
+    it('should match snapshot commonErrorMessages', () => {
+        expect(commonErrorMessages).toMatchSnapshot();
     });
 
     it('should trasnlate error if find message', () => {

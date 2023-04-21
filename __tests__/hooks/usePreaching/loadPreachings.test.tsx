@@ -7,10 +7,20 @@ import { initialState as preachingInitState } from '../../features/preaching';
 import { revisitsState } from '../../features/revisits';
 import { initialState as statusInitState } from '../../features/status';
 
+/* Hooks */
+import { useNetwork } from '../../../src/hooks';
+
 /* Setup */
 import { getMockStoreComplete, render } from './setup';
 
+/* Mock hooks */
+jest.mock('../../../src/hooks/useNetwork.ts');
+
 describe('Test usePreaching hook loadPreachings', () => {
+    (useNetwork as jest.Mock).mockReturnValue({
+        isConnected: true,
+    });
+
     it('should load preachings day successfully', async () => {
         const mockStore = getMockStoreComplete({
             auth: authInitState,

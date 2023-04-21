@@ -1,12 +1,24 @@
 import { act } from '@testing-library/react-native';
 
+/* Features */
 import { initialState as authInitState } from '../../features/auth';
 import { initialState as preachingInitState, preachingsState } from '../../features/preaching';
 import { initialState as statusInitState } from '../../features/status';
 
+/* Hooks */
+import { useNetwork } from '../../../src/hooks';
+
+/* Setup */
 import { getMockStore, render } from './setup';
 
+/* Mock hooks */
+jest.mock('../../../src/hooks/useNetwork.ts');
+
 describe('Test usePreaching hook clearPreaching', () => {
+    (useNetwork as jest.Mock).mockReturnValue({
+        isConnected: true,
+    });
+
     it('should clear state', async () => {
         const mockStore = getMockStore({ auth: authInitState, preaching: preachingsState, status: statusInitState });
         const { result } = render(mockStore);

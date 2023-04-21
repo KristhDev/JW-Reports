@@ -21,7 +21,7 @@ import {
 } from '../features/preaching';
 
 /* Hooks */
-import { useAuth, useStatus } from './';
+import { useAuth, useNetwork, useStatus } from './';
 
 /* Interfaces */
 import { Preaching, PreachingFormValues } from '../interfaces/preaching';
@@ -34,7 +34,8 @@ const usePreaching = () => {
     const { goBack } = useNavigation();
 
     const { state: { user, isAuthenticated } } = useAuth();
-    const { setStatus, setSupabaseError, setUnauthenticatedError } = useStatus();
+    const { setStatus, setSupabaseError, setUnauthenticatedError, setNetworkError } = useStatus();
+    const { isConnected } = useNetwork();
 
     const state = useAppSelector(store => store.preaching);
 
@@ -48,6 +49,11 @@ const usePreaching = () => {
      * @param {Date} date - Date of preaching (month)
      */
     const loadPreachings = async (date: Date) => {
+        if (!isConnected) {
+            setNetworkError();
+            return;
+        }
+
         setIsPreachingsLoading(true);
 
         if (!isAuthenticated) {
@@ -77,6 +83,11 @@ const usePreaching = () => {
      * @param {PreachingFormValues} preachingValues - The values for save preaching day
      */
     const savePreaching = async (preachingValues: PreachingFormValues) => {
+        if (!isConnected) {
+            setNetworkError();
+            return;
+        }
+
         dispatch(setIsPreachingLoading({ isLoading: true }));
 
         if (!isAuthenticated) {
@@ -114,6 +125,11 @@ const usePreaching = () => {
      * @param {PreachingFormValues} preachingValues - Values to update preaching day
      */
     const updatePreaching = async (preachingValues: PreachingFormValues) => {
+        if (!isConnected) {
+            setNetworkError();
+            return;
+        }
+
         dispatch(setIsPreachingLoading({ isLoading: true }));
 
         if (!isAuthenticated) {
@@ -169,6 +185,11 @@ const usePreaching = () => {
      * @param {Function} onFinish - This callback executed when the process is finished (success or failure)
      */
     const deletePreaching = async (onFinish?: () => void) => {
+        if (!isConnected) {
+            setNetworkError();
+            return;
+        }
+
         dispatch(setIsPreachingDeleting({ isDeleting: true }));
 
         if (!isAuthenticated) {

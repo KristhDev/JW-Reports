@@ -8,7 +8,7 @@ import { AddOrEditPreaching, Home } from '../screens/preaching';
 import { BackButton, HeaderButtons } from '../components/ui';
 
 /* Hooks */
-import { useCourses, usePreaching, useTheme } from '../hooks';
+import { useCourses, useNetwork, usePreaching, useStatus, useTheme } from '../hooks';
 
 /* Interfaces */
 import { PreachingStackParamsList } from '../interfaces/preaching';
@@ -31,6 +31,8 @@ const PreachingStackNavigation = () => {
         loadPreachings
     } = usePreaching();
     const { state: { colors } } = useTheme();
+    const { setNetworkError } = useStatus();
+    const { isConnected } = useNetwork();
 
     /**
      * If the user clicks the delete button, then show the delete modal, and if the user clicks the
@@ -45,14 +47,15 @@ const PreachingStackNavigation = () => {
      */
     useEffect(() => {
         setSelectedDate(new Date());
-        loadCourses({ filter: 'all' });
+        if (isConnected) loadCourses({ filter: 'all' });
     }, []);
 
     /**
      * Effect to load preachings of the selected date.
      */
     useEffect(() => {
-        loadPreachings(selectedDate);
+        if (isConnected) loadPreachings(selectedDate);
+        else setNetworkError();
     } ,[ selectedDate ]);
 
     return (

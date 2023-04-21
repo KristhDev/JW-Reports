@@ -7,10 +7,20 @@ import { supabase } from '../../supabase';
 import { initialState as authInitState, newUserData } from '../../features/auth';
 import { initialState as statusInitState } from '../../features/status';
 
+/* Hooks */
+import { useNetwork } from '../../../src/hooks';
+
 /* Setup */
 import { getMockStore, render } from './setup';
 
+/* Mock hooks */
+jest.mock('../../../src/hooks/useNetwork.ts');
+
 describe('Test in useAuth hook signUp', () => {
+    (useNetwork as jest.Mock).mockReturnValue({
+        isConnected: true,
+    });
+
     it('should create new account', async () => {
         const mockStore = getMockStore({ auth: authInitState, status: statusInitState });
         const { result } = render(mockStore);

@@ -4,10 +4,20 @@ import { act } from '@testing-library/react-native';
 import { initialState as authInitState, testCredentials } from '../../features/auth';
 import { initialState as statusInitState } from '../../features/status';
 
+/* Hooks */
+import { useNetwork } from '../../../src/hooks';
+
 /* Setup */
 import { getMockStore, render } from './setup';
 
+/* Mock hooks */
+jest.mock('../../../src/hooks/useNetwork.ts');
+
 describe('Test in useAuth hook resetPassword', () => {
+    (useNetwork as jest.Mock).mockReturnValue({
+        isConnected: true,
+    });
+
     beforeEach(() => {
         jest.clearAllMocks();
     });

@@ -1,9 +1,5 @@
 import { act } from '@testing-library/react-native';
 
-/* Setup */
-import { getMockStoreComplete, render } from './setup';
-import { goBackMock } from '../../../jest.setup';
-
 /* Features */
 import { initialState as authInitState, testCredentials } from '../../features/auth';
 import { coursesState } from '../../features/courses';
@@ -11,7 +7,21 @@ import { initialState as preachingInitState } from '../../features/preaching';
 import { revisitsState } from '../../features/revisits';
 import { initialState as statusInitState } from '../../features/status';
 
+/* Hooks */
+import { useNetwork } from '../../../src/hooks';
+
+/* Setup */
+import { getMockStoreComplete, render } from './setup';
+import { goBackMock } from '../../../jest.setup';
+
+/* Mock hooks */
+jest.mock('../../../src/hooks/useNetwork.ts');
+
 describe('Test in usePreaching hook savePreaching', () => {
+    (useNetwork as jest.Mock).mockReturnValue({
+        isConnected: true,
+    });
+
     beforeEach(() => {
         jest.clearAllMocks();
     });
