@@ -19,8 +19,10 @@ import { NetworkContext } from './';
 const NetworkProvider: FC<PropsWithChildren> = ({ children }) => {
     const [ isConnected, setIsConnected ] = useState<boolean>(true);
 
-    /* This code is using the `useEffect` hook to subscribe to changes in the device's network
-    connectivity status using the `NetInfo` API from `@react-native-community/netinfo`. */
+    /**
+     * This code is using the `useEffect` hook to subscribe to changes in the device's
+     * network connectivity status using the `NetInfo` API from `@react-native-community/netinfo`.
+     */
     useEffect(() => {
         const unSubscribreNetInfo = NetInfo.addEventListener((state) => {
             setIsConnected(state?.isConnected || false);
