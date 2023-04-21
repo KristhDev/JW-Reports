@@ -15,6 +15,11 @@ export const authErrorMessages = {
     'For security purposes, you can only request this once every 60 seconds': 'Para evitar problemas de seguridad, solo puede realizar esta solicitud una vez cada 60 segundos.'
 }
 
+export const commonErrorMessages = {
+    'Network request failed': 'Lo sentimos pero no dispones de conexión a internet.',
+    'FetchError: Network request failed': 'Lo sentimos pero no dispones de conexión a internet.'
+}
+
 /**
  * The function translates error messages in TypeScript.
  * @param {string} message - The message parameter is a string that represents an error message that
@@ -24,5 +29,6 @@ export const authErrorMessages = {
  */
 export const translateErrorMsg = (message: string) => {
     return (authErrorMessages as any)[message]
+        || (commonErrorMessages as any)[message]
         || 'Ocurrió un error al realizar está acción, por favor vuelvalo a intentar.';
 }

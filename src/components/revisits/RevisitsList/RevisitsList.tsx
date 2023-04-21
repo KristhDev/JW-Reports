@@ -15,7 +15,7 @@ import { RevisitCard } from '../RevisitCard';
 import { ListEmptyComponent, ListFooterComponent, SearchInput, Title } from '../../ui';
 
 /* Hooks */
-import { useRevisits } from '../../../hooks';
+import { useNetwork, useRevisits } from '../../../hooks';
 
 /* Interfaces */
 import { RevisitsListProps } from './interfaces';
@@ -58,6 +58,7 @@ export const RevisitsList: FC<RevisitsListProps> = ({ emptyMessage, filter, titl
         setSelectedRevisit,
         loadRevisits,
     } = useRevisits();
+    const { isConnected } = useNetwork();
 
     /**
      * When the user refreshes the page, the search term is reset, the pagination is reset, the
@@ -65,8 +66,12 @@ export const RevisitsList: FC<RevisitsListProps> = ({ emptyMessage, filter, titl
      */
     const handleRefreshing = () => {
         setSearchTerm('');
-        setRevisitsPagination({ from: 0, to: 9 });
-        removeRevisits();
+
+        if (isConnected) {
+            setRevisitsPagination({ from: 0, to: 9 });
+            removeRevisits();
+        }
+
         loadRevisits({ filter, refresh: true });
     }
 
@@ -77,8 +82,11 @@ export const RevisitsList: FC<RevisitsListProps> = ({ emptyMessage, filter, titl
      */
     const handleResetRevisits = (search: string) => {
         if (search.trim().length === 0 && revisits.length === 0) {
-            setRevisitsPagination({ from: 0, to: 9 });
-            removeRevisits();
+            if (isConnected) {
+                setRevisitsPagination({ from: 0, to: 9 });
+                removeRevisits();
+            }
+
             loadRevisits({ filter, search: '', refresh: true });
             setIsRefreshing(false);
         }
@@ -89,7 +97,7 @@ export const RevisitsList: FC<RevisitsListProps> = ({ emptyMessage, filter, titl
      * load more revisits.
      */
     const handleEndReach = () => {
-        if (!hasMoreRevisits || isRevisitsLoading) return;
+        if (!hasMoreRevisits || isRevisitsLoading || !isConnected) return;
         loadRevisits({ filter, search: searchTerm, loadMore: true });
     }
 
@@ -139,8 +147,12 @@ export const RevisitsList: FC<RevisitsListProps> = ({ emptyMessage, filter, titl
      */
     useEffect(() => {
         if (searchTerm.trim().length > 0) {
-            setRevisitsPagination({ from: 0, to: 9 });
-            removeRevisits();
+
+            if (isConnected) {
+                setRevisitsPagination({ from: 0, to: 9 });
+                removeRevisits();
+            }
+
             loadRevisits({ filter, search: searchTerm, refresh: true });
             setIsRefreshing(false);
         }
@@ -167,7 +179,7 @@ export const RevisitsList: FC<RevisitsListProps> = ({ emptyMessage, filter, titl
      * refreshRevisits is true
      */
     useEffect(() => {
-        if (isFocused() && refreshRevisits) {
+        if (isFocused() && refreshRevisits && isConnected) {
             removeRevisits();
             loadRevisits({ filter, search: searchTerm, refresh: true });
         }

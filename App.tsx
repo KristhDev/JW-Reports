@@ -16,6 +16,7 @@ import { ONESIGNAL_APP_ID } from '@env';
 import { store, persistor } from './src/features/store';
 
 /* Context */
+import { NetworkProvider } from './src/context/network';
 import { ThemeProvider } from './src/theme/context';
 
 /* Navigation */
@@ -56,19 +57,21 @@ const App = () => {
   }, []);
 
   return (
-    <MenuProvider>
-      <ThemeProvider>
-        <Provider store={ store }>
-          <PersistGate loading={ null } persistor={ persistor }>
-            <PaperProvider>
-              <NavigationContainer>
-                <Navigation />
-              </NavigationContainer>
-            </PaperProvider>
-          </PersistGate>
-        </Provider>
-      </ThemeProvider>
-    </MenuProvider>
+    <NetworkProvider>
+      <MenuProvider>
+        <ThemeProvider>
+          <Provider store={ store }>
+            <PersistGate loading={ null } persistor={ persistor }>
+              <PaperProvider>
+                <NavigationContainer>
+                  <Navigation />
+                </NavigationContainer>
+              </PaperProvider>
+            </PersistGate>
+          </Provider>
+        </ThemeProvider>
+      </MenuProvider>
+    </NetworkProvider>
   );
 }
 

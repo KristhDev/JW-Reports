@@ -1,6 +1,7 @@
 export { default as useAuth } from './useAuth';
 export { default as useCourses } from './useCourses';
 export { default as useImage } from './useImage';
+export { default as useNetwork } from './useNetwork';
 export { default as usePermissions } from './usePermissions';
 export { default as usePreaching } from './usePreaching';
 export { default as useRevisits } from './useRevisits';

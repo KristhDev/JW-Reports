@@ -13,7 +13,7 @@ import { LessonCard } from '../LessonCard';
 import { ListEmptyComponent, ListFooterComponent, SearchInput, Title } from '../../ui';
 
 /* Hooks */
-import { useCourses } from '../../../hooks';
+import { useCourses, useNetwork } from '../../../hooks';
 
 /* Interfaces */
 import { Lesson } from '../../../interfaces/courses';
@@ -42,6 +42,7 @@ export const LessonsList = () => {
         setSelectedLesson,
         loadLessons,
     } = useCourses();
+    const { isConnected } = useNetwork();
 
     /**
      * When the user refreshes the page, reset the search term, reset the pagination, remove the
@@ -49,8 +50,12 @@ export const LessonsList = () => {
      */
     const handleRefreshing = () => {
         setSearchTerm('');
-        setLessonsPagination({ from: 0, to: 9 });
-        removeLessons();
+
+        if (isConnected) {
+            setLessonsPagination({ from: 0, to: 9 });
+            removeLessons();
+        }
+
         loadLessons({ refresh: true });
     }
 
@@ -59,7 +64,7 @@ export const LessonsList = () => {
      * Otherwise, load more lessons.
      */
     const handleEndReach = () => {
-        if (!hasMoreLessons || isLessonsLoading) return;
+        if (!hasMoreLessons || isLessonsLoading || !isConnected) return;
         loadLessons({ search: searchTerm, loadMore: true });
     }
 
@@ -108,12 +113,15 @@ export const LessonsList = () => {
      */
     useEffect(() => {
         if (searchTerm.trim().length > 0) {
-            setLessonsPagination({ from: 0, to: 9 });
-            removeLessons();
+            if (isConnected) {
+                setLessonsPagination({ from: 0, to: 9 });
+                removeLessons();
+            }
+
             loadLessons({ search: searchTerm, refresh: true });
             setIsRefreshing(false);
         }
-        else if (searchTerm.trim().length === 0 && lessons.length === 0) {
+        else if (searchTerm.trim().length === 0 && lessons.length === 0 && isConnected) {
             setLessonsPagination({ from: 0, to: 9 });
             removeLessons();
             loadLessons({ search: '', refresh: true });
