@@ -25,7 +25,8 @@ const NetworkProvider: FC<PropsWithChildren> = ({ children }) => {
      */
     useEffect(() => {
         const unSubscribreNetInfo = NetInfo.addEventListener((state) => {
-            setIsConnected(state?.isConnected || false);
+            console.log(state.isInternetReachable);
+            setIsConnected(state?.isInternetReachable || false);
         });
 
         return () => {
