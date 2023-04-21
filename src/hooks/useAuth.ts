@@ -144,7 +144,7 @@ const useAuth = () => {
     const signOut = async () => {
         if (!state.isAuthenticated) return;
 
-        if (!isConnected) {
+        if (isConnected) {
             const { error } = await supabase.auth.signOut();
             OneSignal.removeExternalUserId();
             const next = setSupabaseError(error, 500);
