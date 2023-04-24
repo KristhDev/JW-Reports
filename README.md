@@ -20,7 +20,7 @@ es una aplicación oficial de Watch Tower Bible and Tract Society of Pennsylvani
 También he decido dejar el **código al público** para que se vea el funcionamiento de la aplicación y más hermanos que tengan los 
 conocimientos debidos puedan, si ellos lo quieren, **hacer su propia implementación.**
 
-Este documento explica las tecnologías utilizadas, el entorno de desarrollo, estructura, la base de datos, cómo correr en  
+Este documento explica las tecnologías utilizadas, el entorno de desarrollo, estructura, la base de datos, cómo correr en 
 desarrollo, el testing, cómo crear su implementación propia, etc.
 
 ## 1) Tecnologías
