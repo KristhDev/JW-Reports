@@ -20,8 +20,7 @@ es una aplicación oficial de Watch Tower Bible and Tract Society of Pennsylvani
 También he decido dejar el **código al público** para que se vea el funcionamiento de la aplicación y más hermanos que tengan los 
 conocimientos debidos puedan, si ellos lo quieren, **hacer su propia implementación.**
 
-Este documento explica las tecnologías utilizadas, el entorno de desarrollo, estructura, la base de datos, cómo correr en 
-desarrollo, el testing, cómo crear su implementación propia, etc.
+Este documento explica las tecnologías utilizadas, el entorno de desarrollo, arquitectura, la base de datos, cómo crear su implementación propia, el testing, etc.
 
 ## 1) Tecnologías
 
@@ -123,3 +122,400 @@ sus aplicaciones desde una sencilla interfaz de escritorio. Puede usar Flipper t
  * [Flipper](https://fbflipper.com)
 
 <br>
+
+## 3) Arquitectura
+Con **arquitectura** me refiero a las **aplicaciones que en conjunto permiten el correcto funcionamiento de JW Reports.** 
+En total podemos **identificar 4 aplicaciones** para este proyecto: Aplicación Movil, Proyecto de Supabase, Sitio Web de
+verificación de correos y Servidor de Notificaciones. Cada una con un proposito. 
+
+Al final de está sección encontrará unos enlaces para ver el código del server y sitio web. Aquí una pequeña explicación
+del proposito de cada uno de ellos:
+
+### 3.1) Aplicación Movil
+Es la aplicación con la que al final los usuarios **van a interactuar más y es la que tiene el foco principal de desarrollo.** 
+Las otras aplicaciones y servicios son para **complementar funcionalidades de la aplicación móvil,** como la verificación de
+correos y envio de notificaciones.
+
+### 3.2) Proyecto de Supabase
+Es uno de las partes más importantes del proyecto. Supabase es una **alternativa directa a Firebase,** solo que Supabase usa
+Postgres como base de datos. Nos **ofrece muchas herramientas** como autenticación, almacenamiento de archivos, gestión de bases
+de datos, etc.
+
+### 3.3) Sitio Web de verificación de correos
+Es el sitio web de **verificación de correos y procesos relacionados con la autenticación** de usuarios, como el cambio de
+contraseñas solicitado por correo.
+
+### 3.4) Servidor de Notificaciones 
+Es el **servidor de notificaciones** que permite **enviar recordatorios a los usuarios de la aplicación.** Hace una verificación
+de los datos y envia la notificación al usuario. Para esto se realiza una **petición HTTP que debe ser válidada.** Mediante un 
+cron que ofrecen algunos servicios en la nube se realiza la petición para enviar las notificaciones.
+
+### 3.5) Enlaces
+ * [Sitio Web](https://nodejs.org)
+ * [Server](https://yarnpkg.com)
+
+<br>
+
+## 4) Base de datos
+Como se menciono anteriormente, Supabase usa **Postgres** como base de datos. Al analizar los requerimientos de este proyecto
+se obtiene el siguiente esquema de base de datos:
+
+<br>
+
+<p align="center">
+    <img 
+    alt="DB Schema" 
+    src="./docs/JWReportsDB.jpg"
+    />
+</p>
+
+<br>
+
+Como habrá notado hay 5 tablas: ```courses```, ```lessons```, ```preachings```, ```revisits``` y ```users``` que son las
+necesarias para el correcto funcionamiento del proyecto.
+
+Algo que **aclarar** es que la tabla de ```users``` no existe como tal, solo es una **representación de los campos que componen
+un usuario,** se usa la tabla de ```users``` de la autenticación de Supabase, por ello no es necesario crearla.
+
+## 5) Implementación propia
+En está sección se explicará cómo crear su propia implementación de la aplicación. Esto para los usuarios que deseen tener
+sus datos en su proyecto de Supabase o para aprender más de este servicio.
+
+### 5.1) Proyecto de Supabase
+Lo primero es crear un proyecto de Supabase, para ello debes tener una cuenta en su sitio oficial, puedes acceder [aquí](https://supabase.com). Cuando ya tengas la cuenta vas a crear un nuevo proyecto y llenas los campos que se te pidan. Ahora apareceras
+en el Dashboard de administración de tu proyecto.
+
+### 5.2) Proveedor de autenticación
+Estando en tu proyecto de Supabase ve a la pestaña de Authentication y luego en configuración selecciona providers. Te saldrá
+una lista de proveedores de authenticación (Email, Google, Facebook, Twitter, Slack, Github, etc). Para este caso habilita
+el proveedor de Email e inhabilita el resto de funciones de este proveedor (más adelante habilitaremos algunas).
+
+### 5.3) Base de datos
+Lo siguiente será crear las tablas que conforman la base de datos, para eso ve a la pestaña de Database de tu proyecto y selecciona
+Tables, asegurate de que que el schema seleccionado sea public. Te dejo unas tablas con los tipos de datos y configuraciones de
+cada tabla:
+
+<table>
+    <thead>
+        <th colspan="5">Courses</th>
+    </thead>
+    <tbody>
+        <tr>
+            <td>Campo</td>
+            <td>Tipo</td>
+            <td>Clave</td>
+            <td>Requerido</td>
+            <td>Valor por defecto</td>
+        </tr>
+        <tr>
+            <td>id</td>
+            <td>UUID</td>
+            <td>Primary Key</td>
+            <td>No</td>
+            <td>uuid_generate_v4()</td>
+        </tr>
+        <tr>
+            <td>user_id</td>
+            <td>UUID</td>
+            <td>Foreign Key (users table of Supabase)</td>
+            <td>Si</td>
+            <td>No posee</td>
+        </tr>
+        <tr>
+            <td>person_name</td>
+            <td>VARCHAR</td>
+            <td>No</td>
+            <td>Si</td>
+            <td>No posee</td>
+        </tr>
+        <tr>
+            <td>person_about</td>
+            <td>TEXT</td>
+            <td>No</td>
+            <td>Si</td>
+            <td>No posee</td>
+        </tr>
+        <tr>
+            <td>person_address</td>
+            <td>TEXT</td>
+            <td>No</td>
+            <td>Si</td>
+            <td>No posee</td>
+        </tr>
+        <tr>
+            <td>publication</td>
+            <td>VARCHAR</td>
+            <td>No</td>
+            <td>Si</td>
+            <td>No posee</td>
+        </tr>
+        <tr>
+            <td>suspended</td>
+            <td>BOOL</td>
+            <td>No</td>
+            <td>No</td>
+            <td>false</td>
+        </tr>
+        <tr>
+            <td>finished</td>
+            <td>BOOL</td>
+            <td>No</td>
+            <td>No</td>
+            <td>false</td>
+        </tr>
+        <tr>
+            <td>created_at</td>
+            <td>TIMESTAMP</td>
+            <td>No</td>
+            <td>No</td>
+            <td>now()</td>
+        </tr>
+        <tr>
+            <td>updated_at</td>
+            <td>TIMESTAMP</td>
+            <td>No</td>
+            <td>No</td>
+            <td>now()</td>
+        </tr>
+    </tbody>
+</table>
+
+<br>
+
+<table>
+    <thead>
+        <th colspan="5">Lessons</th>
+    </thead>
+    <tbody>
+        <tr>
+            <td>Campo</td>
+            <td>Tipo</td>
+            <td>Clave</td>
+            <td>Requerido</td>
+            <td>Valor por defecto</td>
+        </tr>
+        <tr>
+            <td>id</td>
+            <td>UUID</td>
+            <td>Primary Key</td>
+            <td>No</td>
+            <td>uuid_generate_v4()</td>
+        </tr>
+        <tr>
+            <td>course_id</td>
+            <td>UUID</td>
+            <td>Foreign Key (id of courses table)</td>
+            <td>Si</td>
+            <td>No posee</td>
+        </tr>
+        <tr>
+            <td>description</td>
+            <td>TEXT</td>
+            <td>No</td>
+            <td>Si</td>
+            <td>No posee</td>
+        </tr>
+        <tr>
+            <td>next_lesson</td>
+            <td>TIMESTAMP</td>
+            <td>No</td>
+            <td>No</td>
+            <td>now()</td>
+        </tr>
+        <tr>
+            <td>done</td>
+            <td>BOOL</td>
+            <td>No</td>
+            <td>No</td>
+            <td>false</td>
+        </tr>
+        <tr>
+            <td>created_at</td>
+            <td>TIMESTAMP</td>
+            <td>No</td>
+            <td>No</td>
+            <td>now()</td>
+        </tr>
+        <tr>
+            <td>updated_at</td>
+            <td>TIMESTAMP</td>
+            <td>No</td>
+            <td>No</td>
+            <td>now()</td>
+        </tr>
+    </tbody>
+</table>
+
+<br>
+
+<table>
+    <thead>
+        <th colspan="5">Preachings</th>
+    </thead>
+    <tbody>
+        <tr>
+            <td>Campo</td>
+            <td>Tipo</td>
+            <td>Clave</td>
+            <td>Requerido</td>
+            <td>Valor por defecto</td>
+        </tr>
+        <tr>
+            <td>id</td>
+            <td>UUID</td>
+            <td>Primary Key</td>
+            <td>No</td>
+            <td>uuid_generate_v4()</td>
+        </tr>
+        <tr>
+            <td>user_id</td>
+            <td>UUID</td>
+            <td>Foreign Key (users table of Supabase)</td>
+            <td>Si</td>
+            <td>No posee</td>
+        </tr>
+        <tr>
+            <td>day</td>
+            <td>TIMESTAMP</td>
+            <td>No</td>
+            <td>No</td>
+            <td>now()</td>
+        </tr>
+        <tr>
+            <td>init_hour</td>
+            <td>TIMESTAMP</td>
+            <td>No</td>
+            <td>Si</td>
+            <td>No posee</td>
+        </tr>
+        <tr>
+            <td>final_hour</td>
+            <td>TIMESTAMP</td>
+            <td>No</td>
+            <td>Si</td>
+            <td>No posee</td>
+        </tr>
+        <tr>
+            <td>publications</td>
+            <td>INT2</td>
+            <td>No</td>
+            <td>No</td>
+            <td>0</td>
+        </tr>
+        <tr>
+            <td>videos</td>
+            <td>INT2</td>
+            <td>No</td>
+            <td>No</td>
+            <td>0</td>
+        </tr>
+        <tr>
+            <td>revists</td>
+            <td>INT2</td>
+            <td>No</td>
+            <td>No</td>
+            <td>0</td>
+        </tr>
+        <tr>
+            <td>created_at</td>
+            <td>TIMESTAMP</td>
+            <td>No</td>
+            <td>No</td>
+            <td>now()</td>
+        </tr>
+        <tr>
+            <td>updated_at</td>
+            <td>TIMESTAMP</td>
+            <td>No</td>
+            <td>No</td>
+            <td>now()</td>
+        </tr>
+    </tbody>
+</table>
+
+<br>
+
+<table>
+    <thead>
+        <th colspan="5">Revisits</th>
+    </thead>
+    <tbody>
+        <tr>
+            <td>Campo</td>
+            <td>Tipo</td>
+            <td>Clave</td>
+            <td>Requerido</td>
+            <td>Valor por defecto</td>
+        </tr>
+        <tr>
+            <td>id</td>
+            <td>UUID</td>
+            <td>Primary Key</td>
+            <td>No</td>
+            <td>uuid_generate_v4()</td>
+        </tr>
+        <tr>
+            <td>user_id</td>
+            <td>UUID</td>
+            <td>Foreign Key (users table of Supabase)</td>
+            <td>Si</td>
+            <td>No posee</td>
+        </tr>
+        <tr>
+            <td>person_name</td>
+            <td>VARCHAR</td>
+            <td>No</td>
+            <td>Si</td>
+            <td>No posee</td>
+        </tr>
+        <tr>
+            <td>about</td>
+            <td>TEXT</td>
+            <td>No</td>
+            <td>Si</td>
+            <td>No posee</td>
+        </tr>
+        <tr>
+            <td>address</td>
+            <td>TEXT</td>
+            <td>No</td>
+            <td>Si</td>
+            <td>No posee</td>
+        </tr>
+        <tr>
+            <td>photo</td>
+            <td>VARCHAR</td>
+            <td>No</td>
+            <td>No</td>
+            <td>null</td>
+        </tr>
+        <tr>
+            <td>next_visit</td>
+            <td>TIMESTAMP</td>
+            <td>No</td>
+            <td>No</td>
+            <td>now()</td>
+        </tr>
+        <tr>
+            <td>done</td>
+            <td>BOOL</td>
+            <td>No</td>
+            <td>No</td>
+            <td>false</td>
+        </tr>
+        <tr>
+            <td>created_at</td>
+            <td>TIMESTAMP</td>
+            <td>No</td>
+            <td>No</td>
+            <td>now()</td>
+        </tr>
+        <tr>
+            <td>updated_at</td>
+            <td>TIMESTAMP</td>
+            <td>No</td>
+            <td>No</td>
+            <td>now()</td>
+        </tr>
+    </tbody>
+</table>
