@@ -677,8 +677,7 @@ android y ejecuté el siguiente comando:
 ./gradlew assembleRelease
 ```
 
-Cuando el proceso termine y se realice con éxito **habrá generado su apk**, se encotrara en ```android/app/build/outputs/apk/
-release/app-release.apk```. Solo instálela en su dispositivo y podrá usarla.
+Cuando el proceso termine y se realice con éxito **habrá generado su apk**, se encotrara en ```android/app/build/outputs/apk/release/app-release.apk```. Solo instálela en su dispositivo y podrá usarla.
 
 Para más información te dejo la documentación oficial acerca de este punto [aquí](https://reactnative.dev/docs/signed-apk-android).
 
