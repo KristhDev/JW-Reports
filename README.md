@@ -4,9 +4,9 @@
 
 <p align="center">
     <img 
-    alt="App Logo" 
-    src="./docs/JWReports-logo.jpg"
-    width="350"
+        alt="App Logo" 
+        src="./docs/JWReports-logo.jpg"
+        width="350"
     />
 </p>
 
@@ -152,8 +152,8 @@ de los datos y envía la notificación al usuario. Para esto se realiza una **pe
 cron que ofrecen algunos servicios en la nube se realiza la petición para enviar las notificaciones.
 
 ### 3.5) Enlaces
- * [Sitio Web](https://nodejs.org)
- * [Server](https://yarnpkg.com)
+ * [Sitio Web](https://github.com/KristhDev/JW-Reports-auth-web-site)
+ * [Server](https://github.com/KristhDev/JW-Reports-notifications-rest-server)
 
 <br>
 
@@ -577,8 +577,8 @@ Finalmente, tienes otra pestaña llamada **Email templates** donde puedes **camb
 para confirmar correos y cambiar contraseñas.
 
 Igualmente, le dejo ambos links de los repositorios de estas partes para más información:
- * [Sitio web](https://github.com/KristhDev/JW-Reports)
- * [Servidor de notificaciones](https://github.com/KristhDev/JW-Reports)
+ * [Sitio web](https://github.com/KristhDev/JW-Reports-auth-web-site)
+ * [Servidor de notificaciones](https://github.com/KristhDev/JW-Reports-notifications-rest-server)
 
 ### 5.9) One Signal
 Para el envío de notificaciones se usa el **servicio OneSignal**, que es el más utilizado para este tipo de funcionalidad. Para
