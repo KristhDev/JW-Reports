@@ -577,8 +577,8 @@ Finalmente, tienes otra pestaña llamada **Email templates** donde puedes **camb
 para confirmar correos y cambiar contraseñas.
 
 Igualmente, le dejo ambos links de los repositorios de estas partes para más información:
-[Sitio web](https://github.com/KristhDev/JW-Reports)
-[Servidor de notificaciones](https://github.com/KristhDev/JW-Reports)
+ * [Sitio web](https://github.com/KristhDev/JW-Reports)
+ * [Servidor de notificaciones](https://github.com/KristhDev/JW-Reports)
 
 ### 5.9) One Signal
 Para el envío de notificaciones se usa el **servicio OneSignal**, que es el más utilizado para este tipo de funcionalidad. Para
@@ -779,8 +779,4 @@ el **dispositivo sea físico o virtual**, das un clic para seleccionarlo y listo
 
 ----------------------------------------------------------------------------
 
-<br>
-
 Para más información escriba a este correo: kristhdev@gmail.com
-
-<br>
