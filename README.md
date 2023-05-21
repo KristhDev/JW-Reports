@@ -20,7 +20,10 @@ es una aplicación oficial de Watch Tower Bible and Tract Society of Pennsylvani
 También he decidido dejar el **código al público** para que se vea el funcionamiento de la aplicación y más hermanos que tengan
 los conocimientos debidos puedan, si ellos lo quieren, **hacer su propia implementación.**
 
-Este documento explica las tecnologías utilizadas, el entorno de desarrollo, arquitectura, la base de datos, cómo crear su implementación propia, el testing, etc.
+Este documento explica las tecnologías utilizadas, el entorno de desarrollo, arquitectura, la base de datos, cómo crear su 
+implementación propia, el testing, etc.
+
+Te dejo el link para que puedas descargarla y probarla, has click [aquí](https://www.mediafire.com/file/zazj4xeoj2by00j/JW_Reports.apk/file)
 
 <br>
 
