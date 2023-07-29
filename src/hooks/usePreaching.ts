@@ -114,7 +114,7 @@ const usePreaching = () => {
 
         setStatus({
             code: 201,
-            msg: 'Haz agregado tu día de predicación correctamente.'
+            msg: 'Has agregado tu día de predicación correctamente.'
         });
 
         goBack();
@@ -167,7 +167,7 @@ const usePreaching = () => {
 
         setStatus({
             code: 200,
-            msg: 'Haz actualizado tu día de predicación correctamente.'
+            msg: 'Has actualizado tu día de predicación correctamente.'
         });
 
         setSelectedPreaching({
@@ -250,7 +250,7 @@ const usePreaching = () => {
 
         setStatus({
             code: 200,
-            msg: 'Haz eliminado tu día de predicación correctamente.'
+            msg: 'Has eliminado tu día de predicación correctamente.'
         });
     }
 

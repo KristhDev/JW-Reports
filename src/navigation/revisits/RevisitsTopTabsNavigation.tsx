@@ -50,7 +50,7 @@ const RevisitsTopTabsNavigation = () => {
             <Tabs.Screen
                 component={ Revisits }
                 initialParams={{
-                    emptyMessage: 'No haz agregado ninguna revisita.',
+                    emptyMessage: 'No has agregado ninguna revisita.',
                     filter: 'all',
                     title: 'TODAS MIS REVISITAS',
                 }}
@@ -61,7 +61,7 @@ const RevisitsTopTabsNavigation = () => {
             <Tabs.Screen
                 component={ Revisits }
                 initialParams={{
-                    emptyMessage: 'No haz realizado ninguna revisita.',
+                    emptyMessage: 'No has realizado ninguna revisita.',
                     filter: 'visited',
                     title: 'REVISITAS REALIZADAS'
                 }}

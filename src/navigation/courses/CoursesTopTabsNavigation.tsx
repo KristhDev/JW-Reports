@@ -56,7 +56,7 @@ const CoursesTopTabsNavigation = () => {
             <Tabs.Screen
                 component={ Courses }
                 initialParams={{
-                    emptyMessage: 'No haz agregado ningún curso.',
+                    emptyMessage: 'No has agregado ningún curso.',
                     filter: 'all',
                     title: 'TODOS MIS CURSOS',
                 }}

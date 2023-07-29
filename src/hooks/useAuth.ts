@@ -295,7 +295,7 @@ const useAuth = () => {
 
         setStatus({
             code: 200,
-            msg: 'Haz actualizado tu contraseña correctamente.'
+            msg: 'Has actualizado tu contraseña correctamente.'
         });
     }
 
@@ -320,7 +320,7 @@ const useAuth = () => {
 
         setStatus({
             code: 200,
-            msg: 'Haz actualizado tu perfil correctamente.'
+            msg: 'Has actualizado tu perfil correctamente.'
         });
     }
 
