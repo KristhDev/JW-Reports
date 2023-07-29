@@ -12,8 +12,10 @@ import { styles as themeStyles } from '../../../theme';
 /**
  * This screen is to display the form to change the credentials
  * of the authenticated user.
+ *
+ * @return {JSX.Element} The rendered form screen of credentials
  */
-const Credentials = () => {
+const Credentials = (): JSX.Element => {
     return (
         <KeyboardAwareScrollView
             contentContainerStyle={{ flexGrow: 1 }}

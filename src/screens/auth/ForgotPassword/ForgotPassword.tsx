@@ -9,8 +9,10 @@ import { Title } from '../../../components/ui';
 /**
  * This screen is to display the form to request a
  * password reset.
+ *
+ * @return {JSX.Element} The rendered form screen of credentials
  */
-const ForgotPassword = () => {
+const ForgotPassword = (): JSX.Element => {
     return (
         <KeyboardAwareScrollView
             contentContainerStyle={{ flexGrow: 1 }}

@@ -19,10 +19,11 @@ import { useCourses, useNetwork } from '../../../hooks';
 import { Lesson } from '../../../interfaces/courses';
 
 /**
- * This component is responsible for rendering a list of lessons
- * based on selectedCourse.
+ * Render a list of lessons.
+ *
+ * @return {JSX.Element} The JSX element representing the lessons list.
  */
-export const LessonsList = () => {
+export const LessonsList = (): JSX.Element => {
     const [ searchTerm, setSearchTerm ] = useState<string>('');
     const [ isRefreshing, setIsRefreshing ] = useState<boolean>(false);
     const [ showDeleteModal, setShowDeleteModal ] = useState<boolean>(false);
@@ -47,8 +48,10 @@ export const LessonsList = () => {
     /**
      * When the user refreshes the page, reset the search term, reset the pagination, remove the
      * lessons from the state, and load the lessons again.
+     *
+     * @return {void} This function does not return any value.
      */
-    const handleRefreshing = () => {
+    const handleRefreshing = (): void => {
         setSearchTerm('');
 
         if (isConnected) {
@@ -62,8 +65,10 @@ export const LessonsList = () => {
     /**
      * If there are no more lessons to load, or if the lessons are currently loading, then return.
      * Otherwise, load more lessons.
+     *
+     * @return {void} This function does not return any value.
      */
-    const handleEndReach = () => {
+    const handleEndReach = (): void => {
         if (!hasMoreLessons || isLessonsLoading || !isConnected) return;
         loadLessons({ search: searchTerm, loadMore: true });
     }
@@ -71,10 +76,12 @@ export const LessonsList = () => {
     /**
      * HandleShowModal is a function that takes a lesson and a setShowModal function as parameters and
      * returns nothing.
+     *
      * @param {Lesson} lesson - Lesson - this is the lesson that was clicked on
-     * @param setShowModal - (value: boolean) => void
+     * @param {(setShowModal: (value: boolean) => void)} setShowModal The function to set the modal visibility.
+     * @return {void} This function does not return any value.
      */
-    const handleShowModal = (lesson: Lesson, setShowModal: (value: boolean) => void) => {
+    const handleShowModal = (lesson: Lesson, setShowModal: (value: boolean) => void): void => {
         setSelectedLesson(lesson);
         setShowModal(true);
     }
@@ -82,9 +89,11 @@ export const LessonsList = () => {
     /**
      * HandleHideModal is a function that takes a function as an argument and returns a function that
      * takes no arguments and returns nothing.
-     * @param setShowModal - (value: boolean) => void
+     *
+     * @param {(setShowModal: (value: boolean) => void)} setShowModal The function to set the modal visibility.
+     * @return {void} This function does not return any value.
      */
-    const handleHideModal = (setShowModal: (value: boolean) => void) => {
+    const handleHideModal = (setShowModal: (value: boolean) => void): void => {
         setShowModal(false);
         setSelectedLesson({
             ...INIT_LESSON,
@@ -92,10 +101,14 @@ export const LessonsList = () => {
         });
     }
 
+
     /**
-     * If the user confirms the delete, then delete the lesson and close the modal.
+     * Handles the delete confirmation by calling the deleteLesson function with a boolean value of false,
+     * and then hides the delete modal by calling setShowDeleteModal with a boolean value of false.
+     *
+     * @return {void} - This function does not return any value.
      */
-    const handleDeleteConfirm = () => {
+    const handleDeleteConfirm = (): void => {
         deleteLesson(false, () => setShowDeleteModal(false));
     }
 

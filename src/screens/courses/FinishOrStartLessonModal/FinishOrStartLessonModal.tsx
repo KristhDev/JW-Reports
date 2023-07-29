@@ -22,7 +22,9 @@ import { styles as themeStyles } from '../../../theme';
 /**
  * This modal is responsible for grouping the components to finish
  * or start a lesson again.
+ *
  * @param {ModalProps} { isOpen: boolean, onClose: () => void }
+ * @return {JSX.Element} rendered component to show list of modal
  */
 const FinishOrStartLessonModal: FC<ModalProps> = ({ isOpen, onClose }) => {
     const [ reschedule, setReschedule ] = useState<boolean>(false);
@@ -37,8 +39,10 @@ const FinishOrStartLessonModal: FC<ModalProps> = ({ isOpen, onClose }) => {
     /**
      * When the user clicks the close button, the modal will close and the onClose function will be
      * called.
+     *
+     * @return {void} This function does not return anything.
      */
-    const handleClose = () => {
+    const handleClose = (): void => {
         setReschedule(false);
         onClose();
     }
@@ -46,9 +50,11 @@ const FinishOrStartLessonModal: FC<ModalProps> = ({ isOpen, onClose }) => {
     /**
      * This is the confirmation function of the modal that executes one or another function
      * depending on selectdLesson, the reschedule state or the function parameters.
+     *
      * @param {{ next_lesson: Date }} values - This is the values with next_lesson property to lesson
+     * @return {void} This function does not return anything
      */
-    const handleConfirm = (values?: { next_lesson: Date }) => {
+    const handleConfirm = (values?: { next_lesson: Date }): void => {
         if (!reschedule && !selectedLesson.done) {
             finishOrStartLesson(new Date(selectedLesson.next_lesson), handleClose);
         }

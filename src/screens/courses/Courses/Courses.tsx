@@ -24,9 +24,11 @@ type CoursesProps = MaterialTopTabScreenProps<CoursesTopTabsParamsList>;
 /**
  * This screen is responsible for grouping the components to show
  * a list of courses according to a filter.
+ *
  * @param {CoursesProps} { route: RouteProp } - This is a params of TopTabNavigation
+ * @return {JSX.Element} rendered component to show list of courses
  */
-const Courses: FC<CoursesProps> = ({ route }) => {
+const Courses: FC<CoursesProps> = ({ route }): JSX.Element => {
     const { addListener, removeListener, getState, navigate } = useNavigation();
 
     const { setCoursesScreenHistory, setSelectedCourse } = useCourses();
@@ -36,8 +38,10 @@ const Courses: FC<CoursesProps> = ({ route }) => {
      * The function handleNavigate is a function that takes no parameters and returns nothing. It sets
      * the selectedCourse to the INIT_COURSE constant and then navigates to the AddOrEditCourseScreen
      * screen.
+     *
+     * @return {void} This function does not return anything.
      */
-    const handleNavigate = () => {
+    const handleNavigate = (): void => {
         setSelectedCourse(INIT_COURSE);
         navigate('AddOrEditCourseScreen' as never);
     }

@@ -9,8 +9,10 @@ import { ThemeBtn, Title } from '../../../components/ui';
 /**
  * This screen is to display the form to login with
  * an account.
+ *
+ * @return {JSX.Element} The rendered form screen of credentials
  */
-const Login = () => {
+const Login = (): JSX.Element => {
     return (
         <KeyboardAwareScrollView
             contentContainerStyle={{ flexGrow: 1 }}

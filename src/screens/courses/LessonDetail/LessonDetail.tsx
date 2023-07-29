@@ -22,8 +22,10 @@ import styles from './styles';
 /**
  * This screen is responsible for grouping the components to
  * show the detail of a lesson.
+ *
+ * @return {JSX.Element} rendered component to show detail of a lesson
  */
-const LessonDetail = () => {
+const LessonDetail = (): JSX.Element => {
     const [ showFSModal, setShowFSModal ] = useState<boolean>(false);
     const { addListener, getState, removeListener } = useNavigation();
 

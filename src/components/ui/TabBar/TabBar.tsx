@@ -14,10 +14,12 @@ import styles from './styles';
 /**
  * This component is responsible for displaying a custom navigation bar
  * for the app
+ *
  * @param {BottomTabBarProps} props { navigation, state, descriptors } - This is the
  * props for functionality of the component
+ * @return {JSX.Element} Return jsx element to render tab bar of navigation
  */
-export const TabBar: FC<BottomTabBarProps> = ({ navigation, state, descriptors }) => {
+export const TabBar: FC<BottomTabBarProps> = ({ navigation, state, descriptors }): JSX.Element => {
     const [ hideTabBar, setHideTabBar ] = useState<boolean>(false);
     const { state: { colors } } = useTheme();
 

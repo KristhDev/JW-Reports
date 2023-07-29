@@ -16,8 +16,10 @@ import { styles as themeStyles } from '../../../theme';
 /**
  * This modal is responsible for displaying the success and error
  * states of the app.
+ *
+ * @return {JSX.Element} return jsx element to render status modal
  */
-const StatusModal = () => {
+const StatusModal = (): JSX.Element => {
     const { state: { msg }, clearStatus } = useStatus();
     const { state: { colors }, BUTTON_TRANSLUCENT_COLOR } = useTheme();
 
@@ -29,8 +31,10 @@ const StatusModal = () => {
 
     /**
      * If the message is the config message, open the settings page, otherwise clear the status.
+     *
+     * @return {void} This function returns nothing
      */
-    const handleClose = () => {
+    const handleClose = (): void => {
         clearStatus();
         if (msg === configMsg) Linking.openSettings();
     }

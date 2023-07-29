@@ -12,10 +12,12 @@ import { Button, EyeBtn, FormField } from '../../ui';
 import { useAuth, useStatus, useTheme } from '../../../hooks';
 
 /**
- * This component is responsible for rendering the fields to change the credentials
- * of an authenticated user (email and password).
+ * The function takes no arguments and returns a component that renders a form
+ * for updating user credentials.
+ *
+ * @return {JSX.Element} The rendered form component.
  */
-export const CredentialsForm = () => {
+export const CredentialsForm = (): JSX.Element => {
     const [ loadingEmail, setLoadingEmail ] = useState<boolean>(false);
     const [ loadingPassword, setLoadingPassword ] = useState<boolean>(false);
     const [ showPassword, setShowPassword ] = useState<boolean>(false);
@@ -45,22 +47,25 @@ export const CredentialsForm = () => {
     });
 
     /**
-     * The function takes an object with a property called email, and returns a function that takes no
-     * arguments and returns nothing.
-     * @param values - { email: string }
+     * Handles updating the email.
+     *
+     * @param {Object} values - The values object containing the email to be updated.
+     * @param {string} values.email - The new email.
+     * @return {void} This function does not return anything.
      */
-    const handleUpdateEmail = (values: { email: string }) => {
+    const handleUpdateEmail = (values: { email: string }): void => {
         setLoadingEmail(true);
         updateEmail(values, () => setLoadingEmail(false));
     }
 
     /**
-     * handleUpdatePassword is a function that takes two arguments, values and resetForm, and returns
-     * a function that takes no arguments and returns a promise that calls resetForm.
-     * @param values - { password: string, confirmPassword: string }
-     * @param resetForm - () => void
+     * Updates the password with the provided values and resets the form.
+     *
+     * @param {Object} values - An object containing the password and confirmPassword.
+     * @param {Function} resetForm - A function to reset the form.
+     * @return {void} This function does not return anything.
      */
-    const handleUpdatePassword = (values: { password: string, confirmPassword: string }, resetForm: () => void) => {
+    const handleUpdatePassword = (values: { password: string, confirmPassword: string }, resetForm: () => void): void => {
         setLoadingPassword(true);
         updatePassword({ password: values.password }, () => setLoadingPassword(false))
             .then(resetForm);

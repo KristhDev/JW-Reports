@@ -24,9 +24,11 @@ import styles from './styles';
 /**
  * This modal is responsible for grouping all the components to display and deliver
  * the report of the month.
+ *
  * @param {ReportModalProps} { isOpen: boolean, month: string, onClose: () => void }
+ * @return {JSX.Element} rendered component to show modal
  */
-const ReportModal: FC<ReportModalProps> = ({ isOpen, month, onClose }) => {
+const ReportModal: FC<ReportModalProps> = ({ isOpen, month, onClose }): JSX.Element => {
     const [ comment, setComment ] = useState<string>('');
     const [ isFocused, setIsFocused ] = useState<boolean>(false);
     const [ selection, setSelection ] = useState({
@@ -53,8 +55,10 @@ const ReportModal: FC<ReportModalProps> = ({ isOpen, month, onClose }) => {
     /**
      * When the user clicks the button, the function will close the modal, create a report string, and
      * then share the report string with the user's preferred sharing method.
+     *
+     * @return {Promise<void>} This function does not return anything
      */
-    const handleDeliver = async () => {
+    const handleDeliver = async (): Promise<void> => {
         onClose();
 
         let report = '*Informe De Predicación* \n \n';
@@ -77,8 +81,10 @@ const ReportModal: FC<ReportModalProps> = ({ isOpen, month, onClose }) => {
 
     /**
      * When the user clicks the close button, the comment is cleared and the modal is closed.
+     *
+     * @return {void} This function does not return anything
      */
-    const handleClose = () => {
+    const handleClose = (): void => {
         onClose();
         setComment('');
     }

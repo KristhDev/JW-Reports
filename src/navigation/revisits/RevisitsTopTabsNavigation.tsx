@@ -14,8 +14,10 @@ const Tabs = createMaterialTopTabNavigator<RevistsTopTabsParamsList>();
 
 /**
  * This is a top taps navigation for the revisits.
+ *
+ * @return {JSX.Element} rendered top taps navigation of revisits
  */
-const RevisitsTopTabsNavigation = () => {
+const RevisitsTopTabsNavigation = (): JSX.Element => {
     const { state: { colors }, BUTTON_TRANSLUCENT_COLOR, BUTTON_TRANSPARENT_COLOR } = useTheme();
 
     return (

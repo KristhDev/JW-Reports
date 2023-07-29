@@ -19,8 +19,10 @@ import { styles as themeStyles } from '../../../theme';
 /**
  * This component is responsible for rendering the fields to create
  * or edit a course.
+ *
+ * @return {JSX.Element} The course form component.
  */
-export const CourseForm = () => {
+export const CourseForm = (): JSX.Element => {
     const { state: { isCourseLoading, selectedCourse }, saveCourse, updateCourse } = useCourses();
     const { setErrorForm } = useStatus();
     const { state: { colors } } = useTheme();
@@ -28,9 +30,11 @@ export const CourseForm = () => {
     /**
      * If the selectedCourse.id is an empty string, then save the formValues, otherwise update the
      * formValues.
+     *
      * @param {CourseFormValues} formValues - CourseFormValues
+     * @return {void} This function does not return any value.
      */
-    const handleSaveOrUpdate = (formValues: CourseFormValues) => {
+    const handleSaveOrUpdate = (formValues: CourseFormValues): void => {
         (selectedCourse.id === '')
             ? saveCourse(formValues)
             : updateCourse(formValues);

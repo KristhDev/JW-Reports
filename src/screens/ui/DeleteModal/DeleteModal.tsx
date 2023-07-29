@@ -18,6 +18,7 @@ import { styles as themeStyles } from '../../../theme';
 
 /**
  * This modal is for removing resources of all kinds.
+ *
  * @param {DeleteModalProps} { text: string, isLoading: boolean, isOpen: boolean, onClose: () => void, onConfirm: () => void } Props
  * for delete one resource.
  * - text: Text that informs about the deletion of a resource
@@ -25,8 +26,9 @@ import { styles as themeStyles } from '../../../theme';
  * - isOpen: Boolean to show or not the modal
  * - onClose: Function to close the modal
  * - onConfirm: Function to confirm the deletion of a resource
+ * @return {JSX.Element} rendered component to show delete modal
  */
-const DeleteModal: FC<DeleteModalProps> = ({ text, isLoading, isOpen, onClose, onConfirm }) => {
+const DeleteModal: FC<DeleteModalProps> = ({ text, isLoading, isOpen, onClose, onConfirm }): JSX.Element => {
     const { state: { colors }, BUTTON_TRANSLUCENT_COLOR } = useTheme();
 
     return (

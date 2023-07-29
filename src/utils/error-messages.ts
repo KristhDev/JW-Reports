@@ -24,7 +24,8 @@ export const commonErrorMessages = {
  * The function translates error messages in TypeScript.
  * @param {string} message - The message parameter is a string that represents an error message that
  * needs to be translated.
- * @returns The function `translateErrorMsg` takes in a string parameter `message` and returns a
+ *
+ * @return {string} The function `translateErrorMsg` takes in a string parameter `message` and returns a
  * string.
  */
 export const translateErrorMsg = (message: string) => {

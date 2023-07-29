@@ -21,8 +21,10 @@ const defaultRevisit = require('../../../assets/revisit-default.jpg');
 /**
  * This component is responsible for rendering the fields to create
  * or edit a revisit.
+ *
+ * @return {JSX.Element} Rendered component form to create or edit a revisit
  */
-export const RevisitForm = () => {
+export const RevisitForm = (): JSX.Element => {
     const [ imageHeight, setImageHeight ] = useState<number>(0);
     const [ imageUri, setImageUri ] = useState<string>('https://local-image.com/images.jpg');
     const { width: windowWidth } = useWindowDimensions();
@@ -36,9 +38,11 @@ export const RevisitForm = () => {
      * If the selectedRevisit.id is an empty string, then saveRevisit is called with the revisitValues
      * and image. If the selectedRevisit.id is not an empty string, then updateRevisit is called with
      * the revisitValues and image.
+     *
      * @param {RevisitFormValues} revisitValues - RevisitFormValues
+     * @return {void} This function returns nothing.
      */
-    const handleSaveOrUpdate = (revisitValues: RevisitFormValues) => {
+    const handleSaveOrUpdate = (revisitValues: RevisitFormValues): void => {
         (selectedRevisit.id === '')
             ? saveRevisit({ revisitValues, image: isChangeImage() ? image : undefined })
             : updateRevisit(revisitValues, isChangeImage() ? image : undefined);
@@ -62,16 +66,14 @@ export const RevisitForm = () => {
     /**
      * If selectedRevisit.photo is not null, return true if selectedRevisit.photo is not equal to
      * imageUri, otherwise return true if the uri of the defaultRevisit image is not equal to imageUri.
-     * @returns The return value is a boolean.
+     *
+     * @return {boolean} true if the uri of the defaultRevisit image is not equal to imageUri
      */
-    const isChangeImage = () => {
-        if (selectedRevisit?.photo) {
-            return selectedRevisit.photo !== imageUri;
-        }
-        else {
-            const { uri } = Image.resolveAssetSource(defaultRevisit);
-            return uri !== imageUri;
-        }
+    const isChangeImage = (): boolean => {
+        if (selectedRevisit?.photo) return selectedRevisit.photo !== imageUri;
+
+        const { uri } = Image.resolveAssetSource(defaultRevisit);
+        return uri !== imageUri;
     }
 
     /**

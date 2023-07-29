@@ -23,8 +23,10 @@ import styles from './styles';
 /**
  * This screen is responsible for grouping the components to
  * show the detail of a course.
+ *
+ * @return {JSX.Element} rendered component to show course
  */
-const CourseDetail = () => {
+const CourseDetail = (): JSX.Element => {
     const [ showASModal, setShowASModal ] = useState<boolean>(false);
     const [ showFSModal, setShowFSModal ] = useState<boolean>(false);
     const { addListener, getState, navigate, removeListener } = useNavigation();
@@ -41,8 +43,10 @@ const CourseDetail = () => {
     /**
      * When the user clicks the button, navigate to the AddOrEditLessonScreen screen and pass the
      * selectedLesson object as a prop.
+     *
+     * @return {void} This function does not return anything.
      */
-    const handleAddLesson = () => {
+    const handleAddLesson = (): void => {
         setSelectedLesson({
             ...INIT_LESSON,
             next_lesson: new Date().toString()
@@ -53,8 +57,10 @@ const CourseDetail = () => {
 
     /**
      * The function handleLessonsList() is a function that navigates to the LessonsScreen.
+     *
+     * @return {void} This function does not return anything.
      */
-    const handleLessonsList = () => {
+    const handleLessonsList = (): void => {
         navigate('LessonsScreen' as never);
     }
 

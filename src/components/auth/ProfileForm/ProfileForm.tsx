@@ -20,8 +20,10 @@ import { styles as themeStyles } from '../../../theme';
 /**
  * This component is responsible for rendering the fields so that an
  * authenticated user can update their profile data.
+ *
+ * @return {JSX.Element} The rendered form component.
  */
-export const ProfileForm = () => {
+export const ProfileForm = (): JSX.Element => {
     const { top } = useSafeAreaInsets();
 
     const { state: { user, isAuthLoading }, updateProfile } = useAuth();

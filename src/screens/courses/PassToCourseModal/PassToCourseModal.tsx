@@ -22,9 +22,11 @@ import { styles as themeStyles } from '../../../theme';
 /**
  * This modal is responsible for grouping the components to
  * revisit a course.
+ *
  * @param {ModalProps} { isOpen: boolean, onClose: () => void }
+ * @return {JSX.Element} rendered component to show modal
  */
-const PassToCourseModal: FC<ModalProps> = ({ isOpen, onClose }) => {
+const PassToCourseModal: FC<ModalProps> = ({ isOpen, onClose }): JSX.Element => {
     const [ startCourse, setStartCourse ] = useState<boolean>(false);
 
     const { state: { selectedRevisit } } = useRevisits();
@@ -35,9 +37,11 @@ const PassToCourseModal: FC<ModalProps> = ({ isOpen, onClose }) => {
     /**
      * This is the confirmation function of the modal that executes one or another function
      * depending on startCourse or the function parameters.
+     *
      * @param {{ publication: string }} values - This is the values with publication property to create course
+     * @return {void} This function does not return anything
      */
-    const handleConfirm = (values?: { publication: string }) => {
+    const handleConfirm = (values?: { publication: string }): void => {
         if (startCourse) {
             if (values?.publication && values?.publication.length >= 5) {
                 saveCourse({
@@ -66,8 +70,10 @@ const PassToCourseModal: FC<ModalProps> = ({ isOpen, onClose }) => {
     /**
      * When the user clicks the close button, the modal closes and the startCourse state is set to
      * false.
+     *
+     * @return {void} This function does not return anything
      */
-    const handleClose = () => {
+    const handleClose = (): void => {
         onClose();
         setStartCourse(false);
     }

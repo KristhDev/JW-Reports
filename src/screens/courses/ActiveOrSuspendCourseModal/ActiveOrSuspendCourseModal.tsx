@@ -19,9 +19,11 @@ import { styles as themeStyles } from '../../../theme';
 /**
  * This is a modal that groups the components to activate
  * or suspend a course.
+ *
  * @param {ModalProps} { onClose: () => void, isOpen: boolean }
+ * @return {JSX.Element} Return jsx element to render the modal
  */
-const ActiveOrSuspendCourseModal: FC<ModalProps> = ({ onClose, isOpen }) => {
+const ActiveOrSuspendCourseModal: FC<ModalProps> = ({ onClose, isOpen }): JSX.Element => {
     const { state: { selectedCourse, isCourseLoading }, activeOrSuspendCourse } = useCourses();
     const { state: { colors }, BUTTON_TRANSLUCENT_COLOR } = useTheme();
 
@@ -36,8 +38,10 @@ const ActiveOrSuspendCourseModal: FC<ModalProps> = ({ onClose, isOpen }) => {
     /**
      * HandleConfirm() is a function that calls activeOrSuspendCourse() and passes onClose() as an
      * argument.
+     *
+     * @return {void} This function does not return anything.
      */
-    const handleConfirm = () => {
+    const handleConfirm = (): void => {
         activeOrSuspendCourse(onClose);
     }
 

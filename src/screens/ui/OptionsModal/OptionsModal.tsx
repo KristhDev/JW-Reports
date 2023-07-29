@@ -21,6 +21,7 @@ import styles from './styles';
 /**
  * This modal is responsible for displaying various options with radio buttons
  * to select one and save it where needed.
+ *
  * @param {OptionsModalProps} { isOpen: boolean, items: ItemOption[], onCancel: () => void, onChangeValue: (value: string) => void, title: string, value: string } This props
  * is for config modal.
  * - isOpen: Boolean to indicate if the modal is open or closed
@@ -29,8 +30,9 @@ import styles from './styles';
  * - onChangeValue: Function to be called when the value is changed
  * - title: Title of the modal
  * - value: Default value or selected value of the modal
+ * @return {JSX.Element} Returns the component to show the field with radio
  */
-const OptionsModal: FC<OptionsModalProps> = ({ isOpen, items, onCancel, onChangeValue, title, value }) => {
+const OptionsModal: FC<OptionsModalProps> = ({ isOpen, items, onCancel, onChangeValue, title, value }): JSX.Element => {
     const { state: { colors }, BUTTON_TRANSLUCENT_COLOR } = useTheme();
     return (
         <Modal isOpen={ isOpen }>

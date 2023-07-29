@@ -15,9 +15,11 @@ import { styles as themeStyles } from '../../../theme';
 
 /**
  * This component is responsible for grouping actions for modal.
+ *
  * @param {ModalActionProps} { onClose: () => void, onConfirm: () => void, reschedule: boolean }
+ * @return {JSX.Element} rendered component to show actions of modal
  */
-export const ModalActions: FC<ModalActionProps> = ({ onClose, onConfirm, reschedule }) => {
+export const ModalActions: FC<ModalActionProps> = ({ onClose, onConfirm, reschedule }): JSX.Element => {
     const { state: { selectedLesson } } = useCourses();
     const { state: { colors }, BUTTON_TRANSLUCENT_COLOR } = useTheme();
 

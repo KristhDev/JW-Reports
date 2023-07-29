@@ -15,8 +15,10 @@ import { styles as themeStyles } from '../../../theme';
 /**
  * This screen is responsible for grouping the components to add or
  * edit a revisit.
+ *
+ * @return {JSX.Element} rendered component to show form to add or edit a revisit
  */
-const AddOrEditRevisit = () => {
+const AddOrEditRevisit = (): JSX.Element => {
     const { state: { selectedRevisit } } = useRevisits();
 
     return (

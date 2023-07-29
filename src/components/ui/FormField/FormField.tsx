@@ -14,6 +14,7 @@ import { styles as themeStyles } from '../../../theme';
 /**
  * This component is responsible for displaying fields for forms of
  * different types but as long as it has to do with texts.
+ *
  * @param {FormFieldProps} props {
  *      controlStyle: StyleProp<ViewStyle>,
  *      icon: ReactNode,
@@ -31,6 +32,7 @@ import { styles as themeStyles } from '../../../theme';
  * - labelStyle: The style of the label
  * - name: The name of the field
  * - style: The style of the field
+ * @return {JSX.Element} Returns the component to show the field
  */
 export const FormField: FC<FormFieldProps> = ({
     controlStyle,
@@ -41,7 +43,7 @@ export const FormField: FC<FormFieldProps> = ({
     name,
     style,
     ...rest
-}) => {
+}): JSX.Element => {
     const { width } = useWindowDimensions();
 
     const [ field, meta, helpers ] = useField({ name });

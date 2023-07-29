@@ -43,9 +43,10 @@ const useAuth = () => {
      * set the user.
      * @param {AuthResponse} AuthResponse - this is the response from the API call.
      * @param {boolean} isNew - this is a flag indicating whether the user is a new user or not.
-     * @returns The return type is AuthResponse.
+     *
+     * @return {void} This function does not return any value.
      */
-    const setUser = ({ data: { user, session }, error }: AuthResponse, isNew: boolean = false) => {
+    const setUser = ({ data: { user, session }, error }: AuthResponse, isNew: boolean = false): void => {
         const next = setSupabaseError(error, 400, () => {
             dispatch(clearAuthAction());
             OneSignal.removeExternalUserId();
@@ -75,8 +76,10 @@ const useAuth = () => {
     /**
      * `renew` is an async function that checks if the token is empty, if it is, it returns. If it's
      * not empty, it calls `supabase.auth.refreshSession` with the token as a parameter
+     *
+     * @return {Promise<void>} This function does not return any value.
      */
-    const renew = async () => {
+    const renew = async (): Promise<void> => {
         if (state.token?.trim().length <= 0) return;
 
         if (!isConnected) {
@@ -96,8 +99,9 @@ const useAuth = () => {
      * code and display an error message to the user if
      * @param {{ email: string }} { email: string } - This a object with email property
      * to reset password for authenticated user
+     * @return {Promise<void>} This function does not return any value.
      */
-    const resetPassword = async ({ email }: { email: string }) => {
+    const resetPassword = async ({ email }: { email: string }): Promise<void> => {
         if (!isConnected) {
             setNetworkError();
             return;
@@ -123,9 +127,11 @@ const useAuth = () => {
     /**
      * The function signIn takes an object with the properties email and password, and returns a promise
      * that resolves to an object with the properties email, id, and token.
+     *
      * @param {SignIn} { email: string, password: string } - This is a values for sign in a user
+     * @return {Promise<void>} This function does not return any value.
      */
-    const signIn = async ({ email, password }: SignIn) => {
+    const signIn = async ({ email, password }: SignIn): Promise<void> => {
         if (!isConnected) {
             setNetworkError('Lo sentimos pero no dispones de conexión a Internet.');
             return;
@@ -138,10 +144,12 @@ const useAuth = () => {
     }
 
     /**
-    * If the user is not authenticated, return. If the user is authenticated, sign them out and clear
-    * the redux store.
-    */
-    const signOut = async () => {
+     * If the user is not authenticated, return. If the user is authenticated, sign them out and clear
+     * the redux store.
+     *
+     * @return {Promise<void>} This function does not return any value.
+     */
+    const signOut = async (): Promise<void> => {
         if (!state.isAuthenticated) return;
 
         if (isConnected) {
@@ -159,10 +167,12 @@ const useAuth = () => {
 
     /**
      * This function is to register a new user and authenticate it.
+     *
      * @param {SignUp} { name: string, surname: string, email: string, password: string } - This is a
      * values for sign up a new user
+     * @return {Promise<void>} This function does not return any value.
      */
-    const signUp = async ({ name, surname, email, password }: SignUp) => {
+    const signUp = async ({ name, surname, email, password }: SignUp): Promise<void> => {
         if (!isConnected) {
             setNetworkError('Lo sentimos pero no dispones de conexión a Internet.');
             return;
@@ -199,11 +209,13 @@ const useAuth = () => {
     /**
      * If the user's email is the same as the email passed in, then set the status to 400 and return,
      * otherwise, update the user's email and set the status to 200.
+     *
      * @param {{ email: string }} { email: string } - This a object with email property to
      * update email for authenticated user
      * @param {Function} onFinish - This callback executed when the process is finished (success or failure)
+     * @return {Promise<void>} This function does not return any value.
      */
-    const updateEmail = async ({ email }: { email: string }, onFinish?: () => void) => {
+    const updateEmail = async ({ email }: { email: string }, onFinish?: () => void): Promise<void> => {
         if (!isConnected) {
             setNetworkError();
             return;
@@ -257,11 +269,13 @@ const useAuth = () => {
     /**
      * If the password is empty, set the status to 400 and return, otherwise, if there's an error, set
      * the status to 400 and return, otherwise, set the status to 200 and return.
+     *
      * @param {{ password: string }} { password: string } - This is a object with password property
      * for update password
      * @param {Function} onFinish - This callback executed when the process is finished (success or failure)
+     * @return {Promise<void>} This function does not return anything.
      */
-    const updatePassword = async ({ password }: { password: string }, onFinish?: () => void) => {
+    const updatePassword = async ({ password }: { password: string }, onFinish?: () => void): Promise<void> => {
         if (!isConnected) {
             setNetworkError();
             return;
@@ -301,9 +315,11 @@ const useAuth = () => {
 
     /**
      * If the user updates their profile, then update the user's profile.
+     *
      * @param {Profile} values - This is a values for update profile
+     * @return {Promise<void>} This function does not return anything.
      */
-    const updateProfile = async (values: Profile) => {
+    const updateProfile = async (values: Profile): Promise<void> => {
         if (!isConnected) {
             setNetworkError();
             return;

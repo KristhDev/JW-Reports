@@ -10,6 +10,7 @@ import styles from './styles';
 /**
  * This component is responsible for displaying a floating action
  * button to perform different actions in the app.
+ *
  * @param {FabProps} props {
  *      color: string,
  *      icon: ReactNode,
@@ -22,8 +23,9 @@ import styles from './styles';
  * - onPress: This is a function to perform the action
  * - touchColor: This is the color of the touchable ripple
  * - style: This is the style of the fab, default is `undefined`
+ * @return {JSX.Element} Return jsx element to render button
  */
-export const Fab: FC<FabProps> = ({ color, icon, onPress, touchColor, style }) => {
+export const Fab: FC<FabProps> = ({ color, icon, onPress, touchColor, style }): JSX.Element => {
     return (
         <TouchableRipple
             borderless

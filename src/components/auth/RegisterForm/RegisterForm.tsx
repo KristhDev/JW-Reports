@@ -17,8 +17,10 @@ import { styles as themeStyles } from '../../../theme';
 /**
  * This component is responsible for rendering the fields so that a user
  * can register in the app.
+ *
+ * @return {JSX.Element} The rendered form component.
  */
-export const RegisterForm = () => {
+export const RegisterForm = (): JSX.Element => {
     const [ showPassword, setShowPassword ] = useState<boolean>(false);
     const [ showConfirmPassword, setShowConfirmPassword ] = useState<boolean>(false);
 

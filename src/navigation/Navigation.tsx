@@ -18,8 +18,10 @@ const Stack = createStackNavigator<NavigationParamsList>();
 
 /**
  * This a main navigation for app.
+ *
+ * @return {JSX.Element} rendered component to show navigation
  */
-const Navigation = () => {
+const Navigation = (): JSX.Element => {
     const { state: { isAuthenticated }, renew } = useAuth();
     const { checkPermissions } = usePermissions();
     const { clearCourses } = useCourses();

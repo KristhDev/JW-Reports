@@ -19,17 +19,22 @@ import { styles as themeStyles } from '../../../theme';
 /**
  * This component is responsible for rendering the fields to create
  * or edit a lesson.
+ *
+ * @returns {JSX.Element} The lesson form component.
  */
-export const LessonForm = () => {
+export const LessonForm = (): JSX.Element => {
     const { state: { isLessonLoading, selectedLesson }, saveLesson, updateLesson } = useCourses();
     const { setErrorForm } = useStatus();
     const { state: { colors } } = useTheme();
 
     /**
      * If the selectedLesson.id is an empty string, then saveLesson, otherwise updateLesson.
+     *
      * @param {LessonFormValues} formValues - LessonFormValues
+     * @param {() => void} resetForm - Function to reset the form
+     * @return {Promise<void>} This function does not return any value.
      */
-    const handleSaveOrUpdate = async (formValues: LessonFormValues, resetForm: () => void) => {
+    const handleSaveOrUpdate = async (formValues: LessonFormValues, resetForm: () => void): Promise<void> => {
         if (selectedLesson.id === '') {
             await saveLesson(formValues);
             resetForm();

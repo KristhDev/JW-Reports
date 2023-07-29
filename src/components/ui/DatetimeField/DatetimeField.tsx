@@ -19,6 +19,7 @@ import { styles as themeStyles } from '../../../theme';
 /**
  * This component is responsible for displaying a field to select a
  * Date type data, be it a date or time.
+ *
  * @param {DatetimeFieldProps} props {
  *      controlStyle: StyleProp<ViewStyle>,
  *      icon: ReactNode,
@@ -40,6 +41,7 @@ import { styles as themeStyles } from '../../../theme';
  * - mode: The mode of the field
  * - name: The name of the field
  * - style: The style of the field
+ * @return {JSX.Element} Returns the component to show the field to select a date
  */
 export const DatetimeField: FC<DatetimeFieldProps> = ({
     controlStyle,
@@ -52,7 +54,7 @@ export const DatetimeField: FC<DatetimeFieldProps> = ({
     name,
     style,
     ...rest
-}) => {
+}): JSX.Element => {
     const [ open, setOpen ] = useState<boolean>(false);
     const { width } = useWindowDimensions();
 

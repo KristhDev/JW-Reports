@@ -21,8 +21,10 @@ import styles from './styles';
 /**
  * This component is responsible for displaying a table that contains the data
  * of the preaching days of the selectedDate.
+ *
+ * @returns {JSX.Element} The table component with the data of the preaching days.
  */
-export const PreachingTable = () => {
+export const PreachingTable = (): JSX.Element => {
     const { navigate } = useNavigation();
     const { width } = useWindowDimensions();
 
@@ -32,9 +34,11 @@ export const PreachingTable = () => {
     /**
      * I'm going to navigate to a screen called AddOrEditPreachingScreen, and I'm going to pass it a
      * preaching object.
-     * @param {Preaching} preaching - Preaching
+     *
+     * @param {Preaching} preaching - The preaching object.
+     * @return {void} This function does not return anything.
      */
-    const handleGoToEditPreaching = (preaching: Preaching) => {
+    const handleGoToEditPreaching = (preaching: Preaching): void => {
         setSelectedPreaching(preaching);
         navigate('AddOrEditPreachingScreen' as never);
     }

@@ -20,8 +20,10 @@ import { styles as themeStyles } from '../../../theme';
 /**
  * This component is responsible for rendering the fields to create
  * or edit a preaching.
+ *
+ * @returns {JSX.Element} The preaching form component.
  */
-export const PreachingForm = () => {
+export const PreachingForm = (): JSX.Element => {
     const { setErrorForm } = useStatus();
     const { state: { colors } } = useTheme();
     const { state: { isPreachingLoading, seletedPreaching }, savePreaching, updatePreaching } = usePreaching();
@@ -47,9 +49,11 @@ export const PreachingForm = () => {
 
     /**
      * If the selected preaching has an id, then update the preaching, otherwise save the preaching.
+     *
      * @param {PreachingFormValues} formValues - PreachingFormValues
+     * @return {void} This function does not return anything.
      */
-    const handleSaveOrUpdate = (formValues: PreachingFormValues) => {
+    const handleSaveOrUpdate = (formValues: PreachingFormValues): void => {
         (seletedPreaching.id === '')
             ? savePreaching(formValues)
             : updatePreaching(formValues);

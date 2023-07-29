@@ -10,6 +10,8 @@ import { useTheme } from '../../../hooks';
 /**
  * This component is responsible for render button to change
  * app theme.
+ *
+ * @return {JSX.Element} Return jsx element to render a button of theme
  */
 export const ThemeBtn = () => {
     const { state: { selectedTheme, colors }, setTheme } = useTheme();

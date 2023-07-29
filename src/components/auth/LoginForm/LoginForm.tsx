@@ -15,10 +15,11 @@ import { useAuth, useStatus, useTheme } from '../../../hooks';
 import { styles as themeStyles } from '../../../theme';
 
 /**
- * This component is responsible for rendering the fields so that a user
- * can log in with their account.
+ * Renders a login form component.
+ *
+ * @return {JSX.Element} The login form component.
  */
-export const LoginForm = () => {
+export const LoginForm = (): JSX.Element => {
     const [ showPassword, setShowPassword ] = useState<boolean>(false);
 
     const { navigate } = useNavigation();
