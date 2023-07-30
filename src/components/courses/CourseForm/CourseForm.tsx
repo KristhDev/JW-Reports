@@ -125,7 +125,7 @@ export const CourseForm = (): JSX.Element => {
                             (isCourseLoading) && (
                                 <ActivityIndicator
                                     color={ colors.contentHeader }
-                                    size="small"
+                                    size={ 25 }
                                     style={{ marginLeft: 10 }}
                                 />
                             )

@@ -226,7 +226,7 @@ export const RevisitForm = (): JSX.Element => {
                             (isRevisitLoading) && (
                                 <ActivityIndicator
                                     color={ colors.contentHeader }
-                                    size="small"
+                                    size={ 25 }
                                     style={{ marginLeft: 10 }}
                                 />
                             )

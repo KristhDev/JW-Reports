@@ -92,7 +92,7 @@ export const ForgotPasswordForm = (): JSX.Element => {
                             (isAuthLoading) && (
                                 <ActivityIndicator
                                     color={ colors.contentHeader }
-                                    size="small"
+                                    size={ 25 }
                                     style={{ marginLeft: 10 }}
                                 />
                             )

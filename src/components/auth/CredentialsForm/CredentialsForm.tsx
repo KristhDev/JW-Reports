@@ -104,7 +104,7 @@ export const CredentialsForm = (): JSX.Element => {
                                 (isAuthLoading && loadingEmail) && (
                                     <ActivityIndicator
                                         color={ colors.contentHeader }
-                                        size="small"
+                                        size={ 25 }
                                         style={{ marginLeft: 10 }}
                                     />
                                 )
@@ -167,7 +167,7 @@ export const CredentialsForm = (): JSX.Element => {
                                 (isAuthLoading && loadingPassword) && (
                                     <ActivityIndicator
                                         color={ colors.contentHeader }
-                                        size="small"
+                                        size={ 25 }
                                         style={{ marginLeft: 10 }}
                                     />
                                 )
