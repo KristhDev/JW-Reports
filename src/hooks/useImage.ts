@@ -11,6 +11,9 @@ import { supabase } from '../supabase/config';
 /* Hooks */
 import { usePermissions, useStatus, useTheme } from './';
 
+/* Interfaces */
+import { StorageError } from '../interfaces/ui';
+
 /**
  * This hook allows to group the functions and states in relation to the images.
  */
@@ -23,8 +26,10 @@ const useImage = () => {
 
     /**
      * It opens the image picker, and if the user selects an image, it sets the image state.
+     *
+     * @return {Promise<void>} This function does not return anything.
      */
-    const takeImageToGallery = async () => {
+    const takeImageToGallery = async (): Promise<void> => {
         /* Asking for the mediaLibrary permission. */
         if (permissions.mediaLibrary === 'unavailable') await askPermission('mediaLibrary');
 
@@ -63,8 +68,10 @@ const useImage = () => {
     /**
      * If the camera permission is unavailable, ask for it. If the camera permission is denied, show a
      * message. If the camera permission is granted, open the camera.
+     *
+     * @return {Promise<void>} This function does not return anything.
      */
-    const takePhoto = async () => {
+    const takePhoto = async (): Promise<void> => {
         /* Asking for the camera permission. */
         if (permissions.camera === 'unavailable') await askPermission('camera');
 
@@ -102,10 +109,9 @@ const useImage = () => {
     /**
      * It takes a photo, uploads it to Supabase, and returns the public URL of the photo
      * @param {Image} photo - This is the image that is being uploaded
-     * @returns The result of the uploadImage function is an object with two properties: data and
-     * error.
+     * @return {Promise<{ data: { publicUrl: string } | null, error: StorageError | null }>} This function return object
      */
-    const uploadImage = async (photo: Image) => {
+    const uploadImage = async (photo: Image): Promise<{ data: { publicUrl: string } | null, error: StorageError | null }> => {
         const file = photo.path.split('/')[photo.path.split('/').length - 1];
         const [ fileName, fileExt ] = file.split('.');
         const id = Math.floor(Math.random()).toString(16);
@@ -131,9 +137,9 @@ const useImage = () => {
     /**
      * It takes a URI, splits it into an array, and then removes the last item in the array
      * @param {string} uri - The uri of the image you want to delete.
-     * @returns The result of the delete operation.
+     * @return {Promise<{ data: any[] | null, error: StorageError | null }>} This function return object.
      */
-    const deleteImage = async (uri: string) => {
+    const deleteImage = async (uri: string): Promise<{ data: any[] | null, error: StorageError | null }> => {
         const imageId = uri.split('/')[uri.split('/').length - 1];
 
         const result = await supabase.storage

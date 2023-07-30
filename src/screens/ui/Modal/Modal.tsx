@@ -9,9 +9,11 @@ import styles from './styles';
 
 /**
  * This modal is a layout for the other modals of the app.
+ *
  * @param {ModalProps} { children: ReactNode, isOpen: boolean }
+ * @return {JSX.Element} Return jsx element to render the modal
  */
-const Modal: FC<ModalProps> = ({ children, isOpen }) => {
+const Modal: FC<ModalProps> = ({ children, isOpen }): JSX.Element => {
     return (
         <ModalRN
             animationType="fade"

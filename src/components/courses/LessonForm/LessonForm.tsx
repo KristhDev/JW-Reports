@@ -19,17 +19,22 @@ import { styles as themeStyles } from '../../../theme';
 /**
  * This component is responsible for rendering the fields to create
  * or edit a lesson.
+ *
+ * @returns {JSX.Element} The lesson form component.
  */
-export const LessonForm = () => {
+export const LessonForm = (): JSX.Element => {
     const { state: { isLessonLoading, selectedLesson }, saveLesson, updateLesson } = useCourses();
     const { setErrorForm } = useStatus();
     const { state: { colors } } = useTheme();
 
     /**
      * If the selectedLesson.id is an empty string, then saveLesson, otherwise updateLesson.
+     *
      * @param {LessonFormValues} formValues - LessonFormValues
+     * @param {() => void} resetForm - Function to reset the form
+     * @return {Promise<void>} This function does not return any value.
      */
-    const handleSaveOrUpdate = async (formValues: LessonFormValues, resetForm: () => void) => {
+    const handleSaveOrUpdate = async (formValues: LessonFormValues, resetForm: () => void): Promise<void> => {
         if (selectedLesson.id === '') {
             await saveLesson(formValues);
             resetForm();
@@ -57,7 +62,7 @@ export const LessonForm = () => {
             validationSchema={ lessonFormSchema }
         >
             { ({ handleSubmit, errors, isValid }) => (
-                <View style={{ ...themeStyles.formContainer, paddingTop: 30, paddingBottom: 40 }}>
+                <View style={{ ...themeStyles.formContainer, paddingBottom: 40 }}>
 
                     {/* Description field */}
                     <FormField
@@ -83,6 +88,7 @@ export const LessonForm = () => {
                         mode="date"
                         name="next_lesson"
                         placeholder="Seleccione el día"
+                        style={{ marginBottom: 40 }}
                     />
 
                     <View style={{ flex: 1 }} />
@@ -94,14 +100,13 @@ export const LessonForm = () => {
                             (isLessonLoading) && (
                                 <ActivityIndicator
                                     color={ colors.contentHeader }
-                                    size="small"
+                                    size={ 25 }
                                     style={{ marginLeft: 10 }}
                                 />
                             )
                         }
                         onPress={ (isValid) ? handleSubmit : () => setErrorForm(errors) }
                         text={ (selectedLesson.id !== '') ? 'Actualizar' : 'Guardar' }
-                        touchableStyle={{ marginTop: 30 }}
                     />
                 </View>
             ) }

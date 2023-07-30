@@ -21,8 +21,10 @@ const defaultRevisit = require('../../../assets/revisit-default.jpg');
 /**
  * This component is responsible for rendering the fields to create
  * or edit a revisit.
+ *
+ * @return {JSX.Element} Rendered component form to create or edit a revisit
  */
-export const RevisitForm = () => {
+export const RevisitForm = (): JSX.Element => {
     const [ imageHeight, setImageHeight ] = useState<number>(0);
     const [ imageUri, setImageUri ] = useState<string>('https://local-image.com/images.jpg');
     const { width: windowWidth } = useWindowDimensions();
@@ -36,9 +38,11 @@ export const RevisitForm = () => {
      * If the selectedRevisit.id is an empty string, then saveRevisit is called with the revisitValues
      * and image. If the selectedRevisit.id is not an empty string, then updateRevisit is called with
      * the revisitValues and image.
+     *
      * @param {RevisitFormValues} revisitValues - RevisitFormValues
+     * @return {void} This function returns nothing.
      */
-    const handleSaveOrUpdate = (revisitValues: RevisitFormValues) => {
+    const handleSaveOrUpdate = (revisitValues: RevisitFormValues): void => {
         (selectedRevisit.id === '')
             ? saveRevisit({ revisitValues, image: isChangeImage() ? image : undefined })
             : updateRevisit(revisitValues, isChangeImage() ? image : undefined);
@@ -62,16 +66,14 @@ export const RevisitForm = () => {
     /**
      * If selectedRevisit.photo is not null, return true if selectedRevisit.photo is not equal to
      * imageUri, otherwise return true if the uri of the defaultRevisit image is not equal to imageUri.
-     * @returns The return value is a boolean.
+     *
+     * @return {boolean} true if the uri of the defaultRevisit image is not equal to imageUri
      */
-    const isChangeImage = () => {
-        if (selectedRevisit?.photo) {
-            return selectedRevisit.photo !== imageUri;
-        }
-        else {
-            const { uri } = Image.resolveAssetSource(defaultRevisit);
-            return uri !== imageUri;
-        }
+    const isChangeImage = (): boolean => {
+        if (selectedRevisit?.photo) return selectedRevisit.photo !== imageUri;
+
+        const { uri } = Image.resolveAssetSource(defaultRevisit);
+        return uri !== imageUri;
     }
 
     /**
@@ -119,7 +121,7 @@ export const RevisitForm = () => {
             validationSchema={ revisitFormSchema }
         >
             { ({ handleSubmit, errors, isValid }) => (
-                <View style={{ ...themeStyles.formContainer, paddingTop: 30, paddingBottom: 40 }}>
+                <View style={{ ...themeStyles.formContainer, paddingBottom: 40 }}>
 
                     {/* Person name field */}
                     <FormField
@@ -154,7 +156,7 @@ export const RevisitForm = () => {
                     />
 
                     {/* Photo field */}
-                    <View style={{ ...themeStyles.formField, width: windowWidth * 0.9 }}>
+                    <View style={{ ...themeStyles.formField }}>
                         <Text style={{ ...themeStyles.formLabel, color: colors.titleText }}>
                             Foto
                         </Text>
@@ -165,10 +167,11 @@ export const RevisitForm = () => {
                             style={{ borderRadius: 5, height: imageHeight, width: '100%' }}
                         />
 
-                        <View style={{ flexDirection: 'row', justifyContent: 'space-around', marginTop: 20 }}>
+                        <View style={{ flexDirection: 'row', justifyContent: 'space-around', marginTop: 16 }}>
 
                             {/* Gallery button */}
                             <Button
+                                containerStyle={{ minWidth: 0 }}
                                 icon={
                                     <Icon
                                         color={ colors.contentHeader }
@@ -183,6 +186,7 @@ export const RevisitForm = () => {
 
                             {/* Camera button */}
                             <Button
+                                containerStyle={{ minWidth: 0 }}
                                 icon={
                                     <Icon
                                         color={ colors.contentHeader }
@@ -212,6 +216,7 @@ export const RevisitForm = () => {
                         mode="date"
                         name="next_visit"
                         placeholder="Seleccione el día"
+                        style={{ marginBottom: 40 }}
                     />
 
                     {/* Submit button */}
@@ -221,14 +226,13 @@ export const RevisitForm = () => {
                             (isRevisitLoading) && (
                                 <ActivityIndicator
                                     color={ colors.contentHeader }
-                                    size="small"
+                                    size={ 25 }
                                     style={{ marginLeft: 10 }}
                                 />
                             )
                         }
                         onPress={ (isValid) ? handleSubmit : () => setErrorForm(errors) }
                         text={ (selectedRevisit.id !== '') ? 'Actualizar' : 'Guardar' }
-                        touchableStyle={{ marginTop: 30 }}
                     />
                 </View>
             ) }

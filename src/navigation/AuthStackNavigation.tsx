@@ -15,8 +15,10 @@ const Stack = createStackNavigator<AuthStackParamsList>();
 
 /**
  * This is a stack navigation for authentication.
+ *
+ * @return {JSX.Element} rendered component to show stack navigation of authentication
  */
-const AuthStackNavigation = () => {
+const AuthStackNavigation = (): JSX.Element => {
     const { top } = useSafeAreaInsets();
 
     const { clearAuth } = useAuth();

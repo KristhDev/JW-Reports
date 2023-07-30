@@ -19,9 +19,11 @@ import { styles as themeStyles } from '../../../theme';
 /**
  * This is a modal that groups the components to activate
  * or suspend a course.
+ *
  * @param {ModalProps} { onClose: () => void, isOpen: boolean }
+ * @return {JSX.Element} Return jsx element to render the modal
  */
-const ActiveOrSuspendCourseModal: FC<ModalProps> = ({ onClose, isOpen }) => {
+const ActiveOrSuspendCourseModal: FC<ModalProps> = ({ onClose, isOpen }): JSX.Element => {
     const { state: { selectedCourse, isCourseLoading }, activeOrSuspendCourse } = useCourses();
     const { state: { colors }, BUTTON_TRANSLUCENT_COLOR } = useTheme();
 
@@ -36,8 +38,10 @@ const ActiveOrSuspendCourseModal: FC<ModalProps> = ({ onClose, isOpen }) => {
     /**
      * HandleConfirm() is a function that calls activeOrSuspendCourse() and passes onClose() as an
      * argument.
+     *
+     * @return {void} This function does not return anything.
      */
-    const handleConfirm = () => {
+    const handleConfirm = (): void => {
         activeOrSuspendCourse(onClose);
     }
 
@@ -56,7 +60,8 @@ const ActiveOrSuspendCourseModal: FC<ModalProps> = ({ onClose, isOpen }) => {
                         <Text
                             style={{
                                 ...themeStyles.modalText,
-                                color: colors.modalText
+                                color: colors.modalText,
+                                marginBottom: 0
                             }}
                             testID="modal-text"
                         >
@@ -66,7 +71,7 @@ const ActiveOrSuspendCourseModal: FC<ModalProps> = ({ onClose, isOpen }) => {
                         {/* Modal actions */}
                         <View style={{ ...themeStyles.modalActions, alignSelf: 'flex-end' }}>
                             <Button
-                                containerStyle={{ paddingHorizontal: 12 }}
+                                containerStyle={{ paddingHorizontal: 12, minWidth: 0 }}
                                 onPress={ onClose }
                                 text="CANCELAR"
                                 textStyle={{ color: colors.button, fontSize: 16 }}
@@ -75,7 +80,7 @@ const ActiveOrSuspendCourseModal: FC<ModalProps> = ({ onClose, isOpen }) => {
                             />
 
                             <Button
-                                containerStyle={{ paddingHorizontal: 12 }}
+                                containerStyle={{ paddingHorizontal: 12, minWidth: 0 }}
                                 onPress={ handleConfirm }
                                 text={ confirmTextButton }
                                 textStyle={{ color: colors.button, fontSize: 16 }}

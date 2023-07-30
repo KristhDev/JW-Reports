@@ -15,9 +15,11 @@ import { THEME_OPTIONS } from '../../../utils';
 
 /**
  * This is a modal that allows the user to change the theme.
+ *
  * @param {ModalProps} { isOpen, onClose }
+ * @return {JSX.Element} Return jsx element to render modal of theme
  */
-const ThemeModal: FC<ModalProps> = ({ isOpen, onClose }) => {
+const ThemeModal: FC<ModalProps> = ({ isOpen, onClose }): JSX.Element => {
     const { state: { theme }, setTheme } = useTheme();
 
     return (

@@ -23,8 +23,10 @@ import styles from './styles';
 /**
  * This screen is responsible for grouping the components to
  * show the detail of a course.
+ *
+ * @return {JSX.Element} rendered component to show course
  */
-const CourseDetail = () => {
+const CourseDetail = (): JSX.Element => {
     const [ showASModal, setShowASModal ] = useState<boolean>(false);
     const [ showFSModal, setShowFSModal ] = useState<boolean>(false);
     const { addListener, getState, navigate, removeListener } = useNavigation();
@@ -41,8 +43,10 @@ const CourseDetail = () => {
     /**
      * When the user clicks the button, navigate to the AddOrEditLessonScreen screen and pass the
      * selectedLesson object as a prop.
+     *
+     * @return {void} This function does not return anything.
      */
-    const handleAddLesson = () => {
+    const handleAddLesson = (): void => {
         setSelectedLesson({
             ...INIT_LESSON,
             next_lesson: new Date().toString()
@@ -53,8 +57,10 @@ const CourseDetail = () => {
 
     /**
      * The function handleLessonsList() is a function that navigates to the LessonsScreen.
+     *
+     * @return {void} This function does not return anything.
      */
-    const handleLessonsList = () => {
+    const handleLessonsList = (): void => {
         navigate('LessonsScreen' as never);
     }
 
@@ -77,7 +83,7 @@ const CourseDetail = () => {
     return (
         <>
             <ScrollView
-                contentContainerStyle={{ alignItems: 'center', flexGrow: 1, paddingBottom: 100 }}
+                contentContainerStyle={{ alignItems: 'center', flexGrow: 1, padding: 24, paddingBottom: 100 }}
                 overScrollMode="never"
                 style={{ flex: 1 }}
             >
@@ -91,7 +97,7 @@ const CourseDetail = () => {
 
                 {/* Text publication */}
                 <InfoText
-                    containerStyle={{ paddingHorizontal: 20, width: '100%' }}
+                    containerStyle={{ padding: 0, paddingBottom: 24, width: '100%' }}
                     text={ selectedCourse.publication.toUpperCase() }
                     textStyle={{ fontSize: 16, fontWeight: 'bold', textAlign: 'left' }}
                 />
@@ -224,7 +230,7 @@ const CourseDetail = () => {
                     <TouchableOpacity
                         activeOpacity={ 0.75 }
                         onPress={ handleLessonsList }
-                        style={{ marginTop: 20 }}
+                        style={{ marginTop: 24 }}
                         testID="course-detail-lessons-touchable"
                     >
                         <Text style={{ color: colors.linkText, fontSize: 19 }}>
@@ -235,7 +241,7 @@ const CourseDetail = () => {
                     <TouchableOpacity
                         activeOpacity={ 0.75 }
                         onPress={ handleAddLesson }
-                        style={{ marginTop: 5 }}
+                        style={{ marginTop: 8 }}
                         testID="course-detail-add-lesson-touchable"
                     >
                         <Text style={{ color: colors.linkText, fontSize: 19 }}>

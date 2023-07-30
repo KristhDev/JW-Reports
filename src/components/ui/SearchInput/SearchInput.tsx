@@ -16,14 +16,16 @@ import styles from './styles';
 /**
  * This component is responsible for displaying a text box to perform searches
  * depending on the props that are sent to it.
+ *
  * @param {SearchInputProps} props { onClean: () => void, onSearch: () => void, refreshing: boolean, searchTerm: string } - This
  * is the props for functionality of the component
  * - onClean: This is the function to be called when the text box is cleared
  * - onSearch: This is the function to be called when onSubmitEditing is called
  * - refreshing: This is the value of the refreshing state
  * - searchTerm: This is the value of the search term
+ * @return {JSX.Element} Return jsx element to render search input
  */
-export const SearchInput: FC<SearchInputProps> = ({ onClean, onSearch, refreshing, searchTerm }) => {
+export const SearchInput: FC<SearchInputProps> = ({ onClean, onSearch, refreshing, searchTerm }): JSX.Element => {
     const [ searchText, setSearchText ] = useState<string>(searchTerm);
     const [ isFocused, setIsFocused ] = useState<boolean>(false);
 
@@ -32,8 +34,10 @@ export const SearchInput: FC<SearchInputProps> = ({ onClean, onSearch, refreshin
     /**
      * When the user clicks the clear button, clear the search text, call the onClean function, and set
      * the isFocused state to false.
+     *
+     * @return {void} This function does not return any value.
      */
-    const handleClearInput = () => {
+    const handleClearInput = (): void => {
         setSearchText('');
         onClean();
         setIsFocused(false);

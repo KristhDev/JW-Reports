@@ -15,10 +15,11 @@ import { useAuth, useStatus, useTheme } from '../../../hooks';
 import { styles as themeStyles } from '../../../theme';
 
 /**
- * This component is responsible for rendering the fields so that a user
- * can log in with their account.
+ * Renders a login form component.
+ *
+ * @return {JSX.Element} The login form component.
  */
-export const LoginForm = () => {
+export const LoginForm = (): JSX.Element => {
     const [ showPassword, setShowPassword ] = useState<boolean>(false);
 
     const { navigate } = useNavigation();
@@ -49,7 +50,9 @@ export const LoginForm = () => {
             validateOnMount
         >
             { ({ handleSubmit, isValid, errors }) => (
-                <View style={ themeStyles.formContainer }>
+                <View style={{ ...themeStyles.formContainer, flex: 0, marginBottom: 40 }}>
+
+                    <View style={{ height: width / 4 }} />
 
                     {/* Email field */}
                     <FormField
@@ -80,6 +83,7 @@ export const LoginForm = () => {
                         name="password"
                         placeholder="Ingrese su contraseña"
                         secureTextEntry={ !showPassword }
+                        style={{ marginBottom: 40 }}
                     />
 
                     {/* Submit button */}
@@ -89,18 +93,17 @@ export const LoginForm = () => {
                             (isAuthLoading) && (
                                 <ActivityIndicator
                                     color={ colors.contentHeader }
-                                    size="small"
+                                    size={ 25 }
                                     style={{ marginLeft: 10 }}
                                 />
                             )
                         }
                         onPress={ (isValid) ? handleSubmit : () => setErrorForm(errors)  }
                         text="Ingresar"
-                        touchableStyle={{ paddingHorizontal: 20, marginTop: 30 }}
                     />
 
                     {/* Sign up link */}
-                    <View style={{ ...themeStyles.btnLink, width: width * 0.9 }}>
+                    <View style={ themeStyles.btnLink }>
                         <Text
                             style={{
                                 ...themeStyles.formText,
@@ -127,7 +130,7 @@ export const LoginForm = () => {
                     </View>
 
                     {/* Forgot password link */}
-                    <View style={{ ...themeStyles.btnLink, marginTop: 10, width: width * 0.9 }}>
+                    <View style={{ ...themeStyles.btnLink, marginTop: 16 }}>
                         <TouchableOpacity
                             activeOpacity={ 0.75 }
                             onPress={ () => navigate('ForgotPasswordScreen' as never) }

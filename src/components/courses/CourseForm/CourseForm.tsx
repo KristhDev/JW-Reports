@@ -19,8 +19,10 @@ import { styles as themeStyles } from '../../../theme';
 /**
  * This component is responsible for rendering the fields to create
  * or edit a course.
+ *
+ * @return {JSX.Element} The course form component.
  */
-export const CourseForm = () => {
+export const CourseForm = (): JSX.Element => {
     const { state: { isCourseLoading, selectedCourse }, saveCourse, updateCourse } = useCourses();
     const { setErrorForm } = useStatus();
     const { state: { colors } } = useTheme();
@@ -28,9 +30,11 @@ export const CourseForm = () => {
     /**
      * If the selectedCourse.id is an empty string, then save the formValues, otherwise update the
      * formValues.
+     *
      * @param {CourseFormValues} formValues - CourseFormValues
+     * @return {void} This function does not return any value.
      */
-    const handleSaveOrUpdate = (formValues: CourseFormValues) => {
+    const handleSaveOrUpdate = (formValues: CourseFormValues): void => {
         (selectedCourse.id === '')
             ? saveCourse(formValues)
             : updateCourse(formValues);
@@ -65,7 +69,7 @@ export const CourseForm = () => {
             validationSchema={ courseFormSchema }
         >
             { ({ handleSubmit, errors, isValid }) => (
-                <View style={{ ...themeStyles.formContainer, paddingTop: 30, paddingBottom: 40 }}>
+                <View style={{ ...themeStyles.formContainer, paddingBottom: 40 }}>
 
                     {/* Person name field */}
                     <FormField
@@ -111,6 +115,7 @@ export const CourseForm = () => {
                         label="Publicación de estudio:"
                         name="publication"
                         placeholder="Ingrese la publicación"
+                        style={{ marginBottom: 40 }}
                     />
 
                     {/* Submit button */}
@@ -120,14 +125,13 @@ export const CourseForm = () => {
                             (isCourseLoading) && (
                                 <ActivityIndicator
                                     color={ colors.contentHeader }
-                                    size="small"
+                                    size={ 25 }
                                     style={{ marginLeft: 10 }}
                                 />
                             )
                         }
                         onPress={ (isValid) ? handleSubmit : () => setErrorForm(errors) }
                         text={ (selectedCourse.id !== '') ? 'Actualizar' : 'Guardar' }
-                        touchableStyle={{ marginTop: 30 }}
                     />
                 </View>
             ) }

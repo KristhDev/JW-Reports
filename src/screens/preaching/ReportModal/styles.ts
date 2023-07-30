@@ -3,8 +3,7 @@ import { StyleSheet } from 'react-native';
 const styles = StyleSheet.create({
     reportModal: {
         borderRadius: 10,
-        padding: 15,
-        width: '87%'
+        padding: 24,
     },
 
     reportModalInfo: {

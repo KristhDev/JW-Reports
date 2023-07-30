@@ -21,8 +21,10 @@ const Stack = createStackNavigator<CoursesStackParamsList>();
 
 /**
  * This is a stack navigation for the courses.
+ *
+ * @return {JSX.Element} rendered component to show the list of courses
  */
-const CoursesStackNavigation = () => {
+const CoursesStackNavigation = (): JSX.Element => {
     const [ showDeleteCourseModal, setShowDeleteCourseModal ] = useState<boolean>(false);
     const [ showDeleteLessonModal, setShowDeleteLessonModal ] = useState<boolean>(false);
     const { navigate } = useNavigation();
@@ -45,16 +47,20 @@ const CoursesStackNavigation = () => {
     /**
      * When the user clicks the delete button, the deleteCourse function is called, which sets the
      * showDeleteCourseModal state to false.
+     *
+     * @return {void} This function does not return anything
      */
-    const handleDeleteCourse = () => {
+    const handleDeleteCourse = (): void => {
         deleteCourse(true, () => setShowDeleteCourseModal(false));
     }
 
     /**
      * When the user clicks the delete button, show the delete modal, and when the user clicks the
      * delete button in the modal, delete the lesson.
+     *
+     * @return {void} This function does not return anything
      */
-    const handleDeleteLesson = () => {
+    const handleDeleteLesson = (): void => {
         deleteLesson(true, () => setShowDeleteLessonModal(false));
     }
 

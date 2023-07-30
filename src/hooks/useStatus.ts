@@ -23,9 +23,11 @@ const useStatus = () => {
 
     /**
      * This function is to set errors in formik forms
+     *
      * @param {T} fromErrors - Object with error of forms
+     * @return {void} This function does not return anything
      */
-    const setErrorForm = <T extends Object>(fromErrors: T) => {
+    const setErrorForm = <T extends Object>(fromErrors: T): void => {
         const values = Object.values(fromErrors) as string[];
 
         setStatus({
@@ -36,16 +38,16 @@ const useStatus = () => {
 
     /**
      * If there's an error, log it, call the onDispatch function if it exists, set the status, and
-     * return true. Otherwise, return false.
+     * return true. Otherwise, return false
+     *
      * @param {AuthError | PostgrestError | StorageError |  null} error - AuthError | PostgrestError |
      * StorageError |  null
      * @param {number} status - number - The status code of the error
      * @param {Function} onDispatch - This is a function that will be called if there is an error.
-     * @returns A boolean value.
+     * @return {boolean} Returns true if there's an error, false otherwise
      */
-    const setSupabaseError = (error: AuthError | PostgrestError | StorageError |  null, status: number, onDispatch?: () => void) => {
+    const setSupabaseError = (error: AuthError | PostgrestError | StorageError |  null, status: number, onDispatch?: () => void): boolean => {
         if (error) {
-            console.log(error);
             const msg = translateErrorMsg(error.message);
 
             onDispatch && onDispatch();
@@ -57,7 +59,13 @@ const useStatus = () => {
         return false;
     }
 
-    const setUnauthenticatedError = (onDispatch?: () => void) => {
+    /**
+     * Sets an unauthenticated error and optionally triggers a dispatch function.
+     *
+     * @param {() => void} onDispatch - An optional function to be triggered.
+     * @return {void} This function does not return anything
+     */
+    const setUnauthenticatedError = (onDispatch?: () => void): void => {
         onDispatch && onDispatch();
 
         setStatus({
@@ -66,7 +74,15 @@ const useStatus = () => {
         });
     }
 
-    const setNetworkError = (msg?: string, onDispatch?: () => void) => {
+
+    /**
+     * Sets the network error status and dispatches an action if provided.
+     *
+     * @param {string} msg - An optional error message.
+     * @param {function} onDispatch - An optional function to be called on dispatch.
+     * @return {void} This function does not return anything
+     */
+    const setNetworkError = (msg?: string, onDispatch?: () => void): void => {
         onDispatch && onDispatch();
 
         setStatus({
