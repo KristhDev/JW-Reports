@@ -58,7 +58,7 @@ const LessonDetail = (): JSX.Element => {
     return (
         <>
             <ScrollView
-                contentContainerStyle={{ alignItems: 'center', paddingBottom: 100, flexGrow: 1 }}
+                contentContainerStyle={{ alignItems: 'center', padding: 24, paddingBottom: 100, flexGrow: 1 }}
                 overScrollMode="never"
                 style={{ flex: 1 }}
             >
@@ -72,7 +72,7 @@ const LessonDetail = (): JSX.Element => {
 
                 {/* Text publication */}
                 <InfoText
-                    containerStyle={{ paddingHorizontal: 20, width: '100%' }}
+                    containerStyle={{ padding: 0, paddingBottom: 24, width: '100%' }}
                     text={ selectedCourse.publication.toUpperCase() }
                     textStyle={{ fontSize: 16, fontWeight: 'bold', textAlign: 'left' }}
                 />

@@ -60,7 +60,8 @@ const ActiveOrSuspendCourseModal: FC<ModalProps> = ({ onClose, isOpen }): JSX.El
                         <Text
                             style={{
                                 ...themeStyles.modalText,
-                                color: colors.modalText
+                                color: colors.modalText,
+                                marginBottom: 0
                             }}
                             testID="modal-text"
                         >
@@ -70,7 +71,7 @@ const ActiveOrSuspendCourseModal: FC<ModalProps> = ({ onClose, isOpen }): JSX.El
                         {/* Modal actions */}
                         <View style={{ ...themeStyles.modalActions, alignSelf: 'flex-end' }}>
                             <Button
-                                containerStyle={{ paddingHorizontal: 12 }}
+                                containerStyle={{ paddingHorizontal: 12, minWidth: 0 }}
                                 onPress={ onClose }
                                 text="CANCELAR"
                                 textStyle={{ color: colors.button, fontSize: 16 }}
@@ -79,7 +80,7 @@ const ActiveOrSuspendCourseModal: FC<ModalProps> = ({ onClose, isOpen }): JSX.El
                             />
 
                             <Button
-                                containerStyle={{ paddingHorizontal: 12 }}
+                                containerStyle={{ paddingHorizontal: 12, minWidth: 0 }}
                                 onPress={ handleConfirm }
                                 text={ confirmTextButton }
                                 textStyle={{ color: colors.button, fontSize: 16 }}

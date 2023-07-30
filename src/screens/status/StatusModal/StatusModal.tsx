@@ -1,5 +1,5 @@
 import React from 'react';
-import { Linking, Text, View } from 'react-native';
+import { Linking, useWindowDimensions, Text, View } from 'react-native';
 
 /* Screens */
 import { Modal } from '../../ui';
@@ -20,6 +20,7 @@ import { styles as themeStyles } from '../../../theme';
  * @return {JSX.Element} return jsx element to render status modal
  */
 const StatusModal = (): JSX.Element => {
+    const { width } = useWindowDimensions();
     const { state: { msg }, clearStatus } = useStatus();
     const { state: { colors }, BUTTON_TRANSLUCENT_COLOR } = useTheme();
 
@@ -45,16 +46,19 @@ const StatusModal = (): JSX.Element => {
                 style={{
                     ...themeStyles.modalContainer,
                     backgroundColor: colors.modal,
+                    width: width - 48,
                     minHeight: 120,
                 }}
             >
 
                 {/* Modal text */}
-                <View style={{ alignItems: 'center' }}>
+                <View>
                     <Text
                         style={{
                             ...themeStyles.modalText,
                             color: colors.modalText,
+                            marginBottom: 0,
+                            width: '100%',
                         }}
                     >
                         { msg }
@@ -67,7 +71,7 @@ const StatusModal = (): JSX.Element => {
                     {/* Button settings */}
                     { (msg === configMsg) && (
                         <Button
-                            containerStyle={{ paddingHorizontal: 12 }}
+                            containerStyle={{ paddingHorizontal: 12, minWidth: 0 }}
                             onPress={ clearStatus }
                             text="CANCELAR"
                             textStyle={{ color: colors.button, fontSize: 16 }}
@@ -78,7 +82,7 @@ const StatusModal = (): JSX.Element => {
 
                     {/* Confirm button */}
                     <Button
-                        containerStyle={{ paddingHorizontal: 12 }}
+                        containerStyle={{ paddingHorizontal: 12, minWidth: 0 }}
                         onPress={ handleClose }
                         text={ btnText }
                         textStyle={{ color: colors.button, fontSize: 16 }}

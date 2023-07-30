@@ -145,7 +145,7 @@ export const LessonsList = (): JSX.Element => {
     return (
         <>
             <FlatList
-                contentContainerStyle={{ alignItems: 'center', paddingBottom: 100, flexGrow: 1 }}
+                contentContainerStyle={{ alignItems: 'center', padding: 24, paddingBottom: 100, flexGrow: 1 }}
                 data={ lessons }
                 keyExtractor={ (item) => item.id }
                 ListFooterComponent={
@@ -157,7 +157,7 @@ export const LessonsList = (): JSX.Element => {
                 ListHeaderComponent={
                     <>
                         <Title
-                            containerStyle={{ paddingTop: 30, paddingBottom: 20 }}
+                            containerStyle={{ marginVertical: 8 }}
                             text={ `Clases del curso con ${ selectedCourse.person_name }` }
                             textStyle={{ fontSize: 24 }}
                         />

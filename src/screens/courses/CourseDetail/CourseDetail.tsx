@@ -83,7 +83,7 @@ const CourseDetail = (): JSX.Element => {
     return (
         <>
             <ScrollView
-                contentContainerStyle={{ alignItems: 'center', flexGrow: 1, paddingBottom: 100 }}
+                contentContainerStyle={{ alignItems: 'center', flexGrow: 1, padding: 24, paddingBottom: 100 }}
                 overScrollMode="never"
                 style={{ flex: 1 }}
             >
@@ -97,7 +97,7 @@ const CourseDetail = (): JSX.Element => {
 
                 {/* Text publication */}
                 <InfoText
-                    containerStyle={{ paddingHorizontal: 20, width: '100%' }}
+                    containerStyle={{ padding: 0, paddingBottom: 24, width: '100%' }}
                     text={ selectedCourse.publication.toUpperCase() }
                     textStyle={{ fontSize: 16, fontWeight: 'bold', textAlign: 'left' }}
                 />
@@ -230,7 +230,7 @@ const CourseDetail = (): JSX.Element => {
                     <TouchableOpacity
                         activeOpacity={ 0.75 }
                         onPress={ handleLessonsList }
-                        style={{ marginTop: 20 }}
+                        style={{ marginTop: 24 }}
                         testID="course-detail-lessons-touchable"
                     >
                         <Text style={{ color: colors.linkText, fontSize: 19 }}>
@@ -241,7 +241,7 @@ const CourseDetail = (): JSX.Element => {
                     <TouchableOpacity
                         activeOpacity={ 0.75 }
                         onPress={ handleAddLesson }
-                        style={{ marginTop: 5 }}
+                        style={{ marginTop: 8 }}
                         testID="course-detail-add-lesson-touchable"
                     >
                         <Text style={{ color: colors.linkText, fontSize: 19 }}>

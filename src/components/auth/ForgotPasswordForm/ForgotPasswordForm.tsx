@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, TouchableOpacity, useWindowDimensions, ActivityIndicator } from 'react-native';
+import { View, Text, TouchableOpacity, ActivityIndicator } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { Formik } from 'formik';
 import { object, string } from 'yup';
@@ -22,7 +22,6 @@ import { styles as themeStyles } from '../../../theme';
  */
 export const ForgotPasswordForm = (): JSX.Element => {
     const { navigate } = useNavigation();
-    const { width } = useWindowDimensions();
 
     const { state: { isAuthLoading }, resetPassword } = useAuth();
     const { setErrorForm } = useStatus();
@@ -57,7 +56,7 @@ export const ForgotPasswordForm = (): JSX.Element => {
         >
             { ({ handleSubmit, isValid, errors }) => (
                 <View style={ themeStyles.formContainer }>
-                    <View style={{ ...themeStyles.btnLink, marginBottom: 30, marginTop: 60, width: width * 0.9 }}>
+                    <View style={{ ...themeStyles.btnLink, marginTop: 0, marginBottom: 40 }}>
                         <Text
                             style={{
                                 ...themeStyles.formText,
@@ -83,6 +82,7 @@ export const ForgotPasswordForm = (): JSX.Element => {
                         label="Correo:"
                         name="email"
                         placeholder="Ingrese su correo"
+                        style={{ marginBottom: 40 }}
                     />
 
                     {/* Submit button */}
@@ -99,11 +99,10 @@ export const ForgotPasswordForm = (): JSX.Element => {
                         }
                         onPress={ (isValid) ? handleSubmit : () => setErrorForm(errors)  }
                         text="Restablecer contraseña"
-                        touchableStyle={{ paddingHorizontal: 20, marginTop: 30 }}
                     />
 
                     {/* Sign in link */}
-                    <View style={{ ...themeStyles.btnLink, marginBottom: 100, width: width * 0.9 }}>
+                    <View style={{ ...themeStyles.btnLink, marginBottom: 100 }}>
                         <TouchableOpacity
                             activeOpacity={ 0.75 }
                             onPress={ () => navigate('LoginScreen' as never) }

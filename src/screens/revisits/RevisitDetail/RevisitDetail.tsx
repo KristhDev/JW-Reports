@@ -72,7 +72,7 @@ const RevisitDetail = (): JSX.Element => {
     return (
         <>
             <ScrollView
-                contentContainerStyle={{ alignItems: 'center', flexGrow: 1, paddingBottom: 100 }}
+                contentContainerStyle={{ alignItems: 'center', flexGrow: 1, padding: 24, paddingBottom: 100 }}
                 overScrollMode="never"
                 style={{ flex: 1 }}
             >
@@ -86,7 +86,7 @@ const RevisitDetail = (): JSX.Element => {
 
                 {/* Revisit status */}
                 { (!selectedRevisit.done) ? (
-                    <View style={{ ...styles.sectionStyle, paddingTop: 40 }}>
+                    <View style={{ ...styles.sectionStyle }}>
                         <View style={{ flexDirection: 'row' }}>
                             <Text
                                 style={{

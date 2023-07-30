@@ -1,5 +1,5 @@
 import React, { FC, useState } from 'react';
-import { Text, View } from 'react-native';
+import { Text, View, useWindowDimensions } from 'react-native';
 import { TouchableRipple } from 'react-native-paper';
 import { Menu, MenuOption, MenuOptions, MenuTrigger } from 'react-native-popup-menu';
 import { useNavigation } from '@react-navigation/native';
@@ -32,6 +32,7 @@ import styles from './styles';
 export const LessonCard: FC<LessonCardProps> = ({ lesson, onDelete, onFinish }): JSX.Element => {
     const [ isOpen, setIsOpen ] = useState<boolean>(false);
     const { navigate } = useNavigation();
+    const { width } = useWindowDimensions();
 
     const { setSelectedLesson } = useCourses();
     const { state: { colors }, BUTTON_TRANSPARENT_COLOR } = useTheme();
@@ -77,7 +78,7 @@ export const LessonCard: FC<LessonCardProps> = ({ lesson, onDelete, onFinish }):
             borderless
             onPress={ handleLessonDetail }
             rippleColor={ BUTTON_TRANSPARENT_COLOR }
-            style={ styles.touchable }
+            style={{ ...styles.touchable, width: width - 16 }}
             testID="lesson-card-touchable"
         >
             <View style={{ ...styles.container, backgroundColor: colors.card }}>

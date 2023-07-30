@@ -204,7 +204,7 @@ export const CoursesList: FC<CoursesListProps> = ({ emptyMessage, filter, title 
     return (
         <>
             <FlatList
-                contentContainerStyle={{ alignItems: 'center', paddingBottom: 100, flexGrow: 1 }}
+                contentContainerStyle={{ alignItems: 'center', padding: 24, paddingBottom: 100, flexGrow: 1 }}
                 data={ courses }
                 keyExtractor={ (item) => item.id }
                 ListFooterComponent={
@@ -216,7 +216,7 @@ export const CoursesList: FC<CoursesListProps> = ({ emptyMessage, filter, title 
                 ListHeaderComponent={
                     <>
                         <Title
-                            containerStyle={{ paddingTop: 30, paddingBottom: 20 }}
+                            containerStyle={{ marginVertical: 8 }}
                             text={ title }
                             textStyle={{ fontSize: 24 }}
                         />

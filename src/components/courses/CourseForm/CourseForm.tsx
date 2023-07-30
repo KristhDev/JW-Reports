@@ -69,7 +69,7 @@ export const CourseForm = (): JSX.Element => {
             validationSchema={ courseFormSchema }
         >
             { ({ handleSubmit, errors, isValid }) => (
-                <View style={{ ...themeStyles.formContainer, paddingTop: 30, paddingBottom: 40 }}>
+                <View style={{ ...themeStyles.formContainer, paddingBottom: 40 }}>
 
                     {/* Person name field */}
                     <FormField
@@ -115,6 +115,7 @@ export const CourseForm = (): JSX.Element => {
                         label="Publicación de estudio:"
                         name="publication"
                         placeholder="Ingrese la publicación"
+                        style={{ marginBottom: 40 }}
                     />
 
                     {/* Submit button */}
@@ -131,7 +132,6 @@ export const CourseForm = (): JSX.Element => {
                         }
                         onPress={ (isValid) ? handleSubmit : () => setErrorForm(errors) }
                         text={ (selectedCourse.id !== '') ? 'Actualizar' : 'Guardar' }
-                        touchableStyle={{ marginTop: 30 }}
                     />
                 </View>
             ) }

@@ -56,7 +56,8 @@ const FinishOrStartCourseModal: FC<ModalProps> = ({ isOpen, onClose }): JSX.Elem
                         <Text
                             style={{
                                 ...themeStyles.modalText,
-                                color: colors.modalText
+                                color: colors.modalText,
+                                marginBottom: 0
                             }}
                             testID="modal-text"
                         >

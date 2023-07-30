@@ -70,7 +70,7 @@ const Home = (): JSX.Element => {
     return (
         <>
             <ScrollView
-                contentContainerStyle={{ alignItems: 'center', paddingBottom: 100 }}
+                contentContainerStyle={{ alignItems: 'center', padding: 24, paddingBottom: 100 }}
                 overScrollMode="never"
                 refreshControl={
                     <RefreshControl

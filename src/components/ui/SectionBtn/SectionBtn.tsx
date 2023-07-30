@@ -28,7 +28,7 @@ export const SectionBtn: FC<SectionBtnProps> = ({ onPress, subText, text }): JSX
             centered
             onPress={ onPress }
             rippleColor={ BUTTON_TRANSPARENT_COLOR }
-            style={{ paddingHorizontal: 18, paddingVertical: 16 }}
+            style={{ padding: 16 }}
             testID="section-btn-touchable"
         >
             <View>

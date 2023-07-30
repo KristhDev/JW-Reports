@@ -2,9 +2,7 @@ import { StyleSheet } from 'react-native';
 
 const styles = StyleSheet.create({
     touchable: {
-        marginVertical: 10,
-        minWidth: '95%',
-        width: '95%'
+        marginVertical: 8,
     },
 
     container: {

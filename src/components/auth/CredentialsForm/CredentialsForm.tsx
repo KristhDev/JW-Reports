@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { View, ActivityIndicator } from 'react-native';
 import { Formik } from 'formik';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { object, ref, string } from 'yup';
 import Icon from 'react-native-vector-icons/Ionicons';
 
@@ -22,7 +21,6 @@ export const CredentialsForm = (): JSX.Element => {
     const [ loadingPassword, setLoadingPassword ] = useState<boolean>(false);
     const [ showPassword, setShowPassword ] = useState<boolean>(false);
     const [ showConfirmPassword, setShowConfirmPassword ] = useState<boolean>(false);
-    const { top } = useSafeAreaInsets();
 
     const { state: { user, isAuthLoading }, updateEmail, updatePassword } = useAuth();
     const { setErrorForm } = useStatus();
@@ -72,7 +70,7 @@ export const CredentialsForm = (): JSX.Element => {
     }
 
     return (
-        <View style={{ paddingVertical: top }}>
+        <View>
             <Formik
                 initialValues={{ email: user.email }}
                 onSubmit={ handleUpdateEmail }
@@ -80,7 +78,7 @@ export const CredentialsForm = (): JSX.Element => {
                 validationSchema={ emailFormSchema }
             >
                 { ({ errors, handleSubmit, isValid }) => (
-                    <View style={{ alignItems: 'center', justifyContent: 'flex-start', paddingBottom: top }}>
+                    <View style={{ alignItems: 'center', justifyContent: 'flex-start' }}>
 
                         {/* Email field */}
                         <FormField
@@ -96,6 +94,7 @@ export const CredentialsForm = (): JSX.Element => {
                             label="Correo:"
                             name="email"
                             placeholder="Ingrese su correo"
+                            style={{ marginBottom: 40 }}
                         />
 
                         {/* Submit button */}
@@ -112,7 +111,7 @@ export const CredentialsForm = (): JSX.Element => {
                             }
                             onPress={ (isValid) ? handleSubmit : () => setErrorForm(errors)  }
                             text="Cambiar correo"
-                            touchableStyle={{ paddingHorizontal: 20, marginTop: top }}
+                            touchableStyle={{ marginBottom: 40 }}
                         />
                     </View>
                 ) }
@@ -128,7 +127,7 @@ export const CredentialsForm = (): JSX.Element => {
                 validationSchema={ passwordFormSchema }
             >
                 { ({ errors, handleSubmit, isValid }) => (
-                    <View style={{ alignItems: 'center', justifyContent: 'flex-start', paddingBottom: top }}>
+                    <View style={{ alignItems: 'center', justifyContent: 'flex-start' }}>
 
                         {/* New password field */}
                         <FormField
@@ -158,6 +157,7 @@ export const CredentialsForm = (): JSX.Element => {
                             name="confirmPassword"
                             placeholder="Confirme su contraseña"
                             secureTextEntry={ !showConfirmPassword }
+                            style={{ marginBottom: 40 }}
                         />
 
                         {/* Submit button */}
@@ -174,7 +174,7 @@ export const CredentialsForm = (): JSX.Element => {
                             }
                             onPress={ (isValid) ? handleSubmit : () => setErrorForm(errors)  }
                             text="Cambiar contraseña"
-                            touchableStyle={{ paddingHorizontal: 20, marginTop: top }}
+                            touchableStyle={{ marginBottom: 40 }}
                         />
                     </View>
                 ) }

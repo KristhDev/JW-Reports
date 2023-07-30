@@ -74,7 +74,7 @@ export const PreachingForm = (): JSX.Element => {
             validateOnMount
         >
             { ({ handleSubmit, errors, isValid }) => (
-                <View style={{ ...themeStyles.formContainer, paddingTop: 30, paddingBottom: 40 }}>
+                <View style={{ ...themeStyles.formContainer, paddingBottom: 40 }}>
 
                     {/* Day field */}
                     <DatetimeField
@@ -170,6 +170,7 @@ export const PreachingForm = (): JSX.Element => {
                         mode="time"
                         name="final_hour"
                         placeholder="Seleccione la hora"
+                        style={{ marginBottom: 40 }}
                     />
 
                     {/* Submit button */}
@@ -186,7 +187,6 @@ export const PreachingForm = (): JSX.Element => {
                         }
                         onPress={ (isValid) ? handleSubmit : () => setErrorForm(errors) }
                         text={ (seletedPreaching.id !== '') ? 'Actualizar' : 'Guardar' }
-                        touchableStyle={{ marginTop: 30 }}
                     />
                 </View>
             ) }

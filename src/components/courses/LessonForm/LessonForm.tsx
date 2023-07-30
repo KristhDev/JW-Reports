@@ -62,7 +62,7 @@ export const LessonForm = (): JSX.Element => {
             validationSchema={ lessonFormSchema }
         >
             { ({ handleSubmit, errors, isValid }) => (
-                <View style={{ ...themeStyles.formContainer, paddingTop: 30, paddingBottom: 40 }}>
+                <View style={{ ...themeStyles.formContainer, paddingBottom: 40 }}>
 
                     {/* Description field */}
                     <FormField
@@ -88,6 +88,7 @@ export const LessonForm = (): JSX.Element => {
                         mode="date"
                         name="next_lesson"
                         placeholder="Seleccione el día"
+                        style={{ marginBottom: 40 }}
                     />
 
                     <View style={{ flex: 1 }} />
@@ -106,7 +107,6 @@ export const LessonForm = (): JSX.Element => {
                         }
                         onPress={ (isValid) ? handleSubmit : () => setErrorForm(errors) }
                         text={ (selectedLesson.id !== '') ? 'Actualizar' : 'Guardar' }
-                        touchableStyle={{ marginTop: 30 }}
                     />
                 </View>
             ) }

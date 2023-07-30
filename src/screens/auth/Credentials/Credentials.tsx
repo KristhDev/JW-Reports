@@ -21,7 +21,7 @@ const Credentials = (): JSX.Element => {
             contentContainerStyle={{ flexGrow: 1 }}
             overScrollMode="never"
         >
-            <View style={{ flex: 1, alignItems: 'center' }}>
+            <View style={{ flex: 1, alignItems: 'center', padding: 24 }}>
                 <Title
                     containerStyle={ themeStyles.titleContainer }
                     text="Credenciales"

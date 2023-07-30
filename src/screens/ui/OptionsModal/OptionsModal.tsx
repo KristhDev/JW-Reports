@@ -1,5 +1,5 @@
 import React, { Children, FC } from 'react';
-import { View } from 'react-native';
+import { View, useWindowDimensions } from 'react-native';
 import { RadioButton } from 'react-native-paper';
 
 /* Screens */
@@ -33,13 +33,16 @@ import styles from './styles';
  * @return {JSX.Element} Returns the component to show the field with radio
  */
 const OptionsModal: FC<OptionsModalProps> = ({ isOpen, items, onCancel, onChangeValue, title, value }): JSX.Element => {
+    const { width } = useWindowDimensions();
     const { state: { colors }, BUTTON_TRANSLUCENT_COLOR } = useTheme();
+
     return (
         <Modal isOpen={ isOpen }>
             <View
                 style={{
                     ...themeStyles.modalContainer,
-                    backgroundColor: colors.modal
+                    backgroundColor: colors.modal,
+                    width: width - 48
                 }}
             >
                 <InfoText
@@ -62,11 +65,11 @@ const OptionsModal: FC<OptionsModalProps> = ({ isOpen, items, onCancel, onChange
 
                     {/* Cancel button */}
                     <Button
-                        containerStyle={{ paddingHorizontal: 12 }}
+                        containerStyle={{ paddingHorizontal: 12, minWidth: 0 }}
                         onPress={ onCancel }
                         text="CANCELAR"
                         textStyle={{ color: colors.button, fontSize: 16 }}
-                        touchableStyle={{ backgroundColor: 'transparent', marginRight: 5 }}
+                        touchableStyle={{ backgroundColor: 'transparent' }}
                         underlayColor={ BUTTON_TRANSLUCENT_COLOR }
                     />
                 </View>

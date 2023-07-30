@@ -41,7 +41,7 @@ const Settings = (): JSX.Element => {
     const handleMoreInfo = (): void => {
         setStatus({
             code: 200,
-            msg: 'Para más información o dejar sus comentarios acerca de la aplicación, escriba al correo: kristhdev@gmail.com',
+            msg: 'Para más información o dejar sus comentarios acerca de la aplicación, por favor escriba al siguiente correo: kristhdev@gmail.com',
         });
     }
 

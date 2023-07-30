@@ -19,7 +19,7 @@ const Register = (): JSX.Element => {
             extraHeight={ 50 }
             overScrollMode="never"
         >
-            <View style={{ flex: 1, alignItems: 'center' }}>
+            <View style={{ flex: 1, alignItems: 'center', padding: 24 }}>
                 <Title text="Crear cuenta" />
 
                 <RegisterForm />

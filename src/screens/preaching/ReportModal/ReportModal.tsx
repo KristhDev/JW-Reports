@@ -105,10 +105,10 @@ const ReportModal: FC<ReportModalProps> = ({ isOpen, month, onClose }): JSX.Elem
                     overScrollMode="never"
                     showsVerticalScrollIndicator={ false }
                 >
-                    <View style={{ ...styles.reportModal, backgroundColor: colors.modal, width: width * 0.87 }}>
+                    <View style={{ ...styles.reportModal, backgroundColor: colors.modal, width: width - 48 }}>
                         <Text style={{ ...styles.reportModalInfo, color: colors.modalText }}>Estás a punto de entregar tu informe predicación, por favor revisalo.</Text>
 
-                        <View style={{ padding: 10, marginTop: 20 }}>
+                        <View style={{ marginTop: 40, marginBottom: 24 }}>
                             <Text style={{ ...styles.reportTitle, color: colors.text }}>Informe De Predicación</Text>
 
                             <View style={{ flexDirection: 'row' }}>
@@ -153,7 +153,8 @@ const ReportModal: FC<ReportModalProps> = ({ isOpen, month, onClose }): JSX.Elem
                                 <View
                                     style={{
                                         ...themeStyles.focusExternalBorder,
-                                        borderColor: (isFocused) ? '#FFFFFF' : 'transparent'
+                                        borderColor: (isFocused) ? '#FFFFFF' : 'transparent',
+                                        marginTop: 16
                                     }}
                                 >
                                     <View
@@ -200,16 +201,16 @@ const ReportModal: FC<ReportModalProps> = ({ isOpen, month, onClose }): JSX.Elem
 
                         {
                             (restMins > 0) && (
-                                <Text style={{ color: colors.modalText, fontSize: 16, padding: 10 }}>
+                                <Text style={{ color: colors.modalText, fontSize: 16, marginBottom: 24 }}>
                                     Para este mes te sobraron { restMins } minutos, guardalos para el siguiente mes.
                                 </Text>
                             )
                         }
 
                         {/* Modal actions */}
-                        <View style={{ flexDirection: 'row', justifyContent: 'flex-end', marginTop: 20 }}>
+                        <View style={{ flexDirection: 'row', justifyContent: 'flex-end' }}>
                             <Button
-                                containerStyle={{ paddingHorizontal: 12 }}
+                                containerStyle={{ paddingHorizontal: 12, minWidth: 0 }}
                                 onPress={ handleClose }
                                 text="CANCELAR"
                                 textStyle={{ color: colors.button, fontSize: 16 }}
@@ -218,7 +219,7 @@ const ReportModal: FC<ReportModalProps> = ({ isOpen, month, onClose }): JSX.Elem
                             />
 
                             <Button
-                                containerStyle={{ paddingHorizontal: 12 }}
+                                containerStyle={{ paddingHorizontal: 12, minWidth: 0 }}
                                 onPress={ handleDeliver }
                                 text="ENTREGAR"
                                 textStyle={{ color: colors.button, fontSize: 16 }}

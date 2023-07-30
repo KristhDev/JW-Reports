@@ -35,7 +35,7 @@ export const SectionContent: FC<PropsWithChildren<SectionContentProps>> = ({ con
             ]}
         >
             <InfoText
-                containerStyle={{ marginHorizontal: 8 }}
+                containerStyle={{ padding: 16, paddingTop: 0 }}
                 text={ title }
                 textStyle={{
                     color: colors.titleSecondary,

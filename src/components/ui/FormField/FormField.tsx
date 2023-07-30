@@ -1,5 +1,5 @@
 import React, { useState, FC } from 'react';
-import { View, Text, TextInput, useWindowDimensions } from 'react-native';
+import { View, Text, TextInput } from 'react-native';
 import { useField } from 'formik';
 
 /* Hooks */
@@ -44,8 +44,6 @@ export const FormField: FC<FormFieldProps> = ({
     style,
     ...rest
 }): JSX.Element => {
-    const { width } = useWindowDimensions();
-
     const [ field, meta, helpers ] = useField({ name });
 
     const [ isFocused, setIsFocused ] = useState<boolean>(false);
@@ -60,7 +58,6 @@ export const FormField: FC<FormFieldProps> = ({
         <View
             style={{
                 ...themeStyles.formField,
-                width: width * 0.9,
                 ...style as any
             }}
         >
@@ -69,7 +66,7 @@ export const FormField: FC<FormFieldProps> = ({
             <Text
                 style={[
                     { ...themeStyles.formLabel, color: colors.titleText },
-                    labelStyle
+                    labelStyle,
                 ]}
                 testID="form-field-label"
             >

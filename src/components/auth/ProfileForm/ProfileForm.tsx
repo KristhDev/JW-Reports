@@ -55,7 +55,7 @@ export const ProfileForm = (): JSX.Element => {
             validationSchema={ profileFormSchema }
         >
             { ({ errors, handleSubmit, isValid }) => (
-                <View style={{ ...themeStyles.formContainer, justifyContent: 'flex-start', paddingTop: 20 }}>
+                <View style={{ ...themeStyles.formContainer, justifyContent: 'flex-start' }}>
 
                     {/* Name field */}
                     <FormField
@@ -112,7 +112,7 @@ export const ProfileForm = (): JSX.Element => {
                         }
                         onPress={ (isValid) ? handleSubmit : () => setErrorForm(errors)  }
                         text="Guardar"
-                        touchableStyle={{ paddingHorizontal: 20, marginVertical: top }}
+                        touchableStyle={{ marginVertical: top }}
                     />
                 </View>
             ) }

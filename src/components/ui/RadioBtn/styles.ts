@@ -4,12 +4,12 @@ const styles = StyleSheet.create({
     radioContainer: {
         alignItems: 'center',
         flexDirection: 'row',
-        padding: 5
+        marginBottom: 5
     },
 
     radioLabel: {
         fontSize: 18,
-        marginLeft: 15
+        marginLeft: 8
     }
 });
 

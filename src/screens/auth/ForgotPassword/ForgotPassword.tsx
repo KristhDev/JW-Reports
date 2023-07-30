@@ -18,7 +18,7 @@ const ForgotPassword = (): JSX.Element => {
             contentContainerStyle={{ flexGrow: 1 }}
             overScrollMode="never"
         >
-            <View style={{ alignItems: 'center', flex: 1 }}>
+            <View style={{ alignItems: 'center', flex: 1, padding: 24 }}>
                 <Title text="Olvide mi contraseña" />
 
                 <ForgotPasswordForm />

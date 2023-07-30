@@ -96,6 +96,7 @@ const PassToCourseModal: FC<ModalProps> = ({ isOpen, onClose }): JSX.Element => 
                                     <Text
                                         style={{
                                             ...themeStyles.modalText,
+                                            marginBottom: 0,
                                             color: colors.modalText
                                         }}
                                         testID="modal-text"
@@ -115,12 +116,13 @@ const PassToCourseModal: FC<ModalProps> = ({ isOpen, onClose }): JSX.Element => 
                                     onSubmit={ handleConfirm }
                                 >
                                     { ({ handleSubmit }) => (
-                                        <>
+                                        <View>
 
                                             {/* Modal title in form */}
                                             <Text
                                                 style={{
                                                     ...themeStyles.modalText,
+                                                    marginBottom: 24,
                                                     color: colors.modalText
                                                 }}
                                             >
@@ -139,7 +141,7 @@ const PassToCourseModal: FC<ModalProps> = ({ isOpen, onClose }): JSX.Element => 
                                                 label="Publicación de estudio:"
                                                 name="publication"
                                                 placeholder="Ingrese la publicación"
-                                                style={{ width: '100%' }}
+                                                style={{ marginBottom: 0 }}
                                             />
 
                                             {/* Modal actions in form */}
@@ -147,7 +149,7 @@ const PassToCourseModal: FC<ModalProps> = ({ isOpen, onClose }): JSX.Element => 
                                                 onClose={ handleClose }
                                                 onConfirm={ handleSubmit }
                                             />
-                                        </>
+                                        </View>
                                     ) }
                                 </Formik>
                             )

@@ -121,7 +121,7 @@ export const RevisitForm = (): JSX.Element => {
             validationSchema={ revisitFormSchema }
         >
             { ({ handleSubmit, errors, isValid }) => (
-                <View style={{ ...themeStyles.formContainer, paddingTop: 30, paddingBottom: 40 }}>
+                <View style={{ ...themeStyles.formContainer, paddingBottom: 40 }}>
 
                     {/* Person name field */}
                     <FormField
@@ -156,7 +156,7 @@ export const RevisitForm = (): JSX.Element => {
                     />
 
                     {/* Photo field */}
-                    <View style={{ ...themeStyles.formField, width: windowWidth * 0.9 }}>
+                    <View style={{ ...themeStyles.formField }}>
                         <Text style={{ ...themeStyles.formLabel, color: colors.titleText }}>
                             Foto
                         </Text>
@@ -167,10 +167,11 @@ export const RevisitForm = (): JSX.Element => {
                             style={{ borderRadius: 5, height: imageHeight, width: '100%' }}
                         />
 
-                        <View style={{ flexDirection: 'row', justifyContent: 'space-around', marginTop: 20 }}>
+                        <View style={{ flexDirection: 'row', justifyContent: 'space-around', marginTop: 16 }}>
 
                             {/* Gallery button */}
                             <Button
+                                containerStyle={{ minWidth: 0 }}
                                 icon={
                                     <Icon
                                         color={ colors.contentHeader }
@@ -185,6 +186,7 @@ export const RevisitForm = (): JSX.Element => {
 
                             {/* Camera button */}
                             <Button
+                                containerStyle={{ minWidth: 0 }}
                                 icon={
                                     <Icon
                                         color={ colors.contentHeader }
@@ -214,6 +216,7 @@ export const RevisitForm = (): JSX.Element => {
                         mode="date"
                         name="next_visit"
                         placeholder="Seleccione el día"
+                        style={{ marginBottom: 40 }}
                     />
 
                     {/* Submit button */}
@@ -230,7 +233,6 @@ export const RevisitForm = (): JSX.Element => {
                         }
                         onPress={ (isValid) ? handleSubmit : () => setErrorForm(errors) }
                         text={ (selectedRevisit.id !== '') ? 'Actualizar' : 'Guardar' }
-                        touchableStyle={{ marginTop: 30 }}
                     />
                 </View>
             ) }

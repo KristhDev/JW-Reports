@@ -1,5 +1,5 @@
 import React, { FC, useState } from 'react';
-import { Text, View } from 'react-native';
+import { Text, View, useWindowDimensions } from 'react-native';
 import { TouchableRipple } from 'react-native-paper';
 import { useNavigation } from '@react-navigation/native';
 import { Menu, MenuOption, MenuOptions, MenuTrigger } from 'react-native-popup-menu';
@@ -33,6 +33,7 @@ import styles from './styles';
 export const RevisitCard: FC<RevisitCardProps> = ({ onDelete, onPass, onRevisit, revisit }): JSX.Element => {
     const [ isOpen, setIsOpen ] = useState<boolean>(false);
     const { navigate } = useNavigation();
+    const { width } = useWindowDimensions();
 
     const { setSelectedRevisit } = useRevisits();
     const { state: { colors }, BUTTON_TRANSPARENT_COLOR } = useTheme();
@@ -79,7 +80,7 @@ export const RevisitCard: FC<RevisitCardProps> = ({ onDelete, onPass, onRevisit,
             borderless
             onPress={ handleRevisitDetail }
             rippleColor={ BUTTON_TRANSPARENT_COLOR  }
-            style={ styles.touchable }
+            style={{ ...styles.touchable, width: width - 16 }}
             testID="revisit-card-touchable"
         >
             <View style={{ ...styles.container, backgroundColor: colors.card }}>

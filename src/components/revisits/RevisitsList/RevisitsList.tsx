@@ -202,7 +202,7 @@ export const RevisitsList: FC<RevisitsListProps> = ({ emptyMessage, filter, titl
     return (
         <>
             <FlatList
-                contentContainerStyle={{ alignItems: 'center', paddingBottom: 100, flexGrow: 1 }}
+                contentContainerStyle={{ alignItems: 'center', padding: 24, paddingBottom: 100, flexGrow: 1 }}
                 data={ revisits }
                 keyExtractor={ (item) => item.id }
                 ListFooterComponent={
@@ -214,7 +214,7 @@ export const RevisitsList: FC<RevisitsListProps> = ({ emptyMessage, filter, titl
                 ListHeaderComponent={
                     <>
                         <Title
-                            containerStyle={{ paddingTop: 30, paddingBottom: 20 }}
+                            containerStyle={{ marginVertical: 8 }}
                             text={ title }
                             textStyle={{ fontSize: 24 }}
                         />

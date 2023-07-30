@@ -28,7 +28,7 @@ export const ThemeBtn = () => {
                 />
             }
             onPress={ () => setTheme((selectedTheme === 'dark') ? 'light' : 'dark') }
-            style={{ top: 20, right: 20, position: 'absolute' }}
+            style={{ top: 24, right: 24, position: 'absolute' }}
             touchColor="rgba(0, 0, 0, 0.15)"
         />
     );

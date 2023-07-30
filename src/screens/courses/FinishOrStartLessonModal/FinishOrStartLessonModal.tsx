@@ -1,5 +1,5 @@
 import React, { FC, useState } from 'react';
-import { ActivityIndicator, Text, View } from 'react-native';
+import { ActivityIndicator, Text, View, useWindowDimensions } from 'react-native';
 import { Formik } from 'formik';
 import Icon from 'react-native-vector-icons/Ionicons';
 
@@ -28,6 +28,7 @@ import { styles as themeStyles } from '../../../theme';
  */
 const FinishOrStartLessonModal: FC<ModalProps> = ({ isOpen, onClose }) => {
     const [ reschedule, setReschedule ] = useState<boolean>(false);
+    const { width } = useWindowDimensions();
 
     const { state: { selectedLesson, isLessonLoading }, finishOrStartLesson } = useCourses();
     const { state: { colors } } = useTheme();
@@ -73,7 +74,8 @@ const FinishOrStartLessonModal: FC<ModalProps> = ({ isOpen, onClose }) => {
                     <View
                         style={{
                             ...themeStyles.modalContainer,
-                            backgroundColor: colors.modal
+                            backgroundColor: colors.modal,
+                            width: width - 48
                         }}
                     >
                         {
@@ -112,7 +114,8 @@ const FinishOrStartLessonModal: FC<ModalProps> = ({ isOpen, onClose }) => {
                                             <Text
                                                 style={{
                                                     ...themeStyles.modalText,
-                                                    color: colors.modalText
+                                                    color: colors.modalText,
+                                                    marginBottom: 24
                                                 }}
                                             >
                                                 Por favor ingrese la fecha en la se dará la clase
@@ -133,7 +136,7 @@ const FinishOrStartLessonModal: FC<ModalProps> = ({ isOpen, onClose }) => {
                                                 mode="date"
                                                 name="next_lesson"
                                                 placeholder="Seleccione el día"
-                                                style={{ width: '100%' }}
+                                                style={{ marginBottom: 0 }}
                                             />
 
                                             {/* Modal actions */}

@@ -1,5 +1,5 @@
 import React, { useState, FC } from 'react';
-import { View, Text, TextInput, useWindowDimensions } from 'react-native';
+import { View, Text, TextInput } from 'react-native';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import { useField } from 'formik';
 import dayjs from 'dayjs';
@@ -56,7 +56,6 @@ export const DatetimeField: FC<DatetimeFieldProps> = ({
     ...rest
 }): JSX.Element => {
     const [ open, setOpen ] = useState<boolean>(false);
-    const { width } = useWindowDimensions();
 
     const [ field, meta, helpers ] = useField({ name });
     const { state: { colors } } = useTheme();
@@ -81,13 +80,7 @@ export const DatetimeField: FC<DatetimeFieldProps> = ({
     }
 
     return (
-        <View
-            style={{
-                ...themeStyles.formField,
-                width: width * 0.9,
-                ...style as any
-            }}
-        >
+        <View style={[ themeStyles.formField, style ]}>
 
             {/* Field label */}
             <Text
@@ -127,11 +120,11 @@ export const DatetimeField: FC<DatetimeFieldProps> = ({
 
                 {/* Field button */}
                 <Button
-                    containerStyle={{ paddingHorizontal: 10 }}
+                    containerStyle={{ minWidth: 0, paddingHorizontal: 9 }}
                     icon={ icon }
                     onPress={ () => setOpen(true) }
                     text=""
-                    touchableStyle={{ marginLeft: 10 }}
+                    touchableStyle={{ marginLeft: 16 }}
                 />
             </View>
 
