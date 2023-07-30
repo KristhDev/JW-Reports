@@ -57,7 +57,7 @@ describe('Test useCourses hook deleteCourse', () => {
         /* Check if status state is equal to respective status */
         expect(result.current.useStatus.state).toEqual({
             code: 200,
-            msg: 'Haz eliminado el curso correctamente.'
+            msg: 'Has eliminado el curso correctamente.'
         });
 
         /* Check if onFinish and navigate is called with respective arg */

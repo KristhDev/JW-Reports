@@ -3,11 +3,14 @@
 exports[`Test in <DatetimeField /> component should to match snapshot 1`] = `
 <View
   style={
-    {
-      "display": "flex",
-      "padding": 10,
-      "width": 675,
-    }
+    [
+      {
+        "display": "flex",
+        "marginBottom": 16,
+        "width": "100%",
+      },
+      undefined,
+    ]
   }
 >
   <Text
@@ -16,8 +19,7 @@ exports[`Test in <DatetimeField /> component should to match snapshot 1`] = `
         {
           "color": "#FFFFFF",
           "fontSize": 18,
-          "marginBottom": 5,
-          "padding": 5,
+          "marginBottom": 16,
         },
         undefined,
       ]
@@ -113,7 +115,7 @@ exports[`Test in <DatetimeField /> component should to match snapshot 1`] = `
               "borderRadius": 10,
             },
             {
-              "marginLeft": 10,
+              "marginLeft": 16,
             },
           ],
         ]
@@ -127,11 +129,13 @@ exports[`Test in <DatetimeField /> component should to match snapshot 1`] = `
               "alignItems": "center",
               "flexDirection": "row",
               "justifyContent": "center",
+              "minWidth": "100%",
               "paddingHorizontal": 20,
-              "paddingVertical": 8,
+              "paddingVertical": 9,
             },
             {
-              "paddingHorizontal": 10,
+              "minWidth": 0,
+              "paddingHorizontal": 9,
             },
           ]
         }

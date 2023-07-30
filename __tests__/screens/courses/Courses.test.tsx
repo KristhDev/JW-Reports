@@ -52,7 +52,7 @@ describe('Test in <Courses /> screen', () => {
                         name: 'CoursesScreen',
                         params: {
                             title: 'TODOS MIS CURSOS',
-                            emptyMessage: 'No haz agregado ningún curso.',
+                            emptyMessage: 'No has agregado ningún curso.',
                             filter: 'all',
                         },
                         key: 'CoursesScreen',

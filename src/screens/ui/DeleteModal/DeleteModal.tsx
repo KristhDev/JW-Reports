@@ -1,5 +1,5 @@
 import React, { FC } from 'react';
-import { ActivityIndicator, View, Text } from 'react-native';
+import { ActivityIndicator, View, Text, useWindowDimensions } from 'react-native';
 
 /* Screens */
 import { Modal } from '../';
@@ -18,6 +18,7 @@ import { styles as themeStyles } from '../../../theme';
 
 /**
  * This modal is for removing resources of all kinds.
+ *
  * @param {DeleteModalProps} { text: string, isLoading: boolean, isOpen: boolean, onClose: () => void, onConfirm: () => void } Props
  * for delete one resource.
  * - text: Text that informs about the deletion of a resource
@@ -25,9 +26,11 @@ import { styles as themeStyles } from '../../../theme';
  * - isOpen: Boolean to show or not the modal
  * - onClose: Function to close the modal
  * - onConfirm: Function to confirm the deletion of a resource
+ * @return {JSX.Element} rendered component to show delete modal
  */
-const DeleteModal: FC<DeleteModalProps> = ({ text, isLoading, isOpen, onClose, onConfirm }) => {
+const DeleteModal: FC<DeleteModalProps> = ({ text, isLoading, isOpen, onClose, onConfirm }): JSX.Element => {
     const { state: { colors }, BUTTON_TRANSLUCENT_COLOR } = useTheme();
+    const { width } = useWindowDimensions();
 
     return (
         <Modal isOpen={ isOpen }>
@@ -36,7 +39,8 @@ const DeleteModal: FC<DeleteModalProps> = ({ text, isLoading, isOpen, onClose, o
                     <View
                         style={{
                             ...themeStyles.modalContainer,
-                            backgroundColor: colors.modal
+                            backgroundColor: colors.modal,
+                            width: width - 48
                         }}
                     >
 
@@ -44,6 +48,7 @@ const DeleteModal: FC<DeleteModalProps> = ({ text, isLoading, isOpen, onClose, o
                         <Text
                             style={{
                                 ...themeStyles.modalText,
+                                marginBottom: 0,
                                 color: colors.modalText
                             }}
                             testID="delete-modal-title"
@@ -56,7 +61,7 @@ const DeleteModal: FC<DeleteModalProps> = ({ text, isLoading, isOpen, onClose, o
 
                             {/* Cancel button */}
                             <Button
-                                containerStyle={{ paddingHorizontal: 12 }}
+                                containerStyle={{ paddingHorizontal: 12, minWidth: 0 }}
                                 onPress={ onClose }
                                 text="CANCELAR"
                                 textStyle={{ color: colors.button, fontSize: 16 }}
@@ -66,7 +71,7 @@ const DeleteModal: FC<DeleteModalProps> = ({ text, isLoading, isOpen, onClose, o
 
                             {/* Confirm button */}
                             <Button
-                                containerStyle={{ paddingHorizontal: 12 }}
+                                containerStyle={{ paddingHorizontal: 12, minWidth: 0 }}
                                 onPress={ onConfirm }
                                 text="ELIMINAR"
                                 textStyle={{ color: colors.button, fontSize: 16 }}

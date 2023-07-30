@@ -1,5 +1,5 @@
 import React from 'react';
-import { Linking, Text, View } from 'react-native';
+import { Linking, useWindowDimensions, Text, View } from 'react-native';
 
 /* Screens */
 import { Modal } from '../../ui';
@@ -16,8 +16,11 @@ import { styles as themeStyles } from '../../../theme';
 /**
  * This modal is responsible for displaying the success and error
  * states of the app.
+ *
+ * @return {JSX.Element} return jsx element to render status modal
  */
-const StatusModal = () => {
+const StatusModal = (): JSX.Element => {
+    const { width } = useWindowDimensions();
     const { state: { msg }, clearStatus } = useStatus();
     const { state: { colors }, BUTTON_TRANSLUCENT_COLOR } = useTheme();
 
@@ -29,8 +32,10 @@ const StatusModal = () => {
 
     /**
      * If the message is the config message, open the settings page, otherwise clear the status.
+     *
+     * @return {void} This function returns nothing
      */
-    const handleClose = () => {
+    const handleClose = (): void => {
         clearStatus();
         if (msg === configMsg) Linking.openSettings();
     }
@@ -41,16 +46,19 @@ const StatusModal = () => {
                 style={{
                     ...themeStyles.modalContainer,
                     backgroundColor: colors.modal,
+                    width: width - 48,
                     minHeight: 120,
                 }}
             >
 
                 {/* Modal text */}
-                <View style={{ alignItems: 'center' }}>
+                <View>
                     <Text
                         style={{
                             ...themeStyles.modalText,
                             color: colors.modalText,
+                            marginBottom: 0,
+                            width: '100%',
                         }}
                     >
                         { msg }
@@ -63,7 +71,7 @@ const StatusModal = () => {
                     {/* Button settings */}
                     { (msg === configMsg) && (
                         <Button
-                            containerStyle={{ paddingHorizontal: 12 }}
+                            containerStyle={{ paddingHorizontal: 12, minWidth: 0 }}
                             onPress={ clearStatus }
                             text="CANCELAR"
                             textStyle={{ color: colors.button, fontSize: 16 }}
@@ -74,7 +82,7 @@ const StatusModal = () => {
 
                     {/* Confirm button */}
                     <Button
-                        containerStyle={{ paddingHorizontal: 12 }}
+                        containerStyle={{ paddingHorizontal: 12, minWidth: 0 }}
                         onPress={ handleClose }
                         text={ btnText }
                         textStyle={{ color: colors.button, fontSize: 16 }}

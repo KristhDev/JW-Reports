@@ -84,7 +84,7 @@ describe('Test useRevisits hook deleteRevisit', () => {
         /* Check if status state is equal to respective status */
         expect(result.current.useStatus.state).toEqual({
             code: 200,
-            msg: 'Haz eliminado tu revisita correctamente.'
+            msg: 'Has eliminado tu revisita correctamente.'
         });
     });
 

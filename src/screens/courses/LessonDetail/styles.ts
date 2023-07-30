@@ -2,44 +2,21 @@ import { StyleSheet } from 'react-native';
 
 const styles = StyleSheet.create({
     sectionStyle: {
-        paddingHorizontal: 20,
-        paddingVertical: 16,
+        paddingBottom: 24,
         width: '100%'
     },
 
     sectionSubTitle: {
         fontSize: 19,
         fontWeight: 'bold',
-        marginBottom: 10
-    },
-
-    imageText: {
-        fontSize: 16,
-        marginTop: 10
+        marginBottom: 8
     },
 
     dateCreatedText: {
-        bottom: 20,
+        bottom: 24,
         fontSize: 16,
         position: 'absolute',
-        right: 20,
-    },
-
-    cardContainer: {
-        borderWidth: 1,
-        width: '100%'
-    },
-
-    cardHeaderText: {
-        fontSize: 24,
-        fontWeight: 'bold',
-        padding: 10,
-        textAlign: 'center'
-    },
-
-    cardContentText: {
-        fontSize: 19,
-        padding: 22
+        right: 24,
     }
 });
 

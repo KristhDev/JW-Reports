@@ -25,8 +25,7 @@ exports[`Test in <FinishOrStartCourseModal /> screen should to match snapshot 1`
           "backgroundColor": "#292929",
           "borderRadius": 10,
           "justifyContent": "space-between",
-          "padding": 15,
-          "width": "87%",
+          "padding": 24,
         }
       }
     >
@@ -35,9 +34,7 @@ exports[`Test in <FinishOrStartCourseModal /> screen should to match snapshot 1`
           {
             "color": "#B4B4B4",
             "fontSize": 19,
-            "marginBottom": 10,
-            "marginTop": 5,
-            "width": "90%",
+            "marginBottom": 0,
           }
         }
         testID="modal-text"
@@ -50,7 +47,7 @@ exports[`Test in <FinishOrStartCourseModal /> screen should to match snapshot 1`
             "alignSelf": "flex-end",
             "flexDirection": "row",
             "justifyContent": "flex-end",
-            "marginTop": 20,
+            "marginTop": 40,
           }
         }
       >
@@ -111,8 +108,9 @@ exports[`Test in <FinishOrStartCourseModal /> screen should to match snapshot 1`
                   "alignItems": "center",
                   "flexDirection": "row",
                   "justifyContent": "center",
+                  "minWidth": "100%",
                   "paddingHorizontal": 20,
-                  "paddingVertical": 8,
+                  "paddingVertical": 9,
                 },
                 {
                   "paddingHorizontal": 12,
@@ -212,8 +210,9 @@ exports[`Test in <FinishOrStartCourseModal /> screen should to match snapshot 1`
                   "alignItems": "center",
                   "flexDirection": "row",
                   "justifyContent": "center",
+                  "minWidth": "100%",
                   "paddingHorizontal": 20,
-                  "paddingVertical": 8,
+                  "paddingVertical": 9,
                 },
                 {
                   "paddingHorizontal": 12,

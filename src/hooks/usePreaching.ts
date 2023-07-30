@@ -46,9 +46,11 @@ const usePreaching = () => {
 
     /**
      * Load preachings from the database and set them in the state.
+     *
      * @param {Date} date - Date of preaching (month)
+     * @return {Promise<void>} This function does not return anything.
      */
-    const loadPreachings = async (date: Date) => {
+    const loadPreachings = async (date: Date): Promise<void> => {
         if (!isConnected) {
             setNetworkError();
             return;
@@ -80,9 +82,11 @@ const usePreaching = () => {
 
     /**
      * This function is to save the preaching day and return to the previous screen.
+     *
      * @param {PreachingFormValues} preachingValues - The values for save preaching day
+     * @return {Promise<void>} This function does not return anything.
      */
-    const savePreaching = async (preachingValues: PreachingFormValues) => {
+    const savePreaching = async (preachingValues: PreachingFormValues): Promise<void> => {
         if (!isConnected) {
             setNetworkError();
             return;
@@ -114,7 +118,7 @@ const usePreaching = () => {
 
         setStatus({
             code: 201,
-            msg: 'Haz agregado tu día de predicación correctamente.'
+            msg: 'Has agregado tu día de predicación correctamente.'
         });
 
         goBack();
@@ -122,9 +126,11 @@ const usePreaching = () => {
 
     /**
      * This function is to update the preaching day and return to the previous screen.
+     *
      * @param {PreachingFormValues} preachingValues - Values to update preaching day
+     * @return {Promise<void>} This function does not return anything.
      */
-    const updatePreaching = async (preachingValues: PreachingFormValues) => {
+    const updatePreaching = async (preachingValues: PreachingFormValues): Promise<void> => {
         if (!isConnected) {
             setNetworkError();
             return;
@@ -167,7 +173,7 @@ const usePreaching = () => {
 
         setStatus({
             code: 200,
-            msg: 'Haz actualizado tu día de predicación correctamente.'
+            msg: 'Has actualizado tu día de predicación correctamente.'
         });
 
         setSelectedPreaching({
@@ -182,9 +188,11 @@ const usePreaching = () => {
 
     /**
      * This function is to delete a preaching day and return to the previous screen.
+     *
      * @param {Function} onFinish - This callback executed when the process is finished (success or failure)
+     * @return {Promise<void>} This function does not return anything.
      */
-    const deletePreaching = async (onFinish?: () => void) => {
+    const deletePreaching = async (onFinish?: () => void): Promise<void> => {
         if (!isConnected) {
             setNetworkError();
             return;
@@ -250,7 +258,7 @@ const usePreaching = () => {
 
         setStatus({
             code: 200,
-            msg: 'Haz eliminado tu día de predicación correctamente.'
+            msg: 'Has eliminado tu día de predicación correctamente.'
         });
     }
 

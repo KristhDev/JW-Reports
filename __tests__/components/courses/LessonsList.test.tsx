@@ -20,7 +20,7 @@ const removeLessonsMock = jest.fn();
 const setLessonsPaginationMock = jest.fn();
 const setSelectedLessonMock = jest.fn();
 
-const emptyMessageTest = 'No haz agregado clases a este curso.';
+const emptyMessageTest = 'No has agregado clases a este curso.';
 const titleTest = `Clases del curso con ${ lessonsState.selectedCourse.person_name }`;
 
 /* Mock hooks */

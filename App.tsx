@@ -17,8 +17,8 @@ import { ONESIGNAL_APP_ID } from '@env';
 import { store, persistor } from './src/features/store';
 
 /* Context */
-import { NetworkProvider } from './src/context/network';
 import { ThemeProvider } from './src/theme/context';
+import { NetworkProvider } from './src/context/network';
 
 /* Navigation */
 import { Navigation } from './src/navigation';

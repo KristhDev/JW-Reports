@@ -10,6 +10,8 @@ import { useTheme } from '../../../hooks';
 /**
  * This component is responsible for render button to change
  * app theme.
+ *
+ * @return {JSX.Element} Return jsx element to render a button of theme
  */
 export const ThemeBtn = () => {
     const { state: { selectedTheme, colors }, setTheme } = useTheme();
@@ -26,7 +28,7 @@ export const ThemeBtn = () => {
                 />
             }
             onPress={ () => setTheme((selectedTheme === 'dark') ? 'light' : 'dark') }
-            style={{ top: 20, right: 20, position: 'absolute' }}
+            style={{ top: 24, right: 24, position: 'absolute' }}
             touchColor="rgba(0, 0, 0, 0.15)"
         />
     );

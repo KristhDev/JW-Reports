@@ -22,8 +22,10 @@ import styles from './styles';
 /**
  * This screen is responsible for grouping the components to show
  * the detail of a revisit.
+ *
+ * @return {JSX.Element} Return jsx element to render detail of revisit
  */
-const RevisitDetail = () => {
+const RevisitDetail = (): JSX.Element => {
     const [ imageHeight, setImageHeight ] = useState<number>(0);
     const [ showModal, setShowModal ] = useState<boolean>(false);
     const { addListener, removeListener, getState } = useNavigation();
@@ -70,7 +72,7 @@ const RevisitDetail = () => {
     return (
         <>
             <ScrollView
-                contentContainerStyle={{ alignItems: 'center', flexGrow: 1, paddingBottom: 100 }}
+                contentContainerStyle={{ alignItems: 'center', flexGrow: 1, padding: 24, paddingBottom: 100 }}
                 overScrollMode="never"
                 style={{ flex: 1 }}
             >
@@ -84,7 +86,7 @@ const RevisitDetail = () => {
 
                 {/* Revisit status */}
                 { (!selectedRevisit.done) ? (
-                    <View style={{ ...styles.sectionStyle, paddingTop: 40 }}>
+                    <View style={{ ...styles.sectionStyle }}>
                         <View style={{ flexDirection: 'row' }}>
                             <Text
                                 style={{

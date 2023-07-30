@@ -1,5 +1,5 @@
 import React, { useState, FC } from 'react';
-import { View, Text, TextInput, useWindowDimensions } from 'react-native';
+import { View, Text, TextInput } from 'react-native';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import { useField } from 'formik';
 import dayjs from 'dayjs';
@@ -19,6 +19,7 @@ import { styles as themeStyles } from '../../../theme';
 /**
  * This component is responsible for displaying a field to select a
  * Date type data, be it a date or time.
+ *
  * @param {DatetimeFieldProps} props {
  *      controlStyle: StyleProp<ViewStyle>,
  *      icon: ReactNode,
@@ -40,6 +41,7 @@ import { styles as themeStyles } from '../../../theme';
  * - mode: The mode of the field
  * - name: The name of the field
  * - style: The style of the field
+ * @return {JSX.Element} Returns the component to show the field to select a date
  */
 export const DatetimeField: FC<DatetimeFieldProps> = ({
     controlStyle,
@@ -52,9 +54,8 @@ export const DatetimeField: FC<DatetimeFieldProps> = ({
     name,
     style,
     ...rest
-}) => {
+}): JSX.Element => {
     const [ open, setOpen ] = useState<boolean>(false);
-    const { width } = useWindowDimensions();
 
     const [ field, meta, helpers ] = useField({ name });
     const { state: { colors } } = useTheme();
@@ -79,13 +80,7 @@ export const DatetimeField: FC<DatetimeFieldProps> = ({
     }
 
     return (
-        <View
-            style={{
-                ...themeStyles.formField,
-                width: width * 0.9,
-                ...style as any
-            }}
-        >
+        <View style={[ themeStyles.formField, style ]}>
 
             {/* Field label */}
             <Text
@@ -125,11 +120,11 @@ export const DatetimeField: FC<DatetimeFieldProps> = ({
 
                 {/* Field button */}
                 <Button
-                    containerStyle={{ paddingHorizontal: 10 }}
+                    containerStyle={{ minWidth: 0, paddingHorizontal: 9 }}
                     icon={ icon }
                     onPress={ () => setOpen(true) }
                     text=""
-                    touchableStyle={{ marginLeft: 10 }}
+                    touchableStyle={{ marginLeft: 16 }}
                 />
             </View>
 

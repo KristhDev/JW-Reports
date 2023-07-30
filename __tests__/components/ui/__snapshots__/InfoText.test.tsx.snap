@@ -5,7 +5,7 @@ exports[`Test in <InfoText /> component should to match snapshot 1`] = `
   style={
     [
       {
-        "padding": 10,
+        "padding": 16,
       },
       undefined,
     ]

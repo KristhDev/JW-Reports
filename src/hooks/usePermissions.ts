@@ -21,9 +21,11 @@ const usePermissions = () => {
 
     /**
      * It asks for a permission and if the permission is not available it sets a status message.
+     *
      * @param {keyof Permissions} permission - keyof Permissions
+     * @return {Promise<void>} This function does not return anything.
      */
-    const askPermission = async (permission: keyof Permissions) => {
+    const askPermission = async (permission: keyof Permissions): Promise<void> => {
         const askPermissions = {
             camera: PERMISSIONS.ANDROID.CAMERA,
             mediaLibrary: PERMISSIONS.ANDROID.READ_EXTERNAL_STORAGE

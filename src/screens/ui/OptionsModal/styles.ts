@@ -8,8 +8,8 @@ const styles = StyleSheet.create({
     },
 
     modalTitleContainer: {
-        marginBottom: 10,
-        marginLeft: 5,
+        marginBottom: 24,
+        // marginLeft: 5,
         padding: 0
     }
 });

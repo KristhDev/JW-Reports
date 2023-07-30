@@ -1,5 +1,5 @@
 import React, { useState, FC } from 'react';
-import { View, Text, TextInput, useWindowDimensions } from 'react-native';
+import { View, Text, TextInput } from 'react-native';
 import { useField } from 'formik';
 
 /* Hooks */
@@ -14,6 +14,7 @@ import { styles as themeStyles } from '../../../theme';
 /**
  * This component is responsible for displaying fields for forms of
  * different types but as long as it has to do with texts.
+ *
  * @param {FormFieldProps} props {
  *      controlStyle: StyleProp<ViewStyle>,
  *      icon: ReactNode,
@@ -31,6 +32,7 @@ import { styles as themeStyles } from '../../../theme';
  * - labelStyle: The style of the label
  * - name: The name of the field
  * - style: The style of the field
+ * @return {JSX.Element} Returns the component to show the field
  */
 export const FormField: FC<FormFieldProps> = ({
     controlStyle,
@@ -41,9 +43,7 @@ export const FormField: FC<FormFieldProps> = ({
     name,
     style,
     ...rest
-}) => {
-    const { width } = useWindowDimensions();
-
+}): JSX.Element => {
     const [ field, meta, helpers ] = useField({ name });
 
     const [ isFocused, setIsFocused ] = useState<boolean>(false);
@@ -58,7 +58,6 @@ export const FormField: FC<FormFieldProps> = ({
         <View
             style={{
                 ...themeStyles.formField,
-                width: width * 0.9,
                 ...style as any
             }}
         >
@@ -67,7 +66,7 @@ export const FormField: FC<FormFieldProps> = ({
             <Text
                 style={[
                     { ...themeStyles.formLabel, color: colors.titleText },
-                    labelStyle
+                    labelStyle,
                 ]}
                 testID="form-field-label"
             >

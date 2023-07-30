@@ -2,15 +2,14 @@ import { StyleSheet } from 'react-native';
 
 const styles = StyleSheet.create({
     sectionStyle: {
-        paddingHorizontal: 20,
-        paddingVertical: 16,
+        marginBottom: 32,
         width: '100%'
     },
 
     sectionSubTitle: {
         fontSize: 19,
         fontWeight: 'bold',
-        marginBottom: 10
+        marginBottom: 16
     },
 
     imageText: {
@@ -19,10 +18,10 @@ const styles = StyleSheet.create({
     },
 
     dateCreatedText: {
-        bottom: 20,
+        bottom: 24,
         fontSize: 16,
         position: 'absolute',
-        right: 20,
+        right: 24,
     }
 });
 

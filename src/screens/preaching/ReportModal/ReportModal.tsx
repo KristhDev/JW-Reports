@@ -24,9 +24,11 @@ import styles from './styles';
 /**
  * This modal is responsible for grouping all the components to display and deliver
  * the report of the month.
+ *
  * @param {ReportModalProps} { isOpen: boolean, month: string, onClose: () => void }
+ * @return {JSX.Element} rendered component to show modal
  */
-const ReportModal: FC<ReportModalProps> = ({ isOpen, month, onClose }) => {
+const ReportModal: FC<ReportModalProps> = ({ isOpen, month, onClose }): JSX.Element => {
     const [ comment, setComment ] = useState<string>('');
     const [ isFocused, setIsFocused ] = useState<boolean>(false);
     const [ selection, setSelection ] = useState({
@@ -53,8 +55,10 @@ const ReportModal: FC<ReportModalProps> = ({ isOpen, month, onClose }) => {
     /**
      * When the user clicks the button, the function will close the modal, create a report string, and
      * then share the report string with the user's preferred sharing method.
+     *
+     * @return {Promise<void>} This function does not return anything
      */
-    const handleDeliver = async () => {
+    const handleDeliver = async (): Promise<void> => {
         onClose();
 
         let report = '*Informe De Predicación* \n \n';
@@ -77,8 +81,10 @@ const ReportModal: FC<ReportModalProps> = ({ isOpen, month, onClose }) => {
 
     /**
      * When the user clicks the close button, the comment is cleared and the modal is closed.
+     *
+     * @return {void} This function does not return anything
      */
-    const handleClose = () => {
+    const handleClose = (): void => {
         onClose();
         setComment('');
     }
@@ -99,10 +105,10 @@ const ReportModal: FC<ReportModalProps> = ({ isOpen, month, onClose }) => {
                     overScrollMode="never"
                     showsVerticalScrollIndicator={ false }
                 >
-                    <View style={{ ...styles.reportModal, backgroundColor: colors.modal, width: width * 0.87 }}>
+                    <View style={{ ...styles.reportModal, backgroundColor: colors.modal, width: width - 48 }}>
                         <Text style={{ ...styles.reportModalInfo, color: colors.modalText }}>Estás a punto de entregar tu informe predicación, por favor revisalo.</Text>
 
-                        <View style={{ padding: 10, marginTop: 20 }}>
+                        <View style={{ marginTop: 40, marginBottom: 24 }}>
                             <Text style={{ ...styles.reportTitle, color: colors.text }}>Informe De Predicación</Text>
 
                             <View style={{ flexDirection: 'row' }}>
@@ -147,7 +153,8 @@ const ReportModal: FC<ReportModalProps> = ({ isOpen, month, onClose }) => {
                                 <View
                                     style={{
                                         ...themeStyles.focusExternalBorder,
-                                        borderColor: (isFocused) ? '#FFFFFF' : 'transparent'
+                                        borderColor: (isFocused) ? '#FFFFFF' : 'transparent',
+                                        marginTop: 16
                                     }}
                                 >
                                     <View
@@ -194,16 +201,16 @@ const ReportModal: FC<ReportModalProps> = ({ isOpen, month, onClose }) => {
 
                         {
                             (restMins > 0) && (
-                                <Text style={{ color: colors.modalText, fontSize: 16, padding: 10 }}>
+                                <Text style={{ color: colors.modalText, fontSize: 16, marginBottom: 24 }}>
                                     Para este mes te sobraron { restMins } minutos, guardalos para el siguiente mes.
                                 </Text>
                             )
                         }
 
                         {/* Modal actions */}
-                        <View style={{ flexDirection: 'row', justifyContent: 'flex-end', marginTop: 20 }}>
+                        <View style={{ flexDirection: 'row', justifyContent: 'flex-end' }}>
                             <Button
-                                containerStyle={{ paddingHorizontal: 12 }}
+                                containerStyle={{ paddingHorizontal: 12, minWidth: 0 }}
                                 onPress={ handleClose }
                                 text="CANCELAR"
                                 textStyle={{ color: colors.button, fontSize: 16 }}
@@ -212,7 +219,7 @@ const ReportModal: FC<ReportModalProps> = ({ isOpen, month, onClose }) => {
                             />
 
                             <Button
-                                containerStyle={{ paddingHorizontal: 12 }}
+                                containerStyle={{ paddingHorizontal: 12, minWidth: 0 }}
                                 onPress={ handleDeliver }
                                 text="ENTREGAR"
                                 textStyle={{ color: colors.button, fontSize: 16 }}

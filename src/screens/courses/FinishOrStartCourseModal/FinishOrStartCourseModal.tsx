@@ -19,9 +19,11 @@ import { styles as themeStyles } from '../../../theme';
 /**
  * This modal is responsible for grouping the components to finish
  * or start a course again.
+ *
  * @param {ModalProps} { isOpen: boolean, onClose: () => void }
+ * @return {JSX.Element} rendered component to show modal
  */
-const FinishOrStartCourseModal: FC<ModalProps> = ({ isOpen, onClose }) => {
+const FinishOrStartCourseModal: FC<ModalProps> = ({ isOpen, onClose }): JSX.Element => {
     const { state: { selectedCourse, isCourseLoading }, finishOrStartCourse } = useCourses();
     const { state: { colors }, BUTTON_TRANSLUCENT_COLOR } = useTheme();
 
@@ -34,8 +36,10 @@ const FinishOrStartCourseModal: FC<ModalProps> = ({ isOpen, onClose }) => {
     /**
      * HandleConfirm() is a function that calls the finishOrStartCourse() function and passes the
      * onClose() function as an argument.
+     *
+     * @return {void} This function does not return anything.
      */
-    const handleConfirm = () => {
+    const handleConfirm = (): void => {
         finishOrStartCourse(onClose);
     }
 
@@ -52,7 +56,8 @@ const FinishOrStartCourseModal: FC<ModalProps> = ({ isOpen, onClose }) => {
                         <Text
                             style={{
                                 ...themeStyles.modalText,
-                                color: colors.modalText
+                                color: colors.modalText,
+                                marginBottom: 0
                             }}
                             testID="modal-text"
                         >

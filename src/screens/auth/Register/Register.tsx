@@ -9,15 +9,17 @@ import { Title } from '../../../components/ui';
 /**
  * This screen is to show the form that will allow users
  * to create a new account.
+ *
+ * @return {JSX.Element} The rendered form screen of create account
  */
-const Register = () => {
+const Register = (): JSX.Element => {
     return (
         <KeyboardAwareScrollView
             contentContainerStyle={{ flexGrow: 1, paddingBottom: 25 }}
             extraHeight={ 50 }
             overScrollMode="never"
         >
-            <View style={{ flex: 1, alignItems: 'center' }}>
+            <View style={{ flex: 1, alignItems: 'center', padding: 24 }}>
                 <Title text="Crear cuenta" />
 
                 <RegisterForm />

@@ -21,8 +21,10 @@ const Stack = createStackNavigator<RevisitsStackParamsList>();
 
 /**
  * This is a stack navigation for the revisits.
+ *
+ * @return {JSX.Element} rendered component to show stack navigation of revisits
  */
-const RevisitsStackNavigation = () => {
+const RevisitsStackNavigation = (): JSX.Element => {
     const [ showDeleteModal, setShowDeleteModal ] = useState<boolean>(false);
     const { navigate } = useNavigation();
 
@@ -33,6 +35,8 @@ const RevisitsStackNavigation = () => {
 
     /**
      * If the user confirms the delete, then delete the revisit and close the modal.
+     *
+     * @return {void} This function does not return anything
      */
     const handleDeleteConfirm = () => {
         deleteRevisit(true, () => setShowDeleteModal(false));

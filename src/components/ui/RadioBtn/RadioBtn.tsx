@@ -14,13 +14,15 @@ import styles from './styles';
 /**
  * This component is responsible for displaying a radio button with a
  * label to select an option.
+ *
  * @param {RadioBtnProps} props { label: string, onPress: () => void, value: string } - This is the props
  * for functionality of the component
  * - label: This is the label of the radio button
  * - onPress: This is the function to be called when the radio button is pressed
  * - value: This is the value of the radio button
+ * @return {JSX.Element} Returns the component to show the field with radio
  */
-export const RadioBtn: FC<RadioBtnProps> = ({ label, onPress, value }) => {
+export const RadioBtn: FC<RadioBtnProps> = ({ label, onPress, value }): JSX.Element => {
     const { state: { colors } } = useTheme();
 
     return (

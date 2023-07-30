@@ -20,8 +20,10 @@ import { styles as themeStyles } from '../../../theme';
 /**
  * This component is responsible for rendering the fields to create
  * or edit a preaching.
+ *
+ * @returns {JSX.Element} The preaching form component.
  */
-export const PreachingForm = () => {
+export const PreachingForm = (): JSX.Element => {
     const { setErrorForm } = useStatus();
     const { state: { colors } } = useTheme();
     const { state: { isPreachingLoading, seletedPreaching }, savePreaching, updatePreaching } = usePreaching();
@@ -47,9 +49,11 @@ export const PreachingForm = () => {
 
     /**
      * If the selected preaching has an id, then update the preaching, otherwise save the preaching.
+     *
      * @param {PreachingFormValues} formValues - PreachingFormValues
+     * @return {void} This function does not return anything.
      */
-    const handleSaveOrUpdate = (formValues: PreachingFormValues) => {
+    const handleSaveOrUpdate = (formValues: PreachingFormValues): void => {
         (seletedPreaching.id === '')
             ? savePreaching(formValues)
             : updatePreaching(formValues);
@@ -70,7 +74,7 @@ export const PreachingForm = () => {
             validateOnMount
         >
             { ({ handleSubmit, errors, isValid }) => (
-                <View style={{ ...themeStyles.formContainer, paddingTop: 30, paddingBottom: 40 }}>
+                <View style={{ ...themeStyles.formContainer, paddingBottom: 40 }}>
 
                     {/* Day field */}
                     <DatetimeField
@@ -166,6 +170,7 @@ export const PreachingForm = () => {
                         mode="time"
                         name="final_hour"
                         placeholder="Seleccione la hora"
+                        style={{ marginBottom: 40 }}
                     />
 
                     {/* Submit button */}
@@ -175,14 +180,13 @@ export const PreachingForm = () => {
                             (isPreachingLoading) && (
                                 <ActivityIndicator
                                     color={ colors.contentHeader }
-                                    size="small"
+                                    size={ 25 }
                                     style={{ marginLeft: 10 }}
                                 />
                             )
                         }
                         onPress={ (isValid) ? handleSubmit : () => setErrorForm(errors) }
                         text={ (seletedPreaching.id !== '') ? 'Actualizar' : 'Guardar' }
-                        touchableStyle={{ marginTop: 30 }}
                     />
                 </View>
             ) }

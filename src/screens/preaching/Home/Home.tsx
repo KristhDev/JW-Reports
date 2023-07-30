@@ -24,8 +24,10 @@ import { styles as themeStyles } from '../../../theme';
  * This screen is in charge of grouping the components to list the preaching days by
  * selectedDate, in addition to being the main screen that is shown to the
  * authenticated user.
+ *
+ * @return {JSX.Element} rendered component to show list of preaching days
  */
-const Home = () => {
+const Home = (): JSX.Element => {
     const [ isRefreshing, setIsRefreshing ] = useState<boolean>(false);
     const [ showModal, setShowModal ] = useState<boolean>(false);
     const { navigate } = useNavigation();
@@ -40,8 +42,10 @@ const Home = () => {
     /**
      * I'm trying to set the state of the selectedPreaching object to the INIT_PREACHING object, but I
      * want to change the day, init_hour and final_hour properties to the current date
+     *
+     * @return {void} This function does not return anything
      */
-    const handleNavigate = () => {
+    const handleNavigate = (): void => {
         setSelectedPreaching({
             ...INIT_PREACHING,
             day: new Date().toString(),
@@ -55,8 +59,10 @@ const Home = () => {
     /**
      * When the user swipes down to refresh, load the preachings for the selected date and set the
      * refreshing state to false.
+     *
+     * @return {void} This function does not return anything
      */
-    const handleRefreshing = () => {
+    const handleRefreshing = (): void => {
         loadPreachings(selectedDate);
         setIsRefreshing(false);
     }
@@ -64,7 +70,7 @@ const Home = () => {
     return (
         <>
             <ScrollView
-                contentContainerStyle={{ alignItems: 'center', paddingBottom: 100 }}
+                contentContainerStyle={{ alignItems: 'center', padding: 24, paddingBottom: 100 }}
                 overScrollMode="never"
                 refreshControl={
                     <RefreshControl
@@ -100,7 +106,7 @@ const Home = () => {
                 { (!isPreachingsLoading && preachings.length === 0) && (
                     <InfoText
                         containerStyle={{ marginTop: height * 0.30 }}
-                        text="No haz agregado ningún día de predicación para el informe de este mes."
+                        text="No has agregado ningún día de predicación para el informe de este mes."
                     />
                 ) }
             </ScrollView>

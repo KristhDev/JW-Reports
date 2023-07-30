@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, TouchableOpacity, useWindowDimensions, ActivityIndicator } from 'react-native';
+import { View, Text, TouchableOpacity, ActivityIndicator } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { Formik } from 'formik';
 import { object, string } from 'yup';
@@ -17,10 +17,11 @@ import { styles as themeStyles } from '../../../theme';
 /**
  * This component is responsible for rendering the fields to request a user's
  * password reset to recover their account.
+ *
+ * @return {JSX.Element} The rendered form component.
  */
-export const ForgotPasswordForm = () => {
+export const ForgotPasswordForm = (): JSX.Element => {
     const { navigate } = useNavigation();
-    const { width } = useWindowDimensions();
 
     const { state: { isAuthLoading }, resetPassword } = useAuth();
     const { setErrorForm } = useStatus();
@@ -33,13 +34,15 @@ export const ForgotPasswordForm = () => {
             .required('El correo electrónico es requerido.')
     });
 
+
     /**
-     * HandleResetPassword is a function that takes in two arguments, values and resetForm, and returns
-     * a function that calls resetPassword with values and resetForm.
-     * @param values - { email: string } - this is the values object that is passed to the formik form.
-     * @param resetForm - ()  => void
+     * Handles the reset password functionality.
+     *
+     * @param {Object} values - An object containing the email value.
+     * @param {Function} resetForm - A function to reset the form.
+     * @return {void} This function does not return any value.
      */
-    const handleResetPassword = (values: { email: string }, resetForm: ()  => void) => {
+    const handleResetPassword = (values: { email: string }, resetForm: ()  => void): void => {
         resetPassword(values);
         resetForm();
     }
@@ -53,7 +56,7 @@ export const ForgotPasswordForm = () => {
         >
             { ({ handleSubmit, isValid, errors }) => (
                 <View style={ themeStyles.formContainer }>
-                    <View style={{ ...themeStyles.btnLink, marginBottom: 30, marginTop: 60, width: width * 0.9 }}>
+                    <View style={{ ...themeStyles.btnLink, marginTop: 0, marginBottom: 40 }}>
                         <Text
                             style={{
                                 ...themeStyles.formText,
@@ -79,6 +82,7 @@ export const ForgotPasswordForm = () => {
                         label="Correo:"
                         name="email"
                         placeholder="Ingrese su correo"
+                        style={{ marginBottom: 40 }}
                     />
 
                     {/* Submit button */}
@@ -88,18 +92,17 @@ export const ForgotPasswordForm = () => {
                             (isAuthLoading) && (
                                 <ActivityIndicator
                                     color={ colors.contentHeader }
-                                    size="small"
+                                    size={ 25 }
                                     style={{ marginLeft: 10 }}
                                 />
                             )
                         }
                         onPress={ (isValid) ? handleSubmit : () => setErrorForm(errors)  }
                         text="Restablecer contraseña"
-                        touchableStyle={{ paddingHorizontal: 20, marginTop: 30 }}
                     />
 
                     {/* Sign in link */}
-                    <View style={{ ...themeStyles.btnLink, marginBottom: 100, width: width * 0.9 }}>
+                    <View style={{ ...themeStyles.btnLink, marginBottom: 100 }}>
                         <TouchableOpacity
                             activeOpacity={ 0.75 }
                             onPress={ () => navigate('LoginScreen' as never) }

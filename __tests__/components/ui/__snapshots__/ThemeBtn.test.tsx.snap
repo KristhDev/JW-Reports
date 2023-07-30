@@ -49,8 +49,8 @@ exports[`Test in <ThemeBtn /> component should to match snapshot 1`] = `
         },
         {
           "position": "absolute",
-          "right": 20,
-          "top": 20,
+          "right": 24,
+          "top": 24,
         },
       ],
     ]

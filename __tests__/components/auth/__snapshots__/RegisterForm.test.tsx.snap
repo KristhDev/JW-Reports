@@ -7,6 +7,7 @@ exports[`Test in <RegisterForm /> component should to match snapshot 1`] = `
       "alignItems": "center",
       "flex": 1,
       "justifyContent": "center",
+      "width": "100%",
     }
   }
 >
@@ -14,8 +15,8 @@ exports[`Test in <RegisterForm /> component should to match snapshot 1`] = `
     style={
       {
         "display": "flex",
-        "padding": 10,
-        "width": 675,
+        "marginBottom": 16,
+        "width": "100%",
       }
     }
   >
@@ -25,8 +26,7 @@ exports[`Test in <RegisterForm /> component should to match snapshot 1`] = `
           {
             "color": "#FFFFFF",
             "fontSize": 18,
-            "marginBottom": 5,
-            "padding": 5,
+            "marginBottom": 16,
           },
           undefined,
         ]
@@ -130,8 +130,8 @@ exports[`Test in <RegisterForm /> component should to match snapshot 1`] = `
     style={
       {
         "display": "flex",
-        "padding": 10,
-        "width": 675,
+        "marginBottom": 16,
+        "width": "100%",
       }
     }
   >
@@ -141,8 +141,7 @@ exports[`Test in <RegisterForm /> component should to match snapshot 1`] = `
           {
             "color": "#FFFFFF",
             "fontSize": 18,
-            "marginBottom": 5,
-            "padding": 5,
+            "marginBottom": 16,
           },
           undefined,
         ]
@@ -246,8 +245,8 @@ exports[`Test in <RegisterForm /> component should to match snapshot 1`] = `
     style={
       {
         "display": "flex",
-        "padding": 10,
-        "width": 675,
+        "marginBottom": 16,
+        "width": "100%",
       }
     }
   >
@@ -257,8 +256,7 @@ exports[`Test in <RegisterForm /> component should to match snapshot 1`] = `
           {
             "color": "#FFFFFF",
             "fontSize": 18,
-            "marginBottom": 5,
-            "padding": 5,
+            "marginBottom": 16,
           },
           undefined,
         ]
@@ -363,8 +361,8 @@ exports[`Test in <RegisterForm /> component should to match snapshot 1`] = `
     style={
       {
         "display": "flex",
-        "padding": 10,
-        "width": 675,
+        "marginBottom": 16,
+        "width": "100%",
       }
     }
   >
@@ -374,8 +372,7 @@ exports[`Test in <RegisterForm /> component should to match snapshot 1`] = `
           {
             "color": "#FFFFFF",
             "fontSize": 18,
-            "marginBottom": 5,
-            "padding": 5,
+            "marginBottom": 16,
           },
           undefined,
         ]
@@ -516,8 +513,8 @@ exports[`Test in <RegisterForm /> component should to match snapshot 1`] = `
     style={
       {
         "display": "flex",
-        "padding": 10,
-        "width": 675,
+        "marginBottom": 16,
+        "width": "100%",
       }
     }
   >
@@ -527,8 +524,7 @@ exports[`Test in <RegisterForm /> component should to match snapshot 1`] = `
           {
             "color": "#FFFFFF",
             "fontSize": 18,
-            "marginBottom": 5,
-            "padding": 5,
+            "marginBottom": 16,
           },
           undefined,
         ]
@@ -721,8 +717,9 @@ exports[`Test in <RegisterForm /> component should to match snapshot 1`] = `
             "alignItems": "center",
             "flexDirection": "row",
             "justifyContent": "center",
+            "minWidth": "100%",
             "paddingHorizontal": 20,
-            "paddingVertical": 8,
+            "paddingVertical": 9,
           },
           undefined,
         ]
@@ -766,7 +763,7 @@ exports[`Test in <RegisterForm /> component should to match snapshot 1`] = `
       {
         "flexDirection": "row",
         "justifyContent": "center",
-        "marginTop": 30,
+        "marginTop": 40,
         "width": 675,
       }
     }

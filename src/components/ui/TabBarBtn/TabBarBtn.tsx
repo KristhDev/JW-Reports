@@ -13,6 +13,7 @@ import styles from './styles';
 
 /**
  * This component is responsible for displaying a button for the navigation bar.
+ *
  * @param {TabBarBtnProps} props {
  *      active: boolean,
  *      color: string,
@@ -25,8 +26,9 @@ import styles from './styles';
  * - iconName: This is the icon name of the button
  * - onPress: This is the function to be called when the button is pressed
  * - title: This is the title of the button
+ * @return {JSX.Element} Return jsx element to render tab bar btn of navigation
  */
-export const TabBarBtn: FC<TabBarBtnProps> = ({ active, color, iconName, onPress, title }) => {
+export const TabBarBtn: FC<TabBarBtnProps> = ({ active, color, iconName, onPress, title }): JSX.Element => {
     const { state: { selectedTheme }, BUTTON_TRANSLUCENT_COLOR, BUTTON_TRANSPARENT_COLOR } = useTheme();
     const [ pressColor, setPressColor ] = useState<string>(BUTTON_TRANSPARENT_COLOR);
 

@@ -25,8 +25,8 @@ exports[`Test in <OptionsModal /> screen should to match snapshot 1`] = `
           "backgroundColor": "#292929",
           "borderRadius": 10,
           "justifyContent": "space-between",
-          "padding": 15,
-          "width": "87%",
+          "padding": 24,
+          "width": 702,
         }
       }
     >
@@ -34,11 +34,10 @@ exports[`Test in <OptionsModal /> screen should to match snapshot 1`] = `
         style={
           [
             {
-              "padding": 10,
+              "padding": 16,
             },
             {
-              "marginBottom": 10,
-              "marginLeft": 5,
+              "marginBottom": 24,
               "padding": 0,
             },
           ]
@@ -73,7 +72,7 @@ exports[`Test in <OptionsModal /> screen should to match snapshot 1`] = `
             {
               "alignItems": "center",
               "flexDirection": "row",
-              "padding": 5,
+              "marginBottom": 5,
             }
           }
           testID="radio-btn-container"
@@ -176,7 +175,7 @@ exports[`Test in <OptionsModal /> screen should to match snapshot 1`] = `
               {
                 "color": "#FFFFFF",
                 "fontSize": 18,
-                "marginLeft": 15,
+                "marginLeft": 8,
               }
             }
             testID="radio-btn-text"
@@ -189,7 +188,7 @@ exports[`Test in <OptionsModal /> screen should to match snapshot 1`] = `
             {
               "alignItems": "center",
               "flexDirection": "row",
-              "padding": 5,
+              "marginBottom": 5,
             }
           }
           testID="radio-btn-container"
@@ -292,7 +291,7 @@ exports[`Test in <OptionsModal /> screen should to match snapshot 1`] = `
               {
                 "color": "#FFFFFF",
                 "fontSize": 18,
-                "marginLeft": 15,
+                "marginLeft": 8,
               }
             }
             testID="radio-btn-text"
@@ -305,7 +304,7 @@ exports[`Test in <OptionsModal /> screen should to match snapshot 1`] = `
             {
               "alignItems": "center",
               "flexDirection": "row",
-              "padding": 5,
+              "marginBottom": 5,
             }
           }
           testID="radio-btn-container"
@@ -408,7 +407,7 @@ exports[`Test in <OptionsModal /> screen should to match snapshot 1`] = `
               {
                 "color": "#FFFFFF",
                 "fontSize": 18,
-                "marginLeft": 15,
+                "marginLeft": 8,
               }
             }
             testID="radio-btn-text"
@@ -421,7 +420,7 @@ exports[`Test in <OptionsModal /> screen should to match snapshot 1`] = `
             {
               "alignItems": "center",
               "flexDirection": "row",
-              "padding": 5,
+              "marginBottom": 5,
             }
           }
           testID="radio-btn-container"
@@ -524,7 +523,7 @@ exports[`Test in <OptionsModal /> screen should to match snapshot 1`] = `
               {
                 "color": "#FFFFFF",
                 "fontSize": 18,
-                "marginLeft": 15,
+                "marginLeft": 8,
               }
             }
             testID="radio-btn-text"
@@ -538,7 +537,7 @@ exports[`Test in <OptionsModal /> screen should to match snapshot 1`] = `
           {
             "flexDirection": "row",
             "justifyContent": "flex-end",
-            "marginTop": 20,
+            "marginTop": 40,
           }
         }
       >
@@ -585,7 +584,6 @@ exports[`Test in <OptionsModal /> screen should to match snapshot 1`] = `
                 },
                 {
                   "backgroundColor": "transparent",
-                  "marginRight": 5,
                 },
               ],
             ]
@@ -599,10 +597,12 @@ exports[`Test in <OptionsModal /> screen should to match snapshot 1`] = `
                   "alignItems": "center",
                   "flexDirection": "row",
                   "justifyContent": "center",
+                  "minWidth": "100%",
                   "paddingHorizontal": 20,
-                  "paddingVertical": 8,
+                  "paddingVertical": 9,
                 },
                 {
+                  "minWidth": 0,
                   "paddingHorizontal": 12,
                 },
               ]

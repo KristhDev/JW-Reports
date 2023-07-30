@@ -7,6 +7,7 @@ exports[`Test in <RevistDetail /> screen should to match snapshot 1`] = `
       {
         "alignItems": "center",
         "flexGrow": 1,
+        "padding": 24,
         "paddingBottom": 100,
       }
     }
@@ -23,12 +24,12 @@ exports[`Test in <RevistDetail /> screen should to match snapshot 1`] = `
           [
             {
               "alignItems": "flex-start",
-              "padding": 20,
+              "marginBottom": 40,
               "width": "100%",
             },
             {
               "paddingBottom": 0,
-              "paddingTop": 30,
+              "paddingTop": 8,
             },
           ]
         }
@@ -54,9 +55,7 @@ exports[`Test in <RevistDetail /> screen should to match snapshot 1`] = `
       <View
         style={
           {
-            "paddingHorizontal": 20,
-            "paddingTop": 40,
-            "paddingVertical": 16,
+            "marginBottom": 32,
             "width": "100%",
           }
         }
@@ -141,8 +140,7 @@ exports[`Test in <RevistDetail /> screen should to match snapshot 1`] = `
       <View
         style={
           {
-            "paddingHorizontal": 20,
-            "paddingVertical": 16,
+            "marginBottom": 32,
             "width": "100%",
           }
         }
@@ -154,7 +152,7 @@ exports[`Test in <RevistDetail /> screen should to match snapshot 1`] = `
               "color": "#FFFFFF",
               "fontSize": 19,
               "fontWeight": "bold",
-              "marginBottom": 10,
+              "marginBottom": 16,
             }
           }
         >
@@ -176,8 +174,7 @@ exports[`Test in <RevistDetail /> screen should to match snapshot 1`] = `
       <View
         style={
           {
-            "paddingHorizontal": 20,
-            "paddingVertical": 16,
+            "marginBottom": 32,
             "width": "100%",
           }
         }
@@ -189,7 +186,7 @@ exports[`Test in <RevistDetail /> screen should to match snapshot 1`] = `
               "color": "#FFFFFF",
               "fontSize": 19,
               "fontWeight": "bold",
-              "marginBottom": 10,
+              "marginBottom": 16,
             }
           }
         >
@@ -209,11 +206,11 @@ exports[`Test in <RevistDetail /> screen should to match snapshot 1`] = `
       <Text
         style={
           {
-            "bottom": 20,
+            "bottom": 24,
             "color": "#B4B4B4",
             "fontSize": 16,
             "position": "absolute",
-            "right": 20,
+            "right": 24,
           }
         }
         testID="revisit-detail-created-date"

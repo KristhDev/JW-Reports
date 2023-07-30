@@ -108,7 +108,7 @@ const RevisitModal: FC<ModalProps> = ({ isOpen, onClose }) => {
                             style={{
                                 ...themeStyles.modalContainer,
                                 backgroundColor: colors.modal,
-                                width: width * 0.87,
+                                width: width - 16,
                             }}
                         >
 
@@ -117,7 +117,8 @@ const RevisitModal: FC<ModalProps> = ({ isOpen, onClose }) => {
                                 <Text
                                     style={{
                                         ...themeStyles.modalText,
-                                        color: colors.modalText
+                                        color: colors.modalText,
+                                        marginBottom: 40
                                     }}
                                     testID="revisit-modal-complete-msg"
                                 >
@@ -131,7 +132,8 @@ const RevisitModal: FC<ModalProps> = ({ isOpen, onClose }) => {
                                     <Text
                                         style={{
                                             ...themeStyles.modalText,
-                                            color: colors.modalText
+                                            color: colors.modalText,
+                                            marginBottom: 0
                                         }}
                                         testID="revisit-modal-title"
                                     >
@@ -151,7 +153,8 @@ const RevisitModal: FC<ModalProps> = ({ isOpen, onClose }) => {
                                     <Text
                                         style={{
                                             ...themeStyles.modalText,
-                                            color: colors.modalText
+                                            color: colors.modalText,
+                                            marginBottom: 40
                                         }}
                                         testID="revisit-modal-title"
                                     >
@@ -177,7 +180,6 @@ const RevisitModal: FC<ModalProps> = ({ isOpen, onClose }) => {
                                                     name="about"
                                                     numberOfLines={ 10 }
                                                     placeholder="Ingrese datos sobre la persona, tema de conversación, aspectos importantes, etc..."
-                                                    style={{ width: '100%' }}
                                                 />
 
                                                 {/* Next visit field */}
@@ -195,7 +197,7 @@ const RevisitModal: FC<ModalProps> = ({ isOpen, onClose }) => {
                                                     mode="date"
                                                     name="next_visit"
                                                     placeholder="Seleccione el día"
-                                                    style={{ width: '100%' }}
+                                                    style={{ marginBottom: 0 }}
                                                 />
 
                                                 {/* Modal actions */}

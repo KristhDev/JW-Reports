@@ -15,8 +15,10 @@ const Tabs = createMaterialTopTabNavigator<CoursesTopTabsParamsList>();
 
 /**
  * This is a top taps navigation for the courses.
+ *
+ * @return {JSX.Element} The top taps navigation for the courses.
  */
-const CoursesTopTabsNavigation = () => {
+const CoursesTopTabsNavigation = (): JSX.Element => {
     const { width } = useWindowDimensions();
     const { state: { colors }, BUTTON_TRANSLUCENT_COLOR, BUTTON_TRANSPARENT_COLOR } = useTheme();
 
@@ -56,7 +58,7 @@ const CoursesTopTabsNavigation = () => {
             <Tabs.Screen
                 component={ Courses }
                 initialParams={{
-                    emptyMessage: 'No haz agregado ningún curso.',
+                    emptyMessage: 'No has agregado ningún curso.',
                     filter: 'all',
                     title: 'TODOS MIS CURSOS',
                 }}

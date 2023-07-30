@@ -30,9 +30,11 @@ const ThemeProvider: FC<PropsWithChildren> = ({ children }) => {
     /**
      * This function sets the theme, and then sets the selected theme, and then sets the colors, and
      * then sets the isLoaded theme.
+     *
      * @param {Theme} theme - Theme - this is the theme that the user has selected.
+     * @return {Promise<void>} This function does not return anything.
      */
-    const setTheme = async (theme: Theme) => {
+    const setTheme = async (theme: Theme): Promise<void> => {
         dispatch({ type: '[Theme] set theme', payload: { theme } });
         await AsyncStorage.setItem('jw-reports-theme', theme);
 
@@ -65,12 +67,16 @@ const ThemeProvider: FC<PropsWithChildren> = ({ children }) => {
 
     /**
      * SetDefaultTheme is a function that sets the theme to default.
+     *
+     * @return This function does not return anything.
      */
-    const setDefaultTheme = () => {
+    const setDefaultTheme = (): void => {
         setTheme('default');
     }
 
-     /* This is the transition that is used when the theme is changed. */
+    /**
+     * This is the transition that is used when the theme is changed.
+     */
     const transition = (
         <Transition.Together>
             <Transition.In type="fade" durationMs={ 300 } />

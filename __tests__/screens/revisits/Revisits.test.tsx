@@ -59,7 +59,7 @@ describe('Test in <Revisits /> screen', () => {
                         name: 'RevisitsScreen',
                         params: {
                             title: 'TODAS MIS REVISITAS',
-                            emptyMessage: 'No haz agregado ninguna revisita.',
+                            emptyMessage: 'No has agregado ninguna revisita.',
                             filter: 'all',
                         },
                         key: 'RevisitsScreen',

@@ -21,8 +21,10 @@ import { THEME_OPTIONS } from '../../../utils';
 /**
  * This screen is responsible for displaying all the app's settings through
  * sections that direct it to other screens, modals or actions.
+ *
+ * @return {JSX.Element} return jsx element to render the settings
  */
-const Settings = () => {
+const Settings = (): JSX.Element => {
     const [ showThemeModal, setShowThemeModal ] = useState<boolean>(false);
     const { navigate } = useNavigation();
 
@@ -33,11 +35,13 @@ const Settings = () => {
      * When the user clicks the button, set the status to a new object with a code of 200 and a msg of
      * 'Para más información o dejar sus comentarios acerca de la aplicación, escriba al correo:
      * kristhdev@gmail.com'.
+     *
+     * @return {void} This function returns nothing
      */
-    const handleMoreInfo = () => {
+    const handleMoreInfo = (): void => {
         setStatus({
             code: 200,
-            msg: 'Para más información o dejar sus comentarios acerca de la aplicación, escriba al correo: kristhdev@gmail.com',
+            msg: 'Para más información o dejar sus comentarios acerca de la aplicación, por favor escriba al siguiente correo: kristhdev@gmail.com',
         });
     }
 

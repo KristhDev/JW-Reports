@@ -77,9 +77,11 @@ const useCourses = () => {
 
     /**
      * This function is responsible for activating or suspending a course.
+     *
      * @param {Function} onFinish - This callback executed when the process is finished (success or failure)
+     * @return {Promise<void>} This function does not return anything.
      */
-    const activeOrSuspendCourse = async (onFinish?: () => void) => {
+    const activeOrSuspendCourse = async (onFinish?: () => void): Promise<void> => {
         if (!isConnected) {
             setNetworkError();
             return;
@@ -143,8 +145,8 @@ const useCourses = () => {
         if (next) return;
 
         const msg = (data![0].suspended)
-            ? 'Haz suspendido el curso correctamente.'
-            : 'Haz renovado el curso correctamente.'
+            ? 'Has suspendido el curso correctamente.'
+            : 'Has renovado el curso correctamente.'
 
         dispatch(updateCourseAction({ course: data![0] }));
 
@@ -155,10 +157,12 @@ const useCourses = () => {
 
     /**
      * It deletes a course and all its lessons from the database.
+     *
      * @param {boolean} back - This parameter allows you to return to the previous screen, by default it is `false`
      * @param {Function} onFinish - This callback executed when the process is finished (success or failure)
+     * @return {Promise<void>} This function does not return anything.
      */
-    const deleteCourse = async (back: boolean = false, onFinish?: () => void) => {
+    const deleteCourse = async (back: boolean = false, onFinish?: () => void): Promise<void> => {
         if (!isConnected) {
             setNetworkError();
             return;
@@ -219,16 +223,18 @@ const useCourses = () => {
 
         setStatus({
             code: 200,
-            msg: 'Haz eliminado el curso correctamente.'
+            msg: 'Has eliminado el curso correctamente.'
         });
     }
 
     /**
      * It deletes a lesson from the database and updates the state of the app.
+     *
      * @param {boolean} back - This parameter allows you to return to the previous screen, by default it is `false`
      * @param {Function} onFinish - This callback executed when the process is finished (success or failure)
+     * @return {Promise<void>} This function does not return anything.
      */
-    const deleteLesson = async (back: boolean = false, onFinish?: () => void) => {
+    const deleteLesson = async (back: boolean = false, onFinish?: () => void): Promise<void> => {
         if (!isConnected) {
             setNetworkError();
             return;
@@ -293,15 +299,17 @@ const useCourses = () => {
 
         setStatus({
             code: 200,
-            msg: 'Haz eliminado la clase correctamente.'
+            msg: 'Has eliminado la clase correctamente.'
         });
     }
 
     /**
      * This function is to finish or start a course again.
+     *
      * @param {Function} onFinish - This callback executed when the process is finished (success or failure)
+     * @return {Promise<void>} This function does not return anything.
      */
-    const finishOrStartCourse = async (onFinish?: () => void) => {
+    const finishOrStartCourse = async (onFinish?: () => void): Promise<void> => {
         if (!isConnected) {
             setNetworkError();
             return;
@@ -361,8 +369,8 @@ const useCourses = () => {
         if (next) return;
 
         const msg = (data![0].finished)
-            ? 'Haz terminado el curso correctamente.'
-            : 'Haz comenzado de nuevo el curso correctamente.'
+            ? 'Has terminado el curso correctamente.'
+            : 'Has comenzado de nuevo el curso correctamente.'
 
         dispatch(updateCourseAction({ course: data![0] }));
 
@@ -373,10 +381,12 @@ const useCourses = () => {
 
     /**
      * This function is to finish or start a lesson again.
+     *
      * @param {Date} next_lesson - This is date of next lesson
      * @param {Function} onFinish - This callback executed when the process is finished (success or failure)
+     * @return {Promise<void>} This function does not return anything.
      */
-    const finishOrStartLesson = async (next_lesson: Date, onFinish?: () => void) => {
+    const finishOrStartLesson = async (next_lesson: Date, onFinish?: () => void): Promise<void> => {
         if (!isConnected) {
             setNetworkError();
             return;
@@ -437,8 +447,8 @@ const useCourses = () => {
         if (next) return;
 
         const msg = (data![0].done)
-            ? 'Haz terminado la clase correctamente.'
-            : 'Haz reprogrado la clase correctamente.'
+            ? 'Has terminado la clase correctamente.'
+            : 'Has reprogrado la clase correctamente.'
 
         dispatch(updateLessonAction({ lesson: (data as any)![0] }));
 
@@ -450,13 +460,15 @@ const useCourses = () => {
     /**
      * This function is to load the courses using the options that are passed by parameter, you can
      * load them for pagination or not.
+     *
      * @param {loadCoursesOptions} { filter: CourseFilter, loadMore: boolean, refresh: boolean, search: string } - They are the options that are used to load the courses:
      * - filter: It is the filter of the courses to show them are: `all`, `active`, `suspended`, `finished`
      * - loadMore: This flag is used to add or set the courses that are requested, default is `false`
      * - refresh: This flag is to reset the pagination of the courses, default is `false`
      * - search: This is a search text to search courses, default is empty `string`
+     * @return {Promise<void>} This function does not return anything.
      */
-    const loadCourses = async ({ filter, loadMore = false, refresh = false, search = '' }: loadCoursesOptions) => {
+    const loadCourses = async ({ filter, loadMore = false, refresh = false, search = '' }: loadCoursesOptions): Promise<void> => {
         dispatch(setCourseFilter({ filter }));
 
         if (!isConnected) {
@@ -526,12 +538,14 @@ const useCourses = () => {
     /**
      * This function is to load the lessons using the options that are passed by parameter, you can
      * load them for pagination or not.
+     *
      * @param {LoadResourcesOptions} { loadMore: boolean, refresh: boolean, search: string } - They are the options that are used to load the lessons:
      * - loadMore: This flag is used to add or set the lessons that are requested, default is `false`
      * - refresh: This flag is to reset the pagination of the lessons, default is `false`
      * - search: This is a search text to search lessons, default is empty `string`
+     * @return {Promise<void>} This function does not return anything.
      */
-    const loadLessons = async ({ loadMore = false, refresh = false, search = '' }: LoadResourcesOptions) => {
+    const loadLessons = async ({ loadMore = false, refresh = false, search = '' }: LoadResourcesOptions): Promise<void> => {
         if (!isConnected) {
             setNetworkError();
             return;
@@ -589,10 +603,12 @@ const useCourses = () => {
     /**
      * This function saves a course to the database and then navigates to the CoursesTopTabsNavigation
      * screen.
+     *
      * @param {CourseFormValues} courseValues - This is a values for save course
      * @param {Function} onFinish - This callback executed when the process is finished (success or failure)
+     * @return {Promise<void>} This function does not return anything.
      */
-    const saveCourse = async (courseValues: CourseFormValues, onFinish?: () => void) => {
+    const saveCourse = async (courseValues: CourseFormValues, onFinish?: () => void): Promise<void> => {
         if (!isConnected) {
             setNetworkError();
             return;
@@ -625,7 +641,7 @@ const useCourses = () => {
 
         setStatus({
             code: 201,
-            msg: 'Haz agregado un curso correctamente.'
+            msg: 'Has agregado un curso correctamente.'
         });
 
         navigate({
@@ -638,9 +654,11 @@ const useCourses = () => {
 
     /**
      * This function saves a lesson to the database and then navigates to the LessonsScreen.
+     *
      * @param {LessonFormValues} lessonValues - This is a values for save lesson
+     * @return {Promise<void>} This function does not return anything.
      */
-    const saveLesson = async (lessonValues: LessonFormValues) => {
+    const saveLesson = async (lessonValues: LessonFormValues): Promise<void> => {
         if (!isConnected) {
             setNetworkError();
             return;
@@ -672,7 +690,7 @@ const useCourses = () => {
 
         setStatus({
             code: 201,
-            msg: 'Haz agregado una clase al curso correctamente.'
+            msg: 'Has agregado una clase al curso correctamente.'
         });
 
         navigate('LessonsScreen' as never);
@@ -681,9 +699,11 @@ const useCourses = () => {
     /**
      * This function updates a course in the database and then updates the state with the updated
      * course.
+     *
      * @param {CourseFormValues} courseValues - This is a values for update course
+     * @return {Promise<void>} This function does not return anything.
      */
-    const updateCourse = async (courseValues: CourseFormValues) => {
+    const updateCourse = async (courseValues: CourseFormValues): Promise<void> => {
         if (!isConnected) {
             setNetworkError();
             return;
@@ -726,7 +746,7 @@ const useCourses = () => {
 
         setStatus({
             code: 200,
-            msg: 'Haz actualizado el curso correctamente.'
+            msg: 'Has actualizado el curso correctamente.'
         });
 
         goBack();
@@ -734,9 +754,11 @@ const useCourses = () => {
 
     /**
      * It updates a lesson in the database and then updates the state with the updated lesson.
+     *
      * @param {LessonFormValues} lessonValues - This is a values for update lesson
+     * @return {Promise<void>} This function does not return anything.
      */
-    const updateLesson = async (lessonValues: LessonFormValues) => {
+    const updateLesson = async (lessonValues: LessonFormValues): Promise<void> => {
         if (!isConnected) {
             setNetworkError();
             return;
@@ -780,7 +802,7 @@ const useCourses = () => {
 
         setStatus({
             code: 200,
-            msg: 'Haz actualizado la clase correctamente.'
+            msg: 'Has actualizado la clase correctamente.'
         });
 
         goBack();

@@ -3,10 +3,11 @@ import dayjs from 'dayjs';
 /**
  * It takes an array of objects with two properties, init and finish, and returns the sum of the
  * difference between the init and finish properties.
+ *
  * @param {{ init: string, finish: string }[]} dates - { init: string, finish: string }[]
- * @returns The restMins value from the sumMins function.
+ * @return {number} The restMins value from the sumMins function.
  */
-export const getRestMins = (dates: { init: string, finish: string }[]) => {
+export const getRestMins = (dates: { init: string, finish: string }[]): number => {
     const { restMins } = sumMins(dates);
 
     return restMins;
@@ -15,10 +16,11 @@ export const getRestMins = (dates: { init: string, finish: string }[]) => {
 /**
  * It takes an array of objects with two properties, init and finish, and returns the sum of the hours
  * between the two dates
+ *
  * @param {{ init: string, finish: string }[]} dates - { init: string, finish: string }[]
- * @returns The sum of the hours between the dates.
+ * @return {number} The sum of the hours between the dates.
  */
-export const sumHours = (dates: { init: string, finish: string }[]) => {
+export const sumHours = (dates: { init: string, finish: string }[]): number => {
     const hours = dates.map(date => {
         const start = dayjs(date.init);
         const end = dayjs(date.finish);
@@ -36,10 +38,11 @@ export const sumHours = (dates: { init: string, finish: string }[]) => {
 /**
  * It takes an array of objects with two properties, init and finish, and returns an object with two
  * properties, hours and restMins
+ *
  * @param {{ init: string, finish: string }[]} dates - { init: string, finish: string }[]
- * @returns An object with two properties, hours and restMins
+ * @returns {{ hours: number, restMins: number }} An object with two properties, hours and restMins
  */
-export const sumMins = (dates: { init: string, finish: string }[]) => {
+export const sumMins = (dates: { init: string, finish: string }[]): { hours: number, restMins: number } => {
     const mins = dates.map(date => {
         const start = dayjs(date.init, 'HH:mm');
         const end = dayjs(date.finish, 'HH:mm');
@@ -63,9 +66,10 @@ export const sumMins = (dates: { init: string, finish: string }[]) => {
 
 /**
  * It takes an array of numbers and returns the sum of all the numbers in the array.
+ *
  * @param {number[]} numbers - number[] - an array of numbers
- * @returns The sum of the numbers in the array.
+ * @return {number} The sum of the numbers in the array.
  */
-export const sumNumbers = (numbers: number[]) => {
+export const sumNumbers = (numbers: number[]): number => {
     return numbers.reduce((total, number) => total + number, 0);
 }

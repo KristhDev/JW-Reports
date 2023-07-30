@@ -25,13 +25,15 @@ import { Revisit } from '../../../interfaces/revisits';
  * This component is responsible for rendering a list of revisits based
  * on a filter that is passed from the screens, in addition to the
  * search for revisits.
+ *
  * @param {RevisitsListProps} { emptyMessage: string, filter: RevisitFilter, title: string } - This is a props
  * to functionality of the component
  * - emptyMessage: This string is a message to display if there are no revisits
  * - filter: This string is a filter to load revisits
  * - title: This string is a title of screen
+ * @return {JSX.Element} Return a list of revisits
  */
-export const RevisitsList: FC<RevisitsListProps> = ({ emptyMessage, filter, title }) => {
+export const RevisitsList: FC<RevisitsListProps> = ({ emptyMessage, filter, title }): JSX.Element => {
     const [ searchTerm, setSearchTerm ] = useState<string>('');
     const [ isRefreshing, setIsRefreshing ] = useState<boolean>(false);
 
@@ -63,8 +65,10 @@ export const RevisitsList: FC<RevisitsListProps> = ({ emptyMessage, filter, titl
     /**
      * When the user refreshes the page, the search term is reset, the pagination is reset, the
      * revisits are removed, and the revisits are loaded.
+     *
+     * @return {void} This function returns nothing
      */
-    const handleRefreshing = () => {
+    const handleRefreshing = (): void => {
         setSearchTerm('');
 
         if (isConnected) {
@@ -78,9 +82,11 @@ export const RevisitsList: FC<RevisitsListProps> = ({ emptyMessage, filter, titl
     /**
      * If the search string is not empty, reset the pagination, remove the revisits, load the revisits,
      * and set the refreshing state to false.
+     *
      * @param {string} search - string
+     * @return {void} This function does not return any value
      */
-    const handleResetRevisits = (search: string) => {
+    const handleResetRevisits = (search: string): void => {
         if (search.trim().length === 0 && revisits.length === 0) {
             if (isConnected) {
                 setRevisitsPagination({ from: 0, to: 9 });
@@ -95,8 +101,10 @@ export const RevisitsList: FC<RevisitsListProps> = ({ emptyMessage, filter, titl
     /**
      * If there are no more revisits to load, or if revisits are already loading, return. Otherwise,
      * load more revisits.
+     *
+     * @return {void} This function does not return any value
      */
-    const handleEndReach = () => {
+    const handleEndReach = (): void => {
         if (!hasMoreRevisits || isRevisitsLoading || !isConnected) return;
         loadRevisits({ filter, search: searchTerm, loadMore: true });
     }
@@ -104,11 +112,13 @@ export const RevisitsList: FC<RevisitsListProps> = ({ emptyMessage, filter, titl
     /**
      * HandleShowModal is a function that takes a revisit and a setShowModal function as parameters and
      * sets the selectedRevisit to the revisit and sets the showModal to true.
+     *
      * @param {Revisit} revisit - Revisit - this is the object that is being passed in from the parent
      * component
-     * @param setShowModal - (value: boolean) => void
+     * @param {(setShowModal: (value: boolean) => void)} setShowModal - (value: boolean) => void
+     * @return {void} This function does not return any value
      */
-    const handleShowModal = (revisit: Revisit, setShowModal: (value: boolean) => void) => {
+    const handleShowModal = (revisit: Revisit, setShowModal: (value: boolean) => void): void => {
         setSelectedRevisit(revisit);
         setShowModal(true);
     }
@@ -116,9 +126,11 @@ export const RevisitsList: FC<RevisitsListProps> = ({ emptyMessage, filter, titl
     /**
      * HandleHideModal is a function that takes a function as an argument and returns a function that
      * takes no arguments and returns nothing.
-     * @param setShowModal - (value: boolean) => void
+     *
+     * @param {(setShowModal: (value: boolean) => void)} setShowModal - (value: boolean) => void
+     * @return {void} This function does not return any value
      */
-    const handleHideModal = (setShowModal: (value: boolean) => void) => {
+    const handleHideModal = (setShowModal: (value: boolean) => void): void => {
         setShowModal(false);
         setSelectedRevisit({
             ...INIT_REVISIT,
@@ -128,8 +140,10 @@ export const RevisitsList: FC<RevisitsListProps> = ({ emptyMessage, filter, titl
 
     /**
      * If the user confirms the delete, then delete the revisit and close the modal.
+     *
+     * @return {void} - This function does not return any value
      */
-    const handleDeleteConfirm = () => {
+    const handleDeleteConfirm = (): void => {
         deleteRevisit(false, () => setShowDeleteModal(false));
     }
 
@@ -188,7 +202,7 @@ export const RevisitsList: FC<RevisitsListProps> = ({ emptyMessage, filter, titl
     return (
         <>
             <FlatList
-                contentContainerStyle={{ alignItems: 'center', paddingBottom: 100, flexGrow: 1 }}
+                contentContainerStyle={{ alignItems: 'center', padding: 24, paddingBottom: 100, flexGrow: 1 }}
                 data={ revisits }
                 keyExtractor={ (item) => item.id }
                 ListFooterComponent={
@@ -200,7 +214,7 @@ export const RevisitsList: FC<RevisitsListProps> = ({ emptyMessage, filter, titl
                 ListHeaderComponent={
                     <>
                         <Title
-                            containerStyle={{ paddingTop: 30, paddingBottom: 20 }}
+                            containerStyle={{ marginVertical: 8 }}
                             text={ title }
                             textStyle={{ fontSize: 24 }}
                         />

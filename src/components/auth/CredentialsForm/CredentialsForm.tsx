@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { View, ActivityIndicator } from 'react-native';
 import { Formik } from 'formik';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { object, ref, string } from 'yup';
 import Icon from 'react-native-vector-icons/Ionicons';
 
@@ -12,15 +11,16 @@ import { Button, EyeBtn, FormField } from '../../ui';
 import { useAuth, useStatus, useTheme } from '../../../hooks';
 
 /**
- * This component is responsible for rendering the fields to change the credentials
- * of an authenticated user (email and password).
+ * The function takes no arguments and returns a component that renders a form
+ * for updating user credentials.
+ *
+ * @return {JSX.Element} The rendered form component.
  */
-export const CredentialsForm = () => {
+export const CredentialsForm = (): JSX.Element => {
     const [ loadingEmail, setLoadingEmail ] = useState<boolean>(false);
     const [ loadingPassword, setLoadingPassword ] = useState<boolean>(false);
     const [ showPassword, setShowPassword ] = useState<boolean>(false);
     const [ showConfirmPassword, setShowConfirmPassword ] = useState<boolean>(false);
-    const { top } = useSafeAreaInsets();
 
     const { state: { user, isAuthLoading }, updateEmail, updatePassword } = useAuth();
     const { setErrorForm } = useStatus();
@@ -45,29 +45,32 @@ export const CredentialsForm = () => {
     });
 
     /**
-     * The function takes an object with a property called email, and returns a function that takes no
-     * arguments and returns nothing.
-     * @param values - { email: string }
+     * Handles updating the email.
+     *
+     * @param {Object} values - The values object containing the email to be updated.
+     * @param {string} values.email - The new email.
+     * @return {void} This function does not return anything.
      */
-    const handleUpdateEmail = (values: { email: string }) => {
+    const handleUpdateEmail = (values: { email: string }): void => {
         setLoadingEmail(true);
         updateEmail(values, () => setLoadingEmail(false));
     }
 
     /**
-     * handleUpdatePassword is a function that takes two arguments, values and resetForm, and returns
-     * a function that takes no arguments and returns a promise that calls resetForm.
-     * @param values - { password: string, confirmPassword: string }
-     * @param resetForm - () => void
+     * Updates the password with the provided values and resets the form.
+     *
+     * @param {Object} values - An object containing the password and confirmPassword.
+     * @param {Function} resetForm - A function to reset the form.
+     * @return {void} This function does not return anything.
      */
-    const handleUpdatePassword = (values: { password: string, confirmPassword: string }, resetForm: () => void) => {
+    const handleUpdatePassword = (values: { password: string, confirmPassword: string }, resetForm: () => void): void => {
         setLoadingPassword(true);
         updatePassword({ password: values.password }, () => setLoadingPassword(false))
             .then(resetForm);
     }
 
     return (
-        <View style={{ paddingVertical: top }}>
+        <View>
             <Formik
                 initialValues={{ email: user.email }}
                 onSubmit={ handleUpdateEmail }
@@ -75,7 +78,7 @@ export const CredentialsForm = () => {
                 validationSchema={ emailFormSchema }
             >
                 { ({ errors, handleSubmit, isValid }) => (
-                    <View style={{ alignItems: 'center', justifyContent: 'flex-start', paddingBottom: top }}>
+                    <View style={{ alignItems: 'center', justifyContent: 'flex-start' }}>
 
                         {/* Email field */}
                         <FormField
@@ -91,6 +94,7 @@ export const CredentialsForm = () => {
                             label="Correo:"
                             name="email"
                             placeholder="Ingrese su correo"
+                            style={{ marginBottom: 40 }}
                         />
 
                         {/* Submit button */}
@@ -100,14 +104,14 @@ export const CredentialsForm = () => {
                                 (isAuthLoading && loadingEmail) && (
                                     <ActivityIndicator
                                         color={ colors.contentHeader }
-                                        size="small"
+                                        size={ 25 }
                                         style={{ marginLeft: 10 }}
                                     />
                                 )
                             }
                             onPress={ (isValid) ? handleSubmit : () => setErrorForm(errors)  }
                             text="Cambiar correo"
-                            touchableStyle={{ paddingHorizontal: 20, marginTop: top }}
+                            touchableStyle={{ marginBottom: 40 }}
                         />
                     </View>
                 ) }
@@ -123,7 +127,7 @@ export const CredentialsForm = () => {
                 validationSchema={ passwordFormSchema }
             >
                 { ({ errors, handleSubmit, isValid }) => (
-                    <View style={{ alignItems: 'center', justifyContent: 'flex-start', paddingBottom: top }}>
+                    <View style={{ alignItems: 'center', justifyContent: 'flex-start' }}>
 
                         {/* New password field */}
                         <FormField
@@ -153,6 +157,7 @@ export const CredentialsForm = () => {
                             name="confirmPassword"
                             placeholder="Confirme su contraseña"
                             secureTextEntry={ !showConfirmPassword }
+                            style={{ marginBottom: 40 }}
                         />
 
                         {/* Submit button */}
@@ -162,14 +167,14 @@ export const CredentialsForm = () => {
                                 (isAuthLoading && loadingPassword) && (
                                     <ActivityIndicator
                                         color={ colors.contentHeader }
-                                        size="small"
+                                        size={ 25 }
                                         style={{ marginLeft: 10 }}
                                     />
                                 )
                             }
                             onPress={ (isValid) ? handleSubmit : () => setErrorForm(errors)  }
                             text="Cambiar contraseña"
-                            touchableStyle={{ paddingHorizontal: 20, marginTop: top }}
+                            touchableStyle={{ marginBottom: 40 }}
                         />
                     </View>
                 ) }

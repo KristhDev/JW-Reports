@@ -24,13 +24,15 @@ import { Course } from '../../../interfaces/courses';
  * This component is responsible for rendering a list of courses based
  * on a filter that is passed from the screens, in addition to the
  * search for courses.
+ *
  * @param {CoursesListProps} props { filter: CourseFilter, title: string, emptyMessage: string } - This is a props
  * to functionality of the component
  * - emptyMessage: This string is a message to display if there are no courses
  * - filter: This string is a filter to load courses
  * - title: This string is a title of screen
+ * @return {JSX.Element} rendered component to show the list of courses
  */
-export const CoursesList: FC<CoursesListProps> = ({ emptyMessage, filter, title }) => {
+export const CoursesList: FC<CoursesListProps> = ({ emptyMessage, filter, title }): JSX.Element => {
     const [ searchTerm, setSearchTerm ] = useState<string>('');
     const [ isRefreshing, setIsRefreshing ] = useState<boolean>(false);
     const [ showDeleteModal, setShowDeleteModal ] = useState<boolean>(false);
@@ -64,8 +66,10 @@ export const CoursesList: FC<CoursesListProps> = ({ emptyMessage, filter, title 
     /**
      * When the user refreshes the page, the search term is reset, the pagination is reset, the courses
      * are removed, and the courses are loaded.
+     *
+     * @return {void} This function does not return any value.
      */
-    const handleRefreshing = () => {
+    const handleRefreshing = (): void => {
         setSearchTerm('');
 
         if (isConnected) {
@@ -79,9 +83,11 @@ export const CoursesList: FC<CoursesListProps> = ({ emptyMessage, filter, title 
     /**
      * If the search string is empty and the courses array is empty, then set the courses pagination,
      * remove the courses, load the courses, and set the isRefreshing state to false.
+     *
      * @param {string} search - string
+     * @return {void} This function does not return any value.
      */
-    const handleResetCourses = (search: string) => {
+    const handleResetCourses = (search: string): void => {
         if (search.trim().length === 0 && courses.length === 0) {
             if (isConnected) {
                 setCoursesPagination({ from: 0, to: 9 });
@@ -96,19 +102,22 @@ export const CoursesList: FC<CoursesListProps> = ({ emptyMessage, filter, title 
     /**
      * If there are no more courses to load, or if the courses are currently loading, then return.
      * Otherwise, load more courses.
+     *
+     * @return {void} This function does not return any value.
      */
-    const handleEndReach = () => {
+    const handleEndReach = (): void => {
         if (!hasMoreCourses || isCoursesLoading || !isConnected) return;
         loadCourses({ filter, search: searchTerm, loadMore: true });
     }
 
     /**
-     * HandleShowModal is a function that takes a course and a setShowModal function as parameters and
-     * returns nothing.
-     * @param {Course} course - Course - this is the course that was clicked on
-     * @param setShowModal - (value: boolean) => void
+     * Sets the selected course and shows the modal.
+     *
+     * @param {Course} course - The course to be selected.
+     * @param {(value: boolean) => void} setShowModal - A function to set the modal visibility.
+     * @return {void}
      */
-    const handleShowModal = (course: Course, setShowModal: (value: boolean) => void) => {
+    const handleShowModal = (course: Course, setShowModal: (value: boolean) => void): void => {
         setSelectedCourse(course);
         setShowModal(true);
     }
@@ -116,17 +125,21 @@ export const CoursesList: FC<CoursesListProps> = ({ emptyMessage, filter, title 
     /**
      * HandleHideModal is a function that takes a function as an argument and returns a function that
      * takes no arguments and returns nothing.
-     * @param setShowModal - (value: boolean) => void
+     *
+     * @param {(value: boolean) => void} setShowModal - A function to set the modal visibility.
+     * @return {void} This function does not return any value.
      */
-    const handleHideModal = (setShowModal: (value: boolean) => void) => {
+    const handleHideModal = (setShowModal: (value: boolean) => void): void => {
         setShowModal(false);
         setSelectedCourse(INIT_COURSE);
     }
 
     /**
      * If the user confirms the delete, then delete the course and close the modal.
+     *
+     * @return {void} This function does not return any value.
      */
-    const handleDeleteConfirm = () => {
+    const handleDeleteConfirm = (): void => {
         deleteCourse(false, () => setShowDeleteModal(false));
     }
 
@@ -191,7 +204,7 @@ export const CoursesList: FC<CoursesListProps> = ({ emptyMessage, filter, title 
     return (
         <>
             <FlatList
-                contentContainerStyle={{ alignItems: 'center', paddingBottom: 100, flexGrow: 1 }}
+                contentContainerStyle={{ alignItems: 'center', padding: 24, paddingBottom: 100, flexGrow: 1 }}
                 data={ courses }
                 keyExtractor={ (item) => item.id }
                 ListFooterComponent={
@@ -203,7 +216,7 @@ export const CoursesList: FC<CoursesListProps> = ({ emptyMessage, filter, title 
                 ListHeaderComponent={
                     <>
                         <Title
-                            containerStyle={{ paddingTop: 30, paddingBottom: 20 }}
+                            containerStyle={{ marginVertical: 8 }}
                             text={ title }
                             textStyle={{ fontSize: 24 }}
                         />

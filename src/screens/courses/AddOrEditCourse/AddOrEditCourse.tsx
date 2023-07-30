@@ -15,8 +15,10 @@ import { styles as themeStyles } from '../../../theme';
 /**
  * This screen is responsible for grouping the components
  * to add or edit a course.
+ *
+ * @return {JSX.Element} rendered component to show form to add or edit a course
  */
-const AddOrEditCourse = () => {
+const AddOrEditCourse = (): JSX.Element => {
     const { state: { selectedCourse } } = useCourses();
 
     return (
@@ -24,7 +26,7 @@ const AddOrEditCourse = () => {
             contentContainerStyle={{ flexGrow: 1 }}
             overScrollMode="never"
         >
-            <View style={{ flex: 1, alignItems: 'center' }}>
+            <View style={{ flex: 1, alignItems: 'center', padding: 24 }}>
                 <Title
                     containerStyle={ themeStyles.titleContainer }
                     textStyle={{ fontSize: 24 }}

@@ -6,7 +6,7 @@ exports[`Test in <FormSelect /> component should to match snapshot 1`] = `
     style={
       {
         "display": "flex",
-        "padding": 10,
+        "marginBottom": 16,
         "width": 675,
       }
     }
@@ -17,8 +17,7 @@ exports[`Test in <FormSelect /> component should to match snapshot 1`] = `
           {
             "color": "#FFFFFF",
             "fontSize": 18,
-            "marginBottom": 5,
-            "padding": 5,
+            "marginBottom": 16,
           },
           undefined,
         ]

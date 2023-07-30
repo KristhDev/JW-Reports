@@ -6,6 +6,7 @@ exports[`Test in <AddOrEditCourse /> screen should to match snapshot 1`] = `
     {
       "alignItems": "center",
       "flex": 1,
+      "padding": 24,
     }
   }
 >
@@ -14,12 +15,12 @@ exports[`Test in <AddOrEditCourse /> screen should to match snapshot 1`] = `
       [
         {
           "alignItems": "flex-start",
-          "padding": 20,
+          "marginBottom": 40,
           "width": "100%",
         },
         {
           "paddingBottom": 0,
-          "paddingTop": 30,
+          "paddingTop": 8,
         },
       ]
     }
@@ -49,7 +50,7 @@ exports[`Test in <AddOrEditCourse /> screen should to match snapshot 1`] = `
         "flex": 1,
         "justifyContent": "center",
         "paddingBottom": 40,
-        "paddingTop": 30,
+        "width": "100%",
       }
     }
   >
@@ -57,8 +58,8 @@ exports[`Test in <AddOrEditCourse /> screen should to match snapshot 1`] = `
       style={
         {
           "display": "flex",
-          "padding": 10,
-          "width": 675,
+          "marginBottom": 16,
+          "width": "100%",
         }
       }
     >
@@ -68,8 +69,7 @@ exports[`Test in <AddOrEditCourse /> screen should to match snapshot 1`] = `
             {
               "color": "#FFFFFF",
               "fontSize": 18,
-              "marginBottom": 5,
-              "padding": 5,
+              "marginBottom": 16,
             },
             undefined,
           ]
@@ -172,8 +172,8 @@ exports[`Test in <AddOrEditCourse /> screen should to match snapshot 1`] = `
       style={
         {
           "display": "flex",
-          "padding": 10,
-          "width": 675,
+          "marginBottom": 16,
+          "width": "100%",
         }
       }
     >
@@ -183,8 +183,7 @@ exports[`Test in <AddOrEditCourse /> screen should to match snapshot 1`] = `
             {
               "color": "#FFFFFF",
               "fontSize": 18,
-              "marginBottom": 5,
-              "padding": 5,
+              "marginBottom": 16,
             },
             undefined,
           ]
@@ -268,8 +267,8 @@ exports[`Test in <AddOrEditCourse /> screen should to match snapshot 1`] = `
       style={
         {
           "display": "flex",
-          "padding": 10,
-          "width": 675,
+          "marginBottom": 16,
+          "width": "100%",
         }
       }
     >
@@ -279,8 +278,7 @@ exports[`Test in <AddOrEditCourse /> screen should to match snapshot 1`] = `
             {
               "color": "#FFFFFF",
               "fontSize": 18,
-              "marginBottom": 5,
-              "padding": 5,
+              "marginBottom": 16,
             },
             undefined,
           ]
@@ -364,8 +362,8 @@ exports[`Test in <AddOrEditCourse /> screen should to match snapshot 1`] = `
       style={
         {
           "display": "flex",
-          "padding": 10,
-          "width": 675,
+          "marginBottom": 40,
+          "width": "100%",
         }
       }
     >
@@ -375,8 +373,7 @@ exports[`Test in <AddOrEditCourse /> screen should to match snapshot 1`] = `
             {
               "color": "#FFFFFF",
               "fontSize": 18,
-              "marginBottom": 5,
-              "padding": 5,
+              "marginBottom": 16,
             },
             undefined,
           ]
@@ -516,9 +513,7 @@ exports[`Test in <AddOrEditCourse /> screen should to match snapshot 1`] = `
               "backgroundColor": "#C0A7E1",
               "borderRadius": 10,
             },
-            {
-              "marginTop": 30,
-            },
+            undefined,
           ],
         ]
       }
@@ -531,8 +526,9 @@ exports[`Test in <AddOrEditCourse /> screen should to match snapshot 1`] = `
               "alignItems": "center",
               "flexDirection": "row",
               "justifyContent": "center",
+              "minWidth": "100%",
               "paddingHorizontal": 20,
-              "paddingVertical": 8,
+              "paddingVertical": 9,
             },
             undefined,
           ]

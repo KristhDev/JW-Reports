@@ -15,8 +15,10 @@ const Stack = createStackNavigator();
 
 /**
  * This is a stack navigation for settings
+ *
+ * @return {JSX.Element} rendered component to show stack navigation
  */
-const SettingsStackNavigation = () => {
+const SettingsStackNavigation = (): JSX.Element => {
     const { state: { colors } } = useTheme();
 
     return (

@@ -57,7 +57,7 @@ describe('Test in useAuth hook updatePassword', () => {
         /* Check if status state is equal to respective object */
         expect(result.current.useStatus.state).toEqual({
             code: 200,
-            msg: 'Haz actualizado tu contraseña correctamente.'
+            msg: 'Has actualizado tu contraseña correctamente.'
         });
 
         await act(async () => {

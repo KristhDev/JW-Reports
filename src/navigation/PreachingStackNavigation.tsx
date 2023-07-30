@@ -17,8 +17,10 @@ const Stack = createStackNavigator<PreachingStackParamsList>();
 
 /**
  * This is a stack navigation for preaching.
+ *
+ * @return {JSX.Element} rendered component to show stack navigation of preaching
  */
-const PreachingStackNavigation = () => {
+const PreachingStackNavigation = (): JSX.Element => {
     const [ showDeleteModal, setShowDeleteModal ] = useState<boolean>(false);
 
     const { loadCourses } = useCourses();
@@ -37,8 +39,10 @@ const PreachingStackNavigation = () => {
     /**
      * If the user clicks the delete button, then show the delete modal, and if the user clicks the
      * confirm button, then delete the preaching.
+     *
+     * @return {void} This function does not return anything
      */
-    const handleDeleteConfirm = () => {
+    const handleDeleteConfirm = (): void => {
         deletePreaching(() => setShowDeleteModal(false));
     }
 

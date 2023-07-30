@@ -3,7 +3,7 @@ import { StyleSheet } from 'react-native';
 const styles = StyleSheet.create({
     titleContainer: {
         alignItems: 'flex-start',
-        padding: 20,
+        marginBottom: 40,
         width: '100%'
     },
 

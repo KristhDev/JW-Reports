@@ -15,8 +15,10 @@ import { styles as themeStyles } from '../../../theme';
 /**
  * This screen is responsible for grouping the components to add or
  * edit a preaching day.
+ *
+ * @return {JSX.Element} rendered component to show form to add or edit a preaching day
  */
-const AddOrEditPreaching = () => {
+const AddOrEditPreaching = (): JSX.Element => {
     const { state: { seletedPreaching } } = usePreaching();
 
     return (
@@ -24,7 +26,7 @@ const AddOrEditPreaching = () => {
             contentContainerStyle={{ flexGrow: 1 }}
             overScrollMode="never"
         >
-            <View style={{ flex: 1, alignItems: 'center' }}>
+            <View style={{ flex: 1, alignItems: 'center', padding: 24 }}>
                 <Title
                     containerStyle={ themeStyles.titleContainer }
                     textStyle={{ fontSize: 24 }}

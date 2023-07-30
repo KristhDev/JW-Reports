@@ -22,9 +22,11 @@ type RevisitsProps = MaterialTopTabScreenProps<RevistsTopTabsParamsList>;
 /**
  * This screen is responsible for grouping the components to show a list
  * of revisits according to the filter that is sent.
+ *
  * @param {RevisitsProps} { route: RouteProp } - This is a params of TopTabNavigation
+ * @return {JSX.Element} rendered component to show list of revisits
  */
-const Revisits: FC<RevisitsProps> = ({ route }) => {
+const Revisits: FC<RevisitsProps> = ({ route }): JSX.Element => {
     const { navigate, addListener, removeListener, getState } = useNavigation();
 
     const { setSelectedRevisit, setRevisitsScreenHistory } = useRevisits();
@@ -33,8 +35,10 @@ const Revisits: FC<RevisitsProps> = ({ route }) => {
     /**
      * I'm going to set the selectedRevisit to the INIT_REVISIT object, but I'm going to override the
      * next_visit property with the current date.
+     *
+     * @return {void} This function does not return anything
      */
-    const handleNavigate = () => {
+    const handleNavigate = (): void => {
         setSelectedRevisit({
             ...INIT_REVISIT,
             next_visit: new Date().toString()

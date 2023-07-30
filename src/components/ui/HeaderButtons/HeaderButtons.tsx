@@ -20,6 +20,7 @@ import { HeaderButtonsProps } from './interfaces';
  * This component is responsible for displaying various buttons that will be in the
  * headers of the screens, they are sent the condition with which they will appear
  * and the action that will be performed.
+ *
  * @param {HeaderButtonsProps} props - {
  *      logoutButton: boolean,
  *      changeMonthButton: boolean,
@@ -34,6 +35,7 @@ import { HeaderButtonsProps } from './interfaces';
  *      onShowDeleteModal: () => void,
  *      showDeleteModal: boolean,
  *  }
+ * @return {JSX.Element} Return jsx element to render header buttons
  */
 export const HeaderButtons: FC<HeaderButtonsProps> = ({
     logoutButton = false,
@@ -50,7 +52,7 @@ export const HeaderButtons: FC<HeaderButtonsProps> = ({
     onConfirmDeleteModal = () => {},
     onShowDeleteModal = () => {},
     showDeleteModal = false,
-}) => {
+}): JSX.Element => {
     const [ showMonthPicker, setShowMonthPicker ] = useState<boolean>(false);
     const { navigate } = useNavigation();
 
@@ -61,9 +63,11 @@ export const HeaderButtons: FC<HeaderButtonsProps> = ({
     /**
      * When the user selects a date, hide the month picker and set the selected date to the date the
      * user selected.
+     *
      * @param {Date} date - Date - The date that was selected
+     * @return {void} Returns nothing
      */
-    const handleOnChange = (date: Date) => {
+    const handleOnChange = (date: Date): void => {
         setShowMonthPicker(false);
         if (date) setSelectedDate(date);
     }

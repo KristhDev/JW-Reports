@@ -6,6 +6,7 @@ exports[`Test in <AddOrEditPreaching /> screen should to match snapshot 1`] = `
     {
       "alignItems": "center",
       "flex": 1,
+      "padding": 24,
     }
   }
 >
@@ -14,12 +15,12 @@ exports[`Test in <AddOrEditPreaching /> screen should to match snapshot 1`] = `
       [
         {
           "alignItems": "flex-start",
-          "padding": 20,
+          "marginBottom": 40,
           "width": "100%",
         },
         {
           "paddingBottom": 0,
-          "paddingTop": 30,
+          "paddingTop": 8,
         },
       ]
     }
@@ -49,17 +50,20 @@ exports[`Test in <AddOrEditPreaching /> screen should to match snapshot 1`] = `
         "flex": 1,
         "justifyContent": "center",
         "paddingBottom": 40,
-        "paddingTop": 30,
+        "width": "100%",
       }
     }
   >
     <View
       style={
-        {
-          "display": "flex",
-          "padding": 10,
-          "width": 675,
-        }
+        [
+          {
+            "display": "flex",
+            "marginBottom": 16,
+            "width": "100%",
+          },
+          undefined,
+        ]
       }
     >
       <Text
@@ -68,8 +72,7 @@ exports[`Test in <AddOrEditPreaching /> screen should to match snapshot 1`] = `
             {
               "color": "#FFFFFF",
               "fontSize": 18,
-              "marginBottom": 5,
-              "padding": 5,
+              "marginBottom": 16,
             },
             undefined,
           ]
@@ -165,7 +168,7 @@ exports[`Test in <AddOrEditPreaching /> screen should to match snapshot 1`] = `
                   "borderRadius": 10,
                 },
                 {
-                  "marginLeft": 10,
+                  "marginLeft": 16,
                 },
               ],
             ]
@@ -179,11 +182,13 @@ exports[`Test in <AddOrEditPreaching /> screen should to match snapshot 1`] = `
                   "alignItems": "center",
                   "flexDirection": "row",
                   "justifyContent": "center",
+                  "minWidth": "100%",
                   "paddingHorizontal": 20,
-                  "paddingVertical": 8,
+                  "paddingVertical": 9,
                 },
                 {
-                  "paddingHorizontal": 10,
+                  "minWidth": 0,
+                  "paddingHorizontal": 9,
                 },
               ]
             }
@@ -254,8 +259,8 @@ exports[`Test in <AddOrEditPreaching /> screen should to match snapshot 1`] = `
       style={
         {
           "display": "flex",
-          "padding": 10,
-          "width": 675,
+          "marginBottom": 16,
+          "width": "100%",
         }
       }
     >
@@ -265,8 +270,7 @@ exports[`Test in <AddOrEditPreaching /> screen should to match snapshot 1`] = `
             {
               "color": "#FFFFFF",
               "fontSize": 18,
-              "marginBottom": 5,
-              "padding": 5,
+              "marginBottom": 16,
             },
             undefined,
           ]
@@ -370,8 +374,8 @@ exports[`Test in <AddOrEditPreaching /> screen should to match snapshot 1`] = `
       style={
         {
           "display": "flex",
-          "padding": 10,
-          "width": 675,
+          "marginBottom": 16,
+          "width": "100%",
         }
       }
     >
@@ -381,8 +385,7 @@ exports[`Test in <AddOrEditPreaching /> screen should to match snapshot 1`] = `
             {
               "color": "#FFFFFF",
               "fontSize": 18,
-              "marginBottom": 5,
-              "padding": 5,
+              "marginBottom": 16,
             },
             undefined,
           ]
@@ -486,8 +489,8 @@ exports[`Test in <AddOrEditPreaching /> screen should to match snapshot 1`] = `
       style={
         {
           "display": "flex",
-          "padding": 10,
-          "width": 675,
+          "marginBottom": 16,
+          "width": "100%",
         }
       }
     >
@@ -497,8 +500,7 @@ exports[`Test in <AddOrEditPreaching /> screen should to match snapshot 1`] = `
             {
               "color": "#FFFFFF",
               "fontSize": 18,
-              "marginBottom": 5,
-              "padding": 5,
+              "marginBottom": 16,
             },
             undefined,
           ]
@@ -600,11 +602,14 @@ exports[`Test in <AddOrEditPreaching /> screen should to match snapshot 1`] = `
     </View>
     <View
       style={
-        {
-          "display": "flex",
-          "padding": 10,
-          "width": 675,
-        }
+        [
+          {
+            "display": "flex",
+            "marginBottom": 16,
+            "width": "100%",
+          },
+          undefined,
+        ]
       }
     >
       <Text
@@ -613,8 +618,7 @@ exports[`Test in <AddOrEditPreaching /> screen should to match snapshot 1`] = `
             {
               "color": "#FFFFFF",
               "fontSize": 18,
-              "marginBottom": 5,
-              "padding": 5,
+              "marginBottom": 16,
             },
             undefined,
           ]
@@ -710,7 +714,7 @@ exports[`Test in <AddOrEditPreaching /> screen should to match snapshot 1`] = `
                   "borderRadius": 10,
                 },
                 {
-                  "marginLeft": 10,
+                  "marginLeft": 16,
                 },
               ],
             ]
@@ -724,11 +728,13 @@ exports[`Test in <AddOrEditPreaching /> screen should to match snapshot 1`] = `
                   "alignItems": "center",
                   "flexDirection": "row",
                   "justifyContent": "center",
+                  "minWidth": "100%",
                   "paddingHorizontal": 20,
-                  "paddingVertical": 8,
+                  "paddingVertical": 9,
                 },
                 {
-                  "paddingHorizontal": 10,
+                  "minWidth": 0,
+                  "paddingHorizontal": 9,
                 },
               ]
             }
@@ -797,11 +803,16 @@ exports[`Test in <AddOrEditPreaching /> screen should to match snapshot 1`] = `
     </View>
     <View
       style={
-        {
-          "display": "flex",
-          "padding": 10,
-          "width": 675,
-        }
+        [
+          {
+            "display": "flex",
+            "marginBottom": 16,
+            "width": "100%",
+          },
+          {
+            "marginBottom": 40,
+          },
+        ]
       }
     >
       <Text
@@ -810,8 +821,7 @@ exports[`Test in <AddOrEditPreaching /> screen should to match snapshot 1`] = `
             {
               "color": "#FFFFFF",
               "fontSize": 18,
-              "marginBottom": 5,
-              "padding": 5,
+              "marginBottom": 16,
             },
             undefined,
           ]
@@ -907,7 +917,7 @@ exports[`Test in <AddOrEditPreaching /> screen should to match snapshot 1`] = `
                   "borderRadius": 10,
                 },
                 {
-                  "marginLeft": 10,
+                  "marginLeft": 16,
                 },
               ],
             ]
@@ -921,11 +931,13 @@ exports[`Test in <AddOrEditPreaching /> screen should to match snapshot 1`] = `
                   "alignItems": "center",
                   "flexDirection": "row",
                   "justifyContent": "center",
+                  "minWidth": "100%",
                   "paddingHorizontal": 20,
-                  "paddingVertical": 8,
+                  "paddingVertical": 9,
                 },
                 {
-                  "paddingHorizontal": 10,
+                  "minWidth": 0,
+                  "paddingHorizontal": 9,
                 },
               ]
             }
@@ -1033,9 +1045,7 @@ exports[`Test in <AddOrEditPreaching /> screen should to match snapshot 1`] = `
               "backgroundColor": "#C0A7E1",
               "borderRadius": 10,
             },
-            {
-              "marginTop": 30,
-            },
+            undefined,
           ],
         ]
       }
@@ -1048,8 +1058,9 @@ exports[`Test in <AddOrEditPreaching /> screen should to match snapshot 1`] = `
               "alignItems": "center",
               "flexDirection": "row",
               "justifyContent": "center",
+              "minWidth": "100%",
               "paddingHorizontal": 20,
-              "paddingVertical": 8,
+              "paddingVertical": 9,
             },
             undefined,
           ]

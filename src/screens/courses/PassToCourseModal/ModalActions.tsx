@@ -25,7 +25,7 @@ export const ModalActions: FC<ModalActionProps> = ({ onClose, onConfirm }) => {
 
             {/* Cancel button */}
             <Button
-                containerStyle={{ paddingHorizontal: 12 }}
+                containerStyle={{ paddingHorizontal: 12, minWidth: 0 }}
                 onPress={ onClose }
                 text="CANCELAR"
                 textStyle={{ color: colors.button, fontSize: 16 }}
@@ -35,7 +35,7 @@ export const ModalActions: FC<ModalActionProps> = ({ onClose, onConfirm }) => {
 
             {/* Confirm button */}
             <Button
-                containerStyle={{ paddingHorizontal: 12 }}
+                containerStyle={{ paddingHorizontal: 12, minWidth: 0 }}
                 onPress={ onConfirm }
                 text="ACEPTAR"
                 textStyle={{ color: colors.button, fontSize: 16 }}

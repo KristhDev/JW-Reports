@@ -24,7 +24,7 @@ exports[`Test in <Revisits /> screen should to match snapshot 1`] = `
     <RCTScrollView
       ListEmptyComponent={
         <ListEmptyComponent
-          msg="No haz agregado ninguna revisita."
+          msg="No has agregado ninguna revisita."
           showMsg={false}
         />
       }

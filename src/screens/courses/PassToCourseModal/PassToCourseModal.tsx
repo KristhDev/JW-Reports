@@ -22,9 +22,11 @@ import { styles as themeStyles } from '../../../theme';
 /**
  * This modal is responsible for grouping the components to
  * revisit a course.
+ *
  * @param {ModalProps} { isOpen: boolean, onClose: () => void }
+ * @return {JSX.Element} rendered component to show modal
  */
-const PassToCourseModal: FC<ModalProps> = ({ isOpen, onClose }) => {
+const PassToCourseModal: FC<ModalProps> = ({ isOpen, onClose }): JSX.Element => {
     const [ startCourse, setStartCourse ] = useState<boolean>(false);
 
     const { state: { selectedRevisit } } = useRevisits();
@@ -35,9 +37,11 @@ const PassToCourseModal: FC<ModalProps> = ({ isOpen, onClose }) => {
     /**
      * This is the confirmation function of the modal that executes one or another function
      * depending on startCourse or the function parameters.
+     *
      * @param {{ publication: string }} values - This is the values with publication property to create course
+     * @return {void} This function does not return anything
      */
-    const handleConfirm = (values?: { publication: string }) => {
+    const handleConfirm = (values?: { publication: string }): void => {
         if (startCourse) {
             if (values?.publication && values?.publication.length >= 5) {
                 saveCourse({
@@ -66,8 +70,10 @@ const PassToCourseModal: FC<ModalProps> = ({ isOpen, onClose }) => {
     /**
      * When the user clicks the close button, the modal closes and the startCourse state is set to
      * false.
+     *
+     * @return {void} This function does not return anything
      */
-    const handleClose = () => {
+    const handleClose = (): void => {
         onClose();
         setStartCourse(false);
     }
@@ -90,6 +96,7 @@ const PassToCourseModal: FC<ModalProps> = ({ isOpen, onClose }) => {
                                     <Text
                                         style={{
                                             ...themeStyles.modalText,
+                                            marginBottom: 0,
                                             color: colors.modalText
                                         }}
                                         testID="modal-text"
@@ -109,12 +116,13 @@ const PassToCourseModal: FC<ModalProps> = ({ isOpen, onClose }) => {
                                     onSubmit={ handleConfirm }
                                 >
                                     { ({ handleSubmit }) => (
-                                        <>
+                                        <View>
 
                                             {/* Modal title in form */}
                                             <Text
                                                 style={{
                                                     ...themeStyles.modalText,
+                                                    marginBottom: 24,
                                                     color: colors.modalText
                                                 }}
                                             >
@@ -133,7 +141,7 @@ const PassToCourseModal: FC<ModalProps> = ({ isOpen, onClose }) => {
                                                 label="Publicación de estudio:"
                                                 name="publication"
                                                 placeholder="Ingrese la publicación"
-                                                style={{ width: '100%' }}
+                                                style={{ marginBottom: 0 }}
                                             />
 
                                             {/* Modal actions in form */}
@@ -141,7 +149,7 @@ const PassToCourseModal: FC<ModalProps> = ({ isOpen, onClose }) => {
                                                 onClose={ handleClose }
                                                 onConfirm={ handleSubmit }
                                             />
-                                        </>
+                                        </View>
                                     ) }
                                 </Formik>
                             )

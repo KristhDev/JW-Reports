@@ -20,8 +20,10 @@ import { styles as themeStyles } from '../../../theme';
 /**
  * This component is responsible for rendering the fields so that an
  * authenticated user can update their profile data.
+ *
+ * @return {JSX.Element} The rendered form component.
  */
-export const ProfileForm = () => {
+export const ProfileForm = (): JSX.Element => {
     const { top } = useSafeAreaInsets();
 
     const { state: { user, isAuthLoading }, updateProfile } = useAuth();
@@ -53,7 +55,7 @@ export const ProfileForm = () => {
             validationSchema={ profileFormSchema }
         >
             { ({ errors, handleSubmit, isValid }) => (
-                <View style={{ ...themeStyles.formContainer, justifyContent: 'flex-start', paddingTop: 20 }}>
+                <View style={{ ...themeStyles.formContainer, justifyContent: 'flex-start' }}>
 
                     {/* Name field */}
                     <FormField
@@ -103,14 +105,14 @@ export const ProfileForm = () => {
                             (isAuthLoading) && (
                                 <ActivityIndicator
                                     color={ colors.contentHeader }
-                                    size="small"
+                                    size={ 25 }
                                     style={{ marginLeft: 10 }}
                                 />
                             )
                         }
                         onPress={ (isValid) ? handleSubmit : () => setErrorForm(errors)  }
                         text="Guardar"
-                        touchableStyle={{ paddingHorizontal: 20, marginVertical: top }}
+                        touchableStyle={{ marginVertical: top }}
                     />
                 </View>
             ) }
