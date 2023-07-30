@@ -11,9 +11,11 @@ import { styles as themeStyles } from '../../../theme';
 
 /**
  * This component is responsible for grouping actions for modal.
+ *
  * @param {ModalActionProps} { onClose: () => void, onConfirm: () => void, reschedule: boolean, revisitPerson: boolean }
+ * @return {JSX.Element} rendered component to show actions of modal
  */
-export const ModalActions: FC<ModalActionProps> = ({ onClose, onConfirm, revisitPerson }) => {
+export const ModalActions: FC<ModalActionProps> = ({ onClose, onConfirm, revisitPerson }): JSX.Element => {
     const { state: { selectedRevisit } } = useRevisits();
     const { state: { colors }, BUTTON_TRANSLUCENT_COLOR } = useTheme();
 
@@ -28,7 +30,7 @@ export const ModalActions: FC<ModalActionProps> = ({ onClose, onConfirm, revisit
 
             {/* Cancel button */}
             <Button
-                containerStyle={{ paddingHorizontal: 12 }}
+                containerStyle={{ paddingHorizontal: 12, minWidth: 0 }}
                 onPress={ onClose }
                 text="CANCELAR"
                 textStyle={{ color: colors.button, fontSize: 16 }}
@@ -38,7 +40,7 @@ export const ModalActions: FC<ModalActionProps> = ({ onClose, onConfirm, revisit
 
             {/* Confirm button */}
             <Button
-                containerStyle={{ paddingHorizontal: 12 }}
+                containerStyle={{ paddingHorizontal: 12, minWidth: 0 }}
                 onPress={ onConfirm }
                 text={ confirmTextButton }
                 textStyle={{ color: colors.button, fontSize: 16 }}

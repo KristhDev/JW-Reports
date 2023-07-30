@@ -22,8 +22,10 @@ import styles from './styles';
 /**
  * This screen is responsible for grouping the components to
  * show the detail of a lesson.
+ *
+ * @return {JSX.Element} rendered component to show detail of a lesson
  */
-const LessonDetail = () => {
+const LessonDetail = (): JSX.Element => {
     const [ showFSModal, setShowFSModal ] = useState<boolean>(false);
     const { addListener, getState, removeListener } = useNavigation();
 
@@ -56,7 +58,7 @@ const LessonDetail = () => {
     return (
         <>
             <ScrollView
-                contentContainerStyle={{ alignItems: 'center', paddingBottom: 100, flexGrow: 1 }}
+                contentContainerStyle={{ alignItems: 'center', padding: 24, paddingBottom: 100, flexGrow: 1 }}
                 overScrollMode="never"
                 style={{ flex: 1 }}
             >
@@ -70,7 +72,7 @@ const LessonDetail = () => {
 
                 {/* Text publication */}
                 <InfoText
-                    containerStyle={{ paddingHorizontal: 20, width: '100%' }}
+                    containerStyle={{ padding: 0, paddingBottom: 24, width: '100%' }}
                     text={ selectedCourse.publication.toUpperCase() }
                     textStyle={{ fontSize: 16, fontWeight: 'bold', textAlign: 'left' }}
                 />

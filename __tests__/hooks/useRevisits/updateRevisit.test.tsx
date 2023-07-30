@@ -88,7 +88,7 @@ describe('Test useRevisits hook updateRevisit', () => {
         /* Check if status state is equal to respective status */
         expect(result.current.useStatus.state).toEqual({
             code: 200,
-            msg: 'Haz actualizado tu revisita correctamente.'
+            msg: 'Has actualizado tu revisita correctamente.'
         });
 
         /* Check if goBack is called one time */

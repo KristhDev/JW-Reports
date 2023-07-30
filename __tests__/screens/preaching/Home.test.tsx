@@ -127,7 +127,7 @@ describe('Test in <Home /> screen', () => {
 
         /* Check if text exists and contain respective value */
         expect(text).toBeTruthy();
-        expect(text.props.children).toBe('No haz agregado ningún día de predicación para el informe de este mes.');
+        expect(text.props.children).toBe('No has agregado ningún día de predicación para el informe de este mes.');
     });
 
     it('should call setSelectedPreaching and navigate when add button is pressed', () => {

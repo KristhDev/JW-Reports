@@ -6,7 +6,7 @@ exports[`Test in <RadioBtn /> component should to match snapshot 1`] = `
     {
       "alignItems": "center",
       "flexDirection": "row",
-      "padding": 5,
+      "marginBottom": 5,
     }
   }
   testID="radio-btn-container"
@@ -109,7 +109,7 @@ exports[`Test in <RadioBtn /> component should to match snapshot 1`] = `
       {
         "color": "#FFFFFF",
         "fontSize": 18,
-        "marginLeft": 15,
+        "marginLeft": 8,
       }
     }
     testID="radio-btn-text"

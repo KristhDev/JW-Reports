@@ -5,7 +5,7 @@ exports[`Test in <ListEmptyComponent /> component should to match snapshot 1`] =
   style={
     [
       {
-        "padding": 10,
+        "padding": 16,
       },
       {
         "marginTop": 266.8,

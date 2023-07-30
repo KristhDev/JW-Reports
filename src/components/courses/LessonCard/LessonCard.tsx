@@ -1,5 +1,5 @@
 import React, { FC, useState } from 'react';
-import { Text, View } from 'react-native';
+import { Text, View, useWindowDimensions } from 'react-native';
 import { TouchableRipple } from 'react-native-paper';
 import { Menu, MenuOption, MenuOptions, MenuTrigger } from 'react-native-popup-menu';
 import { useNavigation } from '@react-navigation/native';
@@ -21,15 +21,18 @@ import styles from './styles';
 /**
  * This component is responsible for rendering part of the information of a
  * lesson in the form of a card.
+ *
  * @param {LessonCardProps} props { lesson: Lesson, onDelete: () => void, onFinish: () => void } - This is a props
  * to functionality of the component
  * - lesson: This is a lesson object that render in the card
  * - onDelete: This is a function to delete the lesson
  * - onFinish: This is a function to finish the lesson
+ * @return {JSX.Element} rendered component to show the lesson
  */
-export const LessonCard: FC<LessonCardProps> = ({ lesson, onDelete, onFinish }) => {
+export const LessonCard: FC<LessonCardProps> = ({ lesson, onDelete, onFinish }): JSX.Element => {
     const [ isOpen, setIsOpen ] = useState<boolean>(false);
     const { navigate } = useNavigation();
+    const { width } = useWindowDimensions();
 
     const { setSelectedLesson } = useCourses();
     const { state: { colors }, BUTTON_TRANSPARENT_COLOR } = useTheme();
@@ -39,8 +42,10 @@ export const LessonCard: FC<LessonCardProps> = ({ lesson, onDelete, onFinish }) 
     /**
      * When the user clicks on a lesson, the lesson is set as the selected lesson and the user is
      * navigated to the LessonDetailScreen.
+     *
+     * @return {void} This function does not return any value.
      */
-    const handleLessonDetail = () => {
+    const handleLessonDetail = (): void => {
         setSelectedLesson(lesson);
         navigate('LessonDetailScreen' as never);
     }
@@ -48,8 +53,10 @@ export const LessonCard: FC<LessonCardProps> = ({ lesson, onDelete, onFinish }) 
     /**
      * When the user clicks the edit button, close the modal, set the selected lesson to the current
      * lesson, and navigate to the AddOrEditLessonScreen.
+     *
+     * @return {void} This function does not return any value.
      */
-    const handleEdit = () => {
+    const handleEdit = (): void => {
         setIsOpen(false);
         setSelectedLesson(lesson);
         navigate('AddOrEditLessonScreen' as never);
@@ -57,9 +64,11 @@ export const LessonCard: FC<LessonCardProps> = ({ lesson, onDelete, onFinish }) 
 
     /**
      * The function takes a function as an argument and calls it.
+     *
      * @param onSelect - () => void
+     * @return {void} This function does not return any value.
      */
-    const handleSelect = (onSelect: () => void) => {
+    const handleSelect = (onSelect: () => void): void => {
         setIsOpen(false);
         onSelect();
     }
@@ -69,7 +78,7 @@ export const LessonCard: FC<LessonCardProps> = ({ lesson, onDelete, onFinish }) 
             borderless
             onPress={ handleLessonDetail }
             rippleColor={ BUTTON_TRANSPARENT_COLOR }
-            style={ styles.touchable }
+            style={{ ...styles.touchable, width: width - 16 }}
             testID="lesson-card-touchable"
         >
             <View style={{ ...styles.container, backgroundColor: colors.card }}>

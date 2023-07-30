@@ -12,7 +12,7 @@ exports[`Test in <Settings /> screen should to match snapshot 1`] = `
             {
               "borderBottomColor": "#292929",
               "borderBottomWidth": 1,
-              "paddingTop": 15,
+              "paddingTop": 24,
             },
             undefined,
           ]
@@ -22,10 +22,11 @@ exports[`Test in <Settings /> screen should to match snapshot 1`] = `
           style={
             [
               {
-                "padding": 10,
+                "padding": 16,
               },
               {
-                "marginHorizontal": 8,
+                "padding": 16,
+                "paddingTop": 0,
               },
             ]
           }
@@ -89,8 +90,7 @@ exports[`Test in <Settings /> screen should to match snapshot 1`] = `
               },
               false,
               {
-                "paddingHorizontal": 18,
-                "paddingVertical": 16,
+                "padding": 16,
               },
             ]
           }
@@ -159,8 +159,7 @@ exports[`Test in <Settings /> screen should to match snapshot 1`] = `
               },
               false,
               {
-                "paddingHorizontal": 18,
-                "paddingVertical": 16,
+                "padding": 16,
               },
             ]
           }
@@ -198,7 +197,7 @@ exports[`Test in <Settings /> screen should to match snapshot 1`] = `
             {
               "borderBottomColor": "#292929",
               "borderBottomWidth": 1,
-              "paddingTop": 15,
+              "paddingTop": 24,
             },
             undefined,
           ]
@@ -208,10 +207,11 @@ exports[`Test in <Settings /> screen should to match snapshot 1`] = `
           style={
             [
               {
-                "padding": 10,
+                "padding": 16,
               },
               {
-                "marginHorizontal": 8,
+                "padding": 16,
+                "paddingTop": 0,
               },
             ]
           }
@@ -275,8 +275,7 @@ exports[`Test in <Settings /> screen should to match snapshot 1`] = `
               },
               false,
               {
-                "paddingHorizontal": 18,
-                "paddingVertical": 16,
+                "padding": 16,
               },
             ]
           }
@@ -314,7 +313,7 @@ exports[`Test in <Settings /> screen should to match snapshot 1`] = `
             {
               "borderBottomColor": "#292929",
               "borderBottomWidth": 1,
-              "paddingTop": 15,
+              "paddingTop": 24,
             },
             undefined,
           ]
@@ -324,10 +323,11 @@ exports[`Test in <Settings /> screen should to match snapshot 1`] = `
           style={
             [
               {
-                "padding": 10,
+                "padding": 16,
               },
               {
-                "marginHorizontal": 8,
+                "padding": 16,
+                "paddingTop": 0,
               },
             ]
           }
@@ -391,8 +391,7 @@ exports[`Test in <Settings /> screen should to match snapshot 1`] = `
               },
               false,
               {
-                "paddingHorizontal": 18,
-                "paddingVertical": 16,
+                "padding": 16,
               },
             ]
           }
@@ -430,7 +429,7 @@ exports[`Test in <Settings /> screen should to match snapshot 1`] = `
             {
               "borderBottomColor": "#292929",
               "borderBottomWidth": 1,
-              "paddingTop": 15,
+              "paddingTop": 24,
             },
             {
               "borderBottomWidth": 0,
@@ -442,10 +441,11 @@ exports[`Test in <Settings /> screen should to match snapshot 1`] = `
           style={
             [
               {
-                "padding": 10,
+                "padding": 16,
               },
               {
-                "marginHorizontal": 8,
+                "padding": 16,
+                "paddingTop": 0,
               },
             ]
           }
@@ -509,8 +509,7 @@ exports[`Test in <Settings /> screen should to match snapshot 1`] = `
               },
               false,
               {
-                "paddingHorizontal": 18,
-                "paddingVertical": 16,
+                "padding": 16,
               },
             ]
           }
@@ -579,8 +578,7 @@ exports[`Test in <Settings /> screen should to match snapshot 1`] = `
               },
               false,
               {
-                "paddingHorizontal": 18,
-                "paddingVertical": 16,
+                "padding": 16,
               },
             ]
           }
@@ -649,8 +647,7 @@ exports[`Test in <Settings /> screen should to match snapshot 1`] = `
               },
               false,
               {
-                "paddingHorizontal": 18,
-                "paddingVertical": 16,
+                "padding": 16,
               },
             ]
           }

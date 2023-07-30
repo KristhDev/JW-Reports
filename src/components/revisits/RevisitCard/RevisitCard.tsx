@@ -1,5 +1,5 @@
 import React, { FC, useState } from 'react';
-import { Text, View } from 'react-native';
+import { Text, View, useWindowDimensions } from 'react-native';
 import { TouchableRipple } from 'react-native-paper';
 import { useNavigation } from '@react-navigation/native';
 import { Menu, MenuOption, MenuOptions, MenuTrigger } from 'react-native-popup-menu';
@@ -21,16 +21,19 @@ import styles from './styles';
 /**
  * This component is responsible for rendering part of the information of a
  * revisit in the form of a card.
+ *
  * @param {RevisitCardProps} props { onDelete: () => void, onPass: () => void, onRevisit: () => void, revisit: Revisit } - This a props
  * to functionality of the component
  * - onDelete: This is a function to delete the revisit
  * - onPass: This is a function to pass the revisit to course
  * - onRevisit: This is a function to mark as complete and revisit again
  * - revisit: This is a revisit object that render in the card
+ * @return {JSX.Element} Rendered component to show the revisit
  */
-export const RevisitCard: FC<RevisitCardProps> = ({ onDelete, onPass, onRevisit, revisit }) => {
+export const RevisitCard: FC<RevisitCardProps> = ({ onDelete, onPass, onRevisit, revisit }): JSX.Element => {
     const [ isOpen, setIsOpen ] = useState<boolean>(false);
     const { navigate } = useNavigation();
+    const { width } = useWindowDimensions();
 
     const { setSelectedRevisit } = useRevisits();
     const { state: { colors }, BUTTON_TRANSPARENT_COLOR } = useTheme();
@@ -40,8 +43,10 @@ export const RevisitCard: FC<RevisitCardProps> = ({ onDelete, onPass, onRevisit,
     /**
      * When the user clicks on a revisit, set the selected revisit to the revisit that was clicked on
      * and navigate to the RevisitDetailScreen.
+     *
+     * @return {void} This function does not return any value.
      */
-    const handleRevisitDetail = () => {
+    const handleRevisitDetail = (): void => {
         setSelectedRevisit(revisit);
         navigate('RevisitDetailScreen' as never);
     }
@@ -49,8 +54,10 @@ export const RevisitCard: FC<RevisitCardProps> = ({ onDelete, onPass, onRevisit,
     /**
      * When the user clicks the edit button, the modal closes, the selected revisit is set to the
      * current revisit, and the user is navigated to the AddOrEditRevisitScreen.
+     *
+     * @return {void} This function does not return any value.
      */
-    const handleEdit = () => {
+    const handleEdit = (): void => {
         setIsOpen(false);
         setSelectedRevisit(revisit);
         navigate('AddOrEditRevisitScreen' as never);
@@ -59,9 +66,11 @@ export const RevisitCard: FC<RevisitCardProps> = ({ onDelete, onPass, onRevisit,
     /**
      * The function takes a function as an argument and returns a function that calls the argument
      * function.
-     * @param onAction - The function to call when the user clicks the action button.
+     *
+     * @param {() => void} onAction - The function to call when the user clicks the action button.
+     * @return {void} This function does not return any value.
      */
-    const handleAction = (onAction: () => void) => {
+    const handleAction = (onAction: () => void): void => {
         setIsOpen(false);
         onAction();
     }
@@ -71,7 +80,7 @@ export const RevisitCard: FC<RevisitCardProps> = ({ onDelete, onPass, onRevisit,
             borderless
             onPress={ handleRevisitDetail }
             rippleColor={ BUTTON_TRANSPARENT_COLOR  }
-            style={ styles.touchable }
+            style={{ ...styles.touchable, width: width - 16 }}
             testID="revisit-card-touchable"
         >
             <View style={{ ...styles.container, backgroundColor: colors.card }}>

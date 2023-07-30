@@ -18,6 +18,7 @@ import { styles as themeStyles } from '../../../theme';
 /**
  * This component is responsible for displaying a field to select a value among
  * several through a modal and then displays the value in the input.
+ *
  * @param {FormSelectProps} props {
  *      controlStyle: StyleProp<ViewStyle>,
  *      inputContainerStyle: StyleProp<ViewStyle>,
@@ -40,6 +41,7 @@ import { styles as themeStyles } from '../../../theme';
  * - placeholder: The placeholder of the field
  * - style: The style of the field
  * - title: The title of the field modal
+ * @return {JSX.Element} Returns the component to show the field
  */
 export const FormSelect: FC<FormSelectProps> = ({
     controlStyle,
@@ -52,7 +54,7 @@ export const FormSelect: FC<FormSelectProps> = ({
     placeholder,
     style,
     title
-}) => {
+}): JSX.Element => {
     const { width } = useWindowDimensions();
 
     const [ field, meta, helpers ] = useField({ name });
@@ -64,16 +66,20 @@ export const FormSelect: FC<FormSelectProps> = ({
 
     /**
      * When the user clicks on the button, the modal will show and the input will be focused.
+     *
+     * @return {void} This function returns nothing
      */
-    const handleShowModal = () => {
+    const handleShowModal = (): void => {
         setShowModal(true);
         setIsFocused(true);
     }
 
     /**
      * When the user clicks the button, the modal will close and the input will be marked as touched.
+     *
+     * @return {void} This function returns nothing
      */
-    const handleHideModal = () => {
+    const handleHideModal = (): void => {
         helpers.setTouched(!meta.touched);
         setIsFocused(false);
         setShowModal(false);
@@ -82,9 +88,11 @@ export const FormSelect: FC<FormSelectProps> = ({
     /**
      * When the user clicks on a button, the value of the button is set to the value of the input
      * field, and the modal is hidden.
+     *
      * @param {string} value - string - the value of the input
+     * @return {void} This function returns nothing
      */
-    const handleChangeValue = (value: string) => {
+    const handleChangeValue = (value: string): void => {
         helpers.setValue(value);
         handleHideModal();
     }

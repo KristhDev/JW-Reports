@@ -3,18 +3,19 @@
 exports[`Test in <Register /> screen should to match snapshot 1`] = `
 <View
   style={
-    Object {
+    {
       "alignItems": "center",
       "flex": 1,
+      "padding": 24,
     }
   }
 >
   <View
     style={
-      Array [
-        Object {
+      [
+        {
           "alignItems": "flex-start",
-          "padding": 20,
+          "marginBottom": 40,
           "width": "100%",
         },
         undefined,
@@ -23,8 +24,8 @@ exports[`Test in <Register /> screen should to match snapshot 1`] = `
   >
     <Text
       style={
-        Array [
-          Object {
+        [
+          {
             "color": "#FFFFFF",
             "fontSize": 38,
             "fontWeight": "bold",
@@ -39,30 +40,30 @@ exports[`Test in <Register /> screen should to match snapshot 1`] = `
   </View>
   <View
     style={
-      Object {
+      {
         "alignItems": "center",
         "flex": 1,
         "justifyContent": "center",
+        "width": "100%",
       }
     }
   >
     <View
       style={
-        Object {
+        {
           "display": "flex",
-          "padding": 10,
-          "width": 675,
+          "marginBottom": 16,
+          "width": "100%",
         }
       }
     >
       <Text
         style={
-          Array [
-            Object {
+          [
+            {
               "color": "#FFFFFF",
               "fontSize": 18,
-              "marginBottom": 5,
-              "padding": 5,
+              "marginBottom": 16,
             },
             undefined,
           ]
@@ -73,7 +74,7 @@ exports[`Test in <Register /> screen should to match snapshot 1`] = `
       </Text>
       <View
         style={
-          Object {
+          {
             "borderColor": "transparent",
             "borderRadius": 7,
             "borderWidth": 1,
@@ -82,7 +83,7 @@ exports[`Test in <Register /> screen should to match snapshot 1`] = `
       >
         <View
           style={
-            Object {
+            {
               "borderColor": "#FFFFFF",
               "borderRadius": 5,
               "borderWidth": 0.5,
@@ -91,8 +92,8 @@ exports[`Test in <Register /> screen should to match snapshot 1`] = `
         >
           <View
             style={
-              Array [
-                Object {
+              [
+                {
                   "alignItems": "center",
                   "borderColor": "transparent",
                   "borderRadius": 5,
@@ -115,15 +116,15 @@ exports[`Test in <Register /> screen should to match snapshot 1`] = `
               placeholder="Ingrese su nombre"
               placeholderTextColor="#BFBFBF"
               selection={
-                Object {
+                {
                   "end": 0,
                   "start": 0,
                 }
               }
               selectionColor="#A0B9E2"
               style={
-                Array [
-                  Object {
+                [
+                  {
                     "color": "#FFFFFF",
                     "flex": 1,
                     "fontSize": 17,
@@ -141,18 +142,18 @@ exports[`Test in <Register /> screen should to match snapshot 1`] = `
               allowFontScaling={false}
               selectable={false}
               style={
-                Array [
-                  Object {
+                [
+                  {
                     "color": "#BFBFBF",
                     "fontSize": 25,
                   },
                   undefined,
-                  Object {
+                  {
                     "fontFamily": "Ionicons",
                     "fontStyle": "normal",
                     "fontWeight": "normal",
                   },
-                  Object {},
+                  {},
                 ]
               }
             >
@@ -164,21 +165,20 @@ exports[`Test in <Register /> screen should to match snapshot 1`] = `
     </View>
     <View
       style={
-        Object {
+        {
           "display": "flex",
-          "padding": 10,
-          "width": 675,
+          "marginBottom": 16,
+          "width": "100%",
         }
       }
     >
       <Text
         style={
-          Array [
-            Object {
+          [
+            {
               "color": "#FFFFFF",
               "fontSize": 18,
-              "marginBottom": 5,
-              "padding": 5,
+              "marginBottom": 16,
             },
             undefined,
           ]
@@ -189,7 +189,7 @@ exports[`Test in <Register /> screen should to match snapshot 1`] = `
       </Text>
       <View
         style={
-          Object {
+          {
             "borderColor": "transparent",
             "borderRadius": 7,
             "borderWidth": 1,
@@ -198,7 +198,7 @@ exports[`Test in <Register /> screen should to match snapshot 1`] = `
       >
         <View
           style={
-            Object {
+            {
               "borderColor": "#FFFFFF",
               "borderRadius": 5,
               "borderWidth": 0.5,
@@ -207,8 +207,8 @@ exports[`Test in <Register /> screen should to match snapshot 1`] = `
         >
           <View
             style={
-              Array [
-                Object {
+              [
+                {
                   "alignItems": "center",
                   "borderColor": "transparent",
                   "borderRadius": 5,
@@ -231,15 +231,15 @@ exports[`Test in <Register /> screen should to match snapshot 1`] = `
               placeholder="Ingrese su apellido"
               placeholderTextColor="#BFBFBF"
               selection={
-                Object {
+                {
                   "end": 0,
                   "start": 0,
                 }
               }
               selectionColor="#A0B9E2"
               style={
-                Array [
-                  Object {
+                [
+                  {
                     "color": "#FFFFFF",
                     "flex": 1,
                     "fontSize": 17,
@@ -257,18 +257,18 @@ exports[`Test in <Register /> screen should to match snapshot 1`] = `
               allowFontScaling={false}
               selectable={false}
               style={
-                Array [
-                  Object {
+                [
+                  {
                     "color": "#BFBFBF",
                     "fontSize": 25,
                   },
                   undefined,
-                  Object {
+                  {
                     "fontFamily": "Ionicons",
                     "fontStyle": "normal",
                     "fontWeight": "normal",
                   },
-                  Object {},
+                  {},
                 ]
               }
             >
@@ -280,21 +280,20 @@ exports[`Test in <Register /> screen should to match snapshot 1`] = `
     </View>
     <View
       style={
-        Object {
+        {
           "display": "flex",
-          "padding": 10,
-          "width": 675,
+          "marginBottom": 16,
+          "width": "100%",
         }
       }
     >
       <Text
         style={
-          Array [
-            Object {
+          [
+            {
               "color": "#FFFFFF",
               "fontSize": 18,
-              "marginBottom": 5,
-              "padding": 5,
+              "marginBottom": 16,
             },
             undefined,
           ]
@@ -305,7 +304,7 @@ exports[`Test in <Register /> screen should to match snapshot 1`] = `
       </Text>
       <View
         style={
-          Object {
+          {
             "borderColor": "transparent",
             "borderRadius": 7,
             "borderWidth": 1,
@@ -314,7 +313,7 @@ exports[`Test in <Register /> screen should to match snapshot 1`] = `
       >
         <View
           style={
-            Object {
+            {
               "borderColor": "#FFFFFF",
               "borderRadius": 5,
               "borderWidth": 0.5,
@@ -323,8 +322,8 @@ exports[`Test in <Register /> screen should to match snapshot 1`] = `
         >
           <View
             style={
-              Array [
-                Object {
+              [
+                {
                   "alignItems": "center",
                   "borderColor": "transparent",
                   "borderRadius": 5,
@@ -348,15 +347,15 @@ exports[`Test in <Register /> screen should to match snapshot 1`] = `
               placeholder="Ingrese su correo"
               placeholderTextColor="#BFBFBF"
               selection={
-                Object {
+                {
                   "end": 0,
                   "start": 0,
                 }
               }
               selectionColor="#A0B9E2"
               style={
-                Array [
-                  Object {
+                [
+                  {
                     "color": "#FFFFFF",
                     "flex": 1,
                     "fontSize": 17,
@@ -374,18 +373,18 @@ exports[`Test in <Register /> screen should to match snapshot 1`] = `
               allowFontScaling={false}
               selectable={false}
               style={
-                Array [
-                  Object {
+                [
+                  {
                     "color": "#BFBFBF",
                     "fontSize": 25,
                   },
                   undefined,
-                  Object {
+                  {
                     "fontFamily": "Ionicons",
                     "fontStyle": "normal",
                     "fontWeight": "normal",
                   },
-                  Object {},
+                  {},
                 ]
               }
             >
@@ -397,21 +396,20 @@ exports[`Test in <Register /> screen should to match snapshot 1`] = `
     </View>
     <View
       style={
-        Object {
+        {
           "display": "flex",
-          "padding": 10,
-          "width": 675,
+          "marginBottom": 16,
+          "width": "100%",
         }
       }
     >
       <Text
         style={
-          Array [
-            Object {
+          [
+            {
               "color": "#FFFFFF",
               "fontSize": 18,
-              "marginBottom": 5,
-              "padding": 5,
+              "marginBottom": 16,
             },
             undefined,
           ]
@@ -422,7 +420,7 @@ exports[`Test in <Register /> screen should to match snapshot 1`] = `
       </Text>
       <View
         style={
-          Object {
+          {
             "borderColor": "transparent",
             "borderRadius": 7,
             "borderWidth": 1,
@@ -431,7 +429,7 @@ exports[`Test in <Register /> screen should to match snapshot 1`] = `
       >
         <View
           style={
-            Object {
+            {
               "borderColor": "#FFFFFF",
               "borderRadius": 5,
               "borderWidth": 0.5,
@@ -440,8 +438,8 @@ exports[`Test in <Register /> screen should to match snapshot 1`] = `
         >
           <View
             style={
-              Array [
-                Object {
+              [
+                {
                   "alignItems": "center",
                   "borderColor": "transparent",
                   "borderRadius": 5,
@@ -465,15 +463,15 @@ exports[`Test in <Register /> screen should to match snapshot 1`] = `
               placeholderTextColor="#BFBFBF"
               secureTextEntry={true}
               selection={
-                Object {
+                {
                   "end": 0,
                   "start": 0,
                 }
               }
               selectionColor="#A0B9E2"
               style={
-                Array [
-                  Object {
+                [
+                  {
                     "color": "#FFFFFF",
                     "flex": 1,
                     "fontSize": 17,
@@ -488,6 +486,23 @@ exports[`Test in <Register /> screen should to match snapshot 1`] = `
               value=""
             />
             <View
+              accessibilityState={
+                {
+                  "busy": undefined,
+                  "checked": undefined,
+                  "disabled": undefined,
+                  "expanded": undefined,
+                  "selected": undefined,
+                }
+              }
+              accessibilityValue={
+                {
+                  "max": undefined,
+                  "min": undefined,
+                  "now": undefined,
+                  "text": undefined,
+                }
+              }
               accessible={true}
               collapsable={false}
               focusable={true}
@@ -499,7 +514,7 @@ exports[`Test in <Register /> screen should to match snapshot 1`] = `
               onResponderTerminationRequest={[Function]}
               onStartShouldSetResponder={[Function]}
               style={
-                Object {
+                {
                   "opacity": 1,
                 }
               }
@@ -509,18 +524,18 @@ exports[`Test in <Register /> screen should to match snapshot 1`] = `
                 allowFontScaling={false}
                 selectable={false}
                 style={
-                  Array [
-                    Object {
+                  [
+                    {
                       "color": "#BFBFBF",
                       "fontSize": 25,
                     },
                     undefined,
-                    Object {
+                    {
                       "fontFamily": "Ionicons",
                       "fontStyle": "normal",
                       "fontWeight": "normal",
                     },
-                    Object {},
+                    {},
                   ]
                 }
               >
@@ -533,21 +548,20 @@ exports[`Test in <Register /> screen should to match snapshot 1`] = `
     </View>
     <View
       style={
-        Object {
+        {
           "display": "flex",
-          "padding": 10,
-          "width": 675,
+          "marginBottom": 16,
+          "width": "100%",
         }
       }
     >
       <Text
         style={
-          Array [
-            Object {
+          [
+            {
               "color": "#FFFFFF",
               "fontSize": 18,
-              "marginBottom": 5,
-              "padding": 5,
+              "marginBottom": 16,
             },
             undefined,
           ]
@@ -558,7 +572,7 @@ exports[`Test in <Register /> screen should to match snapshot 1`] = `
       </Text>
       <View
         style={
-          Object {
+          {
             "borderColor": "transparent",
             "borderRadius": 7,
             "borderWidth": 1,
@@ -567,7 +581,7 @@ exports[`Test in <Register /> screen should to match snapshot 1`] = `
       >
         <View
           style={
-            Object {
+            {
               "borderColor": "#FFFFFF",
               "borderRadius": 5,
               "borderWidth": 0.5,
@@ -576,8 +590,8 @@ exports[`Test in <Register /> screen should to match snapshot 1`] = `
         >
           <View
             style={
-              Array [
-                Object {
+              [
+                {
                   "alignItems": "center",
                   "borderColor": "transparent",
                   "borderRadius": 5,
@@ -601,15 +615,15 @@ exports[`Test in <Register /> screen should to match snapshot 1`] = `
               placeholderTextColor="#BFBFBF"
               secureTextEntry={true}
               selection={
-                Object {
+                {
                   "end": 0,
                   "start": 0,
                 }
               }
               selectionColor="#A0B9E2"
               style={
-                Array [
-                  Object {
+                [
+                  {
                     "color": "#FFFFFF",
                     "flex": 1,
                     "fontSize": 17,
@@ -624,6 +638,23 @@ exports[`Test in <Register /> screen should to match snapshot 1`] = `
               value=""
             />
             <View
+              accessibilityState={
+                {
+                  "busy": undefined,
+                  "checked": undefined,
+                  "disabled": undefined,
+                  "expanded": undefined,
+                  "selected": undefined,
+                }
+              }
+              accessibilityValue={
+                {
+                  "max": undefined,
+                  "min": undefined,
+                  "now": undefined,
+                  "text": undefined,
+                }
+              }
               accessible={true}
               collapsable={false}
               focusable={true}
@@ -635,7 +666,7 @@ exports[`Test in <Register /> screen should to match snapshot 1`] = `
               onResponderTerminationRequest={[Function]}
               onStartShouldSetResponder={[Function]}
               style={
-                Object {
+                {
                   "opacity": 1,
                 }
               }
@@ -645,18 +676,18 @@ exports[`Test in <Register /> screen should to match snapshot 1`] = `
                 allowFontScaling={false}
                 selectable={false}
                 style={
-                  Array [
-                    Object {
+                  [
+                    {
                       "color": "#BFBFBF",
                       "fontSize": 25,
                     },
                     undefined,
-                    Object {
+                    {
                       "fontFamily": "Ionicons",
                       "fontStyle": "normal",
                       "fontWeight": "normal",
                     },
-                    Object {},
+                    {},
                   ]
                 }
               >
@@ -669,8 +700,20 @@ exports[`Test in <Register /> screen should to match snapshot 1`] = `
     </View>
     <View
       accessibilityState={
-        Object {
+        {
+          "busy": undefined,
+          "checked": undefined,
           "disabled": false,
+          "expanded": undefined,
+          "selected": undefined,
+        }
+      }
+      accessibilityValue={
+        {
+          "max": undefined,
+          "min": undefined,
+          "now": undefined,
+          "text": undefined,
         }
       }
       accessible={true}
@@ -686,17 +729,17 @@ exports[`Test in <Register /> screen should to match snapshot 1`] = `
       onResponderTerminationRequest={[Function]}
       onStartShouldSetResponder={[Function]}
       style={
-        Array [
-          Object {
+        [
+          {
             "overflow": "hidden",
           },
           false,
-          Array [
-            Object {
+          [
+            {
               "backgroundColor": "#C0A7E1",
               "borderRadius": 10,
             },
-            Object {
+            {
               "marginTop": 30,
             },
           ],
@@ -706,13 +749,14 @@ exports[`Test in <Register /> screen should to match snapshot 1`] = `
     >
       <View
         style={
-          Array [
-            Object {
+          [
+            {
               "alignItems": "center",
               "flexDirection": "row",
               "justifyContent": "center",
+              "minWidth": "100%",
               "paddingHorizontal": 20,
-              "paddingVertical": 8,
+              "paddingVertical": 9,
             },
             undefined,
           ]
@@ -720,21 +764,21 @@ exports[`Test in <Register /> screen should to match snapshot 1`] = `
       >
         <Text
           style={
-            Array [
-              Object {
+            [
+              {
                 "textAlign": "left",
               },
-              Object {
+              {
                 "color": "rgba(28, 27, 31, 1)",
                 "fontFamily": "System",
                 "fontWeight": "400",
                 "letterSpacing": 0,
               },
-              Object {
+              {
                 "writingDirection": "ltr",
               },
-              Array [
-                Object {
+              [
+                {
                   "color": "#121212",
                   "fontSize": 18,
                   "fontWeight": "bold",
@@ -753,17 +797,17 @@ exports[`Test in <Register /> screen should to match snapshot 1`] = `
     </View>
     <View
       style={
-        Object {
+        {
           "flexDirection": "row",
           "justifyContent": "center",
-          "marginTop": 30,
+          "marginTop": 40,
           "width": 675,
         }
       }
     >
       <Text
         style={
-          Object {
+          {
             "color": "#FFFFFF",
             "fontSize": 16,
             "marginRight": 10,
@@ -773,6 +817,23 @@ exports[`Test in <Register /> screen should to match snapshot 1`] = `
         ¿Ya tienes cuenta?
       </Text>
       <View
+        accessibilityState={
+          {
+            "busy": undefined,
+            "checked": undefined,
+            "disabled": undefined,
+            "expanded": undefined,
+            "selected": undefined,
+          }
+        }
+        accessibilityValue={
+          {
+            "max": undefined,
+            "min": undefined,
+            "now": undefined,
+            "text": undefined,
+          }
+        }
         accessible={true}
         collapsable={false}
         focusable={true}
@@ -784,7 +845,7 @@ exports[`Test in <Register /> screen should to match snapshot 1`] = `
         onResponderTerminationRequest={[Function]}
         onStartShouldSetResponder={[Function]}
         style={
-          Object {
+          {
             "opacity": 1,
           }
         }
@@ -792,7 +853,7 @@ exports[`Test in <Register /> screen should to match snapshot 1`] = `
       >
         <Text
           style={
-            Object {
+            {
               "color": "#A0B9E2",
               "fontSize": 16,
             }

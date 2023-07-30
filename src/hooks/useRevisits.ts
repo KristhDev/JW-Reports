@@ -61,13 +61,15 @@ const useRevisits = () => {
     /**
      * This function is to load the revisits using the options that are passed by parameter, you can
      * load them for pagination or not.
+     *
      * @param {loadRevisitsOptions} { filter: RevisitFilter, loadMore: boolean, refresh: boolean, search: string } - They are the options that are used to load the revisits:
      * - filter: It is the filter of the revisits to show them are: `all`, `unvisited`, `visited`
      * - loadMore: This flag is used to add or set the revisits that are requested, default is `false`
      * - refresh: This flag is to reset the pagination of the revisits, default is `false`
      * - search: This is a search text to search revisits, default is empty `string`
-     */
-    const loadRevisits = async ({ filter, loadMore = false, refresh = false, search = '' }: loadRevisitsOptions) => {
+     * @return {Promise<void>} This function does not return anything.
+    */
+    const loadRevisits = async ({ filter, loadMore = false, refresh = false, search = '' }: loadRevisitsOptions): Promise<void> => {
         dispatch(setRevisitFilter({ filter }));
 
         if (!isConnected) {
@@ -120,14 +122,16 @@ const useRevisits = () => {
 
     /**
      * This function is to save a revisit according to the options that are sent to you.
+     *
      * @param {SaveRevisitOptions} { revisitValues: RevisitFormValues, back: boolean, image: Image, onFinish: Function } - This
      * is a options for save revisit.
      * - revisitValues: This is a values for save revisits
      * - back: This flag is used to navigate for previus screen, default is `true`
      * - image: This is a image for upload and save uri in revisit, default is `undefined`
      * - onFinish: This callback executed when the process is finished (success or failure), default is `undefined`
+     * @return {Promise<void>} This function does not return anything.
      */
-    const saveRevisit = async ({ revisitValues, back = true, image, onFinish }: SaveRevisitOptions) => {
+    const saveRevisit = async ({ revisitValues, back = true, image, onFinish }: SaveRevisitOptions): Promise<void> => {
         if (!isConnected) {
             setNetworkError();
             return;
@@ -180,8 +184,8 @@ const useRevisits = () => {
         onFinish && onFinish();
 
         const successMsg = (back)
-            ? 'Haz agregado tu revisita correctamente.'
-            : `Haz agregado correctamente a ${ data![0].person_name } para volverla a visitar.`
+            ? 'Has agregado tu revisita correctamente.'
+            : `Has agregado correctamente a ${ data![0].person_name } para volverla a visitar.`
 
         setStatus({ code: status, msg: successMsg });
 
@@ -190,10 +194,12 @@ const useRevisits = () => {
 
     /**
      * This function is responsible for updating a revisit and returns to the previous screen.
+     *
      * @param {RevisitFormValues} revisitValues - Revisit values to update
      * @param {Image} image - Image to upload, default is `undefined`
+     * @return {Promise<void>} This function does not return anything
      */
-    const updateRevisit = async (revisitValues: RevisitFormValues, image?: Image) => {
+    const updateRevisit = async (revisitValues: RevisitFormValues, image?: Image): Promise<void> => {
         if (!isConnected) {
             setNetworkError();
             return;
@@ -256,7 +262,7 @@ const useRevisits = () => {
 
         setStatus({
             code: 200,
-            msg: 'Haz actualizado tu revisita correctamente.'
+            msg: 'Has actualizado tu revisita correctamente.'
         });
 
         goBack();
@@ -264,10 +270,12 @@ const useRevisits = () => {
 
     /**
      * This function is to delete a revisit.
+     *
      * @param {boolean} back - This is a flag to indicate whether to navigate to the previous screen or not, default is `false`
      * @param {Function} onFinish - This callback executed when the process is finished (success or failure), default is `undefined`
+     * @return {Promise<void>} This function does not return anything
      */
-    const deleteRevisit = async (back: boolean = false, onFinish?: () => void) => {
+    const deleteRevisit = async (back: boolean = false, onFinish?: () => void): Promise<void> => {
         if (!isConnected) {
             setNetworkError();
             return;
@@ -329,18 +337,20 @@ const useRevisits = () => {
 
         setStatus({
             code: 200,
-            msg: 'Haz eliminado tu revisita correctamente.'
+            msg: 'Has eliminado tu revisita correctamente.'
         });
     }
 
     /**
      * This function is to mark a revisit as complete.
+     *
      * @param {Function} onFailFinish - This callback executed when the process is failed
+     * @return {Promise<string | void>} This function returns a string
      */
-    const completeRevisit = async (onFailFinish?: () => void) => {
+    const completeRevisit = async (onFailFinish?: () => void): Promise<string> => {
         if (!isConnected) {
             setNetworkError();
-            return;
+            return '';
         }
 
         dispatch(setIsRevisitLoading({ isLoading: true }));
@@ -388,7 +398,7 @@ const useRevisits = () => {
         dispatch(updateRevisitAction({ revisit: data![0] }));
         setSelectedRevisit(data![0]);
 
-        return 'Haz marcado como completa tu revista correctamente.';
+        return 'Has marcado como completa tu revista correctamente.';
     }
 
     return {

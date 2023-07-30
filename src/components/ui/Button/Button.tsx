@@ -13,6 +13,7 @@ import styles from './styles';
 
 /**
  * This component shows a custom button for the different actions of the app.
+ *
  * @param {ButtonProps} props {
  *      containerStyle: StyleProp<ViewStyle>,
  *      disabled: boolean,
@@ -31,6 +32,7 @@ import styles from './styles';
  * - textStyle: This is a style of the text, default is `undefined`
  * - touchableStyle: This is a style of the touchable, default is `undefined`
  * - underlayColor: This is a color of the underlay, default is `undefined`
+ * @return {JSX.Element} Return jsx element to render button
  */
 export const Button: FC<ButtonProps> = ({
     containerStyle,
@@ -41,7 +43,7 @@ export const Button: FC<ButtonProps> = ({
     textStyle,
     touchableStyle,
     underlayColor
-}) => {
+}): JSX.Element => {
     const { state: { colors } } = useTheme();
 
     return (
@@ -51,9 +53,9 @@ export const Button: FC<ButtonProps> = ({
             onPress={ onPress }
             rippleColor={ underlayColor || 'rgba(0, 0, 0, 0.30)' }
             style={[
-                    { ...styles.buttonTouchable, backgroundColor: colors.button },
-                    touchableStyle
-                ]}
+                { ...styles.buttonTouchable, backgroundColor: colors.button },
+                touchableStyle
+            ]}
             testID="button-touchable"
         >
             <View style={[ styles.buttonContainer, containerStyle ]}>

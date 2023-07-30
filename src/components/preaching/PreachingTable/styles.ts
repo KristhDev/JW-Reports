@@ -3,8 +3,7 @@ import { StyleSheet } from 'react-native';
 const styles = StyleSheet.create({
     table: {
         alignItems: 'center',
-        borderWidth: 1,
-        margin: 20,
+        borderWidth: 1
     },
 
     tableRow: {

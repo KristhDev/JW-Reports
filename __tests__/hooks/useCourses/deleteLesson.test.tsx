@@ -85,7 +85,7 @@ describe('Test useCourses hook deleteLesson', () => {
         /* Check if status state is equal to respective status */
         expect(result.current.useStatus.state).toEqual({
             code: 200,
-            msg: 'Haz eliminado la clase correctamente.'
+            msg: 'Has eliminado la clase correctamente.'
         });
 
         /* Check if onFinish and navigate is called with respective arg */

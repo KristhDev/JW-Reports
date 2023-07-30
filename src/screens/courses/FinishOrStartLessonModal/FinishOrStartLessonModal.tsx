@@ -1,5 +1,5 @@
 import React, { FC, useState } from 'react';
-import { ActivityIndicator, Text, View } from 'react-native';
+import { ActivityIndicator, Text, View, useWindowDimensions } from 'react-native';
 import { Formik } from 'formik';
 import Icon from 'react-native-vector-icons/Ionicons';
 
@@ -22,10 +22,13 @@ import { styles as themeStyles } from '../../../theme';
 /**
  * This modal is responsible for grouping the components to finish
  * or start a lesson again.
+ *
  * @param {ModalProps} { isOpen: boolean, onClose: () => void }
+ * @return {JSX.Element} rendered component to show list of modal
  */
 const FinishOrStartLessonModal: FC<ModalProps> = ({ isOpen, onClose }) => {
     const [ reschedule, setReschedule ] = useState<boolean>(false);
+    const { width } = useWindowDimensions();
 
     const { state: { selectedLesson, isLessonLoading }, finishOrStartLesson } = useCourses();
     const { state: { colors } } = useTheme();
@@ -37,8 +40,10 @@ const FinishOrStartLessonModal: FC<ModalProps> = ({ isOpen, onClose }) => {
     /**
      * When the user clicks the close button, the modal will close and the onClose function will be
      * called.
+     *
+     * @return {void} This function does not return anything.
      */
-    const handleClose = () => {
+    const handleClose = (): void => {
         setReschedule(false);
         onClose();
     }
@@ -46,9 +51,11 @@ const FinishOrStartLessonModal: FC<ModalProps> = ({ isOpen, onClose }) => {
     /**
      * This is the confirmation function of the modal that executes one or another function
      * depending on selectdLesson, the reschedule state or the function parameters.
+     *
      * @param {{ next_lesson: Date }} values - This is the values with next_lesson property to lesson
+     * @return {void} This function does not return anything
      */
-    const handleConfirm = (values?: { next_lesson: Date }) => {
+    const handleConfirm = (values?: { next_lesson: Date }): void => {
         if (!reschedule && !selectedLesson.done) {
             finishOrStartLesson(new Date(selectedLesson.next_lesson), handleClose);
         }
@@ -67,7 +74,8 @@ const FinishOrStartLessonModal: FC<ModalProps> = ({ isOpen, onClose }) => {
                     <View
                         style={{
                             ...themeStyles.modalContainer,
-                            backgroundColor: colors.modal
+                            backgroundColor: colors.modal,
+                            width: width - 48
                         }}
                     >
                         {
@@ -106,7 +114,8 @@ const FinishOrStartLessonModal: FC<ModalProps> = ({ isOpen, onClose }) => {
                                             <Text
                                                 style={{
                                                     ...themeStyles.modalText,
-                                                    color: colors.modalText
+                                                    color: colors.modalText,
+                                                    marginBottom: 24
                                                 }}
                                             >
                                                 Por favor ingrese la fecha en la se dará la clase
@@ -127,7 +136,7 @@ const FinishOrStartLessonModal: FC<ModalProps> = ({ isOpen, onClose }) => {
                                                 mode="date"
                                                 name="next_lesson"
                                                 placeholder="Seleccione el día"
-                                                style={{ width: '100%' }}
+                                                style={{ marginBottom: 0 }}
                                             />
 
                                             {/* Modal actions */}

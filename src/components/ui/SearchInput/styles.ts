@@ -4,8 +4,8 @@ const styles = StyleSheet.create({
     searchInputContainer: {
         alignItems: 'center',
         flexDirection: 'row',
-        marginBottom: 30,
-        paddingHorizontal: 30,
+        marginBottom: 24,
+        paddingHorizontal: 8,
         width: '100%'
     },
 

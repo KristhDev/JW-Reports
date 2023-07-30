@@ -78,7 +78,7 @@ describe('Test in usePreaching hook savePreaching', () => {
         /* Check if status state is equal to respective object */
         expect(result.current.useStatus.state).toEqual({
             code: 201,
-            msg: 'Haz agregado tu día de predicación correctamente.'
+            msg: 'Has agregado tu día de predicación correctamente.'
         });
 
         /* Check if goBack is called one time */

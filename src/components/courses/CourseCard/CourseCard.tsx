@@ -1,5 +1,5 @@
 import React, { FC, useState } from 'react';
-import { Text, View } from 'react-native';
+import { Text, View, useWindowDimensions } from 'react-native';
 import { TouchableRipple } from 'react-native-paper';
 import { Menu, MenuOption, MenuOptions, MenuTrigger } from 'react-native-popup-menu';
 import { useNavigation } from '@react-navigation/native';
@@ -20,16 +20,19 @@ import styles from './styles';
 /**
  * This component is responsible for rendering part of the information of a
  * course in the form of a card.
+ *
  * @param {CourseCardProps} props { course: Course, onActiveOrSuspend: () => void, onDelete: () =>, onFinishOrStart: () => void } - This a props
  * to functionality of the component
  * - course: Its course object that render in the card
  * - onActiveOrSuspend: Function to active or suspend the course
  * - onDelete: Function to delete the course
  * - onFinishOrStart: Function to finish or start again the course
+ * @return {JSX.Element} rendered component to show the course
  */
-export const CourseCard: FC<CourseCardProps> = ({ course, onActiveOrSuspend, onDelete, onFinishOrStart }) => {
+export const CourseCard: FC<CourseCardProps> = ({ course, onActiveOrSuspend, onDelete, onFinishOrStart }): JSX.Element => {
     const [ isOpen, setIsOpen ] = useState<boolean>(false);
     const { navigate } = useNavigation();
+    const { width } = useWindowDimensions();
 
     const { state: { selectedLesson }, setSelectedLesson, setSelectedCourse } = useCourses();
     const { state: { colors }, BUTTON_TRANSPARENT_COLOR } = useTheme();
@@ -37,8 +40,10 @@ export const CourseCard: FC<CourseCardProps> = ({ course, onActiveOrSuspend, onD
     /**
      * When the user clicks on a course, set the selected course to the course that was clicked on and
      * navigate to the CourseDetailScreen.
+     *
+     * @return {void} This function does not return any value.
      */
-    const handleCourseDetail = () => {
+    const handleCourseDetail = (): void => {
         setSelectedCourse(course);
         navigate('CourseDetailScreen' as never);
     }
@@ -46,8 +51,10 @@ export const CourseCard: FC<CourseCardProps> = ({ course, onActiveOrSuspend, onD
     /**
      * When the user clicks the edit button, close the modal, set the selected course to the course
      * that was clicked, and navigate to the AddOrEditCourseScreen.
+     *
+     * @return {void} This function does not return any value.
      */
-    const handleEdit = () => {
+    const handleEdit = (): void => {
         setIsOpen(false);
         setSelectedCourse(course);
         navigate('AddOrEditCourseScreen' as never);
@@ -57,8 +64,10 @@ export const CourseCard: FC<CourseCardProps> = ({ course, onActiveOrSuspend, onD
      * When the user clicks the button, the modal closes, the selected course is set to the course that
      * was clicked, the selected lesson is set to the lesson that was clicked, and the user is
      * navigated to the AddOrEditLessonScreen.
+     *
+     * @return {void} This function does not return any value.
      */
-    const handleAddClass = () => {
+    const handleAddClass = (): void => {
         setIsOpen(false);
 
         setSelectedCourse(course);
@@ -73,8 +82,10 @@ export const CourseCard: FC<CourseCardProps> = ({ course, onActiveOrSuspend, onD
     /**
      * When the user clicks on a course, the course is set as the selected course and the user is
      * navigated to the LessonsScreen.
+     *
+     * @return {void} This function does not return any value.
      */
-    const handleLessonList = () => {
+    const handleLessonList = (): void => {
         setIsOpen(false);
         setSelectedCourse(course);
         navigate('LessonsScreen' as never);
@@ -82,9 +93,11 @@ export const CourseCard: FC<CourseCardProps> = ({ course, onActiveOrSuspend, onD
 
     /**
      * The function takes a function as an argument and calls it.
+     *
      * @param onSelect - () => void
+     * @return {void} This function does not return any value.
      */
-    const handleSelect = (onSelect: () => void) => {
+    const handleSelect = (onSelect: () => void): void => {
         setIsOpen(false);
         onSelect();
     }
@@ -94,7 +107,7 @@ export const CourseCard: FC<CourseCardProps> = ({ course, onActiveOrSuspend, onD
             borderless
             onPress={ handleCourseDetail }
             rippleColor={ BUTTON_TRANSPARENT_COLOR }
-            style={ styles.touchable }
+            style={{ ...styles.touchable, width: width - 16 }}
             testID="course-card-touchable"
         >
             <View style={{ ...styles.container, backgroundColor: colors.card }}>

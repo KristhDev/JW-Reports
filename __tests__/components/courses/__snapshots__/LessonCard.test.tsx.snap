@@ -58,9 +58,8 @@ exports[`Test in <LessonCard /> component should to match snapshot 1`] = `
           },
           false,
           {
-            "marginVertical": 10,
-            "minWidth": "95%",
-            "width": "95%",
+            "marginVertical": 8,
+            "width": 734,
           },
         ]
       }

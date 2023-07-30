@@ -20,8 +20,10 @@ const Tabs = createBottomTabNavigator<MainTabsBottomParamsList>();
 
 /**
  * This is a main tabs bottom navigation.
+ *
+ * @return {JSX.Element} rendered component to show tabs bottom navigation of main
  */
-const MainTabsBottomNavigation = () => {
+const MainTabsBottomNavigation = (): JSX.Element => {
     const { state: { user } } = useAuth();
     const { state: { colors } } = useTheme();
 

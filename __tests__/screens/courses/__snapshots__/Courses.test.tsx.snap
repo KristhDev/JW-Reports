@@ -24,7 +24,7 @@ exports[`Test in <Courses /> screen should to match snapshot 1`] = `
     <RCTScrollView
       ListEmptyComponent={
         <ListEmptyComponent
-          msg="No haz agregado ningún curso."
+          msg="No has agregado ningún curso."
           showMsg={false}
         />
       }

@@ -4,7 +4,7 @@ const styles = StyleSheet.create({
     btnLink: {
         flexDirection: 'row',
         justifyContent: 'center',
-        marginTop: 30,
+        marginTop: 40,
     },
 
     defaultBorder: {
@@ -33,7 +33,8 @@ const styles = StyleSheet.create({
     formContainer: {
         alignItems: 'center',
         flex: 1,
-        justifyContent: 'center'
+        justifyContent: 'center',
+        width: '100%',
     },
 
     formControl: {
@@ -45,12 +46,13 @@ const styles = StyleSheet.create({
 
     formField: {
         display: 'flex',
-        padding: 10
+        marginBottom: 16,
+        width: '100%'
     },
 
     formInput: {
         fontSize: 17,
-        paddingLeft: 10
+        paddingLeft: 10,
     },
 
     formInputText: {
@@ -60,8 +62,7 @@ const styles = StyleSheet.create({
 
     formLabel: {
         fontSize: 18,
-        marginBottom: 5,
-        padding: 5,
+        marginBottom: 16,
     },
 
     formLink: {
@@ -82,26 +83,23 @@ const styles = StyleSheet.create({
     modalActions: {
         flexDirection: 'row',
         justifyContent: 'flex-end',
-        marginTop: 20
+        marginTop: 40
     },
 
     modalContainer: {
         borderRadius: 10,
         justifyContent: 'space-between',
-        padding: 15,
-        width: '87%'
+        padding: 24
     },
 
     modalText: {
         fontSize: 19,
-        marginBottom: 10,
-        marginTop: 5,
-        width: '90%'
+        marginBottom: 16
     },
 
     titleContainer: {
         paddingBottom: 0,
-        paddingTop: 30
+        paddingTop: 8
     },
 
     titleContainerSpacingVertical: {
