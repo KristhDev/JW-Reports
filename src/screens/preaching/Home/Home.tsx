@@ -116,12 +116,27 @@ const Home = (): JSX.Element => {
                 icon={
                     <Icon
                         color={ colors.contentHeader }
+                        name="information-circle-outline"
+                        size={ 40 }
+                        style={{ marginLeft: 1 }}
+                    />
+                }
+                onPress={ () => setShowModal(true) }
+                style={{ ...themeStyles.fabBottomRight, bottom: 145 }}
+                touchColor="rgba(0, 0, 0, 0.15)"
+            />
+
+            <Fab
+                color={ colors.button }
+                icon={
+                    <Icon
+                        color={ colors.contentHeader }
                         name="reader-outline"
                         size={ 40 }
                     />
                 }
                 onPress={ () => setShowModal(true) }
-                style={{ ...themeStyles.fabBottomRight, right: 80 }}
+                style={{ ...themeStyles.fabBottomRight, bottom: 75 }}
                 touchColor="rgba(0, 0, 0, 0.15)"
             />
 
