@@ -28,6 +28,7 @@ const testUser: User = {
     surname: 'Wilderman',
     email: 'Ernestine_Doyle@yahoo.com',
     precursor: 'ninguno',
+    hours_requirement: 20,
     createdAt: '2021-03-10T12:00:00.000Z',
     updatedAt: '2021-03-10T12:00:00.000Z',
 }

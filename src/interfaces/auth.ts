@@ -26,6 +26,7 @@ export interface User {
     surname: string;
     email: string;
     precursor: Precursor;
+    hours_requirement: number;
     createdAt: string;
     updatedAt: string;
 }
@@ -37,6 +38,7 @@ export interface Profile {
     name: string;
     surname: string;
     precursor: Precursor;
+    hours_requirement: number;
 }
 
 /* Defining the interface of the SignIn object. */

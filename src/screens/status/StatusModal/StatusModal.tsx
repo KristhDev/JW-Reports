@@ -28,7 +28,7 @@ const StatusModal = (): JSX.Element => {
 
     const btnText = (msg === configMsg)
         ? 'CONFIGURACIÓN'
-        : 'ESTÁ BIEN';
+        : 'ESTA BIEN';
 
     /**
      * If the message is the config message, open the settings page, otherwise clear the status.
