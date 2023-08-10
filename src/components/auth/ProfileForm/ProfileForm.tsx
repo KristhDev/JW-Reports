@@ -123,6 +123,7 @@ export const ProfileForm = (): JSX.Element => {
                     <Checkbox
                         onPress={ () => setEditHoursRequirement(!editHoursRequirement) }
                         status={ editHoursRequirement ? 'checked' : 'unchecked' }
+                        label="Editar requerimiento de horas"
                     />
 
                     {/* Submit button */}

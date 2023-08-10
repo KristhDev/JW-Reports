@@ -8,7 +8,7 @@ import { CheckboxProps } from './interfaces';
 
 import styles from './styles';
 
-export const Checkbox: FC<CheckboxProps> = ({ onPress, status, style, textStyle }) => {
+export const Checkbox: FC<CheckboxProps> = ({ label, onPress, status, style, textStyle }) => {
     const { state: { colors } } = useTheme();
 
     return (
@@ -18,9 +18,15 @@ export const Checkbox: FC<CheckboxProps> = ({ onPress, status, style, textStyle 
                 uncheckedColor={ colors.text }
                 color={ colors.button }
                 onPress={ onPress }
+                testID="checkbox-checkbox"
             />
 
-            <Text style={[ { ...styles.text, color: colors.text }, textStyle ]}>Editar requerimiento de horas</Text>
+            <Text
+                style={[ { ...styles.text, color: colors.text }, textStyle ]}
+                testID="checkbox-text"
+            >
+                { label }
+            </Text>
         </View>
     );
 }
