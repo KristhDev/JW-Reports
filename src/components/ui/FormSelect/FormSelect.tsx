@@ -1,5 +1,5 @@
 import React, { useState, FC  } from 'react';
-import { View, Text, useWindowDimensions, TouchableHighlight } from 'react-native';
+import { View, Text, TouchableHighlight } from 'react-native';
 import { useField } from 'formik';
 import Icon from 'react-native-vector-icons/Ionicons';
 
@@ -51,12 +51,11 @@ export const FormSelect: FC<FormSelectProps> = ({
     label,
     labelStyle,
     name,
+    onChange,
     placeholder,
     style,
     title
 }): JSX.Element => {
-    const { width } = useWindowDimensions();
-
     const [ field, meta, helpers ] = useField({ name });
 
     const [ isFocused, setIsFocused ] = useState<boolean>(false);
@@ -94,6 +93,7 @@ export const FormSelect: FC<FormSelectProps> = ({
      */
     const handleChangeValue = (value: string): void => {
         helpers.setValue(value);
+        onChange && onChange(value);
         handleHideModal();
     }
 
@@ -102,7 +102,6 @@ export const FormSelect: FC<FormSelectProps> = ({
             <View
                 style={{
                     ...themeStyles.formField,
-                    width: width * 0.9,
                     ...style as any
                 }}
             >

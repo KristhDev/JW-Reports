@@ -187,7 +187,8 @@ const useAuth = () => {
                 data: {
                     name,
                     surname,
-                    precursor: 'ninguno'
+                    precursor: 'ninguno',
+                    hours_requirement: 0
                 }
             }
         });

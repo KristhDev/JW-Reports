@@ -9,13 +9,14 @@ import { INIT_PREACHING } from '../../../features/preaching';
 
 /* Screens */
 import { ReportModal } from '../ReportModal';
+import { PreachingInfoModal } from '../PreachingInfoModal';
 
 /* Components */
 import { PreachingTable } from '../../../components/preaching';
 import { Fab, InfoText, Title } from '../../../components/ui';
 
 /* Hooks */
-import { usePreaching, useTheme } from '../../../hooks';
+import { useAuth, usePreaching, useTheme } from '../../../hooks';
 
 /* Theme */
 import { styles as themeStyles } from '../../../theme';
@@ -29,14 +30,17 @@ import { styles as themeStyles } from '../../../theme';
  */
 const Home = (): JSX.Element => {
     const [ isRefreshing, setIsRefreshing ] = useState<boolean>(false);
-    const [ showModal, setShowModal ] = useState<boolean>(false);
+    const [ showReportModal, setShowReportModal ] = useState<boolean>(false);
+    const [ showPreachingInfoModal, setShowPreachingInfoModal ] = useState<boolean>(false);
     const { navigate } = useNavigation();
     const { height } = useWindowDimensions();
 
+    const { state: { user } } = useAuth();
     const { state: { selectedDate, preachings, isPreachingsLoading }, setSelectedPreaching, loadPreachings } = usePreaching();
     const { state: { colors } } = useTheme();
 
     const month = dayjs(selectedDate).format('MMMM').toUpperCase();
+    const currentMonth = dayjs().format('MMMM').toUpperCase();
     const year = dayjs(selectedDate).get('year');
 
     /**
@@ -111,6 +115,23 @@ const Home = (): JSX.Element => {
                 ) }
             </ScrollView>
 
+            { ((currentMonth === month) && preachings.length > 0 && user?.hours_requirement && user?.hours_requirement > 0) && (
+                <Fab
+                    color={ colors.button }
+                    icon={
+                        <Icon
+                            color={ colors.contentHeader }
+                            name="information-circle-outline"
+                            size={ 40 }
+                            style={{ marginLeft: 1 }}
+                        />
+                    }
+                    onPress={ () => setShowPreachingInfoModal(true) }
+                    style={{ ...themeStyles.fabBottomRight, bottom: 145 }}
+                    touchColor="rgba(0, 0, 0, 0.15)"
+                />
+            ) }
+
             <Fab
                 color={ colors.button }
                 icon={
@@ -120,8 +141,8 @@ const Home = (): JSX.Element => {
                         size={ 40 }
                     />
                 }
-                onPress={ () => setShowModal(true) }
-                style={{ ...themeStyles.fabBottomRight, right: 80 }}
+                onPress={ () => setShowReportModal(true) }
+                style={{ ...themeStyles.fabBottomRight, bottom: 75 }}
                 touchColor="rgba(0, 0, 0, 0.15)"
             />
 
@@ -140,11 +161,16 @@ const Home = (): JSX.Element => {
                 touchColor="rgba(0, 0, 0, 0.15)"
             />
 
+            <PreachingInfoModal
+                isOpen={ showPreachingInfoModal }
+                onClose={ () => setShowPreachingInfoModal(false) }
+            />
+
             {/* Modal for show report */}
             <ReportModal
-                isOpen={ showModal }
+                isOpen={ showReportModal }
                 month={ month.toLowerCase() }
-                onClose={ () => setShowModal(false) }
+                onClose={ () => setShowReportModal(false) }
             />
         </>
     );
