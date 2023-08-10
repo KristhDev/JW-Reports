@@ -2788,10 +2788,10 @@ exports[`Test in <Home /> screen should to match snapshot 1`] = `
             "width": 42,
           },
           {
-            "bottom": 5,
+            "bottom": 75,
             "height": 60,
             "position": "absolute",
-            "right": 80,
+            "right": 10,
             "width": 60,
           },
         ],
@@ -2903,6 +2903,13 @@ exports[`Test in <Home /> screen should to match snapshot 1`] = `
       
     </Text>
   </View>,
+  <Modal
+    animationType="fade"
+    hardwareAccelerated={false}
+    statusBarTranslucent={true}
+    transparent={true}
+    visible={false}
+  />,
   <Modal
     animationType="fade"
     hardwareAccelerated={false}

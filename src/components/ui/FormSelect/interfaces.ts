@@ -12,6 +12,7 @@ export interface FormSelectProps {
     label: string;
     labelStyle?: StyleProp<TextStyle>;
     name: string;
+    onChange?: (value: string) => void;
     placeholder?: string;
     style?: StyleProp<ViewStyle>;
     title: string;

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { View, ActivityIndicator } from 'react-native';
 import { Formik } from 'formik';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -6,13 +6,13 @@ import { object, string } from 'yup';
 import Icon from 'react-native-vector-icons/Ionicons';
 
 /* Components */
-import { Button, FormField, FormSelect } from '../../ui';
+import { Button, Checkbox, FormField, FormSelect } from '../../ui';
 
 /* Hooks */
 import { useAuth, useStatus, useTheme } from '../../../hooks';
 
 /* Utils */
-import { PRECURSORS_OPTIONS } from '../../../utils';
+import { HOURS_REQUIREMENTS, PRECURSORS_OPTIONS } from '../../../utils';
 
 /* Theme */
 import { styles as themeStyles } from '../../../theme';
@@ -29,6 +29,8 @@ export const ProfileForm = (): JSX.Element => {
     const { state: { user, isAuthLoading }, updateProfile } = useAuth();
     const { setErrorForm } = useStatus();
     const { state: { colors } } = useTheme();
+
+    const [ editHoursRequirement, setEditHoursRequirement ] = useState<boolean>(![ 0, 30, 50, 90 ].includes(user?.hours_requirement || 0));
 
     /* Validation schema for profile values */
     const profileFormSchema = object().shape({
@@ -48,13 +50,14 @@ export const ProfileForm = (): JSX.Element => {
             initialValues={{
                 name: user.name,
                 surname: user.surname,
-                precursor: user.precursor
+                precursor: user.precursor,
+                hours_requirement: user?.hours_requirement || 0
             }}
             onSubmit={ updateProfile }
             validateOnMount
             validationSchema={ profileFormSchema }
         >
-            { ({ errors, handleSubmit, isValid }) => (
+            { ({ errors, handleSubmit, setFieldValue, isValid }) => (
                 <View style={{ ...themeStyles.formContainer, justifyContent: 'flex-start' }}>
 
                     {/* Name field */}
@@ -92,11 +95,36 @@ export const ProfileForm = (): JSX.Element => {
                         items={ PRECURSORS_OPTIONS }
                         label="Precursor:"
                         name="precursor"
+                        onChange={ (value) => {
+                            setFieldValue('hours_requirement', HOURS_REQUIREMENTS[value as keyof typeof HOURS_REQUIREMENTS] || 0);
+                            setEditHoursRequirement(false);
+                        } }
                         placeholder="Seleccione una opción"
                         title="Seleccione su precursorado"
                     />
 
-                    <View style={{ flex: 1 }} />
+                    {/* Hours requirement field */}
+                    <FormField
+                        autoCapitalize="none"
+                        editable={ editHoursRequirement }
+                        icon={
+                            <Icon
+                                color={ colors.icon }
+                                name="time-outline"
+                                size={ 25 }
+                            />
+                        }
+                        label="Requerimiento de horas:"
+                        name="hours_requirement"
+                        placeholder="Ingrese su requerimiento de horas"
+                    />
+
+                    {/* Checkbox to edit hours requirement */}
+                    <Checkbox
+                        onPress={ () => setEditHoursRequirement(!editHoursRequirement) }
+                        status={ editHoursRequirement ? 'checked' : 'unchecked' }
+                        label="Editar requerimiento de horas"
+                    />
 
                     {/* Submit button */}
                     <Button
@@ -112,7 +140,7 @@ export const ProfileForm = (): JSX.Element => {
                         }
                         onPress={ (isValid) ? handleSubmit : () => setErrorForm(errors)  }
                         text="Guardar"
-                        touchableStyle={{ marginVertical: top }}
+                        touchableStyle={{ marginBottom: top }}
                     />
                 </View>
             ) }

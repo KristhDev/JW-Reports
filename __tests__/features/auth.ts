@@ -22,6 +22,7 @@ export const initialState: AuthState = {
         surname: '',
         email: '',
         precursor: 'ninguno',
+        hours_requirement: 0,
         createdAt: '2021-08-26T15:00:00.000Z',
         updatedAt: '2021-08-26T15:00:00.000Z',
     }
@@ -35,6 +36,7 @@ export const authenticateState: AuthState = {
         ...newUserData,
         id: '3eb3fd2c-31ad-48c3-ab9b-587a059de40d',
         precursor: 'ninguno',
+        hours_requirement: 20,
         createdAt: '2021-08-26T15:00:00.000Z',
         updatedAt: '2021-08-26T15:00:00.000Z',
     }

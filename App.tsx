@@ -8,6 +8,7 @@ import { Provider as PaperProvider } from 'react-native-paper';
 import SplashScreen from 'react-native-splash-screen';
 import OneSignal from 'react-native-onesignal';
 import dayjs from 'dayjs';
+import weekday from 'dayjs/plugin/weekday';
 import 'dayjs/locale/es';
 
 /* Env */
@@ -24,6 +25,7 @@ import { NetworkProvider } from './src/context/network';
 import { Navigation } from './src/navigation';
 
 /* Global config of dayjs */
+dayjs.extend(weekday);
 dayjs.locale('es');
 
 /**

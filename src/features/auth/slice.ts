@@ -10,6 +10,7 @@ export const INIT_USER: User = {
     surname: '',
     email: '',
     precursor: 'ninguno',
+    hours_requirement: 0,
     createdAt: Date.now().toString(),
     updatedAt: Date.now().toString()
 }

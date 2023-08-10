@@ -1,5 +1,6 @@
 export { BackButton } from './BackButton';
 export { Button } from './Button';
+export { Checkbox } from './Checkbox';
 export { DatetimeField } from './DatetimeField';
 export { EyeBtn } from './EyeBtn';
 export { Fab } from './Fab';

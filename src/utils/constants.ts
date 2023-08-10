@@ -31,3 +31,10 @@ export const THEME_OPTIONS: ItemOption[] = [
     { label: 'Modo claro', value: 'light' },
     { label: 'Modo oscuro', value: 'dark' }
 ];
+
+export const HOURS_REQUIREMENTS = {
+    'ninguno': 0,
+    'auxiliar': 30,
+    'regular': 50,
+    'especial': 90
+}
