@@ -83,15 +83,43 @@ const PreachingInfoModal: FC<ModalProps> = ({ isOpen, onClose }): JSX.Element =>
 
                 <View style={ styles.modalSection }>
                     <Text style={{ ...styles.modalSectionText, color: colors.text }}>Horas faltantes por semana:</Text>
-                    <Text style={{ ...styles.modalSectionText, color: colors.modalText }}>{ remainingHoursOfWeeklyRequirement }</Text>
+                    <Text style={{ ...styles.modalSectionText, color: colors.modalText }}>
+                        { (remainingHoursOfWeeklyRequirement === '0:00' || remainingHoursOfWeeklyRequirement.startsWith('-'))
+                            ? '¡Excelente! Has cumplido con tu requerimiento de horas por semana.'
+                            : remainingHoursOfWeeklyRequirement
+                        }
+                    </Text>
                 </View>
 
-                <View style={{ marginBottom: 40 }}>
+                { (remainingHoursOfWeeklyRequirement.startsWith('-')) && (
+                    <View style={ styles.modalSection }>
+                        <Text style={{ ...styles.modalSectionText, color: colors.text }}>Horas extras hechas en esta semana:</Text>
+                        <Text style={{ ...styles.modalSectionText, color: colors.modalText }}>
+                            { remainingHoursOfWeeklyRequirement.slice(1, remainingHoursOfWeeklyRequirement.length) }
+                        </Text>
+                    </View>
+                ) }
+
+                <View style={ styles.modalSection }>
                     <Text style={{ ...styles.modalSectionText, color: colors.text }}>Horas faltantes por mes:</Text>
-                    <Text style={{ ...styles.modalSectionText, color: colors.modalText }}>{ reamainingOfHoursRequirement }</Text>
+                    <Text style={{ ...styles.modalSectionText, color: colors.modalText }}>
+                        { (reamainingOfHoursRequirement === '0:00' || reamainingOfHoursRequirement.startsWith('-'))
+                            ? '¡Excelente! Has cumplido con tu requerimiento de horas por mes.'
+                            : reamainingOfHoursRequirement
+                        }
+                    </Text>
                 </View>
 
-                <View style={{ flexDirection: 'row', justifyContent: 'flex-end' }}>
+                { (reamainingOfHoursRequirement.startsWith('-')) && (
+                    <View style={ styles.modalSection }>
+                        <Text style={{ ...styles.modalSectionText, color: colors.text }}>Horas extras hechas en este mes:</Text>
+                        <Text style={{ ...styles.modalSectionText, color: colors.modalText }}>
+                            { reamainingOfHoursRequirement.slice(1, reamainingOfHoursRequirement.length) }
+                        </Text>
+                    </View>
+                ) }
+
+                <View style={{ flexDirection: 'row', justifyContent: 'flex-end', marginTop: 24 }}>
                     <Button
                         containerStyle={{ paddingHorizontal: 12, minWidth: 0 }}
                         onPress={ onClose }
