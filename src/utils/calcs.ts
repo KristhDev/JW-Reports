@@ -56,7 +56,9 @@ export const getRemainingHoursOfWeeklyRequirement = (hoursRequirementByWeek: str
         .add(Number(minsRequired), 'minutes');
 
     const hoursDiff = hoursByWeek.diff(hours, 'hours');
-    const minsDiff = hoursByWeek.diff(hours, 'minutes') % 60;
+    let minsDiff = hoursByWeek.diff(hours, 'minutes') % 60;
+
+    minsDiff = (minsDiff < 0) ? minsDiff * -1 : minsDiff;
 
     return `${ hoursDiff }:${ (minsDiff === 0) ? '00' : minsDiff }`;
 }
@@ -76,7 +78,9 @@ export const getReamainingOfHoursRequirement = (preachings: Preaching[], hoursRe
     const hoursDoneWithDate = dayjs().add(hours, 'hours').add(restMins, 'minutes');
 
     const hoursDiff = hoursRequirementWithDate.diff(hoursDoneWithDate, 'hours');
-    const minsDiff = hoursRequirementWithDate.diff(hoursDoneWithDate, 'minutes') % 60;
+    let minsDiff = hoursRequirementWithDate.diff(hoursDoneWithDate, 'minutes') % 60;
+
+    minsDiff = (minsDiff < 0) ? minsDiff * -1 : minsDiff;
 
     return `${ hoursDiff }:${ (minsDiff === 0) ? '00' : minsDiff }`;
 }
