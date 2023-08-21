@@ -2,6 +2,12 @@ export type Theme = 'dark' | 'light' | 'default';
 
 /**
  * Defining the interface for the ThemeState.
+ *
+ * @property {Colors} colors - The colors object.
+ * @property {Theme} deviceTheme - The device of theme.
+ * @property {boolean} isLoadedTheme - Whether the theme has been loaded.
+ * @property {Theme} selectedTheme - The selected theme of app.
+ * @property {Theme} theme - The theme.
  */
 export interface ThemeState {
     colors: Colors;
