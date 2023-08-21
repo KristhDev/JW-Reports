@@ -50,8 +50,8 @@ const PreachingInfoModal: FC<ModalProps> = ({ isOpen, onClose }): JSX.Element =>
 
     const hoursRequirementByWeek = getHoursRequirementByWeek(user.hours_requirement);
     const hoursDoneByWeek = getHoursDoneByWeek(preachingsOfWeek);
-    const remainingHoursOfWeeklyRequirement = getRemainingHoursOfWeeklyRequirement(hoursRequirementByWeek, hoursDoneByWeek);
-    const reamainingOfHoursRequirement = getReamainingOfHoursRequirement(preachings, user.hours_requirement);
+    const { isNegative: isNegativeHWR, remainingHoursOfWeeklyRequirement } = getRemainingHoursOfWeeklyRequirement(hoursRequirementByWeek, hoursDoneByWeek);
+    const { isNegative: isNegativeHR, reamainingOfHoursRequirement } = getReamainingOfHoursRequirement(preachings, user.hours_requirement);
 
     return (
         <Modal isOpen={ isOpen }>
@@ -84,18 +84,18 @@ const PreachingInfoModal: FC<ModalProps> = ({ isOpen, onClose }): JSX.Element =>
                 <View style={ styles.modalSection }>
                     <Text style={{ ...styles.modalSectionText, color: colors.text }}>Horas faltantes por semana:</Text>
                     <Text style={{ ...styles.modalSectionText, color: colors.modalText }}>
-                        { (remainingHoursOfWeeklyRequirement === '0:00' || remainingHoursOfWeeklyRequirement.startsWith('-'))
+                        { (remainingHoursOfWeeklyRequirement === '0:00' || isNegativeHWR)
                             ? '¡Excelente! Has cumplido con tu requerimiento de horas por semana.'
                             : remainingHoursOfWeeklyRequirement
                         }
                     </Text>
                 </View>
 
-                { (remainingHoursOfWeeklyRequirement.startsWith('-')) && (
+                { (isNegativeHWR) && (
                     <View style={ styles.modalSection }>
-                        <Text style={{ ...styles.modalSectionText, color: colors.text }}>Horas extras hechas en esta semana:</Text>
+                        <Text style={{ ...styles.modalSectionText, color: colors.text }}>Horas extras hechas en está semana:</Text>
                         <Text style={{ ...styles.modalSectionText, color: colors.modalText }}>
-                            { remainingHoursOfWeeklyRequirement.slice(1, remainingHoursOfWeeklyRequirement.length) }
+                            { remainingHoursOfWeeklyRequirement }
                         </Text>
                     </View>
                 ) }
@@ -103,18 +103,18 @@ const PreachingInfoModal: FC<ModalProps> = ({ isOpen, onClose }): JSX.Element =>
                 <View style={ styles.modalSection }>
                     <Text style={{ ...styles.modalSectionText, color: colors.text }}>Horas faltantes por mes:</Text>
                     <Text style={{ ...styles.modalSectionText, color: colors.modalText }}>
-                        { (reamainingOfHoursRequirement === '0:00' || reamainingOfHoursRequirement.startsWith('-'))
+                        { (reamainingOfHoursRequirement === '0:00' || isNegativeHR)
                             ? '¡Excelente! Has cumplido con tu requerimiento de horas por mes.'
                             : reamainingOfHoursRequirement
                         }
                     </Text>
                 </View>
 
-                { (reamainingOfHoursRequirement.startsWith('-')) && (
+                { (isNegativeHR) && (
                     <View style={ styles.modalSection }>
                         <Text style={{ ...styles.modalSectionText, color: colors.text }}>Horas extras hechas en este mes:</Text>
                         <Text style={{ ...styles.modalSectionText, color: colors.modalText }}>
-                            { reamainingOfHoursRequirement.slice(1, reamainingOfHoursRequirement.length) }
+                            { reamainingOfHoursRequirement }
                         </Text>
                     </View>
                 ) }

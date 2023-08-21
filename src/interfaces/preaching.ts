@@ -66,3 +66,25 @@ export type SetSelectedDatePayload = {
 export type SetPreachingsPayload = {
     preachings: Preaching[];
 }
+
+/**
+ * ReamainingOfHoursRequirement is an object with a reamainingOfHoursRequirement property that is a string
+ * representing the remaining hours requirement.
+ * @property {string} reamainingOfHoursRequirement
+ * @property {boolean} isNegative
+ */
+export type ReamainingOfHoursRequirement = {
+    reamainingOfHoursRequirement: string;
+    isNegative: boolean;
+}
+
+/**
+ * RemainingHoursOfWeeklyRequirement is an object with a remainingHoursOfWeeklyRequirement property that is a string
+ * representing the remaining hours requirement.
+ * @property {string} remainingHoursOfWeeklyRequirement
+ * @property {boolean} isNegative
+ */
+export type RemainingHoursOfWeeklyRequirement = {
+    remainingHoursOfWeeklyRequirement: string;
+    isNegative: boolean;
+}
