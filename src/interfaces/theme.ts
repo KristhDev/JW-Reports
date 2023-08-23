@@ -1,6 +1,14 @@
 export type Theme = 'dark' | 'light' | 'default';
 
-/* Defining the interface for the ThemeState. */
+/**
+ * Defining the interface for the ThemeState.
+ *
+ * @property {Colors} colors - The colors object.
+ * @property {Theme} deviceTheme - The device of theme.
+ * @property {boolean} isLoadedTheme - Whether the theme has been loaded.
+ * @property {Theme} selectedTheme - The selected theme of app.
+ * @property {Theme} theme - The theme.
+ */
 export interface ThemeState {
     colors: Colors;
     deviceTheme: Theme;
@@ -32,7 +40,8 @@ export interface Colors {
 }
 
 /**
- * SetThemePayload is an object with a property called theme that is of type Theme
+ * SetThemePayload is an object with a property called theme that is of type Theme.
+ *
  * @property {Theme} theme - The theme to set.
  */
 export type SetThemePayload = {

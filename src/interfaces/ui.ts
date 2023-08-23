@@ -1,6 +1,7 @@
 /**
  * NavigationParamsList is a type that is an object with a bunch of properties, each of which is a type
  * that is an object with a single property called undefined.
+ *
  * @property MainTabsBottomNavigation - undefined;
  * @property SettingsStackNavigation - undefined;
  * @property ProfileScreen - undefined;
@@ -18,6 +19,7 @@ export type NavigationParamsList = {
 /**
  * MainTabsBottomParamsList is a type that is an object with three properties, each of which is a type
  * that is a function that takes undefined and returns undefined.
+ *
  * @property PreachingStackNavigation - undefined;
  * @property RevistsStackNavigation - undefined;
  * @property CoursesStackNavigation - undefined;
@@ -28,20 +30,36 @@ export type MainTabsBottomParamsList = {
     CoursesStackNavigation: undefined;
 }
 
-/* Defining an interface called LoadResourcesOptions. */
+/**
+ * Defining an interface called LoadResourcesOptions.
+ *
+ * @property {boolean} loadMore - If the load more button should be shown.
+ * @property {boolean} refresh - If the refresh button should be shown.
+ * @property {string} search - The search term.
+ */
 export interface LoadResourcesOptions {
     loadMore?: boolean;
     refresh?: boolean;
     search?: string;
 }
 
-/* Defining an interface called Pagination. */
+/**
+ * Defining an interface called Pagination.
+ *
+ * @property {number} from - The number of items to skip.
+ * @property {number} to - The number of items to return.
+ */
 export interface Pagination {
     from: number;
     to: number;
 }
 
-/* Defining an interface called ModalProps. */
+/**
+ * Defining an interface called ModalProps.
+ *
+ * @property {boolean} isOpen - If the modal is open or not.
+ * @property {() => void} onClose - The function that will be called when the modal is closed.
+ */
 export interface ModalProps {
     isOpen: boolean;
     onClose: () => void;
@@ -49,6 +67,7 @@ export interface ModalProps {
 
 /**
  * ItemOption is an object with a label property of type string and a value property of type string.
+ *
  * @property {string} label - The text that will be displayed in the dropdown
  * @property {string} value - The value of the item.
  */
@@ -57,7 +76,13 @@ export type ItemOption = {
     value: string;
 }
 
-/* Defining an interface called StorageError. */
+/**
+ * Defining an interface called StorageError.
+ *
+ * @property {string} message - The error message.
+ * @property {string} name - The error name.
+ * @property {string} stack - The error stack.
+ */
 export interface StorageError {
     message: string;
     name: string;
