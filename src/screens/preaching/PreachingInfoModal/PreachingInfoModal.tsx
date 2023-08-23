@@ -72,7 +72,7 @@ const PreachingInfoModal: FC<ModalProps> = ({ isOpen, onClose }): JSX.Element =>
                 </Text>
 
                 <View style={ styles.modalSection }>
-                    <Text style={{ ...styles.modalSectionText, color: colors.text }}>Horas por semana:</Text>
+                    <Text style={{ ...styles.modalSectionText, color: colors.text }}>Horas aproximadas por semana:</Text>
                     <Text style={{ ...styles.modalSectionText, color: colors.modalText }}>{ hoursRequirementByWeek }</Text>
                 </View>
 
