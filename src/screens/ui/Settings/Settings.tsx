@@ -89,7 +89,7 @@ const Settings = (): JSX.Element => {
                 >
                     <SectionBtn
                         onPress={ () => {} }
-                        subText="1.1.1"
+                        subText="1.1.2"
                         text="Versión"
                     />
 

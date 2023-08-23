@@ -1,7 +1,7 @@
 import dayjs from 'dayjs';
 
 /* Interfaces */
-import { Preaching } from '../interfaces/preaching';
+import { Preaching, ReamainingOfHoursRequirement, RemainingHoursOfWeeklyRequirement } from '../interfaces/preaching';
 
 /**
  * Calculates the total number of hours worked in a week based on the given array of preaching objects.
@@ -37,13 +37,14 @@ export const getHoursRequirementByWeek = (hoursRequirement: number): string => {
 }
 
 /**
- * Calculates the remaining hours needed to meet the weekly requirement.
+ * Calculates the remaining hours of the weekly requirement based on the hours
+ * requirement by week and the hours done by week.
  *
- * @param {string} hoursRequirementByWeek - The weekly hour requirement in the format "HH:MM".
- * @param {string} hoursDoneByWeek - The hours and minutes worked in the week in the format "HH:MM".
- * @return {string} The remaining hours needed to meet the weekly requirement in the format "HH:MM".
+ * @param {string} hoursRequirementByWeek - The hours requirement by week in the format "HH:mm".
+ * @param {string} hoursDoneByWeek - The hours done by week in the format "HH:mm".
+ * @return {RemainingHoursOfWeeklyRequirement} An object containing the remaining hours of the weekly requirement and a flag indicating if it's negative.
  */
-export const getRemainingHoursOfWeeklyRequirement = (hoursRequirementByWeek: string, hoursDoneByWeek: string): string => {
+export const getRemainingHoursOfWeeklyRequirement = (hoursRequirementByWeek: string, hoursDoneByWeek: string): RemainingHoursOfWeeklyRequirement => {
     const [ hoursDone, minsDone ] = hoursDoneByWeek.split(':');
     const [ hoursRequired, minsRequired ] = hoursRequirementByWeek.split(':');
 
@@ -56,21 +57,26 @@ export const getRemainingHoursOfWeeklyRequirement = (hoursRequirementByWeek: str
         .add(Number(minsRequired), 'minutes');
 
     const hoursDiff = hoursByWeek.diff(hours, 'hours');
-    let minsDiff = hoursByWeek.diff(hours, 'minutes') % 60;
+    const minsDiff = hoursByWeek.diff(hours, 'minutes') % 60;
 
-    minsDiff = (minsDiff < 0) ? minsDiff * -1 : minsDiff;
+    const hoursToReturn = (hoursDiff < 0) ? hoursDiff * -1 : hoursDiff;
+    const minsToReturn = (minsDiff < 0) ? minsDiff * -1 : minsDiff;
 
-    return `${ hoursDiff }:${ (minsDiff === 0) ? '00' : minsDiff }`;
+    return {
+        remainingHoursOfWeeklyRequirement: `${ hoursToReturn }:${ (minsToReturn === 0) ? '00' : (minsToReturn.toString().length > 1) ? minsToReturn : `0${ minsToReturn }` }`,
+        isNegative: (hoursDiff < 0 || minsDiff < 0)
+    }
 }
 
+
 /**
- * Calculates the remaining hours required to meet the hours requirement.
+ * Calculates the remaining hours requirement based on the given list of preachings and hours requirement.
  *
- * @param {Preaching[]} preachings - An array of preaching objects.
- * @param {number} hoursRequirement - The total number of hours required.
- * @return {string} - The remaining hours in the format "HH:MM".
+ * @param {Preaching[]} preachings - The list of preachings.
+ * @param {number} hoursRequirement - The required number of hours.
+ * @return {ReamainingOfHoursRequirement} - An object containing the remaining hours requirement and a flag indicating if it is negative.
  */
-export const getReamainingOfHoursRequirement = (preachings: Preaching[], hoursRequirement: number): string => {
+export const getReamainingOfHoursRequirement = (preachings: Preaching[], hoursRequirement: number): ReamainingOfHoursRequirement => {
     const hours = sumHours(preachings.map(p => ({ init: p.init_hour, finish: p.final_hour })));
     const restMins = getRestMins(preachings.map(p => ({ init: p.init_hour, finish: p.final_hour })));
 
@@ -78,11 +84,15 @@ export const getReamainingOfHoursRequirement = (preachings: Preaching[], hoursRe
     const hoursDoneWithDate = dayjs().add(hours, 'hours').add(restMins, 'minutes');
 
     const hoursDiff = hoursRequirementWithDate.diff(hoursDoneWithDate, 'hours');
-    let minsDiff = hoursRequirementWithDate.diff(hoursDoneWithDate, 'minutes') % 60;
+    const minsDiff = hoursRequirementWithDate.diff(hoursDoneWithDate, 'minutes') % 60;
 
-    minsDiff = (minsDiff < 0) ? minsDiff * -1 : minsDiff;
+    const hoursToReturn = (hoursDiff < 0) ? hoursDiff * -1 : hoursDiff;
+    const minsToReturn = (minsDiff < 0) ? minsDiff * -1 : minsDiff;
 
-    return `${ hoursDiff }:${ (minsDiff === 0) ? '00' : minsDiff }`;
+    return {
+        reamainingOfHoursRequirement: `${ hoursToReturn }:${ (minsToReturn === 0) ? '00' : (minsToReturn.toString().length > 1) ? minsToReturn : `0${ minsToReturn }` }`,
+        isNegative: (hoursDiff < 0 || minsDiff < 0)
+    }
 }
 
 /**
