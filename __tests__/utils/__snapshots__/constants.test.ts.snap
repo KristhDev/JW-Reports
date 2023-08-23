@@ -1,5 +1,14 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`Test in Constants util should to match snapshot HOURS_REQUIREMENTS 1`] = `
+{
+  "auxiliar": 30,
+  "especial": 90,
+  "ninguno": 0,
+  "regular": 50,
+}
+`;
+
 exports[`Test in Constants util should to match snapshot PRECURSORS_OPTIONS 1`] = `
 [
   {

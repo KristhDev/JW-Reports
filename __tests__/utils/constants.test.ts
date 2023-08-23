@@ -1,6 +1,6 @@
 
 /* Utils */
-import { PRECURSORS_OPTIONS, TABLE_PREACHING_HEADERS, THEME_OPTIONS } from '../../src/utils';
+import { PRECURSORS_OPTIONS, TABLE_PREACHING_HEADERS, THEME_OPTIONS, HOURS_REQUIREMENTS } from '../../src/utils';
 
 describe('Test in Constants util', () => {
     it('should to match snapshot TABLE_PREACHING_HEADERS', () => {
@@ -13,5 +13,9 @@ describe('Test in Constants util', () => {
 
     it('should to match snapshot THEME_OPTIONS', () => {
         expect(THEME_OPTIONS).toMatchSnapshot();
+    });
+
+    it('should to match snapshot HOURS_REQUIREMENTS', () => {
+        expect(HOURS_REQUIREMENTS).toMatchSnapshot();
     });
 });
