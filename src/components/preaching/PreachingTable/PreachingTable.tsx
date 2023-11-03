@@ -10,10 +10,10 @@ import { TableCell } from '../../ui';
 import { usePreaching, useTheme } from '../../../hooks';
 
 /* Interfaces */
-import { Preaching } from '../../../interfaces/preaching';
+import { Preaching } from '../../../interfaces';
 
 /* Utils */
-import { sumHours, sumNumbers, TABLE_PREACHING_HEADERS } from '../../../utils';
+import { sumHours, TABLE_PREACHING_HEADERS } from '../../../utils';
 
 /* Styles */
 import styles from './styles';
@@ -84,12 +84,12 @@ export const PreachingTable = (): JSX.Element => {
                         />
 
                         <TableCell
-                            text={ dayjs(preaching.init_hour).format('HH:mm') }
+                            text={ dayjs(preaching.initHour).format('HH:mm') }
                             style={{ backgroundColor: '#746C84', width: cellWidthHours }}
                         />
 
                         <TableCell
-                            text={ dayjs(preaching.final_hour).format('HH:mm') }
+                            text={ dayjs(preaching.finalHour).format('HH:mm') }
                             style={{ backgroundColor: '#746C84', width: cellWidthHours }}
                         />
                     </View>
@@ -104,7 +104,7 @@ export const PreachingTable = (): JSX.Element => {
                 />
 
                 <TableCell
-                    text={ `${ sumHours(preachings.map(p => ({ init: p.init_hour, finish: p.final_hour }))) }H` }
+                    text={ `${ sumHours(preachings.map(p => ({ init: p.initHour, finish: p.finalHour }))) }H` }
                     style={{ backgroundColor: '#544C63', width: cellWidthHours * 2 }}
                 />
             </View>

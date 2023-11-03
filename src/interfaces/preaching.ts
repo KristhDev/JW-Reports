@@ -31,6 +31,27 @@ export interface PreachingState {
 
 /**
  * Defining the structure of the Preaching object.
+ * 
+ * @property {string} id - This is the id of the preaching.
+ * @property {string} userId - This is the id of the user.
+ * @property {string} day - This is the day of the preaching.
+ * @property {string} initHour - This is the initial hour of the preaching.
+ * @property {string} finalHour - This is the final hour of the preaching.
+ * @property {string} createdAt - This is the created at of the preaching.
+ * @property {string} updatedAt - This is the updated at of the preaching.
+ */
+export interface Preaching {
+    id: string;
+    userId: string;
+    day: string;
+    initHour: string;
+    finalHour: string;
+    createdAt: string;
+    updatedAt: string;
+}
+
+/**
+ * Defining the structure of the Preaching object in the endpoint.
  *
  * @property {string} id - This is the id of the preaching.
  * @property {string} user_id - This is the id of the user.
@@ -40,7 +61,7 @@ export interface PreachingState {
  * @property {string} created_at - This is the created at of the preaching.
  * @property {string} updated_at - This is the updated at of the preaching.
  */
-export interface Preaching {
+export interface PreachingEndpoint {
     id: string;
     user_id: string;
     day: string;
@@ -54,13 +75,13 @@ export interface Preaching {
  * Defining the structure of the PreachingFormValues object.
  *
  * @property {Date} day - This is the day of the preaching.
- * @property {Date} init_hour - This is the initial hour of the preaching.
- * @property {Date} final_hour - This is the final hour of the preaching.
+ * @property {Date} initHour - This is the initial hour of the preaching.
+ * @property {Date} finalHour - This is the final hour of the preaching.
  */
 export interface PreachingFormValues {
     day: Date;
-    init_hour: Date;
-    final_hour: Date;
+    initHour: Date;
+    finalHour: Date;
 }
 
 /**

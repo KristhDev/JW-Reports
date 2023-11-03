@@ -13,7 +13,7 @@ import { usePreaching, useStatus, useTheme } from '../../../hooks';
 import { preachingFormSchema } from './schemas';
 
 /* Interfaces */
-import { PreachingFormValues } from '../../../interfaces/preaching';
+import { PreachingFormValues } from '../../../interfaces';
 
 /* Theme */
 import { styles as themeStyles } from '../../../theme';
@@ -45,8 +45,8 @@ export const PreachingForm = (): JSX.Element => {
         <Formik
             initialValues={{
                 day: new Date(seletedPreaching.day),
-                init_hour: new Date(seletedPreaching.init_hour),
-                final_hour: new Date(seletedPreaching.final_hour)
+                initHour: new Date(seletedPreaching.initHour),
+                finalHour: new Date(seletedPreaching.finalHour)
             }}
             onSubmit={ handleSaveOrUpdate }
             validationSchema={ preachingFormSchema }
@@ -85,7 +85,7 @@ export const PreachingForm = (): JSX.Element => {
                         label="Hora de inicio:"
                         modalTitle="Hora de inicio"
                         mode="time"
-                        name="init_hour"
+                        name="initHour"
                         placeholder="Seleccione la hora"
                     />
 
@@ -102,7 +102,7 @@ export const PreachingForm = (): JSX.Element => {
                         label="Hora de fin:"
                         modalTitle="Hora de fin"
                         mode="time"
-                        name="final_hour"
+                        name="finalHour"
                         placeholder="Seleccione la hora"
                         style={{ marginBottom: 40 }}
                     />

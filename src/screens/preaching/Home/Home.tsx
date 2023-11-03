@@ -53,8 +53,8 @@ const Home = (): JSX.Element => {
         setSelectedPreaching({
             ...INIT_PREACHING,
             day: new Date().toString(),
-            init_hour: new Date().toString(),
-            final_hour: new Date().toString()
+            initHour: new Date().toString(),
+            finalHour: new Date().toString()
         });
 
         navigate('AddOrEditPreachingScreen' as never);

@@ -1,18 +1,26 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 /* Interfaces */
-import { Preaching, PreachingPayload, PreachingState, SetPreachingsPayload, SetSelectedDatePayload } from '../../interfaces/preaching';
-import { RemoveResourcePayload, SetIsDeletingPayload, SetIsLoadingPayload } from '../../interfaces/features';
+import { 
+    Preaching,
+    PreachingPayload,
+    PreachingState,
+    RemoveResourcePayload,
+    SetIsDeletingPayload,
+    SetIsLoadingPayload,
+    SetPreachingsPayload,
+    SetSelectedDatePayload
+} from '../../interfaces';
 
 /* Initial preaching */
 export const INIT_PREACHING: Preaching = {
     id: '',
-    user_id: '',
+    userId: '',
     day: new Date().toString(),
-    init_hour: new Date().toString(),
-    final_hour: new Date().toString(),
-    created_at: new Date().toString(),
-    updated_at: new Date().toString()
+    initHour: new Date().toString(),
+    finalHour: new Date().toString(),
+    createdAt: new Date().toString(),
+    updatedAt: new Date().toString()
 }
 
 /* Initial state */
