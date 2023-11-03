@@ -11,9 +11,6 @@ export const INIT_PREACHING: Preaching = {
     day: new Date().toString(),
     init_hour: new Date().toString(),
     final_hour: new Date().toString(),
-    publications: 0,
-    videos: 0,
-    revisits: 0,
     created_at: new Date().toString(),
     updated_at: new Date().toString()
 }

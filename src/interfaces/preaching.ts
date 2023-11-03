@@ -37,9 +37,6 @@ export interface PreachingState {
  * @property {string} day - This is the day of the preaching.
  * @property {string} init_hour - This is the initial hour of the preaching.
  * @property {string} final_hour - This is the final hour of the preaching.
- * @property {number} publications - This is the number of publications.
- * @property {number} videos - This is the number of videos.
- * @property {number} revisits - This is the number of revisits.
  * @property {string} created_at - This is the created at of the preaching.
  * @property {string} updated_at - This is the updated at of the preaching.
  */
@@ -49,9 +46,6 @@ export interface Preaching {
     day: string;
     init_hour: string;
     final_hour: string;
-    publications: number;
-    videos: number;
-    revisits: number;
     created_at: string;
     updated_at: string;
 }
@@ -62,17 +56,11 @@ export interface Preaching {
  * @property {Date} day - This is the day of the preaching.
  * @property {Date} init_hour - This is the initial hour of the preaching.
  * @property {Date} final_hour - This is the final hour of the preaching.
- * @property {number} publications - This is the number of publications.
- * @property {number} videos - This is the number of videos.
- * @property {number} revisits - This is the number of revisits.
  */
 export interface PreachingFormValues {
     day: Date;
     init_hour: Date;
     final_hour: Date;
-    publications: number;
-    videos: number;
-    revisits: number;
 }
 
 /**

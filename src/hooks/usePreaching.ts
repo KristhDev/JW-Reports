@@ -101,7 +101,6 @@ const usePreaching = () => {
 
         const { data, error, status } = await supabase.from('preachings')
             .insert({
-                ...preachingValues,
                 day: dayjs(preachingValues.day).format('YYYY-MM-DD'),
                 init_hour: dayjs(preachingValues.init_hour).format('YYYY-MM-DD HH:mm:ss.SSSSSS'),
                 final_hour: dayjs(preachingValues.final_hour).format('YYYY-MM-DD HH:mm:ss.SSSSSS'),
@@ -156,7 +155,6 @@ const usePreaching = () => {
 
         const { data, error, status } = await supabase.from('preachings')
             .update({
-                ...preachingValues,
                 day: dayjs(preachingValues.day).format('YYYY-MM-DD'),
                 init_hour: dayjs(preachingValues.init_hour).format('YYYY-MM-DD HH:mm:ss.SSSSSS'),
                 final_hour: dayjs(preachingValues.final_hour).format('YYYY-MM-DD HH:mm:ss.SSSSSS'),

@@ -5,12 +5,10 @@ import { ItemOption } from '../interfaces/ui';
  * The headers of the table that will be displayed in the PreachingTable component
  */
 export const TABLE_PREACHING_HEADERS = [
+    'N°',
     'Día',
-    'H/I',
-    'H/F',
-    'Pub',
-    'Vid',
-    'Rev'
+    'Hora de Inicio',
+    'Hora de Fin'
 ];
 
 /**
