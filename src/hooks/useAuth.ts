@@ -19,11 +19,14 @@ import { clearCourses } from '../features/courses';
 import { clearPreaching } from '../features/preaching';
 import { clearRevisits } from '../features/revisits';
 
+/* Adapters */
+import { userAdpater } from '../adapters';
+
 /* Hooks */
 import { useNetwork, useStatus } from './';
 
 /* Interfaces */
-import { SignIn, Profile, SignUp, User } from '../interfaces/auth';
+import { SignIn, Profile, SignUp, UserEndpoint } from '../interfaces/auth';
 
 /**
  * Hook to management authentication of store with state and actions
@@ -56,13 +59,13 @@ const useAuth = () => {
 
         dispatch(setUserAction({
             token: session?.refresh_token!,
-            user: {
+            user: userAdpater({
                 ...user?.user_metadata,
                 id: user?.id!,
                 createdAt: user?.created_at!,
                 updatedAt: user?.updated_at!,
                 email: user?.email,
-            } as User
+            } as UserEndpoint)
         }));
 
         if (isNew) {
@@ -310,7 +313,7 @@ const useAuth = () => {
 
         setStatus({
             code: 200,
-            msg: 'Has actualizado tu contraseña correctamente.'
+            msg: 'Haz actualizado tu contraseña correctamente.'
         });
     }
 
@@ -328,7 +331,9 @@ const useAuth = () => {
 
         dispatch(setIsAuthLoading({ isLoading: true }));
 
-        const { error } = await supabase.auth.updateUser({ data: { ...values } });
+        const { hoursRequirement, ...rest } = values;
+
+        const { error } = await supabase.auth.updateUser({ data: { ...rest, hours_requirement: hoursRequirement } });
 
         const next = setSupabaseError(error, 400, () => dispatch(setIsAuthLoading({ isLoading: false })));
         if (next) return;
@@ -337,7 +342,7 @@ const useAuth = () => {
 
         setStatus({
             code: 200,
-            msg: 'Has actualizado tu perfil correctamente.'
+            msg: 'Haz actualizado tu perfil correctamente.'
         });
     }
 

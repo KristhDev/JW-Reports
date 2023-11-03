@@ -115,7 +115,7 @@ const Home = (): JSX.Element => {
                 ) }
             </ScrollView>
 
-            { ((currentMonth === month) && preachings.length > 0 && user?.hours_requirement && user?.hours_requirement > 0) && (
+            { ((currentMonth === month) && preachings.length > 0 && user?.hoursRequirement && user?.hoursRequirement > 0) && (
                 <Fab
                     color={ colors.button }
                     icon={

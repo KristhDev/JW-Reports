@@ -145,8 +145,8 @@ const useCourses = () => {
         if (next) return;
 
         const msg = (data![0].suspended)
-            ? 'Has suspendido el curso correctamente.'
-            : 'Has renovado el curso correctamente.'
+            ? 'Haz suspendido el curso correctamente.'
+            : 'Haz renovado el curso correctamente.'
 
         dispatch(updateCourseAction({ course: data![0] }));
 
@@ -223,7 +223,7 @@ const useCourses = () => {
 
         setStatus({
             code: 200,
-            msg: 'Has eliminado el curso correctamente.'
+            msg: 'Haz eliminado el curso correctamente.'
         });
     }
 
@@ -299,7 +299,7 @@ const useCourses = () => {
 
         setStatus({
             code: 200,
-            msg: 'Has eliminado la clase correctamente.'
+            msg: 'Haz eliminado la clase correctamente.'
         });
     }
 
@@ -369,8 +369,8 @@ const useCourses = () => {
         if (next) return;
 
         const msg = (data![0].finished)
-            ? 'Has terminado el curso correctamente.'
-            : 'Has comenzado de nuevo el curso correctamente.'
+            ? 'Haz terminado el curso correctamente.'
+            : 'Haz comenzado de nuevo el curso correctamente.'
 
         dispatch(updateCourseAction({ course: data![0] }));
 
@@ -447,8 +447,8 @@ const useCourses = () => {
         if (next) return;
 
         const msg = (data![0].done)
-            ? 'Has terminado la clase correctamente.'
-            : 'Has reprogrado la clase correctamente.'
+            ? 'Haz terminado la clase correctamente.'
+            : 'Haz reprogrado la clase correctamente.'
 
         dispatch(updateLessonAction({ lesson: (data as any)![0] }));
 
@@ -641,7 +641,7 @@ const useCourses = () => {
 
         setStatus({
             code: 201,
-            msg: 'Has agregado un curso correctamente.'
+            msg: 'Haz agregado un curso correctamente.'
         });
 
         navigate({
@@ -690,7 +690,7 @@ const useCourses = () => {
 
         setStatus({
             code: 201,
-            msg: 'Has agregado una clase al curso correctamente.'
+            msg: 'Haz agregado una clase al curso correctamente.'
         });
 
         navigate('LessonsScreen' as never);
@@ -746,7 +746,7 @@ const useCourses = () => {
 
         setStatus({
             code: 200,
-            msg: 'Has actualizado el curso correctamente.'
+            msg: 'Haz actualizado el curso correctamente.'
         });
 
         goBack();
@@ -802,7 +802,7 @@ const useCourses = () => {
 
         setStatus({
             code: 200,
-            msg: 'Has actualizado la clase correctamente.'
+            msg: 'Haz actualizado la clase correctamente.'
         });
 
         goBack();

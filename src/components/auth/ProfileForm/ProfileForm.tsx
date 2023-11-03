@@ -30,7 +30,7 @@ export const ProfileForm = (): JSX.Element => {
     const { setErrorForm } = useStatus();
     const { state: { colors } } = useTheme();
 
-    const [ editHoursRequirement, setEditHoursRequirement ] = useState<boolean>(![ 0, 30, 50, 90 ].includes(user?.hours_requirement || 0));
+    const [ editHoursRequirement, setEditHoursRequirement ] = useState<boolean>(![ 0, 30, 50, 90 ].includes(user?.hoursRequirement || 0));
 
     /* Validation schema for profile values */
     const profileFormSchema = object().shape({
@@ -51,7 +51,7 @@ export const ProfileForm = (): JSX.Element => {
                 name: user.name,
                 surname: user.surname,
                 precursor: user.precursor,
-                hours_requirement: user?.hours_requirement || 0
+                hoursRequirement: user?.hoursRequirement || 0
             }}
             onSubmit={ updateProfile }
             validateOnMount
@@ -96,7 +96,7 @@ export const ProfileForm = (): JSX.Element => {
                         label="Precursor:"
                         name="precursor"
                         onChange={ (value) => {
-                            setFieldValue('hours_requirement', HOURS_REQUIREMENTS[value as keyof typeof HOURS_REQUIREMENTS] || 0);
+                            setFieldValue('hoursRequirement', HOURS_REQUIREMENTS[value as keyof typeof HOURS_REQUIREMENTS] || 0);
                             setEditHoursRequirement(false);
                         } }
                         placeholder="Seleccione una opción"
@@ -115,7 +115,7 @@ export const ProfileForm = (): JSX.Element => {
                             />
                         }
                         label="Requerimiento de horas:"
-                        name="hours_requirement"
+                        name="hoursRequirement"
                         placeholder="Ingrese su requerimiento de horas"
                     />
 

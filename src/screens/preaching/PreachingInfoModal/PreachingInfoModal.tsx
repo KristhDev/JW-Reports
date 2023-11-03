@@ -48,10 +48,10 @@ const PreachingInfoModal: FC<ModalProps> = ({ isOpen, onClose }): JSX.Element =>
         || dayjs(p.day).isSame(lastDayOfWeek)
     );
 
-    const hoursRequirementByWeek = getHoursRequirementByWeek(user.hours_requirement);
+    const hoursRequirementByWeek = getHoursRequirementByWeek(user.hoursRequirement);
     const hoursDoneByWeek = getHoursDoneByWeek(preachingsOfWeek);
     const { isNegative: isNegativeHWR, remainingHoursOfWeeklyRequirement } = getRemainingHoursOfWeeklyRequirement(hoursRequirementByWeek, hoursDoneByWeek);
-    const { isNegative: isNegativeHR, reamainingOfHoursRequirement } = getReamainingOfHoursRequirement(preachings, user.hours_requirement);
+    const { isNegative: isNegativeHR, reamainingOfHoursRequirement } = getReamainingOfHoursRequirement(preachings, user.hoursRequirement);
 
     return (
         <Modal isOpen={ isOpen }>
@@ -85,7 +85,7 @@ const PreachingInfoModal: FC<ModalProps> = ({ isOpen, onClose }): JSX.Element =>
                     <Text style={{ ...styles.modalSectionText, color: colors.text }}>Horas faltantes por semana:</Text>
                     <Text style={{ ...styles.modalSectionText, color: colors.modalText }}>
                         { (remainingHoursOfWeeklyRequirement === '0:00' || isNegativeHWR)
-                            ? '¡Excelente! Has cumplido con tu requerimiento de horas por semana.'
+                            ? '¡Excelente! Haz cumplido con tu requerimiento de horas por semana.'
                             : remainingHoursOfWeeklyRequirement
                         }
                     </Text>
@@ -104,7 +104,7 @@ const PreachingInfoModal: FC<ModalProps> = ({ isOpen, onClose }): JSX.Element =>
                     <Text style={{ ...styles.modalSectionText, color: colors.text }}>Horas faltantes por mes:</Text>
                     <Text style={{ ...styles.modalSectionText, color: colors.modalText }}>
                         { (reamainingOfHoursRequirement === '0:00' || isNegativeHR)
-                            ? '¡Excelente! Has cumplido con tu requerimiento de horas por mes.'
+                            ? '¡Excelente! Haz cumplido con tu requerimiento de horas por mes.'
                             : reamainingOfHoursRequirement
                         }
                     </Text>
