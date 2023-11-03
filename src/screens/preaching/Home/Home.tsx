@@ -123,7 +123,7 @@ const Home = (): JSX.Element => {
                             color={ colors.contentHeader }
                             name="information-circle-outline"
                             size={ 40 }
-                            style={{ marginLeft: 1 }}
+                            style={{ marginLeft: 1, marginTop: 1 }}
                         />
                     }
                     onPress={ () => setShowPreachingInfoModal(true) }
@@ -139,6 +139,7 @@ const Home = (): JSX.Element => {
                         color={ colors.contentHeader }
                         name="reader-outline"
                         size={ 40 }
+                        style={{ marginBottom: 1 }}
                     />
                 }
                 onPress={ () => setShowReportModal(true) }
@@ -153,7 +154,7 @@ const Home = (): JSX.Element => {
                         color={ colors.contentHeader }
                         name="add-circle-outline"
                         size={ 40 }
-                        style={{ marginLeft: 3 }}
+                        style={{ marginLeft: 1.5 }}
                     />
                 }
                 onPress={ handleNavigate }

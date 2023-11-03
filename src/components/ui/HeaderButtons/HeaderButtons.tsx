@@ -101,7 +101,7 @@ export const HeaderButtons: FC<HeaderButtonsProps> = ({
                             icon={
                                 <Icon
                                     color={ colors.button }
-                                    name="calendar-sharp"
+                                    name="calendar-outline"
                                     size={ 28 }
                                     style={{ marginLeft: 0.5 }}
                                 />

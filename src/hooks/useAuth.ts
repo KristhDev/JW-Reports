@@ -1,5 +1,5 @@
 import { AuthResponse } from '@supabase/supabase-js';
-import OneSignal from 'react-native-onesignal';
+import { OneSignal } from 'react-native-onesignal';
 
 /* Env */
 import { SITIE_URL } from '@env';
@@ -49,7 +49,7 @@ const useAuth = () => {
     const setUser = ({ data: { user, session }, error }: AuthResponse, isNew: boolean = false): void => {
         const next = setSupabaseError(error, 400, () => {
             dispatch(clearAuthAction());
-            OneSignal.removeExternalUserId();
+            OneSignal.logout();
         });
 
         if (next) return;
@@ -154,7 +154,7 @@ const useAuth = () => {
 
         if (isConnected) {
             const { error } = await supabase.auth.signOut();
-            OneSignal.removeExternalUserId();
+            OneSignal.logout();
             const next = setSupabaseError(error, 500);
             if (next) return;
         }

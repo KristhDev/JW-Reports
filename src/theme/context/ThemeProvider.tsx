@@ -1,6 +1,5 @@
-import React, { FC, PropsWithChildren, useEffect, useReducer, useRef } from 'react';
+import React, { FC, PropsWithChildren, useEffect, useReducer } from 'react';
 import { Appearance } from 'react-native';
-import { Transitioning, TransitioningView, Transition } from 'react-native-reanimated';
 import SystemNavigationBar from 'react-native-system-navigation-bar';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
@@ -25,7 +24,6 @@ const INITIAL_STATE: ThemeState = {
 
 const ThemeProvider: FC<PropsWithChildren> = ({ children }) => {
     const [ state, dispatch ] = useReducer(themeReducer, INITIAL_STATE);
-    const ref = useRef<TransitioningView>(null);
 
     /**
      * This function sets the theme, and then sets the selected theme, and then sets the colors, and
@@ -47,7 +45,6 @@ const ThemeProvider: FC<PropsWithChildren> = ({ children }) => {
             }
         });
 
-        if (ref.current) ref.current.animateNextTransition();
         if (theme === 'default') theme = Appearance.getColorScheme() || 'light';
 
         dispatch({
@@ -73,16 +70,6 @@ const ThemeProvider: FC<PropsWithChildren> = ({ children }) => {
     const setDefaultTheme = (): void => {
         setTheme('default');
     }
-
-    /**
-     * This is the transition that is used when the theme is changed.
-     */
-    const transition = (
-        <Transition.Together>
-            <Transition.In type="fade" durationMs={ 300 } />
-            <Transition.Out type="fade" durationMs={ 300 } />
-        </Transition.Together>
-    );
 
     /**
      * Effect to get of async storage the theme.
@@ -136,21 +123,17 @@ const ThemeProvider: FC<PropsWithChildren> = ({ children }) => {
 
     return (
         <>
-            {
-                (state.isLoadedTheme) && (
-                    <ThemeContext.Provider
-                        value={{
-                            state,
-                            setTheme,
-                            setDefaultTheme
-                        }}
-                    >
-                        <Transitioning.View style={{ flex: 1 }} { ...{ ref, transition } }>
-                            { children }
-                        </Transitioning.View>
-                    </ThemeContext.Provider>
-                )
-            }
+            { (state.isLoadedTheme) && (
+                <ThemeContext.Provider
+                    value={{
+                        state,
+                        setTheme,
+                        setDefaultTheme
+                    }}
+                >
+                    { children }
+                </ThemeContext.Provider>
+            ) }
         </>
     );
 }

@@ -24,7 +24,7 @@ export const ThemeBtn = () => {
                     color={ colors.contentHeader }
                     name={ (selectedTheme === 'dark') ? 'sunny-outline' : 'moon-outline' }
                     size={ (selectedTheme === 'dark') ? 35 : 30 }
-                    style={{ marginLeft: (selectedTheme === 'dark') ? 2 : 1, marginBottom: 1 }}
+                    style={{ marginLeft: (selectedTheme === 'dark') ? 0 : 1, marginBottom: 1 }}
                 />
             }
             onPress={ () => setTheme((selectedTheme === 'dark') ? 'light' : 'dark') }

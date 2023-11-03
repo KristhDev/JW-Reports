@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import OneSignal from 'react-native-onesignal';
+import { OneSignal } from 'react-native-onesignal';
 
 /* Navigations */
 import { PreachingStackNavigation } from './';
@@ -31,7 +31,7 @@ const MainTabsBottomNavigation = (): JSX.Element => {
      * Effect to set the external user id for push notifications.
      */
     useEffect(() => {
-        OneSignal.setExternalUserId(user.id);
+        OneSignal.login(user.id);
     }, []);
 
     return (
