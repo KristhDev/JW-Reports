@@ -52,6 +52,7 @@ const useStatus = () => {
 
             onDispatch && onDispatch();
             setStatus({ code: status, msg });
+            console.log(error);
 
             return true;
         }

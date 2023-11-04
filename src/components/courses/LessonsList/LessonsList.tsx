@@ -194,6 +194,7 @@ export const LessonsList = (): JSX.Element => {
                         lesson={ item }
                         onDelete={ () => handleShowModal(item, setShowDeleteModal) }
                         onFinish={ () => handleShowModal(item, setShowFSModal) }
+                        screenToNavigate="LessonDetailScreen"
                     />
                 ) }
             />

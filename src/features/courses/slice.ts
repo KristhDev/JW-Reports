@@ -9,6 +9,7 @@ import {
     Lesson,
     LessonPayload,
     SetCoursesPayload,
+    SetLessonWithCoursePayload,
     SetLessonsPayload,
 } from '../../interfaces/courses';
 
@@ -62,9 +63,14 @@ const INITIAL_STATE: CoursesState = {
     isCourseDeleting: false,
     isCourseLoading: false,
     isCoursesLoading: false,
+    isLastLessonLoading: false,
     isLessonDeleting: false,
     isLessonLoading: false,
     isLessonsLoading: false,
+    lastLesson: {
+        ...INIT_LESSON,
+        course: INIT_COURSE
+    },
     lessons: [],
     lessonsPagination: {
         from: 0,
@@ -125,6 +131,11 @@ const courseSlice = createSlice({
             state.selectedCourse = (state.selectedCourse.id === action.payload.lesson.course_id)
                 ? { ...state.selectedCourse, last_lesson: state.lessons[0] }
                 : state.selectedCourse;
+        },
+
+        addLastLesson: (state, action: PayloadAction<SetLessonWithCoursePayload>) => {
+            state.lastLesson = action.payload.lesson;
+            state.isLastLessonLoading = false;
         },
 
         addLessons: (state, action: PayloadAction<SetLessonsPayload>) => {
@@ -241,6 +252,10 @@ const courseSlice = createSlice({
             state.isLessonDeleting = action.payload.isDeleting;
         },
 
+        setIsLastLessonLoading: (state, action: PayloadAction<SetIsLoadingPayload>) => {
+            state.isLastLessonLoading = action.payload.isLoading;
+        },
+
         setIsLessonLoading: (state, action: PayloadAction<SetIsLoadingPayload>) => {
             state.isLessonLoading = action.payload.isLoading;
         },
@@ -318,6 +333,7 @@ const courseSlice = createSlice({
 export const {
     addCourse,
     addCourses,
+    addLastLesson,
     addLesson,
     addLessons,
     clearCourses,
@@ -334,6 +350,7 @@ export const {
     setIsCourseDeleting,
     setIsCourseLoading,
     setIsCoursesLoading,
+    setIsLastLessonLoading,
     setIsLessonDeleting,
     setIsLessonLoading,
     setIsLessonsLoading,

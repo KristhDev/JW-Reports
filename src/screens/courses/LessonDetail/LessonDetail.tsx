@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { ScrollView, Text, TouchableOpacity, View } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useRoute } from '@react-navigation/native';
 import dayjs from 'dayjs';
 
 /* Features */
@@ -28,6 +28,7 @@ import styles from './styles';
 const LessonDetail = (): JSX.Element => {
     const [ showFSModal, setShowFSModal ] = useState<boolean>(false);
     const { addListener, getState, removeListener } = useNavigation();
+    const { name } = useRoute();
 
     const { state: { selectedCourse, selectedLesson }, setSelectedLesson } = useCourses();
     const { state: { colors } } = useTheme();
@@ -42,7 +43,8 @@ const LessonDetail = (): JSX.Element => {
     useEffect(() => {
         addListener('blur', () => {
             const { index } = getState();
-            if (index !== 4) {
+
+            if ((name === 'LessonDetailScreen' && index !== 4) || (name === 'HomeLessonDetailScreen' && index !== 2)) {
                 setSelectedLesson({
                     ...INIT_LESSON,
                     next_lesson: new Date().toString()

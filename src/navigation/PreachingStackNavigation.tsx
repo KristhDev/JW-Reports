@@ -1,14 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import { CardStyleInterpolators, createStackNavigator } from '@react-navigation/stack';
+import { useNavigation } from '@react-navigation/native';
 
 /* Screens */
-import { AddOrEditPreaching, Home } from '../screens/preaching';
+import { AddOrEditPreaching, PrecursorHome, PublisherHome } from '../screens/preaching';
+import { AddOrEditLesson, LessonDetail } from '../screens/courses';
 
 /* Components */
 import { BackButton, HeaderButtons } from '../components/ui';
 
 /* Hooks */
-import { useCourses, useNetwork, usePreaching, useStatus, useTheme } from '../hooks';
+import { useAuth, useCourses, useNetwork, usePreaching, useStatus, useTheme } from '../hooks';
 
 /* Interfaces */
 import { PreachingStackParamsList } from '../interfaces/preaching';
@@ -21,13 +23,29 @@ const Stack = createStackNavigator<PreachingStackParamsList>();
  * @return {JSX.Element} rendered component to show stack navigation of preaching
  */
 const PreachingStackNavigation = (): JSX.Element => {
+    const [ showDeleteLessonModal, setShowDeleteLessonModal ] = useState<boolean>(false);
     const [ showDeleteModal, setShowDeleteModal ] = useState<boolean>(false);
+    const { navigate } = useNavigation();
 
-    const { loadCourses } = useCourses();
-    const { state: {
-        isPreachingDeleting,
-        seletedPreaching,
-        selectedDate },
+    const { state: { user } } = useAuth();
+
+    const {
+        state: {
+            isLessonDeleting,
+            selectedCourse,
+            selectedLesson
+        },
+        deleteLesson,
+        loadCourses,
+        loadLastLesson
+    } = useCourses();
+
+    const {
+        state: {
+            isPreachingDeleting,
+            seletedPreaching,
+            selectedDate
+        },
         deletePreaching,
         setSelectedDate,
         loadPreachings
@@ -35,6 +53,16 @@ const PreachingStackNavigation = (): JSX.Element => {
     const { state: { colors } } = useTheme();
     const { setNetworkError } = useStatus();
     const { isConnected } = useNetwork();
+
+    /**
+     * When the user clicks the delete button, show the delete modal, and when the user clicks the
+     * delete button in the modal, delete the lesson.
+     *
+     * @return {void} This function does not return anything
+     */
+    const handleDeleteLesson = (): void => {
+        deleteLesson(true, () => setShowDeleteLessonModal(false));
+    }
 
     /**
      * If the user clicks the delete button, then show the delete modal, and if the user clicks the
@@ -50,7 +78,7 @@ const PreachingStackNavigation = (): JSX.Element => {
      * Effect to select default date and load courses.
      */
     useEffect(() => {
-        setSelectedDate(new Date());
+        if (user.precursor !== 'ninguno') setSelectedDate(new Date());
         if (isConnected) loadCourses({ filter: 'all' });
     }, []);
 
@@ -58,8 +86,15 @@ const PreachingStackNavigation = (): JSX.Element => {
      * Effect to load preachings of the selected date.
      */
     useEffect(() => {
-        if (isConnected) loadPreachings(selectedDate);
-        else setNetworkError();
+        if (!isConnected) {
+            setNetworkError();
+            return;
+        }
+
+        if (user.precursor !== 'ninguno') loadPreachings(selectedDate);
+        else {
+            loadLastLesson();
+        }
     } ,[ selectedDate ]);
 
     return (
@@ -77,7 +112,7 @@ const PreachingStackNavigation = (): JSX.Element => {
             }}
         >
             <Stack.Screen
-                component={ Home }
+                component={ (user.precursor !== 'ninguno') ? PrecursorHome : PublisherHome }
                 name="HomeScreen"
                 options={{
                     headerRight: () => (
@@ -98,6 +133,7 @@ const PreachingStackNavigation = (): JSX.Element => {
                     headerLeft: ({ onPress }) => <BackButton onPress={ onPress } />,
                     headerRight: () => (
                         <HeaderButtons
+                            changeMonthButton={ (user.precursor !== 'ninguno') }
                             deleteButton={ seletedPreaching.id !== '' }
                             deleteModalText="¿Está seguro de eliminar este día de predicación?"
                             isDeleteModalLoading={ isPreachingDeleting }
@@ -108,6 +144,49 @@ const PreachingStackNavigation = (): JSX.Element => {
                         />
                     ),
                     title: `${ seletedPreaching.id !== '' ? 'Editar' : 'Agregar' } predicación`
+                }}
+            />
+
+            <Stack.Screen
+                component={ AddOrEditLesson }
+                name="AddOrEditLessonScreen"
+                options={{
+                    headerLeft: ({ onPress }) => <BackButton onPress={ onPress } />,
+                    headerRight: () => (
+                        <HeaderButtons
+                            deleteButton={ selectedLesson.id !== '' }
+                            deleteModalText="¿Está seguro de eliminar esta clase?"
+                            isDeleteModalLoading={ isLessonDeleting }
+                            onCloseDeleteModal={ () => setShowDeleteLessonModal(false) }
+                            onConfirmDeleteModal={ handleDeleteLesson }
+                            onShowDeleteModal={ () => setShowDeleteLessonModal(true) }
+                            showDeleteModal={ showDeleteLessonModal }
+                        />
+                    ),
+                    title: `${ selectedLesson.id !== '' ? 'Editar' : 'Agregar' } clase`
+                }}
+            />
+
+            <Stack.Screen
+                component={ LessonDetail }
+                name="HomeLessonDetailScreen"
+                options={{
+                    headerLeft: ({ onPress }) => <BackButton onPress={ onPress } />,
+                    headerRight: () => (
+                        <HeaderButtons
+                            deleteButton={ true }
+                            deleteModalText="¿Está seguro de eliminar esta clase?"
+                            isDeleteModalLoading={ isLessonDeleting }
+                            onCloseDeleteModal={ () => setShowDeleteLessonModal(false) }
+                            onConfirmDeleteModal={ handleDeleteLesson }
+                            onShowDeleteModal={ () => setShowDeleteLessonModal(true) }
+                            showDeleteModal={ showDeleteLessonModal }
+
+                            editButton={ !selectedCourse.finished || !selectedCourse.suspended }
+                            onPressEditButton={ () => navigate({ name: 'PreachingStackNavigation', params: { screen: 'AddOrEditLessonScreen' } } as never) }
+                        />
+                    ),
+                    title: `Clase con ${ selectedCourse.person_name }`
                 }}
             />
         </Stack.Navigator>

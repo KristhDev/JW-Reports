@@ -29,7 +29,7 @@ import styles from './styles';
  * - onFinish: This is a function to finish the lesson
  * @return {JSX.Element} rendered component to show the lesson
  */
-export const LessonCard: FC<LessonCardProps> = ({ lesson, onDelete, onFinish }): JSX.Element => {
+export const LessonCard: FC<LessonCardProps> = ({ lesson, screenToNavigate, onClick, onDelete, onFinish }): JSX.Element => {
     const [ isOpen, setIsOpen ] = useState<boolean>(false);
     const { navigate } = useNavigation();
     const { width } = useWindowDimensions();
@@ -47,7 +47,8 @@ export const LessonCard: FC<LessonCardProps> = ({ lesson, onDelete, onFinish }):
      */
     const handleLessonDetail = (): void => {
         setSelectedLesson(lesson);
-        navigate('LessonDetailScreen' as never);
+        onClick && onClick();
+        navigate(screenToNavigate as never);
     }
 
     /**

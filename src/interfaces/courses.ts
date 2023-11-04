@@ -63,6 +63,7 @@ export type CoursesTopTabsParamsList = {
  * @property {boolean} isCoursesLoading - Whether the courses are being loaded
  * @property {boolean} isLessonLoading - Whether the lessons are being loaded
  * @property {boolean} isLessonsLoading - Whether the lessons are being loaded
+ * @property {LessonWithCourse} lastLesson - The last lesson of the course
  * @property {Lesson[]} lessons - The lessons to be displayed
  * @property {Pagination} lessonsPagination - The pagination for the lessons
  * @property {boolean} refreshCourses - Whether the courses should be refreshed
@@ -77,12 +78,14 @@ export interface CoursesState {
     coursesScreenHistory: string[];
     hasMoreCourses: boolean;
     hasMoreLessons: boolean;
-    isLessonDeleting: boolean;
     isCourseDeleting: boolean;
     isCourseLoading: boolean;
     isCoursesLoading: boolean;
+    isLastLessonLoading: boolean;
+    isLessonDeleting: boolean;
     isLessonLoading: boolean;
     isLessonsLoading: boolean;
+    lastLesson: LessonWithCourse;
     lessons: Lesson[];
     lessonsPagination: Pagination;
     refreshCourses: boolean;
@@ -142,6 +145,24 @@ export interface Lesson {
 }
 
 /**
+ * Defining the structure of the LessonWithCourse object.
+ *
+ * @property {Course} courses - The course of the lesson
+ */
+export interface LessonWithCourseEndpoint extends Lesson {
+    courses: Course;
+}
+
+/**
+ * Defining the structure of the LessonWithCourse object.
+ *
+ * @property {Course} course - The course of the lesson
+ */
+export interface LessonWithCourse extends Lesson {
+    course: Course;
+}
+
+/**
  * Defining the structure of the CourseFormValues object.
  *
  * @property {string} person_name - The name of the person
@@ -190,6 +211,15 @@ export type LessonPayload = {
  */
 export type CoursePayload = {
     course: Course;
+}
+
+/**
+ * SetLessonWithCoursePayload is a type that has a property called lesson that is of type LessonWithCourse.
+ *
+ * @property {LessonWithCourse} lesson - LessonWithCourse
+ */
+export type SetLessonWithCoursePayload = {
+    lesson: LessonWithCourse;
 }
 
 /**

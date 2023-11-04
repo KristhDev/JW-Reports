@@ -171,7 +171,7 @@ const CoursesStackNavigation = (): JSX.Element => {
                             onShowDeleteModal={ () => setShowDeleteLessonModal(true) }
                             showDeleteModal={ showDeleteLessonModal }
 
-                            editButton={ !selectedCourse.finished || !selectedLesson.done }
+                            editButton={ !selectedCourse.finished || !selectedCourse.suspended }
                             onPressEditButton={ () => navigate('AddOrEditLessonScreen' as never) }
                         />
                     ),

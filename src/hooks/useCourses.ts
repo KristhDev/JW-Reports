@@ -11,6 +11,7 @@ import {
     INIT_LESSON,
     addCourse,
     addCourses as addCoursesAction,
+    addLastLesson,
     addLesson,
     addLessons as addLessonsAction,
     clearCourses as clearCoursesAction,
@@ -27,6 +28,7 @@ import {
     setIsCourseDeleting,
     setIsCourseLoading,
     setIsCoursesLoading as setIsCoursesLoadingAction,
+    setIsLastLessonLoading as setIsLastLessonLoadingAction,
     setIsLessonDeleting,
     setIsLessonLoading,
     setIsLessonsLoading as setIsLessonsLoadingAction,
@@ -43,7 +45,7 @@ import {
 import { useAuth, useStatus, useNetwork } from './';
 
 /* Interfaces */
-import { Course, CourseFormValues, Lesson, LessonFormValues, loadCoursesOptions } from '../interfaces/courses';
+import { Course, CourseFormValues, Lesson, LessonWithCourseEndpoint, LessonFormValues, loadCoursesOptions } from '../interfaces/courses';
 import { LoadResourcesOptions, Pagination } from '../interfaces/ui';
 
 /**
@@ -68,6 +70,7 @@ const useCourses = () => {
     const setCoursesPagination = (pagination: Pagination) => dispatch(setCoursesPaginationAction({ pagination }));
     const setCoursesScreenHistory = (newScreen: string) => dispatch(setCoursesScreenHistoryAction({ newScreen }));
     const setIsCoursesLoading = (isLoading: boolean) => dispatch(setIsCoursesLoadingAction({ isLoading }));
+    const setIsLastLessonLoading = (isLoading: boolean) => dispatch(setIsLastLessonLoadingAction({ isLoading }));
     const setIsLessonsLoading = (isLoading: boolean) => dispatch(setIsLessonsLoadingAction({ isLoading }));
     const setLessons = (lessons: Lesson[]) => dispatch(setLessonsAction({ lessons }));
     const setLessonsPagination = (pagination: Pagination) => dispatch(setLessonsPaginationAction({ pagination }));
@@ -290,7 +293,7 @@ const useCourses = () => {
 
         dispatch(removeLesson({ id: state.selectedLesson.id }));
         onFinish && onFinish();
-        back && navigate('LessonsScreen' as never);
+        back && goBack();
 
         setSelectedLesson({
             ...INIT_LESSON,
@@ -452,6 +455,13 @@ const useCourses = () => {
 
         dispatch(updateLessonAction({ lesson: (data as any)![0] }));
 
+        if (data![0].id === state.lastLesson.id) {
+            dispatch(addLastLesson({ lesson: {
+                ...data![0],
+                course: state.lastLesson.course
+            } }));
+        }
+
         onFinish && onFinish();
 
         setStatus({ code: 200, msg });
@@ -533,6 +543,59 @@ const useCourses = () => {
 
         dispatch(setHasMoreCourses({ hasMore: (courses!.length >= 10) }));
         (loadMore) ? addCourses(courses!) : setCourses(courses!);
+    }
+
+    /**
+     * Loads the last lesson asynchronously.
+     *
+     * @return {Promise<void>} Promise that resolves when the last lesson is loaded.
+     */
+    const loadLastLesson = async (): Promise<void> => {
+        if (!isConnected) {
+            setNetworkError();
+            return;
+        }
+
+        setIsLastLessonLoading(true);
+
+        if (!isAuthenticated) {
+            setUnauthenticatedError(() => setIsLastLessonLoading(false));
+            return;
+        }
+
+        const { data: dataCourses, error: errorCourses, status: statusCourses, } = await supabase.from('courses')
+            .select('id')
+            .eq('user_id', user.id);
+
+        const next = setSupabaseError(errorCourses, statusCourses, () => setIsLastLessonLoading(false));
+        if (next) return;
+
+        const { data, error, status } = await supabase.from('lessons')
+            .select<'*, courses (*)', LessonWithCourseEndpoint>('*, courses (*)')
+            .in('course_id', [ dataCourses!.map(({ id }) => id) ])
+            .order('next_lesson', { ascending: false })
+            .limit(1);
+
+        const nextLesson = setSupabaseError(error, status, () => setIsLastLessonLoading(false));
+        if (nextLesson) return;
+
+        dispatch(addLastLesson({
+            lesson: (data?.length && data.length > 0)
+                ? {
+                    id: data[0].id,
+                    course_id: data[0].course_id,
+                    course: data[0].courses,
+                    description: data[0].description,
+                    done: data[0].done,
+                    next_lesson: data[0].next_lesson,
+                    created_at: data[0].created_at,
+                    updated_at: data[0].updated_at
+                }
+                : {
+                    ...INIT_LESSON,
+                    course: INIT_COURSE
+                },
+        }));
     }
 
     /**
@@ -800,6 +863,13 @@ const useCourses = () => {
 
         dispatch(updateLessonAction({ lesson: data![0] }));
 
+        if (data![0].id === state.lastLesson.id) {
+            dispatch(addLastLesson({ lesson: {
+                ...data![0],
+                course: state.lastLesson.course
+            } }));
+        }
+
         setStatus({
             code: 200,
             msg: 'Haz actualizado la clase correctamente.'
@@ -829,6 +899,7 @@ const useCourses = () => {
         finishOrStartCourse,
         finishOrStartLesson,
         loadCourses,
+        loadLastLesson,
         loadLessons,
         saveCourse,
         saveLesson,

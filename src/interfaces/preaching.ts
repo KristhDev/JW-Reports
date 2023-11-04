@@ -6,8 +6,10 @@
  * @property AddOrEditPreachingScreen - undefined;
  */
 export type PreachingStackParamsList = {
-    HomeScreen: undefined;
+    AddOrEditLessonScreen: undefined;
     AddOrEditPreachingScreen: undefined;
+    HomeScreen: undefined;
+    HomeLessonDetailScreen: undefined;
 }
 
 /**
@@ -31,7 +33,7 @@ export interface PreachingState {
 
 /**
  * Defining the structure of the Preaching object.
- * 
+ *
  * @property {string} id - This is the id of the preaching.
  * @property {string} userId - This is the id of the user.
  * @property {string} day - This is the day of the preaching.
