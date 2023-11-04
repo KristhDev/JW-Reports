@@ -4,7 +4,7 @@ import { Formik } from 'formik';
 import Icon from 'react-native-vector-icons/Ionicons';
 
 /* Components */
-import { Button, DatetimeField, FormField } from '../../ui';
+import { Button, DatetimeField } from '../../ui';
 
 /* Hooks */
 import { usePreaching, useStatus, useTheme } from '../../../hooks';
@@ -53,7 +53,7 @@ export const PreachingForm = (): JSX.Element => {
             validateOnMount
         >
             { ({ handleSubmit, errors, isValid }) => (
-                <View style={{ ...themeStyles.formContainer, paddingBottom: 40 }}>
+                <View style={{ ...themeStyles.formContainer, justifyContent: 'flex-start', paddingBottom: 40 }}>
 
                     {/* Day field */}
                     <DatetimeField

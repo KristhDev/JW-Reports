@@ -57,7 +57,7 @@ export const ProfileForm = (): JSX.Element => {
             validateOnMount
             validationSchema={ profileFormSchema }
         >
-            { ({ errors, handleSubmit, setFieldValue, isValid }) => (
+            { ({ errors, handleSubmit, setFieldValue, isValid, values }) => (
                 <View style={{ ...themeStyles.formContainer, justifyContent: 'flex-start' }}>
 
                     {/* Name field */}
@@ -100,31 +100,36 @@ export const ProfileForm = (): JSX.Element => {
                             setEditHoursRequirement(false);
                         } }
                         placeholder="Seleccione una opción"
+                        style={{ marginBottom: (values.precursor !== 'ninguno') ? 16 : 40 }}
                         title="Seleccione su precursorado"
                     />
 
-                    {/* Hours requirement field */}
-                    <FormField
-                        autoCapitalize="none"
-                        editable={ editHoursRequirement }
-                        icon={
-                            <Icon
-                                color={ colors.icon }
-                                name="time-outline"
-                                size={ 25 }
+                    { (values.precursor !== 'ninguno') && (
+                        <>
+                            {/* Hours requirement field */}
+                            <FormField
+                                autoCapitalize="none"
+                                editable={ editHoursRequirement }
+                                icon={
+                                    <Icon
+                                        color={ colors.icon }
+                                        name="time-outline"
+                                        size={ 25 }
+                                    />
+                                }
+                                label="Requerimiento de horas:"
+                                name="hoursRequirement"
+                                placeholder="Ingrese su requerimiento de horas"
                             />
-                        }
-                        label="Requerimiento de horas:"
-                        name="hoursRequirement"
-                        placeholder="Ingrese su requerimiento de horas"
-                    />
 
-                    {/* Checkbox to edit hours requirement */}
-                    <Checkbox
-                        onPress={ () => setEditHoursRequirement(!editHoursRequirement) }
-                        status={ editHoursRequirement ? 'checked' : 'unchecked' }
-                        label="Editar requerimiento de horas"
-                    />
+                            {/* Checkbox to edit hours requirement */}
+                            <Checkbox
+                                onPress={ () => setEditHoursRequirement(!editHoursRequirement) }
+                                status={ editHoursRequirement ? 'checked' : 'unchecked' }
+                                label="Editar requerimiento de horas"
+                            />
+                        </>
+                    ) }
 
                     {/* Submit button */}
                     <Button

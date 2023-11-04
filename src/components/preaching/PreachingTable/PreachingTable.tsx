@@ -74,7 +74,7 @@ export const PreachingTable = (): JSX.Element => {
                 >
                     <View style={{ ...styles.tableRow }}>
                         <TableCell
-                            text={ index + 1 }
+                            text={ (index + 1).toString() }
                             style={{ backgroundColor: '#746C84', width: cellWidth }}
                         />
 

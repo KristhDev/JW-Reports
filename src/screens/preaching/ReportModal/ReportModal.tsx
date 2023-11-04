@@ -12,7 +12,7 @@ import { Button } from '../../../components/ui';
 import { useAuth, useCourses, usePreaching, useTheme } from '../../../hooks';
 
 /* Utils */
-import { sumHours, sumNumbers, getRestMins } from '../../../utils';
+import { sumHours, getRestMins } from '../../../utils';
 
 /* Interfaces */
 import { ReportModalProps } from './interfaces';
@@ -45,12 +45,9 @@ const ReportModal: FC<ReportModalProps> = ({ isOpen, month, onClose }): JSX.Elem
     const { state: { colors }, BUTTON_TRANSLUCENT_COLOR } = useTheme();
 
     const username = `${ user.name } ${ user.surname }`;
-    const totalPublications = sumNumbers(preachings.map(p => p.publications));
-    const totalVideos = sumNumbers(preachings.map(p => p.videos));
-    const totalHours = sumHours(preachings.map(p => ({ init: p.init_hour, finish: p.final_hour })));
-    const totalRevisits = sumNumbers(preachings.map(p => p.revisits));
+    const totalHours = sumHours(preachings.map(p => ({ init: p.initHour, finish: p.finalHour })));
     const totalCourses = courses.filter(c => !c.suspended && !c.finished)?.length;
-    const restMins = getRestMins(preachings.map(p => ({ init: p.init_hour, finish: p.final_hour })));
+    const restMins = getRestMins(preachings.map(p => ({ init: p.initHour, finish: p.finalHour })));
 
     /**
      * When the user clicks the button, the function will close the modal, create a report string, and
@@ -64,18 +61,14 @@ const ReportModal: FC<ReportModalProps> = ({ isOpen, month, onClose }): JSX.Elem
         let report = '*Informe De Predicación* \n \n';
         report += `Nombre: ${ username }\n`;
         report += `Mes: ${ month.toLowerCase() }\n`;
-        report += `Publicaciones: ${ totalPublications }\n`;
-        report += `Videos: ${ totalVideos }\n`;
-        report += `Horas: ${ totalHours }\n`;
-        report += `Revisitas: ${ totalRevisits }\n`;
+
+        if (user.precursor !== 'ninguno') report += `Horas: ${ totalHours }\n`;
+
         report += `Cursos: ${ totalCourses } \n`;
         report += 'Comentarios: \n';
         report += `${ (comment.trim().length > 0) ? comment : 'Ninguno' }`;
 
-        const { action } = await Share.share({
-            message: report
-        });
-
+        const { action } = await Share.share({ message: report });
         if (action === 'sharedAction') setComment('');
     }
 
@@ -121,25 +114,12 @@ const ReportModal: FC<ReportModalProps> = ({ isOpen, month, onClose }): JSX.Elem
                                 <Text style={{ ...styles.reportText, color: colors.modalText }}>{ month.toLowerCase() }</Text>
                             </View>
 
-                            <View style={{ flexDirection: 'row' }}>
-                                <Text style={{ ...styles.reportText, color: colors.text }}>Pulicaciones: </Text>
-                                <Text style={{ ...styles.reportText, color: colors.modalText }}>{ totalPublications }</Text>
-                            </View>
-
-                            <View style={{ flexDirection: 'row' }}>
-                                <Text style={{ ...styles.reportText, color: colors.text }}>Videos: </Text>
-                                <Text style={{ ...styles.reportText, color: colors.modalText }}>{ totalVideos }</Text>
-                            </View>
-
-                            <View style={{ flexDirection: 'row' }}>
-                                <Text style={{ ...styles.reportText, color: colors.text }}>Horas: </Text>
-                                <Text style={{ ...styles.reportText, color: colors.modalText }}>{ totalHours }</Text>
-                            </View>
-
-                            <View style={{ flexDirection: 'row' }}>
-                                <Text style={{ ...styles.reportText, color: colors.text }}>Revisitas: </Text>
-                                <Text style={{ ...styles.reportText, color: colors.modalText }}>{ totalRevisits }</Text>
-                            </View>
+                            { (user.precursor !== 'ninguno') && (
+                                <View style={{ flexDirection: 'row' }}>
+                                    <Text style={{ ...styles.reportText, color: colors.text }}>Horas: </Text>
+                                    <Text style={{ ...styles.reportText, color: colors.modalText }}>{ totalHours }</Text>
+                                </View>
+                            ) }
 
                             <View style={{ flexDirection: 'row' }}>
                                 <Text style={{ ...styles.reportText, color: colors.text }}>Cursos: </Text>
@@ -199,13 +179,11 @@ const ReportModal: FC<ReportModalProps> = ({ isOpen, month, onClose }): JSX.Elem
                             </View>
                         </View>
 
-                        {
-                            (restMins > 0) && (
-                                <Text style={{ color: colors.modalText, fontSize: 16, marginBottom: 24 }}>
-                                    Para este mes te sobraron { restMins } minutos, guardalos para el siguiente mes.
-                                </Text>
-                            )
-                        }
+                        { (restMins > 0) && (
+                            <Text style={{ color: colors.modalText, fontSize: 16, marginBottom: 24 }}>
+                                Para este mes te sobraron { restMins } minutos, guardalos para el siguiente mes.
+                            </Text>
+                        ) }
 
                         {/* Modal actions */}
                         <View style={{ flexDirection: 'row', justifyContent: 'flex-end' }}>
