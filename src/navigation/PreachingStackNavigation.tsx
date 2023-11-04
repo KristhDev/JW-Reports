@@ -126,69 +126,72 @@ const PreachingStackNavigation = (): JSX.Element => {
                 }}
             />
 
-            <Stack.Screen
-                component={ AddOrEditPreaching }
-                name="AddOrEditPreachingScreen"
-                options={{
-                    headerLeft: ({ onPress }) => <BackButton onPress={ onPress } />,
-                    headerRight: () => (
-                        <HeaderButtons
-                            changeMonthButton={ (user.precursor !== 'ninguno') }
-                            deleteButton={ seletedPreaching.id !== '' }
-                            deleteModalText="¿Está seguro de eliminar este día de predicación?"
-                            isDeleteModalLoading={ isPreachingDeleting }
-                            onCloseDeleteModal={ () => setShowDeleteModal(false) }
-                            onConfirmDeleteModal={ handleDeleteConfirm }
-                            onShowDeleteModal={ () => setShowDeleteModal(true) }
-                            showDeleteModal={ showDeleteModal }
-                        />
-                    ),
-                    title: `${ seletedPreaching.id !== '' ? 'Editar' : 'Agregar' } predicación`
-                }}
-            />
+            { (user.precursor !== 'ninguno') ? (
+                <Stack.Screen
+                    component={ AddOrEditPreaching }
+                    name="AddOrEditPreachingScreen"
+                    options={{
+                        headerLeft: ({ onPress }) => <BackButton onPress={ onPress } />,
+                        headerRight: () => (
+                            <HeaderButtons
+                                deleteButton={ seletedPreaching.id !== '' }
+                                deleteModalText="¿Está seguro de eliminar este día de predicación?"
+                                isDeleteModalLoading={ isPreachingDeleting }
+                                onCloseDeleteModal={ () => setShowDeleteModal(false) }
+                                onConfirmDeleteModal={ handleDeleteConfirm }
+                                onShowDeleteModal={ () => setShowDeleteModal(true) }
+                                showDeleteModal={ showDeleteModal }
+                                />
+                                ),
+                                title: `${ seletedPreaching.id !== '' ? 'Editar' : 'Agregar' } predicación`
+                            }}
+                            />
+            ) : (
+                <>
+                    <Stack.Screen
+                        component={ AddOrEditLesson }
+                        name="AddOrEditLessonScreen"
+                        options={{
+                            headerLeft: ({ onPress }) => <BackButton onPress={ onPress } />,
+                            headerRight: () => (
+                                <HeaderButtons
+                                    deleteButton={ selectedLesson.id !== '' }
+                                    deleteModalText="¿Está seguro de eliminar esta clase?"
+                                    isDeleteModalLoading={ isLessonDeleting }
+                                    onCloseDeleteModal={ () => setShowDeleteLessonModal(false) }
+                                    onConfirmDeleteModal={ handleDeleteLesson }
+                                    onShowDeleteModal={ () => setShowDeleteLessonModal(true) }
+                                    showDeleteModal={ showDeleteLessonModal }
+                                />
+                            ),
+                            title: `${ selectedLesson.id !== '' ? 'Editar' : 'Agregar' } clase`
+                        }}
+                    />
 
-            <Stack.Screen
-                component={ AddOrEditLesson }
-                name="AddOrEditLessonScreen"
-                options={{
-                    headerLeft: ({ onPress }) => <BackButton onPress={ onPress } />,
-                    headerRight: () => (
-                        <HeaderButtons
-                            deleteButton={ selectedLesson.id !== '' }
-                            deleteModalText="¿Está seguro de eliminar esta clase?"
-                            isDeleteModalLoading={ isLessonDeleting }
-                            onCloseDeleteModal={ () => setShowDeleteLessonModal(false) }
-                            onConfirmDeleteModal={ handleDeleteLesson }
-                            onShowDeleteModal={ () => setShowDeleteLessonModal(true) }
-                            showDeleteModal={ showDeleteLessonModal }
-                        />
-                    ),
-                    title: `${ selectedLesson.id !== '' ? 'Editar' : 'Agregar' } clase`
-                }}
-            />
+                    <Stack.Screen
+                        component={ LessonDetail }
+                        name="HomeLessonDetailScreen"
+                        options={{
+                            headerLeft: ({ onPress }) => <BackButton onPress={ onPress } />,
+                            headerRight: () => (
+                                <HeaderButtons
+                                    deleteButton={ true }
+                                    deleteModalText="¿Está seguro de eliminar esta clase?"
+                                    isDeleteModalLoading={ isLessonDeleting }
+                                    onCloseDeleteModal={ () => setShowDeleteLessonModal(false) }
+                                    onConfirmDeleteModal={ handleDeleteLesson }
+                                    onShowDeleteModal={ () => setShowDeleteLessonModal(true) }
+                                    showDeleteModal={ showDeleteLessonModal }
 
-            <Stack.Screen
-                component={ LessonDetail }
-                name="HomeLessonDetailScreen"
-                options={{
-                    headerLeft: ({ onPress }) => <BackButton onPress={ onPress } />,
-                    headerRight: () => (
-                        <HeaderButtons
-                            deleteButton={ true }
-                            deleteModalText="¿Está seguro de eliminar esta clase?"
-                            isDeleteModalLoading={ isLessonDeleting }
-                            onCloseDeleteModal={ () => setShowDeleteLessonModal(false) }
-                            onConfirmDeleteModal={ handleDeleteLesson }
-                            onShowDeleteModal={ () => setShowDeleteLessonModal(true) }
-                            showDeleteModal={ showDeleteLessonModal }
-
-                            editButton={ !selectedCourse.finished || !selectedCourse.suspended }
-                            onPressEditButton={ () => navigate({ name: 'PreachingStackNavigation', params: { screen: 'AddOrEditLessonScreen' } } as never) }
-                        />
-                    ),
-                    title: `Clase con ${ selectedCourse.person_name }`
-                }}
-            />
+                                    editButton={ !selectedCourse.finished || !selectedCourse.suspended }
+                                    onPressEditButton={ () => navigate({ name: 'PreachingStackNavigation', params: { screen: 'AddOrEditLessonScreen' } } as never) }
+                                />
+                            ),
+                            title: `Clase con ${ selectedCourse.person_name }`
+                        }}
+                    />
+                </>
+            ) }
         </Stack.Navigator>
     );
 }
