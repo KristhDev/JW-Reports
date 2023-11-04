@@ -95,7 +95,7 @@ const PreachingStackNavigation = (): JSX.Element => {
         else {
             loadLastLesson();
         }
-    } ,[ selectedDate ]);
+    } ,[ selectedDate, user.precursor ]);
 
     return (
         <Stack.Navigator

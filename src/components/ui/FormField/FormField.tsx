@@ -1,4 +1,4 @@
-import React, { useState, FC } from 'react';
+import React, { useState, FC, useRef } from 'react';
 import { View, Text, TextInput } from 'react-native';
 import { useField } from 'formik';
 
@@ -51,6 +51,8 @@ export const FormField: FC<FormFieldProps> = ({
         start: String(field.value)?.length || 0,
         end: String(field.value)?.length || 0
     });
+
+    const textInputRef = useRef<TextInput>(null);
 
     const { state: { colors } } = useTheme();
 
@@ -123,7 +125,9 @@ export const FormField: FC<FormFieldProps> = ({
                                 rest.onBlur && rest.onBlur(e);
                                 helpers.setTouched(!meta.touched);
                                 setIsFocused(false);
+                                textInputRef.current?.blur();
                             } }
+                            ref={ textInputRef }
                             onFocus={ () => setIsFocused(true) }
                             testID="form-field-text-input"
                         />
