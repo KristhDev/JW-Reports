@@ -115,11 +115,8 @@ const useCourses = () => {
             return;
         }
 
-        console.log('Selected course: ', state.selectedCourse.finished);
-
         /* If the selectedCourse is finished it should not be updated */
         if (state.selectedCourse.finished) {
-            console.log('No puedes activar o suspendir un curso terminado.');
             dispatch(setIsCourseLoading({ isLoading: false }));
             onFinish && onFinish();
 
@@ -455,7 +452,7 @@ const useCourses = () => {
 
         dispatch(updateLessonAction({ lesson: (data as any)![0] }));
 
-        if (data![0].id === state.lastLesson.id) {
+        if ((user.precursor !== 'ninguno') && data![0].id === state.lastLesson.id) {
             dispatch(addLastLesson({ lesson: {
                 ...data![0],
                 course: state.lastLesson.course
@@ -863,7 +860,7 @@ const useCourses = () => {
 
         dispatch(updateLessonAction({ lesson: data![0] }));
 
-        if (data![0].id === state.lastLesson.id) {
+        if ((user.precursor !== 'ninguno') && data![0].id === state.lastLesson.id) {
             dispatch(addLastLesson({ lesson: {
                 ...data![0],
                 course: state.lastLesson.course
