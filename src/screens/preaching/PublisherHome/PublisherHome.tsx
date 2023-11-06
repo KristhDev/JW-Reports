@@ -131,7 +131,7 @@ const PublisherHome = (): JSX.Element => {
                     <ActivityIndicator
                         color={ colors.button }
                         size={ 50 }
-                        style={{ marginBottom: 100, marginTop: 27.5 }}
+                        style={{ marginBottom: 63.75, marginTop: 63.75 }}
                         testID="home-loading"
                     />
                 ) }
