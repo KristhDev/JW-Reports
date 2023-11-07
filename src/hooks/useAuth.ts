@@ -112,7 +112,6 @@ const useAuth = () => {
         }
 
         dispatch(setIsAuthLoading({ isLoading: true }));
-        SITIE_URL;
 
         const { error } = await supabase.auth.resetPasswordForEmail(email, {
             redirectTo: `${ SITIE_URL }/reset-password`

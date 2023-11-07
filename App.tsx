@@ -15,11 +15,11 @@ import 'dayjs/locale/es';
 import { ONESIGNAL_APP_ID } from '@env';
 
 /* Features */
-import { store, persistor } from './src/features/store';
+import { store, persistor } from './src/features';
 
 /* Context */
-import { ThemeProvider } from './src/theme/context';
-import { NetworkProvider } from './src/context/network';
+import { ThemeProvider } from './src/theme';
+import { NetworkProvider } from './src/context';
 
 /* Navigation */
 import { Navigation } from './src/navigation';
@@ -42,7 +42,6 @@ const App = () => {
    * listen for push notifications.
    */
   useEffect(() => {
-    ONESIGNAL_APP_ID;
     OneSignal.Debug.setLogLevel(LogLevel.Verbose);
     OneSignal.initialize(ONESIGNAL_APP_ID);
 
