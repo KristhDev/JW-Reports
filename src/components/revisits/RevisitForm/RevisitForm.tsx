@@ -13,7 +13,7 @@ import { useImage, useRevisits, useStatus, useTheme } from '../../../hooks';
 import { revisitFormSchema } from './schemas';
 
 /* Interfaces */
-import { RevisitFormValues } from '../../../interfaces/revisits';
+import { RevisitFormValues } from '../../../interfaces';
 
 /* Theme */
 import { styles as themeStyles } from '../../../theme';

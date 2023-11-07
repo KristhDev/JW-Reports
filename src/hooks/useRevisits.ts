@@ -2,33 +2,34 @@ import { useNavigation } from '@react-navigation/native';
 import { Image } from 'react-native-image-crop-picker';
 import dayjs from 'dayjs';
 
-/* Supabase - config */
-import { supabase } from '../supabase/config';
+/* Supabase */
+import { supabase } from '../supabase';
+
+/* Adapters */
+import { revisitAdapter, revisitFormValuesAdapter } from '../adapters';
 
 /* Features */
-import { useAppDispatch, useAppSelector } from '../features';
 import {
     INIT_REVISIT,
     addRevisit,
     addRevisits as addRevisitsAction,
     clearRevisits as clearRevisitsAction,
+    removeRevisit,
     removeRevisits as removeRevisitsAction,
     setHasMoreRevisits,
-    setRefreshRevisits as setRefreshRevisitsAction,
     setIsRevisitDeleting,
     setIsRevisitLoading,
     setIsRevisitsLoading as setIsRevisitsLoadingAction,
+    setRefreshRevisits as setRefreshRevisitsAction,
     setRevisitFilter,
     setRevisits as setRevisitsAction,
     setRevisitsPagination as setRevisitsPaginationAction,
     setRevisitsScreenHistory as setRevisitsScreenHistoryAction,
     setSelectedRevisit as setSelectedRevisitAction,
     updateRevisit as updateRevisitAction,
-    removeRevisit,
-} from '../features/revisits';
-
-/* Adapters */
-import { revisitAdapter, revisitFormValuesAdapter } from '../adapters';
+    useAppDispatch,
+    useAppSelector
+} from '../features';
 
 /* Hooks */
 import { useAuth, useImage, useNetwork, useStatus } from './';
@@ -53,7 +54,7 @@ const useRevisits = () => {
     const { state: { isAuthenticated, user } } = useAuth();
     const { uploadImage, deleteImage } = useImage();
     const { setStatus, setSupabaseError, setUnauthenticatedError, setNetworkError } = useStatus();
-    const { isConnected } = useNetwork();
+    const { wifi } = useNetwork();
 
     const state = useAppSelector(store => store.revisits);
 
@@ -81,7 +82,7 @@ const useRevisits = () => {
     const loadRevisits = async ({ filter, loadMore = false, refresh = false, search = '' }: loadRevisitsOptions): Promise<void> => {
         dispatch(setRevisitFilter({ filter }));
 
-        if (!isConnected) {
+        if (!wifi.isConnected) {
             setNetworkError();
             return;
         }
@@ -145,7 +146,7 @@ const useRevisits = () => {
      * @return {Promise<void>} This function does not return anything.
      */
     const saveRevisit = async ({ revisitValues, back = true, image, onFinish }: SaveRevisitOptions): Promise<void> => {
-        if (!isConnected) {
+        if (!wifi.isConnected) {
             setNetworkError();
             return;
         }
@@ -213,7 +214,7 @@ const useRevisits = () => {
      * @return {Promise<void>} This function does not return anything
      */
     const updateRevisit = async (revisitValues: RevisitFormValues, image?: Image): Promise<void> => {
-        if (!isConnected) {
+        if (!wifi.isConnected) {
             setNetworkError();
             return;
         }
@@ -289,7 +290,7 @@ const useRevisits = () => {
      * @return {Promise<void>} This function does not return anything
      */
     const deleteRevisit = async (back: boolean = false, onFinish?: () => void): Promise<void> => {
-        if (!isConnected) {
+        if (!wifi.isConnected) {
             setNetworkError();
             return;
         }
@@ -361,7 +362,7 @@ const useRevisits = () => {
      * @return {Promise<string | void>} This function returns a string
      */
     const completeRevisit = async (onFailFinish?: () => void): Promise<string> => {
-        if (!isConnected) {
+        if (!wifi.isConnected) {
             setNetworkError();
             return '';
         }

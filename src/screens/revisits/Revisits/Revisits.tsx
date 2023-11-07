@@ -12,7 +12,7 @@ import { Fab } from '../../../components/ui';
 import { useRevisits, useTheme } from '../../../hooks';
 
 /* Interfaces */
-import { RevisitsTopTabsParamsList } from '../../../interfaces/revisits';
+import { RevisitsTopTabsParamsList } from '../../../interfaces';
 
 /* Theme */
 import { styles as themeStyles } from '../../../theme';

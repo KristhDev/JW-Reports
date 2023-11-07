@@ -1,14 +1,13 @@
 import { useNavigation } from '@react-navigation/native';
 import dayjs from 'dayjs';
 
-/* Supabase - config */
-import { supabase } from '../supabase/config';
+/* Supabase */
+import { supabase } from '../supabase';
 
 /* Adapters */
 import { preachingAdapter } from '../adapters';
 
 /* Features */
-import { useAppDispatch, useAppSelector } from '../features';
 import {
     INIT_PREACHING,
     addPreaching,
@@ -21,7 +20,9 @@ import {
     setSelectedDate as setSelectedDateAction,
     setSelectedPreaching as setSelectedPreachingAction,
     updatePreaching as updatePreachingAction,
-} from '../features/preaching';
+    useAppDispatch,
+    useAppSelector
+} from '../features';
 
 /* Hooks */
 import { useAuth, useNetwork, useStatus } from './';
@@ -38,7 +39,7 @@ const usePreaching = () => {
 
     const { state: { user, isAuthenticated } } = useAuth();
     const { setStatus, setSupabaseError, setUnauthenticatedError, setNetworkError } = useStatus();
-    const { isConnected } = useNetwork();
+    const { wifi } = useNetwork();
 
     const state = useAppSelector(store => store.preaching);
 
@@ -54,7 +55,7 @@ const usePreaching = () => {
      * @return {Promise<void>} This function does not return anything.
      */
     const loadPreachings = async (date: Date): Promise<void> => {
-        if (!isConnected) {
+        if (!wifi.isConnected) {
             setNetworkError();
             return;
         }
@@ -90,7 +91,7 @@ const usePreaching = () => {
      * @return {Promise<void>} This function does not return anything.
      */
     const savePreaching = async (preachingValues: PreachingFormValues): Promise<void> => {
-        if (!isConnected) {
+        if (!wifi.isConnected) {
             setNetworkError();
             return;
         }
@@ -133,7 +134,7 @@ const usePreaching = () => {
      * @return {Promise<void>} This function does not return anything.
      */
     const updatePreaching = async (preachingValues: PreachingFormValues): Promise<void> => {
-        if (!isConnected) {
+        if (!wifi.isConnected) {
             setNetworkError();
             return;
         }
@@ -194,7 +195,7 @@ const usePreaching = () => {
      * @return {Promise<void>} This function does not return anything.
      */
     const deletePreaching = async (onFinish?: () => void): Promise<void> => {
-        if (!isConnected) {
+        if (!wifi.isConnected) {
             setNetworkError();
             return;
         }

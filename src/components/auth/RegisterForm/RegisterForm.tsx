@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, useWindowDimensions, ActivityIndicator } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { Formik } from 'formik';
-import { object, ref, string } from 'yup';
 import Icon from 'react-native-vector-icons/Ionicons';
 
 /* Components */
@@ -10,6 +9,9 @@ import { Button, EyeBtn, FormField } from '../../ui';
 
 /* Hooks */
 import { useAuth, useStatus, useTheme } from '../../../hooks';
+
+/* Schemas */
+import { registerFormSchema } from './schemas';
 
 /* Theme */
 import { styles as themeStyles } from '../../../theme';
@@ -30,25 +32,6 @@ export const RegisterForm = (): JSX.Element => {
     const { state: { isAuthLoading }, signUp } = useAuth();
     const { setErrorForm } = useStatus();
     const { state: { colors } } = useTheme();
-
-    /* Validation schema for register values */
-    const registerFormSchema = object().shape({
-        name: string()
-            .min(2, 'El nombre debe tener al menos 2 caracteres.')
-            .required('El nombre es requerido.'),
-        surname: string()
-            .min(2, 'Los apellidos deben tener al menos 2 caracteres.')
-            .required('Los apellidos son requeridos.'),
-        email: string()
-            .email('Correo electrónico inválido.')
-            .required('El correo electrónico es requerido.'),
-        password: string()
-            .min(6, 'La contraseña debe tener al menos 6 caracteres.')
-            .required('La contraseña es requerida.'),
-        confirmPassword: string()
-            .oneOf([ ref('password'), undefined ], 'Las contraseñas no coinciden.')
-            .required('La confirmación de la contraseña es requerida.'),
-    });
 
     return (
         <Formik

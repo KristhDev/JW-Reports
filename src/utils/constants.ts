@@ -1,5 +1,5 @@
 /* Interfaces */
-import { ItemOption } from '../interfaces/ui';
+import { ItemOption } from '../interfaces';
 
 /**
  * The headers of the table that will be displayed in the PreachingTable component

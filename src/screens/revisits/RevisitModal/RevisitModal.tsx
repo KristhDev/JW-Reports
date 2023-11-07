@@ -16,7 +16,7 @@ import { ModalActions } from './ModalActions';
 import { useRevisits, useStatus, useTheme } from '../../../hooks';
 
 /* Interfaces */
-import { ModalProps } from '../../../interfaces/ui';
+import { ModalProps } from '../../../interfaces';
 
 /* Theme */
 import { styles as themeStyles } from '../../../theme';

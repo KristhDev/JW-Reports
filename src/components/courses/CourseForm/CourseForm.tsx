@@ -13,7 +13,7 @@ import { useCourses, useStatus, useTheme } from '../../../hooks';
 import { courseFormSchema } from './schemas';
 
 /* Interfaces */
-import { CourseFormValues } from '../../../interfaces/courses';
+import { CourseFormValues } from '../../../interfaces';
 
 /* Theme */
 import { styles as themeStyles } from '../../../theme';

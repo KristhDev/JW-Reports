@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 /* Interfaces */
-import { 
+import {
     Preaching,
     PreachingPayload,
     PreachingState,
@@ -24,7 +24,7 @@ export const INIT_PREACHING: Preaching = {
 }
 
 /* Initial state */
-const INITIAL_STATE: PreachingState = {
+export const PREACHING_INITIAL_STATE: PreachingState = {
     isPreachingDeleting: false,
     isPreachingsLoading: false,
     isPreachingLoading: false,
@@ -36,7 +36,7 @@ const INITIAL_STATE: PreachingState = {
 /* Slice of management state */
 const preachingSlice = createSlice({
     name: 'preaching',
-    initialState: INITIAL_STATE,
+    initialState: PREACHING_INITIAL_STATE,
     reducers: {
         addPreaching: (state, action: PayloadAction<PreachingPayload>) => {
             state.preachings = [ ...state.preachings, action.payload.preaching ];
@@ -45,12 +45,12 @@ const preachingSlice = createSlice({
         },
 
         clearPreaching: (state) => {
-            state.isPreachingDeleting = INITIAL_STATE.isPreachingDeleting;
-            state.isPreachingLoading = INITIAL_STATE.isPreachingLoading;
-            state.isPreachingsLoading = INITIAL_STATE.isPreachingsLoading;
-            state.preachings = INITIAL_STATE.preachings;
-            state.selectedDate = INITIAL_STATE.selectedDate;
-            state.seletedPreaching = INITIAL_STATE.seletedPreaching;
+            state.isPreachingDeleting = PREACHING_INITIAL_STATE.isPreachingDeleting;
+            state.isPreachingLoading = PREACHING_INITIAL_STATE.isPreachingLoading;
+            state.isPreachingsLoading = PREACHING_INITIAL_STATE.isPreachingsLoading;
+            state.preachings = PREACHING_INITIAL_STATE.preachings;
+            state.selectedDate = PREACHING_INITIAL_STATE.selectedDate;
+            state.seletedPreaching = PREACHING_INITIAL_STATE.seletedPreaching;
         },
 
         removePreaching: (state, action: PayloadAction<RemoveResourcePayload>) => {

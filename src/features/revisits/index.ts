@@ -1,5 +1,6 @@
 export {
     default as revisitsReducer,
+    REVISITS_INITIAL_STATE,
     INIT_REVISIT,
     addRevisit,
     addRevisits,

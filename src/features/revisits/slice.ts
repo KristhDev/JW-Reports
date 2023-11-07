@@ -2,22 +2,19 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 /* Interfaces */
 import {
-    RevisitPayload,
-    RevisitsState,
-    SetRevisitsPayload,
-    SetRefreshRevisitsPayload,
-    Revisit,
-    RevisitFilter
-} from '../../interfaces/revisits';
-
-import {
-    RemoveResourcePayload,
-    SetIsDeletingPayload,
-    SetIsLoadingPayload,
+    HasMorePayload,
     HistoryPayload,
     PaginationPayload,
-    HasMorePayload
-} from '../../interfaces/features';
+    RemoveResourcePayload,
+    Revisit,
+    RevisitFilter,
+    RevisitPayload,
+    RevisitsState,
+    SetIsDeletingPayload,
+    SetIsLoadingPayload,
+    SetRefreshRevisitsPayload,
+    SetRevisitsPayload
+} from '../../interfaces';
 
 /* Initial revisit */
 export const INIT_REVISIT: Revisit = {
@@ -31,8 +28,9 @@ export const INIT_REVISIT: Revisit = {
     createdAt: new Date().toString(),
     updatedAt: new Date().toString()
 }
+
 /* Initial state */
-const INITIAL_STATE: RevisitsState = {
+export const REVISITS_INITIAL_STATE: RevisitsState = {
     hasMoreRevisits: true,
     isRevisitDeleting: false,
     isRevisitLoading: false,
@@ -67,7 +65,7 @@ const filterRevisits = (revisits: Revisit[], filter: RevisitFilter) => {
 /* Slice of management state */
 const revisitsSlice = createSlice({
     name: 'revisits',
-    initialState: INITIAL_STATE,
+    initialState: REVISITS_INITIAL_STATE,
     reducers: {
         addRevisit: (state, action: PayloadAction<RevisitPayload>) => {
             state.revisits = filterRevisits([ action.payload.revisit, ...state.revisits ], state.revisitFilter);
@@ -81,16 +79,16 @@ const revisitsSlice = createSlice({
         },
 
         clearRevisits: (state) => {
-            state.hasMoreRevisits = INITIAL_STATE.hasMoreRevisits;
-            state.isRevisitDeleting = INITIAL_STATE.isRevisitDeleting;
-            state.isRevisitLoading = INITIAL_STATE.isRevisitLoading;
-            state.isRevisitsLoading = INITIAL_STATE.isRevisitsLoading;
-            state.refreshRevisits = INITIAL_STATE.refreshRevisits;
-            state.revisitFilter = INITIAL_STATE.revisitFilter;
-            state.revisits = INITIAL_STATE.revisits;
-            state.revisitsPagination = INITIAL_STATE.revisitsPagination;
-            state.revisitsScreenHistory = INITIAL_STATE.revisitsScreenHistory;
-            state.selectedRevisit = INITIAL_STATE.selectedRevisit;
+            state.hasMoreRevisits = REVISITS_INITIAL_STATE.hasMoreRevisits;
+            state.isRevisitDeleting = REVISITS_INITIAL_STATE.isRevisitDeleting;
+            state.isRevisitLoading = REVISITS_INITIAL_STATE.isRevisitLoading;
+            state.isRevisitsLoading = REVISITS_INITIAL_STATE.isRevisitsLoading;
+            state.refreshRevisits = REVISITS_INITIAL_STATE.refreshRevisits;
+            state.revisitFilter = REVISITS_INITIAL_STATE.revisitFilter;
+            state.revisits = REVISITS_INITIAL_STATE.revisits;
+            state.revisitsPagination = REVISITS_INITIAL_STATE.revisitsPagination;
+            state.revisitsScreenHistory = REVISITS_INITIAL_STATE.revisitsScreenHistory;
+            state.selectedRevisit = REVISITS_INITIAL_STATE.selectedRevisit;
         },
 
         removeRevisit: (state, action: PayloadAction<RemoveResourcePayload>) => {

@@ -1,4 +1,4 @@
-import { Colors, Theme, ThemeState } from '../../interfaces/theme';
+import { Colors, Theme, ThemeState } from '../../interfaces';
 
 type ThemeAction =
     | { type: '[Theme] set theme', payload: { theme: Theme } }

@@ -15,7 +15,7 @@ import { BackButton, HeaderButtons } from '../../components/ui';
 import { useRevisits, useTheme } from '../../hooks';
 
 /* Interfaces */
-import { RevisitsStackParamsList } from '../../interfaces/revisits';
+import { RevisitsStackParamsList } from '../../interfaces';
 
 const Stack = createStackNavigator<RevisitsStackParamsList>();
 

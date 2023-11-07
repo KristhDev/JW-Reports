@@ -8,7 +8,7 @@ import { Revisits } from '../../screens/revisits';
 import { useTheme } from '../../hooks';
 
 /* Interfaces */
-import { RevisitsTopTabsParamsList } from '../../interfaces/revisits';
+import { RevisitsTopTabsParamsList } from '../../interfaces';
 
 const Tabs = createMaterialTopTabNavigator<RevisitsTopTabsParamsList>();
 

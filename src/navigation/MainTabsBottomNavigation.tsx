@@ -3,9 +3,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { OneSignal } from 'react-native-onesignal';
 
 /* Navigations */
-import { PreachingStackNavigation } from './';
-import { CoursesStackNavigation } from './courses';
-import { RevisitsStackNavigation } from './revisits';
+import { CoursesStackNavigation, PreachingStackNavigation, RevisitsStackNavigation } from './';
 
 /* Components */
 import { TabBar } from '../components/ui';
@@ -14,7 +12,7 @@ import { TabBar } from '../components/ui';
 import { useAuth, useTheme } from '../hooks';
 
 /* Interfaces */
-import { MainTabsBottomParamsList } from '../interfaces/ui';
+import { MainTabsBottomParamsList } from '../interfaces';
 
 const Tabs = createBottomTabNavigator<MainTabsBottomParamsList>();
 

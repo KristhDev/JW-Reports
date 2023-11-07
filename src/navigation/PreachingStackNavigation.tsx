@@ -13,7 +13,7 @@ import { BackButton, HeaderButtons } from '../components/ui';
 import { useAuth, useCourses, useNetwork, usePreaching, useStatus, useTheme } from '../hooks';
 
 /* Interfaces */
-import { PreachingStackParamsList } from '../interfaces/preaching';
+import { PreachingStackParamsList } from '../interfaces';
 
 const Stack = createStackNavigator<PreachingStackParamsList>();
 
@@ -52,7 +52,7 @@ const PreachingStackNavigation = (): JSX.Element => {
     } = usePreaching();
     const { state: { colors } } = useTheme();
     const { setNetworkError } = useStatus();
-    const { isConnected } = useNetwork();
+    const { wifi } = useNetwork();
 
     /**
      * When the user clicks the delete button, show the delete modal, and when the user clicks the
@@ -79,14 +79,14 @@ const PreachingStackNavigation = (): JSX.Element => {
      */
     useEffect(() => {
         if (user.precursor !== 'ninguno') setSelectedDate(new Date());
-        if (isConnected) loadCourses({ filter: 'all' });
+        if (wifi.isConnected) loadCourses({ filter: 'all' });
     }, []);
 
     /**
      * Effect to load preachings of the selected date.
      */
     useEffect(() => {
-        if (!isConnected) {
+        if (!wifi.isConnected) {
             setNetworkError();
             return;
         }

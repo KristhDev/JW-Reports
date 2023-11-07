@@ -12,7 +12,7 @@ import { StatusModal } from '../screens/status';
 import { useAuth, useCourses, useNetwork, usePermissions, usePreaching, useRevisits, useStatus, useTheme } from '../hooks';
 
 /* Interfaces */
-import { NavigationParamsList } from '../interfaces/ui';
+import { NavigationParamsList } from '../interfaces';
 
 const Stack = createStackNavigator<NavigationParamsList>();
 
@@ -29,7 +29,7 @@ const Navigation = (): JSX.Element => {
     const { clearRevisits } = useRevisits();
     const { clearStatus } = useStatus();
     const { state: { selectedTheme, } } = useTheme();
-    const { isConnected } = useNetwork();
+    const { wifi } = useNetwork();
 
     /**
      * Effect to clear store when mount component.
@@ -38,7 +38,7 @@ const Navigation = (): JSX.Element => {
         checkPermissions();
         clearStatus();
 
-        if (isConnected) {
+        if (wifi.isConnected) {
             clearCourses();
             clearPreaching();
             clearRevisits();

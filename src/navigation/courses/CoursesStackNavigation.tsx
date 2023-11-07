@@ -15,7 +15,7 @@ import { BackButton, HeaderButtons } from '../../components/ui';
 import { useCourses, useTheme } from '../../hooks';
 
 /* Interfaces */
-import { CoursesStackParamsList } from '../../interfaces/courses';
+import { CoursesStackParamsList } from '../../interfaces';
 
 const Stack = createStackNavigator<CoursesStackParamsList>();
 

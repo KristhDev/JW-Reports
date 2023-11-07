@@ -18,7 +18,7 @@ import { useCourses, useNetwork } from '../../../hooks';
 
 /* Interfaces */
 import { CoursesListProps } from './interfaces';
-import { Course } from '../../../interfaces/courses';
+import { Course } from '../../../interfaces';
 
 /**
  * This component is responsible for rendering a list of courses based
@@ -61,7 +61,8 @@ export const CoursesList: FC<CoursesListProps> = ({ emptyMessage, filter, title 
         setRefreshCourses,
         setSelectedCourse,
     } = useCourses();
-    const { isConnected } = useNetwork();
+
+    const { wifi } = useNetwork();
 
     /**
      * When the user refreshes the page, the search term is reset, the pagination is reset, the courses
@@ -72,7 +73,7 @@ export const CoursesList: FC<CoursesListProps> = ({ emptyMessage, filter, title 
     const handleRefreshing = (): void => {
         setSearchTerm('');
 
-        if (isConnected) {
+        if (wifi.isConnected) {
             setCoursesPagination({ from: 0, to: 9 });
             removeCourses();
         }
@@ -89,7 +90,7 @@ export const CoursesList: FC<CoursesListProps> = ({ emptyMessage, filter, title 
      */
     const handleResetCourses = (search: string): void => {
         if (search.trim().length === 0 && courses.length === 0) {
-            if (isConnected) {
+            if (wifi.isConnected) {
                 setCoursesPagination({ from: 0, to: 9 });
                 removeCourses();
             }
@@ -106,7 +107,7 @@ export const CoursesList: FC<CoursesListProps> = ({ emptyMessage, filter, title 
      * @return {void} This function does not return any value.
      */
     const handleEndReach = (): void => {
-        if (!hasMoreCourses || isCoursesLoading || !isConnected) return;
+        if (!hasMoreCourses || isCoursesLoading || !wifi.isConnected) return;
         loadCourses({ filter, search: searchTerm, loadMore: true });
     }
 
@@ -185,7 +186,7 @@ export const CoursesList: FC<CoursesListProps> = ({ emptyMessage, filter, title 
      * refreshCourses is true
      */
     useEffect(() => {
-        if (isFocused() && refreshCourses && isConnected) {
+        if (isFocused() && refreshCourses && wifi.isConnected) {
             removeCourses();
             loadCourses({ filter, search: searchTerm, refresh: true });
         }

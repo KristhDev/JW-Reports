@@ -4,29 +4,30 @@ import { OneSignal } from 'react-native-onesignal';
 /* Env */
 import { SITIE_URL } from '@env';
 
-/* Supabase - config */
-import { supabase } from '../supabase/config';
-
-/* Features */
-import { useAppDispatch, useAppSelector } from '../features';
-import {
-    setUser as setUserAction,
-    clearAuth as clearAuthAction,
-    setIsAuthLoading,
-    updateUser
-} from '../features/auth';
-import { clearCourses } from '../features/courses';
-import { clearPreaching } from '../features/preaching';
-import { clearRevisits } from '../features/revisits';
+/* Supabase */
+import { supabase } from '../supabase';
 
 /* Adapters */
 import { userAdpater } from '../adapters';
+
+/* Features */
+import {
+    clearAuth as clearAuthAction,
+    clearCourses,
+    clearPreaching,
+    clearRevisits,
+    setIsAuthLoading,
+    setUser as setUserAction,
+    updateUser,
+    useAppDispatch,
+    useAppSelector
+} from '../features';
 
 /* Hooks */
 import { useNetwork, useStatus } from './';
 
 /* Interfaces */
-import { SignIn, Profile, SignUp, UserEndpoint } from '../interfaces/auth';
+import { SignIn, Profile, SignUp, UserEndpoint } from '../interfaces';
 
 /**
  * Hook to management authentication of store with state and actions
@@ -35,7 +36,7 @@ const useAuth = () => {
     const dispatch = useAppDispatch();
 
     const { setStatus, setSupabaseError, setNetworkError } = useStatus();
-    const { isConnected } = useNetwork();
+    const { wifi } = useNetwork();
 
     const state = useAppSelector(store => store.auth);
 
@@ -85,7 +86,7 @@ const useAuth = () => {
     const renew = async (): Promise<void> => {
         if (state.token?.trim().length <= 0) return;
 
-        if (!isConnected) {
+        if (!wifi.isConnected) {
             setNetworkError();
             return;
         }
@@ -105,7 +106,7 @@ const useAuth = () => {
      * @return {Promise<void>} This function does not return any value.
      */
     const resetPassword = async ({ email }: { email: string }): Promise<void> => {
-        if (!isConnected) {
+        if (!wifi.isConnected) {
             setNetworkError();
             return;
         }
@@ -135,7 +136,7 @@ const useAuth = () => {
      * @return {Promise<void>} This function does not return any value.
      */
     const signIn = async ({ email, password }: SignIn): Promise<void> => {
-        if (!isConnected) {
+        if (!wifi.isConnected) {
             setNetworkError('Lo sentimos pero no dispones de conexión a Internet.');
             return;
         }
@@ -155,7 +156,7 @@ const useAuth = () => {
     const signOut = async (): Promise<void> => {
         if (!state.isAuthenticated) return;
 
-        if (isConnected) {
+        if (wifi.isConnected) {
             const { error } = await supabase.auth.signOut();
             OneSignal.logout();
             const next = setSupabaseError(error, 500);
@@ -176,7 +177,7 @@ const useAuth = () => {
      * @return {Promise<void>} This function does not return any value.
      */
     const signUp = async ({ name, surname, email, password }: SignUp): Promise<void> => {
-        if (!isConnected) {
+        if (!wifi.isConnected) {
             setNetworkError('Lo sentimos pero no dispones de conexión a Internet.');
             return;
         }
@@ -220,7 +221,7 @@ const useAuth = () => {
      * @return {Promise<void>} This function does not return any value.
      */
     const updateEmail = async ({ email }: { email: string }, onFinish?: () => void): Promise<void> => {
-        if (!isConnected) {
+        if (!wifi.isConnected) {
             setNetworkError();
             return;
         }
@@ -280,7 +281,7 @@ const useAuth = () => {
      * @return {Promise<void>} This function does not return anything.
      */
     const updatePassword = async ({ password }: { password: string }, onFinish?: () => void): Promise<void> => {
-        if (!isConnected) {
+        if (!wifi.isConnected) {
             setNetworkError();
             return;
         }
@@ -324,7 +325,7 @@ const useAuth = () => {
      * @return {Promise<void>} This function does not return anything.
      */
     const updateProfile = async (values: Profile): Promise<void> => {
-        if (!isConnected) {
+        if (!wifi.isConnected) {
             setNetworkError();
             return;
         }

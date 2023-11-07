@@ -6,22 +6,19 @@ import {
     CourseFilter,
     CoursePayload,
     CoursesState,
-    Lesson,
-    LessonPayload,
-    SetCoursesPayload,
-    SetLessonWithCoursePayload,
-    SetLessonsPayload,
-} from '../../interfaces/courses';
-
-import {
     HasMorePayload,
     HistoryPayload,
+    Lesson,
+    LessonPayload,
     PaginationPayload,
     RefreshPayload,
     RemoveResourcePayload,
+    SetCoursesPayload,
     SetIsDeletingPayload,
-    SetIsLoadingPayload
-} from '../../interfaces/features';
+    SetIsLoadingPayload,
+    SetLessonsPayload,
+    SetLessonWithCoursePayload
+} from '../../interfaces';
 
 /* Initial lesson */
 export const INIT_LESSON: Lesson = {
@@ -50,7 +47,7 @@ export const INIT_COURSE: Course = {
 }
 
 /* Initial state */
-const INITIAL_STATE: CoursesState = {
+export const COURSES_INITIAL_STATE: CoursesState = {
     courseFilter: 'all',
     courses: [],
     coursesPagination: {
@@ -102,7 +99,7 @@ const filterCoursesBy = (courses: Course[], filter: CourseFilter) => {
 /* Slice of management state */
 const courseSlice = createSlice({
     name: 'courses',
-    initialState: INITIAL_STATE,
+    initialState: COURSES_INITIAL_STATE,
     reducers: {
         addCourse: (state, action: PayloadAction<CoursePayload>) => {
             state.courses = [ action.payload.course, ...state.courses ];
@@ -144,24 +141,24 @@ const courseSlice = createSlice({
         },
 
         clearCourses: (state) => {
-            state.courseFilter = INITIAL_STATE.courseFilter;
-            state.courses = INITIAL_STATE.courses;
-            state.coursesPagination = INITIAL_STATE.coursesPagination;
-            state.coursesScreenHistory = INITIAL_STATE.coursesScreenHistory;
-            state.hasMoreCourses = INITIAL_STATE.hasMoreCourses;
-            state.hasMoreLessons = INITIAL_STATE.hasMoreLessons;
-            state.isCourseDeleting = INITIAL_STATE.isCourseDeleting;
-            state.isCourseLoading = INITIAL_STATE.isCourseLoading;
-            state.isCoursesLoading = INITIAL_STATE.isCoursesLoading;
-            state.isLessonDeleting = INITIAL_STATE.isLessonDeleting;
-            state.isLessonLoading = INITIAL_STATE.isLessonLoading;
-            state.isLessonsLoading = INITIAL_STATE.isLessonsLoading;
-            state.lessons = INITIAL_STATE.lessons;
-            state.lessonsPagination = INITIAL_STATE.lessonsPagination;
-            state.refreshCourses = INITIAL_STATE.refreshCourses;
-            state.refreshLessons = INITIAL_STATE.refreshLessons;
-            state.selectedCourse = INITIAL_STATE.selectedCourse;
-            state.selectedLesson = INITIAL_STATE.selectedLesson;
+            state.courseFilter = COURSES_INITIAL_STATE.courseFilter;
+            state.courses = COURSES_INITIAL_STATE.courses;
+            state.coursesPagination = COURSES_INITIAL_STATE.coursesPagination;
+            state.coursesScreenHistory = COURSES_INITIAL_STATE.coursesScreenHistory;
+            state.hasMoreCourses = COURSES_INITIAL_STATE.hasMoreCourses;
+            state.hasMoreLessons = COURSES_INITIAL_STATE.hasMoreLessons;
+            state.isCourseDeleting = COURSES_INITIAL_STATE.isCourseDeleting;
+            state.isCourseLoading = COURSES_INITIAL_STATE.isCourseLoading;
+            state.isCoursesLoading = COURSES_INITIAL_STATE.isCoursesLoading;
+            state.isLessonDeleting = COURSES_INITIAL_STATE.isLessonDeleting;
+            state.isLessonLoading = COURSES_INITIAL_STATE.isLessonLoading;
+            state.isLessonsLoading = COURSES_INITIAL_STATE.isLessonsLoading;
+            state.lessons = COURSES_INITIAL_STATE.lessons;
+            state.lessonsPagination = COURSES_INITIAL_STATE.lessonsPagination;
+            state.refreshCourses = COURSES_INITIAL_STATE.refreshCourses;
+            state.refreshLessons = COURSES_INITIAL_STATE.refreshLessons;
+            state.selectedCourse = COURSES_INITIAL_STATE.selectedCourse;
+            state.selectedLesson = COURSES_INITIAL_STATE.selectedLesson;
         },
 
         removeCourse: (state, action: PayloadAction<RemoveResourcePayload>) => {

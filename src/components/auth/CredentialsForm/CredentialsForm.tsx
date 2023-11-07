@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { View, ActivityIndicator } from 'react-native';
 import { Formik } from 'formik';
-import { object, ref, string } from 'yup';
 import Icon from 'react-native-vector-icons/Ionicons';
 
 /* Components */
@@ -9,6 +8,9 @@ import { Button, EyeBtn, FormField } from '../../ui';
 
 /* Hooks */
 import { useAuth, useStatus, useTheme } from '../../../hooks';
+
+/* Schemas */
+import { emailFormSchema, passwordFormSchema } from './schemas';
 
 /**
  * The function takes no arguments and returns a component that renders a form
@@ -25,24 +27,6 @@ export const CredentialsForm = (): JSX.Element => {
     const { state: { user, isAuthLoading }, updateEmail, updatePassword } = useAuth();
     const { setErrorForm } = useStatus();
     const { state: { colors } } = useTheme();
-
-    /* Validation schema for new email */
-    const emailFormSchema = object().shape({
-        email: string()
-            .email('Correo electrónico inválido.')
-            .notOneOf([ user.email ], 'Para actualizar tu correo debes cambiarlo.')
-            .required('El correo electrónico es requerido.')
-    });
-
-    /* Validation schema for new password */
-    const passwordFormSchema = object().shape({
-        password: string()
-            .min(6, 'La nueva contraseña debe tener al menos 6 caracteres.')
-            .required('La nueva contraseña no puede estar vacía.'),
-        confirmPassword: string()
-            .oneOf([ ref('password'), undefined ], 'Las contraseñas no coinciden.')
-            .required('La confirmación de la contraseña es requerida.'),
-    });
 
     /**
      * Handles updating the email.
@@ -75,7 +59,7 @@ export const CredentialsForm = (): JSX.Element => {
                 initialValues={{ email: user.email }}
                 onSubmit={ handleUpdateEmail }
                 validateOnMount
-                validationSchema={ emailFormSchema }
+                validationSchema={ emailFormSchema(user.email) }
             >
                 { ({ errors, handleSubmit, isValid }) => (
                     <View style={{ alignItems: 'center', justifyContent: 'flex-start' }}>

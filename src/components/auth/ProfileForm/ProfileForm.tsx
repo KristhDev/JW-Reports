@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { View, ActivityIndicator } from 'react-native';
 import { Formik } from 'formik';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { object, string } from 'yup';
 import Icon from 'react-native-vector-icons/Ionicons';
 
 /* Components */
@@ -10,6 +9,9 @@ import { Button, Checkbox, FormField, FormSelect } from '../../ui';
 
 /* Hooks */
 import { useAuth, useStatus, useTheme } from '../../../hooks';
+
+/* Schemas */
+import { profileFormSchema } from './schemas';
 
 /* Utils */
 import { HOURS_REQUIREMENTS, PRECURSORS_OPTIONS } from '../../../utils';
@@ -31,19 +33,6 @@ export const ProfileForm = (): JSX.Element => {
     const { state: { colors } } = useTheme();
 
     const [ editHoursRequirement, setEditHoursRequirement ] = useState<boolean>(![ 0, 30, 50, 90 ].includes(user?.hoursRequirement || 0));
-
-    /* Validation schema for profile values */
-    const profileFormSchema = object().shape({
-        name: string()
-            .min(2, 'El nombre debe tener al menos 2 caracteres.')
-            .required('El nombre es requerido.'),
-        surname: string()
-            .min(2, 'Los apellidos deben tener al menos 2 caracteres.')
-            .required('Los apellidos son requeridos.'),
-        precursor: string()
-            .oneOf([ 'ninguno', 'auxiliar', 'regular', 'especial' ], 'Por favor seleccione una opción de precursor.')
-            .required('El campo precursor es requerido.')
-    });
 
     return (
         <Formik

@@ -12,7 +12,7 @@ import { Button } from '../../../components/ui';
 import { useAuth, usePreaching, useTheme } from '../../../hooks';
 
 /* Interfaces */
-import { ModalProps } from '../../../interfaces/ui';
+import { ModalProps } from '../../../interfaces';
 
 /* Utils */
 import {

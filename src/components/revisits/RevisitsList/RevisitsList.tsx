@@ -19,7 +19,7 @@ import { useNetwork, useRevisits } from '../../../hooks';
 
 /* Interfaces */
 import { RevisitsListProps } from './interfaces';
-import { Revisit } from '../../../interfaces/revisits';
+import { Revisit } from '../../../interfaces';
 
 /**
  * This component is responsible for rendering a list of revisits based
@@ -60,7 +60,8 @@ export const RevisitsList: FC<RevisitsListProps> = ({ emptyMessage, filter, titl
         setSelectedRevisit,
         loadRevisits,
     } = useRevisits();
-    const { isConnected } = useNetwork();
+
+    const { wifi } = useNetwork();
 
     /**
      * When the user refreshes the page, the search term is reset, the pagination is reset, the
@@ -71,7 +72,7 @@ export const RevisitsList: FC<RevisitsListProps> = ({ emptyMessage, filter, titl
     const handleRefreshing = (): void => {
         setSearchTerm('');
 
-        if (isConnected) {
+        if (wifi.isConnected) {
             setRevisitsPagination({ from: 0, to: 9 });
             removeRevisits();
         }
@@ -88,7 +89,7 @@ export const RevisitsList: FC<RevisitsListProps> = ({ emptyMessage, filter, titl
      */
     const handleResetRevisits = (search: string): void => {
         if (search.trim().length === 0 && revisits.length === 0) {
-            if (isConnected) {
+            if (wifi.isConnected) {
                 setRevisitsPagination({ from: 0, to: 9 });
                 removeRevisits();
             }
@@ -105,7 +106,7 @@ export const RevisitsList: FC<RevisitsListProps> = ({ emptyMessage, filter, titl
      * @return {void} This function does not return any value
      */
     const handleEndReach = (): void => {
-        if (!hasMoreRevisits || isRevisitsLoading || !isConnected) return;
+        if (!hasMoreRevisits || isRevisitsLoading || !wifi.isConnected) return;
         loadRevisits({ filter, search: searchTerm, loadMore: true });
     }
 
@@ -162,7 +163,7 @@ export const RevisitsList: FC<RevisitsListProps> = ({ emptyMessage, filter, titl
     useEffect(() => {
         if (searchTerm.trim().length > 0) {
 
-            if (isConnected) {
+            if (wifi.isConnected) {
                 setRevisitsPagination({ from: 0, to: 9 });
                 removeRevisits();
             }
@@ -193,7 +194,7 @@ export const RevisitsList: FC<RevisitsListProps> = ({ emptyMessage, filter, titl
      * refreshRevisits is true
      */
     useEffect(() => {
-        if (isFocused() && refreshRevisits && isConnected) {
+        if (isFocused() && refreshRevisits && wifi.isConnected) {
             removeRevisits();
             loadRevisits({ filter, search: searchTerm, refresh: true });
         }

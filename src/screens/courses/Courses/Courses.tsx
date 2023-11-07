@@ -14,7 +14,7 @@ import { Fab } from '../../../components/ui';
 import { useCourses, useTheme } from '../../../hooks';
 
 /* Interfaces */
-import { CoursesTopTabsParamsList } from '../../../interfaces/courses';
+import { CoursesTopTabsParamsList } from '../../../interfaces';
 
 /* Theme */
 import { styles as themeStyles } from '../../../theme';
