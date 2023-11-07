@@ -1,2 +1,2 @@
 export { default as RevisitsTopTabsNavigation } from './RevisitsTopTabsNavigation';
-export { default as RevistsStackNavigation } from './RevistsStackNavigation';
+export { default as RevisitsStackNavigation } from './RevisitsStackNavigation';

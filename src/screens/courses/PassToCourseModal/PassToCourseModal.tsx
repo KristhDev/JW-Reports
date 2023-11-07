@@ -45,7 +45,7 @@ const PassToCourseModal: FC<ModalProps> = ({ isOpen, onClose }): JSX.Element => 
         if (startCourse) {
             if (values?.publication && values?.publication.length >= 5) {
                 saveCourse({
-                    personName: selectedRevisit.person_name,
+                    personName: selectedRevisit.personName,
                     personAbout: selectedRevisit.about,
                     personAddress: selectedRevisit.address,
                     publication: values?.publication!
@@ -101,7 +101,7 @@ const PassToCourseModal: FC<ModalProps> = ({ isOpen, onClose }): JSX.Element => 
                                         }}
                                         testID="modal-text"
                                     >
-                                        ¿Está seguro de comenzar un curso bíblico con { selectedRevisit.person_name }?
+                                        ¿Está seguro de comenzar un curso bíblico con { selectedRevisit.personName }?
                                     </Text>
 
                                     {/* Modal actions */}

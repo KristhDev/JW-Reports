@@ -12,12 +12,12 @@ import { Fab } from '../../../components/ui';
 import { useRevisits, useTheme } from '../../../hooks';
 
 /* Interfaces */
-import { RevistsTopTabsParamsList } from '../../../interfaces/revisits';
+import { RevisitsTopTabsParamsList } from '../../../interfaces/revisits';
 
 /* Theme */
 import { styles as themeStyles } from '../../../theme';
 
-type RevisitsProps = MaterialTopTabScreenProps<RevistsTopTabsParamsList>;
+type RevisitsProps = MaterialTopTabScreenProps<RevisitsTopTabsParamsList>;
 
 /**
  * This screen is responsible for grouping the components to show a list
@@ -41,7 +41,7 @@ const Revisits: FC<RevisitsProps> = ({ route }): JSX.Element => {
     const handleNavigate = (): void => {
         setSelectedRevisit({
             ...INIT_REVISIT,
-            next_visit: new Date().toString()
+            nextVisit: new Date().toString()
         });
 
         navigate('AddOrEditRevisitScreen' as never);

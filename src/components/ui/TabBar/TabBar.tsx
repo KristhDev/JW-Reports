@@ -28,7 +28,7 @@ export const TabBar: FC<BottomTabBarProps> = ({ state, descriptors }): JSX.Eleme
     const icons = [ 'home-outline', 'briefcase-outline', 'book-outline' ];
     const firstScreens = {
         'PreachingStackNavigation': 'HomeScreen',
-        'RevistsStackNavigation': 'RevisitsTopTabsNavigation',
+        'RevisitsStackNavigation': 'RevisitsTopTabsNavigation',
         'CoursesStackNavigation': 'CoursesTopTabsNavigation',
     }
 

@@ -38,7 +38,7 @@ const RevisitModal: FC<ModalProps> = ({ isOpen, onClose }) => {
     const { state: { colors } } = useTheme();
 
     const modalTitle = (selectedRevisit.done)
-        ? `¿Quieres volver a visitar a ${ selectedRevisit.person_name }?`
+        ? `¿Quieres volver a visitar a ${ selectedRevisit.personName }?`
         : '¿Está seguro de marcar esta revisitada como visitada?';
 
     /* Validation schema for revisit */
@@ -54,23 +54,23 @@ const RevisitModal: FC<ModalProps> = ({ isOpen, onClose }) => {
      * If the selectedRevisit.done is false, then call completeRevisit, otherwise if
      * selectedRevisit.done is true and values.next_visit is false, then setRevisitPerson to true,
      * otherwise if values.next_visit is true, then setRevisitPerson to false and call saveRevisit.
-     * @param {{ about: string, next_visit: Date }} values - { about: string, next_visit: Date }
+     * @param {{ about: string, nextVisit: Date }} values - { about: string, next_visit: Date }
      */
-    const handleConfirm = async (values?: { about: string, next_visit: Date }) => {
+    const handleConfirm = async (values?: { about: string, nextVisit: Date }) => {
         if (!selectedRevisit.done) {
             const msg = await completeRevisit(onClose);
             setCompleteMsg(msg);
         }
-        else if (selectedRevisit.done && !values?.next_visit) {
+        else if (selectedRevisit.done && !values?.nextVisit) {
             setRevisitPerson(true);
         }
-        else if (values?.next_visit) {
+        else if (values?.nextVisit) {
             setRevisitPerson(false);
             saveRevisit({
                 revisitValues: {
                     ...values,
                     address: selectedRevisit.address,
-                    person_name: selectedRevisit.person_name
+                    personName: selectedRevisit.personName
                 },
                 back: false,
                 onFinish: onClose
@@ -164,7 +164,7 @@ const RevisitModal: FC<ModalProps> = ({ isOpen, onClose }) => {
                                     <Formik
                                         initialValues={{
                                             about: selectedRevisit.about,
-                                            next_visit: new Date()
+                                            nextVisit: new Date()
                                         }}
                                         onSubmit={ handleConfirm }
                                         validateOnMount
@@ -195,7 +195,7 @@ const RevisitModal: FC<ModalProps> = ({ isOpen, onClose }) => {
                                                     label="Próxima visita:"
                                                     modalTitle="Próxima visita"
                                                     mode="date"
-                                                    name="next_visit"
+                                                    name="nextVisit"
                                                     placeholder="Seleccione el día"
                                                     style={{ marginBottom: 0 }}
                                                 />

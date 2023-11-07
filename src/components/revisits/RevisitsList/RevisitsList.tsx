@@ -134,7 +134,7 @@ export const RevisitsList: FC<RevisitsListProps> = ({ emptyMessage, filter, titl
         setShowModal(false);
         setSelectedRevisit({
             ...INIT_REVISIT,
-            next_visit: new Date().toString()
+            nextVisit: new Date().toString()
         });
     }
 

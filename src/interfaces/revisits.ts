@@ -18,14 +18,14 @@ export type RevisitsStackParamsList = {
 }
 
 /**
- * RevistsTopTabsParamsList is a type that has three properties, each of which is an object with three
+ * RevisitsTopTabsParamsList is a type that has three properties, each of which is an object with three
  * properties.
  *
  * @property RevisitsScreen - {
  * @property VisitedRevisitsScreen - {
  * @property UnvisitedRevisitsScreen - {
  */
-export type RevistsTopTabsParamsList = {
+export type RevisitsTopTabsParamsList = {
     RevisitsScreen: {
         emptyMessage: string,
         filter: RevisitFilter,
@@ -71,7 +71,34 @@ export interface RevisitsState {
 }
 
 /**
- * Defining the structure of the Revisit object.
+ * Defining the structure of the Revisit Endpoint object.
+ *
+ * @property {string} id - This is the id of the revisit.
+ * @property {string} userId - This is the id of the user.
+ * @property {string} personName - This is the name of the person.
+ * @property {string} about - This is the about of the person.
+ * @property {string} address - This is the address of the person.
+ * @property {string | undefined} photo - This is the photo to more information.
+ * @property {string} nextVisit - This is the next visit of the person.
+ * @property {boolean} done - This indicates whether the revisit is done.
+ * @property {string} createdAt - This is the created at of the revisit.
+ * @property {string} updatedAt - This is the updated at of the revisit.
+ */
+export interface Revisit {
+    id: string;
+    userId: string;
+    personName: string;
+    about: string;
+    address: string;
+    photo?: string;
+    nextVisit: string;
+    done: boolean;
+    createdAt: string;
+    updatedAt: string;
+}
+
+/**
+ * Defining the structure of the Revisit Endpoint object.
  *
  * @property {string} id - This is the id of the revisit.
  * @property {string} user_id - This is the id of the user.
@@ -84,7 +111,7 @@ export interface RevisitsState {
  * @property {string} created_at - This is the created at of the revisit.
  * @property {string} updated_at - This is the updated at of the revisit.
  */
-export interface Revisit {
+export interface RevisitEndpoint {
     id: string;
     user_id: string;
     person_name: string;
@@ -100,16 +127,16 @@ export interface Revisit {
 /**
  * Defining the structure of the RevisitFormValues object.
  *
- * @property {string} person_name - This is the name of the person.
+ * @property {string} personName - This is the name of the person.
  * @property {string} about - This is the about of the person.
  * @property {string} address - This is the address of the person.
- * @property {Date} next_visit - This is the next visit of the person.
+ * @property {Date} nextVisit - This is the next visit of the person.
  */
 export interface RevisitFormValues {
-    person_name: string;
+    personName: string;
     about: string;
     address: string;
-    next_visit: Date;
+    nextVisit: Date;
 }
 
 /**

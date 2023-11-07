@@ -5,7 +5,7 @@ import { OneSignal } from 'react-native-onesignal';
 /* Navigations */
 import { PreachingStackNavigation } from './';
 import { CoursesStackNavigation } from './courses';
-import { RevistsStackNavigation } from './revisits';
+import { RevisitsStackNavigation } from './revisits';
 
 /* Components */
 import { TabBar } from '../components/ui';
@@ -55,8 +55,8 @@ const MainTabsBottomNavigation = (): JSX.Element => {
             />
 
             <Tabs.Screen
-                component={ RevistsStackNavigation }
-                name="RevistsStackNavigation"
+                component={ RevisitsStackNavigation }
+                name="RevisitsStackNavigation"
                 options={{
                     title: 'Revisitas',
                 }}

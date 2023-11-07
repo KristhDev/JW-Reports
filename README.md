@@ -417,7 +417,7 @@ configuraciones de cada tabla:
             <td>0</td>
         </tr>
         <tr>
-            <td>revists</td>
+            <td>revisits</td>
             <td>INT2</td>
             <td>No</td>
             <td>No</td>

@@ -27,12 +27,21 @@ import {
     removeRevisit,
 } from '../features/revisits';
 
+/* Adapters */
+import { revisitAdapter, revisitFormValuesAdapter } from '../adapters';
+
 /* Hooks */
 import { useAuth, useImage, useNetwork, useStatus } from './';
 
 /* Interfaces */
-import { Revisit, RevisitFormValues, SaveRevisitOptions, loadRevisitsOptions } from '../interfaces/revisits';
-import { Pagination } from '../interfaces/ui';
+import {
+    loadRevisitsOptions,
+    Pagination,
+    Revisit,
+    RevisitEndpoint,
+    RevisitFormValues,
+    SaveRevisitOptions
+} from '../interfaces';
 
 /**
  * Hook to management revisits of store with state and actions
@@ -84,7 +93,9 @@ const useRevisits = () => {
             return;
         }
 
-        const revisitsPromise = supabase.from('revisits').select<'*', Revisit>().eq('user_id', user.id);
+        const revisitsPromise = supabase.from('revisits')
+            .select<'*', RevisitEndpoint>()
+            .eq('user_id', user.id);
 
         if (filter === 'visited') revisitsPromise.eq('done', true);
         else if (filter === 'unvisited') revisitsPromise.eq('done', false);
@@ -116,8 +127,10 @@ const useRevisits = () => {
             });
         }
 
+        const revisits = data!.map(revisitAdapter);
+
         dispatch(setHasMoreRevisits({ hasMore: (data!.length >= 10) }));
-        (loadMore) ? addRevisits(data!) : setRevisits(data!);
+        (loadMore) ? addRevisits(revisits!) : setRevisits(revisits!);
     }
 
     /**
@@ -166,12 +179,12 @@ const useRevisits = () => {
 
         const { data, error, status } = await supabase.from('revisits')
             .insert({
-                ...revisitValues,
+                ...revisitFormValuesAdapter(revisitValues),
                 photo,
-                next_visit: dayjs(revisitValues.next_visit).format('YYYY-MM-DD HH:mm:ss.SSSSSS'),
+                next_visit: dayjs(revisitValues.nextVisit).format('YYYY-MM-DD HH:mm:ss.SSSSSS'),
                 user_id: user.id
             })
-            .select<'*', Revisit>();
+            .select<'*', RevisitEndpoint>();
 
         const next = setSupabaseError(error, status, () => {
             dispatch(setIsRevisitLoading({ isLoading: false }));
@@ -180,7 +193,7 @@ const useRevisits = () => {
 
         if (next) return;
 
-        dispatch(addRevisit({ revisit: data![0] }));
+        dispatch(addRevisit({ revisit: revisitAdapter(data![0]) }));
         onFinish && onFinish();
 
         const successMsg = (back)
@@ -246,19 +259,19 @@ const useRevisits = () => {
 
         const { data, error, status } = await supabase.from('revisits')
             .update({
-                ...revisitValues,
+                ...revisitFormValuesAdapter(revisitValues),
                 photo,
-                next_visit: dayjs(revisitValues.next_visit).format('YYYY-MM-DD HH:mm:ss.SSSSSS'),
+                next_visit: dayjs(revisitValues.nextVisit).format('YYYY-MM-DD HH:mm:ss.SSSSSS'),
                 updated_at: dayjs().format('YYYY-MM-DD HH:mm:ss.SSSSSS')
             })
             .eq('id', state.selectedRevisit.id)
             .eq('user_id', user.id)
-            .select<'*', Revisit>();
+            .select<'*', RevisitEndpoint>();
 
         const next = setSupabaseError(error, status, () => dispatch(setIsRevisitLoading({ isLoading: false })));
         if (next) return;
 
-        dispatch(updateRevisitAction({ revisit: data![0] }));
+        dispatch(updateRevisitAction({ revisit: revisitAdapter(data![0]) }));
 
         setStatus({
             code: 200,
@@ -384,7 +397,7 @@ const useRevisits = () => {
             })
             .eq('id', state.selectedRevisit.id)
             .eq('user_id', user.id)
-            .select<'*', Revisit>();
+            .select<'*', RevisitEndpoint>();
 
         if (error) {
             console.log(error);
@@ -395,10 +408,12 @@ const useRevisits = () => {
             return '';
         }
 
-        dispatch(updateRevisitAction({ revisit: data![0] }));
-        setSelectedRevisit(data![0]);
+        const revisit = revisitAdapter(data![0]);
 
-        return 'Haz marcado como completa tu revista correctamente.';
+        dispatch(updateRevisitAction({ revisit }));
+        setSelectedRevisit(revisit);
+
+        return 'Haz marcado como completa tu revisita correctamente.';
     }
 
     return {

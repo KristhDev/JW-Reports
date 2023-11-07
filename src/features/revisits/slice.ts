@@ -22,14 +22,14 @@ import {
 /* Initial revisit */
 export const INIT_REVISIT: Revisit = {
     id: '',
-    user_id: '',
-    person_name: '',
+    userId: '',
+    personName: '',
     about: '',
     address: '',
-    next_visit: new Date().toString(),
+    nextVisit: new Date().toString(),
     done: false,
-    created_at: new Date().toString(),
-    updated_at: new Date().toString()
+    createdAt: new Date().toString(),
+    updatedAt: new Date().toString()
 }
 /* Initial state */
 const INITIAL_STATE: RevisitsState = {
@@ -71,7 +71,7 @@ const revisitsSlice = createSlice({
     reducers: {
         addRevisit: (state, action: PayloadAction<RevisitPayload>) => {
             state.revisits = filterRevisits([ action.payload.revisit, ...state.revisits ], state.revisitFilter);
-            state.revisits = state.revisits.sort((a, b) => new Date(b.next_visit).getTime() - new Date(a.next_visit).getTime());
+            state.revisits = state.revisits.sort((a, b) => new Date(b.nextVisit).getTime() - new Date(a.nextVisit).getTime());
             state.isRevisitLoading = false;
         },
 
@@ -150,7 +150,7 @@ const revisitsSlice = createSlice({
                     ? action.payload.revisit
                     : revisit
             ), state.revisitFilter);
-            state.revisits = state.revisits.sort((a, b) => new Date(b.next_visit).getTime() - new Date(a.next_visit).getTime());
+            state.revisits = state.revisits.sort((a, b) => new Date(b.nextVisit).getTime() - new Date(a.nextVisit).getTime());
             state.selectedRevisit = (state.selectedRevisit.id === action.payload.revisit.id)
                 ? action.payload.revisit
                 : state.selectedRevisit;
