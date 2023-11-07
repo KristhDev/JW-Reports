@@ -187,7 +187,7 @@ const PreachingStackNavigation = (): JSX.Element => {
                                     onPressEditButton={ () => navigate({ name: 'PreachingStackNavigation', params: { screen: 'AddOrEditLessonScreen' } } as never) }
                                 />
                             ),
-                            title: `Clase con ${ selectedCourse.person_name }`
+                            title: `Clase con ${ selectedCourse.personName }`
                         }}
                     />
                 </>

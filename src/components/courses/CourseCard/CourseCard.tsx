@@ -131,7 +131,7 @@ export const CourseCard: FC<CourseCardProps> = ({ course, onActiveOrSuspend, onD
                     style={{ ...styles.textName, color: colors.text }}
                     testID="course-card-name-text"
                 >
-                    { course.person_name }
+                    { course.personName }
                 </Text>
 
                 <Text
@@ -146,7 +146,7 @@ export const CourseCard: FC<CourseCardProps> = ({ course, onActiveOrSuspend, onD
                     style={{ ...styles.textDescription, color: colors.text }}
                     testID="course-card-about-text"
                 >
-                    { (course.person_about.length > 200) ? course.person_about.substring(0, 200) + '...' : course.person_about }
+                    { (course.personAbout.length > 200) ? course.personAbout.substring(0, 200) + '...' : course.personAbout }
                 </Text>
 
                 <Fab

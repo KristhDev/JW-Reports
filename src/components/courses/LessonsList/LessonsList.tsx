@@ -158,7 +158,7 @@ export const LessonsList = (): JSX.Element => {
                     <>
                         <Title
                             containerStyle={{ marginVertical: 8 }}
-                            text={ `Clases del curso con ${ selectedCourse.person_name }` }
+                            text={ `Clases del curso con ${ selectedCourse.personName }` }
                             textStyle={{ fontSize: 24 }}
                         />
 

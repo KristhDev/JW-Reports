@@ -37,16 +37,16 @@ export const INIT_LESSON: Lesson = {
 /* Initial course */
 export const INIT_COURSE: Course = {
     id: '',
-    user_id: '',
-    person_name: '',
-    person_about: '',
-    person_address: '',
+    userId: '',
+    personName: '',
+    personAbout: '',
+    personAddress: '',
     publication: '',
-    last_lesson: undefined,
+    lastLesson: undefined,
     suspended: false,
     finished: false,
-    created_at: new Date().toString(),
-    updated_at: new Date().toString()
+    createdAt: new Date().toString(),
+    updatedAt: new Date().toString()
 }
 
 /* Initial state */
@@ -106,7 +106,7 @@ const courseSlice = createSlice({
     reducers: {
         addCourse: (state, action: PayloadAction<CoursePayload>) => {
             state.courses = [ action.payload.course, ...state.courses ];
-            state.courses = state.courses.sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime());
+            state.courses = state.courses.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
             state.isCourseLoading = false;
         },
 
@@ -124,12 +124,12 @@ const courseSlice = createSlice({
 
             state.courses = state.courses.map(c =>
                 (c.id === action.payload.lesson.course_id)
-                    ? { ...c, last_lesson: state.lessons[0] }
+                    ? { ...c, lastLesson: state.lessons[0] }
                     : c
             );
 
             state.selectedCourse = (state.selectedCourse.id === action.payload.lesson.course_id)
-                ? { ...state.selectedCourse, last_lesson: state.lessons[0] }
+                ? { ...state.selectedCourse, lastLesson: state.lessons[0] }
                 : state.selectedCourse;
         },
 
@@ -177,13 +177,13 @@ const courseSlice = createSlice({
             state.lessons = state.lessons.filter(l => l.id !== action.payload.id);
 
             state.courses = state.courses.map(c =>
-                (c.last_lesson && c.last_lesson.id === action.payload.id)
-                ? { ...c, last_lesson: state.lessons[0] }
+                (c.lastLesson && c.lastLesson.id === action.payload.id)
+                ? { ...c, lastLesson: state.lessons[0] }
                 : c
             );
 
-            state.selectedCourse = (state.selectedCourse.last_lesson && state.selectedCourse.last_lesson.id === action.payload.id)
-                ? { ...state.selectedCourse, last_lesson: state.lessons[0] }
+            state.selectedCourse = (state.selectedCourse.lastLesson && state.selectedCourse.lastLesson.id === action.payload.id)
+                ? { ...state.selectedCourse, lastLesson: state.lessons[0] }
                 : state.selectedCourse;
 
             state.isLessonDeleting = false;
@@ -207,16 +207,16 @@ const courseSlice = createSlice({
             state.isLessonsLoading = false;
 
             state.courses = state.courses.map(c =>
-                (state.lessons.length > 0 && c.id === state.lessons[0].course_id && (!c.last_lesson || c.last_lesson.id !== state.lessons[0].id))
+                (state.lessons.length > 0 && c.id === state.lessons[0].course_id && (!c.lastLesson || c.lastLesson.id !== state.lessons[0].id))
                     ? { ...c, last_lesson: state.lessons[0] }
                     : c
             );
 
             state.selectedCourse =
                 (state.lessons.length > 0 && state.selectedCourse.id === state.lessons[0].course_id
-                    && (!state.selectedCourse.last_lesson || state.selectedCourse.last_lesson.id !== state.lessons[0].id)
+                    && (!state.selectedCourse.lastLesson || state.selectedCourse.lastLesson.id !== state.lessons[0].id)
                 )
-                    ? { ...state.selectedCourse, last_lesson: state.lessons[0] }
+                    ? { ...state.selectedCourse, lastLesson: state.lessons[0] }
                     : state.selectedCourse;
         },
 
@@ -293,7 +293,7 @@ const courseSlice = createSlice({
                     : course
             ), state.courseFilter);
 
-            state.courses = state.courses.sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime());
+            state.courses = state.courses.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
 
             state.selectedCourse = (state.selectedCourse.id === action.payload.course.id)
                 ? action.payload.course
@@ -316,13 +316,13 @@ const courseSlice = createSlice({
                 : state.selectedLesson;
 
             state.courses = state.courses.map(c =>
-                (c.last_lesson && c.id === action.payload.lesson.course_id)
+                (c.lastLesson && c.id === action.payload.lesson.course_id)
                     ? { ...c, last_lesson: state.lessons[0] }
                     : c
             );
 
-            state.selectedCourse = (state.selectedCourse.last_lesson && state.selectedCourse.id === action.payload.lesson.course_id)
-                ? { ...state.selectedCourse, last_lesson: state.lessons[0] }
+            state.selectedCourse = (state.selectedCourse.lastLesson && state.selectedCourse.id === action.payload.lesson.course_id)
+                ? { ...state.selectedCourse, lastLesson: state.lessons[0] }
                 : state.selectedCourse;
 
             state.isLessonLoading = false;

@@ -41,13 +41,24 @@ import {
     updateLesson as updateLessonAction
 } from '../features/courses';
 
+/* Adapters */
+import { courseAdapter, courseFormValuesAdapter } from '../adapters';
+
 /* Hooks */
 import { useAuth, useStatus, useNetwork } from './';
 
 /* Interfaces */
-import { Course, CourseFormValues, Lesson, LessonWithCourseEndpoint, LessonFormValues, loadCoursesOptions } from '../interfaces/courses';
-import { LoadResourcesOptions, Pagination } from '../interfaces/ui';
-
+import {
+    Course,
+    CourseFormValues,
+    Lesson,
+    LessonWithCourseEndpoint,
+    LessonFormValues,
+    loadCoursesOptions,
+    LoadResourcesOptions,
+    Pagination,
+    CourseEndpoint
+} from '../interfaces';
 /**
  * Hook to management courses of store with state and actions
  */
@@ -135,7 +146,7 @@ const useCourses = () => {
             })
             .eq('id', state.selectedCourse.id)
             .eq('user_id', user.id)
-            .select<'*', Course>();
+            .select<'*', CourseEndpoint>();
 
         const next = setSupabaseError(error, status, () => {
             dispatch(setIsCourseLoading({ isLoading: false }));
@@ -148,7 +159,7 @@ const useCourses = () => {
             ? 'Haz suspendido el curso correctamente.'
             : 'Haz renovado el curso correctamente.'
 
-        dispatch(updateCourseAction({ course: data![0] }));
+        dispatch(updateCourseAction({ course: courseAdapter(data![0]) }));
 
         onFinish && onFinish();
 
@@ -265,7 +276,7 @@ const useCourses = () => {
         }
 
         /* Cannot delete a class if the selectedCourse.user_id is different from user.id */
-        if (state.selectedCourse.user_id !== user.id) {
+        if (state.selectedCourse.userId !== user.id) {
             onFinish && onFinish();
             dispatch(setIsLessonDeleting({ isDeleting: false }));
 
@@ -359,7 +370,7 @@ const useCourses = () => {
             })
             .eq('id', state.selectedCourse.id)
             .eq('user_id', user.id)
-            .select<'*', Course>();
+            .select<'*', CourseEndpoint>();
 
         const next = setSupabaseError(error, status, () => {
             dispatch(setIsCourseLoading({ isLoading: false }));
@@ -372,7 +383,7 @@ const useCourses = () => {
             ? 'Haz terminado el curso correctamente.'
             : 'Haz comenzado de nuevo el curso correctamente.'
 
-        dispatch(updateCourseAction({ course: data![0] }));
+        dispatch(updateCourseAction({ course: courseAdapter(data![0]) }));
 
         onFinish && onFinish();
 
@@ -533,10 +544,10 @@ const useCourses = () => {
             });
         }
 
-        const courses = data!.map(({ lessons, ...rest }) => ({
+        const courses = data!.map(({ lessons, ...rest }) => courseAdapter({
             ...rest,
             last_lesson: lessons[0]
-        })) as any[];
+        } as CourseEndpoint));
 
         dispatch(setHasMoreCourses({ hasMore: (courses!.length >= 10) }));
         (loadMore) ? addCourses(courses!) : setCourses(courses!);
@@ -581,7 +592,7 @@ const useCourses = () => {
                 ? {
                     id: data[0].id,
                     course_id: data[0].course_id,
-                    course: data[0].courses,
+                    course: courseAdapter(data[0].courses),
                     description: data[0].description,
                     done: data[0].done,
                     next_lesson: data[0].next_lesson,
@@ -686,8 +697,8 @@ const useCourses = () => {
         }
 
         const { data, error, status } = await supabase.from('courses')
-            .insert({ ...courseValues, user_id: user.id })
-            .select();
+            .insert({ ...courseFormValuesAdapter(courseValues), user_id: user.id })
+            .select<'*', CourseEndpoint>();
 
         const next = setSupabaseError(error, status, () => {
             dispatch(setIsCourseLoading({ isLoading: false }));
@@ -696,7 +707,7 @@ const useCourses = () => {
 
         if (next) return;
 
-        dispatch(addCourse({ course: (data as any)![0] }));
+        dispatch(addCourse({ course: courseAdapter((data)![0]) }));
         onFinish && onFinish();
 
         setStatus({
@@ -792,17 +803,19 @@ const useCourses = () => {
 
         const { data, error, status } = await supabase.from('courses')
             .update({
-                ...courseValues,
+                ...courseFormValuesAdapter(courseValues),
                 updated_at: dayjs().format('YYYY-MM-DD HH:mm:ss.SSSSSS')
             })
             .eq('id', state.selectedCourse.id)
             .eq('user_id', user.id)
-            .select<'*', Course>();
+            .select<'*', CourseEndpoint>();
 
         const next = setSupabaseError(error, status, () => dispatch(setIsCourseLoading({ isLoading: false })));
         if (next) return;
 
-        dispatch(updateCourseAction({ course: data![0] }));
+        console.log(data);
+
+        dispatch(updateCourseAction({ course: courseAdapter(data![0]) }));
 
         setStatus({
             code: 200,

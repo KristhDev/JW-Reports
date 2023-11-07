@@ -1,7 +1,6 @@
 import React from 'react';
 import { ActivityIndicator, View } from 'react-native';
 import { Formik } from 'formik';
-import { object, string } from 'yup';
 import Icon from 'react-native-vector-icons/Ionicons';
 
 /* Components */
@@ -9,6 +8,9 @@ import { Button, FormField } from '../../ui';
 
 /* Hooks */
 import { useCourses, useStatus, useTheme } from '../../../hooks';
+
+/* Schemas */
+import { courseFormSchema } from './schemas';
 
 /* Interfaces */
 import { CourseFormValues } from '../../../interfaces/courses';
@@ -40,28 +42,12 @@ export const CourseForm = (): JSX.Element => {
             : updateCourse(formValues);
     }
 
-    /* Validation schema for course */
-    const courseFormSchema = object().shape({
-        person_name: string()
-            .min(2, 'El nombre de la persona debe tener al menoss 2 caracteres.')
-            .required('El nombre de la persona es requerido.'),
-        person_about: string()
-            .min(10, 'La información de la persona debe tener al menos 10 caracteres.')
-            .required('La información de la persona es requerida.'),
-        person_address: string()
-            .min(10, 'La dirección debe tener al menos 10 caracteres.')
-            .required('La dirección es requerida.'),
-        publication: string()
-            .min(5, 'La publicación de estudio debe tener al menos 5 caracteres.')
-            .required('La publicación de estudio no puede estar vacía'),
-    });
-
     return (
         <Formik
             initialValues={{
-                person_name: selectedCourse.person_name,
-                person_about: selectedCourse.person_about,
-                person_address: selectedCourse.person_address,
+                personName: selectedCourse.personName,
+                personAbout: selectedCourse.personAbout,
+                personAddress: selectedCourse.personAddress,
                 publication: selectedCourse.publication
             }}
             onSubmit={ handleSaveOrUpdate }
@@ -81,7 +67,7 @@ export const CourseForm = (): JSX.Element => {
                             />
                         }
                         label="Nombre del estudiante:"
-                        name="person_name"
+                        name="personName"
                         placeholder="Ingrese el nombre"
                     />
 
@@ -89,7 +75,7 @@ export const CourseForm = (): JSX.Element => {
                     <FormField
                         label="Información del estudiante:"
                         multiline
-                        name="person_about"
+                        name="personAbout"
                         numberOfLines={ 10 }
                         placeholder="Ingrese datos sobre la persona, temas de interés, preferencias, aspectos importantes, etc..."
                     />
@@ -98,7 +84,7 @@ export const CourseForm = (): JSX.Element => {
                     <FormField
                         label="Dirección:"
                         multiline
-                        name="person_address"
+                        name="personAddress"
                         numberOfLines={ 4 }
                         placeholder="Ingrese la dirección"
                     />

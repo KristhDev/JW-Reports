@@ -146,6 +146,10 @@ export const FormField: FC<FormFieldProps> = ({
                             { ...rest }
                             onFocus={ () => setIsFocused(true) }
                             testID="form-field-text-input"
+                            onBlur={ () => {
+                                setIsFocused(false);
+                                helpers.setTouched(!meta.touched);
+                            } }
                         />
 
                         { icon }

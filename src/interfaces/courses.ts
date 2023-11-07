@@ -98,6 +98,35 @@ export interface CoursesState {
  * Defining the structure of the Course object.
  *
  * @property {string} id - The id of the course
+ * @property {string} userId - The id of the user
+ * @property {string} personName - The name of the person
+ * @property {string} personAbout - The about of the person
+ * @property {string} personAddress - The address of the person
+ * @property {string} publication - The publication of the course
+ * @property {Lesson | undefined} lastLesson - The last lesson of the course
+ * @property {boolean} suspended - Whether the course is suspended
+ * @property {boolean} finished - Whether the course is finished
+ * @property {string} createdAt - The created at of the course
+ * @property {string} updatedAt - The updated at of the course
+ */
+export interface Course {
+    id: string;
+    userId: string;
+    personName: string;
+    personAbout: string;
+    personAddress: string;
+    publication: string;
+    lastLesson?: Lesson;
+    suspended: boolean;
+    finished: boolean;
+    createdAt: string;
+    updatedAt: string;
+}
+
+/**
+ * Defining the structure of the Course Endpoint object.
+ *
+ * @property {string} id - The id of the course
  * @property {string} user_id - The id of the user
  * @property {string} person_name - The name of the person
  * @property {string} person_about - The about of the person
@@ -109,7 +138,7 @@ export interface CoursesState {
  * @property {string} created_at - The created at of the course
  * @property {string} updated_at - The updated at of the course
  */
-export interface Course {
+export interface CourseEndpoint {
     id: string;
     user_id: string;
     person_name: string;
@@ -150,7 +179,7 @@ export interface Lesson {
  * @property {Course} courses - The course of the lesson
  */
 export interface LessonWithCourseEndpoint extends Lesson {
-    courses: Course;
+    courses: CourseEndpoint;
 }
 
 /**
@@ -165,15 +194,15 @@ export interface LessonWithCourse extends Lesson {
 /**
  * Defining the structure of the CourseFormValues object.
  *
- * @property {string} person_name - The name of the person
- * @property {string} person_about - The about of the person
- * @property {string} person_address - The address of the person
+ * @property {string} personName - The name of the person
+ * @property {string} personAbout - The about of the person
+ * @property {string} personAddress - The address of the person
  * @property {string} publication - The publication of the course
  */
 export interface CourseFormValues {
-    person_name: string;
-    person_about: string;
-    person_address: string;
+    personName: string;
+    personAbout: string;
+    personAddress: string;
     publication: string;
 }
 

@@ -45,9 +45,9 @@ const PassToCourseModal: FC<ModalProps> = ({ isOpen, onClose }): JSX.Element => 
         if (startCourse) {
             if (values?.publication && values?.publication.length >= 5) {
                 saveCourse({
-                    person_name: selectedRevisit.person_name,
-                    person_about: selectedRevisit.about,
-                    person_address: selectedRevisit.address,
+                    personName: selectedRevisit.person_name,
+                    personAbout: selectedRevisit.about,
+                    personAddress: selectedRevisit.address,
                     publication: values?.publication!
                 }, onClose);
             }

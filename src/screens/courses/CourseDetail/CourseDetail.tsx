@@ -91,7 +91,7 @@ const CourseDetail = (): JSX.Element => {
                 {/* Title of detail */}
                 <Title
                     containerStyle={ themeStyles.titleContainer }
-                    text={ selectedCourse.person_name.toUpperCase() }
+                    text={ selectedCourse.personName.toUpperCase() }
                     textStyle={{ fontSize: 24 }}
                 />
 
@@ -151,11 +151,11 @@ const CourseDetail = (): JSX.Element => {
                             color: colors.text
                         }}
                     >
-                        Información de { selectedCourse.person_name }:
+                        Información de { selectedCourse.personName }:
                     </Text>
 
                     <Text style={{ color: colors.text, fontSize: 19 }}>
-                        { selectedCourse.person_about }
+                        { selectedCourse.personAbout }
                     </Text>
                 </View>
 
@@ -174,7 +174,7 @@ const CourseDetail = (): JSX.Element => {
                     </Text>
 
                     <Text style={{ color: colors.text, fontSize: 19 }}>
-                        { selectedCourse.person_address }
+                        { selectedCourse.personAddress }
                     </Text>
                 </View>
 
@@ -190,7 +190,7 @@ const CourseDetail = (): JSX.Element => {
                     </Text>
 
                     {/* Card of last lesson */}
-                    { (selectedCourse?.last_lesson) && (
+                    { (selectedCourse?.lastLesson) && (
                         <View
                             style={{
                                 ...styles.cardContainer,
@@ -206,9 +206,9 @@ const CourseDetail = (): JSX.Element => {
                                     testID="course-detail-last-lesson-status"
                                 >
                                     {
-                                        (selectedCourse.last_lesson.done)
+                                        (selectedCourse.lastLesson.done)
                                             ? 'Clase impartida'
-                                            : `Próxima clase ${ dayjs(selectedCourse.last_lesson.next_lesson).format('DD/MM/YYYY') }`
+                                            : `Próxima clase ${ dayjs(selectedCourse.lastLesson.next_lesson).format('DD/MM/YYYY') }`
                                         }
                                 </Text>
                             </View>
@@ -221,7 +221,7 @@ const CourseDetail = (): JSX.Element => {
                                     }}
                                     testID="course-detail-last-lesson-description"
                                 >
-                                    { selectedCourse.last_lesson.description }
+                                    { selectedCourse.lastLesson.description }
                                 </Text>
                             </View>
                         </View>
@@ -255,7 +255,7 @@ const CourseDetail = (): JSX.Element => {
                     style={{ ...styles.dateCreatedText, color: colors.modalText }}
                     testID="course-detail-text-date"
                 >
-                    { dayjs(selectedCourse.created_at).format('DD/MM/YYYY') }
+                    { dayjs(selectedCourse.createdAt).format('DD/MM/YYYY') }
                 </Text>
             </ScrollView>
 

@@ -68,7 +68,7 @@ const LessonDetail = (): JSX.Element => {
                 {/* Title of detail */}
                 <Title
                     containerStyle={ themeStyles.titleContainer }
-                    text={ `CLASE DEL CURSO CON ${ selectedCourse.person_name.toUpperCase() }` }
+                    text={ `CLASE DEL CURSO CON ${ selectedCourse.personName.toUpperCase() }` }
                     textStyle={{ fontSize: 24 }}
                 />
 

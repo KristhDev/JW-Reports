@@ -42,7 +42,7 @@ const CoursesStackNavigation = (): JSX.Element => {
 
     const { state: { colors } } = useTheme();
 
-    const courseDetailTitle = `Curso a ${ selectedCourse.person_name }`;
+    const courseDetailTitle = `Curso a ${ selectedCourse.personName }`;
 
     /**
      * When the user clicks the delete button, the deleteCourse function is called, which sets the
@@ -175,7 +175,7 @@ const CoursesStackNavigation = (): JSX.Element => {
                             onPressEditButton={ () => navigate('AddOrEditLessonScreen' as never) }
                         />
                     ),
-                    title: `Clase con ${ selectedCourse.person_name }`
+                    title: `Clase con ${ selectedCourse.personName }`
                 }}
             />
         </Stack.Navigator>
