@@ -34,7 +34,7 @@ const LessonDetail = (): JSX.Element => {
     const { state: { colors } } = useTheme();
 
     const statusLessonText = (selectedLesson.done) ? 'Impartida' : 'Por impartir';
-    const nextVisit = dayjs(selectedLesson.next_lesson);
+    const nextVisit = dayjs(selectedLesson.nextLesson);
 
     /**
      * Effect to reset selectedLesson when index in navigation
@@ -47,7 +47,7 @@ const LessonDetail = (): JSX.Element => {
             if ((name === 'LessonDetailScreen' && index !== 4) || (name === 'HomeLessonDetailScreen' && index !== 2)) {
                 setSelectedLesson({
                     ...INIT_LESSON,
-                    next_lesson: new Date().toString()
+                    nextLesson: new Date().toString()
                 });
             }
         });
@@ -150,7 +150,7 @@ const LessonDetail = (): JSX.Element => {
                     style={{ ...styles.dateCreatedText, color: colors.modalText }}
                     testID="lesson-detail-date-created-text"
                 >
-                    { dayjs(selectedLesson.created_at).format('DD/MM/YYYY') }
+                    { dayjs(selectedLesson.createdAt).format('DD/MM/YYYY') }
                 </Text>
             </ScrollView>
 

@@ -37,7 +37,7 @@ export const LessonCard: FC<LessonCardProps> = ({ lesson, screenToNavigate, onCl
     const { setSelectedLesson } = useCourses();
     const { state: { colors }, BUTTON_TRANSPARENT_COLOR } = useTheme();
 
-    const nextVisit = dayjs(lesson.next_lesson);
+    const nextVisit = dayjs(lesson.nextLesson);
 
     /**
      * When the user clicks on a lesson, the lesson is set as the selected lesson and the user is

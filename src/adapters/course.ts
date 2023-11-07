@@ -1,4 +1,4 @@
-import { Course, CourseEndpoint, CourseFormValues } from '../interfaces';
+import { Course, CourseEndpoint, CourseFormValues, Lesson, LessonEndpoint } from '../interfaces';
 
 /**
  * Adapts a CourseEndpoint object to a Course object.
@@ -31,4 +31,20 @@ export const courseFormValuesAdapter = (course: CourseFormValues) => ({
     person_about: course.personAbout,
     person_address: course.personAddress,
     publication: course.publication
+});
+
+/**
+ * Converts a LessonEndpoint object to a Lesson object.
+ *
+ * @param {LessonEndpoint} lesson - The LessonEndpoint object to be converted.
+ * @return {Lesson} The converted Lesson object.
+ */
+export const lessonAdapter = (lesson: LessonEndpoint): Lesson => ({
+    id: lesson.id,
+    courseId: lesson.course_id,
+    description: lesson.description,
+    nextLesson: lesson.next_lesson,
+    done: lesson.done,
+    createdAt: lesson.created_at,
+    updatedAt: lesson.updated_at
 });

@@ -156,6 +156,27 @@ export interface CourseEndpoint {
  * Defining the structure of the Lesson object.
  *
  * @property {string} id - The id of the lesson
+ * @property {string} courseId - The id of the course
+ * @property {string} description - The description of the lesson
+ * @property {string} nextLesson - The next lesson of the course
+ * @property {boolean} done - Whether the lesson is done
+ * @property {string} createdAt - The created at of the lesson
+ * @property {string} updatedAt - The updated at of the lesson
+ */
+export interface Lesson {
+    id: string;
+    courseId: string;
+    description: string;
+    nextLesson: string;
+    done: boolean;
+    createdAt: string;
+    updatedAt: string;
+}
+
+/**
+ * Defining the structure of the Lesson Endpoint object.
+ *
+ * @property {string} id - The id of the lesson
  * @property {string} course_id - The id of the course
  * @property {string} description - The description of the lesson
  * @property {string} next_lesson - The next lesson of the course
@@ -163,7 +184,7 @@ export interface CourseEndpoint {
  * @property {string} created_at - The created at of the lesson
  * @property {string} updated_at - The updated at of the lesson
  */
-export interface Lesson {
+export interface LessonEndpoint {
     id: string;
     course_id: string;
     description: string;
@@ -178,7 +199,7 @@ export interface Lesson {
  *
  * @property {Course} courses - The course of the lesson
  */
-export interface LessonWithCourseEndpoint extends Lesson {
+export interface LessonWithCourseEndpoint extends LessonEndpoint {
     courses: CourseEndpoint;
 }
 
@@ -214,7 +235,7 @@ export interface CourseFormValues {
  */
 export interface LessonFormValues {
     description: string;
-    next_lesson: Date;
+    nextLesson: Date;
 }
 
 /* Extending the LoadResourcesOptions interface with a new property called filter. */

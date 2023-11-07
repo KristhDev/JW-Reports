@@ -92,7 +92,7 @@ const PublisherHome = (): JSX.Element => {
         setShowModal(false);
         setSelectedLesson({
             ...INIT_LESSON,
-            next_lesson: new Date().toString()
+            nextLesson: new Date().toString()
         });
     }
 

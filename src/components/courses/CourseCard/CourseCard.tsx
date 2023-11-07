@@ -73,7 +73,7 @@ export const CourseCard: FC<CourseCardProps> = ({ course, onActiveOrSuspend, onD
         setSelectedCourse(course);
         setSelectedLesson({
             ...selectedLesson,
-            next_lesson: new Date().toString()
+            nextLesson: new Date().toString()
         });
 
         navigate('AddOrEditLessonScreen' as never);

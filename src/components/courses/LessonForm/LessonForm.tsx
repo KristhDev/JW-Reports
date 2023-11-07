@@ -1,7 +1,6 @@
 import React from 'react';
 import { ActivityIndicator, View } from 'react-native';
 import { Formik } from 'formik';
-import { date, object, string } from 'yup';
 import Icon from 'react-native-vector-icons/Ionicons';
 
 /* Components */
@@ -9,6 +8,9 @@ import { Button, DatetimeField, FormField } from '../../ui';
 
 /* Hooks */
 import { useCourses, useStatus, useTheme } from '../../../hooks';
+
+/* Schemas */
+import { lessonFormSchema } from './schemas';
 
 /* Interfaces */
 import { LessonFormValues } from '../../../interfaces/courses';
@@ -42,20 +44,11 @@ export const LessonForm = (): JSX.Element => {
         else updateLesson(formValues);
     }
 
-    /* Validation schema for lesson */
-    const lessonFormSchema = object().shape({
-        description: string()
-            .min(10, 'El contenido de la clase debe tener al menos 10 caracteres.')
-            .required('El contenido de la clase es requerido.'),
-        next_lesson: date()
-            .required('La fecha de la próxima clase no puede estar vacía.'),
-    });
-
     return (
         <Formik
             initialValues={{
                 description: selectedLesson.description,
-                next_lesson: new Date(selectedLesson.next_lesson)
+                nextLesson: new Date(selectedLesson.nextLesson)
             }}
             onSubmit={ (values, { resetForm }) => handleSaveOrUpdate(values, resetForm) }
             validateOnMount
@@ -86,7 +79,7 @@ export const LessonForm = (): JSX.Element => {
                         label="Próxima clase:"
                         modalTitle="Próxima clase"
                         mode="date"
-                        name="next_lesson"
+                        name="nextLesson"
                         placeholder="Seleccione el día"
                         style={{ marginBottom: 40 }}
                     />

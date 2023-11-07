@@ -49,7 +49,7 @@ const CourseDetail = (): JSX.Element => {
     const handleAddLesson = (): void => {
         setSelectedLesson({
             ...INIT_LESSON,
-            next_lesson: new Date().toString()
+            nextLesson: new Date().toString()
         });
 
         navigate('AddOrEditLessonScreen' as never);
@@ -208,7 +208,7 @@ const CourseDetail = (): JSX.Element => {
                                     {
                                         (selectedCourse.lastLesson.done)
                                             ? 'Clase impartida'
-                                            : `Próxima clase ${ dayjs(selectedCourse.lastLesson.next_lesson).format('DD/MM/YYYY') }`
+                                            : `Próxima clase ${ dayjs(selectedCourse.lastLesson.nextLesson).format('DD/MM/YYYY') }`
                                         }
                                 </Text>
                             </View>

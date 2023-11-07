@@ -36,7 +36,7 @@ const Lessons = (): JSX.Element => {
     const handleNavigate = (): void => {
         setSelectedLesson({
             ...INIT_LESSON,
-            next_lesson: new Date().toString(),
+            nextLesson: new Date().toString(),
         });
 
         navigate('AddOrEditLessonScreen' as never);

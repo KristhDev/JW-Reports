@@ -52,15 +52,15 @@ const FinishOrStartLessonModal: FC<ModalProps> = ({ isOpen, onClose }) => {
      * This is the confirmation function of the modal that executes one or another function
      * depending on selectdLesson, the reschedule state or the function parameters.
      *
-     * @param {{ next_lesson: Date }} values - This is the values with next_lesson property to lesson
+     * @param {{ nextLesson: Date }} values - This is the values with nextLesson property to lesson
      * @return {void} This function does not return anything
      */
-    const handleConfirm = (values?: { next_lesson: Date }): void => {
+    const handleConfirm = (values?: { nextLesson: Date }): void => {
         if (!reschedule && !selectedLesson.done) {
-            finishOrStartLesson(new Date(selectedLesson.next_lesson), handleClose);
+            finishOrStartLesson(new Date(selectedLesson.nextLesson), handleClose);
         }
         else if (reschedule && selectedLesson.done) {
-            finishOrStartLesson(values?.next_lesson || new Date(), handleClose);
+            finishOrStartLesson(values?.nextLesson || new Date(), handleClose);
         }
         else {
             setReschedule(true);
@@ -103,7 +103,7 @@ const FinishOrStartLessonModal: FC<ModalProps> = ({ isOpen, onClose }) => {
                             ) : (
                                 <Formik
                                     initialValues={{
-                                        next_lesson: new Date(selectedLesson.next_lesson)
+                                        nextLesson: new Date(selectedLesson.nextLesson)
                                     }}
                                     onSubmit={ handleConfirm }
                                 >
@@ -134,7 +134,7 @@ const FinishOrStartLessonModal: FC<ModalProps> = ({ isOpen, onClose }) => {
                                                 label="Reprogramar clase:"
                                                 modalTitle="Reprogramar clase"
                                                 mode="date"
-                                                name="next_lesson"
+                                                name="nextLesson"
                                                 placeholder="Seleccione el día"
                                                 style={{ marginBottom: 0 }}
                                             />

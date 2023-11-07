@@ -46,6 +46,7 @@ import { courseAdapter, courseFormValuesAdapter } from '../adapters';
 
 /* Hooks */
 import { useAuth, useStatus, useNetwork } from './';
+import { lessonAdapter } from '../adapters/course';
 
 /* Interfaces */
 import {
@@ -57,7 +58,8 @@ import {
     loadCoursesOptions,
     LoadResourcesOptions,
     Pagination,
-    CourseEndpoint
+    CourseEndpoint,
+    LessonEndpoint
 } from '../interfaces';
 /**
  * Hook to management courses of store with state and actions
@@ -305,7 +307,7 @@ const useCourses = () => {
 
         setSelectedLesson({
             ...INIT_LESSON,
-            next_lesson: new Date().toString()
+            nextLesson: new Date().toString()
         });
 
         setStatus({
@@ -448,7 +450,7 @@ const useCourses = () => {
             })
             .eq('id', state.selectedLesson.id)
             .eq('course_id', state.selectedCourse.id)
-            .select<'*', Lesson>();
+            .select<'*', LessonEndpoint>();
 
         const next = setSupabaseError(error, status, () => {
             dispatch(setIsLessonLoading({ isLoading: false }));
@@ -465,7 +467,7 @@ const useCourses = () => {
 
         if ((user.precursor !== 'ninguno') && data![0].id === state.lastLesson.id) {
             dispatch(addLastLesson({ lesson: {
-                ...data![0],
+                ...lessonAdapter(data![0]),
                 course: state.lastLesson.course
             } }));
         }
@@ -590,14 +592,8 @@ const useCourses = () => {
         dispatch(addLastLesson({
             lesson: (data?.length && data.length > 0)
                 ? {
-                    id: data[0].id,
-                    course_id: data[0].course_id,
-                    course: courseAdapter(data[0].courses),
-                    description: data[0].description,
-                    done: data[0].done,
-                    next_lesson: data[0].next_lesson,
-                    created_at: data[0].created_at,
-                    updated_at: data[0].updated_at
+                    ...lessonAdapter(data![0]),
+                    course: courseAdapter(data![0].courses)
                 }
                 : {
                     ...INIT_LESSON,
@@ -642,7 +638,7 @@ const useCourses = () => {
         }
 
         const lessonsPromise = supabase.from('lessons')
-            .select<'*', Lesson>()
+            .select<'*', LessonEndpoint>()
             .eq('course_id', state.selectedCourse.id);
 
         if (search.trim().length > 0) {
@@ -667,8 +663,10 @@ const useCourses = () => {
             });
         }
 
+        const lessons = data!.map(lessonAdapter);
+
         dispatch(setHasMoreLessons({ hasMore: (data!.length >= 10) }));
-        (loadMore) ? addLessons(data!) : setLessons(data!);
+        (loadMore) ? addLessons(lessons) : setLessons(lessons);
     }
 
     /**
@@ -749,15 +747,15 @@ const useCourses = () => {
             .insert({
                 course_id: state.selectedCourse.id,
                 description: lessonValues.description,
-                next_lesson: dayjs(lessonValues.next_lesson).format('YYYY-MM-DD HH:mm:ss.SSSSSS')
+                next_lesson: dayjs(lessonValues.nextLesson).format('YYYY-MM-DD HH:mm:ss.SSSSSS')
             })
-            .select<'*', Lesson>();
+            .select<'*', LessonEndpoint>();
 
         const next = setSupabaseError(error, status, () => dispatch(setIsLessonLoading({ isLoading: false })));
         if (next) return;
 
         dispatch(setIsLessonLoading({ isLoading: false }));
-        if (state.lessons.length > 0) dispatch(addLesson({ lesson: data![0] }));
+        if (state.lessons.length > 0) dispatch(addLesson({ lesson: lessonAdapter(data![0]) }));
 
         setStatus({
             code: 201,
@@ -813,8 +811,6 @@ const useCourses = () => {
         const next = setSupabaseError(error, status, () => dispatch(setIsCourseLoading({ isLoading: false })));
         if (next) return;
 
-        console.log(data);
-
         dispatch(updateCourseAction({ course: courseAdapter(data![0]) }));
 
         setStatus({
@@ -860,22 +856,24 @@ const useCourses = () => {
 
         const { data, error, status } = await supabase.from('lessons')
             .update({
-                ...lessonValues,
-                next_lesson: dayjs(lessonValues.next_lesson).format('YYYY-MM-DD HH:mm:ss.SSSSSS'),
+                description: lessonValues.description,
+                next_lesson: dayjs(lessonValues.nextLesson).format('YYYY-MM-DD HH:mm:ss.SSSSSS'),
                 updated_at: dayjs().format('YYYY-MM-DD HH:mm:ss.SSSSSS')
             })
             .eq('id', state.selectedLesson.id)
             .eq('course_id', state.selectedCourse.id)
-            .select<'*', Lesson>();
+            .select<'*', LessonEndpoint>();
 
         const next = setSupabaseError(error, status, () => dispatch(setIsLessonLoading({ isLoading: false })));
         if (next) return;
 
-        dispatch(updateLessonAction({ lesson: data![0] }));
+        const lesson = lessonAdapter(data![0]);
+
+        dispatch(updateLessonAction({ lesson }));
 
         if ((user.precursor !== 'ninguno') && data![0].id === state.lastLesson.id) {
             dispatch(addLastLesson({ lesson: {
-                ...data![0],
+                ...lesson,
                 course: state.lastLesson.course
             } }));
         }
