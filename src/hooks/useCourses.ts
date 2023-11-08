@@ -114,7 +114,6 @@ const useCourses = () => {
             return;
         }
 
-
         /* Should not update if selectedCourse.id is an empty string */
         if (state.selectedCourse.id === '') {
             dispatch(setIsCourseLoading({ isLoading: false }));
@@ -162,6 +161,15 @@ const useCourses = () => {
             : 'Haz renovado el curso correctamente.'
 
         dispatch(updateCourseAction({ course: courseAdapter(data![0]) }));
+
+        if (user.precursor === 'ninguno' && state.lastLesson.courseId === state.selectedCourse.id) {
+            dispatch(addLastLesson({
+                lesson: {
+                    ...state.lastLesson,
+                    course: courseAdapter(data![0])
+                }
+            }));
+        }
 
         onFinish && onFinish();
 
@@ -228,7 +236,12 @@ const useCourses = () => {
 
         if (next) return;
 
+        if (user.precursor === 'ninguno' && state.lastLesson.courseId === state.selectedCourse.id) {
+            loadLastLesson();
+        }
+
         dispatch(removeCourse({ id: state.selectedCourse.id }));
+
         onFinish && onFinish();
         back && navigate('CoursesScreen' as never);
 
@@ -387,6 +400,15 @@ const useCourses = () => {
 
         dispatch(updateCourseAction({ course: courseAdapter(data![0]) }));
 
+        if (user.precursor === 'ninguno' && state.lastLesson.courseId === state.selectedCourse.id) {
+            dispatch(addLastLesson({
+                lesson: {
+                    ...state.lastLesson,
+                    course: courseAdapter(data![0])
+                }
+            }));
+        }
+
         onFinish && onFinish();
 
         setStatus({ code: 200, msg });
@@ -465,12 +487,7 @@ const useCourses = () => {
 
         dispatch(updateLessonAction({ lesson: (data as any)![0] }));
 
-        if ((user.precursor !== 'ninguno') && data![0].id === state.lastLesson.id) {
-            dispatch(addLastLesson({ lesson: {
-                ...lessonAdapter(data![0]),
-                course: state.lastLesson.course
-            } }));
-        }
+        if ((user.precursor !== 'ninguno')) loadLastLesson();
 
         onFinish && onFinish();
 
@@ -754,8 +771,8 @@ const useCourses = () => {
         const next = setSupabaseError(error, status, () => dispatch(setIsLessonLoading({ isLoading: false })));
         if (next) return;
 
-        dispatch(setIsLessonLoading({ isLoading: false }));
         if (state.lessons.length > 0) dispatch(addLesson({ lesson: lessonAdapter(data![0]) }));
+        if (user.precursor === 'ninguno') loadLastLesson();
 
         setStatus({
             code: 201,
@@ -812,6 +829,15 @@ const useCourses = () => {
         if (next) return;
 
         dispatch(updateCourseAction({ course: courseAdapter(data![0]) }));
+
+        if (user.precursor === 'ninguno' && state.lastLesson.courseId === state.selectedCourse.id) {
+            dispatch(addLastLesson({
+                lesson: {
+                    ...state.lastLesson,
+                    course: courseAdapter(data![0])
+                }
+            }));
+        }
 
         setStatus({
             code: 200,

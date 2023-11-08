@@ -2,7 +2,6 @@ import React, { useState, FC } from 'react';
 import { KeyboardAvoidingView, View, Text, ActivityIndicator, ScrollView, useWindowDimensions } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Formik } from 'formik';
-import { date, object, string } from 'yup';
 import Icon from 'react-native-vector-icons/Ionicons';
 
 /* Screens */
@@ -17,6 +16,9 @@ import { useRevisits, useStatus, useTheme } from '../../../hooks';
 
 /* Interfaces */
 import { ModalProps } from '../../../interfaces';
+
+/* Scahemas */
+import { revisitFormSchema } from './schemas';
 
 /* Theme */
 import { styles as themeStyles } from '../../../theme';
@@ -40,15 +42,6 @@ const RevisitModal: FC<ModalProps> = ({ isOpen, onClose }) => {
     const modalTitle = (selectedRevisit.done)
         ? `¿Quieres volver a visitar a ${ selectedRevisit.personName }?`
         : '¿Está seguro de marcar esta revisitada como visitada?';
-
-    /* Validation schema for revisit */
-    const revisitFormSchema = object().shape({
-        about: string()
-            .min(10, 'La información de la persona debe tener al menos 10 caracteres.')
-            .required('La información de la persona es requerida.'),
-        next_visit: date()
-            .required('La fecha de la próxima visita no puede estar vacía'),
-    });
 
     /**
      * If the selectedRevisit.done is false, then call completeRevisit, otherwise if

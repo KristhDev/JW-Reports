@@ -3,14 +3,15 @@ import { CardStyleInterpolators, createStackNavigator } from '@react-navigation/
 import { useNavigation } from '@react-navigation/native';
 
 /* Screens */
-import { AddOrEditPreaching, PrecursorHome, PublisherHome } from '../screens/preaching';
 import { AddOrEditLesson, LessonDetail } from '../screens/courses';
+import { AddOrEditRevisit, RevisitDetail } from '../screens/revisits';
+import { AddOrEditPreaching, PrecursorHome, PublisherHome } from '../screens/preaching';
 
 /* Components */
 import { BackButton, HeaderButtons } from '../components/ui';
 
 /* Hooks */
-import { useAuth, useCourses, useNetwork, usePreaching, useStatus, useTheme } from '../hooks';
+import { useAuth, useCourses, useNetwork, usePreaching, useRevisits, useStatus, useTheme } from '../hooks';
 
 /* Interfaces */
 import { PreachingStackParamsList } from '../interfaces';
@@ -24,7 +25,8 @@ const Stack = createStackNavigator<PreachingStackParamsList>();
  */
 const PreachingStackNavigation = (): JSX.Element => {
     const [ showDeleteLessonModal, setShowDeleteLessonModal ] = useState<boolean>(false);
-    const [ showDeleteModal, setShowDeleteModal ] = useState<boolean>(false);
+    const [ showDeleteRevisitModal, setShowDeleteRevisitModal ] = useState<boolean>(false);
+    const [ showDeletePreachingModal, setShowDeletePreachingModal ] = useState<boolean>(false);
     const { navigate } = useNavigation();
 
     const { state: { user } } = useAuth();
@@ -50,9 +52,20 @@ const PreachingStackNavigation = (): JSX.Element => {
         setSelectedDate,
         loadPreachings
     } = usePreaching();
+
+    const {
+        state: {
+            selectedRevisit,
+            isRevisitDeleting,
+        },
+        loadLastRevisit
+    } = useRevisits();
+
     const { state: { colors } } = useTheme();
     const { setNetworkError } = useStatus();
     const { wifi } = useNetwork();
+
+    const revisitDetailTitle = `Revisita ${ selectedRevisit.personName }`;
 
     /**
      * When the user clicks the delete button, show the delete modal, and when the user clicks the
@@ -71,7 +84,7 @@ const PreachingStackNavigation = (): JSX.Element => {
      * @return {void} This function does not return anything
      */
     const handleDeleteConfirm = (): void => {
-        deletePreaching(() => setShowDeleteModal(false));
+        deletePreaching(() => setShowDeletePreachingModal(false));
     }
 
     /**
@@ -94,6 +107,7 @@ const PreachingStackNavigation = (): JSX.Element => {
         if (user.precursor !== 'ninguno') loadPreachings(selectedDate);
         else {
             loadLastLesson();
+            loadLastRevisit();
         }
     } ,[ selectedDate, user.precursor ]);
 
@@ -137,15 +151,15 @@ const PreachingStackNavigation = (): JSX.Element => {
                                 deleteButton={ seletedPreaching.id !== '' }
                                 deleteModalText="¿Está seguro de eliminar este día de predicación?"
                                 isDeleteModalLoading={ isPreachingDeleting }
-                                onCloseDeleteModal={ () => setShowDeleteModal(false) }
+                                onCloseDeleteModal={ () => setShowDeletePreachingModal(false) }
                                 onConfirmDeleteModal={ handleDeleteConfirm }
-                                onShowDeleteModal={ () => setShowDeleteModal(true) }
-                                showDeleteModal={ showDeleteModal }
-                                />
-                                ),
-                                title: `${ seletedPreaching.id !== '' ? 'Editar' : 'Agregar' } predicación`
-                            }}
+                                onShowDeleteModal={ () => setShowDeletePreachingModal(true) }
+                                showDeleteModal={ showDeletePreachingModal }
                             />
+                        ),
+                        title: `${ seletedPreaching.id !== '' ? 'Editar' : 'Agregar' } predicación`
+                    }}
+                />
             ) : (
                 <>
                     <Stack.Screen
@@ -188,6 +202,51 @@ const PreachingStackNavigation = (): JSX.Element => {
                                 />
                             ),
                             title: `Clase con ${ selectedCourse.personName }`
+                        }}
+                    />
+
+                    <Stack.Screen
+                        component={ AddOrEditRevisit }
+                        name="AddOrEditRevisitScreen"
+                        options={{
+                            headerLeft: ({ onPress }) => <BackButton onPress={ onPress } />,
+                            headerRight: () => (
+                                <HeaderButtons
+                                    deleteButton={ selectedRevisit.id !== '' }
+                                    deleteModalText="¿Está seguro de eliminar esta revisita?"
+                                    isDeleteModalLoading={ isRevisitDeleting }
+                                    onCloseDeleteModal={ () => setShowDeleteRevisitModal(false) }
+                                    onConfirmDeleteModal={ handleDeleteConfirm }
+                                    onShowDeleteModal={ () => setShowDeleteRevisitModal(true) }
+                                    showDeleteModal={ showDeleteRevisitModal }
+
+                                    editButton={ false }
+                                />
+                            ),
+                            title: `${ selectedRevisit.id !== '' ? 'Editar' : 'Agregar' } revisita`
+                        }}
+                    />
+
+                    <Stack.Screen
+                        component={ RevisitDetail }
+                        name="HomeRevisitDetailScreen"
+                        options={{
+                            headerLeft: ({ onPress }) => <BackButton onPress={ onPress } />,
+                            headerRight: () => (
+                                <HeaderButtons
+                                    deleteButton={ true }
+                                    deleteModalText="¿Está seguro de eliminar esta revisita?"
+                                    isDeleteModalLoading={ isRevisitDeleting }
+                                    onCloseDeleteModal={ () => setShowDeleteRevisitModal(false) }
+                                    onConfirmDeleteModal={ handleDeleteConfirm }
+                                    onShowDeleteModal={ () => setShowDeleteRevisitModal(true) }
+                                    showDeleteModal={ showDeleteRevisitModal }
+
+                                    editButton={ true }
+                                    onPressEditButton={ () => navigate({ name: 'PreachingStackNavigation', params: { screen: 'AddOrEditRevisitScreen' } } as never) }
+                                />
+                            ),
+                            title: (revisitDetailTitle.length >= 22) ? revisitDetailTitle.slice(0, 22) + '...' : revisitDetailTitle
                         }}
                     />
                 </>

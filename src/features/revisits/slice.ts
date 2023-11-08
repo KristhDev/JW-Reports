@@ -32,9 +32,11 @@ export const INIT_REVISIT: Revisit = {
 /* Initial state */
 export const REVISITS_INITIAL_STATE: RevisitsState = {
     hasMoreRevisits: true,
+    isLastRevisitLoading: false,
     isRevisitDeleting: false,
     isRevisitLoading: false,
     isRevisitsLoading: false,
+    lastRevisit: INIT_REVISIT,
     refreshRevisits: false,
     revisitFilter: 'all',
     revisits: [],
@@ -104,6 +106,10 @@ const revisitsSlice = createSlice({
             state.hasMoreRevisits = action.payload.hasMore;
         },
 
+        setIsLastRevisitLoading: (state, action: PayloadAction<SetIsLoadingPayload>) => {
+            state.isLastRevisitLoading = action.payload.isLoading;
+        },
+
         setIsRevisitDeleting: (state, action: PayloadAction<SetIsDeletingPayload>) => {
             state.isRevisitDeleting = action.payload.isDeleting;
         },
@@ -114,6 +120,11 @@ const revisitsSlice = createSlice({
 
         setIsRevisitsLoading: (state, action: PayloadAction<SetIsLoadingPayload>) => {
             state.isRevisitsLoading = action.payload.isLoading;
+        },
+
+        setLastRevisit: (state, action: PayloadAction<RevisitPayload>) => {
+            state.lastRevisit = action.payload.revisit;
+            state.isLastRevisitLoading = false;
         },
 
         setRefreshRevisits: (state, action: PayloadAction<SetRefreshRevisitsPayload>) => {
@@ -164,9 +175,11 @@ export const {
     removeRevisit,
     removeRevisits,
     setHasMoreRevisits,
+    setIsLastRevisitLoading,
     setIsRevisitDeleting,
     setIsRevisitLoading,
     setIsRevisitsLoading,
+    setLastRevisit,
     setRefreshRevisits,
     setRevisitFilter,
     setRevisits,

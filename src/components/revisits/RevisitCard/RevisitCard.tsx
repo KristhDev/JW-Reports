@@ -30,7 +30,7 @@ import styles from './styles';
  * - revisit: This is a revisit object that render in the card
  * @return {JSX.Element} Rendered component to show the revisit
  */
-export const RevisitCard: FC<RevisitCardProps> = ({ onDelete, onPass, onRevisit, revisit }): JSX.Element => {
+export const RevisitCard: FC<RevisitCardProps> = ({ onDelete, onPass, onRevisit, revisit, screenToNavigate }): JSX.Element => {
     const [ isOpen, setIsOpen ] = useState<boolean>(false);
     const { navigate } = useNavigation();
     const { width } = useWindowDimensions();
@@ -48,7 +48,7 @@ export const RevisitCard: FC<RevisitCardProps> = ({ onDelete, onPass, onRevisit,
      */
     const handleRevisitDetail = (): void => {
         setSelectedRevisit(revisit);
-        navigate('RevisitDetailScreen' as never);
+        navigate(screenToNavigate as never);
     }
 
     /**

@@ -47,9 +47,11 @@ export type RevisitsTopTabsParamsList = {
  * Defining the structure of the RevisitsState object.
  *
  * @property {boolean} hasMoreRevisits - This indicates whether there are more revisits to load.
+ * @property {boolean} isLastRevisitLoading - This indicates whether the last revisit is being loaded.
  * @property {boolean} isRevisitDeleting - This indicates whether a revisits is being deleted.
  * @property {boolean} isRevisitLoading - This indicates whether a revisits is being loaded.
  * @property {boolean} isRevisitsLoading - This indicates whether revisits are being loaded.
+ * @property {Revisit} lastRevisit - This is the last revisit.
  * @property {boolean} refreshRevisits - This indicates whether the revisits should be refreshed.
  * @property {RevisitFilter} revisitFilter - This is the filter for revisits.
  * @property {Revisit[]} revisits - This is an array of revisits.
@@ -59,14 +61,16 @@ export type RevisitsTopTabsParamsList = {
  */
 export interface RevisitsState {
     hasMoreRevisits: boolean;
+    isLastRevisitLoading: boolean;
     isRevisitDeleting: boolean;
     isRevisitLoading: boolean;
     isRevisitsLoading: boolean;
+    lastRevisit: Revisit;
     refreshRevisits: boolean;
     revisitFilter: RevisitFilter;
     revisits: Revisit[];
-    revisitsScreenHistory: string[];
     revisitsPagination: Pagination;
+    revisitsScreenHistory: string[];
     selectedRevisit: Revisit;
 }
 

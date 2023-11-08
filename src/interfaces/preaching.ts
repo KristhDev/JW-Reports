@@ -8,8 +8,10 @@
 export type PreachingStackParamsList = {
     AddOrEditLessonScreen: undefined;
     AddOrEditPreachingScreen: undefined;
-    HomeScreen: undefined;
+    AddOrEditRevisitScreen: undefined;
     HomeLessonDetailScreen: undefined;
+    HomeRevisitDetailScreen: undefined;
+    HomeScreen: undefined;
 }
 
 /**

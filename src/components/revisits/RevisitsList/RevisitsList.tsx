@@ -256,6 +256,7 @@ export const RevisitsList: FC<RevisitsListProps> = ({ emptyMessage, filter, titl
                         onPass={ () => handleShowModal(item, setShowPassModal) }
                         onRevisit={ () => handleShowModal(item, setShowRevisitModal) }
                         revisit={ item }
+                        screenToNavigate="RevisitDetailScreen"
                     />
                 ) }
             />

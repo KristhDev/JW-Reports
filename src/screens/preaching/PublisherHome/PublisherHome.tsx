@@ -4,22 +4,24 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import dayjs from 'dayjs';
 
 /* Features */
-import { INIT_LESSON } from '../../../features/courses/slice';
+import { INIT_REVISIT, INIT_LESSON } from '../../../features';
 
 /* Screens */
 import { ReportModal } from '../ReportModal';
-import { FinishOrStartLessonModal } from '../../courses';
+import { FinishOrStartLessonModal, PassToCourseModal } from '../../courses';
+import { RevisitModal } from '../../revisits';
 import { DeleteModal } from '../../ui';
 
 /* Components */
 import { LessonCard } from '../../../components/courses';
+import { RevisitCard } from '../../../components/revisits';
 import { Fab, InfoText, Title } from '../../../components/ui';
 
 /* Hooks */
-import { useCourses, usePreaching, useTheme } from '../../../hooks';
+import { useCourses, usePreaching, useRevisits, useTheme } from '../../../hooks';
 
 /* Interfaces */
-import { LessonWithCourse } from '../../../interfaces';
+import { LessonWithCourse, Revisit } from '../../../interfaces';
 
 /* Theme */
 import { styles as themeStyles } from '../../../theme';
@@ -33,9 +35,12 @@ import { styles as themeStyles } from '../../../theme';
  */
 const PublisherHome = (): JSX.Element => {
     const [ isRefreshing, setIsRefreshing ] = useState<boolean>(false);
-    const [ showReportModal, setShowReportModal ] = useState<boolean>(false);
     const [ showDeleteLessonModal, setShowDeleteLessonModal ] = useState<boolean>(false);
+    const [ showDeleteRevisitModal, setShowDeleteRevisitModal ] = useState<boolean>(false);
     const [ showFSModal, setShowFSModal ] = useState<boolean>(false);
+    const [ showPassModal, setShowPassModal ] = useState<boolean>(false);
+    const [ showReportModal, setShowReportModal ] = useState<boolean>(false);
+    const [ showRevisitModal, setShowRevisitModal ] = useState<boolean>(false);
     const { height } = useWindowDimensions();
 
     const { state: { selectedDate } } = usePreaching();
@@ -52,6 +57,16 @@ const PublisherHome = (): JSX.Element => {
         setSelectedLesson
     } = useCourses();
 
+    const {
+        state: {
+            isLastRevisitLoading,
+            isRevisitDeleting,
+            lastRevisit
+        },
+        setSelectedRevisit,
+        loadLastRevisit
+    } = useRevisits();
+
     const { state: { colors } } = useTheme();
 
     const month = dayjs(selectedDate).format('MMMM').toUpperCase();
@@ -65,6 +80,19 @@ const PublisherHome = (): JSX.Element => {
     const handleRefreshing = (): void => {
         setIsRefreshing(false);
         loadLastLesson();
+        loadLastRevisit();
+    }
+
+    /**
+     * Handles showing the revisits modal.
+     *
+     * @param {Revisit} revisit - The revisit object.
+     * @param {(value: boolean) => void} setShowModal - The function to set the showModal value.
+     * @return {void} This function does not return anything.
+     */
+    const handleShowRevisitsModal = (revisit: Revisit, setShowModal: (value: boolean) => void): void => {
+        setSelectedRevisit(revisit);
+        setShowModal(true);
     }
 
     /**
@@ -79,6 +107,20 @@ const PublisherHome = (): JSX.Element => {
         const { course, ...rest } = lesson;
         setSelectedLesson(rest);
         setShowModal(true);
+    }
+
+    /**
+     * Handles hiding the revisit modal and resetting the selected revisit state.
+     *
+     * @param {function} setShowModal - A function to set the visibility of the modal.
+     * @return {void} This function does not return anything.
+     */
+    const handleHideRevisitsModal = (setShowModal: (value: boolean) => void): void => {
+        setShowModal(false);
+        setSelectedRevisit({
+            ...INIT_REVISIT,
+            nextVisit: new Date().toString()
+        });
     }
 
     /**
@@ -126,7 +168,7 @@ const PublisherHome = (): JSX.Element => {
                     textStyle={{ fontSize: 24 }}
                 />
 
-                {/* If the preachings are loading, show a loading indicator */}
+                {/* If the last lesson loading, show a loading indicator */}
                 { (isLastLessonLoading) && (
                     <ActivityIndicator
                         color={ colors.button }
@@ -136,7 +178,7 @@ const PublisherHome = (): JSX.Element => {
                     />
                 ) }
 
-                {/* If the preachings are not loading and there are no preachings, show a message */}
+                {/* If the last lesson not loading and last lesson not found, show a message */}
                 { (!isLastLessonLoading && !lastLesson?.id) && (
                     <InfoText
                         containerStyle={{ marginTop: height * 0.30 }}
@@ -155,10 +197,38 @@ const PublisherHome = (): JSX.Element => {
                 ) }
 
                 <Title
-                    containerStyle={{ ...themeStyles.titleContainer, paddingTop: 32 }}
+                    containerStyle={{ ...themeStyles.titleContainer, paddingTop: 32, marginBottom: 16 }}
                     text="ÚLTIMA REVISITA"
                     textStyle={{ fontSize: 24 }}
                 />
+
+                {/* If the last revisit loading, show a loading indicator */}
+                { (isLastRevisitLoading) && (
+                    <ActivityIndicator
+                        color={ colors.button }
+                        size={ 50 }
+                        style={{ marginBottom: 63.75, marginTop: 63.75 }}
+                        testID="home-loading"
+                    />
+                ) }
+
+                {/* If the last revisit not loading and last revisit not found, show a message */}
+                { (!isLastRevisitLoading && !lastRevisit?.id) && (
+                    <InfoText
+                        containerStyle={{ marginTop: height * 0.30 }}
+                        text="No has agregado ninguna revisita."
+                    />
+                ) }
+
+                { (!isLastRevisitLoading && lastRevisit?.id) && (
+                    <RevisitCard
+                        onDelete={ () => handleShowRevisitsModal(lastRevisit, setShowDeleteRevisitModal) }
+                        onPass={ () => handleShowRevisitsModal(lastRevisit, setShowPassModal) }
+                        onRevisit={ () => handleShowRevisitsModal(lastRevisit, setShowRevisitModal) }
+                        revisit={ lastRevisit }
+                        screenToNavigate="HomeRevisitDetailScreen"
+                    />
+                ) }
             </ScrollView>
 
             <Fab
@@ -196,6 +266,27 @@ const PublisherHome = (): JSX.Element => {
                 onClose={ () => handleHideLessonsModals(setShowDeleteLessonModal) }
                 onConfirm={ handleDeleteConfirm }
                 text="¿Está seguro de eliminar esta clase?"
+            />
+
+            {/* Modal to complete revisit */}
+            <RevisitModal
+                isOpen={ showRevisitModal }
+                onClose={ () => handleHideRevisitsModal(setShowRevisitModal) }
+            />
+
+            {/* Modal for pass revisit to course */}
+            <PassToCourseModal
+                isOpen={ showPassModal }
+                onClose={ () => handleHideRevisitsModal(setShowPassModal) }
+            />
+
+            {/* Modal to delete revisit */}
+            <DeleteModal
+                isLoading={ isRevisitDeleting }
+                isOpen={ showDeleteRevisitModal }
+                onClose={ () => handleHideRevisitsModal(setShowDeleteRevisitModal) }
+                onConfirm={ handleDeleteConfirm }
+                text="¿Está seguro de eliminar esta revisita?"
             />
         </>
     );

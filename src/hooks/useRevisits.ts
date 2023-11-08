@@ -17,9 +17,11 @@ import {
     removeRevisit,
     removeRevisits as removeRevisitsAction,
     setHasMoreRevisits,
+    setIsLastRevisitLoading as setIsLastRevisitLoadingAction,
     setIsRevisitDeleting,
     setIsRevisitLoading,
     setIsRevisitsLoading as setIsRevisitsLoadingAction,
+    setLastRevisit,
     setRefreshRevisits as setRefreshRevisitsAction,
     setRevisitFilter,
     setRevisits as setRevisitsAction,
@@ -61,12 +63,45 @@ const useRevisits = () => {
     const addRevisits = (revisits: Revisit[]) => dispatch(addRevisitsAction({ revisits }));
     const clearRevisits = () => dispatch(clearRevisitsAction());
     const removeRevisits = () => dispatch(removeRevisitsAction());
+    const setIsLastRevisitLoading = (isLoading: boolean) => dispatch(setIsLastRevisitLoadingAction({ isLoading }));
     const setIsRevisitsLoading = (isLoading: boolean) => dispatch(setIsRevisitsLoadingAction({ isLoading }));
     const setRefreshRevisits = (refresh: boolean) => dispatch(setRefreshRevisitsAction({ refresh }));
     const setRevisits = (revisits: Revisit[]) => dispatch(setRevisitsAction({ revisits }));
     const setRevisitsScreenHistory = (newScreen: string) => dispatch(setRevisitsScreenHistoryAction({ newScreen }));
     const setRevisitsPagination = (pagination: Pagination) => dispatch(setRevisitsPaginationAction({ pagination }));
     const setSelectedRevisit = (revisit: Revisit) => dispatch(setSelectedRevisitAction({ revisit }));
+
+    /**
+     * Loads the last revisit from the database.
+     *
+     * @return {Promise<void>} - Returns a promise that resolves when the last revisit is loaded.
+     */
+    const loadLastRevisit = async (): Promise<void> => {
+        if (!wifi.isConnected) {
+            setNetworkError();
+            return;
+        }
+
+        setIsLastRevisitLoading(true);
+
+        if (!isAuthenticated) {
+            setUnauthenticatedError(() => setIsLastRevisitLoading(false));
+            return;
+        }
+
+        const { data, error, status } = await supabase.from('revisits')
+            .select<'*', RevisitEndpoint>('*')
+            .eq('user_id', user.id)
+            .order('next_visit', { ascending: false })
+            .limit(1);
+
+        const next = setSupabaseError(error, status, () => setIsLastRevisitLoading(false));
+        if (next) return;
+
+        dispatch(setLastRevisit({
+            revisit: data ? revisitAdapter(data[0]) : INIT_REVISIT
+        }));
+    }
 
     /**
      * This function is to load the revisits using the options that are passed by parameter, you can
@@ -204,6 +239,7 @@ const useRevisits = () => {
         setStatus({ code: status, msg: successMsg });
 
         back && navigate('RevisitsTopTabsNavigation' as never);
+        if (user.precursor === 'ninguno') loadLastRevisit();
     }
 
     /**
@@ -279,6 +315,8 @@ const useRevisits = () => {
             msg: 'Haz actualizado tu revisita correctamente.'
         });
 
+        if (user.precursor === 'ninguno') loadLastRevisit();
+
         goBack();
     }
 
@@ -349,6 +387,10 @@ const useRevisits = () => {
 
         setSelectedRevisit(INIT_REVISIT);
 
+        if (user.precursor === 'ninguno' && state.lastRevisit.id === state.selectedRevisit.id) {
+            loadLastRevisit();
+        }
+
         setStatus({
             code: 200,
             msg: 'Haz eliminado tu revisita correctamente.'
@@ -414,6 +456,10 @@ const useRevisits = () => {
         dispatch(updateRevisitAction({ revisit }));
         setSelectedRevisit(revisit);
 
+        if (user.precursor === 'ninguno' && state.lastRevisit.id === state.selectedRevisit.id) {
+            dispatch(setLastRevisit({ revisit }));
+        }
+
         return 'Haz marcado como completa tu revisita correctamente.';
     }
 
@@ -429,11 +475,12 @@ const useRevisits = () => {
         setSelectedRevisit,
 
         // Functions
+        completeRevisit,
         deleteRevisit,
+        loadLastRevisit,
         loadRevisits,
         saveRevisit,
-        updateRevisit,
-        completeRevisit
+        updateRevisit
     }
 }
 
