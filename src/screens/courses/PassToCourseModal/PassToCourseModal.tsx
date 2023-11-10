@@ -80,88 +80,84 @@ const PassToCourseModal: FC<ModalProps> = ({ isOpen, onClose }): JSX.Element => 
 
     return (
         <Modal isOpen={ isOpen }>
-            {
-                (!isCourseLoading) ? (
-                    <View
-                        style={{
-                            ...themeStyles.modalContainer,
-                            backgroundColor: colors.modal
-                        }}
-                    >
-                        {
-                            (!startCourse) ? (
-                                <>
+            { (!isCourseLoading) ? (
+                <View
+                    style={{
+                        ...themeStyles.modalContainer,
+                        backgroundColor: colors.modal
+                    }}
+                >
+                    { (!startCourse) ? (
+                        <>
 
-                                    {/* Modal title */}
+                            {/* Modal title */}
+                            <Text
+                                style={{
+                                    ...themeStyles.modalText,
+                                    marginBottom: 0,
+                                    color: colors.modalText
+                                }}
+                                testID="modal-text"
+                            >
+                                ¿Está seguro de comenzar un curso bíblico con { selectedRevisit.personName }?
+                            </Text>
+
+                            {/* Modal actions */}
+                            <ModalActions
+                                onClose={ handleClose }
+                                onConfirm={ handleConfirm }
+                            />
+                        </>
+                    ) : (
+                        <Formik
+                            initialValues={{ publication: '' }}
+                            onSubmit={ handleConfirm }
+                        >
+                            { ({ handleSubmit }) => (
+                                <View>
+
+                                    {/* Modal title in form */}
                                     <Text
                                         style={{
                                             ...themeStyles.modalText,
-                                            marginBottom: 0,
+                                            marginBottom: 24,
                                             color: colors.modalText
                                         }}
-                                        testID="modal-text"
                                     >
-                                        ¿Está seguro de comenzar un curso bíblico con { selectedRevisit.personName }?
+                                        Por favor ingrese el nombre de la publicación de estudio
                                     </Text>
 
-                                    {/* Modal actions */}
+                                    {/* Publication field */}
+                                    <FormField
+                                        icon={
+                                            <Icon
+                                                color={ colors.icon }
+                                                name="book-outline"
+                                                size={ 25 }
+                                            />
+                                        }
+                                        label="Publicación de estudio:"
+                                        name="publication"
+                                        placeholder="Ingrese la publicación"
+                                        style={{ marginBottom: 0 }}
+                                    />
+
+                                    {/* Modal actions in form */}
                                     <ModalActions
                                         onClose={ handleClose }
-                                        onConfirm={ handleConfirm }
+                                        onConfirm={ handleSubmit }
                                     />
-                                </>
-                            ) : (
-                                <Formik
-                                    initialValues={{ publication: '' }}
-                                    onSubmit={ handleConfirm }
-                                >
-                                    { ({ handleSubmit }) => (
-                                        <View>
-
-                                            {/* Modal title in form */}
-                                            <Text
-                                                style={{
-                                                    ...themeStyles.modalText,
-                                                    marginBottom: 24,
-                                                    color: colors.modalText
-                                                }}
-                                            >
-                                                Por favor ingrese el nombre de la publicación de estudio
-                                            </Text>
-
-                                            {/* Publication field */}
-                                            <FormField
-                                                icon={
-                                                    <Icon
-                                                        color={ colors.icon }
-                                                        name="book-outline"
-                                                        size={ 25 }
-                                                    />
-                                                }
-                                                label="Publicación de estudio:"
-                                                name="publication"
-                                                placeholder="Ingrese la publicación"
-                                                style={{ marginBottom: 0 }}
-                                            />
-
-                                            {/* Modal actions in form */}
-                                            <ModalActions
-                                                onClose={ handleClose }
-                                                onConfirm={ handleSubmit }
-                                            />
-                                        </View>
-                                    ) }
-                                </Formik>
-                            )
-                        }
-                    </View>
-                ) : (
-                    <ActivityIndicator
-                        color={ colors.button }
-                        size={ 50 }
-                    />
-                )
-            }
+                                </View>
+                            ) }
+                        </Formik>
+                    ) }
+                </View>
+            ) : (
+                <ActivityIndicator
+                    color={ colors.button }
+                    size={ 50 }
+                />
+            ) }
         </Modal>
     );
 }

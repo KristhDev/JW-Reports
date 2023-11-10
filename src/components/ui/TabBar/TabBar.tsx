@@ -52,31 +52,29 @@ export const TabBar: FC<BottomTabBarProps> = ({ state, descriptors }): JSX.Eleme
 
     return (
         <>
-            {
-                (!hideTabBar) && (
-                    <View
-                        style={{
-                            ...styles.container,
-                            backgroundColor: colors.bottom,
-                        }}
-                    >
-                        { state.routes.map((route, index) => (
-                            <TabBarBtn
-                                active={ state.index === index }
-                                key={ route.key }
-                                onPress={ () => navigate({ name: route.name, params: { screen: firstScreens[(route.name as keyof typeof firstScreens)] } } as never) }
-                                iconName={ icons[index] }
-                                title={ descriptors[route.key]?.options.title || '' }
-                                color={
-                                    (state.index === index)
-                                        ? descriptors[route.key]?.options.tabBarActiveTintColor
-                                        : descriptors[route.key]?.options.tabBarInactiveTintColor
-                                }
-                            />
-                        )) }
-                    </View>
-                )
-            }
+            { (!hideTabBar) && (
+                <View
+                    style={{
+                        ...styles.container,
+                        backgroundColor: colors.bottom,
+                    }}
+                >
+                    { state.routes.map((route, index) => (
+                        <TabBarBtn
+                            active={ state.index === index }
+                            key={ route.key }
+                            onPress={ () => navigate({ name: route.name, params: { screen: firstScreens[(route.name as keyof typeof firstScreens)] } } as never) }
+                            iconName={ icons[index] }
+                            title={ descriptors[route.key]?.options.title || '' }
+                            color={
+                                (state.index === index)
+                                    ? descriptors[route.key]?.options.tabBarActiveTintColor
+                                    : descriptors[route.key]?.options.tabBarInactiveTintColor
+                            }
+                        />
+                    )) }
+                </View>
+            ) }
         </>
     );
 }

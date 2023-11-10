@@ -1,12 +1,13 @@
-import React, { FC, useState } from 'react';
+import React, { Children, FC, useState } from 'react';
 import { KeyboardAvoidingView, ScrollView, View, Text, Share, TextInput, useWindowDimensions } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { RadioButton } from 'react-native-paper';
 
 /* Screens */
 import { Modal } from '../../ui';
 
 /* Components */
-import { Button } from '../../../components/ui';
+import { Button, RadioBtn } from '../../../components/ui';
 
 /* Hooks */
 import { useAuth, useCourses, usePreaching, useTheme } from '../../../hooks';
@@ -21,6 +22,11 @@ import { ReportModalProps } from './interfaces';
 import { styles as themeStyles } from '../../../theme';
 import styles from './styles';
 
+const particitions = [
+    { label: 'Si', value: 'si' },
+    { label: 'No', value: 'no' }
+];
+
 /**
  * This modal is responsible for grouping all the components to display and deliver
  * the report of the month.
@@ -30,6 +36,7 @@ import styles from './styles';
  */
 const ReportModal: FC<ReportModalProps> = ({ isOpen, month, onClose }): JSX.Element => {
     const [ comment, setComment ] = useState<string>('');
+    const [ participated, setParticipated ] = useState<string>('si');
     const [ isFocused, setIsFocused ] = useState<boolean>(false);
     const [ selection, setSelection ] = useState({
         start: comment.length || 0,
@@ -63,6 +70,7 @@ const ReportModal: FC<ReportModalProps> = ({ isOpen, month, onClose }): JSX.Elem
         report += `Mes: ${ month.toLowerCase() }\n`;
 
         if (user.precursor !== 'ninguno') report += `Horas: ${ totalHours }\n`;
+        else report += `Participo en el ministerio: ${ participated }`;
 
         report += `Cursos: ${ totalCourses } \n`;
         report += 'Comentarios: \n';
@@ -125,6 +133,27 @@ const ReportModal: FC<ReportModalProps> = ({ isOpen, month, onClose }): JSX.Elem
                                 <Text style={{ ...styles.reportText, color: colors.text }}>Cursos: </Text>
                                 <Text style={{ ...styles.reportText, color: colors.modalText }}>{ totalCourses }</Text>
                             </View>
+
+                            { (user.precursor === 'ninguno') && (
+                                <View style={{ flexDirection: 'column' }}>
+                                    <Text style={{ ...styles.reportText, color: colors.text, marginBottom: 5 }}>Participo en el ministerio: </Text>
+
+                                    <RadioButton.Group
+                                        onValueChange={ setParticipated }
+                                        value={ participated }
+                                    >
+                                        <View style={{ flexDirection: 'row', gap: 32, paddingVertical: 8 }}>
+                                            { Children.toArray(particitions.map(particition => (
+                                                <RadioBtn
+                                                    label={ particition.label }
+                                                    onPress={ () => setParticipated(particition.value) }
+                                                    value={ particition.value }
+                                                />
+                                            ))) }
+                                        </View>
+                                    </RadioButton.Group>
+                                </View>
+                            ) }
 
                             {/* Comment section */}
                             <View style={{ flexDirection: 'column' }}>

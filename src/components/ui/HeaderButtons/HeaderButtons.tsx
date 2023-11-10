@@ -75,114 +75,101 @@ export const HeaderButtons: FC<HeaderButtonsProps> = ({
     return (
         <>
             <View style={{ flexDirection: 'row' }}>
-                {
-                    (logoutButton) && (
-                        <Fab
-                            color={ 'transparent' }
-                            icon={
-                                <Icon
-                                    color={ colors.button }
-                                    name="log-out-outline"
-                                    size={ 34 }
-                                    style={{ marginLeft: 3 }}
-                                />
-                            }
-                            style={{ marginRight: -2 }}
-                            onPress={ signOut }
-                            touchColor={ BUTTON_TRANSPARENT_COLOR }
-                        />
-                    )
-                }
+                { (logoutButton) && (
+                    <Fab
+                        color={ 'transparent' }
+                        icon={
+                            <Icon
+                                color={ colors.button }
+                                name="log-out-outline"
+                                size={ 34 }
+                                style={{ marginLeft: 3 }}
+                            />
+                        }
+                        style={{ marginRight: -2 }}
+                        onPress={ signOut }
+                        touchColor={ BUTTON_TRANSPARENT_COLOR }
+                    />
+                ) }
 
-                {
-                    (changeMonthButton) && (
-                        <Fab
-                            color={ 'transparent' }
-                            icon={
-                                <Icon
-                                    color={ colors.button }
-                                    name="calendar-outline"
-                                    size={ 28 }
-                                    style={{ marginLeft: 0.5 }}
-                                />
-                            }
-                            onPress={ () => setShowMonthPicker(true) }
-                            style={{ marginRight: -2 }}
-                            touchColor={ BUTTON_TRANSPARENT_COLOR }
-                        />
-                    )
-                }
+                { (changeMonthButton) && (
+                    <Fab
+                        color={ 'transparent' }
+                        icon={
+                            <Icon
+                                color={ colors.button }
+                                name="calendar-outline"
+                                size={ 28 }
+                                style={{ marginLeft: 0.5 }}
+                            />
+                        }
+                        onPress={ () => setShowMonthPicker(true) }
+                        style={{ marginRight: -2 }}
+                        touchColor={ BUTTON_TRANSPARENT_COLOR }
+                    />
+                ) }
 
-                {
-                    (settingsButtons) && (
-                        <Fab
-                            color={ 'transparent' }
-                            icon={
-                                <Icon
-                                    color={ colors.button }
-                                    name="settings-outline"
-                                    size={ 28 }
-                                    style={{ marginLeft: 1 }}
-                                />
-                            }
-                            onPress={ () => navigate('SettingsStackNavigation' as never) }
-                            touchColor={ BUTTON_TRANSPARENT_COLOR }
-                        />
-                    )
-                }
+                { (settingsButtons) && (
+                    <Fab
+                        color={ 'transparent' }
+                        icon={
+                            <Icon
+                                color={ colors.button }
+                                name="settings-outline"
+                                size={ 28 }
+                                style={{ marginLeft: 1 }}
+                            />
+                        }
+                        onPress={ () => navigate('SettingsStackNavigation' as never) }
+                        touchColor={ BUTTON_TRANSPARENT_COLOR }
+                    />
+                ) }
 
-                {
-                    (editButton) && (
-                        <Fab
-                            color={ 'transparent' }
-                            icon={
-                                <Icon
-                                    color={ colors.button }
-                                    name="pencil-outline"
-                                    size={ 26 }
-                                    style={{ marginLeft: 2 }}
-                                />
-                            }
-                            onPress={ onPressEditButton }
-                            style={{ marginRight: -2 }}
-                            touchColor={ BUTTON_TRANSPARENT_COLOR }
-                        />
-                    )
-                }
+                { (editButton) && (
+                    <Fab
+                        color={ 'transparent' }
+                        icon={
+                            <Icon
+                                color={ colors.button }
+                                name="pencil-outline"
+                                size={ 26 }
+                                style={{ marginLeft: 2 }}
+                            />
+                        }
+                        onPress={ onPressEditButton }
+                        style={{ marginRight: -2 }}
+                        touchColor={ BUTTON_TRANSPARENT_COLOR }
+                    />
+                ) }
 
-                {
-                    (deleteButton) && (
-                        <Fab
-                            color={ 'transparent' }
-                            icon={
-                                <Icon
-                                    color={ colors.button }
-                                    name="trash-outline"
-                                    size={ 30 }
-                                    style={{ marginLeft: 2 }}
-                                />
-                            }
-                            onPress={ onShowDeleteModal }
-                            style={{ marginRight: 6 }}
-                            touchColor={ BUTTON_TRANSPARENT_COLOR }
+                { (deleteButton) && (
+                    <Fab
+                        color={ 'transparent' }
+                        icon={
+                            <Icon
+                                color={ colors.button }
+                                name="trash-outline"
+                                size={ 30 }
+                                style={{ marginLeft: 2 }}
+                            />
+                        }
+                        onPress={ onShowDeleteModal }
+                        style={{ marginRight: 6 }}
+                        touchColor={ BUTTON_TRANSPARENT_COLOR }
                         />
-                    )
-                }
-
+                ) }
             </View>
 
-            {
-                (showMonthPicker) && (
-                    <MonthPicker
-                        cancelButton="Cancelar"
-                        locale="es"
-                        mode="short"
-                        okButton="Seleccionar"
-                        onChange={ (_, date) => handleOnChange(date) }
-                        value={ selectedDate }
-                    />
-                )
-            }
+            { (showMonthPicker) && (
+                <MonthPicker
+                    cancelButton="Cancelar"
+                    locale="es"
+                    mode="short"
+                    okButton="Seleccionar"
+                    onChange={ (_, date) => handleOnChange(date) }
+                    value={ selectedDate }
+                />
+            ) }
 
             <DeleteModal
                 isLoading={ isDeleteModalLoading }

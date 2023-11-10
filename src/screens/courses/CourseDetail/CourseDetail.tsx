@@ -115,29 +115,27 @@ const CourseDetail = (): JSX.Element => {
                         Estado del curso: { statusCourseText }
                     </Text>
 
-                    {
-                        (!selectedCourse.finished) ? (
-                            <TouchableOpacity
-                                activeOpacity={ 0.75 }
-                                onPress={ () => setShowASModal(true) }
-                                testID="course-detail-status-touchable"
-                            >
-                                <Text style={{ color: colors.linkText, fontSize: 19 }}>
-                                    { (selectedCourse.suspended) ? '¿Continuar?' : '¿Suspender?' }
-                                </Text>
-                            </TouchableOpacity>
-                        ) : (
-                            <TouchableOpacity
-                                activeOpacity={ 0.75 }
-                                onPress={ () => setShowFSModal(true) }
-                                testID="course-detail-status-touchable"
-                            >
-                                <Text style={{ color: colors.linkText, fontSize: 19 }}>
-                                    ¿Comenzar de nuevo?
-                                </Text>
-                            </TouchableOpacity>
-                        )
-                    }
+                    { (!selectedCourse.finished) ? (
+                        <TouchableOpacity
+                            activeOpacity={ 0.75 }
+                            onPress={ () => setShowASModal(true) }
+                            testID="course-detail-status-touchable"
+                        >
+                            <Text style={{ color: colors.linkText, fontSize: 19 }}>
+                                { (selectedCourse.suspended) ? '¿Continuar?' : '¿Suspender?' }
+                            </Text>
+                        </TouchableOpacity>
+                    ) : (
+                        <TouchableOpacity
+                            activeOpacity={ 0.75 }
+                            onPress={ () => setShowFSModal(true) }
+                            testID="course-detail-status-touchable"
+                        >
+                            <Text style={{ color: colors.linkText, fontSize: 19 }}>
+                                ¿Comenzar de nuevo?
+                            </Text>
+                        </TouchableOpacity>
+                    ) }
                 </View>
 
                 {/* Text person about */}

@@ -54,14 +54,12 @@ export const PreachingTable = (): JSX.Element => {
 
             {/* Table header */}
             <View style={ styles.tableRow }>
-                {
-                    Children.toArray(TABLE_PREACHING_HEADERS.map((head, index) => (
-                        <TableCell
-                            text={ head }
-                            style={{ width: (index <= 1) ? cellWidth : cellWidthHours }}
-                        />
-                    )))
-                }
+                { Children.toArray(TABLE_PREACHING_HEADERS.map((head, index) => (
+                    <TableCell
+                        text={ head }
+                        style={{ width: (index <= 1) ? cellWidth : cellWidthHours }}
+                    />
+                ))) }
             </View>
 
             {/* Table body */}

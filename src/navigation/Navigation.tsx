@@ -77,29 +77,27 @@ const Navigation = (): JSX.Element => {
                     headerShown: false
                 }}
             >
-                {
-                    (isAuthenticated) ? (
-                        <>
-                            <Stack.Screen
-                                component={ MainTabsBottomNavigation }
-                                name="MainTabsBottomNavigation"
-                            />
-
-                            <Stack.Screen
-                                component={ SettingsStackNavigation }
-                                name="SettingsStackNavigation"
-                                options={{
-                                    cardStyleInterpolator: CardStyleInterpolators.forBottomSheetAndroid,
-                                }}
-                            />
-                        </>
-                    ) : (
+                { (isAuthenticated) ? (
+                    <>
                         <Stack.Screen
-                            component={ AuthStackNavigation }
-                            name="AuthStackNavigation"
+                            component={ MainTabsBottomNavigation }
+                            name="MainTabsBottomNavigation"
                         />
-                    )
-                }
+
+                        <Stack.Screen
+                            component={ SettingsStackNavigation }
+                            name="SettingsStackNavigation"
+                            options={{
+                                cardStyleInterpolator: CardStyleInterpolators.forBottomSheetAndroid,
+                            }}
+                        />
+                    </>
+                ) : (
+                    <Stack.Screen
+                        component={ AuthStackNavigation }
+                        name="AuthStackNavigation"
+                    />
+                ) }
             </Stack.Navigator>
         </>
     );

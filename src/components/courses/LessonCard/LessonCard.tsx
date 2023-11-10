@@ -89,10 +89,9 @@ export const LessonCard: FC<LessonCardProps> = ({ lesson, screenToNavigate, onCl
                     style={{ ...styles.textDate, color: colors.icon }}
                     testID="lesson-card-status-text"
                 >
-                    {
-                        (lesson.done)
-                            ? 'Clase impartida'
-                            : `Clase para el ${ nextVisit.format('DD') } de ${ nextVisit.format('MMMM') } del ${ nextVisit.format('YYYY') }`
+                    { (lesson.done)
+                        ? 'Clase impartida'
+                        : `Clase para el ${ nextVisit.format('DD') } de ${ nextVisit.format('MMMM') } del ${ nextVisit.format('YYYY') }`
                     }
                 </Text>
 

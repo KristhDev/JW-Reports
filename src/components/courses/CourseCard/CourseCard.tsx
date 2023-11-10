@@ -117,12 +117,11 @@ export const CourseCard: FC<CourseCardProps> = ({ course, onActiveOrSuspend, onD
                     style={{ ...styles.textDate, color: colors.icon }}
                     testID="course-card-status-text"
                 >
-                    {
-                        (course.finished)
-                            ? 'Terminado'
-                            : (course.suspended)
-                                ? 'Suspendido'
-                                : 'En Curso'
+                    { (course.finished)
+                        ? 'Terminado'
+                        : (course.suspended)
+                            ? 'Suspendido'
+                            : 'En Curso'
                     }
                 </Text>
 
@@ -203,15 +202,15 @@ export const CourseCard: FC<CourseCardProps> = ({ course, onActiveOrSuspend, onD
                         ) }
 
                         <MenuOption onSelect={ handleLessonList }>
-                                <Text
-                                    style={{
-                                        color: colors.text,
-                                        ...styles.textMenuOpt
-                                    }}
-                                >
-                                    Clases
-                                </Text>
-                            </MenuOption>
+                            <Text
+                                style={{
+                                    color: colors.text,
+                                    ...styles.textMenuOpt
+                                }}
+                            >
+                                Clases
+                            </Text>
+                        </MenuOption>
 
                         {/* Show menu options then course.suspended is false */}
                         {/* It is not possible to finish or add lessons to the course if it is suspended */}

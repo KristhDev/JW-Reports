@@ -90,10 +90,9 @@ export const RevisitCard: FC<RevisitCardProps> = ({ onDelete, onPass, onRevisit,
                     style={{ ...styles.textDate, color: colors.icon }}
                     testID="revisit-card-next-visit-text"
                 >
-                    {
-                        (revisit.done)
-                            ? 'Visita hecha'
-                            : `Visitar el ${ nextVisit.format('DD') } de ${ nextVisit.format('MMMM') } del ${ nextVisit.format('YYYY') }`
+                    { (revisit.done)
+                        ? 'Visita hecha'
+                        : `Visitar el ${ nextVisit.format('DD') } de ${ nextVisit.format('MMMM') } del ${ nextVisit.format('YYYY') }`
                     }
                 </Text>
 

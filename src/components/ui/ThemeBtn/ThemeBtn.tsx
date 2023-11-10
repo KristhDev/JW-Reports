@@ -13,7 +13,7 @@ import { useTheme } from '../../../hooks';
  *
  * @return {JSX.Element} Return jsx element to render a button of theme
  */
-export const ThemeBtn = () => {
+export const ThemeBtn = (): JSX.Element => {
     const { state: { selectedTheme, colors }, setTheme } = useTheme();
 
     return (
