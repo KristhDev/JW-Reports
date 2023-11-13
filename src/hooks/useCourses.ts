@@ -524,15 +524,9 @@ const useCourses = () => {
             .select('*, lessons (*)')
             .eq('user_id', user.id)
 
-        if (filter === 'active') {
-            coursesPromise.eq('suspended', false).eq('finished', false)
-        }
-        else if (filter === 'suspended') {
-            coursesPromise.eq('suspended', true).eq('finished', false)
-        }
-        else if (filter === 'finished') {
-            coursesPromise.eq('suspended', false).eq('finished', true);
-        }
+        if (filter === 'active') coursesPromise.eq('suspended', false).eq('finished', false)
+        else if (filter === 'suspended') coursesPromise.eq('suspended', true).eq('finished', false)
+        else if (filter === 'finished') coursesPromise.eq('suspended', false).eq('finished', true);
 
         if (search.trim().length > 0) {
             let searchQuery = `person_name.ilike.%${ search }%,`;
@@ -658,9 +652,7 @@ const useCourses = () => {
             .select<'*', LessonEndpoint>()
             .eq('course_id', state.selectedCourse.id);
 
-        if (search.trim().length > 0) {
-            lessonsPromise.ilike('description', `%${ search }%`);
-        }
+        if (search.trim().length > 0) lessonsPromise.ilike('description', `%${ search }%`);
 
         lessonsPromise.order('next_lesson', { ascending: false })
             .range(

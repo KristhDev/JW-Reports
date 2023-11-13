@@ -1,9 +1,12 @@
 /**
- * PreachingStackParamsList is a type that is an object with two properties, HomeScreen and
- * AddOrEditPreachingScreen, where both properties are of type undefined.
+ * Defining the structure of stack navigation of preaching.
  *
- * @property HomeScreen - undefined;
+ * @property AddOrEditLessonScreen - undefined;
  * @property AddOrEditPreachingScreen - undefined;
+ * @property AddOrEditRevisitScreen - undefined;
+ * @property HomeLessonDetailScreen - undefined;
+ * @property HomeRevisitDetailScreen - undefined;
+ * @property HomeScreen - undefined;
  */
 export type PreachingStackParamsList = {
     AddOrEditLessonScreen: undefined;
