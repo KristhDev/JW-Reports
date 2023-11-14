@@ -1,14 +1,15 @@
 import { useContext } from 'react';
 import hexToRgba from 'hex-to-rgba';
 
-/* Context */
-import { ThemeContext } from '../theme/context';
+/* Theme */
+import { ThemeContext, ThemeContextProps } from '../theme';
 
 /**
- * This hook is to provide the functions, state and constants in relation
- * to the theme context.
+ * Returns the theme context and additional color values.
+ *
+ * @return {ThemeContextProps & { BUTTON_TRANSLUCENT_COLOR: string, BUTTON_TRANSPARENT_COLOR: string }} The theme context and additional color values.
  */
-const useTheme = () => {
+const useTheme = (): ThemeContextProps & { BUTTON_TRANSLUCENT_COLOR: string, BUTTON_TRANSPARENT_COLOR: string } => {
     const context = useContext(ThemeContext);
 
     const BUTTON_TRANSLUCENT_COLOR = hexToRgba(

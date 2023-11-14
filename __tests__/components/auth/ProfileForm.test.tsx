@@ -7,28 +7,12 @@ import { ProfileForm } from '../../../src/components/auth';
 /* Hooks */
 import { useAuth, useStatus, useTheme } from '../../../src/hooks';
 
-/* Interfaces */
-import { User } from '../../../src/interfaces/auth';
-
 /* Theme */
 import { darkColors } from '../../../src/theme';
 
-/* `const testUser: User` is defining a constant variable `testUser` of type `User`, which is an
-interface defined in the `auth` module. The object assigned to `testUser` contains properties such
-as `id`, `name`, `surname`, `email`, `precursor`, `createdAt`, and `updatedAt`, which represent the
-user's information. This object is used in the tests to simulate a user's data. */
-const testUser: User = {
-    id: '05ef0d0c-0f7a-4512-b705-6da279d88503',
-    name: 'Celestino',
-    surname: 'Wilderman',
-    email: 'Ernestine_Doyle@yahoo.com',
-    precursor: 'ninguno',
-    hours_requirement: 20,
-    createdAt: '2021-03-10T12:00:00.000Z',
-    updatedAt: '2021-03-10T12:00:00.000Z',
-}
+/* Mocks */
+import { testUser, updateProfileMock } from '../../mocks';
 
-const updateProfileMock = jest.fn();
 const setErrorFormMock = jest.fn();
 
 /* Hooks */
@@ -107,7 +91,7 @@ describe('Test in <ProfileForm /> component', () => {
                 name: testUser.name,
                 surname: testUser.surname,
                 precursor: testUser.precursor,
-                hours_requirement: testUser.hours_requirement
+                hoursRequirement: testUser.hoursRequirement
             }, expect.any(Object));
         });
     });

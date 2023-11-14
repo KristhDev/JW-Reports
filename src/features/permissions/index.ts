@@ -1,2 +1,2 @@
-export { default as permissionsReducer, setPermission } from './slice';
+export { default as permissionsReducer, setPermission, PERMISSIONS_INITIAL_STATE } from './slice';
 export { checkPermissions } from './thunks';

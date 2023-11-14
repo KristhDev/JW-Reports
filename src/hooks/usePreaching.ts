@@ -1,11 +1,13 @@
 import { useNavigation } from '@react-navigation/native';
 import dayjs from 'dayjs';
 
-/* Supabase - config */
-import { supabase } from '../supabase/config';
+/* Supabase */
+import { supabase } from '../supabase';
+
+/* Adapters */
+import { preachingAdapter } from '../adapters';
 
 /* Features */
-import { useAppDispatch, useAppSelector } from '../features';
 import {
     INIT_PREACHING,
     addPreaching,
@@ -18,13 +20,15 @@ import {
     setSelectedDate as setSelectedDateAction,
     setSelectedPreaching as setSelectedPreachingAction,
     updatePreaching as updatePreachingAction,
-} from '../features/preaching';
+    useAppDispatch,
+    useAppSelector
+} from '../features';
 
 /* Hooks */
 import { useAuth, useNetwork, useStatus } from './';
 
 /* Interfaces */
-import { Preaching, PreachingFormValues } from '../interfaces/preaching';
+import { Preaching, PreachingFormValues, PreachingEndpoint } from '../interfaces';
 
 /**
  * Hook to management preaching of store with state and actions
@@ -35,7 +39,7 @@ const usePreaching = () => {
 
     const { state: { user, isAuthenticated } } = useAuth();
     const { setStatus, setSupabaseError, setUnauthenticatedError, setNetworkError } = useStatus();
-    const { isConnected } = useNetwork();
+    const { wifi } = useNetwork();
 
     const state = useAppSelector(store => store.preaching);
 
@@ -51,7 +55,7 @@ const usePreaching = () => {
      * @return {Promise<void>} This function does not return anything.
      */
     const loadPreachings = async (date: Date): Promise<void> => {
-        if (!isConnected) {
+        if (!wifi.isConnected) {
             setNetworkError();
             return;
         }
@@ -67,7 +71,7 @@ const usePreaching = () => {
         const final_date = dayjs(date).endOf('month').format('YYYY-MM-DD');
 
         const { data, error, status } = await supabase.from('preachings')
-            .select<'*', Preaching>()
+            .select<'*', PreachingEndpoint>()
             .eq('user_id', user.id)
             .gte('day', init_date)
             .lte('day', final_date)
@@ -77,7 +81,7 @@ const usePreaching = () => {
         const next = setSupabaseError(error, status, () => setIsPreachingsLoading(false));
         if (next) return;
 
-        dispatch(setPreachings({ preachings: data! }));
+        dispatch(setPreachings({ preachings: data!.map(preachingAdapter) }));
     }
 
     /**
@@ -87,7 +91,7 @@ const usePreaching = () => {
      * @return {Promise<void>} This function does not return anything.
      */
     const savePreaching = async (preachingValues: PreachingFormValues): Promise<void> => {
-        if (!isConnected) {
+        if (!wifi.isConnected) {
             setNetworkError();
             return;
         }
@@ -101,24 +105,23 @@ const usePreaching = () => {
 
         const { data, error, status } = await supabase.from('preachings')
             .insert({
-                ...preachingValues,
                 day: dayjs(preachingValues.day).format('YYYY-MM-DD'),
-                init_hour: dayjs(preachingValues.init_hour).format('YYYY-MM-DD HH:mm:ss.SSSSSS'),
-                final_hour: dayjs(preachingValues.final_hour).format('YYYY-MM-DD HH:mm:ss.SSSSSS'),
+                init_hour: dayjs(preachingValues.initHour).format('YYYY-MM-DD HH:mm:ss.SSSSSS'),
+                final_hour: dayjs(preachingValues.finalHour).format('YYYY-MM-DD HH:mm:ss.SSSSSS'),
                 user_id: user.id
             })
-            .select<'*', Preaching>();
+            .select<'*', PreachingEndpoint>();
 
         const next = setSupabaseError(error, status, () => dispatch(setIsPreachingLoading({ isLoading: false })));
         if (next) return;
 
         if (dayjs(data![0].day).format('MMMM') === dayjs(state.selectedDate).format('MMMM')) {
-            dispatch(addPreaching({ preaching: data![0] }));
+            dispatch(addPreaching({ preaching: preachingAdapter(data![0]) }));
         }
 
         setStatus({
             code: 201,
-            msg: 'Has agregado tu día de predicación correctamente.'
+            msg: 'Haz agregado tu día de predicación correctamente.'
         });
 
         goBack();
@@ -131,7 +134,7 @@ const usePreaching = () => {
      * @return {Promise<void>} This function does not return anything.
      */
     const updatePreaching = async (preachingValues: PreachingFormValues): Promise<void> => {
-        if (!isConnected) {
+        if (!wifi.isConnected) {
             setNetworkError();
             return;
         }
@@ -156,31 +159,30 @@ const usePreaching = () => {
 
         const { data, error, status } = await supabase.from('preachings')
             .update({
-                ...preachingValues,
                 day: dayjs(preachingValues.day).format('YYYY-MM-DD'),
-                init_hour: dayjs(preachingValues.init_hour).format('YYYY-MM-DD HH:mm:ss.SSSSSS'),
-                final_hour: dayjs(preachingValues.final_hour).format('YYYY-MM-DD HH:mm:ss.SSSSSS'),
+                init_hour: dayjs(preachingValues.initHour).format('YYYY-MM-DD HH:mm:ss.SSSSSS'),
+                final_hour: dayjs(preachingValues.finalHour).format('YYYY-MM-DD HH:mm:ss.SSSSSS'),
                 updated_at: dayjs().format('YYYY-MM-DD HH:mm:ss.SSSSSS')
             })
             .eq('id', state.seletedPreaching.id)
             .eq('user_id', user.id)
-            .select<'*', Preaching>();
+            .select<'*', PreachingEndpoint>();
 
         const next = setSupabaseError(error, status, () => dispatch(setIsPreachingLoading({ isLoading: false })));
         if (next) return;
 
-        dispatch(updatePreachingAction({ preaching: data![0] }));
+        dispatch(updatePreachingAction({ preaching: preachingAdapter(data![0]) }));
 
         setStatus({
             code: 200,
-            msg: 'Has actualizado tu día de predicación correctamente.'
+            msg: 'Haz actualizado tu día de predicación correctamente.'
         });
 
         setSelectedPreaching({
             ...INIT_PREACHING,
             day: new Date().toString(),
-            init_hour: new Date().toString(),
-            final_hour: new Date().toString()
+            initHour: new Date().toString(),
+            finalHour: new Date().toString()
         });
 
         goBack();
@@ -193,7 +195,7 @@ const usePreaching = () => {
      * @return {Promise<void>} This function does not return anything.
      */
     const deletePreaching = async (onFinish?: () => void): Promise<void> => {
-        if (!isConnected) {
+        if (!wifi.isConnected) {
             setNetworkError();
             return;
         }
@@ -221,7 +223,7 @@ const usePreaching = () => {
             return;
         }
 
-        if (state.seletedPreaching.user_id !== user.id) {
+        if (state.seletedPreaching.userId !== user.id) {
             onFinish && onFinish();
             dispatch(setIsPreachingDeleting({ isDeleting: false }));
 
@@ -252,13 +254,13 @@ const usePreaching = () => {
         setSelectedPreaching({
             ...INIT_PREACHING,
             day: new Date().toString(),
-            init_hour: new Date().toString(),
-            final_hour: new Date().toString()
+            initHour: new Date().toString(),
+            finalHour: new Date().toString()
         });
 
         setStatus({
             code: 200,
-            msg: 'Has eliminado tu día de predicación correctamente.'
+            msg: 'Haz eliminado tu día de predicación correctamente.'
         });
     }
 

@@ -1,5 +1,5 @@
-import React, { useState, FC } from 'react';
-import { View, Text, TextInput } from 'react-native';
+import React, { useState, FC, useRef, useEffect } from 'react';
+import { View, Text, TextInput, Keyboard } from 'react-native';
 import { useField } from 'formik';
 
 /* Hooks */
@@ -52,7 +52,31 @@ export const FormField: FC<FormFieldProps> = ({
         end: String(field.value)?.length || 0
     });
 
+    const textInputRef = useRef<TextInput>(null);
+
     const { state: { colors } } = useTheme();
+
+    /**
+     * Handles the blur event for the input field.
+     *
+     * @return {void} This function does not return anything.
+     */
+    const handleBlur = (): void => {
+        setIsFocused(false);
+        textInputRef.current?.blur();
+
+        setTimeout(() => {
+            helpers.setTouched(!meta.touched);
+        }, 100);
+    }
+
+    useEffect(() => {
+        const hideListener = Keyboard.addListener('keyboardDidHide', () => handleBlur());
+
+        return () => {
+            hideListener.remove();
+        };
+    }, []);
 
     return (
         <View
@@ -118,14 +142,14 @@ export const FormField: FC<FormFieldProps> = ({
                                 inputStyle
                             ]}
                             value={ String(field.value) }
+                            ref={ textInputRef }
                             { ...rest }
-                            onBlur={ (e) => {
-                                rest.onBlur && rest.onBlur(e);
-                                helpers.setTouched(!meta.touched);
-                                setIsFocused(false);
-                            } }
                             onFocus={ () => setIsFocused(true) }
                             testID="form-field-text-input"
+                            onBlur={ () => {
+                                setIsFocused(false);
+                                helpers.setTouched(!meta.touched);
+                            } }
                         />
 
                         { icon }

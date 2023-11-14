@@ -4,18 +4,14 @@ import { act, fireEvent, render, screen, waitFor } from '@testing-library/react-
 /* Components */
 import { CourseForm } from '../../../src/components/courses';
 
-/* Features */
-import { coursesState, courseSelectedState } from '../../features/courses';
-
 /* Hooks */
 import { useCourses, useStatus, useTheme } from '../../../src/hooks';
 
 /* Theme */
 import { darkColors } from '../../../src/theme';
 
-const saveCourseMock = jest.fn();
-const updateCourseMock = jest.fn();
-const setErrorFormMock = jest.fn();
+/* Mocks */
+import { courseSelectedStateMock, coursesStateMock, saveCourseMock, setErrorFormMock, updateCourseMock } from '../../mocks';
 
 /* Mock hooks */
 jest.mock('../../../src/hooks/useCourses.ts');
@@ -24,7 +20,7 @@ jest.mock('../../../src/hooks/useTheme.ts');
 
 describe('Test in <CourseForm /> component', () => {
     (useCourses as jest.Mock).mockReturnValue({
-        state: coursesState,
+        state: coursesStateMock,
         saveCourse: saveCourseMock,
         updateCourse: updateCourseMock
     });
@@ -57,15 +53,15 @@ describe('Test in <CourseForm /> component', () => {
             render(<CourseForm />);
         });
 
+        const touchable = await screen.findByTestId('button-touchable');
+
         await waitFor(() => {
-
             /* Get submit touchable */
-            const touchable = screen.getByTestId('button-touchable');
             fireEvent.press(touchable);
-
-            /* Check if setErrorForm is called one time */
-            expect(setErrorFormMock).toHaveBeenCalledTimes(1);
         });
+
+        /* Check if setErrorForm is called one time */
+        expect(setErrorFormMock).toHaveBeenCalledTimes(1);
     });
 
     it('should call saveCourse when the form is valid and selectedCourse is empty', async () => {
@@ -73,46 +69,48 @@ describe('Test in <CourseForm /> component', () => {
             render(<CourseForm />);
         });
 
-        const person_name = 'Virginie';
-        const person_about = 'Fuga sint rerum voluptatem et quaerat consequatur quas iure.';
-        const person_address = 'Commodi dolorem nesciunt vel sunt quo magnam et enim accusamus. Enim error dolorem voluptas et sed accusamus similique quod.';
+        const personName = 'Virginie';
+        const personAbout = 'Fuga sint rerum voluptatem et quaerat consequatur quas iure.';
+        const personAddress = 'Commodi dolorem nesciunt vel sunt quo magnam et enim accusamus. Enim error dolorem voluptas et sed accusamus similique quod.';
         const publication = 'eius velit veritatis';
 
-        await act(async() => {
-            await waitFor(() => {
+        const inputsText = await  screen.findAllByTestId('form-field-text-input');
 
-                /* Get all text inputs to type person_name, person_about, person_address and publication */
-                const inputsText = screen.getAllByTestId('form-field-text-input');
-                fireEvent(inputsText[0], 'onChangeText', person_name);
-                fireEvent(inputsText[1], 'onChangeText', person_about);
-                fireEvent(inputsText[2], 'onChangeText', person_address);
-                fireEvent(inputsText[3], 'onChangeText', publication);
+        await waitFor(() => {
 
-                /* Get submit touchable */
-                const touchable = screen.getByTestId('button-touchable');
-                fireEvent.press(touchable);
-
-                /* Check if setErrorForm is called one time */
-                expect(saveCourseMock).toHaveBeenCalledTimes(1);
-            });
-
-            /* Get text of submit touchable */
-            const btnText = screen.getByTestId('button-text');
-
-            /**
-             * Check if text of submit touchable is equal to Guardar and saveCourse
-             * is called with respective args
-             */
-            expect(btnText.props.children).toBe('Guardar');
-            expect(saveCourseMock).toHaveBeenCalledWith({ person_name, person_about, person_address, publication });
+            /* Get all text inputs to type person_name, person_about, person_address and publication */
+            fireEvent(inputsText[0], 'onChangeText', personName);
+            fireEvent(inputsText[1], 'onChangeText', personAbout);
+            fireEvent(inputsText[2], 'onChangeText', personAddress);
+            fireEvent(inputsText[3], 'onChangeText', publication);
         });
+
+        /* Get submit touchable */
+        const touchable = await screen.findByTestId('button-touchable');
+
+        await waitFor(() => {
+            fireEvent.press(touchable);
+        });
+
+        /* Check if setErrorForm is called one time */
+        expect(saveCourseMock).toHaveBeenCalledTimes(1);
+
+        /* Get text of submit touchable */
+        const btnText = await screen.findByTestId('button-text');
+
+        /**
+         * Check if text of submit touchable is equal to Guardar and saveCourse
+         * is called with respective args
+         */
+        expect(btnText.props.children).toBe('Guardar');
+        expect(saveCourseMock).toHaveBeenCalledWith({ personName, personAbout, personAddress, publication });
     });
 
     it('should call updateCourse when the form is valid and selectedCourse isnt empty', async () => {
 
         /* Mock data of useCourses */
         (useCourses as jest.Mock).mockReturnValue({
-            state: courseSelectedState,
+            state: courseSelectedStateMock,
             saveCourse: saveCourseMock,
             updateCourse: updateCourseMock
         });
@@ -121,37 +119,38 @@ describe('Test in <CourseForm /> component', () => {
             render(<CourseForm />);
         });
 
-        const person_about = 'Aliquid dolore quae et voluptatibus dicta.';
+        const personAbout = 'Aliquid dolore quae et voluptatibus dicta.';
+        const inputsText = await screen.findAllByTestId('form-field-text-input');
 
-        await act(async() => {
-            await waitFor(() => {
+        await waitFor(() => {
 
-                /* Get text input of about to type new content */
-                const inputsText = screen.getAllByTestId('form-field-text-input');
-                fireEvent(inputsText[1], 'onChangeText', person_about);
+            /* Get text input of about to type new content */
+            fireEvent(inputsText[1], 'onChangeText', personAbout);
+        });
 
-                /* Get submit touchable */
-                const touchable = screen.getByTestId('button-touchable');
-                fireEvent.press(touchable);
+        /* Get submit touchable */
+        const touchable = await screen.findByTestId('button-touchable');
 
-                /* Check if updateCourseMock is called one time */
-                expect(updateCourseMock).toHaveBeenCalledTimes(1);
-            });
+        await waitFor(() => {
+            fireEvent.press(touchable);
+        });
 
-            /* Get text of submit touchable */
-            const btnText = screen.getByTestId('button-text');
+        /* Check if updateCourseMock is called one time */
+        expect(updateCourseMock).toHaveBeenCalledTimes(1);
 
-            /**
-             * Check if text of submit touchable is equal to Actualizar and updateCourse
-             * is called with respective args
-             */
-            expect(btnText.props.children).toBe('Actualizar');
-            expect(updateCourseMock).toHaveBeenCalledWith({
-                person_name: courseSelectedState.selectedCourse.person_name,
-                person_about,
-                person_address: courseSelectedState.selectedCourse.person_address,
-                publication: courseSelectedState.selectedCourse.publication
-            });
+        /* Get text of submit touchable */
+        const btnText = await screen.findByTestId('button-text');
+
+        /**
+         * Check if text of submit touchable is equal to Actualizar and updateCourse
+         * is called with respective args
+         */
+        expect(btnText.props.children).toBe('Actualizar');
+        expect(updateCourseMock).toHaveBeenCalledWith({
+            personName: courseSelectedStateMock.selectedCourse.personName,
+            personAbout: personAbout,
+            personAddress: courseSelectedStateMock.selectedCourse.personAddress,
+            publication: courseSelectedStateMock.selectedCourse.publication
         });
     });
 });

@@ -1,6 +1,7 @@
 export {
     default as preachingReducer,
     INIT_PREACHING,
+    PREACHING_INITIAL_STATE,
     addPreaching,
     clearPreaching,
     removePreaching,

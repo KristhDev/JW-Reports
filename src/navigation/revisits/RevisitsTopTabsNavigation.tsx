@@ -8,9 +8,9 @@ import { Revisits } from '../../screens/revisits';
 import { useTheme } from '../../hooks';
 
 /* Interfaces */
-import { RevistsTopTabsParamsList } from '../../interfaces/revisits';
+import { RevisitsTopTabsParamsList } from '../../interfaces';
 
-const Tabs = createMaterialTopTabNavigator<RevistsTopTabsParamsList>();
+const Tabs = createMaterialTopTabNavigator<RevisitsTopTabsParamsList>();
 
 /**
  * This is a top taps navigation for the revisits.
@@ -74,7 +74,7 @@ const RevisitsTopTabsNavigation = (): JSX.Element => {
             <Tabs.Screen
                 component={ Revisits }
                 initialParams={{
-                    emptyMessage: 'No tienes ninguna revista por hacer.',
+                    emptyMessage: 'No tienes ninguna revisita por hacer.',
                     filter: 'unvisited',
                     title: 'REVISITAS POR HACER'
                 }}

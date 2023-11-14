@@ -4,7 +4,8 @@ import { useNavigation } from '@react-navigation/native';
 import dayjs from 'dayjs';
 
 /* Env */
-import { REPOSITORY_URL } from '@env';
+import { APP_VERSION, REPOSITORY_URL } from '@env';
+
 
 /* Components */
 import { SectionBtn, SectionContent } from '../../../components/ui';
@@ -89,7 +90,7 @@ const Settings = (): JSX.Element => {
                 >
                     <SectionBtn
                         onPress={ () => {} }
-                        subText="1.1.2"
+                        subText={ APP_VERSION }
                         text="Versión"
                     />
 

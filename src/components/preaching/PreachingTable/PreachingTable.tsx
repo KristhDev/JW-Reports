@@ -10,10 +10,10 @@ import { TableCell } from '../../ui';
 import { usePreaching, useTheme } from '../../../hooks';
 
 /* Interfaces */
-import { Preaching } from '../../../interfaces/preaching';
+import { Preaching } from '../../../interfaces';
 
 /* Utils */
-import { sumHours, sumNumbers, TABLE_PREACHING_HEADERS } from '../../../utils';
+import { sumHours, TABLE_PREACHING_HEADERS } from '../../../utils';
 
 /* Styles */
 import styles from './styles';
@@ -32,6 +32,7 @@ export const PreachingTable = (): JSX.Element => {
     const { state: { selectedTheme, colors } } = useTheme();
 
     const cellWidth = (width - 24) / 6;
+    const cellWidthHours = (width - 24) / 3;
 
     /**
      * I'm going to navigate to a screen called AddOrEditPreachingScreen, and I'm going to pass it a
@@ -53,85 +54,56 @@ export const PreachingTable = (): JSX.Element => {
 
             {/* Table header */}
             <View style={ styles.tableRow }>
-                {
-                    Children.toArray(TABLE_PREACHING_HEADERS.map(head => (
-                        <TableCell
-                            text={ head }
-                            style={{ width: cellWidth }}
-                        />
-                    )))
-                }
+                { Children.toArray(TABLE_PREACHING_HEADERS.map((head, index) => (
+                    <TableCell
+                        text={ head }
+                        style={{ width: (index <= 1) ? cellWidth : cellWidthHours }}
+                    />
+                ))) }
             </View>
 
             {/* Table body */}
 
-            {
-                Children.toArray(preachings.map((preaching) => (
-                    <TouchableHighlight
-                        onPress={ () => handleGoToEditPreaching(preaching) }
-                        testID="preaching-table-row"
-                        underlayColor={ (selectedTheme === 'dark') ? 'rgba(255, 255, 255, 0.15)' : 'rgba(0, 0, 0, 0.15)' }
-                    >
-                        <View style={{ ...styles.tableRow }}>
-                            <TableCell
-                                text={ dayjs(preaching.day).format('DD') }
-                                style={{ backgroundColor: '#746C84', width: cellWidth }}
-                            />
+            { Children.toArray(preachings.map((preaching, index) => (
+                <TouchableHighlight
+                    onPress={ () => handleGoToEditPreaching(preaching) }
+                    testID="preaching-table-row"
+                    underlayColor={ (selectedTheme === 'dark') ? 'rgba(255, 255, 255, 0.15)' : 'rgba(0, 0, 0, 0.15)' }
+                >
+                    <View style={{ ...styles.tableRow }}>
+                        <TableCell
+                            text={ (index + 1).toString() }
+                            style={{ backgroundColor: '#746C84', width: cellWidth }}
+                        />
 
-                            <TableCell
-                                text={ dayjs(preaching.init_hour).format('HH:mm') }
-                                style={{ backgroundColor: '#746C84', width: cellWidth }}
-                            />
+                        <TableCell
+                            text={ dayjs(preaching.day).format('DD') }
+                            style={{ backgroundColor: '#746C84', width: cellWidth }}
+                        />
 
-                            <TableCell
-                                text={ dayjs(preaching.final_hour).format('HH:mm') }
-                                style={{ backgroundColor: '#746C84', width: cellWidth }}
-                            />
+                        <TableCell
+                            text={ dayjs(preaching.initHour).format('HH:mm') }
+                            style={{ backgroundColor: '#746C84', width: cellWidthHours }}
+                        />
 
-                            <TableCell
-                                text={ preaching.publications }
-                                style={{ backgroundColor: '#746C84', width: cellWidth }}
-                            />
-
-                            <TableCell
-                                text={ preaching.videos }
-                                style={{ backgroundColor: '#746C84', width: cellWidth }}
-                            />
-
-                            <TableCell
-                                text={ preaching.revisits }
-                                style={{ backgroundColor: '#746C84', width: cellWidth }}
-                            />
-                        </View>
-                    </TouchableHighlight>
-                )))
-            }
+                        <TableCell
+                            text={ dayjs(preaching.finalHour).format('HH:mm') }
+                            style={{ backgroundColor: '#746C84', width: cellWidthHours }}
+                        />
+                    </View>
+                </TouchableHighlight>
+            ))) }
 
             {/* Table footer */}
             <View style={ styles.tableRow }>
                 <TableCell
                     text="Total"
-                    style={{ backgroundColor: '#544C63', width: cellWidth }}
-                />
-
-                <TableCell
-                    text={ `${ sumHours(preachings.map(p => ({ init: p.init_hour, finish: p.final_hour }))) }H` }
                     style={{ backgroundColor: '#544C63', width: cellWidth * 2 }}
                 />
 
                 <TableCell
-                    text={ sumNumbers(preachings.map(p => p.publications)) }
-                    style={{ backgroundColor: '#544C63', width: cellWidth }}
-                />
-
-                <TableCell
-                    text={ sumNumbers(preachings.map(p => p.videos)) }
-                    style={{ backgroundColor: '#544C63', width: cellWidth }}
-                />
-
-                <TableCell
-                    text={ sumNumbers(preachings.map(p => p.revisits)) }
-                    style={{ backgroundColor: '#544C63', width: cellWidth }}
+                    text={ `${ sumHours(preachings.map(p => ({ init: p.initHour, finish: p.finalHour }))) }H` }
+                    style={{ backgroundColor: '#544C63', width: cellWidthHours * 2 }}
                 />
             </View>
         </View>

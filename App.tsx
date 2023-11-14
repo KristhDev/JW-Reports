@@ -6,7 +6,7 @@ import { useFlipper } from '@react-navigation/devtools';
 import { MenuProvider } from 'react-native-popup-menu';
 import { Provider as PaperProvider } from 'react-native-paper';
 import SplashScreen from 'react-native-splash-screen';
-import OneSignal from 'react-native-onesignal';
+import { LogLevel, OneSignal } from 'react-native-onesignal';
 import dayjs from 'dayjs';
 import weekday from 'dayjs/plugin/weekday';
 import 'dayjs/locale/es';
@@ -15,11 +15,11 @@ import 'dayjs/locale/es';
 import { ONESIGNAL_APP_ID } from '@env';
 
 /* Features */
-import { store, persistor } from './src/features/store';
+import { store, persistor } from './src/features';
 
 /* Context */
-import { ThemeProvider } from './src/theme/context';
-import { NetworkProvider } from './src/context/network';
+import { ThemeProvider } from './src/theme';
+import { NetworkProvider } from './src/context';
 
 /* Navigation */
 import { Navigation } from './src/navigation';
@@ -42,20 +42,10 @@ const App = () => {
    * listen for push notifications.
    */
   useEffect(() => {
-    ONESIGNAL_APP_ID;
-    OneSignal.setLogLevel(6, 0);
-    OneSignal.setAppId(ONESIGNAL_APP_ID);
+    OneSignal.Debug.setLogLevel(LogLevel.Verbose);
+    OneSignal.initialize(ONESIGNAL_APP_ID);
 
-    /**
-     * A method that shows a native prompt to the user asking for permission to send
-     * notificationspush notifications.
-     */
-    OneSignal.promptForPushNotificationsWithUserResponse();
-
-    OneSignal.setNotificationWillShowInForegroundHandler(notificationReceivedEvent => {
-      const notification = notificationReceivedEvent.getNotification();
-      notificationReceivedEvent.complete(notification);
-    });
+    OneSignal.Notifications.requestPermission(true);
   }, []);
 
   useEffect(() => {

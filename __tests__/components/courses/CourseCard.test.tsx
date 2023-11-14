@@ -5,9 +5,6 @@ import { MenuProvider } from 'react-native-popup-menu';
 /* Components */
 import { CourseCard } from '../../../src/components/courses';
 
-/* Features */
-import { coursesState } from '../../features/courses';
-
 /* Hooks */
 import { useCourses, useTheme } from '../../../src/hooks';
 
@@ -17,9 +14,10 @@ import { darkColors } from '../../../src/theme';
 /* Setup */
 import { navigateMock } from '../../../jest.setup';
 
-const course = coursesState.courses[0];
+/* Mocks */
+import { coursesStateMock, setSelectedCourseMock, setSelectedLessonMock } from '../../mocks';
 
-const setSelectedCourseMock = jest.fn();
+const course = coursesStateMock.courses[0];
 
 /* Mock hooks */
 jest.mock('../../../src/hooks/useCourses.ts');
@@ -27,8 +25,8 @@ jest.mock('../../../src/hooks/useTheme.ts');
 
 describe('Test in <CourseCard /> component', () => {
     (useCourses as jest.Mock).mockReturnValue({
-        state: coursesState,
-        setSelectedLesson: jest.fn(),
+        state: coursesStateMock,
+        setSelectedLesson: setSelectedLessonMock,
         setSelectedCourse: setSelectedCourseMock
     });
 
@@ -66,7 +64,7 @@ describe('Test in <CourseCard /> component', () => {
         expect(statusText).toBeTruthy();
         expect(statusText.props.children).toBe('En Curso');
         expect(personNameText).toBeTruthy();
-        expect(personNameText.props.children).toBe(course.person_name);
+        expect(personNameText.props.children).toBe(course.personName);
         expect(publicationText).toBeTruthy();
         expect(publicationText.props.children).toBe(course.publication);
         expect(aboutText).toBeTruthy();

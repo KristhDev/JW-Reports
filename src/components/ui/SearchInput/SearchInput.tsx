@@ -56,7 +56,7 @@ export const SearchInput: FC<SearchInputProps> = ({ onClean, onSearch, refreshin
             {/* Search icon */}
             <Icon
                 color={ colors.icon }
-                name="ios-search"
+                name="search-outline"
                 size={ 25 }
             />
 

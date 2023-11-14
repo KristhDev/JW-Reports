@@ -14,7 +14,7 @@ import { Fab } from '../../../components/ui';
 import { useCourses, useTheme } from '../../../hooks';
 
 /* Interfaces */
-import { CoursesTopTabsParamsList } from '../../../interfaces/courses';
+import { CoursesTopTabsParamsList } from '../../../interfaces';
 
 /* Theme */
 import { styles as themeStyles } from '../../../theme';
@@ -69,24 +69,22 @@ const Courses: FC<CoursesProps> = ({ route }): JSX.Element => {
                 emptyMessage={ route.params.emptyMessage }
             />
 
-            {
-                (route.name === 'CoursesScreen') && (
-                    <Fab
-                        color={ colors.button }
-                        icon={
-                            <Icon
-                                color={ colors.contentHeader }
-                                name="add-circle-outline"
-                                size={ 40 }
-                                style={{ marginLeft: 3 }}
-                            />
-                        }
-                        onPress={ handleNavigate }
-                        style={ themeStyles.fabBottomRight }
-                        touchColor="rgba(0, 0, 0, 0.15)"
-                    />
-                )
-            }
+            { (route.name === 'CoursesScreen') && (
+                <Fab
+                    color={ colors.button }
+                    icon={
+                        <Icon
+                            color={ colors.contentHeader }
+                            name="add-circle-outline"
+                            size={ 40 }
+                            style={{ marginLeft: 1.5 }}
+                        />
+                    }
+                    onPress={ handleNavigate }
+                    style={ themeStyles.fabBottomRight }
+                    touchColor="rgba(0, 0, 0, 0.15)"
+                />
+            )}
         </>
     );
 }

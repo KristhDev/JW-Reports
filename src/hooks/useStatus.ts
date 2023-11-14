@@ -1,12 +1,10 @@
 import { AuthError, PostgrestError } from '@supabase/supabase-js';
 
 /* Features */
-import { useAppDispatch, useAppSelector } from '../features';
-import { clearStatus as clearStatusAction, setStatus as setStatusAction } from '../features/status';
+import { clearStatus as clearStatusAction, setStatus as setStatusAction, useAppDispatch, useAppSelector } from '../features';
 
 /* Interfaces */
-import { SetStatusPayload } from '../interfaces/status';
-import { StorageError } from '../interfaces/ui';
+import { SetStatusPayload, StorageError } from '../interfaces';
 
 /* Utils */
 import { translateErrorMsg } from '../utils';
@@ -52,6 +50,7 @@ const useStatus = () => {
 
             onDispatch && onDispatch();
             setStatus({ code: status, msg });
+            console.log(error);
 
             return true;
         }

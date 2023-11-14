@@ -1,5 +1,6 @@
 export {
     default as revisitsReducer,
+    REVISITS_INITIAL_STATE,
     INIT_REVISIT,
     addRevisit,
     addRevisits,
@@ -7,9 +8,11 @@ export {
     removeRevisit,
     removeRevisits,
     setHasMoreRevisits,
+    setIsLastRevisitLoading,
     setIsRevisitDeleting,
     setIsRevisitLoading,
     setIsRevisitsLoading,
+    setLastRevisit,
     setRefreshRevisits,
     setRevisitFilter,
     setRevisits,

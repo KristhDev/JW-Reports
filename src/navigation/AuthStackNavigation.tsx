@@ -9,7 +9,7 @@ import { ForgotPassword, Login, Register } from '../screens/auth';
 import { useAuth, useTheme } from '../hooks';
 
 /* Interfaces */
-import { AuthStackParamsList } from '../interfaces/auth';
+import { AuthStackParamsList } from '../interfaces';
 
 const Stack = createStackNavigator<AuthStackParamsList>();
 

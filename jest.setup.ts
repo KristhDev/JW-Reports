@@ -1,7 +1,20 @@
 import 'react-native-gesture-handler/jestSetup';
 
+const netInfoStateTypeMock = {
+    unknown: 'unknown',
+    none: 'none',
+    cellular: 'cellular',
+    wifi: 'wifi',
+    bluetooth: 'bluetooth',
+    ethernet: 'ethernet',
+    wimax: 'wimax',
+    vpn: 'vpn',
+    other: 'other'
+}
+
 jest.mock('@react-native-community/netinfo', () => ({
-    addEventListener: jest.fn()
+    addEventListener: jest.fn(),
+    NetInfoStateType: netInfoStateTypeMock
 }));
 
 jest.mock('react-native-onesignal', () => ({

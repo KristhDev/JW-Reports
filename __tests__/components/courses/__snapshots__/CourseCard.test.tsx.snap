@@ -56,7 +56,6 @@ exports[`Test in <CourseCard /> component should to match snapshot 1`] = `
           {
             "overflow": "hidden",
           },
-          false,
           {
             "marginVertical": 8,
             "width": 734,
@@ -155,16 +154,15 @@ exports[`Test in <CourseCard /> component should to match snapshot 1`] = `
               {
                 "overflow": "hidden",
               },
-              false,
               [
                 {
                   "alignItems": "center",
                   "backgroundColor": "transparent",
                   "borderRadius": 50,
-                  "height": 42,
+                  "height": 48,
                   "justifyContent": "center",
                   "margin": 5,
-                  "width": 42,
+                  "width": 48,
                 },
                 {
                   "height": 35,
@@ -199,7 +197,7 @@ exports[`Test in <CourseCard /> component should to match snapshot 1`] = `
               ]
             }
           >
-            
+            
           </Text>
         </View>
         <View

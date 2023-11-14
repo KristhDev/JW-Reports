@@ -9,7 +9,7 @@ import { Courses } from '../../screens/courses';
 import { useTheme } from '../../hooks';
 
 /* Interfaces */
-import { CoursesTopTabsParamsList } from '../../interfaces/courses';
+import { CoursesTopTabsParamsList } from '../../interfaces';
 
 const Tabs = createMaterialTopTabNavigator<CoursesTopTabsParamsList>();
 

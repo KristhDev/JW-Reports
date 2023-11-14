@@ -13,8 +13,8 @@ import { darkColors } from '../../../src/theme';
 /* Setup */
 import { navigateMock } from '../../../jest.setup';
 
-const signInMock = jest.fn();
-const setErrorFormMock = jest.fn();
+/* Mocks */
+import { setErrorFormMock, signInMock } from '../../mocks';
 
 /* Mock hooks */
 jest.mock('../../../src/hooks/useAuth.ts');
