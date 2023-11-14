@@ -1,5 +1,6 @@
 import React, { FC, useEffect, useState } from 'react';
 import { Keyboard, View } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 import { BottomTabBarProps } from '@react-navigation/bottom-tabs';
 
 /* Components */
@@ -19,13 +20,17 @@ import styles from './styles';
  * props for functionality of the component
  * @return {JSX.Element} Return jsx element to render tab bar of navigation
  */
-export const TabBar: FC<BottomTabBarProps> = ({ navigation, state, descriptors }): JSX.Element => {
+export const TabBar: FC<BottomTabBarProps> = ({ state, descriptors }): JSX.Element => {
     const [ hideTabBar, setHideTabBar ] = useState<boolean>(false);
+    const { navigate } = useNavigation();
     const { state: { colors } } = useTheme();
 
     const icons = [ 'home-outline', 'briefcase-outline', 'book-outline' ];
-
-    const { navigate } = navigation;
+    const firstScreens = {
+        'PreachingStackNavigation': 'HomeScreen',
+        'RevisitsStackNavigation': 'RevisitsTopTabsNavigation',
+        'CoursesStackNavigation': 'CoursesTopTabsNavigation',
+    }
 
     /**
      * Effect to show or hide tabbar when the keyboard is shown or hidden
@@ -47,33 +52,29 @@ export const TabBar: FC<BottomTabBarProps> = ({ navigation, state, descriptors }
 
     return (
         <>
-            {
-                (!hideTabBar) && (
-                    <View
-                        style={{
-                            ...styles.container,
-                            backgroundColor: colors.bottom,
-                        }}
-                    >
-                        {
-                            state.routes.map((route, index) => (
-                                <TabBarBtn
-                                    active={ state.index === index }
-                                    key={ route.key }
-                                    onPress={ () => navigate(route.name) }
-                                    iconName={ icons[index] }
-                                    title={ descriptors[route.key]?.options.title || '' }
-                                    color={
-                                        (state.index === index)
-                                            ? descriptors[route.key]?.options.tabBarActiveTintColor
-                                            : descriptors[route.key]?.options.tabBarInactiveTintColor
-                                    }
-                                />
-                            ))
-                        }
-                    </View>
-                )
-            }
+            { (!hideTabBar) && (
+                <View
+                    style={{
+                        ...styles.container,
+                        backgroundColor: colors.bottom,
+                    }}
+                >
+                    { state.routes.map((route, index) => (
+                        <TabBarBtn
+                            active={ state.index === index }
+                            key={ route.key }
+                            onPress={ () => navigate({ name: route.name, params: { screen: firstScreens[(route.name as keyof typeof firstScreens)] } } as never) }
+                            iconName={ icons[index] }
+                            title={ descriptors[route.key]?.options.title || '' }
+                            color={
+                                (state.index === index)
+                                    ? descriptors[route.key]?.options.tabBarActiveTintColor
+                                    : descriptors[route.key]?.options.tabBarInactiveTintColor
+                            }
+                        />
+                    )) }
+                </View>
+            ) }
         </>
     );
 }

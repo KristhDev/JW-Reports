@@ -10,11 +10,11 @@ import { useAuth, useStatus, useTheme } from '../../../src/hooks';
 /* Theme */
 import { darkColors } from '../../../src/theme';
 
+/* Mocks */
+import { setErrorFormMock, signUpMock } from '../../mocks';
+
 /* Setup */
 import { navigateMock } from '../../../jest.setup';
-
-const signUpMock = jest.fn();
-const setErrorFormMock = jest.fn();
 
 /* Mock hooks */
 jest.mock('../../../src/hooks/useAuth.ts');
@@ -50,15 +50,15 @@ describe('Test in <RegisterForm /> component', () => {
             render(<RegisterForm />);
         });
 
+        const touchable = await screen.findByTestId('button-touchable');
+
         await waitFor(() => {
-
             /* Get touchable to submit form */
-            const touchable = screen.getByTestId('button-touchable');
             fireEvent.press(touchable);
-
-            /* Check if setErrorForm is called one time */
-            expect(setErrorFormMock).toHaveBeenCalledTimes(1);
         });
+
+        /* Check if setErrorForm is called one time */
+        expect(setErrorFormMock).toHaveBeenCalledTimes(1);
     });
 
     it('should call signUp when the form is valid', async () => {
@@ -71,25 +71,34 @@ describe('Test in <RegisterForm /> component', () => {
         const email = 'tester@gmail.com';
         const password = 'pass-test-1234';
 
-        await act(async() => {
-            await waitFor(() => {
+        const inputsText = await screen.findAllByTestId('form-field-text-input');
 
-                /* Get text inputs to type name, surname, email and password */
-                const inputsText = screen.getAllByTestId('form-field-text-input');
-                fireEvent(inputsText[0], 'onChangeText', name);
-                fireEvent(inputsText[1], 'onChangeText', surname);
-                fireEvent(inputsText[2], 'onChangeText', email);
-                fireEvent(inputsText[3], 'onChangeText', password);
-                fireEvent(inputsText[4], 'onChangeText', password);
+        await waitFor(() => {
 
-                /* Get touchable to submit form */
-                const touchable = screen.getByTestId('button-touchable');
-                fireEvent.press(touchable);
-
-                /* Check if signUp is called one time */
-                expect(signUpMock).toHaveBeenCalledTimes(1);
-            });
+            /* Get text inputs to type name, surname, email and password */
+            fireEvent(inputsText[0], 'onChangeText', name);
+            fireEvent(inputsText[1], 'onChangeText', surname);
+            fireEvent(inputsText[2], 'onChangeText', email);
+            fireEvent(inputsText[3], 'onChangeText', password);
+            fireEvent(inputsText[4], 'onChangeText', password);
         });
+
+        /* Get touchable to submit form */
+        const touchable = await screen.findByTestId('button-touchable');
+
+        await waitFor(() => {
+            fireEvent.press(touchable);
+        });
+
+        /* Check if signUp is called one time */
+        expect(signUpMock).toHaveBeenCalledTimes(1);
+        expect(signUpMock).toHaveBeenCalledWith({
+            name,
+            surname,
+            email,
+            password,
+            confirmPassword: password
+        }, expect.any(Object));
     });
 
     it('should call navigate of useNavigation with respective values', async () => {
@@ -97,17 +106,15 @@ describe('Test in <RegisterForm /> component', () => {
             render(<RegisterForm />);
         });
 
-        await act(async() => {
-            await waitFor(() => {
+        const touchableSignIn = await screen.findByTestId('register-form-sign-in');
 
-                /* Get touchable to navigate of LoginScreen */
-                const touchableSignIn = screen.getByTestId('register-form-sign-in');
-                fireEvent.press(touchableSignIn);
-
-                /* Check if navigate is called with respective arg */
-                expect(navigateMock).toHaveBeenCalledWith('LoginScreen');
-            });
+        await waitFor(() => {
+            /* Get touchable to navigate of LoginScreen */
+            fireEvent.press(touchableSignIn);
         });
+
+        /* Check if navigate is called with respective arg */
+        expect(navigateMock).toHaveBeenCalledWith('LoginScreen');
     });
 
     it('should disabled button then isAuthLoading is true', async () => {
@@ -122,13 +129,8 @@ describe('Test in <RegisterForm /> component', () => {
             render(<RegisterForm />);
         });
 
-        await act(async() => {
-            await waitFor(() => {
-
-                /* Get submit touchable and check if disabled */
-                const touchable = screen.getByTestId('button-touchable');
-                expect(touchable.props.accessibilityState.disabled).toBeTruthy();
-            });
-        });
+        /* Get submit touchable and check if disabled */
+        const touchable = await screen.findByTestId('button-touchable');
+        expect(touchable.props.accessibilityState.disabled).toBeTruthy();
     });
 });

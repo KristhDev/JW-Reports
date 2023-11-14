@@ -2,37 +2,49 @@ import { useNavigation } from '@react-navigation/native';
 import { Image } from 'react-native-image-crop-picker';
 import dayjs from 'dayjs';
 
-/* Supabase - config */
-import { supabase } from '../supabase/config';
+/* Supabase */
+import { supabase } from '../supabase';
+
+/* Adapters */
+import { revisitAdapter, revisitFormValuesAdapter } from '../adapters';
 
 /* Features */
-import { useAppDispatch, useAppSelector } from '../features';
 import {
     INIT_REVISIT,
     addRevisit,
     addRevisits as addRevisitsAction,
     clearRevisits as clearRevisitsAction,
+    removeRevisit,
     removeRevisits as removeRevisitsAction,
     setHasMoreRevisits,
-    setRefreshRevisits as setRefreshRevisitsAction,
+    setIsLastRevisitLoading as setIsLastRevisitLoadingAction,
     setIsRevisitDeleting,
     setIsRevisitLoading,
     setIsRevisitsLoading as setIsRevisitsLoadingAction,
+    setLastRevisit,
+    setRefreshRevisits as setRefreshRevisitsAction,
     setRevisitFilter,
     setRevisits as setRevisitsAction,
     setRevisitsPagination as setRevisitsPaginationAction,
     setRevisitsScreenHistory as setRevisitsScreenHistoryAction,
     setSelectedRevisit as setSelectedRevisitAction,
     updateRevisit as updateRevisitAction,
-    removeRevisit,
-} from '../features/revisits';
+    useAppDispatch,
+    useAppSelector
+} from '../features';
 
 /* Hooks */
 import { useAuth, useImage, useNetwork, useStatus } from './';
 
 /* Interfaces */
-import { Revisit, RevisitFormValues, SaveRevisitOptions, loadRevisitsOptions } from '../interfaces/revisits';
-import { Pagination } from '../interfaces/ui';
+import {
+    loadRevisitsOptions,
+    Pagination,
+    Revisit,
+    RevisitEndpoint,
+    RevisitFormValues,
+    SaveRevisitOptions
+} from '../interfaces';
 
 /**
  * Hook to management revisits of store with state and actions
@@ -44,19 +56,52 @@ const useRevisits = () => {
     const { state: { isAuthenticated, user } } = useAuth();
     const { uploadImage, deleteImage } = useImage();
     const { setStatus, setSupabaseError, setUnauthenticatedError, setNetworkError } = useStatus();
-    const { isConnected } = useNetwork();
+    const { wifi } = useNetwork();
 
     const state = useAppSelector(store => store.revisits);
 
     const addRevisits = (revisits: Revisit[]) => dispatch(addRevisitsAction({ revisits }));
     const clearRevisits = () => dispatch(clearRevisitsAction());
     const removeRevisits = () => dispatch(removeRevisitsAction());
+    const setIsLastRevisitLoading = (isLoading: boolean) => dispatch(setIsLastRevisitLoadingAction({ isLoading }));
     const setIsRevisitsLoading = (isLoading: boolean) => dispatch(setIsRevisitsLoadingAction({ isLoading }));
     const setRefreshRevisits = (refresh: boolean) => dispatch(setRefreshRevisitsAction({ refresh }));
     const setRevisits = (revisits: Revisit[]) => dispatch(setRevisitsAction({ revisits }));
     const setRevisitsScreenHistory = (newScreen: string) => dispatch(setRevisitsScreenHistoryAction({ newScreen }));
     const setRevisitsPagination = (pagination: Pagination) => dispatch(setRevisitsPaginationAction({ pagination }));
     const setSelectedRevisit = (revisit: Revisit) => dispatch(setSelectedRevisitAction({ revisit }));
+
+    /**
+     * Loads the last revisit from the database.
+     *
+     * @return {Promise<void>} - Returns a promise that resolves when the last revisit is loaded.
+     */
+    const loadLastRevisit = async (): Promise<void> => {
+        if (!wifi.isConnected) {
+            setNetworkError();
+            return;
+        }
+
+        setIsLastRevisitLoading(true);
+
+        if (!isAuthenticated) {
+            setUnauthenticatedError(() => setIsLastRevisitLoading(false));
+            return;
+        }
+
+        const { data, error, status } = await supabase.from('revisits')
+            .select<'*', RevisitEndpoint>('*')
+            .eq('user_id', user.id)
+            .order('next_visit', { ascending: false })
+            .limit(1);
+
+        const next = setSupabaseError(error, status, () => setIsLastRevisitLoading(false));
+        if (next) return;
+
+        dispatch(setLastRevisit({
+            revisit: data ? revisitAdapter(data[0]) : INIT_REVISIT
+        }));
+    }
 
     /**
      * This function is to load the revisits using the options that are passed by parameter, you can
@@ -72,7 +117,7 @@ const useRevisits = () => {
     const loadRevisits = async ({ filter, loadMore = false, refresh = false, search = '' }: loadRevisitsOptions): Promise<void> => {
         dispatch(setRevisitFilter({ filter }));
 
-        if (!isConnected) {
+        if (!wifi.isConnected) {
             setNetworkError();
             return;
         }
@@ -84,7 +129,9 @@ const useRevisits = () => {
             return;
         }
 
-        const revisitsPromise = supabase.from('revisits').select<'*', Revisit>().eq('user_id', user.id);
+        const revisitsPromise = supabase.from('revisits')
+            .select<'*', RevisitEndpoint>()
+            .eq('user_id', user.id);
 
         if (filter === 'visited') revisitsPromise.eq('done', true);
         else if (filter === 'unvisited') revisitsPromise.eq('done', false);
@@ -116,8 +163,10 @@ const useRevisits = () => {
             });
         }
 
+        const revisits = data!.map(revisitAdapter);
+
         dispatch(setHasMoreRevisits({ hasMore: (data!.length >= 10) }));
-        (loadMore) ? addRevisits(data!) : setRevisits(data!);
+        (loadMore) ? addRevisits(revisits!) : setRevisits(revisits!);
     }
 
     /**
@@ -132,7 +181,7 @@ const useRevisits = () => {
      * @return {Promise<void>} This function does not return anything.
      */
     const saveRevisit = async ({ revisitValues, back = true, image, onFinish }: SaveRevisitOptions): Promise<void> => {
-        if (!isConnected) {
+        if (!wifi.isConnected) {
             setNetworkError();
             return;
         }
@@ -166,12 +215,12 @@ const useRevisits = () => {
 
         const { data, error, status } = await supabase.from('revisits')
             .insert({
-                ...revisitValues,
+                ...revisitFormValuesAdapter(revisitValues),
                 photo,
-                next_visit: dayjs(revisitValues.next_visit).format('YYYY-MM-DD HH:mm:ss.SSSSSS'),
+                next_visit: dayjs(revisitValues.nextVisit).format('YYYY-MM-DD HH:mm:ss.SSSSSS'),
                 user_id: user.id
             })
-            .select<'*', Revisit>();
+            .select<'*', RevisitEndpoint>();
 
         const next = setSupabaseError(error, status, () => {
             dispatch(setIsRevisitLoading({ isLoading: false }));
@@ -180,16 +229,17 @@ const useRevisits = () => {
 
         if (next) return;
 
-        dispatch(addRevisit({ revisit: data![0] }));
+        dispatch(addRevisit({ revisit: revisitAdapter(data![0]) }));
         onFinish && onFinish();
 
         const successMsg = (back)
-            ? 'Has agregado tu revisita correctamente.'
-            : `Has agregado correctamente a ${ data![0].person_name } para volverla a visitar.`
+            ? 'Haz agregado tu revisita correctamente.'
+            : `Haz agregado correctamente a ${ data![0].person_name } para volverla a visitar.`
 
         setStatus({ code: status, msg: successMsg });
 
         back && navigate('RevisitsTopTabsNavigation' as never);
+        if (user.precursor === 'ninguno') loadLastRevisit();
     }
 
     /**
@@ -200,7 +250,7 @@ const useRevisits = () => {
      * @return {Promise<void>} This function does not return anything
      */
     const updateRevisit = async (revisitValues: RevisitFormValues, image?: Image): Promise<void> => {
-        if (!isConnected) {
+        if (!wifi.isConnected) {
             setNetworkError();
             return;
         }
@@ -246,24 +296,26 @@ const useRevisits = () => {
 
         const { data, error, status } = await supabase.from('revisits')
             .update({
-                ...revisitValues,
+                ...revisitFormValuesAdapter(revisitValues),
                 photo,
-                next_visit: dayjs(revisitValues.next_visit).format('YYYY-MM-DD HH:mm:ss.SSSSSS'),
+                next_visit: dayjs(revisitValues.nextVisit).format('YYYY-MM-DD HH:mm:ss.SSSSSS'),
                 updated_at: dayjs().format('YYYY-MM-DD HH:mm:ss.SSSSSS')
             })
             .eq('id', state.selectedRevisit.id)
             .eq('user_id', user.id)
-            .select<'*', Revisit>();
+            .select<'*', RevisitEndpoint>();
 
         const next = setSupabaseError(error, status, () => dispatch(setIsRevisitLoading({ isLoading: false })));
         if (next) return;
 
-        dispatch(updateRevisitAction({ revisit: data![0] }));
+        dispatch(updateRevisitAction({ revisit: revisitAdapter(data![0]) }));
 
         setStatus({
             code: 200,
-            msg: 'Has actualizado tu revisita correctamente.'
+            msg: 'Haz actualizado tu revisita correctamente.'
         });
+
+        if (user.precursor === 'ninguno') loadLastRevisit();
 
         goBack();
     }
@@ -276,7 +328,7 @@ const useRevisits = () => {
      * @return {Promise<void>} This function does not return anything
      */
     const deleteRevisit = async (back: boolean = false, onFinish?: () => void): Promise<void> => {
-        if (!isConnected) {
+        if (!wifi.isConnected) {
             setNetworkError();
             return;
         }
@@ -335,9 +387,13 @@ const useRevisits = () => {
 
         setSelectedRevisit(INIT_REVISIT);
 
+        if (user.precursor === 'ninguno' && state.lastRevisit.id === state.selectedRevisit.id) {
+            loadLastRevisit();
+        }
+
         setStatus({
             code: 200,
-            msg: 'Has eliminado tu revisita correctamente.'
+            msg: 'Haz eliminado tu revisita correctamente.'
         });
     }
 
@@ -348,7 +404,7 @@ const useRevisits = () => {
      * @return {Promise<string | void>} This function returns a string
      */
     const completeRevisit = async (onFailFinish?: () => void): Promise<string> => {
-        if (!isConnected) {
+        if (!wifi.isConnected) {
             setNetworkError();
             return '';
         }
@@ -384,7 +440,7 @@ const useRevisits = () => {
             })
             .eq('id', state.selectedRevisit.id)
             .eq('user_id', user.id)
-            .select<'*', Revisit>();
+            .select<'*', RevisitEndpoint>();
 
         if (error) {
             console.log(error);
@@ -395,10 +451,16 @@ const useRevisits = () => {
             return '';
         }
 
-        dispatch(updateRevisitAction({ revisit: data![0] }));
-        setSelectedRevisit(data![0]);
+        const revisit = revisitAdapter(data![0]);
 
-        return 'Has marcado como completa tu revista correctamente.';
+        dispatch(updateRevisitAction({ revisit }));
+        setSelectedRevisit(revisit);
+
+        if (user.precursor === 'ninguno' && state.lastRevisit.id === state.selectedRevisit.id) {
+            dispatch(setLastRevisit({ revisit }));
+        }
+
+        return 'Haz marcado como completa tu revisita correctamente.';
     }
 
     return {
@@ -413,11 +475,12 @@ const useRevisits = () => {
         setSelectedRevisit,
 
         // Functions
+        completeRevisit,
         deleteRevisit,
+        loadLastRevisit,
         loadRevisits,
         saveRevisit,
-        updateRevisit,
-        completeRevisit
+        updateRevisit
     }
 }
 

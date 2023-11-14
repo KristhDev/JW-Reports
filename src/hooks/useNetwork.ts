@@ -1,14 +1,14 @@
 import { useContext } from 'react';
 
 /* Context */
-import { NetworkContext } from '../context/network';
+import { NetworkContext, NetworkContextProps } from '../context';
 
 /**
- * This function returns the context of the network.
- * @returns The `useNetwork` function is returning the value of the `NetworkContext` using the
- * `useContext` hook.
+ * A hook that returns the network context.
+ *
+ * @return {NetworkContextProps} The network context.
  */
-const useNetwork = () => {
+const useNetwork = (): NetworkContextProps => {
     return useContext(NetworkContext);
 }
 

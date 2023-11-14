@@ -1,6 +1,6 @@
-export { CourseCard } from './CourseCard';
-export { CourseForm } from './CourseForm';
-export { CoursesList } from './CoursesList';
-export { LessonCard } from './LessonCard';
-export { LessonForm } from './LessonForm';
-export { LessonsList } from './LessonsList';
+export * from './CourseCard';
+export * from './CourseForm';
+export * from './CoursesList';
+export * from './LessonCard';
+export * from './LessonForm';
+export * from './LessonsList';

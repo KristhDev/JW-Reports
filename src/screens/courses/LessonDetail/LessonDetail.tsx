@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { ScrollView, Text, TouchableOpacity, View } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useRoute } from '@react-navigation/native';
 import dayjs from 'dayjs';
 
 /* Features */
@@ -28,12 +28,13 @@ import styles from './styles';
 const LessonDetail = (): JSX.Element => {
     const [ showFSModal, setShowFSModal ] = useState<boolean>(false);
     const { addListener, getState, removeListener } = useNavigation();
+    const { name } = useRoute();
 
     const { state: { selectedCourse, selectedLesson }, setSelectedLesson } = useCourses();
     const { state: { colors } } = useTheme();
 
     const statusLessonText = (selectedLesson.done) ? 'Impartida' : 'Por impartir';
-    const nextVisit = dayjs(selectedLesson.next_lesson);
+    const nextVisit = dayjs(selectedLesson.nextLesson);
 
     /**
      * Effect to reset selectedLesson when index in navigation
@@ -42,10 +43,11 @@ const LessonDetail = (): JSX.Element => {
     useEffect(() => {
         addListener('blur', () => {
             const { index } = getState();
-            if (index !== 4) {
+
+            if ((name === 'LessonDetailScreen' && index !== 4) || (name === 'HomeLessonDetailScreen' && index !== 2)) {
                 setSelectedLesson({
                     ...INIT_LESSON,
-                    next_lesson: new Date().toString()
+                    nextLesson: new Date().toString()
                 });
             }
         });
@@ -66,7 +68,7 @@ const LessonDetail = (): JSX.Element => {
                 {/* Title of detail */}
                 <Title
                     containerStyle={ themeStyles.titleContainer }
-                    text={ `CLASE DEL CURSO CON ${ selectedCourse.person_name.toUpperCase() }` }
+                    text={ `CLASE DEL CURSO CON ${ selectedCourse.personName.toUpperCase() }` }
                     textStyle={{ fontSize: 24 }}
                 />
 
@@ -148,7 +150,7 @@ const LessonDetail = (): JSX.Element => {
                     style={{ ...styles.dateCreatedText, color: colors.modalText }}
                     testID="lesson-detail-date-created-text"
                 >
-                    { dayjs(selectedLesson.created_at).format('DD/MM/YYYY') }
+                    { dayjs(selectedLesson.createdAt).format('DD/MM/YYYY') }
                 </Text>
             </ScrollView>
 

@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { ActivityIndicator, Image, Text, View, useWindowDimensions } from 'react-native';
 import { Formik } from 'formik';
-import { date, object, string } from 'yup';
 import Icon from 'react-native-vector-icons/Ionicons';
 
 /* Components */
@@ -10,8 +9,11 @@ import { Button, DatetimeField, FormField } from '../../ui';
 /* Hooks */
 import { useImage, useRevisits, useStatus, useTheme } from '../../../hooks';
 
+/* Schemas */
+import { revisitFormSchema } from './schemas';
+
 /* Interfaces */
-import { RevisitFormValues } from '../../../interfaces/revisits';
+import { RevisitFormValues } from '../../../interfaces';
 
 /* Theme */
 import { styles as themeStyles } from '../../../theme';
@@ -47,21 +49,6 @@ export const RevisitForm = (): JSX.Element => {
             ? saveRevisit({ revisitValues, image: isChangeImage() ? image : undefined })
             : updateRevisit(revisitValues, isChangeImage() ? image : undefined);
     }
-
-    /* Validation schema of revisit */
-    const revisitFormSchema = object().shape({
-        person_name: string()
-            .min(2, 'El nombre de la persona debe tener al menos 2 caracteres.')
-            .required('El nombre de la persona es requerido.'),
-        about: string()
-            .min(10, 'La información de la persona debe tener al menos 10 caracteres.')
-            .required('La información de la persona es requerida.'),
-        address: string()
-            .min(10, 'La dirección debe tener al menos 10 caracteres.')
-            .required('La dirección es requerida.'),
-        next_visit: date()
-            .required('La fecha de la próxima visita no puede estar vacía'),
-    });
 
     /**
      * If selectedRevisit.photo is not null, return true if selectedRevisit.photo is not equal to
@@ -111,10 +98,10 @@ export const RevisitForm = (): JSX.Element => {
     return (
         <Formik
             initialValues={{
-                person_name: selectedRevisit.person_name,
+                personName: selectedRevisit.personName,
                 about: selectedRevisit.about,
                 address: selectedRevisit.address,
-                next_visit: new Date(selectedRevisit.next_visit)
+                nextVisit: new Date(selectedRevisit.nextVisit)
             }}
             onSubmit={ handleSaveOrUpdate }
             validateOnMount
@@ -133,7 +120,7 @@ export const RevisitForm = (): JSX.Element => {
                             />
                         }
                         label="Nombre de la persona:"
-                        name="person_name"
+                        name="personName"
                         placeholder="Ingrese el nombre"
                     />
 
@@ -214,7 +201,7 @@ export const RevisitForm = (): JSX.Element => {
                         label="Próxima visita:"
                         modalTitle="Próxima visita"
                         mode="date"
-                        name="next_visit"
+                        name="nextVisit"
                         placeholder="Seleccione el día"
                         style={{ marginBottom: 40 }}
                     />

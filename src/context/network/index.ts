@@ -1,2 +1,3 @@
 export { default as NetworkContext } from './NetworkContext';
-export { default as NetworkProvider } from './NetworkProvider';
+export type * from './NetworkContext';
+export { default as NetworkProvider, INIT_WIFI_STATE } from './NetworkProvider';

@@ -6,4 +6,5 @@ export interface RevisitCardProps {
     onPass: () => void;
     onRevisit: () => void;
     revisit: Revisit;
+    screenToNavigate: string;
 }

@@ -10,11 +10,11 @@ import { useAuth, useStatus, useTheme } from '../../../src/hooks';
 /* Theme */
 import { darkColors } from '../../../src/theme';
 
+/* Mocks */
+import { resetPasswordMock, setErrorFormMock } from '../../mocks';
+
 /* Setup */
 import { navigateMock } from '../../../jest.setup';
-
-const resetPasswordMock = jest.fn();
-const setErrorFormMock = jest.fn();
 
 /* Mock hooks */
 jest.mock('../../../src/hooks/useAuth.ts');

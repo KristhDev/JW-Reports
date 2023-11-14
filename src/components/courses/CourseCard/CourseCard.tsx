@@ -73,7 +73,7 @@ export const CourseCard: FC<CourseCardProps> = ({ course, onActiveOrSuspend, onD
         setSelectedCourse(course);
         setSelectedLesson({
             ...selectedLesson,
-            next_lesson: new Date().toString()
+            nextLesson: new Date().toString()
         });
 
         navigate('AddOrEditLessonScreen' as never);
@@ -117,12 +117,11 @@ export const CourseCard: FC<CourseCardProps> = ({ course, onActiveOrSuspend, onD
                     style={{ ...styles.textDate, color: colors.icon }}
                     testID="course-card-status-text"
                 >
-                    {
-                        (course.finished)
-                            ? 'Terminado'
-                            : (course.suspended)
-                                ? 'Suspendido'
-                                : 'En Curso'
+                    { (course.finished)
+                        ? 'Terminado'
+                        : (course.suspended)
+                            ? 'Suspendido'
+                            : 'En Curso'
                     }
                 </Text>
 
@@ -131,7 +130,7 @@ export const CourseCard: FC<CourseCardProps> = ({ course, onActiveOrSuspend, onD
                     style={{ ...styles.textName, color: colors.text }}
                     testID="course-card-name-text"
                 >
-                    { course.person_name }
+                    { course.personName }
                 </Text>
 
                 <Text
@@ -146,7 +145,7 @@ export const CourseCard: FC<CourseCardProps> = ({ course, onActiveOrSuspend, onD
                     style={{ ...styles.textDescription, color: colors.text }}
                     testID="course-card-about-text"
                 >
-                    { (course.person_about.length > 200) ? course.person_about.substring(0, 200) + '...' : course.person_about }
+                    { (course.personAbout.length > 200) ? course.personAbout.substring(0, 200) + '...' : course.personAbout }
                 </Text>
 
                 <Fab
@@ -203,15 +202,15 @@ export const CourseCard: FC<CourseCardProps> = ({ course, onActiveOrSuspend, onD
                         ) }
 
                         <MenuOption onSelect={ handleLessonList }>
-                                <Text
-                                    style={{
-                                        color: colors.text,
-                                        ...styles.textMenuOpt
-                                    }}
-                                >
-                                    Clases
-                                </Text>
-                            </MenuOption>
+                            <Text
+                                style={{
+                                    color: colors.text,
+                                    ...styles.textMenuOpt
+                                }}
+                            >
+                                Clases
+                            </Text>
+                        </MenuOption>
 
                         {/* Show menu options then course.suspended is false */}
                         {/* It is not possible to finish or add lessons to the course if it is suspended */}

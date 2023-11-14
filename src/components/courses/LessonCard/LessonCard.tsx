@@ -29,7 +29,7 @@ import styles from './styles';
  * - onFinish: This is a function to finish the lesson
  * @return {JSX.Element} rendered component to show the lesson
  */
-export const LessonCard: FC<LessonCardProps> = ({ lesson, onDelete, onFinish }): JSX.Element => {
+export const LessonCard: FC<LessonCardProps> = ({ lesson, screenToNavigate, onClick, onDelete, onFinish }): JSX.Element => {
     const [ isOpen, setIsOpen ] = useState<boolean>(false);
     const { navigate } = useNavigation();
     const { width } = useWindowDimensions();
@@ -37,7 +37,7 @@ export const LessonCard: FC<LessonCardProps> = ({ lesson, onDelete, onFinish }):
     const { setSelectedLesson } = useCourses();
     const { state: { colors }, BUTTON_TRANSPARENT_COLOR } = useTheme();
 
-    const nextVisit = dayjs(lesson.next_lesson);
+    const nextVisit = dayjs(lesson.nextLesson);
 
     /**
      * When the user clicks on a lesson, the lesson is set as the selected lesson and the user is
@@ -47,7 +47,8 @@ export const LessonCard: FC<LessonCardProps> = ({ lesson, onDelete, onFinish }):
      */
     const handleLessonDetail = (): void => {
         setSelectedLesson(lesson);
-        navigate('LessonDetailScreen' as never);
+        onClick && onClick();
+        navigate(screenToNavigate as never);
     }
 
     /**
@@ -88,10 +89,9 @@ export const LessonCard: FC<LessonCardProps> = ({ lesson, onDelete, onFinish }):
                     style={{ ...styles.textDate, color: colors.icon }}
                     testID="lesson-card-status-text"
                 >
-                    {
-                        (lesson.done)
-                            ? 'Clase impartida'
-                            : `Clase para el ${ nextVisit.format('DD') } de ${ nextVisit.format('MMMM') } del ${ nextVisit.format('YYYY') }`
+                    { (lesson.done)
+                        ? 'Clase impartida'
+                        : `Clase para el ${ nextVisit.format('DD') } de ${ nextVisit.format('MMMM') } del ${ nextVisit.format('YYYY') }`
                     }
                 </Text>
 

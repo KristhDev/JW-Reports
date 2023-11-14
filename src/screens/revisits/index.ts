@@ -1,4 +1,4 @@
-export { AddOrEditRevisit } from './AddOrEditRevisit';
-export { RevisitDetail } from './RevisitDetail';
-export { RevisitModal } from './RevisitModal';
-export { Revisits } from './Revisits';
+export * from './AddOrEditRevisit';
+export * from './RevisitDetail';
+export * from './RevisitModal';
+export * from './Revisits';

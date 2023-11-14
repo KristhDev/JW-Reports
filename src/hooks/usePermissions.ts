@@ -1,14 +1,13 @@
 import { request, PERMISSIONS } from 'react-native-permissions';
 
-/* Store */
-import { useAppDispatch, useAppSelector } from '../features';
+/* Features */
+import { checkPermissions as checkPermissionsThunk, setPermission, useAppDispatch, useAppSelector } from '../features';
 
-/* Features - actions */
-import { checkPermissions as checkPermissionsThunk, setPermission } from '../features/permissions';
-import { setStatus } from '../features/status';
+/* Hooks */
+import useStatus from './useStatus';
 
 /* Interfaces */
-import { Permissions } from '../interfaces/permissions';
+import { Permissions } from '../interfaces';
 
 /**
  * Hook to management permissions of store
@@ -18,6 +17,7 @@ const usePermissions = () => {
     const dispatch = useAppDispatch();
 
     const state = useAppSelector(store => store.permissions);
+    const { setStatus } = useStatus();
 
     /**
      * It asks for a permission and if the permission is not available it sets a status message.
@@ -34,10 +34,10 @@ const usePermissions = () => {
         const result = await request(askPermissions[permission]);
 
         if (result === 'unavailable') {
-            dispatch(setStatus({
+            setStatus({
                 msg: 'Lo sentimos pero su dispositivo no soporta está funcionalidad.',
                 code: 418
-            }));
+            });
         }
 
         dispatch(setPermission({ key: permission, value: result }));

@@ -6,9 +6,6 @@ import dayjs from 'dayjs';
 /* Components */
 import { LessonCard } from '../../../src/components/courses';
 
-/* Features */
-import { lessons } from '../../features/courses';
-
 /* Hooks */
 import { useCourses, useTheme } from '../../../src/hooks';
 
@@ -18,9 +15,10 @@ import { darkColors } from '../../../src/theme';
 /* Setup */
 import { navigateMock } from '../../../jest.setup';
 
-const lesson = lessons[0];
+/* Mocks */
+import { lessonsMock, setSelectedLessonMock } from '../../mocks';
 
-const setSelectedLessonMock = jest.fn();
+const lesson = lessonsMock[0];
 
 /* Mock hooks */
 jest.mock('../../../src/hooks/useCourses.ts');
@@ -43,6 +41,7 @@ describe('Test in <LessonCard /> component', () => {
                     lesson={ lesson }
                     onDelete={ jest.fn() }
                     onFinish={ jest.fn() }
+                    screenToNavigate="LessonDetailScreen"
                 />
             </MenuProvider>
         );
@@ -60,7 +59,7 @@ describe('Test in <LessonCard /> component', () => {
         const statusText = screen.getByTestId('lesson-card-status-text');
         const descriptionText = screen.getByTestId('lesson-card-description-text');
 
-        const nextVisit = dayjs(lesson.next_lesson);
+        const nextVisit = dayjs(lesson.nextLesson);
 
         /* Check if elemets exists and containt content of lesson */
         expect(statusText).toBeTruthy();

@@ -2,7 +2,6 @@ import React from 'react';
 import { View, Text, TouchableOpacity, ActivityIndicator } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { Formik } from 'formik';
-import { object, string } from 'yup';
 import Icon from 'react-native-vector-icons/Ionicons';
 
 /* Components */
@@ -10,6 +9,9 @@ import { Button, FormField } from '../../ui';
 
 /* Hooks */
 import { useAuth, useStatus, useTheme } from '../../../hooks';
+
+/* Schemas */
+import { forgotPasswordFormSchema } from './schemas';
 
 /* Theme */
 import { styles as themeStyles } from '../../../theme';
@@ -26,14 +28,6 @@ export const ForgotPasswordForm = (): JSX.Element => {
     const { state: { isAuthLoading }, resetPassword } = useAuth();
     const { setErrorForm } = useStatus();
     const { state: { colors } } = useTheme();
-
-    /* Validation schema to forgot password */
-    const forgotPasswordFormSchema = object().shape({
-        email: string()
-            .email('Correo electrónico inválido.')
-            .required('El correo electrónico es requerido.')
-    });
-
 
     /**
      * Handles the reset password functionality.

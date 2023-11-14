@@ -1,10 +1,10 @@
 import { createContext } from 'react';
 
 /* Interfaces */
-import { Theme, ThemeState } from '../../interfaces/theme';
+import { Theme, ThemeState } from '../../interfaces';
 
 /* Defining the interface for the context. */
-interface ThemeContextProps {
+export interface ThemeContextProps {
     state: ThemeState;
     setTheme: (theme: Theme) => void;
     setDefaultTheme: () => void;

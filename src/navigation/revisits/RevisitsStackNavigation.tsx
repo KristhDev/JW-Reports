@@ -15,7 +15,7 @@ import { BackButton, HeaderButtons } from '../../components/ui';
 import { useRevisits, useTheme } from '../../hooks';
 
 /* Interfaces */
-import { RevisitsStackParamsList } from '../../interfaces/revisits';
+import { RevisitsStackParamsList } from '../../interfaces';
 
 const Stack = createStackNavigator<RevisitsStackParamsList>();
 
@@ -31,7 +31,7 @@ const RevisitsStackNavigation = (): JSX.Element => {
     const { state: { isRevisitDeleting, selectedRevisit }, deleteRevisit } = useRevisits();
     const { state: { colors } } = useTheme();
 
-    const revisitDetailTitle = `Revisita ${ selectedRevisit.person_name }`;
+    const revisitDetailTitle = `Revisita ${ selectedRevisit.personName }`;
 
     /**
      * If the user confirms the delete, then delete the revisit and close the modal.

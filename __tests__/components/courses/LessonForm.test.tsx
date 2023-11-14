@@ -4,18 +4,14 @@ import { act, fireEvent, render, screen, waitFor } from '@testing-library/react-
 /* Components */
 import { LessonForm } from '../../../src/components/courses';
 
-/* Features */
-import { courseSelectedState, lessonSelectedState } from '../../features/courses';
-
 /* Hooks */
 import { useCourses, useStatus, useTheme } from '../../../src/hooks';
 
 /* Theme */
 import { darkColors } from '../../../src/theme';
 
-const saveLessonMock = jest.fn();
-const updateLessonMock = jest.fn();
-const setErrorFormMock = jest.fn();
+/* Mocks */
+import { courseSelectedStateMock, lessonSelectedStateMock, saveLessonMock, setErrorFormMock, updateLessonMock } from '../../mocks';
 
 /* Mock hooks */
 jest.mock('../../../src/hooks/useCourses.ts');
@@ -25,10 +21,10 @@ jest.mock('../../../src/hooks/useTheme.ts');
 describe('Test in <LessonForm /> component', () => {
     (useCourses as jest.Mock).mockReturnValue({
         state: {
-            ...courseSelectedState,
+            ...courseSelectedStateMock,
             selectedLesson: {
-                ...courseSelectedState.selectedLesson,
-                next_lesson: '2022-12-29 00:00:00'
+                ...courseSelectedStateMock.selectedLesson,
+                nextLesson: '2022-12-29 00:00:00'
             }
         },
         saveLesson: saveLessonMock,
@@ -116,7 +112,7 @@ describe('Test in <LessonForm /> component', () => {
 
         /* Mock data of useCourses */
         (useCourses as jest.Mock).mockReturnValue({
-            state: lessonSelectedState,
+            state: lessonSelectedStateMock,
             saveLesson: saveLessonMock,
             updateLesson: updateLessonMock
         });

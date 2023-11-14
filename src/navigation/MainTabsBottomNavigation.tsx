@@ -1,11 +1,9 @@
 import React, { useEffect } from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import OneSignal from 'react-native-onesignal';
+import { OneSignal } from 'react-native-onesignal';
 
 /* Navigations */
-import { PreachingStackNavigation } from './';
-import { CoursesStackNavigation } from './courses';
-import { RevistsStackNavigation } from './revisits';
+import { CoursesStackNavigation, PreachingStackNavigation, RevisitsStackNavigation } from './';
 
 /* Components */
 import { TabBar } from '../components/ui';
@@ -14,7 +12,7 @@ import { TabBar } from '../components/ui';
 import { useAuth, useTheme } from '../hooks';
 
 /* Interfaces */
-import { MainTabsBottomParamsList } from '../interfaces/ui';
+import { MainTabsBottomParamsList } from '../interfaces';
 
 const Tabs = createBottomTabNavigator<MainTabsBottomParamsList>();
 
@@ -31,7 +29,7 @@ const MainTabsBottomNavigation = (): JSX.Element => {
      * Effect to set the external user id for push notifications.
      */
     useEffect(() => {
-        OneSignal.setExternalUserId(user.id);
+        OneSignal.login(user.id);
     }, []);
 
     return (
@@ -55,8 +53,8 @@ const MainTabsBottomNavigation = (): JSX.Element => {
             />
 
             <Tabs.Screen
-                component={ RevistsStackNavigation }
-                name="RevistsStackNavigation"
+                component={ RevisitsStackNavigation }
+                name="RevisitsStackNavigation"
                 options={{
                     title: 'Revisitas',
                 }}

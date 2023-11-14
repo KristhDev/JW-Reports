@@ -1,7 +1,7 @@
 import dayjs from 'dayjs';
 
 /* Interfaces */
-import { Preaching, ReamainingOfHoursRequirement, RemainingHoursOfWeeklyRequirement } from '../interfaces/preaching';
+import { Preaching, ReamainingOfHoursRequirement, RemainingHoursOfWeeklyRequirement } from '../interfaces';
 
 /**
  * Calculates the total number of hours worked in a week based on the given array of preaching objects.
@@ -10,8 +10,8 @@ import { Preaching, ReamainingOfHoursRequirement, RemainingHoursOfWeeklyRequirem
  * @return {string} A string representing the total number of hours worked in the week, in the format "hours:minutes".
  */
 export const getHoursDoneByWeek = (preachingsOfWeek: Preaching[]): string => {
-    const hours = sumHours(preachingsOfWeek.map(p => ({ init: p.init_hour, finish: p.final_hour })));
-    const { restMins } = sumMins(preachingsOfWeek.map(p => ({ init: p.init_hour, finish: p.final_hour })));
+    const hours = sumHours(preachingsOfWeek.map(p => ({ init: p.initHour, finish: p.finalHour })));
+    const { restMins } = sumMins(preachingsOfWeek.map(p => ({ init: p.initHour, finish: p.finalHour })));
 
     return `${ hours }:${ (restMins === 0) ? '00' : restMins }`;
 }
@@ -77,8 +77,8 @@ export const getRemainingHoursOfWeeklyRequirement = (hoursRequirementByWeek: str
  * @return {ReamainingOfHoursRequirement} - An object containing the remaining hours requirement and a flag indicating if it is negative.
  */
 export const getReamainingOfHoursRequirement = (preachings: Preaching[], hoursRequirement: number): ReamainingOfHoursRequirement => {
-    const hours = sumHours(preachings.map(p => ({ init: p.init_hour, finish: p.final_hour })));
-    const restMins = getRestMins(preachings.map(p => ({ init: p.init_hour, finish: p.final_hour })));
+    const hours = sumHours(preachings.map(p => ({ init: p.initHour, finish: p.finalHour })));
+    const restMins = getRestMins(preachings.map(p => ({ init: p.initHour, finish: p.finalHour })));
 
     const hoursRequirementWithDate = dayjs().add(hoursRequirement, 'hours');
     const hoursDoneWithDate = dayjs().add(hours, 'hours').add(restMins, 'minutes');

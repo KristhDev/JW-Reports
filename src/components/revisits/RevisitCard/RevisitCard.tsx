@@ -30,7 +30,7 @@ import styles from './styles';
  * - revisit: This is a revisit object that render in the card
  * @return {JSX.Element} Rendered component to show the revisit
  */
-export const RevisitCard: FC<RevisitCardProps> = ({ onDelete, onPass, onRevisit, revisit }): JSX.Element => {
+export const RevisitCard: FC<RevisitCardProps> = ({ onDelete, onPass, onRevisit, revisit, screenToNavigate }): JSX.Element => {
     const [ isOpen, setIsOpen ] = useState<boolean>(false);
     const { navigate } = useNavigation();
     const { width } = useWindowDimensions();
@@ -38,7 +38,7 @@ export const RevisitCard: FC<RevisitCardProps> = ({ onDelete, onPass, onRevisit,
     const { setSelectedRevisit } = useRevisits();
     const { state: { colors }, BUTTON_TRANSPARENT_COLOR } = useTheme();
 
-    const nextVisit = dayjs(revisit.next_visit);
+    const nextVisit = dayjs(revisit.nextVisit);
 
     /**
      * When the user clicks on a revisit, set the selected revisit to the revisit that was clicked on
@@ -48,7 +48,7 @@ export const RevisitCard: FC<RevisitCardProps> = ({ onDelete, onPass, onRevisit,
      */
     const handleRevisitDetail = (): void => {
         setSelectedRevisit(revisit);
-        navigate('RevisitDetailScreen' as never);
+        navigate(screenToNavigate as never);
     }
 
     /**
@@ -90,10 +90,9 @@ export const RevisitCard: FC<RevisitCardProps> = ({ onDelete, onPass, onRevisit,
                     style={{ ...styles.textDate, color: colors.icon }}
                     testID="revisit-card-next-visit-text"
                 >
-                    {
-                        (revisit.done)
-                            ? 'Visita hecha'
-                            : `Visitar el ${ nextVisit.format('DD') } de ${ nextVisit.format('MMMM') } del ${ nextVisit.format('YYYY') }`
+                    { (revisit.done)
+                        ? 'Visita hecha'
+                        : `Visitar el ${ nextVisit.format('DD') } de ${ nextVisit.format('MMMM') } del ${ nextVisit.format('YYYY') }`
                     }
                 </Text>
 
@@ -102,7 +101,7 @@ export const RevisitCard: FC<RevisitCardProps> = ({ onDelete, onPass, onRevisit,
                     style={{ ...styles.textName, color: colors.text }}
                     testID="revisit-card-person-name-text"
                 >
-                    { revisit.person_name }
+                    { revisit.personName }
                 </Text>
 
                 {/* Text about person */}

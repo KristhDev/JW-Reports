@@ -1,5 +1,6 @@
 import React from 'react';
 import { CardStyleInterpolators, createStackNavigator } from '@react-navigation/stack';
+import { useNavigation } from '@react-navigation/native';
 
 /* Screens */
 import { Profile, Credentials } from '../screens/auth';
@@ -19,12 +20,13 @@ const Stack = createStackNavigator();
  * @return {JSX.Element} rendered component to show stack navigation
  */
 const SettingsStackNavigation = (): JSX.Element => {
+    const { goBack } = useNavigation();
     const { state: { colors } } = useTheme();
 
     return (
         <Stack.Navigator
             screenOptions={{
-                headerLeft: ({ onPress }) => <BackButton color={ colors.icon } onPress={ onPress } />,
+                headerLeft: () => <BackButton color={ colors.icon } onPress={ goBack } />,
                 cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
                 cardStyle: {
                     backgroundColor: colors.background,

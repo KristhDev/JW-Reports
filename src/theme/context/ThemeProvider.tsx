@@ -1,21 +1,19 @@
-import React, { FC, PropsWithChildren, useEffect, useReducer, useRef } from 'react';
+import React, { FC, PropsWithChildren, useCallback, useEffect, useMemo, useReducer } from 'react';
 import { Appearance } from 'react-native';
-import { Transitioning, TransitioningView, Transition } from 'react-native-reanimated';
 import SystemNavigationBar from 'react-native-system-navigation-bar';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 /* Context */
-import ThemeContext from './ThemeContext';
-import themeReducer from './themeReducer';
+import { ThemeContext, themeReducer } from './';
 
 /* Theme - Colors */
 import { darkColors, lightColors, undefinedColors } from '../colors';
 
 /* Interfaces */
-import { Theme, ThemeState } from '../../interfaces/theme';
+import { Theme, ThemeState } from '../../interfaces';
 
 /* Initial state */
-const INITIAL_STATE: ThemeState = {
+export const THEME_INITIAL_STATE: ThemeState = {
     colors: undefinedColors,
     deviceTheme: 'default',
     isLoadedTheme: false,
@@ -23,9 +21,15 @@ const INITIAL_STATE: ThemeState = {
     theme: 'default'
 }
 
+/**
+ * A function that sets the theme, and then sets the selected theme, and then sets the colors, and
+ * then sets the isLoaded theme.
+ *
+ * @param {Theme} theme - Theme - this is the theme that the user has selected.
+ * @return {Promise<void>} This function does not return anything.
+ */
 const ThemeProvider: FC<PropsWithChildren> = ({ children }) => {
-    const [ state, dispatch ] = useReducer(themeReducer, INITIAL_STATE);
-    const ref = useRef<TransitioningView>(null);
+    const [ state, dispatch ] = useReducer(themeReducer, THEME_INITIAL_STATE);
 
     /**
      * This function sets the theme, and then sets the selected theme, and then sets the colors, and
@@ -34,7 +38,7 @@ const ThemeProvider: FC<PropsWithChildren> = ({ children }) => {
      * @param {Theme} theme - Theme - this is the theme that the user has selected.
      * @return {Promise<void>} This function does not return anything.
      */
-    const setTheme = async (theme: Theme): Promise<void> => {
+    const setTheme = useCallback(async (theme: Theme): Promise<void> => {
         dispatch({ type: '[Theme] set theme', payload: { theme } });
         await AsyncStorage.setItem('jw-reports-theme', theme);
 
@@ -47,7 +51,6 @@ const ThemeProvider: FC<PropsWithChildren> = ({ children }) => {
             }
         });
 
-        if (ref.current) ref.current.animateNextTransition();
         if (theme === 'default') theme = Appearance.getColorScheme() || 'light';
 
         dispatch({
@@ -63,26 +66,16 @@ const ThemeProvider: FC<PropsWithChildren> = ({ children }) => {
                 isLoaded: true
             }
         });
-    }
+    }, []);
 
     /**
      * SetDefaultTheme is a function that sets the theme to default.
      *
      * @return This function does not return anything.
      */
-    const setDefaultTheme = (): void => {
+    const setDefaultTheme = useCallback((): void => {
         setTheme('default');
-    }
-
-    /**
-     * This is the transition that is used when the theme is changed.
-     */
-    const transition = (
-        <Transition.Together>
-            <Transition.In type="fade" durationMs={ 300 } />
-            <Transition.Out type="fade" durationMs={ 300 } />
-        </Transition.Together>
-    );
+    }, []);
 
     /**
      * Effect to get of async storage the theme.
@@ -92,6 +85,12 @@ const ThemeProvider: FC<PropsWithChildren> = ({ children }) => {
             setTheme(theme as Theme || 'default');
         });
     }, []);
+
+    const store = useMemo(() => ({
+        state,
+        setTheme,
+        setDefaultTheme
+    }), [ state ])
 
     /**
      * Effect for listening to the theme changes with object Appearance.
@@ -134,24 +133,12 @@ const ThemeProvider: FC<PropsWithChildren> = ({ children }) => {
         }
     }, [ state.isLoadedTheme, state.selectedTheme, state.colors ]);
 
+    if (!state.isLoadedTheme) return <></>;
+
     return (
-        <>
-            {
-                (state.isLoadedTheme) && (
-                    <ThemeContext.Provider
-                        value={{
-                            state,
-                            setTheme,
-                            setDefaultTheme
-                        }}
-                    >
-                        <Transitioning.View style={{ flex: 1 }} { ...{ ref, transition } }>
-                            { children }
-                        </Transitioning.View>
-                    </ThemeContext.Provider>
-                )
-            }
-        </>
+        <ThemeContext.Provider value={ store }>
+            { children }
+        </ThemeContext.Provider>
     );
 }
 

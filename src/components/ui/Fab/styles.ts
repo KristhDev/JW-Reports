@@ -4,10 +4,10 @@ const styles = StyleSheet.create({
     fab: {
         alignItems: 'center',
         borderRadius: 50,
-        height: 42,
+        height: 48,
         justifyContent: 'center',
         margin: 5,
-        width: 42
+        width: 48
     }
 });
 

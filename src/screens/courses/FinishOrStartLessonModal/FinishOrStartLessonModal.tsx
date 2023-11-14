@@ -14,7 +14,7 @@ import { DatetimeField } from '../../../components/ui';
 import { useCourses, useTheme } from '../../../hooks';
 
 /* Interfaces */
-import { ModalProps } from '../../../interfaces/ui';
+import { ModalProps } from '../../../interfaces';
 
 /* Theme */
 import { styles as themeStyles } from '../../../theme';
@@ -52,15 +52,15 @@ const FinishOrStartLessonModal: FC<ModalProps> = ({ isOpen, onClose }) => {
      * This is the confirmation function of the modal that executes one or another function
      * depending on selectdLesson, the reschedule state or the function parameters.
      *
-     * @param {{ next_lesson: Date }} values - This is the values with next_lesson property to lesson
+     * @param {{ nextLesson: Date }} values - This is the values with nextLesson property to lesson
      * @return {void} This function does not return anything
      */
-    const handleConfirm = (values?: { next_lesson: Date }): void => {
+    const handleConfirm = (values?: { nextLesson: Date }): void => {
         if (!reschedule && !selectedLesson.done) {
-            finishOrStartLesson(new Date(selectedLesson.next_lesson), handleClose);
+            finishOrStartLesson(new Date(selectedLesson.nextLesson), handleClose);
         }
         else if (reschedule && selectedLesson.done) {
-            finishOrStartLesson(values?.next_lesson || new Date(), handleClose);
+            finishOrStartLesson(values?.nextLesson || new Date(), handleClose);
         }
         else {
             setReschedule(true);
@@ -69,96 +69,94 @@ const FinishOrStartLessonModal: FC<ModalProps> = ({ isOpen, onClose }) => {
 
     return (
         <Modal isOpen={ isOpen }>
-            {
-                (!isLessonLoading) ? (
-                    <View
-                        style={{
-                            ...themeStyles.modalContainer,
-                            backgroundColor: colors.modal,
-                            width: width - 48
-                        }}
-                    >
-                        {
-                            (!reschedule) ? (
-                                <>
+            { (!isLessonLoading) ? (
+                <View
+                    style={{
+                        ...themeStyles.modalContainer,
+                        backgroundColor: colors.modal,
+                        width: width - 48
+                    }}
+                >
+                    {
+                        (!reschedule) ? (
+                            <>
 
-                                    {/* Modal title  */}
-                                    <Text
-                                        style={{
-                                            ...themeStyles.modalText,
-                                            color: colors.modalText
-                                        }}
-                                        testID="modal-text"
-                                    >
-                                        { modalMsg }
-                                    </Text>
-
-                                    {/* Modal actions */}
-                                    <ModalActions
-                                        onClose={ handleClose }
-                                        onConfirm={ handleConfirm }
-                                        reschedule={ reschedule }
-                                    />
-                                </>
-                            ) : (
-                                <Formik
-                                    initialValues={{
-                                        next_lesson: new Date(selectedLesson.next_lesson)
+                                {/* Modal title  */}
+                                <Text
+                                    style={{
+                                        ...themeStyles.modalText,
+                                        color: colors.modalText
                                     }}
-                                    onSubmit={ handleConfirm }
+                                    testID="modal-text"
                                 >
-                                    { ({ handleSubmit }) => (
-                                        <>
+                                    { modalMsg }
+                                </Text>
 
-                                            {/* Modal title in form */}
-                                            <Text
-                                                style={{
-                                                    ...themeStyles.modalText,
-                                                    color: colors.modalText,
-                                                    marginBottom: 24
-                                                }}
-                                            >
-                                                Por favor ingrese la fecha en la se dará la clase
-                                            </Text>
+                                {/* Modal actions */}
+                                <ModalActions
+                                    onClose={ handleClose }
+                                    onConfirm={ handleConfirm }
+                                    reschedule={ reschedule }
+                                />
+                            </>
+                        ) : (
+                            <Formik
+                                initialValues={{
+                                    nextLesson: new Date(selectedLesson.nextLesson)
+                                }}
+                                onSubmit={ handleConfirm }
+                            >
+                                { ({ handleSubmit }) => (
+                                    <>
 
-                                            {/* Next lesson field */}
-                                            <DatetimeField
-                                                icon={
-                                                    <Icon
-                                                        color={ colors.contentHeader }
-                                                        name="calendar-outline"
-                                                        size={ 25 }
-                                                    />
-                                                }
-                                                inputDateFormat="DD/MM/YYYY"
-                                                label="Reprogramar clase:"
-                                                modalTitle="Reprogramar clase"
-                                                mode="date"
-                                                name="next_lesson"
-                                                placeholder="Seleccione el día"
-                                                style={{ marginBottom: 0 }}
-                                            />
+                                        {/* Modal title in form */}
+                                        <Text
+                                            style={{
+                                                ...themeStyles.modalText,
+                                                color: colors.modalText,
+                                                marginBottom: 24
+                                            }}
+                                        >
+                                            Por favor ingrese la fecha en la se dará la clase
+                                        </Text>
 
-                                            {/* Modal actions */}
-                                            <ModalActions
-                                                onClose={ handleClose }
-                                                onConfirm={ handleSubmit }
-                                                reschedule={ reschedule }
-                                            />
-                                        </>
-                                    ) }
-                                </Formik>
-                            )
-                        }
-                    </View>
-                ) : (
-                    <ActivityIndicator
-                        color={ colors.button }
-                        size={ 50 }
-                        testID="modal-loading"
-                    />
-                )
-            }
+                                        {/* Next lesson field */}
+                                        <DatetimeField
+                                            icon={
+                                                <Icon
+                                                    color={ colors.contentHeader }
+                                                    name="calendar-outline"
+                                                    size={ 25 }
+                                                />
+                                            }
+                                            inputDateFormat="DD/MM/YYYY"
+                                            label="Reprogramar clase:"
+                                            modalTitle="Reprogramar clase"
+                                            mode="date"
+                                            name="nextLesson"
+                                            placeholder="Seleccione el día"
+                                            style={{ marginBottom: 0 }}
+                                        />
+
+                                        {/* Modal actions */}
+                                        <ModalActions
+                                            onClose={ handleClose }
+                                            onConfirm={ handleSubmit }
+                                            reschedule={ reschedule }
+                                        />
+                                    </>
+                                ) }
+                            </Formik>
+                        )
+                    }
+                </View>
+            ) : (
+                <ActivityIndicator
+                    color={ colors.button }
+                    size={ 50 }
+                    testID="modal-loading"
+                />
+            ) }
         </Modal>
     );
 }

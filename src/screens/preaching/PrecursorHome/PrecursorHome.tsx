@@ -53,8 +53,8 @@ const Home = (): JSX.Element => {
         setSelectedPreaching({
             ...INIT_PREACHING,
             day: new Date().toString(),
-            init_hour: new Date().toString(),
-            final_hour: new Date().toString()
+            initHour: new Date().toString(),
+            finalHour: new Date().toString()
         });
 
         navigate('AddOrEditPreachingScreen' as never);
@@ -115,7 +115,7 @@ const Home = (): JSX.Element => {
                 ) }
             </ScrollView>
 
-            { ((currentMonth === month) && preachings.length > 0 && user?.hours_requirement && user?.hours_requirement > 0) && (
+            { ((currentMonth === month) && preachings.length > 0 && Boolean(user?.hoursRequirement) && user?.hoursRequirement > 0) && (
                 <Fab
                     color={ colors.button }
                     icon={
@@ -123,7 +123,7 @@ const Home = (): JSX.Element => {
                             color={ colors.contentHeader }
                             name="information-circle-outline"
                             size={ 40 }
-                            style={{ marginLeft: 1 }}
+                            style={{ marginLeft: 1, marginTop: 1 }}
                         />
                     }
                     onPress={ () => setShowPreachingInfoModal(true) }
@@ -139,6 +139,7 @@ const Home = (): JSX.Element => {
                         color={ colors.contentHeader }
                         name="reader-outline"
                         size={ 40 }
+                        style={{ marginBottom: 1 }}
                     />
                 }
                 onPress={ () => setShowReportModal(true) }
@@ -153,7 +154,7 @@ const Home = (): JSX.Element => {
                         color={ colors.contentHeader }
                         name="add-circle-outline"
                         size={ 40 }
-                        style={{ marginLeft: 3 }}
+                        style={{ marginLeft: 1.5 }}
                     />
                 }
                 onPress={ handleNavigate }

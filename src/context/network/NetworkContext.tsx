@@ -1,13 +1,20 @@
 import { createContext } from 'react';
+import { NetInfoStateType } from '@react-native-community/netinfo';
 
-export interface NetworkContextProps {
+/* Defining the interface for wifi */
+export interface Wifi {
     isConnected: boolean;
+    type: NetInfoStateType;
 }
 
-/* This line of code is creating a new context object using the `createContext` function from the React
-library. The `createContext` function takes a generic type argument that specifies the shape of the
-context object. In this case, the generic type argument is `NetworkContextProps`, which is an
-interface that defines a single property `isConnected` of type boolean. */
+/* Defining the interface for the context. */
+export interface NetworkContextProps {
+    wifi: Wifi;
+}
+
+/**
+ * Creates a context for the network context.
+ */
 const NetworkContext = createContext<NetworkContextProps>({} as NetworkContextProps);
 
 export default NetworkContext;

@@ -1,1 +1,1 @@
-export { default as statusReducer, clearStatus, setStatus } from './slice';
+export { default as statusReducer, STATUS_INITIAL_STATE, clearStatus, setStatus } from './slice';

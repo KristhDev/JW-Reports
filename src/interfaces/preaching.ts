@@ -1,13 +1,20 @@
 /**
- * PreachingStackParamsList is a type that is an object with two properties, HomeScreen and
- * AddOrEditPreachingScreen, where both properties are of type undefined.
+ * Defining the structure of stack navigation of preaching.
  *
- * @property HomeScreen - undefined;
+ * @property AddOrEditLessonScreen - undefined;
  * @property AddOrEditPreachingScreen - undefined;
+ * @property AddOrEditRevisitScreen - undefined;
+ * @property HomeLessonDetailScreen - undefined;
+ * @property HomeRevisitDetailScreen - undefined;
+ * @property HomeScreen - undefined;
  */
 export type PreachingStackParamsList = {
-    HomeScreen: undefined;
+    AddOrEditLessonScreen: undefined;
     AddOrEditPreachingScreen: undefined;
+    AddOrEditRevisitScreen: undefined;
+    HomeLessonDetailScreen: undefined;
+    HomeRevisitDetailScreen: undefined;
+    HomeScreen: undefined;
 }
 
 /**
@@ -33,25 +40,40 @@ export interface PreachingState {
  * Defining the structure of the Preaching object.
  *
  * @property {string} id - This is the id of the preaching.
+ * @property {string} userId - This is the id of the user.
+ * @property {string} day - This is the day of the preaching.
+ * @property {string} initHour - This is the initial hour of the preaching.
+ * @property {string} finalHour - This is the final hour of the preaching.
+ * @property {string} createdAt - This is the created at of the preaching.
+ * @property {string} updatedAt - This is the updated at of the preaching.
+ */
+export interface Preaching {
+    id: string;
+    userId: string;
+    day: string;
+    initHour: string;
+    finalHour: string;
+    createdAt: string;
+    updatedAt: string;
+}
+
+/**
+ * Defining the structure of the Preaching object in the endpoint.
+ *
+ * @property {string} id - This is the id of the preaching.
  * @property {string} user_id - This is the id of the user.
  * @property {string} day - This is the day of the preaching.
  * @property {string} init_hour - This is the initial hour of the preaching.
  * @property {string} final_hour - This is the final hour of the preaching.
- * @property {number} publications - This is the number of publications.
- * @property {number} videos - This is the number of videos.
- * @property {number} revisits - This is the number of revisits.
  * @property {string} created_at - This is the created at of the preaching.
  * @property {string} updated_at - This is the updated at of the preaching.
  */
-export interface Preaching {
+export interface PreachingEndpoint {
     id: string;
     user_id: string;
     day: string;
     init_hour: string;
     final_hour: string;
-    publications: number;
-    videos: number;
-    revisits: number;
     created_at: string;
     updated_at: string;
 }
@@ -60,19 +82,13 @@ export interface Preaching {
  * Defining the structure of the PreachingFormValues object.
  *
  * @property {Date} day - This is the day of the preaching.
- * @property {Date} init_hour - This is the initial hour of the preaching.
- * @property {Date} final_hour - This is the final hour of the preaching.
- * @property {number} publications - This is the number of publications.
- * @property {number} videos - This is the number of videos.
- * @property {number} revisits - This is the number of revisits.
+ * @property {Date} initHour - This is the initial hour of the preaching.
+ * @property {Date} finalHour - This is the final hour of the preaching.
  */
 export interface PreachingFormValues {
     day: Date;
-    init_hour: Date;
-    final_hour: Date;
-    publications: number;
-    videos: number;
-    revisits: number;
+    initHour: Date;
+    finalHour: Date;
 }
 
 /**

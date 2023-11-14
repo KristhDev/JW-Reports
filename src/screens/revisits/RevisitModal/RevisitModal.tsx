@@ -2,7 +2,6 @@ import React, { useState, FC } from 'react';
 import { KeyboardAvoidingView, View, Text, ActivityIndicator, ScrollView, useWindowDimensions } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Formik } from 'formik';
-import { date, object, string } from 'yup';
 import Icon from 'react-native-vector-icons/Ionicons';
 
 /* Screens */
@@ -16,7 +15,10 @@ import { ModalActions } from './ModalActions';
 import { useRevisits, useStatus, useTheme } from '../../../hooks';
 
 /* Interfaces */
-import { ModalProps } from '../../../interfaces/ui';
+import { ModalProps } from '../../../interfaces';
+
+/* Scahemas */
+import { revisitFormSchema } from './schemas';
 
 /* Theme */
 import { styles as themeStyles } from '../../../theme';
@@ -38,39 +40,30 @@ const RevisitModal: FC<ModalProps> = ({ isOpen, onClose }) => {
     const { state: { colors } } = useTheme();
 
     const modalTitle = (selectedRevisit.done)
-        ? `¿Quieres volver a visitar a ${ selectedRevisit.person_name }?`
+        ? `¿Quieres volver a visitar a ${ selectedRevisit.personName }?`
         : '¿Está seguro de marcar esta revisitada como visitada?';
-
-    /* Validation schema for revisit */
-    const revisitFormSchema = object().shape({
-        about: string()
-            .min(10, 'La información de la persona debe tener al menos 10 caracteres.')
-            .required('La información de la persona es requerida.'),
-        next_visit: date()
-            .required('La fecha de la próxima visita no puede estar vacía'),
-    });
 
     /**
      * If the selectedRevisit.done is false, then call completeRevisit, otherwise if
      * selectedRevisit.done is true and values.next_visit is false, then setRevisitPerson to true,
      * otherwise if values.next_visit is true, then setRevisitPerson to false and call saveRevisit.
-     * @param {{ about: string, next_visit: Date }} values - { about: string, next_visit: Date }
+     * @param {{ about: string, nextVisit: Date }} values - { about: string, next_visit: Date }
      */
-    const handleConfirm = async (values?: { about: string, next_visit: Date }) => {
+    const handleConfirm = async (values?: { about: string, nextVisit: Date }) => {
         if (!selectedRevisit.done) {
             const msg = await completeRevisit(onClose);
             setCompleteMsg(msg);
         }
-        else if (selectedRevisit.done && !values?.next_visit) {
+        else if (selectedRevisit.done && !values?.nextVisit) {
             setRevisitPerson(true);
         }
-        else if (values?.next_visit) {
+        else if (values?.nextVisit) {
             setRevisitPerson(false);
             saveRevisit({
                 revisitValues: {
                     ...values,
                     address: selectedRevisit.address,
-                    person_name: selectedRevisit.person_name
+                    personName: selectedRevisit.personName
                 },
                 back: false,
                 onFinish: onClose
@@ -164,7 +157,7 @@ const RevisitModal: FC<ModalProps> = ({ isOpen, onClose }) => {
                                     <Formik
                                         initialValues={{
                                             about: selectedRevisit.about,
-                                            next_visit: new Date()
+                                            nextVisit: new Date()
                                         }}
                                         onSubmit={ handleConfirm }
                                         validateOnMount
@@ -195,7 +188,7 @@ const RevisitModal: FC<ModalProps> = ({ isOpen, onClose }) => {
                                                     label="Próxima visita:"
                                                     modalTitle="Próxima visita"
                                                     mode="date"
-                                                    name="next_visit"
+                                                    name="nextVisit"
                                                     placeholder="Seleccione el día"
                                                     style={{ marginBottom: 0 }}
                                                 />

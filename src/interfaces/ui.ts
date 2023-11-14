@@ -21,12 +21,12 @@ export type NavigationParamsList = {
  * that is a function that takes undefined and returns undefined.
  *
  * @property PreachingStackNavigation - undefined;
- * @property RevistsStackNavigation - undefined;
+ * @property RevisitsStackNavigation - undefined;
  * @property CoursesStackNavigation - undefined;
  */
 export type MainTabsBottomParamsList = {
     PreachingStackNavigation: undefined;
-    RevistsStackNavigation: undefined;
+    RevisitsStackNavigation: undefined;
     CoursesStackNavigation: undefined;
 }
 

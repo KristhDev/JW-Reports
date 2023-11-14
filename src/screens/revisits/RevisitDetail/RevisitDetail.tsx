@@ -34,7 +34,7 @@ const RevisitDetail = (): JSX.Element => {
     const { state: { selectedRevisit }, setSelectedRevisit } = useRevisits();
     const { state: { colors } } = useTheme();
 
-    const nextVisit = dayjs(selectedRevisit.next_visit);
+    const nextVisit = dayjs(selectedRevisit.nextVisit);
 
     /**
      * Effect to set imageHeight when changing the selectedRevisit.photo
@@ -59,7 +59,7 @@ const RevisitDetail = (): JSX.Element => {
             if (index === 0) {
                 setSelectedRevisit({
                     ...INIT_REVISIT,
-                    next_visit: new Date().toString()
+                    nextVisit: new Date().toString()
                 });
             }
         });
@@ -80,7 +80,7 @@ const RevisitDetail = (): JSX.Element => {
                 {/* Title of detail */}
                 <Title
                     containerStyle={ themeStyles.titleContainer }
-                    text={ selectedRevisit.person_name.toUpperCase() }
+                    text={ selectedRevisit.personName.toUpperCase() }
                     textStyle={{ fontSize: 24 }}
                 />
 
@@ -146,7 +146,7 @@ const RevisitDetail = (): JSX.Element => {
                             color: colors.text
                         }}
                     >
-                        Información de { selectedRevisit.person_name }:
+                        Información de { selectedRevisit.personName }:
                     </Text>
 
                     <Text style={{ color: colors.text, fontSize: 19 }}>
@@ -195,7 +195,7 @@ const RevisitDetail = (): JSX.Element => {
                             style={{ ...styles.imageText, color: colors.modalText }}
                             testID="revisit-detail-photo-text"
                         >
-                            La foto es para ayudarte a recordar el lugar de residencia de { selectedRevisit.person_name }
+                            La foto es para ayudarte a recordar el lugar de residencia de { selectedRevisit.personName }
                         </Text>
                     </View>
                 ) }
@@ -205,7 +205,7 @@ const RevisitDetail = (): JSX.Element => {
                     style={{ ...styles.dateCreatedText, color: colors.modalText }}
                     testID="revisit-detail-created-date"
                 >
-                    { dayjs(selectedRevisit.created_at).format('DD/MM/YYYY') }
+                    { dayjs(selectedRevisit.createdAt).format('DD/MM/YYYY') }
                 </Text>
             </ScrollView>
 

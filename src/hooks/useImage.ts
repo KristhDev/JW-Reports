@@ -5,8 +5,8 @@ import { decode } from 'base64-arraybuffer';
 /* Env */
 import { SUPABASE_BUCKET, SUPABASE_REVISITS_FOLDER } from '@env';
 
-/* Supaḃase - config */
-import { supabase } from '../supabase/config';
+/* Supaḃase */
+import { supabase } from '../supabase';
 
 /* Hooks */
 import { usePermissions, useStatus, useTheme } from './';

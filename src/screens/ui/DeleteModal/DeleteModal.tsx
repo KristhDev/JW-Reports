@@ -34,60 +34,58 @@ const DeleteModal: FC<DeleteModalProps> = ({ text, isLoading, isOpen, onClose, o
 
     return (
         <Modal isOpen={ isOpen }>
-            {
-                (!isLoading) ? (
-                    <View
+            { (!isLoading) ? (
+                <View
+                    style={{
+                        ...themeStyles.modalContainer,
+                        backgroundColor: colors.modal,
+                        width: width - 48
+                    }}
+                >
+
+                    {/* Modal text */}
+                    <Text
                         style={{
-                            ...themeStyles.modalContainer,
-                            backgroundColor: colors.modal,
-                            width: width - 48
+                            ...themeStyles.modalText,
+                            marginBottom: 0,
+                            color: colors.modalText
                         }}
+                        testID="delete-modal-title"
                     >
+                        { text }
+                    </Text>
 
-                        {/* Modal text */}
-                        <Text
-                            style={{
-                                ...themeStyles.modalText,
-                                marginBottom: 0,
-                                color: colors.modalText
-                            }}
-                            testID="delete-modal-title"
-                        >
-                            { text }
-                        </Text>
+                    {/* Modal actions */}
+                    <View style={ themeStyles.modalActions }>
 
-                        {/* Modal actions */}
-                        <View style={ themeStyles.modalActions }>
+                        {/* Cancel button */}
+                        <Button
+                            containerStyle={{ paddingHorizontal: 12, minWidth: 0 }}
+                            onPress={ onClose }
+                            text="CANCELAR"
+                            textStyle={{ color: colors.button, fontSize: 16 }}
+                            touchableStyle={{ backgroundColor: 'transparent', marginRight: 5 }}
+                            underlayColor={ BUTTON_TRANSLUCENT_COLOR }
+                        />
 
-                            {/* Cancel button */}
-                            <Button
-                                containerStyle={{ paddingHorizontal: 12, minWidth: 0 }}
-                                onPress={ onClose }
-                                text="CANCELAR"
-                                textStyle={{ color: colors.button, fontSize: 16 }}
-                                touchableStyle={{ backgroundColor: 'transparent', marginRight: 5 }}
-                                underlayColor={ BUTTON_TRANSLUCENT_COLOR }
-                            />
-
-                            {/* Confirm button */}
-                            <Button
-                                containerStyle={{ paddingHorizontal: 12, minWidth: 0 }}
-                                onPress={ onConfirm }
-                                text="ELIMINAR"
-                                textStyle={{ color: colors.button, fontSize: 16 }}
-                                touchableStyle={{ backgroundColor: 'transparent' }}
-                                underlayColor={ BUTTON_TRANSLUCENT_COLOR }
-                            />
-                        </View>
+                        {/* Confirm button */}
+                        <Button
+                            containerStyle={{ paddingHorizontal: 12, minWidth: 0 }}
+                            onPress={ onConfirm }
+                            text="ELIMINAR"
+                            textStyle={{ color: colors.button, fontSize: 16 }}
+                            touchableStyle={{ backgroundColor: 'transparent' }}
+                            underlayColor={ BUTTON_TRANSLUCENT_COLOR }
+                        />
                     </View>
-                ) : (
-                    <ActivityIndicator
-                        color={ colors.button }
-                        size={ 50 }
-                        testID="delete-modal-loading"
-                    />
-                )
-            }
+                </View>
+            ) : (
+                <ActivityIndicator
+                    color={ colors.button }
+                    size={ 50 }
+                    testID="delete-modal-loading"
+                />
+            ) }
         </Modal>
     );
 }
