@@ -4,15 +4,15 @@ exports[`Test in <LessonsList /> component should to match snapshot 1`] = `
 <View
   onLayout={[Function]}
   style={
-    Object {
+    {
       "flex": 1,
     }
   }
 >
   <View
     style={
-      Array [
-        Object {
+      [
+        {
           "flex": 1,
         },
         undefined,
@@ -38,14 +38,13 @@ exports[`Test in <LessonsList /> component should to match snapshot 1`] = `
         <React.Fragment>
           <Title
             containerStyle={
-              Object {
-                "paddingBottom": 20,
-                "paddingTop": 30,
+              {
+                "marginVertical": 8,
               }
             }
             text="Clases del curso con Fred Cremin"
             textStyle={
-              Object {
+              {
                 "fontSize": 24,
               }
             }
@@ -59,27 +58,28 @@ exports[`Test in <LessonsList /> component should to match snapshot 1`] = `
         </React.Fragment>
       }
       ListHeaderComponentStyle={
-        Object {
+        {
           "alignSelf": "flex-start",
         }
       }
       contentContainerStyle={
-        Object {
+        {
           "alignItems": "center",
           "flexGrow": 1,
+          "padding": 24,
           "paddingBottom": 100,
         }
       }
       data={
-        Array [
-          Object {
-            "course_id": "8ea3baf8-6b47-4222-8ed1-c62d5755b9a5",
-            "created_at": "2021-01-01T00:00:00.000Z",
+        [
+          {
+            "courseId": "8ea3baf8-6b47-4222-8ed1-c62d5755b9a5",
+            "createdAt": "2021-01-01T00:00:00.000Z",
             "description": "Nemo et et non nesciunt ipsum sed rerum vero. Nostrum quae officiis qui nihil dignissimos consectetur aperiam. Vel harum ex. Ipsum ratione necessitatibus eum sint vero enim et consequatur. Ab autem rerum numquam ut. Laboriosam nihil est exercitationem unde aut reiciendis odit.",
             "done": false,
             "id": "0fb579e4-de87-4336-9375-76611c889f76",
-            "next_lesson": "2021-01-01T00:00:00.000Z",
-            "updated_at": "2021-01-01T00:00:00.000Z",
+            "nextLesson": "2021-01-01T00:00:00.000Z",
+            "updatedAt": "2021-01-01T00:00:00.000Z",
           },
         ]
       }
@@ -107,43 +107,43 @@ exports[`Test in <LessonsList /> component should to match snapshot 1`] = `
       removeClippedSubviews={false}
       renderItem={[Function]}
       scrollEventThrottle={50}
-      stickyHeaderIndices={Array []}
-      viewabilityConfigCallbackPairs={Array []}
+      stickyHeaderIndices={[]}
+      viewabilityConfigCallbackPairs={[]}
     >
       <RCTRefreshControl />
       <View>
         <View
+          collapsable={false}
           onLayout={[Function]}
           style={
-            Object {
+            {
               "alignSelf": "flex-start",
             }
           }
         >
           <View
             style={
-              Array [
-                Object {
+              [
+                {
                   "alignItems": "flex-start",
-                  "padding": 20,
+                  "marginBottom": 40,
                   "width": "100%",
                 },
-                Object {
-                  "paddingBottom": 20,
-                  "paddingTop": 30,
+                {
+                  "marginVertical": 8,
                 },
               ]
             }
           >
             <Text
               style={
-                Array [
-                  Object {
+                [
+                  {
                     "color": "#FFFFFF",
                     "fontSize": 38,
                     "fontWeight": "bold",
                   },
-                  Object {
+                  {
                     "fontSize": 24,
                   },
                 ]
@@ -155,11 +155,11 @@ exports[`Test in <LessonsList /> component should to match snapshot 1`] = `
           </View>
           <View
             style={
-              Object {
+              {
                 "alignItems": "center",
                 "flexDirection": "row",
-                "marginBottom": 30,
-                "paddingHorizontal": 30,
+                "marginBottom": 24,
+                "paddingHorizontal": 8,
                 "width": "100%",
               }
             }
@@ -168,26 +168,26 @@ exports[`Test in <LessonsList /> component should to match snapshot 1`] = `
               allowFontScaling={false}
               selectable={false}
               style={
-                Array [
-                  Object {
+                [
+                  {
                     "color": "#BFBFBF",
                     "fontSize": 25,
                   },
                   undefined,
-                  Object {
+                  {
                     "fontFamily": "Ionicons",
                     "fontStyle": "normal",
                     "fontWeight": "normal",
                   },
-                  Object {},
+                  {},
                 ]
               }
             >
-              
+              
             </Text>
             <View
               style={
-                Object {
+                {
                   "alignItems": "center",
                   "borderBottomWidth": 1,
                   "borderColor": "#BFBFBF",
@@ -208,7 +208,7 @@ exports[`Test in <LessonsList /> component should to match snapshot 1`] = `
                 placeholderTextColor="#BFBFBF"
                 returnKeyType="search"
                 style={
-                  Object {
+                  {
                     "color": "#FFFFFF",
                     "flex": 1,
                     "fontSize": 17,
@@ -220,8 +220,20 @@ exports[`Test in <LessonsList /> component should to match snapshot 1`] = `
               />
               <View
                 accessibilityState={
-                  Object {
+                  {
+                    "busy": undefined,
+                    "checked": undefined,
                     "disabled": true,
+                    "expanded": undefined,
+                    "selected": undefined,
+                  }
+                }
+                accessibilityValue={
+                  {
+                    "max": undefined,
+                    "min": undefined,
+                    "now": undefined,
+                    "text": undefined,
                   }
                 }
                 accessible={true}
@@ -238,12 +250,11 @@ exports[`Test in <LessonsList /> component should to match snapshot 1`] = `
                 onResponderTerminationRequest={[Function]}
                 onStartShouldSetResponder={[Function]}
                 style={
-                  Array [
-                    Object {
+                  [
+                    {
                       "overflow": "hidden",
                     },
-                    false,
-                    Object {
+                    {
                       "alignItems": "center",
                       "borderRadius": 999,
                       "height": 40,
@@ -258,35 +269,48 @@ exports[`Test in <LessonsList /> component should to match snapshot 1`] = `
                   allowFontScaling={false}
                   selectable={false}
                   style={
-                    Array [
-                      Object {
+                    [
+                      {
                         "color": "transparent",
                         "fontSize": 30,
                       },
                       undefined,
-                      Object {
+                      {
                         "fontFamily": "Ionicons",
                         "fontStyle": "normal",
                         "fontWeight": "normal",
                       },
-                      Object {},
+                      {},
                     ]
                   }
                 >
-                  
+                  
                 </Text>
               </View>
             </View>
           </View>
         </View>
         <View
+          onFocusCapture={[Function]}
           onLayout={[Function]}
           style={null}
         >
           <View
             accessibilityState={
-              Object {
+              {
+                "busy": undefined,
+                "checked": undefined,
                 "disabled": false,
+                "expanded": undefined,
+                "selected": undefined,
+              }
+            }
+            accessibilityValue={
+              {
+                "max": undefined,
+                "min": undefined,
+                "now": undefined,
+                "text": undefined,
               }
             }
             accessible={true}
@@ -302,15 +326,13 @@ exports[`Test in <LessonsList /> component should to match snapshot 1`] = `
             onResponderTerminationRequest={[Function]}
             onStartShouldSetResponder={[Function]}
             style={
-              Array [
-                Object {
+              [
+                {
                   "overflow": "hidden",
                 },
-                false,
-                Object {
-                  "marginVertical": 10,
-                  "minWidth": "95%",
-                  "width": "95%",
+                {
+                  "marginVertical": 8,
+                  "width": 734,
                 },
               ]
             }
@@ -318,7 +340,7 @@ exports[`Test in <LessonsList /> component should to match snapshot 1`] = `
           >
             <View
               style={
-                Object {
+                {
                   "backgroundColor": "#292929",
                   "padding": 15,
                 }
@@ -326,7 +348,7 @@ exports[`Test in <LessonsList /> component should to match snapshot 1`] = `
             >
               <Text
                 style={
-                  Object {
+                  {
                     "color": "#BFBFBF",
                     "fontSize": 14,
                     "marginBottom": 15,
@@ -338,7 +360,7 @@ exports[`Test in <LessonsList /> component should to match snapshot 1`] = `
               </Text>
               <Text
                 style={
-                  Object {
+                  {
                     "color": "#FFFFFF",
                     "fontSize": 16,
                   }
@@ -349,8 +371,20 @@ exports[`Test in <LessonsList /> component should to match snapshot 1`] = `
               </Text>
               <View
                 accessibilityState={
-                  Object {
+                  {
+                    "busy": undefined,
+                    "checked": undefined,
                     "disabled": false,
+                    "expanded": undefined,
+                    "selected": undefined,
+                  }
+                }
+                accessibilityValue={
+                  {
+                    "max": undefined,
+                    "min": undefined,
+                    "now": undefined,
+                    "text": undefined,
                   }
                 }
                 accessible={true}
@@ -366,22 +400,21 @@ exports[`Test in <LessonsList /> component should to match snapshot 1`] = `
                 onResponderTerminationRequest={[Function]}
                 onStartShouldSetResponder={[Function]}
                 style={
-                  Array [
-                    Object {
+                  [
+                    {
                       "overflow": "hidden",
                     },
-                    false,
-                    Array [
-                      Object {
+                    [
+                      {
                         "alignItems": "center",
                         "backgroundColor": "transparent",
                         "borderRadius": 50,
-                        "height": 42,
+                        "height": 48,
                         "justifyContent": "center",
                         "margin": 5,
-                        "width": 42,
+                        "width": 48,
                       },
-                      Object {
+                      {
                         "height": 35,
                         "position": "absolute",
                         "right": -2.5,
@@ -397,29 +430,29 @@ exports[`Test in <LessonsList /> component should to match snapshot 1`] = `
                   allowFontScaling={false}
                   selectable={false}
                   style={
-                    Array [
-                      Object {
+                    [
+                      {
                         "color": "#C0A7E1",
                         "fontSize": 20,
                       },
-                      Object {
+                      {
                         "marginLeft": 2,
                       },
-                      Object {
+                      {
                         "fontFamily": "Ionicons",
                         "fontStyle": "normal",
                         "fontWeight": "normal",
                       },
-                      Object {},
+                      {},
                     ]
                   }
                 >
-                  
+                  
                 </Text>
               </View>
               <View
                 style={
-                  Object {
+                  {
                     "position": "absolute",
                     "right": 20,
                     "top": 30,
@@ -430,6 +463,14 @@ exports[`Test in <LessonsList /> component should to match snapshot 1`] = `
                   collapsable={false}
                 >
                   <View
+                    accessibilityValue={
+                      {
+                        "max": undefined,
+                        "min": undefined,
+                        "now": undefined,
+                        "text": undefined,
+                      }
+                    }
                     accessible={true}
                     focusable={true}
                     onClick={[Function]}
@@ -442,8 +483,8 @@ exports[`Test in <LessonsList /> component should to match snapshot 1`] = `
                   >
                     <View
                       ctx={
-                        Object {
-                          "menuActions": Object {
+                        {
+                          "menuActions": {
                             "_getOpenedMenu": [Function],
                             "_notify": [Function],
                             "closeMenu": [Function],
@@ -451,7 +492,7 @@ exports[`Test in <LessonsList /> component should to match snapshot 1`] = `
                             "openMenu": [Function],
                             "toggleMenu": [Function],
                           },
-                          "menuRegistry": Object {
+                          "menuRegistry": {
                             "getAll": [Function],
                             "getMenu": [Function],
                             "setOptionsCustomStyles": [Function],
@@ -462,7 +503,7 @@ exports[`Test in <LessonsList /> component should to match snapshot 1`] = `
                         }
                       }
                       style={
-                        Array [
+                        [
                           undefined,
                           undefined,
                         ]
@@ -497,7 +538,7 @@ exports[`Test in <LessonsList /> component should to match snapshot 1`] = `
   <RCTSafeAreaView
     pointerEvents="box-none"
     style={
-      Object {
+      {
         "bottom": 0,
         "left": 0,
         "position": "absolute",
@@ -511,7 +552,7 @@ exports[`Test in <LessonsList /> component should to match snapshot 1`] = `
       onLayout={[Function]}
       pointerEvents="box-none"
       style={
-        Object {
+        {
           "flex": 1,
         }
       }

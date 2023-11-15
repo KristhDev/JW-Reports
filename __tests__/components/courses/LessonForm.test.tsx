@@ -58,17 +58,15 @@ describe('Test in <LessonForm /> component', () => {
             render(<LessonForm />);
         });
 
-        await act(async () => {
-            await waitFor(() => {
+        const touchable = (await screen.findAllByTestId('button-touchable'))[1];
 
-                /* Get submit touchable */
-                const touchable = screen.getAllByTestId('button-touchable')[1];
-                fireEvent.press(touchable);
-
-                /* Check if setErrorForm is called one time */
-                expect(setErrorFormMock).toHaveBeenCalledTimes(1);
-            });
+        await waitFor(() => {
+            /* Submit touchable */
+            fireEvent.press(touchable);
         });
+
+        /* Check if setErrorForm is called one time */
+        expect(setErrorFormMock).toHaveBeenCalledTimes(1);
     });
 
     it('should call saveLesson when form is valid and selectedLesson is empty', async () => {
@@ -78,33 +76,34 @@ describe('Test in <LessonForm /> component', () => {
 
         const textValue = 'Expedita ab laboriosam excepturi earum nam cupiditate ut rerum veritatis.';
 
-        await act(async () => {
-            await waitFor(() => {
+        const input = await screen.findByTestId('form-field-text-input');
 
-                /* Get text input to type description of lesson */
-                const input = screen.getByTestId('form-field-text-input');
-                fireEvent(input, 'onChangeText', textValue);
+        await waitFor(() => {
+            /* Get text input to type description of lesson */
+            fireEvent(input, 'onChangeText', textValue);
+        });
 
-                /* Get submit touchable */
-                const touchable = screen.getAllByTestId('button-touchable')[1];
-                fireEvent.press(touchable);
+        /* Get submit touchable */
+        const touchable = (await screen.findAllByTestId('button-touchable'))[1];
 
-                /* Check if saveLesson is called one time */
-                expect(saveLessonMock).toHaveBeenCalledTimes(1);
-            });
+        await waitFor(() => {
+            fireEvent.press(touchable);
+        });
 
-            /* Get text of submit touchable */
-            const btnText = screen.getAllByTestId('button-text')[1];
+        /* Get text of submit touchable */
+        const btnText = (await screen.findAllByTestId('button-text'))[1];
 
-            /**
-             * Check if text of submit touchable is equal to Guardar and saveLesson
-             * is called with respective args
-             */
-            expect(btnText.props.children).toBe('Guardar');
-            expect(saveLessonMock).toHaveBeenCalledWith({
-                description: textValue,
-                next_lesson: expect.any(Date)
-            });
+        /**
+         * Check if text of submit touchable is equal to Guardar and saveLesson
+         * is called with respective args
+         */
+        expect(btnText.props.children).toBe('Guardar');
+
+        /* Check if saveLesson is called one time */
+        expect(saveLessonMock).toHaveBeenCalledTimes(1);
+        expect(saveLessonMock).toHaveBeenCalledWith({
+            description: textValue,
+            nextLesson: expect.any(Date)
         });
     });
 
@@ -122,34 +121,34 @@ describe('Test in <LessonForm /> component', () => {
         });
 
         const textValue = 'Expedita ab laboriosam excepturi earum nam cupiditate ut rerum veritatis.';
+        const input = await screen.findByTestId('form-field-text-input');
 
-        await act(async () => {
-            await waitFor(() => {
+        await waitFor(() => {
+            /* Get text input to type description of lesson */
+            fireEvent(input, 'onChangeText', textValue);
+        });
 
-                /* Get text input to type description of lesson */
-                const input = screen.getByTestId('form-field-text-input');
-                fireEvent(input, 'onChangeText', textValue);
+        const touchable = (await screen.findAllByTestId('button-touchable'))[1];
 
-                /* Get submit touchable */
-                const touchable = screen.getAllByTestId('button-touchable')[1];
-                fireEvent.press(touchable);
+        await waitFor(() => {
+            /* Get submit touchable */
+            fireEvent.press(touchable);
+        });
 
-                /* Check if updateLesson is called one time */
-                expect(updateLessonMock).toHaveBeenCalledTimes(1);
-            });
+        /* Get text of submit touchable */
+        const btnText = (await screen.findAllByTestId('button-text'))[1];
 
-            /* Get text of submit touchable */
-            const btnText = screen.getAllByTestId('button-text')[1];
+        /**
+         * Check if text of submit touchable is equal to Actualizar and updateLesson
+         * is called with respective args
+         */
+        expect(btnText.props.children).toBe('Actualizar');
 
-            /**
-             * Check if text of submit touchable is equal to Actualizar and updateLesson
-             * is called with respective args
-             */
-            expect(btnText.props.children).toBe('Actualizar');
-            expect(updateLessonMock).toHaveBeenCalledWith({
-                description: textValue,
-                next_lesson: expect.any(Date)
-            });
+        /* Check if updateLesson is called one time */
+        expect(updateLessonMock).toHaveBeenCalledTimes(1);
+        expect(updateLessonMock).toHaveBeenCalledWith({
+            description: textValue,
+            nextLesson: expect.any(Date)
         });
     });
 });

@@ -5,37 +5,36 @@ import { MenuProvider } from 'react-native-popup-menu';
 /* Components */
 import { LessonsList } from '../../../src/components/courses';
 
-/* Features */
-import { courseSelectedState, lessonsState } from '../../features/courses';
-
 /* Hooks */
-import { useCourses, useTheme } from '../../../src/hooks';
+import { useCourses, useNetwork, useTheme } from '../../../src/hooks';
 
 /* Theme */
 import { darkColors } from '../../../src/theme';
 
-const deleteLessonMock = jest.fn();
-const loadLessonsMock = jest.fn();
-const removeLessonsMock = jest.fn();
-const setLessonsPaginationMock = jest.fn();
-const setSelectedLessonMock = jest.fn();
+/* Mocks */
+import { courseSelectedStateMock, deleteLessonMock, finishOrStartLessonMock, lessonsStateMock, loadLessonsMock, removeLessonsMock, setLessonsPaginationMock, setSelectedLessonMock, wifiMock } from '../../mocks';
 
 const emptyMessageTest = 'No has agregado clases a este curso.';
-const titleTest = `Clases del curso con ${ lessonsState.selectedCourse.person_name }`;
+const titleTest = `Clases del curso con ${ lessonsStateMock.selectedCourse.personName }`;
 
 /* Mock hooks */
 jest.mock('../../../src/hooks/useCourses.ts');
+jest.mock('../../../src/hooks/useNetwork.ts');
 jest.mock('../../../src/hooks/useTheme.ts');
 
 describe('Test in <LessonsList /> component', () => {
     (useCourses as jest.Mock).mockReturnValue({
-        state: lessonsState,
+        state: lessonsStateMock,
         deleteLesson: deleteLessonMock,
         loadLessons: loadLessonsMock,
         removeLessons: removeLessonsMock,
         setLessonsPagination: setLessonsPaginationMock,
         setSelectedLesson: setSelectedLessonMock,
-        finishOrStartLesson: jest.fn(),
+        finishOrStartLesson: finishOrStartLessonMock,
+    });
+
+    (useNetwork as jest.Mock).mockReturnValue({
+        wifi: wifiMock
     });
 
     (useTheme as jest.Mock).mockReturnValue({
@@ -44,16 +43,16 @@ describe('Test in <LessonsList /> component', () => {
     });
 
     beforeEach(() => {
+        jest.clearAllMocks();
+    });
+
+    it('should to match snapshot', () => {
         render(
             <MenuProvider>
                 <LessonsList />
             </MenuProvider>
         );
 
-        jest.clearAllMocks();
-    });
-
-    it('should to match snapshot', () => {
         expect(screen.toJSON()).toMatchSnapshot();
     });
 
@@ -73,13 +72,13 @@ describe('Test in <LessonsList /> component', () => {
 
         /* Mock data of useCourses */
         (useCourses as jest.Mock).mockReturnValue({
-            state: courseSelectedState,
+            state: courseSelectedStateMock,
             deleteLesson: deleteLessonMock,
             loadLessons: loadLessonsMock,
             removeLessons: removeLessonsMock,
             setLessonsPagination: setLessonsPaginationMock,
             setSelectedLesson: setSelectedLessonMock,
-            finishOrStartLesson: jest.fn(),
+            finishOrStartLesson: finishOrStartLessonMock,
         });
 
         const { getByTestId } = render(
@@ -98,7 +97,7 @@ describe('Test in <LessonsList /> component', () => {
         /* Mock data of useCourses */
         (useCourses as jest.Mock).mockReturnValue({
             state: {
-                ...courseSelectedState,
+                ...courseSelectedStateMock,
                 isLessonsLoading: true
             },
             deleteLesson: deleteLessonMock,
@@ -106,7 +105,7 @@ describe('Test in <LessonsList /> component', () => {
             removeLessons: removeLessonsMock,
             setLessonsPagination: setLessonsPaginationMock,
             setSelectedLesson: setSelectedLessonMock,
-            finishOrStartLesson: jest.fn(),
+            finishOrStartLesson: finishOrStartLessonMock,
         });
 
         const { getByTestId } = render(
@@ -121,6 +120,11 @@ describe('Test in <LessonsList /> component', () => {
     });
 
     it('should search when searchInput is submit', () => {
+        render(
+            <MenuProvider>
+                <LessonsList />
+            </MenuProvider>
+        );
 
         /* Get search input text, type search and submit */
         const searchInput = screen.getByTestId('search-input-text-input');
@@ -131,10 +135,10 @@ describe('Test in <LessonsList /> component', () => {
          * Check if setLessonsPagination, removeLessons and loadLessons is called
          * one time with respective args
          */
-        expect(setLessonsPaginationMock).toHaveBeenCalledTimes(1);
+        expect(setLessonsPaginationMock).toHaveBeenCalledTimes(2);
         expect(setLessonsPaginationMock).toHaveBeenCalledWith({ from: 0, to: 9 });
-        expect(removeLessonsMock).toHaveBeenCalledTimes(1);
-        expect(loadLessonsMock).toHaveBeenCalledTimes(1);
+        expect(removeLessonsMock).toHaveBeenCalledTimes(2);
+        expect(loadLessonsMock).toHaveBeenCalledTimes(2);
         expect(loadLessonsMock).toHaveBeenCalledWith({
             search: 'Test search', refresh: true
         });

@@ -6,7 +6,7 @@ exports[`Test in <PreachingForm /> component should to match snapshot 1`] = `
     {
       "alignItems": "center",
       "flex": 1,
-      "justifyContent": "center",
+      "justifyContent": "flex-start",
       "paddingBottom": 40,
       "width": "100%",
     }
@@ -119,7 +119,6 @@ exports[`Test in <PreachingForm /> component should to match snapshot 1`] = `
             {
               "overflow": "hidden",
             },
-            false,
             [
               {
                 "backgroundColor": "#C0A7E1",
@@ -199,7 +198,7 @@ exports[`Test in <PreachingForm /> component should to match snapshot 1`] = `
               ]
             }
           >
-            
+            
           </Text>
         </View>
       </View>
@@ -212,351 +211,6 @@ exports[`Test in <PreachingForm /> component should to match snapshot 1`] = `
       transparent={true}
       visible={false}
     />
-  </View>
-  <View
-    style={
-      {
-        "display": "flex",
-        "marginBottom": 16,
-        "width": "100%",
-      }
-    }
-  >
-    <Text
-      style={
-        [
-          {
-            "color": "#FFFFFF",
-            "fontSize": 18,
-            "marginBottom": 16,
-          },
-          undefined,
-        ]
-      }
-      testID="form-field-label"
-    >
-      Publicaciones:
-    </Text>
-    <View
-      style={
-        {
-          "borderColor": "transparent",
-          "borderRadius": 7,
-          "borderWidth": 1,
-        }
-      }
-    >
-      <View
-        style={
-          {
-            "borderColor": "#FFFFFF",
-            "borderRadius": 5,
-            "borderWidth": 0.5,
-          }
-        }
-      >
-        <View
-          style={
-            [
-              {
-                "alignItems": "center",
-                "borderColor": "transparent",
-                "borderRadius": 5,
-                "borderWidth": 1.5,
-                "flexDirection": "row",
-                "paddingRight": 10,
-              },
-              undefined,
-            ]
-          }
-        >
-          <TextInput
-            autoCorrect={false}
-            cursorColor="#C0A7E1"
-            keyboardType="numeric"
-            onBlur={[Function]}
-            onChangeText={[Function]}
-            onFocus={[Function]}
-            onSelectionChange={[Function]}
-            placeholder="Número de publicaciones"
-            placeholderTextColor="#BFBFBF"
-            selection={
-              {
-                "end": 1,
-                "start": 1,
-              }
-            }
-            selectionColor="#A0B9E2"
-            style={
-              [
-                {
-                  "color": "#FFFFFF",
-                  "flex": 1,
-                  "fontSize": 17,
-                  "paddingLeft": 10,
-                  "paddingRight": 5,
-                  "textAlignVertical": "center",
-                },
-                undefined,
-              ]
-            }
-            testID="form-field-text-input"
-            value="0"
-          />
-          <Text
-            allowFontScaling={false}
-            selectable={false}
-            style={
-              [
-                {
-                  "color": "#BFBFBF",
-                  "fontSize": 25,
-                },
-                undefined,
-                {
-                  "fontFamily": "Ionicons",
-                  "fontStyle": "normal",
-                  "fontWeight": "normal",
-                },
-                {},
-              ]
-            }
-          >
-            
-          </Text>
-        </View>
-      </View>
-    </View>
-  </View>
-  <View
-    style={
-      {
-        "display": "flex",
-        "marginBottom": 16,
-        "width": "100%",
-      }
-    }
-  >
-    <Text
-      style={
-        [
-          {
-            "color": "#FFFFFF",
-            "fontSize": 18,
-            "marginBottom": 16,
-          },
-          undefined,
-        ]
-      }
-      testID="form-field-label"
-    >
-      Videos:
-    </Text>
-    <View
-      style={
-        {
-          "borderColor": "transparent",
-          "borderRadius": 7,
-          "borderWidth": 1,
-        }
-      }
-    >
-      <View
-        style={
-          {
-            "borderColor": "#FFFFFF",
-            "borderRadius": 5,
-            "borderWidth": 0.5,
-          }
-        }
-      >
-        <View
-          style={
-            [
-              {
-                "alignItems": "center",
-                "borderColor": "transparent",
-                "borderRadius": 5,
-                "borderWidth": 1.5,
-                "flexDirection": "row",
-                "paddingRight": 10,
-              },
-              undefined,
-            ]
-          }
-        >
-          <TextInput
-            autoCorrect={false}
-            cursorColor="#C0A7E1"
-            keyboardType="numeric"
-            onBlur={[Function]}
-            onChangeText={[Function]}
-            onFocus={[Function]}
-            onSelectionChange={[Function]}
-            placeholder="Número de videos"
-            placeholderTextColor="#BFBFBF"
-            selection={
-              {
-                "end": 1,
-                "start": 1,
-              }
-            }
-            selectionColor="#A0B9E2"
-            style={
-              [
-                {
-                  "color": "#FFFFFF",
-                  "flex": 1,
-                  "fontSize": 17,
-                  "paddingLeft": 10,
-                  "paddingRight": 5,
-                  "textAlignVertical": "center",
-                },
-                undefined,
-              ]
-            }
-            testID="form-field-text-input"
-            value="0"
-          />
-          <Text
-            allowFontScaling={false}
-            selectable={false}
-            style={
-              [
-                {
-                  "color": "#BFBFBF",
-                  "fontSize": 25,
-                },
-                undefined,
-                {
-                  "fontFamily": "Ionicons",
-                  "fontStyle": "normal",
-                  "fontWeight": "normal",
-                },
-                {},
-              ]
-            }
-          >
-            
-          </Text>
-        </View>
-      </View>
-    </View>
-  </View>
-  <View
-    style={
-      {
-        "display": "flex",
-        "marginBottom": 16,
-        "width": "100%",
-      }
-    }
-  >
-    <Text
-      style={
-        [
-          {
-            "color": "#FFFFFF",
-            "fontSize": 18,
-            "marginBottom": 16,
-          },
-          undefined,
-        ]
-      }
-      testID="form-field-label"
-    >
-      Revisitas:
-    </Text>
-    <View
-      style={
-        {
-          "borderColor": "transparent",
-          "borderRadius": 7,
-          "borderWidth": 1,
-        }
-      }
-    >
-      <View
-        style={
-          {
-            "borderColor": "#FFFFFF",
-            "borderRadius": 5,
-            "borderWidth": 0.5,
-          }
-        }
-      >
-        <View
-          style={
-            [
-              {
-                "alignItems": "center",
-                "borderColor": "transparent",
-                "borderRadius": 5,
-                "borderWidth": 1.5,
-                "flexDirection": "row",
-                "paddingRight": 10,
-              },
-              undefined,
-            ]
-          }
-        >
-          <TextInput
-            autoCorrect={false}
-            cursorColor="#C0A7E1"
-            keyboardType="numeric"
-            onBlur={[Function]}
-            onChangeText={[Function]}
-            onFocus={[Function]}
-            onSelectionChange={[Function]}
-            placeholder="Número de revisitas"
-            placeholderTextColor="#BFBFBF"
-            selection={
-              {
-                "end": 1,
-                "start": 1,
-              }
-            }
-            selectionColor="#A0B9E2"
-            style={
-              [
-                {
-                  "color": "#FFFFFF",
-                  "flex": 1,
-                  "fontSize": 17,
-                  "paddingLeft": 10,
-                  "paddingRight": 5,
-                  "textAlignVertical": "center",
-                },
-                undefined,
-              ]
-            }
-            testID="form-field-text-input"
-            value="0"
-          />
-          <Text
-            allowFontScaling={false}
-            selectable={false}
-            style={
-              [
-                {
-                  "color": "#BFBFBF",
-                  "fontSize": 25,
-                },
-                undefined,
-                {
-                  "fontFamily": "Ionicons",
-                  "fontStyle": "normal",
-                  "fontWeight": "normal",
-                },
-                {},
-              ]
-            }
-          >
-            
-          </Text>
-        </View>
-      </View>
-    </View>
   </View>
   <View
     style={
@@ -627,7 +281,7 @@ exports[`Test in <PreachingForm /> component should to match snapshot 1`] = `
             ]
           }
           testID="datetimefield-text-input"
-          value="09:00"
+          value="19:49"
         />
       </View>
       <View
@@ -665,7 +319,6 @@ exports[`Test in <PreachingForm /> component should to match snapshot 1`] = `
             {
               "overflow": "hidden",
             },
-            false,
             [
               {
                 "backgroundColor": "#C0A7E1",
@@ -745,7 +398,7 @@ exports[`Test in <PreachingForm /> component should to match snapshot 1`] = `
               ]
             }
           >
-            
+            
           </Text>
         </View>
       </View>
@@ -830,7 +483,7 @@ exports[`Test in <PreachingForm /> component should to match snapshot 1`] = `
             ]
           }
           testID="datetimefield-text-input"
-          value="11:30"
+          value="19:49"
         />
       </View>
       <View
@@ -868,7 +521,6 @@ exports[`Test in <PreachingForm /> component should to match snapshot 1`] = `
             {
               "overflow": "hidden",
             },
-            false,
             [
               {
                 "backgroundColor": "#C0A7E1",
@@ -948,7 +600,7 @@ exports[`Test in <PreachingForm /> component should to match snapshot 1`] = `
               ]
             }
           >
-            
+            
           </Text>
         </View>
       </View>
@@ -997,7 +649,6 @@ exports[`Test in <PreachingForm /> component should to match snapshot 1`] = `
         {
           "overflow": "hidden",
         },
-        false,
         [
           {
             "backgroundColor": "#C0A7E1",

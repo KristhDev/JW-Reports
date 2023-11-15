@@ -5,8 +5,7 @@ import { act, fireEvent, render, screen, waitFor } from '@testing-library/react-
 import { PreachingForm } from '../../../src/components/preaching';
 
 /* Features */
-import { INIT_PREACHING } from '../../../src/features/preaching';
-import { preachingSelectedState, preachingsState } from '../../features/preaching';
+import { INIT_PREACHING } from '../../../src/features';
 
 /* Hooks */
 import { usePreaching, useStatus, useTheme } from '../../../src/hooks';
@@ -14,9 +13,8 @@ import { usePreaching, useStatus, useTheme } from '../../../src/hooks';
 /* Theme */
 import { darkColors } from '../../../src/theme';
 
-const savePreachingMock = jest.fn();
-const updatePreachingMock = jest.fn();
-const setErrorFormMock = jest.fn();
+/* Mocks */
+import { preachingSelectedStateMock, preachingsStateMock, savePreachingMock, setErrorFormMock, updatePreachingMock } from '../../mocks';
 
 const preachingDay = '2022-12-29 00:00:00';
 const initHour = '2022-12-30 09:00:00';
@@ -30,7 +28,7 @@ jest.mock('../../../src/hooks/useTheme.ts');
 describe('Test in <PreachingForm /> component', () => {
     (usePreaching as jest.Mock).mockReturnValue({
         state: {
-            ...preachingsState,
+            ...preachingsStateMock,
             seletedPreaching: {
                 ...INIT_PREACHING,
                 day: preachingDay,
@@ -71,12 +69,12 @@ describe('Test in <PreachingForm /> component', () => {
         /* Mock data of usePreaching */
         (usePreaching as jest.Mock).mockReturnValue({
             state: {
-                ...preachingsState,
+                ...preachingsStateMock,
                 seletedPreaching: {
                     ...INIT_PREACHING,
                     day: preachingDay,
-                    init_hour: finalHour,
-                    final_hour: initHour
+                    initHour: finalHour,
+                    finalHour: initHour
                 }
             },
             savePreaching: savePreachingMock,
@@ -87,17 +85,16 @@ describe('Test in <PreachingForm /> component', () => {
             render(<PreachingForm />);
         });
 
-        await act(async () => {
-            await waitFor(() => {
+        const touchable = (await screen.findAllByTestId('button-touchable'))[3];
 
-                /* Get submit touchable */
-                const touchable = screen.getAllByTestId('button-touchable')[3];
-                fireEvent.press(touchable);
+        await waitFor(() => {
+            /* Get submit touchable */
+            fireEvent.press(touchable);
 
-                /* Check if setErrorForm is called one time */
-                expect(setErrorFormMock).toHaveBeenCalledTimes(1);
-            });
         });
+
+        /* Check if setErrorForm is called one time */
+        expect(setErrorFormMock).toHaveBeenCalledTimes(1);
     });
 
     it('should call savePreaching when form is valid and selectedPreaching is empty', async () => {
@@ -105,12 +102,12 @@ describe('Test in <PreachingForm /> component', () => {
         /* Mock data of usePreaching */
         (usePreaching as jest.Mock).mockReturnValue({
             state: {
-                ...preachingsState,
+                ...preachingsStateMock,
                 seletedPreaching: {
                     ...INIT_PREACHING,
                     day: preachingDay,
-                    init_hour: initHour,
-                    final_hour: finalHour
+                    initHour: initHour,
+                    finalHour: finalHour
                 }
             },
             savePreaching: savePreachingMock,
@@ -121,33 +118,28 @@ describe('Test in <PreachingForm /> component', () => {
             render(<PreachingForm />);
         });
 
-        await act(async () => {
-            await waitFor(() => {
+        const touchable = (await screen.findAllByTestId('button-touchable'))[3];
 
-                /* Get submit touchable */
-                const touchable = screen.getAllByTestId('button-touchable')[3];
-                fireEvent.press(touchable);
+        await waitFor(() => {
 
-                /* Check if savePreaching is called one time */
-                expect(savePreachingMock).toHaveBeenCalledTimes(1);
-            });
+            /* Get submit touchable */
+            fireEvent.press(touchable);
 
-            /* Get text of submit touchable */
-            const btnText = screen.getAllByTestId('button-text')[3];
+        });
 
-            /**
-             * Check if text of submit touchable is equal to Guardar and savePreaching
-             * is called with respective args
-             */
-            expect(btnText.props.children).toBe('Guardar');
-            expect(savePreachingMock).toHaveBeenCalledWith({
-                day: new Date(preachingDay),
-                init_hour: new Date(initHour),
-                final_hour: new Date(finalHour),
-                publications: 0,
-                videos: 0,
-                revisits: 0
-            });
+        /* Get text of submit touchable */
+        const btnText = (await screen.findAllByTestId('button-text'))[3];
+
+        /**
+         * Check if text of submit touchable is equal to Guardar and savePreaching
+         * is called with respective args
+         */
+        expect(btnText.props.children).toBe('Guardar');
+        expect(savePreachingMock).toHaveBeenCalledTimes(1);
+        expect(savePreachingMock).toHaveBeenCalledWith({
+            day: new Date(preachingDay),
+            initHour: new Date(initHour),
+            finalHour: new Date(finalHour),
         });
     });
 
@@ -155,7 +147,7 @@ describe('Test in <PreachingForm /> component', () => {
 
         /* Mock data of usePreaching */
         (usePreaching as jest.Mock).mockReturnValue({
-            state: preachingSelectedState,
+            state: preachingSelectedStateMock,
             savePreaching: savePreachingMock,
             updatePreaching: updatePreachingMock
         });
@@ -164,33 +156,27 @@ describe('Test in <PreachingForm /> component', () => {
             render(<PreachingForm />);
         });
 
-        await act(async () => {
-            await waitFor(() => {
+        const touchable = (await screen.findAllByTestId('button-touchable'))[3];
 
-                /* Get submit touchable */
-                const touchable = screen.getAllByTestId('button-touchable')[3];
-                fireEvent.press(touchable);
+        await waitFor(() => {
 
-                /* Check if updatePreaching is called one time */
-                expect(updatePreachingMock).toHaveBeenCalledTimes(1);
-            });
+            /* Get submit touchable */
+            fireEvent.press(touchable);
+        });
 
-            /* Get text of submit touchable */
-            const btnText = screen.getAllByTestId('button-text')[3];
+        /* Get text of submit touchable */
+        const btnText = (await screen.findAllByTestId('button-text'))[3];
 
-            /**
-             * Check if text of submit touchable is equal to Actualizar and updatePreaching
-             * is called with respective args
-             */
-            expect(btnText.props.children).toBe('Actualizar');
-            expect(updatePreachingMock).toHaveBeenCalledWith({
-                day: new Date(preachingSelectedState.seletedPreaching.day),
-                init_hour: new Date(preachingSelectedState.seletedPreaching.init_hour),
-                final_hour: new Date(preachingSelectedState.seletedPreaching.final_hour),
-                publications: preachingSelectedState.seletedPreaching.publications,
-                videos: preachingSelectedState.seletedPreaching.videos,
-                revisits: preachingSelectedState.seletedPreaching.revisits
-            });
+        /**
+         * Check if text of submit touchable is equal to Actualizar and updatePreaching
+         * is called with respective args
+         */
+        expect(btnText.props.children).toBe('Actualizar');
+        expect(updatePreachingMock).toHaveBeenCalledTimes(1);
+        expect(updatePreachingMock).toHaveBeenCalledWith({
+            day: new Date(preachingSelectedStateMock.seletedPreaching.day),
+            initHour: new Date(preachingSelectedStateMock.seletedPreaching.initHour),
+            finalHour: new Date(preachingSelectedStateMock.seletedPreaching.finalHour),
         });
     });
 });

@@ -3,9 +3,6 @@ import { fireEvent, render, screen } from '@testing-library/react-native';
 import { MenuProvider } from 'react-native-popup-menu';
 import dayjs from 'dayjs';
 
-/* Features */
-import { selectedRevisitState } from '../../features/revisits';
-
 /* Components */
 import { RevisitCard } from '../../../src/components/revisits';
 
@@ -18,12 +15,22 @@ import { darkColors } from '../../../src/theme';
 /* Setup */
 import { navigateMock } from '../../../jest.setup';
 
-const setSelectedRevisitMock = jest.fn();
-const onDeleteMock = jest.fn();
-const onPassMock = jest.fn();
-const onRevisitMock = jest.fn();
+/* Mocks */
+import { onDeleteMock, onPassMock, onRevisitMock, selectedRevisitStateMock, setSelectedRevisitMock } from '../../mocks';
 
-const selectedRevisit = selectedRevisitState.selectedRevisit;
+const selectedRevisit = selectedRevisitStateMock.selectedRevisit;
+
+const renderComponent = () => render(
+    <MenuProvider>
+        <RevisitCard
+            onDelete={ onDeleteMock }
+            onPass={ onPassMock }
+            onRevisit={ onRevisitMock }
+            revisit={ selectedRevisit }
+            screenToNavigate="RevisitDetailScreen"
+        />
+    </MenuProvider>
+);
 
 /* Mock hooks */
 jest.mock('../../../src/hooks/useRevisits.ts');
@@ -40,40 +47,35 @@ describe('Test in <RevisitCard /> component', () => {
     });
 
     beforeEach(() => {
-        render(
-            <MenuProvider>
-                <RevisitCard
-                    onDelete={ onDeleteMock }
-                    onPass={ onPassMock }
-                    onRevisit={ onRevisitMock }
-                    revisit={ selectedRevisit }
-                />
-            </MenuProvider>
-        );
+        jest.clearAllMocks();
     });
 
     it('should to match snapshot', () => {
+        renderComponent();
         expect(screen.toJSON()).toMatchSnapshot();
     });
 
     it('should render data of revisit', () => {
-        const nextVisit = dayjs(selectedRevisit.next_visit);
+        renderComponent();
+
+        const nextVisit = dayjs(selectedRevisit.nextVisit);
         const visit = `Visitar el ${ nextVisit.format('DD') } de ${ nextVisit.format('MMMM') } del ${ nextVisit.format('YYYY') }`;
 
         /* Get elements with data of revisit */
-        const nextVisitText = screen.getByTestId('revisit-card-next-visit-text');
-        const personNameText = screen.getByTestId('revisit-card-person-name-text');
-        const aboutText = screen.getByTestId('revisit-card-about-text');
+        const nextVisitText = screen.queryByTestId('revisit-card-next-visit-text');
+        const personNameText = screen.queryByTestId('revisit-card-person-name-text');
+        const aboutText = screen.queryByTestId('revisit-card-about-text');
 
         /* Check if elements exists and contain data of revisit */
         expect(nextVisitText).toBeTruthy();
-        expect(nextVisitText.props.children).toBe(visit);
+        expect(nextVisitText!.props.children).toBe(visit);
         expect(personNameText).toBeTruthy();
-        expect(personNameText.props.children).toBe(selectedRevisit.person_name);
+        expect(personNameText!.props.children).toBe(selectedRevisit.personName);
         expect(aboutText).toBeTruthy();
     });
 
     it('should call setSelectedRevisit and navigate when card is pressed', () => {
+        renderComponent();
 
         /* Get touchable of card */
         const touchable = screen.getByTestId('revisit-card-touchable');
@@ -97,6 +99,7 @@ describe('Test in <RevisitCard /> component', () => {
                     onPass={ onPassMock }
                     onRevisit={ onRevisitMock }
                     revisit={{ ...selectedRevisit, done: true }}
+                    screenToNavigate="RevisitDetailScreen"
                 />
             </MenuProvider>
         );
