@@ -1,9 +1,10 @@
 import { INIT_PREACHING } from '../../src/features';
 import { Preaching, PreachingState } from '../../src/interfaces';
 
+export const loadPreachingsMock = jest.fn();
 export const savePreachingMock = jest.fn();
-export const updatePreachingMock = jest.fn();
 export const setSelectedPreachingMock = jest.fn();
+export const updatePreachingMock = jest.fn();
 
 export const preachingsMock: Preaching[] = [
     {

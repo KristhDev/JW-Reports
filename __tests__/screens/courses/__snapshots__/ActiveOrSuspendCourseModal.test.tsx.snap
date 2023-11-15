@@ -86,7 +86,6 @@ exports[`Test in <ActiveOrSuspendCourseModal /> screen should to match snapshot 
               {
                 "overflow": "hidden",
               },
-              false,
               [
                 {
                   "backgroundColor": "#C0A7E1",
@@ -190,7 +189,6 @@ exports[`Test in <ActiveOrSuspendCourseModal /> screen should to match snapshot 
               {
                 "overflow": "hidden",
               },
-              false,
               [
                 {
                   "backgroundColor": "#C0A7E1",

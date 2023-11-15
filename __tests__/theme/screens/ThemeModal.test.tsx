@@ -14,8 +14,11 @@ import { THEME_OPTIONS } from '../../../src/utils';
 /* Theme */
 import { darkColors } from '../../../src/theme';
 
-const onCloseMock = jest.fn();
-const setThemeMock = jest.fn();
+/* Setup */
+import { onCloseMock } from '../../../jest.setup';
+
+/* Mocks */
+import { setThemeMock } from '../../mocks';
 
 /* Mock hooks */
 jest.mock('../../../src/hooks/useTheme.ts')

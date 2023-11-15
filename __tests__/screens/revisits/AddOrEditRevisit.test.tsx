@@ -5,14 +5,14 @@ import { Image } from 'react-native-image-crop-picker';
 /* Screens */
 import { AddOrEditRevisit } from '../../../src/screens/revisits';
 
-/* Features */
-import { revisitsState, selectedRevisitState } from '../../features/revisits';
-
 /* Hooks */
 import { useImage, useRevisits, useStatus, useTheme } from '../../../src/hooks';
 
 /* Theme */
 import { darkColors } from '../../../src/theme';
+
+/* Mocks */
+import { revisitsStateMock, selectedRevisitStateMock } from '../../mocks';
 
 const image: Image = {
     height: 200,
@@ -37,9 +37,9 @@ describe('Test in <AddOrEditRevisit /> screen', () => {
 
     (useRevisits as jest.Mock).mockReturnValue({
         state: {
-            ...revisitsState,
+            ...revisitsStateMock,
             selectedRevisit: {
-                ...revisitsState.selectedRevisit,
+                ...revisitsStateMock.selectedRevisit,
                 next_visit: '2022-12-29 00:00:00'
             }
         },
@@ -71,24 +71,19 @@ describe('Test in <AddOrEditRevisit /> screen', () => {
             render(<AddOrEditRevisit />);
         });
 
-        await act(async () => {
-            await waitFor(() => {
+        /* Get title */
+        const title = await screen.findByTestId('title-text');
 
-                /* Get title */
-                const title = screen.getByTestId('title-text');
-
-                /* Check if title exists and contain value pass by props */
-                expect(title).toBeTruthy();
-                expect(title.props.children).toBe('Agregar revisita');
-            });
-        })
+        /* Check if title exists and contain value pass by props */
+        expect(title).toBeTruthy();
+        expect(title.props.children).toBe('Agregar revisita');
     });
 
     it('should render respective title when seletedPreaching isnt empty', async () => {
 
         /* Mock data of useRevisits */
         (useRevisits as jest.Mock).mockReturnValue({
-            state: selectedRevisitState,
+            state: selectedRevisitStateMock,
             saveRevisit: jest.fn(),
             updateRevisit: jest.fn()
         });
@@ -97,16 +92,11 @@ describe('Test in <AddOrEditRevisit /> screen', () => {
             render(<AddOrEditRevisit />);
         });
 
-        await act(async () => {
-            await waitFor(() => {
+        /* Get title */
+        const title = await screen.findByTestId('title-text');
 
-                /* Get title */
-                const title = screen.getByTestId('title-text');
-
-                /* Check if title exists and contain value pass by props */
-                expect(title).toBeTruthy();
-                expect(title.props.children).toBe('Editar revisita');
-            });
-        });
+        /* Check if title exists and contain value pass by props */
+        expect(title).toBeTruthy();
+        expect(title.props.children).toBe('Editar revisita');
     });
 });

@@ -88,7 +88,6 @@ exports[`Test in <Settings /> screen should to match snapshot 1`] = `
               {
                 "overflow": "hidden",
               },
-              false,
               {
                 "padding": 16,
               },
@@ -157,7 +156,6 @@ exports[`Test in <Settings /> screen should to match snapshot 1`] = `
               {
                 "overflow": "hidden",
               },
-              false,
               {
                 "padding": 16,
               },
@@ -273,7 +271,6 @@ exports[`Test in <Settings /> screen should to match snapshot 1`] = `
               {
                 "overflow": "hidden",
               },
-              false,
               {
                 "padding": 16,
               },
@@ -389,7 +386,6 @@ exports[`Test in <Settings /> screen should to match snapshot 1`] = `
               {
                 "overflow": "hidden",
               },
-              false,
               {
                 "padding": 16,
               },
@@ -507,7 +503,6 @@ exports[`Test in <Settings /> screen should to match snapshot 1`] = `
               {
                 "overflow": "hidden",
               },
-              false,
               {
                 "padding": 16,
               },
@@ -536,7 +531,7 @@ exports[`Test in <Settings /> screen should to match snapshot 1`] = `
               }
               testID="section-btn-sub-text"
             >
-              1.0.0
+              1.1.2
             </Text>
           </View>
         </View>
@@ -576,7 +571,6 @@ exports[`Test in <Settings /> screen should to match snapshot 1`] = `
               {
                 "overflow": "hidden",
               },
-              false,
               {
                 "padding": 16,
               },
@@ -645,7 +639,6 @@ exports[`Test in <Settings /> screen should to match snapshot 1`] = `
               {
                 "overflow": "hidden",
               },
-              false,
               {
                 "padding": 16,
               },

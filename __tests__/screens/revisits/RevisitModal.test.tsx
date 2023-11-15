@@ -7,18 +7,17 @@ import { RevisitModal } from '../../../src/screens/revisits';
 /* Hooks */
 import { useRevisits, useStatus, useTheme } from '../../../src/hooks';
 
-/* Features */
-import { selectedRevisitState } from '../../features/revisits';
-
 /* Theme */
 import { darkColors } from '../../../src/theme';
 
-const completeMsg = 'Test complete msg'
+/* Setup */
+import { onCloseMock } from '../../../jest.setup';
 
+/* Mocks */
+import { saveRevisitMock, selectedRevisitStateMock, setErrorFormMock } from '../../mocks';
+
+const completeMsg = 'Test complete msg'
 const completeRevisitMock = jest.fn().mockImplementation(() => Promise.resolve(completeMsg));
-const saveRevisitMock = jest.fn();
-const setErrorFormMock = jest.fn();
-const onCloseMock = jest.fn();
 
 /* Mock hooks */
 jest.mock('../../../src/hooks/useRevisits.ts');
@@ -27,7 +26,7 @@ jest.mock('../../../src/hooks/useTheme.ts');
 
 describe('Test in <RevisitModal /> screen', () => {
     (useRevisits as jest.Mock).mockReturnValue({
-        state: selectedRevisitState,
+        state: selectedRevisitStateMock,
         completeRevisit: completeRevisitMock,
         saveRevisit: saveRevisitMock
     });
@@ -65,22 +64,19 @@ describe('Test in <RevisitModal /> screen', () => {
             );
         });
 
-        const selectedRevisit = selectedRevisitState.selectedRevisit;
+        const selectedRevisit = selectedRevisitStateMock.selectedRevisit;
 
         const modalTitle = (selectedRevisit.done)
-            ? `¿Quieres volver a visitar a ${ selectedRevisit.person_name }?`
+            ? `¿Quieres volver a visitar a ${ selectedRevisit.personName }?`
             : '¿Está seguro de marcar esta revisitada como visitada?';
 
-        await act(async () => {
-            await waitFor(() => {
+        /* Get modal title */
+        const title = await screen.findByTestId('revisit-modal-title');
 
-                /* Get modal title */
-                const title = screen.getByTestId('revisit-modal-title');
-
-                /* Check if title exists and contain respective value */
-                expect(title).toBeTruthy();
-                expect(title.props.children).toBe(modalTitle);
-            });
+        await waitFor(() => {
+            /* Check if title exists and contain respective value */
+            expect(title).toBeTruthy();
+            expect(title.props.children).toBe(modalTitle);
         });
     });
 
@@ -94,27 +90,23 @@ describe('Test in <RevisitModal /> screen', () => {
             );
         });
 
-        await act(async () => {
-            await waitFor(() => {
+        const touchable = (await screen.findAllByTestId('button-touchable'))[1];
 
-                /* Get touchable */
-                const touchable = screen.getAllByTestId('button-touchable')[1];
-                fireEvent.press(touchable);
-
-                /* Check if completeRevist is called one time */
-                expect(completeRevisitMock).toHaveBeenCalledTimes(1);
-            });
-
-            /* CheckCheck if completeRevist is called with respective arg */
-            expect(completeRevisitMock).toHaveBeenCalledWith(onCloseMock);
-
-            /* Get complete text */
-            const completeMsgText = screen.getByTestId('revisit-modal-complete-msg');
-
-            /* Check if complete text exists and contain respective value */
-            expect(completeMsgText).toBeTruthy();
-            expect(completeMsgText.props.children).toBe(completeMsg);
+        await waitFor(() => {
+            /* Get touchable */
+            fireEvent.press(touchable);
         });
+
+        /* CheckCheck if completeRevist is called with respective arg */
+        expect(completeRevisitMock).toHaveBeenCalledTimes(1);
+        expect(completeRevisitMock).toHaveBeenCalledWith(onCloseMock);
+
+        /* Get complete text */
+        const completeMsgText = await screen.findByTestId('revisit-modal-complete-msg');
+
+        /* Check if complete text exists and contain respective value */
+        expect(completeMsgText).toBeTruthy();
+        expect(completeMsgText.props.children).toBe(completeMsg);
     });
 
     it('should call saveRevisit when selectedRevisit.done is true', async () => {
@@ -122,9 +114,9 @@ describe('Test in <RevisitModal /> screen', () => {
         /* Mock data of useRevisits */
         (useRevisits as jest.Mock).mockReturnValue({
             state: {
-                ...selectedRevisitState,
+                ...selectedRevisitStateMock,
                 selectedRevisit: {
-                    ...selectedRevisitState.selectedRevisit,
+                    ...selectedRevisitStateMock.selectedRevisit,
                     done: true
                 }
             },
@@ -141,34 +133,33 @@ describe('Test in <RevisitModal /> screen', () => {
             );
         });
 
-        const selectedRevisit = selectedRevisitState.selectedRevisit;
+        const selectedRevisit = selectedRevisitStateMock.selectedRevisit;
 
-        await act(async () => {
-            await waitFor(() => {
+        /* Get next step touchable */
+        const touchable = (await screen.findAllByTestId('button-touchable'))[1];
 
-                /* Get next step touchable */
-                const touchable = screen.getAllByTestId('button-touchable')[1];
-                fireEvent.press(touchable);
+        await waitFor(() => {
+            fireEvent.press(touchable);
+        });
 
-                /* Get confirm touchable */
-                const touchableConfirm = screen.getAllByTestId('button-touchable')[2];
-                fireEvent.press(touchableConfirm);
+        /* Get confirm touchable */
+        const touchableConfirm = (await screen.findAllByTestId('button-touchable'))[2];
 
-                /* Check if saveRevisit is called one time */
-                expect(saveRevisitMock).toHaveBeenCalledTimes(1);
-            });
+        await waitFor(() => {
+            fireEvent.press(touchableConfirm);
+        });
 
-            /* Check if saveRevisit with respective value */
-            expect(saveRevisitMock).toHaveBeenCalledWith({
-                revisitValues: {
-                    about: selectedRevisit.about,
-                    address: selectedRevisit.address,
-                    person_name: selectedRevisit.person_name,
-                    next_visit: expect.any(Date)
-                },
-                back: false,
-                onFinish: onCloseMock
-            });
+        /* Check if saveRevisit with respective value */
+        expect(saveRevisitMock).toHaveBeenCalledTimes(1);
+        expect(saveRevisitMock).toHaveBeenCalledWith({
+            revisitValues: {
+                about: selectedRevisit.about,
+                address: selectedRevisit.address,
+                personName: selectedRevisit.personName,
+                nextVisit: expect.any(Date)
+            },
+            back: false,
+            onFinish: onCloseMock
         });
     });
 
@@ -177,7 +168,7 @@ describe('Test in <RevisitModal /> screen', () => {
         /* Mock data of useRevisits */
         (useRevisits as jest.Mock).mockReturnValue({
             state: {
-                ...selectedRevisitState,
+                ...selectedRevisitStateMock,
                 isRevisitLoading: true
             },
             completeRevisit: completeRevisitMock,
@@ -193,13 +184,8 @@ describe('Test in <RevisitModal /> screen', () => {
             );
         });
 
-        await act(async () => {
-            await waitFor(() => {
-
-                /* Get loader and check if exists */
-                const loader = screen.getByTestId('revisit-modal-loading');
-                expect(loader).toBeTruthy();
-            });
-        });
+        /* Get loader and check if exists */
+        const loader = await screen.findByTestId('revisit-modal-loading');
+        expect(loader).toBeTruthy();
     });
 });

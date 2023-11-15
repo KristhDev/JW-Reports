@@ -11,7 +11,8 @@ import { useStatus, useTheme } from '../../../src/hooks';
 /* Theme */
 import { darkColors } from '../../../src/theme';
 
-const clearStatusMock = jest.fn();
+/* Mocks */
+import { clearStatusMock } from '../../mocks';
 
 /* Mock hooks */
 jest.mock('../../../src/hooks/useStatus.ts');

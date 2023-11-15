@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Test in <RevistDetail /> screen should to match snapshot 1`] = `
+exports[`Test in <RevisitDetail /> screen should to match snapshot 1`] = `
 [
   <RCTScrollView
     contentContainerStyle={

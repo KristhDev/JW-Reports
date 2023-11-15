@@ -10,6 +10,9 @@ import { useAuth, useStatus, useTheme } from '../../../src/hooks';
 /* Theme */
 import { darkColors } from '../../../src/theme';
 
+/* Mocks */
+import { resetPasswordMock, setErrorFormMock } from '../../mocks';
+
 /* Mock hooks */
 jest.mock('../../../src/hooks/useAuth.ts');
 jest.mock('../../../src/hooks/useStatus.ts');
@@ -18,11 +21,11 @@ jest.mock('../../../src/hooks/useTheme.ts');
 describe('Test in <ForgotPassword /> screen', () => {
     (useAuth as jest.Mock).mockReturnValue({
         state: { isAuthLoading: false },
-        resetPassword: jest.fn()
+        resetPassword: resetPasswordMock
     });
 
     (useStatus as jest.Mock).mockReturnValue({
-        setErrorForm: jest.fn()
+        setErrorForm: setErrorFormMock
     });
 
     (useTheme as jest.Mock).mockReturnValue({
@@ -44,16 +47,13 @@ describe('Test in <ForgotPassword /> screen', () => {
             render(<ForgotPassword />);
         });
 
-        await act(async () => {
-            await waitFor(() => {
+        /* Get title */
+        const title = await screen.findByTestId('title-text');
 
-                /* Get title */
-                const title = screen.getByTestId('title-text');
-
-                /* Check if title exists and contain value pass by props */
-                expect(title).toBeTruthy();
-                expect(title.props.children).toBe('Olvide mi contraseña');
-            });
-        })
+        await waitFor(() => {
+            /* Check if title exists and contain value pass by props */
+            expect(title).toBeTruthy();
+            expect(title.props.children).toBe('Olvide mi contraseña');
+        });
     });
 });

@@ -4,15 +4,15 @@ exports[`Test in <Revisits /> screen should to match snapshot 1`] = `
 <View
   onLayout={[Function]}
   style={
-    Object {
+    {
       "flex": 1,
     }
   }
 >
   <View
     style={
-      Array [
-        Object {
+      [
+        {
           "flex": 1,
         },
         undefined,
@@ -38,14 +38,13 @@ exports[`Test in <Revisits /> screen should to match snapshot 1`] = `
         <React.Fragment>
           <Title
             containerStyle={
-              Object {
-                "paddingBottom": 20,
-                "paddingTop": 30,
+              {
+                "marginVertical": 8,
               }
             }
             text="TODAS MIS REVISITAS"
             textStyle={
-              Object {
+              {
                 "fontSize": 24,
               }
             }
@@ -59,139 +58,140 @@ exports[`Test in <Revisits /> screen should to match snapshot 1`] = `
         </React.Fragment>
       }
       ListHeaderComponentStyle={
-        Object {
+        {
           "alignSelf": "flex-start",
         }
       }
       contentContainerStyle={
-        Object {
+        {
           "alignItems": "center",
           "flexGrow": 1,
+          "padding": 24,
           "paddingBottom": 100,
         }
       }
       data={
-        Array [
-          Object {
+        [
+          {
             "about": "Ratione quae debitis pariatur tempora magnam est voluptatibus. Eveniet ipsum omnis maxime et soluta iusto. Autem aut ducimus dolore et recusandae et inventore. Enim autem in hic optio.",
             "address": "Voluptatem ratione velit officia qui non ab aut atque. Voluptate possimus dolor ex commodi aut numquam voluptatem sit. Molestiae ut tempora unde sapiente. Soluta culpa repellat et voluptatibus odit eveniet dolore harum.",
-            "created_at": "2021-12-10T00:00:00.000Z",
+            "createdAt": "2021-12-10T00:00:00.000Z",
             "done": false,
             "id": "7345fc2b-b5d3-4000-ba17-a85ae1d5a85d",
-            "next_visit": "2021-12-10T00:00:00.000Z",
-            "person_name": "Dariana Hand",
-            "updated_at": "2021-12-10T00:00:00.000Z",
-            "user_id": "39d71118-57b7-4c4a-8643-0956e5f9350e",
+            "nextVisit": "2021-12-10T00:00:00.000Z",
+            "personName": "Dariana Hand",
+            "updatedAt": "2021-12-10T00:00:00.000Z",
+            "userId": "39d71118-57b7-4c4a-8643-0956e5f9350e",
           },
-          Object {
+          {
             "about": "Ratione quae debitis pariatur tempora magnam est voluptatibus. Eveniet ipsum omnis maxime et soluta iusto. Autem aut ducimus dolore et recusandae et inventore. Enim autem in hic optio.",
             "address": "Voluptatem ratione velit officia qui non ab aut atque. Voluptate possimus dolor ex commodi aut numquam voluptatem sit. Molestiae ut tempora unde sapiente. Soluta culpa repellat et voluptatibus odit eveniet dolore harum.",
-            "created_at": "2021-12-10T00:00:00.000Z",
+            "createdAt": "2021-12-10T00:00:00.000Z",
             "done": false,
             "id": "0d48444f-93eb-46d1-ab92-ed75893bd84d",
-            "next_visit": "2021-12-10T00:00:00.000Z",
-            "person_name": "Dariana Hand",
-            "updated_at": "2021-12-10T00:00:00.000Z",
-            "user_id": "39d71118-57b7-4c4a-8643-0956e5f9350e",
+            "nextVisit": "2021-12-10T00:00:00.000Z",
+            "personName": "Dariana Hand",
+            "updatedAt": "2021-12-10T00:00:00.000Z",
+            "userId": "39d71118-57b7-4c4a-8643-0956e5f9350e",
           },
-          Object {
+          {
             "about": "Ratione quae debitis pariatur tempora magnam est voluptatibus. Eveniet ipsum omnis maxime et soluta iusto. Autem aut ducimus dolore et recusandae et inventore. Enim autem in hic optio.",
             "address": "Voluptatem ratione velit officia qui non ab aut atque. Voluptate possimus dolor ex commodi aut numquam voluptatem sit. Molestiae ut tempora unde sapiente. Soluta culpa repellat et voluptatibus odit eveniet dolore harum.",
-            "created_at": "2021-12-10T00:00:00.000Z",
+            "createdAt": "2021-12-10T00:00:00.000Z",
             "done": false,
             "id": "fcbc1dca-0d97-493c-974d-df65069b5f97",
-            "next_visit": "2021-12-10T00:00:00.000Z",
-            "person_name": "Dariana Hand",
-            "updated_at": "2021-12-10T00:00:00.000Z",
-            "user_id": "39d71118-57b7-4c4a-8643-0956e5f9350e",
+            "nextVisit": "2021-12-10T00:00:00.000Z",
+            "personName": "Dariana Hand",
+            "updatedAt": "2021-12-10T00:00:00.000Z",
+            "userId": "39d71118-57b7-4c4a-8643-0956e5f9350e",
           },
-          Object {
+          {
             "about": "Ratione quae debitis pariatur tempora magnam est voluptatibus. Eveniet ipsum omnis maxime et soluta iusto. Autem aut ducimus dolore et recusandae et inventore. Enim autem in hic optio.",
             "address": "Voluptatem ratione velit officia qui non ab aut atque. Voluptate possimus dolor ex commodi aut numquam voluptatem sit. Molestiae ut tempora unde sapiente. Soluta culpa repellat et voluptatibus odit eveniet dolore harum.",
-            "created_at": "2021-12-10T00:00:00.000Z",
+            "createdAt": "2021-12-10T00:00:00.000Z",
             "done": false,
             "id": "24d9bbf8-dafd-4e95-96f7-246b3bd3c4e8",
-            "next_visit": "2021-12-10T00:00:00.000Z",
-            "person_name": "Dariana Hand",
-            "updated_at": "2021-12-10T00:00:00.000Z",
-            "user_id": "39d71118-57b7-4c4a-8643-0956e5f9350e",
+            "nextVisit": "2021-12-10T00:00:00.000Z",
+            "personName": "Dariana Hand",
+            "updatedAt": "2021-12-10T00:00:00.000Z",
+            "userId": "39d71118-57b7-4c4a-8643-0956e5f9350e",
           },
-          Object {
+          {
             "about": "Ratione quae debitis pariatur tempora magnam est voluptatibus. Eveniet ipsum omnis maxime et soluta iusto. Autem aut ducimus dolore et recusandae et inventore. Enim autem in hic optio.",
             "address": "Voluptatem ratione velit officia qui non ab aut atque. Voluptate possimus dolor ex commodi aut numquam voluptatem sit. Molestiae ut tempora unde sapiente. Soluta culpa repellat et voluptatibus odit eveniet dolore harum.",
-            "created_at": "2021-12-10T00:00:00.000Z",
+            "createdAt": "2021-12-10T00:00:00.000Z",
             "done": false,
             "id": "a9274022-5367-4396-87c7-3e68cd7a2334",
-            "next_visit": "2021-12-10T00:00:00.000Z",
-            "person_name": "Dariana Hand",
-            "updated_at": "2021-12-10T00:00:00.000Z",
-            "user_id": "39d71118-57b7-4c4a-8643-0956e5f9350e",
+            "nextVisit": "2021-12-10T00:00:00.000Z",
+            "personName": "Dariana Hand",
+            "updatedAt": "2021-12-10T00:00:00.000Z",
+            "userId": "39d71118-57b7-4c4a-8643-0956e5f9350e",
           },
-          Object {
+          {
             "about": "Ratione quae debitis pariatur tempora magnam est voluptatibus. Eveniet ipsum omnis maxime et soluta iusto. Autem aut ducimus dolore et recusandae et inventore. Enim autem in hic optio.",
             "address": "Voluptatem ratione velit officia qui non ab aut atque. Voluptate possimus dolor ex commodi aut numquam voluptatem sit. Molestiae ut tempora unde sapiente. Soluta culpa repellat et voluptatibus odit eveniet dolore harum.",
-            "created_at": "2021-12-10T00:00:00.000Z",
+            "createdAt": "2021-12-10T00:00:00.000Z",
             "done": false,
             "id": "5bbcdb1f-c2c1-40e1-9a06-f07c28711479",
-            "next_visit": "2021-12-10T00:00:00.000Z",
-            "person_name": "Dariana Hand",
-            "updated_at": "2021-12-10T00:00:00.000Z",
-            "user_id": "39d71118-57b7-4c4a-8643-0956e5f9350e",
+            "nextVisit": "2021-12-10T00:00:00.000Z",
+            "personName": "Dariana Hand",
+            "updatedAt": "2021-12-10T00:00:00.000Z",
+            "userId": "39d71118-57b7-4c4a-8643-0956e5f9350e",
           },
-          Object {
+          {
             "about": "Ratione quae debitis pariatur tempora magnam est voluptatibus. Eveniet ipsum omnis maxime et soluta iusto. Autem aut ducimus dolore et recusandae et inventore. Enim autem in hic optio.",
             "address": "Voluptatem ratione velit officia qui non ab aut atque. Voluptate possimus dolor ex commodi aut numquam voluptatem sit. Molestiae ut tempora unde sapiente. Soluta culpa repellat et voluptatibus odit eveniet dolore harum.",
-            "created_at": "2021-12-10T00:00:00.000Z",
+            "createdAt": "2021-12-10T00:00:00.000Z",
             "done": false,
             "id": "38007bef-ee92-4062-bb13-c269fb6d7bfa",
-            "next_visit": "2021-12-10T00:00:00.000Z",
-            "person_name": "Dariana Hand",
-            "updated_at": "2021-12-10T00:00:00.000Z",
-            "user_id": "39d71118-57b7-4c4a-8643-0956e5f9350e",
+            "nextVisit": "2021-12-10T00:00:00.000Z",
+            "personName": "Dariana Hand",
+            "updatedAt": "2021-12-10T00:00:00.000Z",
+            "userId": "39d71118-57b7-4c4a-8643-0956e5f9350e",
           },
-          Object {
+          {
             "about": "Ratione quae debitis pariatur tempora magnam est voluptatibus. Eveniet ipsum omnis maxime et soluta iusto. Autem aut ducimus dolore et recusandae et inventore. Enim autem in hic optio.",
             "address": "Voluptatem ratione velit officia qui non ab aut atque. Voluptate possimus dolor ex commodi aut numquam voluptatem sit. Molestiae ut tempora unde sapiente. Soluta culpa repellat et voluptatibus odit eveniet dolore harum.",
-            "created_at": "2021-12-10T00:00:00.000Z",
+            "createdAt": "2021-12-10T00:00:00.000Z",
             "done": false,
             "id": "1d0a72b8-cf2a-4136-b4db-e4538d2e877a",
-            "next_visit": "2021-12-10T00:00:00.000Z",
-            "person_name": "Dariana Hand",
-            "updated_at": "2021-12-10T00:00:00.000Z",
-            "user_id": "39d71118-57b7-4c4a-8643-0956e5f9350e",
+            "nextVisit": "2021-12-10T00:00:00.000Z",
+            "personName": "Dariana Hand",
+            "updatedAt": "2021-12-10T00:00:00.000Z",
+            "userId": "39d71118-57b7-4c4a-8643-0956e5f9350e",
           },
-          Object {
+          {
             "about": "Ratione quae debitis pariatur tempora magnam est voluptatibus. Eveniet ipsum omnis maxime et soluta iusto. Autem aut ducimus dolore et recusandae et inventore. Enim autem in hic optio.",
             "address": "Voluptatem ratione velit officia qui non ab aut atque. Voluptate possimus dolor ex commodi aut numquam voluptatem sit. Molestiae ut tempora unde sapiente. Soluta culpa repellat et voluptatibus odit eveniet dolore harum.",
-            "created_at": "2021-12-10T00:00:00.000Z",
+            "createdAt": "2021-12-10T00:00:00.000Z",
             "done": false,
             "id": "f3d84fc8-f064-412a-81d5-538f9228f2f7",
-            "next_visit": "2021-12-10T00:00:00.000Z",
-            "person_name": "Dariana Hand",
-            "updated_at": "2021-12-10T00:00:00.000Z",
-            "user_id": "39d71118-57b7-4c4a-8643-0956e5f9350e",
+            "nextVisit": "2021-12-10T00:00:00.000Z",
+            "personName": "Dariana Hand",
+            "updatedAt": "2021-12-10T00:00:00.000Z",
+            "userId": "39d71118-57b7-4c4a-8643-0956e5f9350e",
           },
-          Object {
+          {
             "about": "Ratione quae debitis pariatur tempora magnam est voluptatibus. Eveniet ipsum omnis maxime et soluta iusto. Autem aut ducimus dolore et recusandae et inventore. Enim autem in hic optio.",
             "address": "Voluptatem ratione velit officia qui non ab aut atque. Voluptate possimus dolor ex commodi aut numquam voluptatem sit. Molestiae ut tempora unde sapiente. Soluta culpa repellat et voluptatibus odit eveniet dolore harum.",
-            "created_at": "2021-12-10T00:00:00.000Z",
+            "createdAt": "2021-12-10T00:00:00.000Z",
             "done": false,
             "id": "2e67ba8f-deb9-4a7b-8f1a-e1351df52f7e",
-            "next_visit": "2021-12-10T00:00:00.000Z",
-            "person_name": "Dariana Hand",
-            "updated_at": "2021-12-10T00:00:00.000Z",
-            "user_id": "39d71118-57b7-4c4a-8643-0956e5f9350e",
+            "nextVisit": "2021-12-10T00:00:00.000Z",
+            "personName": "Dariana Hand",
+            "updatedAt": "2021-12-10T00:00:00.000Z",
+            "userId": "39d71118-57b7-4c4a-8643-0956e5f9350e",
           },
-          Object {
+          {
             "about": "Ratione quae debitis pariatur tempora magnam est voluptatibus. Eveniet ipsum omnis maxime et soluta iusto. Autem aut ducimus dolore et recusandae et inventore. Enim autem in hic optio.",
             "address": "Voluptatem ratione velit officia qui non ab aut atque. Voluptate possimus dolor ex commodi aut numquam voluptatem sit. Molestiae ut tempora unde sapiente. Soluta culpa repellat et voluptatibus odit eveniet dolore harum.",
-            "created_at": "2021-12-10T00:00:00.000Z",
+            "createdAt": "2021-12-10T00:00:00.000Z",
             "done": false,
             "id": "7e8c4963-126d-4657-a1c6-ea8028152198",
-            "next_visit": "2021-12-10T00:00:00.000Z",
-            "person_name": "Dariana Hand",
-            "updated_at": "2021-12-10T00:00:00.000Z",
-            "user_id": "39d71118-57b7-4c4a-8643-0956e5f9350e",
+            "nextVisit": "2021-12-10T00:00:00.000Z",
+            "personName": "Dariana Hand",
+            "updatedAt": "2021-12-10T00:00:00.000Z",
+            "userId": "39d71118-57b7-4c4a-8643-0956e5f9350e",
           },
         ]
       }
@@ -219,43 +219,43 @@ exports[`Test in <Revisits /> screen should to match snapshot 1`] = `
       removeClippedSubviews={false}
       renderItem={[Function]}
       scrollEventThrottle={50}
-      stickyHeaderIndices={Array []}
-      viewabilityConfigCallbackPairs={Array []}
+      stickyHeaderIndices={[]}
+      viewabilityConfigCallbackPairs={[]}
     >
       <RCTRefreshControl />
       <View>
         <View
+          collapsable={false}
           onLayout={[Function]}
           style={
-            Object {
+            {
               "alignSelf": "flex-start",
             }
           }
         >
           <View
             style={
-              Array [
-                Object {
+              [
+                {
                   "alignItems": "flex-start",
-                  "padding": 20,
+                  "marginBottom": 40,
                   "width": "100%",
                 },
-                Object {
-                  "paddingBottom": 20,
-                  "paddingTop": 30,
+                {
+                  "marginVertical": 8,
                 },
               ]
             }
           >
             <Text
               style={
-                Array [
-                  Object {
+                [
+                  {
                     "color": "#FFFFFF",
                     "fontSize": 38,
                     "fontWeight": "bold",
                   },
-                  Object {
+                  {
                     "fontSize": 24,
                   },
                 ]
@@ -267,11 +267,11 @@ exports[`Test in <Revisits /> screen should to match snapshot 1`] = `
           </View>
           <View
             style={
-              Object {
+              {
                 "alignItems": "center",
                 "flexDirection": "row",
-                "marginBottom": 30,
-                "paddingHorizontal": 30,
+                "marginBottom": 24,
+                "paddingHorizontal": 8,
                 "width": "100%",
               }
             }
@@ -280,26 +280,26 @@ exports[`Test in <Revisits /> screen should to match snapshot 1`] = `
               allowFontScaling={false}
               selectable={false}
               style={
-                Array [
-                  Object {
+                [
+                  {
                     "color": "#BFBFBF",
                     "fontSize": 25,
                   },
                   undefined,
-                  Object {
+                  {
                     "fontFamily": "Ionicons",
                     "fontStyle": "normal",
                     "fontWeight": "normal",
                   },
-                  Object {},
+                  {},
                 ]
               }
             >
-              
+              
             </Text>
             <View
               style={
-                Object {
+                {
                   "alignItems": "center",
                   "borderBottomWidth": 1,
                   "borderColor": "#BFBFBF",
@@ -320,7 +320,7 @@ exports[`Test in <Revisits /> screen should to match snapshot 1`] = `
                 placeholderTextColor="#BFBFBF"
                 returnKeyType="search"
                 style={
-                  Object {
+                  {
                     "color": "#FFFFFF",
                     "flex": 1,
                     "fontSize": 17,
@@ -332,8 +332,20 @@ exports[`Test in <Revisits /> screen should to match snapshot 1`] = `
               />
               <View
                 accessibilityState={
-                  Object {
+                  {
+                    "busy": undefined,
+                    "checked": undefined,
                     "disabled": true,
+                    "expanded": undefined,
+                    "selected": undefined,
+                  }
+                }
+                accessibilityValue={
+                  {
+                    "max": undefined,
+                    "min": undefined,
+                    "now": undefined,
+                    "text": undefined,
                   }
                 }
                 accessible={true}
@@ -350,12 +362,11 @@ exports[`Test in <Revisits /> screen should to match snapshot 1`] = `
                 onResponderTerminationRequest={[Function]}
                 onStartShouldSetResponder={[Function]}
                 style={
-                  Array [
-                    Object {
+                  [
+                    {
                       "overflow": "hidden",
                     },
-                    false,
-                    Object {
+                    {
                       "alignItems": "center",
                       "borderRadius": 999,
                       "height": 40,
@@ -370,35 +381,48 @@ exports[`Test in <Revisits /> screen should to match snapshot 1`] = `
                   allowFontScaling={false}
                   selectable={false}
                   style={
-                    Array [
-                      Object {
+                    [
+                      {
                         "color": "transparent",
                         "fontSize": 30,
                       },
                       undefined,
-                      Object {
+                      {
                         "fontFamily": "Ionicons",
                         "fontStyle": "normal",
                         "fontWeight": "normal",
                       },
-                      Object {},
+                      {},
                     ]
                   }
                 >
-                  
+                  
                 </Text>
               </View>
             </View>
           </View>
         </View>
         <View
+          onFocusCapture={[Function]}
           onLayout={[Function]}
           style={null}
         >
           <View
             accessibilityState={
-              Object {
+              {
+                "busy": undefined,
+                "checked": undefined,
                 "disabled": false,
+                "expanded": undefined,
+                "selected": undefined,
+              }
+            }
+            accessibilityValue={
+              {
+                "max": undefined,
+                "min": undefined,
+                "now": undefined,
+                "text": undefined,
               }
             }
             accessible={true}
@@ -414,15 +438,13 @@ exports[`Test in <Revisits /> screen should to match snapshot 1`] = `
             onResponderTerminationRequest={[Function]}
             onStartShouldSetResponder={[Function]}
             style={
-              Array [
-                Object {
+              [
+                {
                   "overflow": "hidden",
                 },
-                false,
-                Object {
-                  "marginVertical": 10,
-                  "minWidth": "95%",
-                  "width": "95%",
+                {
+                  "marginVertical": 8,
+                  "width": 734,
                 },
               ]
             }
@@ -430,15 +452,15 @@ exports[`Test in <Revisits /> screen should to match snapshot 1`] = `
           >
             <View
               style={
-                Object {
+                {
                   "backgroundColor": "#292929",
-                  "padding": 15,
+                  "padding": 16,
                 }
               }
             >
               <Text
                 style={
-                  Object {
+                  {
                     "color": "#BFBFBF",
                     "fontSize": 14,
                     "marginBottom": 15,
@@ -450,7 +472,7 @@ exports[`Test in <Revisits /> screen should to match snapshot 1`] = `
               </Text>
               <Text
                 style={
-                  Object {
+                  {
                     "color": "#FFFFFF",
                     "fontSize": 18,
                     "fontWeight": "bold",
@@ -463,7 +485,7 @@ exports[`Test in <Revisits /> screen should to match snapshot 1`] = `
               </Text>
               <Text
                 style={
-                  Object {
+                  {
                     "color": "#FFFFFF",
                     "fontSize": 16,
                   }
@@ -474,8 +496,20 @@ exports[`Test in <Revisits /> screen should to match snapshot 1`] = `
               </Text>
               <View
                 accessibilityState={
-                  Object {
+                  {
+                    "busy": undefined,
+                    "checked": undefined,
                     "disabled": false,
+                    "expanded": undefined,
+                    "selected": undefined,
+                  }
+                }
+                accessibilityValue={
+                  {
+                    "max": undefined,
+                    "min": undefined,
+                    "now": undefined,
+                    "text": undefined,
                   }
                 }
                 accessible={true}
@@ -491,22 +525,21 @@ exports[`Test in <Revisits /> screen should to match snapshot 1`] = `
                 onResponderTerminationRequest={[Function]}
                 onStartShouldSetResponder={[Function]}
                 style={
-                  Array [
-                    Object {
+                  [
+                    {
                       "overflow": "hidden",
                     },
-                    false,
-                    Array [
-                      Object {
+                    [
+                      {
                         "alignItems": "center",
                         "backgroundColor": "transparent",
                         "borderRadius": 50,
-                        "height": 42,
+                        "height": 48,
                         "justifyContent": "center",
                         "margin": 5,
-                        "width": 42,
+                        "width": 48,
                       },
-                      Object {
+                      {
                         "height": 35,
                         "position": "absolute",
                         "right": -2.5,
@@ -522,29 +555,29 @@ exports[`Test in <Revisits /> screen should to match snapshot 1`] = `
                   allowFontScaling={false}
                   selectable={false}
                   style={
-                    Array [
-                      Object {
+                    [
+                      {
                         "color": "#C0A7E1",
                         "fontSize": 20,
                       },
-                      Object {
+                      {
                         "marginLeft": 2,
                       },
-                      Object {
+                      {
                         "fontFamily": "Ionicons",
                         "fontStyle": "normal",
                         "fontWeight": "normal",
                       },
-                      Object {},
+                      {},
                     ]
                   }
                 >
-                  
+                  
                 </Text>
               </View>
               <View
                 style={
-                  Object {
+                  {
                     "position": "absolute",
                     "right": 20,
                     "top": 30,
@@ -555,6 +588,14 @@ exports[`Test in <Revisits /> screen should to match snapshot 1`] = `
                   collapsable={false}
                 >
                   <View
+                    accessibilityValue={
+                      {
+                        "max": undefined,
+                        "min": undefined,
+                        "now": undefined,
+                        "text": undefined,
+                      }
+                    }
                     accessible={true}
                     focusable={true}
                     onClick={[Function]}
@@ -567,8 +608,8 @@ exports[`Test in <Revisits /> screen should to match snapshot 1`] = `
                   >
                     <View
                       ctx={
-                        Object {
-                          "menuActions": Object {
+                        {
+                          "menuActions": {
                             "_getOpenedMenu": [Function],
                             "_notify": [Function],
                             "closeMenu": [Function],
@@ -576,7 +617,7 @@ exports[`Test in <Revisits /> screen should to match snapshot 1`] = `
                             "openMenu": [Function],
                             "toggleMenu": [Function],
                           },
-                          "menuRegistry": Object {
+                          "menuRegistry": {
                             "getAll": [Function],
                             "getMenu": [Function],
                             "setOptionsCustomStyles": [Function],
@@ -587,7 +628,7 @@ exports[`Test in <Revisits /> screen should to match snapshot 1`] = `
                         }
                       }
                       style={
-                        Array [
+                        [
                           undefined,
                           undefined,
                         ]
@@ -600,13 +641,26 @@ exports[`Test in <Revisits /> screen should to match snapshot 1`] = `
           </View>
         </View>
         <View
+          onFocusCapture={[Function]}
           onLayout={[Function]}
           style={null}
         >
           <View
             accessibilityState={
-              Object {
+              {
+                "busy": undefined,
+                "checked": undefined,
                 "disabled": false,
+                "expanded": undefined,
+                "selected": undefined,
+              }
+            }
+            accessibilityValue={
+              {
+                "max": undefined,
+                "min": undefined,
+                "now": undefined,
+                "text": undefined,
               }
             }
             accessible={true}
@@ -622,15 +676,13 @@ exports[`Test in <Revisits /> screen should to match snapshot 1`] = `
             onResponderTerminationRequest={[Function]}
             onStartShouldSetResponder={[Function]}
             style={
-              Array [
-                Object {
+              [
+                {
                   "overflow": "hidden",
                 },
-                false,
-                Object {
-                  "marginVertical": 10,
-                  "minWidth": "95%",
-                  "width": "95%",
+                {
+                  "marginVertical": 8,
+                  "width": 734,
                 },
               ]
             }
@@ -638,15 +690,15 @@ exports[`Test in <Revisits /> screen should to match snapshot 1`] = `
           >
             <View
               style={
-                Object {
+                {
                   "backgroundColor": "#292929",
-                  "padding": 15,
+                  "padding": 16,
                 }
               }
             >
               <Text
                 style={
-                  Object {
+                  {
                     "color": "#BFBFBF",
                     "fontSize": 14,
                     "marginBottom": 15,
@@ -658,7 +710,7 @@ exports[`Test in <Revisits /> screen should to match snapshot 1`] = `
               </Text>
               <Text
                 style={
-                  Object {
+                  {
                     "color": "#FFFFFF",
                     "fontSize": 18,
                     "fontWeight": "bold",
@@ -671,7 +723,7 @@ exports[`Test in <Revisits /> screen should to match snapshot 1`] = `
               </Text>
               <Text
                 style={
-                  Object {
+                  {
                     "color": "#FFFFFF",
                     "fontSize": 16,
                   }
@@ -682,8 +734,20 @@ exports[`Test in <Revisits /> screen should to match snapshot 1`] = `
               </Text>
               <View
                 accessibilityState={
-                  Object {
+                  {
+                    "busy": undefined,
+                    "checked": undefined,
                     "disabled": false,
+                    "expanded": undefined,
+                    "selected": undefined,
+                  }
+                }
+                accessibilityValue={
+                  {
+                    "max": undefined,
+                    "min": undefined,
+                    "now": undefined,
+                    "text": undefined,
                   }
                 }
                 accessible={true}
@@ -699,22 +763,21 @@ exports[`Test in <Revisits /> screen should to match snapshot 1`] = `
                 onResponderTerminationRequest={[Function]}
                 onStartShouldSetResponder={[Function]}
                 style={
-                  Array [
-                    Object {
+                  [
+                    {
                       "overflow": "hidden",
                     },
-                    false,
-                    Array [
-                      Object {
+                    [
+                      {
                         "alignItems": "center",
                         "backgroundColor": "transparent",
                         "borderRadius": 50,
-                        "height": 42,
+                        "height": 48,
                         "justifyContent": "center",
                         "margin": 5,
-                        "width": 42,
+                        "width": 48,
                       },
-                      Object {
+                      {
                         "height": 35,
                         "position": "absolute",
                         "right": -2.5,
@@ -730,29 +793,29 @@ exports[`Test in <Revisits /> screen should to match snapshot 1`] = `
                   allowFontScaling={false}
                   selectable={false}
                   style={
-                    Array [
-                      Object {
+                    [
+                      {
                         "color": "#C0A7E1",
                         "fontSize": 20,
                       },
-                      Object {
+                      {
                         "marginLeft": 2,
                       },
-                      Object {
+                      {
                         "fontFamily": "Ionicons",
                         "fontStyle": "normal",
                         "fontWeight": "normal",
                       },
-                      Object {},
+                      {},
                     ]
                   }
                 >
-                  
+                  
                 </Text>
               </View>
               <View
                 style={
-                  Object {
+                  {
                     "position": "absolute",
                     "right": 20,
                     "top": 30,
@@ -763,6 +826,14 @@ exports[`Test in <Revisits /> screen should to match snapshot 1`] = `
                   collapsable={false}
                 >
                   <View
+                    accessibilityValue={
+                      {
+                        "max": undefined,
+                        "min": undefined,
+                        "now": undefined,
+                        "text": undefined,
+                      }
+                    }
                     accessible={true}
                     focusable={true}
                     onClick={[Function]}
@@ -775,8 +846,8 @@ exports[`Test in <Revisits /> screen should to match snapshot 1`] = `
                   >
                     <View
                       ctx={
-                        Object {
-                          "menuActions": Object {
+                        {
+                          "menuActions": {
                             "_getOpenedMenu": [Function],
                             "_notify": [Function],
                             "closeMenu": [Function],
@@ -784,7 +855,7 @@ exports[`Test in <Revisits /> screen should to match snapshot 1`] = `
                             "openMenu": [Function],
                             "toggleMenu": [Function],
                           },
-                          "menuRegistry": Object {
+                          "menuRegistry": {
                             "getAll": [Function],
                             "getMenu": [Function],
                             "setOptionsCustomStyles": [Function],
@@ -795,7 +866,7 @@ exports[`Test in <Revisits /> screen should to match snapshot 1`] = `
                         }
                       }
                       style={
-                        Array [
+                        [
                           undefined,
                           undefined,
                         ]
@@ -808,13 +879,26 @@ exports[`Test in <Revisits /> screen should to match snapshot 1`] = `
           </View>
         </View>
         <View
+          onFocusCapture={[Function]}
           onLayout={[Function]}
           style={null}
         >
           <View
             accessibilityState={
-              Object {
+              {
+                "busy": undefined,
+                "checked": undefined,
                 "disabled": false,
+                "expanded": undefined,
+                "selected": undefined,
+              }
+            }
+            accessibilityValue={
+              {
+                "max": undefined,
+                "min": undefined,
+                "now": undefined,
+                "text": undefined,
               }
             }
             accessible={true}
@@ -830,15 +914,13 @@ exports[`Test in <Revisits /> screen should to match snapshot 1`] = `
             onResponderTerminationRequest={[Function]}
             onStartShouldSetResponder={[Function]}
             style={
-              Array [
-                Object {
+              [
+                {
                   "overflow": "hidden",
                 },
-                false,
-                Object {
-                  "marginVertical": 10,
-                  "minWidth": "95%",
-                  "width": "95%",
+                {
+                  "marginVertical": 8,
+                  "width": 734,
                 },
               ]
             }
@@ -846,15 +928,15 @@ exports[`Test in <Revisits /> screen should to match snapshot 1`] = `
           >
             <View
               style={
-                Object {
+                {
                   "backgroundColor": "#292929",
-                  "padding": 15,
+                  "padding": 16,
                 }
               }
             >
               <Text
                 style={
-                  Object {
+                  {
                     "color": "#BFBFBF",
                     "fontSize": 14,
                     "marginBottom": 15,
@@ -866,7 +948,7 @@ exports[`Test in <Revisits /> screen should to match snapshot 1`] = `
               </Text>
               <Text
                 style={
-                  Object {
+                  {
                     "color": "#FFFFFF",
                     "fontSize": 18,
                     "fontWeight": "bold",
@@ -879,7 +961,7 @@ exports[`Test in <Revisits /> screen should to match snapshot 1`] = `
               </Text>
               <Text
                 style={
-                  Object {
+                  {
                     "color": "#FFFFFF",
                     "fontSize": 16,
                   }
@@ -890,8 +972,20 @@ exports[`Test in <Revisits /> screen should to match snapshot 1`] = `
               </Text>
               <View
                 accessibilityState={
-                  Object {
+                  {
+                    "busy": undefined,
+                    "checked": undefined,
                     "disabled": false,
+                    "expanded": undefined,
+                    "selected": undefined,
+                  }
+                }
+                accessibilityValue={
+                  {
+                    "max": undefined,
+                    "min": undefined,
+                    "now": undefined,
+                    "text": undefined,
                   }
                 }
                 accessible={true}
@@ -907,22 +1001,21 @@ exports[`Test in <Revisits /> screen should to match snapshot 1`] = `
                 onResponderTerminationRequest={[Function]}
                 onStartShouldSetResponder={[Function]}
                 style={
-                  Array [
-                    Object {
+                  [
+                    {
                       "overflow": "hidden",
                     },
-                    false,
-                    Array [
-                      Object {
+                    [
+                      {
                         "alignItems": "center",
                         "backgroundColor": "transparent",
                         "borderRadius": 50,
-                        "height": 42,
+                        "height": 48,
                         "justifyContent": "center",
                         "margin": 5,
-                        "width": 42,
+                        "width": 48,
                       },
-                      Object {
+                      {
                         "height": 35,
                         "position": "absolute",
                         "right": -2.5,
@@ -938,29 +1031,29 @@ exports[`Test in <Revisits /> screen should to match snapshot 1`] = `
                   allowFontScaling={false}
                   selectable={false}
                   style={
-                    Array [
-                      Object {
+                    [
+                      {
                         "color": "#C0A7E1",
                         "fontSize": 20,
                       },
-                      Object {
+                      {
                         "marginLeft": 2,
                       },
-                      Object {
+                      {
                         "fontFamily": "Ionicons",
                         "fontStyle": "normal",
                         "fontWeight": "normal",
                       },
-                      Object {},
+                      {},
                     ]
                   }
                 >
-                  
+                  
                 </Text>
               </View>
               <View
                 style={
-                  Object {
+                  {
                     "position": "absolute",
                     "right": 20,
                     "top": 30,
@@ -971,6 +1064,14 @@ exports[`Test in <Revisits /> screen should to match snapshot 1`] = `
                   collapsable={false}
                 >
                   <View
+                    accessibilityValue={
+                      {
+                        "max": undefined,
+                        "min": undefined,
+                        "now": undefined,
+                        "text": undefined,
+                      }
+                    }
                     accessible={true}
                     focusable={true}
                     onClick={[Function]}
@@ -983,8 +1084,8 @@ exports[`Test in <Revisits /> screen should to match snapshot 1`] = `
                   >
                     <View
                       ctx={
-                        Object {
-                          "menuActions": Object {
+                        {
+                          "menuActions": {
                             "_getOpenedMenu": [Function],
                             "_notify": [Function],
                             "closeMenu": [Function],
@@ -992,7 +1093,7 @@ exports[`Test in <Revisits /> screen should to match snapshot 1`] = `
                             "openMenu": [Function],
                             "toggleMenu": [Function],
                           },
-                          "menuRegistry": Object {
+                          "menuRegistry": {
                             "getAll": [Function],
                             "getMenu": [Function],
                             "setOptionsCustomStyles": [Function],
@@ -1003,7 +1104,7 @@ exports[`Test in <Revisits /> screen should to match snapshot 1`] = `
                         }
                       }
                       style={
-                        Array [
+                        [
                           undefined,
                           undefined,
                         ]
@@ -1016,13 +1117,26 @@ exports[`Test in <Revisits /> screen should to match snapshot 1`] = `
           </View>
         </View>
         <View
+          onFocusCapture={[Function]}
           onLayout={[Function]}
           style={null}
         >
           <View
             accessibilityState={
-              Object {
+              {
+                "busy": undefined,
+                "checked": undefined,
                 "disabled": false,
+                "expanded": undefined,
+                "selected": undefined,
+              }
+            }
+            accessibilityValue={
+              {
+                "max": undefined,
+                "min": undefined,
+                "now": undefined,
+                "text": undefined,
               }
             }
             accessible={true}
@@ -1038,15 +1152,13 @@ exports[`Test in <Revisits /> screen should to match snapshot 1`] = `
             onResponderTerminationRequest={[Function]}
             onStartShouldSetResponder={[Function]}
             style={
-              Array [
-                Object {
+              [
+                {
                   "overflow": "hidden",
                 },
-                false,
-                Object {
-                  "marginVertical": 10,
-                  "minWidth": "95%",
-                  "width": "95%",
+                {
+                  "marginVertical": 8,
+                  "width": 734,
                 },
               ]
             }
@@ -1054,15 +1166,15 @@ exports[`Test in <Revisits /> screen should to match snapshot 1`] = `
           >
             <View
               style={
-                Object {
+                {
                   "backgroundColor": "#292929",
-                  "padding": 15,
+                  "padding": 16,
                 }
               }
             >
               <Text
                 style={
-                  Object {
+                  {
                     "color": "#BFBFBF",
                     "fontSize": 14,
                     "marginBottom": 15,
@@ -1074,7 +1186,7 @@ exports[`Test in <Revisits /> screen should to match snapshot 1`] = `
               </Text>
               <Text
                 style={
-                  Object {
+                  {
                     "color": "#FFFFFF",
                     "fontSize": 18,
                     "fontWeight": "bold",
@@ -1087,7 +1199,7 @@ exports[`Test in <Revisits /> screen should to match snapshot 1`] = `
               </Text>
               <Text
                 style={
-                  Object {
+                  {
                     "color": "#FFFFFF",
                     "fontSize": 16,
                   }
@@ -1098,8 +1210,20 @@ exports[`Test in <Revisits /> screen should to match snapshot 1`] = `
               </Text>
               <View
                 accessibilityState={
-                  Object {
+                  {
+                    "busy": undefined,
+                    "checked": undefined,
                     "disabled": false,
+                    "expanded": undefined,
+                    "selected": undefined,
+                  }
+                }
+                accessibilityValue={
+                  {
+                    "max": undefined,
+                    "min": undefined,
+                    "now": undefined,
+                    "text": undefined,
                   }
                 }
                 accessible={true}
@@ -1115,22 +1239,21 @@ exports[`Test in <Revisits /> screen should to match snapshot 1`] = `
                 onResponderTerminationRequest={[Function]}
                 onStartShouldSetResponder={[Function]}
                 style={
-                  Array [
-                    Object {
+                  [
+                    {
                       "overflow": "hidden",
                     },
-                    false,
-                    Array [
-                      Object {
+                    [
+                      {
                         "alignItems": "center",
                         "backgroundColor": "transparent",
                         "borderRadius": 50,
-                        "height": 42,
+                        "height": 48,
                         "justifyContent": "center",
                         "margin": 5,
-                        "width": 42,
+                        "width": 48,
                       },
-                      Object {
+                      {
                         "height": 35,
                         "position": "absolute",
                         "right": -2.5,
@@ -1146,29 +1269,29 @@ exports[`Test in <Revisits /> screen should to match snapshot 1`] = `
                   allowFontScaling={false}
                   selectable={false}
                   style={
-                    Array [
-                      Object {
+                    [
+                      {
                         "color": "#C0A7E1",
                         "fontSize": 20,
                       },
-                      Object {
+                      {
                         "marginLeft": 2,
                       },
-                      Object {
+                      {
                         "fontFamily": "Ionicons",
                         "fontStyle": "normal",
                         "fontWeight": "normal",
                       },
-                      Object {},
+                      {},
                     ]
                   }
                 >
-                  
+                  
                 </Text>
               </View>
               <View
                 style={
-                  Object {
+                  {
                     "position": "absolute",
                     "right": 20,
                     "top": 30,
@@ -1179,6 +1302,14 @@ exports[`Test in <Revisits /> screen should to match snapshot 1`] = `
                   collapsable={false}
                 >
                   <View
+                    accessibilityValue={
+                      {
+                        "max": undefined,
+                        "min": undefined,
+                        "now": undefined,
+                        "text": undefined,
+                      }
+                    }
                     accessible={true}
                     focusable={true}
                     onClick={[Function]}
@@ -1191,8 +1322,8 @@ exports[`Test in <Revisits /> screen should to match snapshot 1`] = `
                   >
                     <View
                       ctx={
-                        Object {
-                          "menuActions": Object {
+                        {
+                          "menuActions": {
                             "_getOpenedMenu": [Function],
                             "_notify": [Function],
                             "closeMenu": [Function],
@@ -1200,7 +1331,7 @@ exports[`Test in <Revisits /> screen should to match snapshot 1`] = `
                             "openMenu": [Function],
                             "toggleMenu": [Function],
                           },
-                          "menuRegistry": Object {
+                          "menuRegistry": {
                             "getAll": [Function],
                             "getMenu": [Function],
                             "setOptionsCustomStyles": [Function],
@@ -1211,7 +1342,7 @@ exports[`Test in <Revisits /> screen should to match snapshot 1`] = `
                         }
                       }
                       style={
-                        Array [
+                        [
                           undefined,
                           undefined,
                         ]
@@ -1224,13 +1355,26 @@ exports[`Test in <Revisits /> screen should to match snapshot 1`] = `
           </View>
         </View>
         <View
+          onFocusCapture={[Function]}
           onLayout={[Function]}
           style={null}
         >
           <View
             accessibilityState={
-              Object {
+              {
+                "busy": undefined,
+                "checked": undefined,
                 "disabled": false,
+                "expanded": undefined,
+                "selected": undefined,
+              }
+            }
+            accessibilityValue={
+              {
+                "max": undefined,
+                "min": undefined,
+                "now": undefined,
+                "text": undefined,
               }
             }
             accessible={true}
@@ -1246,15 +1390,13 @@ exports[`Test in <Revisits /> screen should to match snapshot 1`] = `
             onResponderTerminationRequest={[Function]}
             onStartShouldSetResponder={[Function]}
             style={
-              Array [
-                Object {
+              [
+                {
                   "overflow": "hidden",
                 },
-                false,
-                Object {
-                  "marginVertical": 10,
-                  "minWidth": "95%",
-                  "width": "95%",
+                {
+                  "marginVertical": 8,
+                  "width": 734,
                 },
               ]
             }
@@ -1262,15 +1404,15 @@ exports[`Test in <Revisits /> screen should to match snapshot 1`] = `
           >
             <View
               style={
-                Object {
+                {
                   "backgroundColor": "#292929",
-                  "padding": 15,
+                  "padding": 16,
                 }
               }
             >
               <Text
                 style={
-                  Object {
+                  {
                     "color": "#BFBFBF",
                     "fontSize": 14,
                     "marginBottom": 15,
@@ -1282,7 +1424,7 @@ exports[`Test in <Revisits /> screen should to match snapshot 1`] = `
               </Text>
               <Text
                 style={
-                  Object {
+                  {
                     "color": "#FFFFFF",
                     "fontSize": 18,
                     "fontWeight": "bold",
@@ -1295,7 +1437,7 @@ exports[`Test in <Revisits /> screen should to match snapshot 1`] = `
               </Text>
               <Text
                 style={
-                  Object {
+                  {
                     "color": "#FFFFFF",
                     "fontSize": 16,
                   }
@@ -1306,8 +1448,20 @@ exports[`Test in <Revisits /> screen should to match snapshot 1`] = `
               </Text>
               <View
                 accessibilityState={
-                  Object {
+                  {
+                    "busy": undefined,
+                    "checked": undefined,
                     "disabled": false,
+                    "expanded": undefined,
+                    "selected": undefined,
+                  }
+                }
+                accessibilityValue={
+                  {
+                    "max": undefined,
+                    "min": undefined,
+                    "now": undefined,
+                    "text": undefined,
                   }
                 }
                 accessible={true}
@@ -1323,22 +1477,21 @@ exports[`Test in <Revisits /> screen should to match snapshot 1`] = `
                 onResponderTerminationRequest={[Function]}
                 onStartShouldSetResponder={[Function]}
                 style={
-                  Array [
-                    Object {
+                  [
+                    {
                       "overflow": "hidden",
                     },
-                    false,
-                    Array [
-                      Object {
+                    [
+                      {
                         "alignItems": "center",
                         "backgroundColor": "transparent",
                         "borderRadius": 50,
-                        "height": 42,
+                        "height": 48,
                         "justifyContent": "center",
                         "margin": 5,
-                        "width": 42,
+                        "width": 48,
                       },
-                      Object {
+                      {
                         "height": 35,
                         "position": "absolute",
                         "right": -2.5,
@@ -1354,29 +1507,29 @@ exports[`Test in <Revisits /> screen should to match snapshot 1`] = `
                   allowFontScaling={false}
                   selectable={false}
                   style={
-                    Array [
-                      Object {
+                    [
+                      {
                         "color": "#C0A7E1",
                         "fontSize": 20,
                       },
-                      Object {
+                      {
                         "marginLeft": 2,
                       },
-                      Object {
+                      {
                         "fontFamily": "Ionicons",
                         "fontStyle": "normal",
                         "fontWeight": "normal",
                       },
-                      Object {},
+                      {},
                     ]
                   }
                 >
-                  
+                  
                 </Text>
               </View>
               <View
                 style={
-                  Object {
+                  {
                     "position": "absolute",
                     "right": 20,
                     "top": 30,
@@ -1387,6 +1540,14 @@ exports[`Test in <Revisits /> screen should to match snapshot 1`] = `
                   collapsable={false}
                 >
                   <View
+                    accessibilityValue={
+                      {
+                        "max": undefined,
+                        "min": undefined,
+                        "now": undefined,
+                        "text": undefined,
+                      }
+                    }
                     accessible={true}
                     focusable={true}
                     onClick={[Function]}
@@ -1399,8 +1560,8 @@ exports[`Test in <Revisits /> screen should to match snapshot 1`] = `
                   >
                     <View
                       ctx={
-                        Object {
-                          "menuActions": Object {
+                        {
+                          "menuActions": {
                             "_getOpenedMenu": [Function],
                             "_notify": [Function],
                             "closeMenu": [Function],
@@ -1408,7 +1569,7 @@ exports[`Test in <Revisits /> screen should to match snapshot 1`] = `
                             "openMenu": [Function],
                             "toggleMenu": [Function],
                           },
-                          "menuRegistry": Object {
+                          "menuRegistry": {
                             "getAll": [Function],
                             "getMenu": [Function],
                             "setOptionsCustomStyles": [Function],
@@ -1419,7 +1580,7 @@ exports[`Test in <Revisits /> screen should to match snapshot 1`] = `
                         }
                       }
                       style={
-                        Array [
+                        [
                           undefined,
                           undefined,
                         ]
@@ -1432,13 +1593,26 @@ exports[`Test in <Revisits /> screen should to match snapshot 1`] = `
           </View>
         </View>
         <View
+          onFocusCapture={[Function]}
           onLayout={[Function]}
           style={null}
         >
           <View
             accessibilityState={
-              Object {
+              {
+                "busy": undefined,
+                "checked": undefined,
                 "disabled": false,
+                "expanded": undefined,
+                "selected": undefined,
+              }
+            }
+            accessibilityValue={
+              {
+                "max": undefined,
+                "min": undefined,
+                "now": undefined,
+                "text": undefined,
               }
             }
             accessible={true}
@@ -1454,15 +1628,13 @@ exports[`Test in <Revisits /> screen should to match snapshot 1`] = `
             onResponderTerminationRequest={[Function]}
             onStartShouldSetResponder={[Function]}
             style={
-              Array [
-                Object {
+              [
+                {
                   "overflow": "hidden",
                 },
-                false,
-                Object {
-                  "marginVertical": 10,
-                  "minWidth": "95%",
-                  "width": "95%",
+                {
+                  "marginVertical": 8,
+                  "width": 734,
                 },
               ]
             }
@@ -1470,15 +1642,15 @@ exports[`Test in <Revisits /> screen should to match snapshot 1`] = `
           >
             <View
               style={
-                Object {
+                {
                   "backgroundColor": "#292929",
-                  "padding": 15,
+                  "padding": 16,
                 }
               }
             >
               <Text
                 style={
-                  Object {
+                  {
                     "color": "#BFBFBF",
                     "fontSize": 14,
                     "marginBottom": 15,
@@ -1490,7 +1662,7 @@ exports[`Test in <Revisits /> screen should to match snapshot 1`] = `
               </Text>
               <Text
                 style={
-                  Object {
+                  {
                     "color": "#FFFFFF",
                     "fontSize": 18,
                     "fontWeight": "bold",
@@ -1503,7 +1675,7 @@ exports[`Test in <Revisits /> screen should to match snapshot 1`] = `
               </Text>
               <Text
                 style={
-                  Object {
+                  {
                     "color": "#FFFFFF",
                     "fontSize": 16,
                   }
@@ -1514,8 +1686,20 @@ exports[`Test in <Revisits /> screen should to match snapshot 1`] = `
               </Text>
               <View
                 accessibilityState={
-                  Object {
+                  {
+                    "busy": undefined,
+                    "checked": undefined,
                     "disabled": false,
+                    "expanded": undefined,
+                    "selected": undefined,
+                  }
+                }
+                accessibilityValue={
+                  {
+                    "max": undefined,
+                    "min": undefined,
+                    "now": undefined,
+                    "text": undefined,
                   }
                 }
                 accessible={true}
@@ -1531,22 +1715,21 @@ exports[`Test in <Revisits /> screen should to match snapshot 1`] = `
                 onResponderTerminationRequest={[Function]}
                 onStartShouldSetResponder={[Function]}
                 style={
-                  Array [
-                    Object {
+                  [
+                    {
                       "overflow": "hidden",
                     },
-                    false,
-                    Array [
-                      Object {
+                    [
+                      {
                         "alignItems": "center",
                         "backgroundColor": "transparent",
                         "borderRadius": 50,
-                        "height": 42,
+                        "height": 48,
                         "justifyContent": "center",
                         "margin": 5,
-                        "width": 42,
+                        "width": 48,
                       },
-                      Object {
+                      {
                         "height": 35,
                         "position": "absolute",
                         "right": -2.5,
@@ -1562,29 +1745,29 @@ exports[`Test in <Revisits /> screen should to match snapshot 1`] = `
                   allowFontScaling={false}
                   selectable={false}
                   style={
-                    Array [
-                      Object {
+                    [
+                      {
                         "color": "#C0A7E1",
                         "fontSize": 20,
                       },
-                      Object {
+                      {
                         "marginLeft": 2,
                       },
-                      Object {
+                      {
                         "fontFamily": "Ionicons",
                         "fontStyle": "normal",
                         "fontWeight": "normal",
                       },
-                      Object {},
+                      {},
                     ]
                   }
                 >
-                  
+                  
                 </Text>
               </View>
               <View
                 style={
-                  Object {
+                  {
                     "position": "absolute",
                     "right": 20,
                     "top": 30,
@@ -1595,6 +1778,14 @@ exports[`Test in <Revisits /> screen should to match snapshot 1`] = `
                   collapsable={false}
                 >
                   <View
+                    accessibilityValue={
+                      {
+                        "max": undefined,
+                        "min": undefined,
+                        "now": undefined,
+                        "text": undefined,
+                      }
+                    }
                     accessible={true}
                     focusable={true}
                     onClick={[Function]}
@@ -1607,8 +1798,8 @@ exports[`Test in <Revisits /> screen should to match snapshot 1`] = `
                   >
                     <View
                       ctx={
-                        Object {
-                          "menuActions": Object {
+                        {
+                          "menuActions": {
                             "_getOpenedMenu": [Function],
                             "_notify": [Function],
                             "closeMenu": [Function],
@@ -1616,7 +1807,7 @@ exports[`Test in <Revisits /> screen should to match snapshot 1`] = `
                             "openMenu": [Function],
                             "toggleMenu": [Function],
                           },
-                          "menuRegistry": Object {
+                          "menuRegistry": {
                             "getAll": [Function],
                             "getMenu": [Function],
                             "setOptionsCustomStyles": [Function],
@@ -1627,7 +1818,7 @@ exports[`Test in <Revisits /> screen should to match snapshot 1`] = `
                         }
                       }
                       style={
-                        Array [
+                        [
                           undefined,
                           undefined,
                         ]
@@ -1640,13 +1831,26 @@ exports[`Test in <Revisits /> screen should to match snapshot 1`] = `
           </View>
         </View>
         <View
+          onFocusCapture={[Function]}
           onLayout={[Function]}
           style={null}
         >
           <View
             accessibilityState={
-              Object {
+              {
+                "busy": undefined,
+                "checked": undefined,
                 "disabled": false,
+                "expanded": undefined,
+                "selected": undefined,
+              }
+            }
+            accessibilityValue={
+              {
+                "max": undefined,
+                "min": undefined,
+                "now": undefined,
+                "text": undefined,
               }
             }
             accessible={true}
@@ -1662,15 +1866,13 @@ exports[`Test in <Revisits /> screen should to match snapshot 1`] = `
             onResponderTerminationRequest={[Function]}
             onStartShouldSetResponder={[Function]}
             style={
-              Array [
-                Object {
+              [
+                {
                   "overflow": "hidden",
                 },
-                false,
-                Object {
-                  "marginVertical": 10,
-                  "minWidth": "95%",
-                  "width": "95%",
+                {
+                  "marginVertical": 8,
+                  "width": 734,
                 },
               ]
             }
@@ -1678,15 +1880,15 @@ exports[`Test in <Revisits /> screen should to match snapshot 1`] = `
           >
             <View
               style={
-                Object {
+                {
                   "backgroundColor": "#292929",
-                  "padding": 15,
+                  "padding": 16,
                 }
               }
             >
               <Text
                 style={
-                  Object {
+                  {
                     "color": "#BFBFBF",
                     "fontSize": 14,
                     "marginBottom": 15,
@@ -1698,7 +1900,7 @@ exports[`Test in <Revisits /> screen should to match snapshot 1`] = `
               </Text>
               <Text
                 style={
-                  Object {
+                  {
                     "color": "#FFFFFF",
                     "fontSize": 18,
                     "fontWeight": "bold",
@@ -1711,7 +1913,7 @@ exports[`Test in <Revisits /> screen should to match snapshot 1`] = `
               </Text>
               <Text
                 style={
-                  Object {
+                  {
                     "color": "#FFFFFF",
                     "fontSize": 16,
                   }
@@ -1722,8 +1924,20 @@ exports[`Test in <Revisits /> screen should to match snapshot 1`] = `
               </Text>
               <View
                 accessibilityState={
-                  Object {
+                  {
+                    "busy": undefined,
+                    "checked": undefined,
                     "disabled": false,
+                    "expanded": undefined,
+                    "selected": undefined,
+                  }
+                }
+                accessibilityValue={
+                  {
+                    "max": undefined,
+                    "min": undefined,
+                    "now": undefined,
+                    "text": undefined,
                   }
                 }
                 accessible={true}
@@ -1739,22 +1953,21 @@ exports[`Test in <Revisits /> screen should to match snapshot 1`] = `
                 onResponderTerminationRequest={[Function]}
                 onStartShouldSetResponder={[Function]}
                 style={
-                  Array [
-                    Object {
+                  [
+                    {
                       "overflow": "hidden",
                     },
-                    false,
-                    Array [
-                      Object {
+                    [
+                      {
                         "alignItems": "center",
                         "backgroundColor": "transparent",
                         "borderRadius": 50,
-                        "height": 42,
+                        "height": 48,
                         "justifyContent": "center",
                         "margin": 5,
-                        "width": 42,
+                        "width": 48,
                       },
-                      Object {
+                      {
                         "height": 35,
                         "position": "absolute",
                         "right": -2.5,
@@ -1770,29 +1983,29 @@ exports[`Test in <Revisits /> screen should to match snapshot 1`] = `
                   allowFontScaling={false}
                   selectable={false}
                   style={
-                    Array [
-                      Object {
+                    [
+                      {
                         "color": "#C0A7E1",
                         "fontSize": 20,
                       },
-                      Object {
+                      {
                         "marginLeft": 2,
                       },
-                      Object {
+                      {
                         "fontFamily": "Ionicons",
                         "fontStyle": "normal",
                         "fontWeight": "normal",
                       },
-                      Object {},
+                      {},
                     ]
                   }
                 >
-                  
+                  
                 </Text>
               </View>
               <View
                 style={
-                  Object {
+                  {
                     "position": "absolute",
                     "right": 20,
                     "top": 30,
@@ -1803,6 +2016,14 @@ exports[`Test in <Revisits /> screen should to match snapshot 1`] = `
                   collapsable={false}
                 >
                   <View
+                    accessibilityValue={
+                      {
+                        "max": undefined,
+                        "min": undefined,
+                        "now": undefined,
+                        "text": undefined,
+                      }
+                    }
                     accessible={true}
                     focusable={true}
                     onClick={[Function]}
@@ -1815,8 +2036,8 @@ exports[`Test in <Revisits /> screen should to match snapshot 1`] = `
                   >
                     <View
                       ctx={
-                        Object {
-                          "menuActions": Object {
+                        {
+                          "menuActions": {
                             "_getOpenedMenu": [Function],
                             "_notify": [Function],
                             "closeMenu": [Function],
@@ -1824,7 +2045,7 @@ exports[`Test in <Revisits /> screen should to match snapshot 1`] = `
                             "openMenu": [Function],
                             "toggleMenu": [Function],
                           },
-                          "menuRegistry": Object {
+                          "menuRegistry": {
                             "getAll": [Function],
                             "getMenu": [Function],
                             "setOptionsCustomStyles": [Function],
@@ -1835,7 +2056,7 @@ exports[`Test in <Revisits /> screen should to match snapshot 1`] = `
                         }
                       }
                       style={
-                        Array [
+                        [
                           undefined,
                           undefined,
                         ]
@@ -1848,13 +2069,26 @@ exports[`Test in <Revisits /> screen should to match snapshot 1`] = `
           </View>
         </View>
         <View
+          onFocusCapture={[Function]}
           onLayout={[Function]}
           style={null}
         >
           <View
             accessibilityState={
-              Object {
+              {
+                "busy": undefined,
+                "checked": undefined,
                 "disabled": false,
+                "expanded": undefined,
+                "selected": undefined,
+              }
+            }
+            accessibilityValue={
+              {
+                "max": undefined,
+                "min": undefined,
+                "now": undefined,
+                "text": undefined,
               }
             }
             accessible={true}
@@ -1870,15 +2104,13 @@ exports[`Test in <Revisits /> screen should to match snapshot 1`] = `
             onResponderTerminationRequest={[Function]}
             onStartShouldSetResponder={[Function]}
             style={
-              Array [
-                Object {
+              [
+                {
                   "overflow": "hidden",
                 },
-                false,
-                Object {
-                  "marginVertical": 10,
-                  "minWidth": "95%",
-                  "width": "95%",
+                {
+                  "marginVertical": 8,
+                  "width": 734,
                 },
               ]
             }
@@ -1886,15 +2118,15 @@ exports[`Test in <Revisits /> screen should to match snapshot 1`] = `
           >
             <View
               style={
-                Object {
+                {
                   "backgroundColor": "#292929",
-                  "padding": 15,
+                  "padding": 16,
                 }
               }
             >
               <Text
                 style={
-                  Object {
+                  {
                     "color": "#BFBFBF",
                     "fontSize": 14,
                     "marginBottom": 15,
@@ -1906,7 +2138,7 @@ exports[`Test in <Revisits /> screen should to match snapshot 1`] = `
               </Text>
               <Text
                 style={
-                  Object {
+                  {
                     "color": "#FFFFFF",
                     "fontSize": 18,
                     "fontWeight": "bold",
@@ -1919,7 +2151,7 @@ exports[`Test in <Revisits /> screen should to match snapshot 1`] = `
               </Text>
               <Text
                 style={
-                  Object {
+                  {
                     "color": "#FFFFFF",
                     "fontSize": 16,
                   }
@@ -1930,8 +2162,20 @@ exports[`Test in <Revisits /> screen should to match snapshot 1`] = `
               </Text>
               <View
                 accessibilityState={
-                  Object {
+                  {
+                    "busy": undefined,
+                    "checked": undefined,
                     "disabled": false,
+                    "expanded": undefined,
+                    "selected": undefined,
+                  }
+                }
+                accessibilityValue={
+                  {
+                    "max": undefined,
+                    "min": undefined,
+                    "now": undefined,
+                    "text": undefined,
                   }
                 }
                 accessible={true}
@@ -1947,22 +2191,21 @@ exports[`Test in <Revisits /> screen should to match snapshot 1`] = `
                 onResponderTerminationRequest={[Function]}
                 onStartShouldSetResponder={[Function]}
                 style={
-                  Array [
-                    Object {
+                  [
+                    {
                       "overflow": "hidden",
                     },
-                    false,
-                    Array [
-                      Object {
+                    [
+                      {
                         "alignItems": "center",
                         "backgroundColor": "transparent",
                         "borderRadius": 50,
-                        "height": 42,
+                        "height": 48,
                         "justifyContent": "center",
                         "margin": 5,
-                        "width": 42,
+                        "width": 48,
                       },
-                      Object {
+                      {
                         "height": 35,
                         "position": "absolute",
                         "right": -2.5,
@@ -1978,29 +2221,29 @@ exports[`Test in <Revisits /> screen should to match snapshot 1`] = `
                   allowFontScaling={false}
                   selectable={false}
                   style={
-                    Array [
-                      Object {
+                    [
+                      {
                         "color": "#C0A7E1",
                         "fontSize": 20,
                       },
-                      Object {
+                      {
                         "marginLeft": 2,
                       },
-                      Object {
+                      {
                         "fontFamily": "Ionicons",
                         "fontStyle": "normal",
                         "fontWeight": "normal",
                       },
-                      Object {},
+                      {},
                     ]
                   }
                 >
-                  
+                  
                 </Text>
               </View>
               <View
                 style={
-                  Object {
+                  {
                     "position": "absolute",
                     "right": 20,
                     "top": 30,
@@ -2011,6 +2254,14 @@ exports[`Test in <Revisits /> screen should to match snapshot 1`] = `
                   collapsable={false}
                 >
                   <View
+                    accessibilityValue={
+                      {
+                        "max": undefined,
+                        "min": undefined,
+                        "now": undefined,
+                        "text": undefined,
+                      }
+                    }
                     accessible={true}
                     focusable={true}
                     onClick={[Function]}
@@ -2023,8 +2274,8 @@ exports[`Test in <Revisits /> screen should to match snapshot 1`] = `
                   >
                     <View
                       ctx={
-                        Object {
-                          "menuActions": Object {
+                        {
+                          "menuActions": {
                             "_getOpenedMenu": [Function],
                             "_notify": [Function],
                             "closeMenu": [Function],
@@ -2032,7 +2283,7 @@ exports[`Test in <Revisits /> screen should to match snapshot 1`] = `
                             "openMenu": [Function],
                             "toggleMenu": [Function],
                           },
-                          "menuRegistry": Object {
+                          "menuRegistry": {
                             "getAll": [Function],
                             "getMenu": [Function],
                             "setOptionsCustomStyles": [Function],
@@ -2043,7 +2294,7 @@ exports[`Test in <Revisits /> screen should to match snapshot 1`] = `
                         }
                       }
                       style={
-                        Array [
+                        [
                           undefined,
                           undefined,
                         ]
@@ -2056,13 +2307,26 @@ exports[`Test in <Revisits /> screen should to match snapshot 1`] = `
           </View>
         </View>
         <View
+          onFocusCapture={[Function]}
           onLayout={[Function]}
           style={null}
         >
           <View
             accessibilityState={
-              Object {
+              {
+                "busy": undefined,
+                "checked": undefined,
                 "disabled": false,
+                "expanded": undefined,
+                "selected": undefined,
+              }
+            }
+            accessibilityValue={
+              {
+                "max": undefined,
+                "min": undefined,
+                "now": undefined,
+                "text": undefined,
               }
             }
             accessible={true}
@@ -2078,15 +2342,13 @@ exports[`Test in <Revisits /> screen should to match snapshot 1`] = `
             onResponderTerminationRequest={[Function]}
             onStartShouldSetResponder={[Function]}
             style={
-              Array [
-                Object {
+              [
+                {
                   "overflow": "hidden",
                 },
-                false,
-                Object {
-                  "marginVertical": 10,
-                  "minWidth": "95%",
-                  "width": "95%",
+                {
+                  "marginVertical": 8,
+                  "width": 734,
                 },
               ]
             }
@@ -2094,15 +2356,15 @@ exports[`Test in <Revisits /> screen should to match snapshot 1`] = `
           >
             <View
               style={
-                Object {
+                {
                   "backgroundColor": "#292929",
-                  "padding": 15,
+                  "padding": 16,
                 }
               }
             >
               <Text
                 style={
-                  Object {
+                  {
                     "color": "#BFBFBF",
                     "fontSize": 14,
                     "marginBottom": 15,
@@ -2114,7 +2376,7 @@ exports[`Test in <Revisits /> screen should to match snapshot 1`] = `
               </Text>
               <Text
                 style={
-                  Object {
+                  {
                     "color": "#FFFFFF",
                     "fontSize": 18,
                     "fontWeight": "bold",
@@ -2127,7 +2389,7 @@ exports[`Test in <Revisits /> screen should to match snapshot 1`] = `
               </Text>
               <Text
                 style={
-                  Object {
+                  {
                     "color": "#FFFFFF",
                     "fontSize": 16,
                   }
@@ -2138,8 +2400,20 @@ exports[`Test in <Revisits /> screen should to match snapshot 1`] = `
               </Text>
               <View
                 accessibilityState={
-                  Object {
+                  {
+                    "busy": undefined,
+                    "checked": undefined,
                     "disabled": false,
+                    "expanded": undefined,
+                    "selected": undefined,
+                  }
+                }
+                accessibilityValue={
+                  {
+                    "max": undefined,
+                    "min": undefined,
+                    "now": undefined,
+                    "text": undefined,
                   }
                 }
                 accessible={true}
@@ -2155,22 +2429,21 @@ exports[`Test in <Revisits /> screen should to match snapshot 1`] = `
                 onResponderTerminationRequest={[Function]}
                 onStartShouldSetResponder={[Function]}
                 style={
-                  Array [
-                    Object {
+                  [
+                    {
                       "overflow": "hidden",
                     },
-                    false,
-                    Array [
-                      Object {
+                    [
+                      {
                         "alignItems": "center",
                         "backgroundColor": "transparent",
                         "borderRadius": 50,
-                        "height": 42,
+                        "height": 48,
                         "justifyContent": "center",
                         "margin": 5,
-                        "width": 42,
+                        "width": 48,
                       },
-                      Object {
+                      {
                         "height": 35,
                         "position": "absolute",
                         "right": -2.5,
@@ -2186,29 +2459,29 @@ exports[`Test in <Revisits /> screen should to match snapshot 1`] = `
                   allowFontScaling={false}
                   selectable={false}
                   style={
-                    Array [
-                      Object {
+                    [
+                      {
                         "color": "#C0A7E1",
                         "fontSize": 20,
                       },
-                      Object {
+                      {
                         "marginLeft": 2,
                       },
-                      Object {
+                      {
                         "fontFamily": "Ionicons",
                         "fontStyle": "normal",
                         "fontWeight": "normal",
                       },
-                      Object {},
+                      {},
                     ]
                   }
                 >
-                  
+                  
                 </Text>
               </View>
               <View
                 style={
-                  Object {
+                  {
                     "position": "absolute",
                     "right": 20,
                     "top": 30,
@@ -2219,6 +2492,14 @@ exports[`Test in <Revisits /> screen should to match snapshot 1`] = `
                   collapsable={false}
                 >
                   <View
+                    accessibilityValue={
+                      {
+                        "max": undefined,
+                        "min": undefined,
+                        "now": undefined,
+                        "text": undefined,
+                      }
+                    }
                     accessible={true}
                     focusable={true}
                     onClick={[Function]}
@@ -2231,8 +2512,8 @@ exports[`Test in <Revisits /> screen should to match snapshot 1`] = `
                   >
                     <View
                       ctx={
-                        Object {
-                          "menuActions": Object {
+                        {
+                          "menuActions": {
                             "_getOpenedMenu": [Function],
                             "_notify": [Function],
                             "closeMenu": [Function],
@@ -2240,7 +2521,7 @@ exports[`Test in <Revisits /> screen should to match snapshot 1`] = `
                             "openMenu": [Function],
                             "toggleMenu": [Function],
                           },
-                          "menuRegistry": Object {
+                          "menuRegistry": {
                             "getAll": [Function],
                             "getMenu": [Function],
                             "setOptionsCustomStyles": [Function],
@@ -2251,7 +2532,7 @@ exports[`Test in <Revisits /> screen should to match snapshot 1`] = `
                         }
                       }
                       style={
-                        Array [
+                        [
                           undefined,
                           undefined,
                         ]
@@ -2264,13 +2545,26 @@ exports[`Test in <Revisits /> screen should to match snapshot 1`] = `
           </View>
         </View>
         <View
+          onFocusCapture={[Function]}
           onLayout={[Function]}
           style={null}
         >
           <View
             accessibilityState={
-              Object {
+              {
+                "busy": undefined,
+                "checked": undefined,
                 "disabled": false,
+                "expanded": undefined,
+                "selected": undefined,
+              }
+            }
+            accessibilityValue={
+              {
+                "max": undefined,
+                "min": undefined,
+                "now": undefined,
+                "text": undefined,
               }
             }
             accessible={true}
@@ -2286,15 +2580,13 @@ exports[`Test in <Revisits /> screen should to match snapshot 1`] = `
             onResponderTerminationRequest={[Function]}
             onStartShouldSetResponder={[Function]}
             style={
-              Array [
-                Object {
+              [
+                {
                   "overflow": "hidden",
                 },
-                false,
-                Object {
-                  "marginVertical": 10,
-                  "minWidth": "95%",
-                  "width": "95%",
+                {
+                  "marginVertical": 8,
+                  "width": 734,
                 },
               ]
             }
@@ -2302,15 +2594,15 @@ exports[`Test in <Revisits /> screen should to match snapshot 1`] = `
           >
             <View
               style={
-                Object {
+                {
                   "backgroundColor": "#292929",
-                  "padding": 15,
+                  "padding": 16,
                 }
               }
             >
               <Text
                 style={
-                  Object {
+                  {
                     "color": "#BFBFBF",
                     "fontSize": 14,
                     "marginBottom": 15,
@@ -2322,7 +2614,7 @@ exports[`Test in <Revisits /> screen should to match snapshot 1`] = `
               </Text>
               <Text
                 style={
-                  Object {
+                  {
                     "color": "#FFFFFF",
                     "fontSize": 18,
                     "fontWeight": "bold",
@@ -2335,7 +2627,7 @@ exports[`Test in <Revisits /> screen should to match snapshot 1`] = `
               </Text>
               <Text
                 style={
-                  Object {
+                  {
                     "color": "#FFFFFF",
                     "fontSize": 16,
                   }
@@ -2346,8 +2638,20 @@ exports[`Test in <Revisits /> screen should to match snapshot 1`] = `
               </Text>
               <View
                 accessibilityState={
-                  Object {
+                  {
+                    "busy": undefined,
+                    "checked": undefined,
                     "disabled": false,
+                    "expanded": undefined,
+                    "selected": undefined,
+                  }
+                }
+                accessibilityValue={
+                  {
+                    "max": undefined,
+                    "min": undefined,
+                    "now": undefined,
+                    "text": undefined,
                   }
                 }
                 accessible={true}
@@ -2363,22 +2667,21 @@ exports[`Test in <Revisits /> screen should to match snapshot 1`] = `
                 onResponderTerminationRequest={[Function]}
                 onStartShouldSetResponder={[Function]}
                 style={
-                  Array [
-                    Object {
+                  [
+                    {
                       "overflow": "hidden",
                     },
-                    false,
-                    Array [
-                      Object {
+                    [
+                      {
                         "alignItems": "center",
                         "backgroundColor": "transparent",
                         "borderRadius": 50,
-                        "height": 42,
+                        "height": 48,
                         "justifyContent": "center",
                         "margin": 5,
-                        "width": 42,
+                        "width": 48,
                       },
-                      Object {
+                      {
                         "height": 35,
                         "position": "absolute",
                         "right": -2.5,
@@ -2394,29 +2697,29 @@ exports[`Test in <Revisits /> screen should to match snapshot 1`] = `
                   allowFontScaling={false}
                   selectable={false}
                   style={
-                    Array [
-                      Object {
+                    [
+                      {
                         "color": "#C0A7E1",
                         "fontSize": 20,
                       },
-                      Object {
+                      {
                         "marginLeft": 2,
                       },
-                      Object {
+                      {
                         "fontFamily": "Ionicons",
                         "fontStyle": "normal",
                         "fontWeight": "normal",
                       },
-                      Object {},
+                      {},
                     ]
                   }
                 >
-                  
+                  
                 </Text>
               </View>
               <View
                 style={
-                  Object {
+                  {
                     "position": "absolute",
                     "right": 20,
                     "top": 30,
@@ -2427,6 +2730,14 @@ exports[`Test in <Revisits /> screen should to match snapshot 1`] = `
                   collapsable={false}
                 >
                   <View
+                    accessibilityValue={
+                      {
+                        "max": undefined,
+                        "min": undefined,
+                        "now": undefined,
+                        "text": undefined,
+                      }
+                    }
                     accessible={true}
                     focusable={true}
                     onClick={[Function]}
@@ -2439,8 +2750,8 @@ exports[`Test in <Revisits /> screen should to match snapshot 1`] = `
                   >
                     <View
                       ctx={
-                        Object {
-                          "menuActions": Object {
+                        {
+                          "menuActions": {
                             "_getOpenedMenu": [Function],
                             "_notify": [Function],
                             "closeMenu": [Function],
@@ -2448,7 +2759,7 @@ exports[`Test in <Revisits /> screen should to match snapshot 1`] = `
                             "openMenu": [Function],
                             "toggleMenu": [Function],
                           },
-                          "menuRegistry": Object {
+                          "menuRegistry": {
                             "getAll": [Function],
                             "getMenu": [Function],
                             "setOptionsCustomStyles": [Function],
@@ -2459,7 +2770,7 @@ exports[`Test in <Revisits /> screen should to match snapshot 1`] = `
                         }
                       }
                       style={
-                        Array [
+                        [
                           undefined,
                           undefined,
                         ]
@@ -2473,7 +2784,7 @@ exports[`Test in <Revisits /> screen should to match snapshot 1`] = `
         </View>
         <View
           style={
-            Object {
+            {
               "height": 0,
             }
           }
@@ -2506,8 +2817,20 @@ exports[`Test in <Revisits /> screen should to match snapshot 1`] = `
     />
     <View
       accessibilityState={
-        Object {
+        {
+          "busy": undefined,
+          "checked": undefined,
           "disabled": false,
+          "expanded": undefined,
+          "selected": undefined,
+        }
+      }
+      accessibilityValue={
+        {
+          "max": undefined,
+          "min": undefined,
+          "now": undefined,
+          "text": undefined,
         }
       }
       accessible={true}
@@ -2523,22 +2846,21 @@ exports[`Test in <Revisits /> screen should to match snapshot 1`] = `
       onResponderTerminationRequest={[Function]}
       onStartShouldSetResponder={[Function]}
       style={
-        Array [
-          Object {
+        [
+          {
             "overflow": "hidden",
           },
-          false,
-          Array [
-            Object {
+          [
+            {
               "alignItems": "center",
               "backgroundColor": "#C0A7E1",
               "borderRadius": 50,
-              "height": 42,
+              "height": 48,
               "justifyContent": "center",
               "margin": 5,
-              "width": 42,
+              "width": 48,
             },
-            Object {
+            {
               "bottom": 5,
               "height": 60,
               "position": "absolute",
@@ -2554,31 +2876,31 @@ exports[`Test in <Revisits /> screen should to match snapshot 1`] = `
         allowFontScaling={false}
         selectable={false}
         style={
-          Array [
-            Object {
+          [
+            {
               "color": "#121212",
               "fontSize": 40,
             },
-            Object {
-              "marginLeft": 3,
+            {
+              "marginLeft": 1.5,
             },
-            Object {
+            {
               "fontFamily": "Ionicons",
               "fontStyle": "normal",
               "fontWeight": "normal",
             },
-            Object {},
+            {},
           ]
         }
       >
-        
+        
       </Text>
     </View>
   </View>
   <RCTSafeAreaView
     pointerEvents="box-none"
     style={
-      Object {
+      {
         "bottom": 0,
         "left": 0,
         "position": "absolute",
@@ -2592,7 +2914,7 @@ exports[`Test in <Revisits /> screen should to match snapshot 1`] = `
       onLayout={[Function]}
       pointerEvents="box-none"
       style={
-        Object {
+        {
           "flex": 1,
         }
       }

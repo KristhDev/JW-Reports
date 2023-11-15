@@ -5,37 +5,32 @@ import { act, render, screen, waitFor } from '@testing-library/react-native';
 import { Profile } from '../../../src/screens/auth';
 
 /* Hooks */
-import { useAuth, useStatus, useTheme } from '../../../src/hooks';
-
-/* Interfaces */
-import { User } from '../../../src/interfaces/auth';
+import { useAuth, useNetwork, useStatus, useTheme } from '../../../src/hooks';
 
 /* Theme */
 import { darkColors } from '../../../src/theme';
 
-const testUser: User = {
-    id: '05ef0d0c-0f7a-4512-b705-6da279d88503',
-    name: 'Celestino',
-    surname: 'Wilderman',
-    email: 'Ernestine_Doyle@yahoo.com',
-    precursor: 'ninguno',
-    createdAt: '2021-03-10T12:00:00.000Z',
-    updatedAt: '2021-03-10T12:00:00.000Z',
-}
+/* Mocks */
+import { setErrorFormMock, testUser, updateProfileMock, wifiMock } from '../../mocks';
 
 /* Mock hooks */
 jest.mock('../../../src/hooks/useAuth.ts');
+jest.mock('../../../src/hooks/useNetwork.ts');
 jest.mock('../../../src/hooks/useStatus.ts');
 jest.mock('../../../src/hooks/useTheme.ts');
 
 describe('Test in <Profile /> screen', () => {
     (useAuth as jest.Mock).mockReturnValue({
         state: { user: testUser, isAuthLoading: false },
-        updateProfile: jest.fn()
+        updateProfile: updateProfileMock
+    });
+
+    (useNetwork as jest.Mock).mockReturnValue({
+        wifi: wifiMock
     });
 
     (useStatus as jest.Mock).mockReturnValue({
-        setErrorForm: jest.fn()
+        setErrorForm: setErrorFormMock
     });
 
     (useTheme as jest.Mock).mockReturnValue({
@@ -57,16 +52,13 @@ describe('Test in <Profile /> screen', () => {
             render(<Profile />);
         });
 
-        await act(async () => {
-            await waitFor(() => {
+        /* Get title */
+        const title = await screen.findByTestId('title-text');
 
-                /* Get title */
-                const title = screen.getByTestId('title-text');
-
-                /* Check if title exists and contain value pass by props */
-                expect(title).toBeTruthy();
-                expect(title.props.children).toBe('Mi perfil');
-            });
-        })
+        await waitFor(() => {
+            /* Check if title exists and contain value pass by props */
+            expect(title).toBeTruthy();
+            expect(title.props.children).toBe('Mi perfil');
+        });
     });
 });

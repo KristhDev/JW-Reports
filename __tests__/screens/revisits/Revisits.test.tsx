@@ -3,9 +3,7 @@ import { fireEvent, render, screen } from '@testing-library/react-native';
 import { MenuProvider } from 'react-native-popup-menu';
 
 /* Features */
-import { INIT_REVISIT } from '../../../src/features/revisits';
-import { coursesState } from '../../features/courses';
-import { revisitsState } from '../../features/revisits';
+import { INIT_REVISIT } from '../../../src/features';
 
 /* Screens */
 import { Revisits } from '../../../src/screens/revisits';
@@ -16,7 +14,8 @@ import { useCourses, useRevisits, useStatus, useTheme } from '../../../src/hooks
 /* Theme */
 import { darkColors } from '../../../src/theme';
 
-const setSelectedRevisitMock = jest.fn();
+/* Mocks */
+import { coursesStateMock, revisitsStateMock, setSelectedRevisitMock } from '../../mocks';
 
 /* Mock hooks */
 jest.mock('../../../src/hooks/useCourses.ts');
@@ -26,12 +25,12 @@ jest.mock('../../../src/hooks/useTheme.ts');
 
 describe('Test in <Revisits /> screen', () => {
     (useCourses as jest.Mock).mockReturnValue({
-        state: coursesState,
+        state: coursesStateMock,
         saveCourse: jest.fn(),
     });
 
     (useRevisits as jest.Mock).mockReturnValue({
-        state: revisitsState,
+        state: revisitsStateMock,
         deleteRevisit: jest.fn(),
         loadRevisits: jest.fn(),
         removeRevisits: jest.fn(),
@@ -96,10 +95,11 @@ describe('Test in <Revisits /> screen', () => {
         /* Get touchable */
         const fabs = screen.getAllByTestId('fab-touchable');
         const addBtn = fabs[fabs.length - 1];
+        const iconName = addBtn.props.children[0].props.children[1].props.name
 
         /* Check if fab exists and contain respective icon */
         expect(addBtn).toBeTruthy();
-        expect(addBtn.props.children[0].props.name).toBe('add-circle-outline');
+        expect(iconName).toBe('add-circle-outline');
     });
 
     it('should call setSelectedRevisit when add button is pressed', () => {
@@ -114,7 +114,7 @@ describe('Test in <Revisits /> screen', () => {
         expect(setSelectedRevisitMock).toHaveBeenCalledTimes(1);
         expect(setSelectedRevisitMock).toHaveBeenCalledWith({
             ...INIT_REVISIT,
-            next_visit: expect.any(String)
+            nextVisit: expect.any(String)
         });
     });
 });

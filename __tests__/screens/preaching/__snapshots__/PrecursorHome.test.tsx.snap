@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Test in <Home /> screen should to match snapshot 1`] = `
+exports[`Test in <PrecursorHome /> screen should to match snapshot 1`] = `
 [
   <RCTScrollView
     contentContainerStyle={
@@ -108,6 +108,35 @@ exports[`Test in <Home /> screen should to match snapshot 1`] = `
               }
               testID="table-cell-text"
             >
+              N°
+            </Text>
+          </View>
+          <View
+            style={
+              [
+                {
+                  "backgroundColor": "#3C3547",
+                  "borderColor": "#000000",
+                  "borderWidth": 1,
+                  "height": 60,
+                  "justifyContent": "center",
+                },
+                {
+                  "width": 121,
+                },
+              ]
+            }
+          >
+            <Text
+              style={
+                {
+                  "color": "#FFFFFF",
+                  "fontSize": 16,
+                  "marginLeft": 10,
+                }
+              }
+              testID="table-cell-text"
+            >
               Día
             </Text>
           </View>
@@ -122,7 +151,7 @@ exports[`Test in <Home /> screen should to match snapshot 1`] = `
                   "justifyContent": "center",
                 },
                 {
-                  "width": 121,
+                  "width": 242,
                 },
               ]
             }
@@ -137,7 +166,7 @@ exports[`Test in <Home /> screen should to match snapshot 1`] = `
               }
               testID="table-cell-text"
             >
-              H/I
+              Hora de Inicio
             </Text>
           </View>
           <View
@@ -151,7 +180,7 @@ exports[`Test in <Home /> screen should to match snapshot 1`] = `
                   "justifyContent": "center",
                 },
                 {
-                  "width": 121,
+                  "width": 242,
                 },
               ]
             }
@@ -166,94 +195,7 @@ exports[`Test in <Home /> screen should to match snapshot 1`] = `
               }
               testID="table-cell-text"
             >
-              H/F
-            </Text>
-          </View>
-          <View
-            style={
-              [
-                {
-                  "backgroundColor": "#3C3547",
-                  "borderColor": "#000000",
-                  "borderWidth": 1,
-                  "height": 60,
-                  "justifyContent": "center",
-                },
-                {
-                  "width": 121,
-                },
-              ]
-            }
-          >
-            <Text
-              style={
-                {
-                  "color": "#FFFFFF",
-                  "fontSize": 16,
-                  "marginLeft": 10,
-                }
-              }
-              testID="table-cell-text"
-            >
-              Pub
-            </Text>
-          </View>
-          <View
-            style={
-              [
-                {
-                  "backgroundColor": "#3C3547",
-                  "borderColor": "#000000",
-                  "borderWidth": 1,
-                  "height": 60,
-                  "justifyContent": "center",
-                },
-                {
-                  "width": 121,
-                },
-              ]
-            }
-          >
-            <Text
-              style={
-                {
-                  "color": "#FFFFFF",
-                  "fontSize": 16,
-                  "marginLeft": 10,
-                }
-              }
-              testID="table-cell-text"
-            >
-              Vid
-            </Text>
-          </View>
-          <View
-            style={
-              [
-                {
-                  "backgroundColor": "#3C3547",
-                  "borderColor": "#000000",
-                  "borderWidth": 1,
-                  "height": 60,
-                  "justifyContent": "center",
-                },
-                {
-                  "width": 121,
-                },
-              ]
-            }
-          >
-            <Text
-              style={
-                {
-                  "color": "#FFFFFF",
-                  "fontSize": 16,
-                  "marginLeft": 10,
-                }
-              }
-              testID="table-cell-text"
-            >
-              Rev
+              Hora de Fin
             </Text>
           </View>
         </View>
@@ -313,7 +255,7 @@ exports[`Test in <Home /> screen should to match snapshot 1`] = `
                 }
                 testID="table-cell-text"
               >
-                12
+                1
               </Text>
             </View>
             <View
@@ -329,6 +271,36 @@ exports[`Test in <Home /> screen should to match snapshot 1`] = `
                   {
                     "backgroundColor": "#746C84",
                     "width": 121,
+                  },
+                ]
+              }
+            >
+              <Text
+                style={
+                  {
+                    "color": "#FFFFFF",
+                    "fontSize": 16,
+                    "marginLeft": 10,
+                  }
+                }
+                testID="table-cell-text"
+              >
+                12
+              </Text>
+            </View>
+            <View
+              style={
+                [
+                  {
+                    "backgroundColor": "#3C3547",
+                    "borderColor": "#000000",
+                    "borderWidth": 1,
+                    "height": 60,
+                    "justifyContent": "center",
+                  },
+                  {
+                    "backgroundColor": "#746C84",
+                    "width": 242,
                   },
                 ]
               }
@@ -358,7 +330,7 @@ exports[`Test in <Home /> screen should to match snapshot 1`] = `
                   },
                   {
                     "backgroundColor": "#746C84",
-                    "width": 121,
+                    "width": 242,
                   },
                 ]
               }
@@ -374,96 +346,6 @@ exports[`Test in <Home /> screen should to match snapshot 1`] = `
                 testID="table-cell-text"
               >
                 16:00
-              </Text>
-            </View>
-            <View
-              style={
-                [
-                  {
-                    "backgroundColor": "#3C3547",
-                    "borderColor": "#000000",
-                    "borderWidth": 1,
-                    "height": 60,
-                    "justifyContent": "center",
-                  },
-                  {
-                    "backgroundColor": "#746C84",
-                    "width": 121,
-                  },
-                ]
-              }
-            >
-              <Text
-                style={
-                  {
-                    "color": "#FFFFFF",
-                    "fontSize": 16,
-                    "marginLeft": 10,
-                  }
-                }
-                testID="table-cell-text"
-              >
-                4
-              </Text>
-            </View>
-            <View
-              style={
-                [
-                  {
-                    "backgroundColor": "#3C3547",
-                    "borderColor": "#000000",
-                    "borderWidth": 1,
-                    "height": 60,
-                    "justifyContent": "center",
-                  },
-                  {
-                    "backgroundColor": "#746C84",
-                    "width": 121,
-                  },
-                ]
-              }
-            >
-              <Text
-                style={
-                  {
-                    "color": "#FFFFFF",
-                    "fontSize": 16,
-                    "marginLeft": 10,
-                  }
-                }
-                testID="table-cell-text"
-              >
-                0
-              </Text>
-            </View>
-            <View
-              style={
-                [
-                  {
-                    "backgroundColor": "#3C3547",
-                    "borderColor": "#000000",
-                    "borderWidth": 1,
-                    "height": 60,
-                    "justifyContent": "center",
-                  },
-                  {
-                    "backgroundColor": "#746C84",
-                    "width": 121,
-                  },
-                ]
-              }
-            >
-              <Text
-                style={
-                  {
-                    "color": "#FFFFFF",
-                    "fontSize": 16,
-                    "marginLeft": 10,
-                  }
-                }
-                testID="table-cell-text"
-              >
-                2
               </Text>
             </View>
           </View>
@@ -524,7 +406,7 @@ exports[`Test in <Home /> screen should to match snapshot 1`] = `
                 }
                 testID="table-cell-text"
               >
-                12
+                2
               </Text>
             </View>
             <View
@@ -540,6 +422,36 @@ exports[`Test in <Home /> screen should to match snapshot 1`] = `
                   {
                     "backgroundColor": "#746C84",
                     "width": 121,
+                  },
+                ]
+              }
+            >
+              <Text
+                style={
+                  {
+                    "color": "#FFFFFF",
+                    "fontSize": 16,
+                    "marginLeft": 10,
+                  }
+                }
+                testID="table-cell-text"
+              >
+                12
+              </Text>
+            </View>
+            <View
+              style={
+                [
+                  {
+                    "backgroundColor": "#3C3547",
+                    "borderColor": "#000000",
+                    "borderWidth": 1,
+                    "height": 60,
+                    "justifyContent": "center",
+                  },
+                  {
+                    "backgroundColor": "#746C84",
+                    "width": 242,
                   },
                 ]
               }
@@ -569,7 +481,7 @@ exports[`Test in <Home /> screen should to match snapshot 1`] = `
                   },
                   {
                     "backgroundColor": "#746C84",
-                    "width": 121,
+                    "width": 242,
                   },
                 ]
               }
@@ -585,96 +497,6 @@ exports[`Test in <Home /> screen should to match snapshot 1`] = `
                 testID="table-cell-text"
               >
                 16:00
-              </Text>
-            </View>
-            <View
-              style={
-                [
-                  {
-                    "backgroundColor": "#3C3547",
-                    "borderColor": "#000000",
-                    "borderWidth": 1,
-                    "height": 60,
-                    "justifyContent": "center",
-                  },
-                  {
-                    "backgroundColor": "#746C84",
-                    "width": 121,
-                  },
-                ]
-              }
-            >
-              <Text
-                style={
-                  {
-                    "color": "#FFFFFF",
-                    "fontSize": 16,
-                    "marginLeft": 10,
-                  }
-                }
-                testID="table-cell-text"
-              >
-                4
-              </Text>
-            </View>
-            <View
-              style={
-                [
-                  {
-                    "backgroundColor": "#3C3547",
-                    "borderColor": "#000000",
-                    "borderWidth": 1,
-                    "height": 60,
-                    "justifyContent": "center",
-                  },
-                  {
-                    "backgroundColor": "#746C84",
-                    "width": 121,
-                  },
-                ]
-              }
-            >
-              <Text
-                style={
-                  {
-                    "color": "#FFFFFF",
-                    "fontSize": 16,
-                    "marginLeft": 10,
-                  }
-                }
-                testID="table-cell-text"
-              >
-                0
-              </Text>
-            </View>
-            <View
-              style={
-                [
-                  {
-                    "backgroundColor": "#3C3547",
-                    "borderColor": "#000000",
-                    "borderWidth": 1,
-                    "height": 60,
-                    "justifyContent": "center",
-                  },
-                  {
-                    "backgroundColor": "#746C84",
-                    "width": 121,
-                  },
-                ]
-              }
-            >
-              <Text
-                style={
-                  {
-                    "color": "#FFFFFF",
-                    "fontSize": 16,
-                    "marginLeft": 10,
-                  }
-                }
-                testID="table-cell-text"
-              >
-                2
               </Text>
             </View>
           </View>
@@ -735,7 +557,7 @@ exports[`Test in <Home /> screen should to match snapshot 1`] = `
                 }
                 testID="table-cell-text"
               >
-                12
+                3
               </Text>
             </View>
             <View
@@ -751,6 +573,36 @@ exports[`Test in <Home /> screen should to match snapshot 1`] = `
                   {
                     "backgroundColor": "#746C84",
                     "width": 121,
+                  },
+                ]
+              }
+            >
+              <Text
+                style={
+                  {
+                    "color": "#FFFFFF",
+                    "fontSize": 16,
+                    "marginLeft": 10,
+                  }
+                }
+                testID="table-cell-text"
+              >
+                12
+              </Text>
+            </View>
+            <View
+              style={
+                [
+                  {
+                    "backgroundColor": "#3C3547",
+                    "borderColor": "#000000",
+                    "borderWidth": 1,
+                    "height": 60,
+                    "justifyContent": "center",
+                  },
+                  {
+                    "backgroundColor": "#746C84",
+                    "width": 242,
                   },
                 ]
               }
@@ -780,7 +632,7 @@ exports[`Test in <Home /> screen should to match snapshot 1`] = `
                   },
                   {
                     "backgroundColor": "#746C84",
-                    "width": 121,
+                    "width": 242,
                   },
                 ]
               }
@@ -796,96 +648,6 @@ exports[`Test in <Home /> screen should to match snapshot 1`] = `
                 testID="table-cell-text"
               >
                 16:00
-              </Text>
-            </View>
-            <View
-              style={
-                [
-                  {
-                    "backgroundColor": "#3C3547",
-                    "borderColor": "#000000",
-                    "borderWidth": 1,
-                    "height": 60,
-                    "justifyContent": "center",
-                  },
-                  {
-                    "backgroundColor": "#746C84",
-                    "width": 121,
-                  },
-                ]
-              }
-            >
-              <Text
-                style={
-                  {
-                    "color": "#FFFFFF",
-                    "fontSize": 16,
-                    "marginLeft": 10,
-                  }
-                }
-                testID="table-cell-text"
-              >
-                4
-              </Text>
-            </View>
-            <View
-              style={
-                [
-                  {
-                    "backgroundColor": "#3C3547",
-                    "borderColor": "#000000",
-                    "borderWidth": 1,
-                    "height": 60,
-                    "justifyContent": "center",
-                  },
-                  {
-                    "backgroundColor": "#746C84",
-                    "width": 121,
-                  },
-                ]
-              }
-            >
-              <Text
-                style={
-                  {
-                    "color": "#FFFFFF",
-                    "fontSize": 16,
-                    "marginLeft": 10,
-                  }
-                }
-                testID="table-cell-text"
-              >
-                0
-              </Text>
-            </View>
-            <View
-              style={
-                [
-                  {
-                    "backgroundColor": "#3C3547",
-                    "borderColor": "#000000",
-                    "borderWidth": 1,
-                    "height": 60,
-                    "justifyContent": "center",
-                  },
-                  {
-                    "backgroundColor": "#746C84",
-                    "width": 121,
-                  },
-                ]
-              }
-            >
-              <Text
-                style={
-                  {
-                    "color": "#FFFFFF",
-                    "fontSize": 16,
-                    "marginLeft": 10,
-                  }
-                }
-                testID="table-cell-text"
-              >
-                2
               </Text>
             </View>
           </View>
@@ -946,96 +708,6 @@ exports[`Test in <Home /> screen should to match snapshot 1`] = `
                 }
                 testID="table-cell-text"
               >
-                12
-              </Text>
-            </View>
-            <View
-              style={
-                [
-                  {
-                    "backgroundColor": "#3C3547",
-                    "borderColor": "#000000",
-                    "borderWidth": 1,
-                    "height": 60,
-                    "justifyContent": "center",
-                  },
-                  {
-                    "backgroundColor": "#746C84",
-                    "width": 121,
-                  },
-                ]
-              }
-            >
-              <Text
-                style={
-                  {
-                    "color": "#FFFFFF",
-                    "fontSize": 16,
-                    "marginLeft": 10,
-                  }
-                }
-                testID="table-cell-text"
-              >
-                13:00
-              </Text>
-            </View>
-            <View
-              style={
-                [
-                  {
-                    "backgroundColor": "#3C3547",
-                    "borderColor": "#000000",
-                    "borderWidth": 1,
-                    "height": 60,
-                    "justifyContent": "center",
-                  },
-                  {
-                    "backgroundColor": "#746C84",
-                    "width": 121,
-                  },
-                ]
-              }
-            >
-              <Text
-                style={
-                  {
-                    "color": "#FFFFFF",
-                    "fontSize": 16,
-                    "marginLeft": 10,
-                  }
-                }
-                testID="table-cell-text"
-              >
-                16:00
-              </Text>
-            </View>
-            <View
-              style={
-                [
-                  {
-                    "backgroundColor": "#3C3547",
-                    "borderColor": "#000000",
-                    "borderWidth": 1,
-                    "height": 60,
-                    "justifyContent": "center",
-                  },
-                  {
-                    "backgroundColor": "#746C84",
-                    "width": 121,
-                  },
-                ]
-              }
-            >
-              <Text
-                style={
-                  {
-                    "color": "#FFFFFF",
-                    "fontSize": 16,
-                    "marginLeft": 10,
-                  }
-                }
-                testID="table-cell-text"
-              >
                 4
               </Text>
             </View>
@@ -1066,7 +738,7 @@ exports[`Test in <Home /> screen should to match snapshot 1`] = `
                 }
                 testID="table-cell-text"
               >
-                0
+                12
               </Text>
             </View>
             <View
@@ -1081,7 +753,7 @@ exports[`Test in <Home /> screen should to match snapshot 1`] = `
                   },
                   {
                     "backgroundColor": "#746C84",
-                    "width": 121,
+                    "width": 242,
                   },
                 ]
               }
@@ -1096,7 +768,37 @@ exports[`Test in <Home /> screen should to match snapshot 1`] = `
                 }
                 testID="table-cell-text"
               >
-                2
+                13:00
+              </Text>
+            </View>
+            <View
+              style={
+                [
+                  {
+                    "backgroundColor": "#3C3547",
+                    "borderColor": "#000000",
+                    "borderWidth": 1,
+                    "height": 60,
+                    "justifyContent": "center",
+                  },
+                  {
+                    "backgroundColor": "#746C84",
+                    "width": 242,
+                  },
+                ]
+              }
+            >
+              <Text
+                style={
+                  {
+                    "color": "#FFFFFF",
+                    "fontSize": 16,
+                    "marginLeft": 10,
+                  }
+                }
+                testID="table-cell-text"
+              >
+                16:00
               </Text>
             </View>
           </View>
@@ -1157,7 +859,7 @@ exports[`Test in <Home /> screen should to match snapshot 1`] = `
                 }
                 testID="table-cell-text"
               >
-                12
+                5
               </Text>
             </View>
             <View
@@ -1173,6 +875,36 @@ exports[`Test in <Home /> screen should to match snapshot 1`] = `
                   {
                     "backgroundColor": "#746C84",
                     "width": 121,
+                  },
+                ]
+              }
+            >
+              <Text
+                style={
+                  {
+                    "color": "#FFFFFF",
+                    "fontSize": 16,
+                    "marginLeft": 10,
+                  }
+                }
+                testID="table-cell-text"
+              >
+                12
+              </Text>
+            </View>
+            <View
+              style={
+                [
+                  {
+                    "backgroundColor": "#3C3547",
+                    "borderColor": "#000000",
+                    "borderWidth": 1,
+                    "height": 60,
+                    "justifyContent": "center",
+                  },
+                  {
+                    "backgroundColor": "#746C84",
+                    "width": 242,
                   },
                 ]
               }
@@ -1202,7 +934,7 @@ exports[`Test in <Home /> screen should to match snapshot 1`] = `
                   },
                   {
                     "backgroundColor": "#746C84",
-                    "width": 121,
+                    "width": 242,
                   },
                 ]
               }
@@ -1218,96 +950,6 @@ exports[`Test in <Home /> screen should to match snapshot 1`] = `
                 testID="table-cell-text"
               >
                 16:00
-              </Text>
-            </View>
-            <View
-              style={
-                [
-                  {
-                    "backgroundColor": "#3C3547",
-                    "borderColor": "#000000",
-                    "borderWidth": 1,
-                    "height": 60,
-                    "justifyContent": "center",
-                  },
-                  {
-                    "backgroundColor": "#746C84",
-                    "width": 121,
-                  },
-                ]
-              }
-            >
-              <Text
-                style={
-                  {
-                    "color": "#FFFFFF",
-                    "fontSize": 16,
-                    "marginLeft": 10,
-                  }
-                }
-                testID="table-cell-text"
-              >
-                4
-              </Text>
-            </View>
-            <View
-              style={
-                [
-                  {
-                    "backgroundColor": "#3C3547",
-                    "borderColor": "#000000",
-                    "borderWidth": 1,
-                    "height": 60,
-                    "justifyContent": "center",
-                  },
-                  {
-                    "backgroundColor": "#746C84",
-                    "width": 121,
-                  },
-                ]
-              }
-            >
-              <Text
-                style={
-                  {
-                    "color": "#FFFFFF",
-                    "fontSize": 16,
-                    "marginLeft": 10,
-                  }
-                }
-                testID="table-cell-text"
-              >
-                0
-              </Text>
-            </View>
-            <View
-              style={
-                [
-                  {
-                    "backgroundColor": "#3C3547",
-                    "borderColor": "#000000",
-                    "borderWidth": 1,
-                    "height": 60,
-                    "justifyContent": "center",
-                  },
-                  {
-                    "backgroundColor": "#746C84",
-                    "width": 121,
-                  },
-                ]
-              }
-            >
-              <Text
-                style={
-                  {
-                    "color": "#FFFFFF",
-                    "fontSize": 16,
-                    "marginLeft": 10,
-                  }
-                }
-                testID="table-cell-text"
-              >
-                2
               </Text>
             </View>
           </View>
@@ -1368,7 +1010,7 @@ exports[`Test in <Home /> screen should to match snapshot 1`] = `
                 }
                 testID="table-cell-text"
               >
-                12
+                6
               </Text>
             </View>
             <View
@@ -1384,6 +1026,36 @@ exports[`Test in <Home /> screen should to match snapshot 1`] = `
                   {
                     "backgroundColor": "#746C84",
                     "width": 121,
+                  },
+                ]
+              }
+            >
+              <Text
+                style={
+                  {
+                    "color": "#FFFFFF",
+                    "fontSize": 16,
+                    "marginLeft": 10,
+                  }
+                }
+                testID="table-cell-text"
+              >
+                12
+              </Text>
+            </View>
+            <View
+              style={
+                [
+                  {
+                    "backgroundColor": "#3C3547",
+                    "borderColor": "#000000",
+                    "borderWidth": 1,
+                    "height": 60,
+                    "justifyContent": "center",
+                  },
+                  {
+                    "backgroundColor": "#746C84",
+                    "width": 242,
                   },
                 ]
               }
@@ -1413,7 +1085,7 @@ exports[`Test in <Home /> screen should to match snapshot 1`] = `
                   },
                   {
                     "backgroundColor": "#746C84",
-                    "width": 121,
+                    "width": 242,
                   },
                 ]
               }
@@ -1429,96 +1101,6 @@ exports[`Test in <Home /> screen should to match snapshot 1`] = `
                 testID="table-cell-text"
               >
                 16:00
-              </Text>
-            </View>
-            <View
-              style={
-                [
-                  {
-                    "backgroundColor": "#3C3547",
-                    "borderColor": "#000000",
-                    "borderWidth": 1,
-                    "height": 60,
-                    "justifyContent": "center",
-                  },
-                  {
-                    "backgroundColor": "#746C84",
-                    "width": 121,
-                  },
-                ]
-              }
-            >
-              <Text
-                style={
-                  {
-                    "color": "#FFFFFF",
-                    "fontSize": 16,
-                    "marginLeft": 10,
-                  }
-                }
-                testID="table-cell-text"
-              >
-                4
-              </Text>
-            </View>
-            <View
-              style={
-                [
-                  {
-                    "backgroundColor": "#3C3547",
-                    "borderColor": "#000000",
-                    "borderWidth": 1,
-                    "height": 60,
-                    "justifyContent": "center",
-                  },
-                  {
-                    "backgroundColor": "#746C84",
-                    "width": 121,
-                  },
-                ]
-              }
-            >
-              <Text
-                style={
-                  {
-                    "color": "#FFFFFF",
-                    "fontSize": 16,
-                    "marginLeft": 10,
-                  }
-                }
-                testID="table-cell-text"
-              >
-                0
-              </Text>
-            </View>
-            <View
-              style={
-                [
-                  {
-                    "backgroundColor": "#3C3547",
-                    "borderColor": "#000000",
-                    "borderWidth": 1,
-                    "height": 60,
-                    "justifyContent": "center",
-                  },
-                  {
-                    "backgroundColor": "#746C84",
-                    "width": 121,
-                  },
-                ]
-              }
-            >
-              <Text
-                style={
-                  {
-                    "color": "#FFFFFF",
-                    "fontSize": 16,
-                    "marginLeft": 10,
-                  }
-                }
-                testID="table-cell-text"
-              >
-                2
               </Text>
             </View>
           </View>
@@ -1579,7 +1161,7 @@ exports[`Test in <Home /> screen should to match snapshot 1`] = `
                 }
                 testID="table-cell-text"
               >
-                12
+                7
               </Text>
             </View>
             <View
@@ -1595,6 +1177,36 @@ exports[`Test in <Home /> screen should to match snapshot 1`] = `
                   {
                     "backgroundColor": "#746C84",
                     "width": 121,
+                  },
+                ]
+              }
+            >
+              <Text
+                style={
+                  {
+                    "color": "#FFFFFF",
+                    "fontSize": 16,
+                    "marginLeft": 10,
+                  }
+                }
+                testID="table-cell-text"
+              >
+                12
+              </Text>
+            </View>
+            <View
+              style={
+                [
+                  {
+                    "backgroundColor": "#3C3547",
+                    "borderColor": "#000000",
+                    "borderWidth": 1,
+                    "height": 60,
+                    "justifyContent": "center",
+                  },
+                  {
+                    "backgroundColor": "#746C84",
+                    "width": 242,
                   },
                 ]
               }
@@ -1624,7 +1236,7 @@ exports[`Test in <Home /> screen should to match snapshot 1`] = `
                   },
                   {
                     "backgroundColor": "#746C84",
-                    "width": 121,
+                    "width": 242,
                   },
                 ]
               }
@@ -1640,96 +1252,6 @@ exports[`Test in <Home /> screen should to match snapshot 1`] = `
                 testID="table-cell-text"
               >
                 16:00
-              </Text>
-            </View>
-            <View
-              style={
-                [
-                  {
-                    "backgroundColor": "#3C3547",
-                    "borderColor": "#000000",
-                    "borderWidth": 1,
-                    "height": 60,
-                    "justifyContent": "center",
-                  },
-                  {
-                    "backgroundColor": "#746C84",
-                    "width": 121,
-                  },
-                ]
-              }
-            >
-              <Text
-                style={
-                  {
-                    "color": "#FFFFFF",
-                    "fontSize": 16,
-                    "marginLeft": 10,
-                  }
-                }
-                testID="table-cell-text"
-              >
-                4
-              </Text>
-            </View>
-            <View
-              style={
-                [
-                  {
-                    "backgroundColor": "#3C3547",
-                    "borderColor": "#000000",
-                    "borderWidth": 1,
-                    "height": 60,
-                    "justifyContent": "center",
-                  },
-                  {
-                    "backgroundColor": "#746C84",
-                    "width": 121,
-                  },
-                ]
-              }
-            >
-              <Text
-                style={
-                  {
-                    "color": "#FFFFFF",
-                    "fontSize": 16,
-                    "marginLeft": 10,
-                  }
-                }
-                testID="table-cell-text"
-              >
-                0
-              </Text>
-            </View>
-            <View
-              style={
-                [
-                  {
-                    "backgroundColor": "#3C3547",
-                    "borderColor": "#000000",
-                    "borderWidth": 1,
-                    "height": 60,
-                    "justifyContent": "center",
-                  },
-                  {
-                    "backgroundColor": "#746C84",
-                    "width": 121,
-                  },
-                ]
-              }
-            >
-              <Text
-                style={
-                  {
-                    "color": "#FFFFFF",
-                    "fontSize": 16,
-                    "marginLeft": 10,
-                  }
-                }
-                testID="table-cell-text"
-              >
-                2
               </Text>
             </View>
           </View>
@@ -1790,7 +1312,7 @@ exports[`Test in <Home /> screen should to match snapshot 1`] = `
                 }
                 testID="table-cell-text"
               >
-                12
+                8
               </Text>
             </View>
             <View
@@ -1806,6 +1328,36 @@ exports[`Test in <Home /> screen should to match snapshot 1`] = `
                   {
                     "backgroundColor": "#746C84",
                     "width": 121,
+                  },
+                ]
+              }
+            >
+              <Text
+                style={
+                  {
+                    "color": "#FFFFFF",
+                    "fontSize": 16,
+                    "marginLeft": 10,
+                  }
+                }
+                testID="table-cell-text"
+              >
+                12
+              </Text>
+            </View>
+            <View
+              style={
+                [
+                  {
+                    "backgroundColor": "#3C3547",
+                    "borderColor": "#000000",
+                    "borderWidth": 1,
+                    "height": 60,
+                    "justifyContent": "center",
+                  },
+                  {
+                    "backgroundColor": "#746C84",
+                    "width": 242,
                   },
                 ]
               }
@@ -1835,7 +1387,7 @@ exports[`Test in <Home /> screen should to match snapshot 1`] = `
                   },
                   {
                     "backgroundColor": "#746C84",
-                    "width": 121,
+                    "width": 242,
                   },
                 ]
               }
@@ -1851,96 +1403,6 @@ exports[`Test in <Home /> screen should to match snapshot 1`] = `
                 testID="table-cell-text"
               >
                 16:00
-              </Text>
-            </View>
-            <View
-              style={
-                [
-                  {
-                    "backgroundColor": "#3C3547",
-                    "borderColor": "#000000",
-                    "borderWidth": 1,
-                    "height": 60,
-                    "justifyContent": "center",
-                  },
-                  {
-                    "backgroundColor": "#746C84",
-                    "width": 121,
-                  },
-                ]
-              }
-            >
-              <Text
-                style={
-                  {
-                    "color": "#FFFFFF",
-                    "fontSize": 16,
-                    "marginLeft": 10,
-                  }
-                }
-                testID="table-cell-text"
-              >
-                4
-              </Text>
-            </View>
-            <View
-              style={
-                [
-                  {
-                    "backgroundColor": "#3C3547",
-                    "borderColor": "#000000",
-                    "borderWidth": 1,
-                    "height": 60,
-                    "justifyContent": "center",
-                  },
-                  {
-                    "backgroundColor": "#746C84",
-                    "width": 121,
-                  },
-                ]
-              }
-            >
-              <Text
-                style={
-                  {
-                    "color": "#FFFFFF",
-                    "fontSize": 16,
-                    "marginLeft": 10,
-                  }
-                }
-                testID="table-cell-text"
-              >
-                0
-              </Text>
-            </View>
-            <View
-              style={
-                [
-                  {
-                    "backgroundColor": "#3C3547",
-                    "borderColor": "#000000",
-                    "borderWidth": 1,
-                    "height": 60,
-                    "justifyContent": "center",
-                  },
-                  {
-                    "backgroundColor": "#746C84",
-                    "width": 121,
-                  },
-                ]
-              }
-            >
-              <Text
-                style={
-                  {
-                    "color": "#FFFFFF",
-                    "fontSize": 16,
-                    "marginLeft": 10,
-                  }
-                }
-                testID="table-cell-text"
-              >
-                2
               </Text>
             </View>
           </View>
@@ -2001,7 +1463,7 @@ exports[`Test in <Home /> screen should to match snapshot 1`] = `
                 }
                 testID="table-cell-text"
               >
-                12
+                9
               </Text>
             </View>
             <View
@@ -2017,6 +1479,36 @@ exports[`Test in <Home /> screen should to match snapshot 1`] = `
                   {
                     "backgroundColor": "#746C84",
                     "width": 121,
+                  },
+                ]
+              }
+            >
+              <Text
+                style={
+                  {
+                    "color": "#FFFFFF",
+                    "fontSize": 16,
+                    "marginLeft": 10,
+                  }
+                }
+                testID="table-cell-text"
+              >
+                12
+              </Text>
+            </View>
+            <View
+              style={
+                [
+                  {
+                    "backgroundColor": "#3C3547",
+                    "borderColor": "#000000",
+                    "borderWidth": 1,
+                    "height": 60,
+                    "justifyContent": "center",
+                  },
+                  {
+                    "backgroundColor": "#746C84",
+                    "width": 242,
                   },
                 ]
               }
@@ -2046,7 +1538,7 @@ exports[`Test in <Home /> screen should to match snapshot 1`] = `
                   },
                   {
                     "backgroundColor": "#746C84",
-                    "width": 121,
+                    "width": 242,
                   },
                 ]
               }
@@ -2062,96 +1554,6 @@ exports[`Test in <Home /> screen should to match snapshot 1`] = `
                 testID="table-cell-text"
               >
                 16:00
-              </Text>
-            </View>
-            <View
-              style={
-                [
-                  {
-                    "backgroundColor": "#3C3547",
-                    "borderColor": "#000000",
-                    "borderWidth": 1,
-                    "height": 60,
-                    "justifyContent": "center",
-                  },
-                  {
-                    "backgroundColor": "#746C84",
-                    "width": 121,
-                  },
-                ]
-              }
-            >
-              <Text
-                style={
-                  {
-                    "color": "#FFFFFF",
-                    "fontSize": 16,
-                    "marginLeft": 10,
-                  }
-                }
-                testID="table-cell-text"
-              >
-                4
-              </Text>
-            </View>
-            <View
-              style={
-                [
-                  {
-                    "backgroundColor": "#3C3547",
-                    "borderColor": "#000000",
-                    "borderWidth": 1,
-                    "height": 60,
-                    "justifyContent": "center",
-                  },
-                  {
-                    "backgroundColor": "#746C84",
-                    "width": 121,
-                  },
-                ]
-              }
-            >
-              <Text
-                style={
-                  {
-                    "color": "#FFFFFF",
-                    "fontSize": 16,
-                    "marginLeft": 10,
-                  }
-                }
-                testID="table-cell-text"
-              >
-                0
-              </Text>
-            </View>
-            <View
-              style={
-                [
-                  {
-                    "backgroundColor": "#3C3547",
-                    "borderColor": "#000000",
-                    "borderWidth": 1,
-                    "height": 60,
-                    "justifyContent": "center",
-                  },
-                  {
-                    "backgroundColor": "#746C84",
-                    "width": 121,
-                  },
-                ]
-              }
-            >
-              <Text
-                style={
-                  {
-                    "color": "#FFFFFF",
-                    "fontSize": 16,
-                    "marginLeft": 10,
-                  }
-                }
-                testID="table-cell-text"
-              >
-                2
               </Text>
             </View>
           </View>
@@ -2212,7 +1614,7 @@ exports[`Test in <Home /> screen should to match snapshot 1`] = `
                 }
                 testID="table-cell-text"
               >
-                12
+                10
               </Text>
             </View>
             <View
@@ -2228,6 +1630,36 @@ exports[`Test in <Home /> screen should to match snapshot 1`] = `
                   {
                     "backgroundColor": "#746C84",
                     "width": 121,
+                  },
+                ]
+              }
+            >
+              <Text
+                style={
+                  {
+                    "color": "#FFFFFF",
+                    "fontSize": 16,
+                    "marginLeft": 10,
+                  }
+                }
+                testID="table-cell-text"
+              >
+                12
+              </Text>
+            </View>
+            <View
+              style={
+                [
+                  {
+                    "backgroundColor": "#3C3547",
+                    "borderColor": "#000000",
+                    "borderWidth": 1,
+                    "height": 60,
+                    "justifyContent": "center",
+                  },
+                  {
+                    "backgroundColor": "#746C84",
+                    "width": 242,
                   },
                 ]
               }
@@ -2257,7 +1689,7 @@ exports[`Test in <Home /> screen should to match snapshot 1`] = `
                   },
                   {
                     "backgroundColor": "#746C84",
-                    "width": 121,
+                    "width": 242,
                   },
                 ]
               }
@@ -2273,96 +1705,6 @@ exports[`Test in <Home /> screen should to match snapshot 1`] = `
                 testID="table-cell-text"
               >
                 16:00
-              </Text>
-            </View>
-            <View
-              style={
-                [
-                  {
-                    "backgroundColor": "#3C3547",
-                    "borderColor": "#000000",
-                    "borderWidth": 1,
-                    "height": 60,
-                    "justifyContent": "center",
-                  },
-                  {
-                    "backgroundColor": "#746C84",
-                    "width": 121,
-                  },
-                ]
-              }
-            >
-              <Text
-                style={
-                  {
-                    "color": "#FFFFFF",
-                    "fontSize": 16,
-                    "marginLeft": 10,
-                  }
-                }
-                testID="table-cell-text"
-              >
-                4
-              </Text>
-            </View>
-            <View
-              style={
-                [
-                  {
-                    "backgroundColor": "#3C3547",
-                    "borderColor": "#000000",
-                    "borderWidth": 1,
-                    "height": 60,
-                    "justifyContent": "center",
-                  },
-                  {
-                    "backgroundColor": "#746C84",
-                    "width": 121,
-                  },
-                ]
-              }
-            >
-              <Text
-                style={
-                  {
-                    "color": "#FFFFFF",
-                    "fontSize": 16,
-                    "marginLeft": 10,
-                  }
-                }
-                testID="table-cell-text"
-              >
-                0
-              </Text>
-            </View>
-            <View
-              style={
-                [
-                  {
-                    "backgroundColor": "#3C3547",
-                    "borderColor": "#000000",
-                    "borderWidth": 1,
-                    "height": 60,
-                    "justifyContent": "center",
-                  },
-                  {
-                    "backgroundColor": "#746C84",
-                    "width": 121,
-                  },
-                ]
-              }
-            >
-              <Text
-                style={
-                  {
-                    "color": "#FFFFFF",
-                    "fontSize": 16,
-                    "marginLeft": 10,
-                  }
-                }
-                testID="table-cell-text"
-              >
-                2
               </Text>
             </View>
           </View>
@@ -2423,7 +1765,7 @@ exports[`Test in <Home /> screen should to match snapshot 1`] = `
                 }
                 testID="table-cell-text"
               >
-                12
+                11
               </Text>
             </View>
             <View
@@ -2439,6 +1781,36 @@ exports[`Test in <Home /> screen should to match snapshot 1`] = `
                   {
                     "backgroundColor": "#746C84",
                     "width": 121,
+                  },
+                ]
+              }
+            >
+              <Text
+                style={
+                  {
+                    "color": "#FFFFFF",
+                    "fontSize": 16,
+                    "marginLeft": 10,
+                  }
+                }
+                testID="table-cell-text"
+              >
+                12
+              </Text>
+            </View>
+            <View
+              style={
+                [
+                  {
+                    "backgroundColor": "#3C3547",
+                    "borderColor": "#000000",
+                    "borderWidth": 1,
+                    "height": 60,
+                    "justifyContent": "center",
+                  },
+                  {
+                    "backgroundColor": "#746C84",
+                    "width": 242,
                   },
                 ]
               }
@@ -2468,7 +1840,7 @@ exports[`Test in <Home /> screen should to match snapshot 1`] = `
                   },
                   {
                     "backgroundColor": "#746C84",
-                    "width": 121,
+                    "width": 242,
                   },
                 ]
               }
@@ -2484,96 +1856,6 @@ exports[`Test in <Home /> screen should to match snapshot 1`] = `
                 testID="table-cell-text"
               >
                 16:00
-              </Text>
-            </View>
-            <View
-              style={
-                [
-                  {
-                    "backgroundColor": "#3C3547",
-                    "borderColor": "#000000",
-                    "borderWidth": 1,
-                    "height": 60,
-                    "justifyContent": "center",
-                  },
-                  {
-                    "backgroundColor": "#746C84",
-                    "width": 121,
-                  },
-                ]
-              }
-            >
-              <Text
-                style={
-                  {
-                    "color": "#FFFFFF",
-                    "fontSize": 16,
-                    "marginLeft": 10,
-                  }
-                }
-                testID="table-cell-text"
-              >
-                4
-              </Text>
-            </View>
-            <View
-              style={
-                [
-                  {
-                    "backgroundColor": "#3C3547",
-                    "borderColor": "#000000",
-                    "borderWidth": 1,
-                    "height": 60,
-                    "justifyContent": "center",
-                  },
-                  {
-                    "backgroundColor": "#746C84",
-                    "width": 121,
-                  },
-                ]
-              }
-            >
-              <Text
-                style={
-                  {
-                    "color": "#FFFFFF",
-                    "fontSize": 16,
-                    "marginLeft": 10,
-                  }
-                }
-                testID="table-cell-text"
-              >
-                0
-              </Text>
-            </View>
-            <View
-              style={
-                [
-                  {
-                    "backgroundColor": "#3C3547",
-                    "borderColor": "#000000",
-                    "borderWidth": 1,
-                    "height": 60,
-                    "justifyContent": "center",
-                  },
-                  {
-                    "backgroundColor": "#746C84",
-                    "width": 121,
-                  },
-                ]
-              }
-            >
-              <Text
-                style={
-                  {
-                    "color": "#FFFFFF",
-                    "fontSize": 16,
-                    "marginLeft": 10,
-                  }
-                }
-                testID="table-cell-text"
-              >
-                2
               </Text>
             </View>
           </View>
@@ -2599,7 +1881,7 @@ exports[`Test in <Home /> screen should to match snapshot 1`] = `
                 },
                 {
                   "backgroundColor": "#544C63",
-                  "width": 121,
+                  "width": 242,
                 },
               ]
             }
@@ -2629,7 +1911,7 @@ exports[`Test in <Home /> screen should to match snapshot 1`] = `
                 },
                 {
                   "backgroundColor": "#544C63",
-                  "width": 242,
+                  "width": 484,
                 },
               ]
             }
@@ -2645,96 +1927,6 @@ exports[`Test in <Home /> screen should to match snapshot 1`] = `
               testID="table-cell-text"
             >
               33H
-            </Text>
-          </View>
-          <View
-            style={
-              [
-                {
-                  "backgroundColor": "#3C3547",
-                  "borderColor": "#000000",
-                  "borderWidth": 1,
-                  "height": 60,
-                  "justifyContent": "center",
-                },
-                {
-                  "backgroundColor": "#544C63",
-                  "width": 121,
-                },
-              ]
-            }
-          >
-            <Text
-              style={
-                {
-                  "color": "#FFFFFF",
-                  "fontSize": 16,
-                  "marginLeft": 10,
-                }
-              }
-              testID="table-cell-text"
-            >
-              44
-            </Text>
-          </View>
-          <View
-            style={
-              [
-                {
-                  "backgroundColor": "#3C3547",
-                  "borderColor": "#000000",
-                  "borderWidth": 1,
-                  "height": 60,
-                  "justifyContent": "center",
-                },
-                {
-                  "backgroundColor": "#544C63",
-                  "width": 121,
-                },
-              ]
-            }
-          >
-            <Text
-              style={
-                {
-                  "color": "#FFFFFF",
-                  "fontSize": 16,
-                  "marginLeft": 10,
-                }
-              }
-              testID="table-cell-text"
-            >
-              0
-            </Text>
-          </View>
-          <View
-            style={
-              [
-                {
-                  "backgroundColor": "#3C3547",
-                  "borderColor": "#000000",
-                  "borderWidth": 1,
-                  "height": 60,
-                  "justifyContent": "center",
-                },
-                {
-                  "backgroundColor": "#544C63",
-                  "width": 121,
-                },
-              ]
-            }
-          >
-            <Text
-              style={
-                {
-                  "color": "#FFFFFF",
-                  "fontSize": 16,
-                  "marginLeft": 10,
-                }
-              }
-              testID="table-cell-text"
-            >
-              22
             </Text>
           </View>
         </View>
@@ -2776,16 +1968,15 @@ exports[`Test in <Home /> screen should to match snapshot 1`] = `
         {
           "overflow": "hidden",
         },
-        false,
         [
           {
             "alignItems": "center",
             "backgroundColor": "#C0A7E1",
             "borderRadius": 50,
-            "height": 42,
+            "height": 48,
             "justifyContent": "center",
             "margin": 5,
-            "width": 42,
+            "width": 48,
           },
           {
             "bottom": 75,
@@ -2808,7 +1999,9 @@ exports[`Test in <Home /> screen should to match snapshot 1`] = `
             "color": "#121212",
             "fontSize": 40,
           },
-          undefined,
+          {
+            "marginBottom": 1,
+          },
           {
             "fontFamily": "Ionicons",
             "fontStyle": "normal",
@@ -2818,7 +2011,7 @@ exports[`Test in <Home /> screen should to match snapshot 1`] = `
         ]
       }
     >
-      
+      
     </Text>
   </View>,
   <View
@@ -2856,16 +2049,15 @@ exports[`Test in <Home /> screen should to match snapshot 1`] = `
         {
           "overflow": "hidden",
         },
-        false,
         [
           {
             "alignItems": "center",
             "backgroundColor": "#C0A7E1",
             "borderRadius": 50,
-            "height": 42,
+            "height": 48,
             "justifyContent": "center",
             "margin": 5,
-            "width": 42,
+            "width": 48,
           },
           {
             "bottom": 5,
@@ -2889,7 +2081,7 @@ exports[`Test in <Home /> screen should to match snapshot 1`] = `
             "fontSize": 40,
           },
           {
-            "marginLeft": 3,
+            "marginLeft": 1.5,
           },
           {
             "fontFamily": "Ionicons",
@@ -2900,7 +2092,7 @@ exports[`Test in <Home /> screen should to match snapshot 1`] = `
         ]
       }
     >
-      
+      
     </Text>
   </View>,
   <Modal

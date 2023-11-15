@@ -5,18 +5,17 @@ import { act, fireEvent, render, screen, waitFor } from '@testing-library/react-
 import { ProfileForm } from '../../../src/components/auth';
 
 /* Hooks */
-import { useAuth, useStatus, useTheme } from '../../../src/hooks';
+import { useAuth, useNetwork, useStatus, useTheme } from '../../../src/hooks';
 
 /* Theme */
 import { darkColors } from '../../../src/theme';
 
 /* Mocks */
-import { testUser, updateProfileMock } from '../../mocks';
-
-const setErrorFormMock = jest.fn();
+import { setErrorFormMock, testUser, updateProfileMock, wifiMock } from '../../mocks';
 
 /* Hooks */
 jest.mock('../../../src/hooks/useAuth.ts');
+jest.mock('../../../src/hooks/useNetwork.ts');
 jest.mock('../../../src/hooks/useStatus.ts');
 jest.mock('../../../src/hooks/useTheme.ts');
 
@@ -28,6 +27,10 @@ describe('Test in <ProfileForm /> component', () => {
     (useAuth as jest.Mock).mockReturnValue({
         state: { user: testUser, isAuthLoading: false },
         updateProfile: updateProfileMock
+    });
+
+    (useNetwork as jest.Mock).mockReturnValue({
+        wifi: wifiMock
     });
 
     (useStatus as jest.Mock).mockReturnValue({

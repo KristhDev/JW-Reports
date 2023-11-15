@@ -5,17 +5,17 @@ import hexToRgba from 'hex-to-rgba';
 /* Screens */
 import { FinishOrStartCourseModal } from '../../../src/screens/courses';
 
-/* Features */
-import { courseSelectedState } from '../../features/courses';
-
 /* Hooks */
 import { useCourses, useTheme } from '../../../src/hooks';
 
 /* Theme */
 import { darkColors } from '../../../src/theme';
 
-const onCloseMock = jest.fn();
-const finishOrStartCourseMock = jest.fn();
+/* Setup */
+import { onCloseMock } from '../../../jest.setup';
+
+/* Mocks */
+import { courseSelectedStateMock, finishOrStartCourseMock } from '../../mocks';
 
 /* Mock hooks */
 jest.mock('../../../src/hooks/useCourses.ts');
@@ -23,7 +23,7 @@ jest.mock('../../../src/hooks/useTheme.ts');
 
 describe('Test in <FinishOrStartCourseModal /> screen', () => {
     (useCourses as jest.Mock).mockReturnValue({
-        state: courseSelectedState,
+        state: courseSelectedStateMock,
         finishOrStartCourse: finishOrStartCourseMock
     });
 
@@ -55,7 +55,7 @@ describe('Test in <FinishOrStartCourseModal /> screen', () => {
         expect(msg).toBeTruthy();
         expect(msg.props.children).toBe('¿Está seguro de terminar este curso?');
         expect(touchable).toBeTruthy();
-        expect(touchable.props.children[0].props.children[0].props.children).toBe('TERMINAR');
+        expect(touchable.props.children[0].props.children[1].props.children[0].props.children).toBe('TERMINAR');
     });
 
     it('should call activeOrSuspendCourse when confirm button is pressed', () => {
@@ -82,7 +82,7 @@ describe('Test in <FinishOrStartCourseModal /> screen', () => {
     it('should render loader when isCourseLoading is true', () => {
         (useCourses as jest.Mock).mockReturnValue({
             state: {
-                ...courseSelectedState,
+                ...courseSelectedStateMock,
                 isCourseLoading: true
             },
             finishOrStartCourse: finishOrStartCourseMock

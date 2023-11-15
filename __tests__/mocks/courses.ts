@@ -13,6 +13,7 @@ export const removeLessonsMock = jest.fn();
 export const saveCourseMock = jest.fn();
 export const saveLessonMock = jest.fn();
 export const setCoursesPaginationMock = jest.fn();
+export const setCoursesScreenHistoryMock = jest.fn();
 export const setLessonsPaginationMock = jest.fn();
 export const setRefreshCoursesMock = jest.fn();
 export const setSelectedCourseMock = jest.fn();

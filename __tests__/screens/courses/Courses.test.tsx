@@ -3,8 +3,7 @@ import { fireEvent, render, screen } from '@testing-library/react-native';
 import { MenuProvider } from 'react-native-popup-menu';
 
 /* Features */
-import { INIT_COURSE } from '../../../src/features/courses';
-import { coursesState } from '../../features/courses';
+import { INIT_COURSE } from '../../../src/features';
 
 /* Screens */
 import { Courses } from '../../../src/screens/courses';
@@ -15,8 +14,8 @@ import { useCourses, useTheme } from '../../../src/hooks';
 /* Theme */
 import { darkColors } from '../../../src/theme';
 
-const setCoursesScreenHistoryMock = jest.fn();
-const setSelectedCourseMock = jest.fn();
+/* Mocks */
+import { coursesStateMock, setCoursesScreenHistoryMock, setSelectedCourseMock } from '../../mocks';
 
 /* Mock hooks */
 jest.mock('../../../src/hooks/useCourses.ts');
@@ -24,7 +23,7 @@ jest.mock('../../../src/hooks/useTheme.ts');
 
 describe('Test in <Courses /> screen', () => {
     (useCourses as jest.Mock).mockReturnValue({
-        state: coursesState,
+        state: coursesStateMock,
         activeOrSuspendCourse: jest.fn(),
         deleteCourse: jest.fn(),
         finishOrStartCourse: jest.fn(),
@@ -89,10 +88,11 @@ describe('Test in <Courses /> screen', () => {
         /* Get touchable */
         const fabs = screen.getAllByTestId('fab-touchable');
         const addBtn = fabs[fabs.length - 1];
+        const iconName = addBtn.props.children[0].props.children[1].props.name;
 
         /* Check if button is rendered */
         expect(addBtn).toBeTruthy();
-        expect(addBtn.props.children[0].props.name).toBe('add-circle-outline');
+        expect(iconName).toBe('add-circle-outline');
     });
 
     it('should call setSelectedCourse when add button is pressed', () => {

@@ -3,33 +3,38 @@ import { fireEvent, render, screen } from '@testing-library/react-native';
 import { MenuProvider } from 'react-native-popup-menu';
 
 /* Features */
-import { INIT_LESSON } from '../../../src/features/courses';
-import { lessonsState } from '../../features/courses';
+import { INIT_LESSON } from '../../../src/features';
 
 /* Screens */
 import { Lessons } from '../../../src/screens/courses';
 
 /* Hooks */
-import { useCourses, useTheme } from '../../../src/hooks';
+import { useCourses, useNetwork, useTheme } from '../../../src/hooks';
 
 /* Theme */
 import { darkColors } from '../../../src/theme';
 
-const setSelectedLessonMock = jest.fn();
+/* Mocks */
+import { lessonsStateMock, setSelectedLessonMock, wifiMock } from '../../mocks';
 
 /* Mock hooks */
 jest.mock('../../../src/hooks/useCourses.ts');
+jest.mock('../../../src/hooks/useNetwork.ts');
 jest.mock('../../../src/hooks/useTheme.ts');
 
 describe('Test in <Lessons /> screen', () => {
     (useCourses as jest.Mock).mockReturnValue({
-        state: lessonsState,
+        state: lessonsStateMock,
         deleteLesson: jest.fn(),
         loadLessons: jest.fn(),
         removeLessons: jest.fn(),
         setLessonsPagination: jest.fn(),
         setSelectedLesson: setSelectedLessonMock,
         finishOrStartLesson: jest.fn(),
+    });
+
+    (useNetwork as jest.Mock).mockReturnValue({
+        wifi: wifiMock
     });
 
     (useTheme as jest.Mock).mockReturnValue({
@@ -63,7 +68,7 @@ describe('Test in <Lessons /> screen', () => {
         expect(setSelectedLessonMock).toHaveBeenCalledTimes(1);
         expect(setSelectedLessonMock).toHaveBeenCalledWith({
             ...INIT_LESSON,
-            next_lesson: expect.any(String),
+            nextLesson: expect.any(String),
         })
     });
 });

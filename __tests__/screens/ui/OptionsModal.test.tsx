@@ -14,6 +14,9 @@ import { ItemOption } from '../../../src/interfaces/ui';
 /* Theme */
 import { darkColors } from '../../../src/theme';
 
+/* Setup */
+import { onCancelMock, onChangeValueMock } from '../../../jest.setup';
+
 const modalTitle = 'Select an option';
 
 const itemsOptions: ItemOption[] = [
@@ -22,9 +25,6 @@ const itemsOptions: ItemOption[] = [
     { label: 'Test option 3', value: 'test-option-3' },
     { label: 'Test option 4', value: 'test-option-4' }
 ];
-
-const onCancelMock = jest.fn();
-const onChangeValueMock = jest.fn();
 
 /* Mock hooks */
 jest.mock('../../../src/hooks/useTheme.ts');

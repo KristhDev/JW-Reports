@@ -4,18 +4,17 @@ import { act, render, screen, waitFor, fireEvent } from '@testing-library/react-
 /* Screens */
 import { PassToCourseModal } from '../../../src/screens/courses';
 
-/* Features */
-import { selectedRevisitState } from '../../features/revisits';
-
 /* Hooks */
 import { useCourses, useRevisits, useStatus, useTheme } from '../../../src/hooks';
 
 /* Theme */
 import { darkColors } from '../../../src/theme';
 
-const saveCourseMock = jest.fn();
-const setStatusMock = jest.fn();
-const onCloseMock = jest.fn();
+/* Setup */
+import { onCloseMock } from '../../../jest.setup';
+
+/* Mocks */
+import { saveCourseMock, selectedRevisitStateMock, setStatusMock } from '../../mocks';
 
 /* Mock hooks */
 jest.mock('../../../src/hooks/useCourses.ts');
@@ -30,7 +29,7 @@ describe('Test in <PassToCourseModal />', () => {
     });
 
     (useRevisits as jest.Mock).mockReturnValue({
-        state: selectedRevisitState
+        state: selectedRevisitStateMock
     });
 
     (useStatus as jest.Mock).mockReturnValue({
@@ -75,7 +74,7 @@ describe('Test in <PassToCourseModal />', () => {
 
                 /* Check if title exists and contain respective value */
                 expect(title).toBeTruthy();
-                expect(title.props.children.join('')).toBe(`¿Está seguro de comenzar un curso bíblico con ${ selectedRevisitState.selectedRevisit.person_name }?`);
+                expect(title.props.children.join('')).toBe(`¿Está seguro de comenzar un curso bíblico con ${ selectedRevisitStateMock.selectedRevisit.personName }?`);
             });
         });
     });
@@ -136,9 +135,9 @@ describe('Test in <PassToCourseModal />', () => {
 
             /* Check if saveCourse is called with respective values */
             expect(saveCourseMock).toHaveBeenCalledWith({
-                person_name: selectedRevisitState.selectedRevisit.person_name,
-                person_about: selectedRevisitState.selectedRevisit.about,
-                person_address: selectedRevisitState.selectedRevisit.address,
+                personName: selectedRevisitStateMock.selectedRevisit.personName,
+                personAbout: selectedRevisitStateMock.selectedRevisit.about,
+                personAddress: selectedRevisitStateMock.selectedRevisit.address,
                 publication: pubName
             }, onCloseMock);
         });
