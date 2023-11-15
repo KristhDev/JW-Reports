@@ -52,7 +52,6 @@ exports[`Test in <RadioBtn /> component should to match snapshot 1`] = `
         {
           "overflow": "hidden",
         },
-        false,
         {
           "borderRadius": 18,
           "padding": 6,

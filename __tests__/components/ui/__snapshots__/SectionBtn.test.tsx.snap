@@ -37,7 +37,6 @@ exports[`Test in <SectionBtn /> component should to match the snapshot 1`] = `
       {
         "overflow": "hidden",
       },
-      false,
       {
         "padding": 16,
       },

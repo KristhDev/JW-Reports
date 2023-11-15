@@ -36,16 +36,15 @@ exports[`Test in <ThemeBtn /> component should to match snapshot 1`] = `
       {
         "overflow": "hidden",
       },
-      false,
       [
         {
           "alignItems": "center",
           "backgroundColor": "#C0A7E1",
           "borderRadius": 50,
-          "height": 42,
+          "height": 48,
           "justifyContent": "center",
           "margin": 5,
-          "width": 42,
+          "width": 48,
         },
         {
           "position": "absolute",
@@ -68,7 +67,7 @@ exports[`Test in <ThemeBtn /> component should to match snapshot 1`] = `
         },
         {
           "marginBottom": 1,
-          "marginLeft": 2,
+          "marginLeft": 0,
         },
         {
           "fontFamily": "Ionicons",
@@ -79,7 +78,7 @@ exports[`Test in <ThemeBtn /> component should to match snapshot 1`] = `
       ]
     }
   >
-    
+    
   </Text>
 </View>
 `;

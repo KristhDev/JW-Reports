@@ -10,7 +10,8 @@ import { useTheme } from '../../../src/hooks';
 /* Theme */
 import { darkColors, lightColors } from '../../../src/theme';
 
-const setThemeMock = jest.fn();
+/* Mocks */
+import { setThemeMock } from '../../mocks';
 
 /* Mock hooks */
 jest.mock('../../../src/hooks/useTheme.ts');
@@ -52,6 +53,7 @@ describe('Test in <ThemeBtn /> component', () => {
 
         /* Get touchable and check if is icon sunny-outline */
         const touchable = screen.getByTestId('fab-touchable');
-        expect(touchable.props.children[0].props.name).toBe('sunny-outline');
+        const iconName = touchable.props.children[0].props.children[1].props.name;
+        expect(iconName).toBe('sunny-outline');
     });
 });

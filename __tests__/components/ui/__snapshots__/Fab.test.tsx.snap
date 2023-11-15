@@ -36,16 +36,15 @@ exports[`Test in <Fab /> component should to match snapshot 1`] = `
       {
         "overflow": "hidden",
       },
-      false,
       [
         {
           "alignItems": "center",
           "backgroundColor": "#C0A7E1",
           "borderRadius": 50,
-          "height": 42,
+          "height": 48,
           "justifyContent": "center",
           "margin": 5,
-          "width": 42,
+          "width": 48,
         },
         undefined,
       ],
@@ -73,7 +72,7 @@ exports[`Test in <Fab /> component should to match snapshot 1`] = `
     }
     testID="fab-icon"
   >
-    
+    
   </Text>
 </View>
 `;

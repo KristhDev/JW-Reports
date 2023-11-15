@@ -10,9 +10,11 @@ import { useTheme } from '../../../src/hooks';
 /* Theme */
 import { darkColors } from '../../../src/theme';
 
+/* Setup */
+import { onPressMock } from '../../../jest.setup';
+
 const text = 'Section text test';
 const subText = 'Section sub text test';
-const onPressMock = jest.fn();
 
 /* Mock hooks */
 jest.mock('../../../src/hooks/useTheme.ts');
