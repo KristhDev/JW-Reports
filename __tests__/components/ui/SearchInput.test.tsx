@@ -10,8 +10,9 @@ import { useTheme } from '../../../src/hooks';
 /* Theme */
 import { darkColors } from '../../../src/theme';
 
-const onCleanMock = jest.fn();
-const onSearchMock = jest.fn();
+/* Setup */
+import { onCleanMock, onSearchMock } from '../../../jest.setup';
+
 const textValue = 'Search test';
 
 /* Mock hooks */
@@ -52,11 +53,11 @@ describe('Test in <SearchInput /> component', () => {
             fireEvent(input, 'onSubmitEditing');
 
             /* Check if onSearch is called one time */
-            expect(onSearchMock).toBeCalledTimes(1);
+            expect(onSearchMock).toHaveBeenCalledTimes(1);
         });
 
         /* Check if onSearch is called with respective value */
-        expect(onSearchMock).toBeCalledWith(textValue);
+        expect(onSearchMock).toHaveBeenCalledWith(textValue);
     });
 
     it('should call onClean when press clear button', async () => {
@@ -75,7 +76,7 @@ describe('Test in <SearchInput /> component', () => {
         fireEvent.press(touchable);
 
         /* Check if onClean is called one time */
-        expect(onCleanMock).toBeCalledTimes(1);
+        expect(onCleanMock).toHaveBeenCalledTimes(1);
     });
 
     it('should change border color when input is focused', async () => {

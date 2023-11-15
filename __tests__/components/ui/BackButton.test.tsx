@@ -10,7 +10,8 @@ import { useTheme } from '../../../src/hooks';
 /* Theme */
 import { darkColors } from '../../../src/theme';
 
-const onPressMock = jest.fn();
+/* Setup */
+import { onPressMock } from '../../../jest.setup';
 
 /* Mock hooks */
 jest.mock('../../../src/hooks/useTheme.ts');
@@ -23,6 +24,7 @@ describe('Test in <BackButton /> component', () => {
 
     beforeEach(() => {
         render(<BackButton onPress={ onPressMock } />);
+        jest.clearAllMocks();
     });
 
     it('should to match snapshot', () => {
@@ -39,14 +41,16 @@ describe('Test in <BackButton /> component', () => {
 
         /* Get touchable of button and check color */
         const touchable = screen.getByTestId('fab-touchable');
-        expect(touchable.props.children[0].props.color).toBe(darkColors.icon);
+        const iconColor = touchable.props.children[0].props.children[1].props.color;
+        expect(iconColor).toBe(darkColors.icon);
     });
 
     it('should render default icon color', () => {
 
         /* Get touchable of button and check icon */
         const touchable = screen.getByTestId('fab-touchable');
-        expect(touchable.props.children[0].props.color).toBe(darkColors.button);
+        const iconColor = touchable.props.children[0].props.children[1].props.color;
+        expect(iconColor).toBe(darkColors.button);
     });
 
     it('should call onPress when pressed', () => {

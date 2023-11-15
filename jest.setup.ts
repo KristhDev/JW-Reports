@@ -12,6 +12,11 @@ const netInfoStateTypeMock = {
     other: 'other'
 }
 
+export const onCleanMock = jest.fn();
+export const onPressMock = jest.fn();
+export const onSearchMock = jest.fn();
+export const onToggleMock = jest.fn();
+
 jest.mock('@react-native-community/netinfo', () => ({
     addEventListener: jest.fn(),
     NetInfoStateType: netInfoStateTypeMock

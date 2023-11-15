@@ -10,8 +10,10 @@ import { useTheme } from '../../../src/hooks';
 /* Theme */
 import { darkColors } from '../../../src/theme';
 
+/* Setup */
+import { onPressMock } from '../../../jest.setup';
+
 const checkboxLabel = 'Label test';
-const onPressMock = jest.fn();
 
 /* Mock hooks */
 jest.mock('../../../src/hooks/useTheme.ts');

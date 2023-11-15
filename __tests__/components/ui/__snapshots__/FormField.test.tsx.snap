@@ -111,7 +111,7 @@ exports[`Test in <FormField /> component should to match snapshot 1`] = `
           }
           testID="form-field-icon"
         >
-          
+          
         </Text>
       </View>
     </View>

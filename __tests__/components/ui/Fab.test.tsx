@@ -11,7 +11,8 @@ import { useTheme } from '../../../src/hooks';
 /* Theme */
 import { darkColors } from '../../../src/theme';
 
-const onPressMock = jest.fn();
+/* Setup */
+import { onPressMock } from '../../../jest.setup';
 
 /* Mock hooks */
 jest.mock('../../../src/hooks/useTheme.ts');
@@ -51,7 +52,7 @@ describe('Test in <Fab /> component', () => {
         const icon = screen.getByTestId('fab-icon');
 
         /* Check values of elements */
-        expect(touchable.props.style[2][0].backgroundColor).toBe(darkColors.button);
+        expect(touchable.props.style[1][0].backgroundColor).toBe(darkColors.button);
         expect(icon).toBeTruthy();
     });
 

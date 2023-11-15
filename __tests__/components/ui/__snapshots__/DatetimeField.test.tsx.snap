@@ -108,7 +108,6 @@ exports[`Test in <DatetimeField /> component should to match snapshot 1`] = `
           {
             "overflow": "hidden",
           },
-          false,
           [
             {
               "backgroundColor": "#C0A7E1",
@@ -188,7 +187,7 @@ exports[`Test in <DatetimeField /> component should to match snapshot 1`] = `
             ]
           }
         >
-          
+          
         </Text>
       </View>
     </View>

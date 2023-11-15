@@ -55,7 +55,7 @@ exports[`Test in <EyeBtn /> component should to match the snapshot 1`] = `
       ]
     }
   >
-    
+    
   </Text>
 </View>
 `;

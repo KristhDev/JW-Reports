@@ -10,7 +10,15 @@ import { useTheme } from '../../../src/hooks';
 /* Theme */
 import { darkColors } from '../../../src/theme';
 
-const onToggleMock = jest.fn();
+/* Setup */
+import { onToggleMock } from '../../../jest.setup';
+
+const renderComponent = () => render(
+    <EyeBtn
+        onToggle={ onToggleMock }
+        value
+    />
+);
 
 /* Mock hooks */
 jest.mock('../../../src/hooks/useTheme.ts');
@@ -21,21 +29,16 @@ describe('Test in <EyeBtn /> component', () => {
     });
 
     beforeEach(() => {
-        render(
-            <EyeBtn
-                onToggle={ onToggleMock }
-                value
-            />
-        );
-
         jest.clearAllMocks();
     });
 
     it('should to match the snapshot', () => {
+        renderComponent();
         expect(screen.toJSON()).toMatchSnapshot();
     });
 
     it('should call onToggle when pressed', () => {
+        renderComponent();
 
         /* Get touchable */
         const touchable = screen.getByTestId('eye-btn-touchable');
