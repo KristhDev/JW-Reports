@@ -3,8 +3,11 @@ import { Course, CoursesState, Lesson } from '../../src/interfaces';
 
 export const activeOrSuspendCourseMock = jest.fn();
 export const deleteCourseMock = jest.fn();
+export const deleteLessonMock = jest.fn();
 export const finishOrStartCourseMock = jest.fn();
+export const finishOrStartLessonMock = jest.fn();
 export const loadCoursesMock = jest.fn();
+export const loadLessonsMock = jest.fn();
 export const removeCoursesMock = jest.fn();
 export const removeLessonsMock = jest.fn();
 export const saveCourseMock = jest.fn();

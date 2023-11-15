@@ -5,52 +5,73 @@ import { MenuProvider } from 'react-native-popup-menu';
 /* Components */
 import { RevisitsList } from '../../../src/components/revisits';
 
-/* Features */
-import { coursesState } from '../../features/courses';
-import { initialState as initRevisitsState, revisitsState } from '../../features/revisits';
-
 /* Hooks */
-import { useCourses, useRevisits, useStatus, useTheme } from '../../../src/hooks';
+import { useCourses, useNetwork, useRevisits, useStatus, useTheme } from '../../../src/hooks';
 
 /* Theme */
 import { darkColors } from '../../../src/theme';
 
-const deleteRevisitMock = jest.fn();
-const loadRevisitsMock = jest.fn();
-const removeRevisitsMock = jest.fn();
-const setRefreshRevisitsMock = jest.fn();
-const setRevisitsPaginationMock = jest.fn();
-const setSelectedRevisitMock = jest.fn();
+/* Mocks */
+import {
+    completeRevisitMock,
+    coursesStateMock,
+    deleteRevisitMock,
+    initialRevisitsStateMock,
+    loadRevisitsMock,
+    removeRevisitsMock,
+    revisitsStateMock,
+    saveRevisitMock,
+    setRefreshRevisitsMock,
+    setRevisitsPaginationMock,
+    setSelectedRevisitMock,
+    setStatusMock,
+    wifiMock
+} from '../../mocks';
 
 const emptyMessageTest = 'No hay revisitas disponibles';
 const titleTest = 'Mis Revisitas';
 
 /* Mock hooks */
 jest.mock('../../../src/hooks/useCourses.ts');
+jest.mock('../../../src/hooks/useNetwork.ts');
 jest.mock('../../../src/hooks/useRevisits.ts');
 jest.mock('../../../src/hooks/useStatus.ts');
 jest.mock('../../../src/hooks/useTheme.ts');
 
+const renderComponent = () => render(
+    <MenuProvider>
+        <RevisitsList
+            emptyMessage={ emptyMessageTest }
+            filter="all"
+            title={ titleTest }
+        />
+    </MenuProvider>
+);
+
 describe('Test in <RevisitsList /> component', () => {
     (useCourses as jest.Mock).mockReturnValue({
-        state: coursesState,
+        state: coursesStateMock,
         saveCourse: jest.fn(),
     });
 
+    (useNetwork as jest.Mock).mockReturnValue({
+        wifi: wifiMock
+    });
+
     (useRevisits as jest.Mock).mockReturnValue({
-        state: revisitsState,
+        state: revisitsStateMock,
         deleteRevisit: deleteRevisitMock,
         loadRevisits: loadRevisitsMock,
         removeRevisits: removeRevisitsMock,
         setRefreshRevisits: setRefreshRevisitsMock,
         setRevisitsPagination: setRevisitsPaginationMock,
         setSelectedRevisit: setSelectedRevisitMock,
-        completeRevisit: jest.fn(),
-        saveRevisit: jest.fn(),
+        completeRevisit: completeRevisitMock,
+        saveRevisit: saveRevisitMock,
     });
 
     (useStatus as jest.Mock).mockReturnValue({
-        setStatus: jest.fn(),
+        setStatus: setStatusMock,
     });
 
     (useTheme as jest.Mock).mockReturnValue({
@@ -59,36 +80,19 @@ describe('Test in <RevisitsList /> component', () => {
     });
 
     beforeEach(() => {
-        render(
-            <MenuProvider>
-                <RevisitsList
-                    emptyMessage={ emptyMessageTest }
-                    filter="all"
-                    title={ titleTest }
-                />
-            </MenuProvider>
-        );
-
         jest.clearAllMocks();
     });
 
     it('should to match snapshot', () => {
+        renderComponent();
         expect(screen.toJSON()).toMatchSnapshot();
     });
 
     it('should render respective props', () => {
-        const { getByTestId } = render(
-            <MenuProvider>
-                <RevisitsList
-                    emptyMessage={ emptyMessageTest }
-                    filter="all"
-                    title={ titleTest }
-                />
-            </MenuProvider>
-        );
+        renderComponent();
 
         /* Get title of list and check if is text pass for props */
-        const titleText = getByTestId('title-text');
+        const titleText = screen.getByTestId('title-text');
         expect(titleText.props.children).toBe(titleTest);
     });
 
@@ -96,29 +100,21 @@ describe('Test in <RevisitsList /> component', () => {
 
         /* Mock data of useRevisits */
         (useRevisits as jest.Mock).mockReturnValue({
-            state: initRevisitsState,
+            state: initialRevisitsStateMock,
             deleteRevisit: deleteRevisitMock,
             loadRevisits: loadRevisitsMock,
             removeRevisits: removeRevisitsMock,
             setRefreshRevisits: setRefreshRevisitsMock,
             setRevisitsPagination: setRevisitsPaginationMock,
             setSelectedRevisit: setSelectedRevisitMock,
-            completeRevisit: jest.fn(),
-            saveRevisit: jest.fn(),
+            completeRevisit: completeRevisitMock,
+            saveRevisit: saveRevisitMock,
         });
 
-        const { getByTestId } = render(
-            <MenuProvider>
-                <RevisitsList
-                    emptyMessage={ emptyMessageTest }
-                    filter="all"
-                    title={ titleTest }
-                />
-            </MenuProvider>
-        );
+        renderComponent();
 
         /* Get empty message of list and check if is text pass for props */
-        const emptyMsgText = getByTestId('info-text-text');
+        const emptyMsgText = screen.getByTestId('info-text-text');
         expect(emptyMsgText.props.children).toBe(emptyMessageTest);
     });
 
@@ -127,7 +123,7 @@ describe('Test in <RevisitsList /> component', () => {
         /* Mock data of useRevisits */
         (useRevisits as jest.Mock).mockReturnValue({
             state: {
-                ...initRevisitsState,
+                ...initialRevisitsStateMock,
                 isRevisitsLoading: true
             },
             deleteRevisit: deleteRevisitMock,
@@ -136,26 +132,19 @@ describe('Test in <RevisitsList /> component', () => {
             setRefreshRevisits: setRefreshRevisitsMock,
             setRevisitsPagination: setRevisitsPaginationMock,
             setSelectedRevisit: setSelectedRevisitMock,
-            completeRevisit: jest.fn(),
-            saveRevisit: jest.fn(),
+            completeRevisit: completeRevisitMock,
+            saveRevisit: saveRevisitMock,
         });
 
-        const { getByTestId } = render(
-            <MenuProvider>
-                <RevisitsList
-                    emptyMessage={ emptyMessageTest }
-                    filter="all"
-                    title={ titleTest }
-                />
-            </MenuProvider>
-        );
+        renderComponent();
 
         /* Get loader and check if exists in component */
-        const loader = getByTestId('loader');
+        const loader = screen.getByTestId('loader');
         expect(loader).toBeTruthy();
     });
 
     it('should search when searchInput is submit', () => {
+        renderComponent();
 
         /* Get search input text, type search and submit */
         const searchInput = screen.getByTestId('search-input-text-input');
