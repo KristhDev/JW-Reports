@@ -6,9 +6,6 @@ import dayjs from 'dayjs';
 /* Screens */
 import { CourseDetail } from '../../../src/screens/courses';
 
-/* Features */
-import { courseSelectedState } from '../../features/courses';
-
 /* Hooks */
 import { useCourses, useTheme } from '../../../src/hooks';
 
@@ -18,8 +15,8 @@ import { darkColors } from '../../../src/theme';
 /* Setup */
 import { navigateMock } from '../../../jest.setup';
 
-const setSelectedCourseMock = jest.fn();
-const setSelectedLessonMock = jest.fn();
+/* Mocks */
+import { courseSelectedStateMock, setSelectedCourseMock, setSelectedLessonMock } from '../../mocks';
 
 /* Mock hooks */
 jest.mock('../../../src/hooks/useCourses.ts');
@@ -27,7 +24,7 @@ jest.mock('../../../src/hooks/useTheme.ts');
 
 describe('Test in <CourseDetail /> screen', () => {
     (useCourses as jest.Mock).mockReturnValue({
-        state: courseSelectedState,
+        state: courseSelectedStateMock,
         activeOrSuspendCourse: jest.fn(),
         finishOrStartCourse: jest.fn(),
         setSelectedCourse: setSelectedCourseMock,
@@ -51,7 +48,7 @@ describe('Test in <CourseDetail /> screen', () => {
     });
 
     it('should render course data', () => {
-        const selectedCourse = courseSelectedState.selectedCourse;
+        const selectedCourse = courseSelectedStateMock.selectedCourse;
 
         const statusCourseText = (selectedCourse.finished)
             ? 'Terminado'
@@ -69,7 +66,7 @@ describe('Test in <CourseDetail /> screen', () => {
 
         /* Check if title, publication and status are exists and contain respective values */
         expect(title).toBeTruthy();
-        expect(title.props.children).toBe(selectedCourse.person_name.toUpperCase());
+        expect(title.props.children).toBe(selectedCourse.personName.toUpperCase());
         expect(publication).toBeTruthy();
         expect(publication.props.children).toBe(selectedCourse.publication.toUpperCase());
         expect(status).toBeTruthy();
@@ -77,21 +74,21 @@ describe('Test in <CourseDetail /> screen', () => {
 
         /* Check if about section exists and contain respective value */
         expect(aboutSection).toBeTruthy();
-        expect(aboutSection.props.children[0].props.children.join('')).toBe(`Información de ${ selectedCourse.person_name }:`);
-        expect(aboutSection.props.children[1].props.children).toBe(selectedCourse.person_about);
+        expect(aboutSection.props.children[0].props.children.join('')).toBe(`Información de ${ selectedCourse.personName }:`);
+        expect(aboutSection.props.children[1].props.children).toBe(selectedCourse.personAbout);
 
         /* Check if address section exists and contain respective value */
         expect(addressSection).toBeTruthy();
         expect(addressSection.props.children[0].props.children).toBe('Dirección:');
-        expect(addressSection.props.children[1].props.children).toBe(selectedCourse.person_address);
+        expect(addressSection.props.children[1].props.children).toBe(selectedCourse.personAddress);
 
         /* Check if date exists and contain respective value */
         expect(date).toBeTruthy();
-        expect(date.props.children).toBe(`${ dayjs(selectedCourse.created_at).format('DD/MM/YYYY') }`);
+        expect(date.props.children).toBe(`${ dayjs(selectedCourse.createdAt).format('DD/MM/YYYY') }`);
     });
 
     it('should render respective touchable of flag course.finished', () => {
-        const selectedCourse = courseSelectedState.selectedCourse;
+        const selectedCourse = courseSelectedStateMock.selectedCourse;
 
         const statusCourseAsk = (selectedCourse.finished)
             ? '¿Comenzar de nuevo?'
@@ -108,7 +105,7 @@ describe('Test in <CourseDetail /> screen', () => {
     });
 
     it('should render last_lesson data if exists', () => {
-        const lastLesson = courseSelectedState.selectedCourse.last_lesson;
+        const lastLesson = courseSelectedStateMock.selectedCourse.lastLesson;
 
         if (!lastLesson) {
             expect(true).toBeTruthy();
@@ -117,7 +114,7 @@ describe('Test in <CourseDetail /> screen', () => {
 
         const statusText =  (lastLesson.done)
             ? 'Clase impartida'
-            : `Próxima clase ${ dayjs(lastLesson.next_lesson).format('DD/MM/YYYY') }`
+            : `Próxima clase ${ dayjs(lastLesson.nextLesson).format('DD/MM/YYYY') }`
 
         /* Get elements with data of last lesson */
         const status = screen.getByTestId('course-detail-last-lesson-status');
@@ -150,10 +147,10 @@ describe('Test in <CourseDetail /> screen', () => {
         /* Check if selectedLesson is called one time with respective value */
         expect(setSelectedLessonMock).toHaveBeenCalledTimes(1);
         expect(setSelectedLessonMock).toHaveBeenCalledWith({
-            ...courseSelectedState.selectedLesson,
-            next_lesson: expect.any(String),
-            created_at: expect.any(String),
-            updated_at: expect.any(String)
+            ...courseSelectedStateMock.selectedLesson,
+            nextLesson: expect.any(String),
+            createdAt: expect.any(String),
+            updatedAt: expect.any(String)
         });
 
         /* Check if navigate is called one time with respective value */

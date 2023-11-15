@@ -4,14 +4,14 @@ import { act, render, screen, waitFor } from '@testing-library/react-native';
 /* Screens */
 import { AddOrEditLesson } from '../../../src/screens/courses';
 
-/* Features */
-import { courseSelectedState, lessonSelectedState } from '../../features/courses';
-
 /* Hooks */
 import { useCourses, useStatus, useTheme } from '../../../src/hooks';
 
 /* Theme */
 import { darkColors } from '../../../src/theme';
+
+/* Mocks */
+import { courseSelectedStateMock, lessonSelectedStateMock } from '../../mocks';
 
 /* Mock hooks */
 jest.mock('../../../src/hooks/useCourses.ts');
@@ -21,9 +21,9 @@ jest.mock('../../../src/hooks/useTheme.ts');
 describe('Test in <AddOrEditLesson /> screen', () => {
     (useCourses as jest.Mock).mockReturnValue({
         state: {
-            ...courseSelectedState,
+            ...courseSelectedStateMock,
             selectedLesson: {
-                ...courseSelectedState.selectedLesson,
+                ...courseSelectedStateMock.selectedLesson,
                 next_lesson: '2022-12-29 00:00:00'
             }
         },
@@ -73,7 +73,7 @@ describe('Test in <AddOrEditLesson /> screen', () => {
 
         /* Mock data of useCourses */
         (useCourses as jest.Mock).mockReturnValue({
-            state: lessonSelectedState,
+            state: lessonSelectedStateMock,
             saveCourse: jest.fn(),
             updateCourse: jest.fn()
         });

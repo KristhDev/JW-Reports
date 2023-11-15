@@ -12,7 +12,11 @@ const netInfoStateTypeMock = {
     other: 'other'
 }
 
+export const onCancelMock = jest.fn();
+export const onChangeValueMock = jest.fn();
 export const onCleanMock = jest.fn();
+export const onCloseMock = jest.fn();
+export const onCofirmMock = jest.fn();
 export const onPressMock = jest.fn();
 export const onSearchMock = jest.fn();
 export const onToggleMock = jest.fn();
@@ -96,6 +100,10 @@ jest.doMock('@react-navigation/native', () => {
             isFocused: isFocusedMock,
             navigate: navigateMock,
             removeListener: removeListenerNavigateMock
+        }),
+
+        useRoute: () => ({
+            name: 'LessonDetailScreen'
         })
     }
 });

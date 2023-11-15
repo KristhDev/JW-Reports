@@ -15,7 +15,8 @@ import { darkColors } from '../../../src/theme';
 /* Setup */
 import { navigateMock } from '../../../jest.setup';
 
-const setStatusMock = jest.fn();
+/* Mocks */
+import { setStatusMock } from '../../mocks';
 
 /* Mock hooks */
 jest.mock('../../../src/hooks/useStatus.ts');
@@ -49,14 +50,14 @@ describe('Test in <Settings /> screen', () => {
         fireEvent.press(touchables[0]);
 
         /* Check is navigate is called one times with respective value */
-        expect(navigateMock).toBeCalledTimes(1);
-        expect(navigateMock).toBeCalledWith('ProfileScreen');
+        expect(navigateMock).toHaveBeenCalledTimes(1);
+        expect(navigateMock).toHaveBeenCalledWith('ProfileScreen');
 
         fireEvent.press(touchables[1]);
 
         /* Check is navigate is called one times with respective value */
-        expect(navigateMock).toBeCalledTimes(2);
-        expect(navigateMock).toBeCalledWith('CredentialsScreen');
+        expect(navigateMock).toHaveBeenCalledTimes(2);
+        expect(navigateMock).toHaveBeenCalledWith('CredentialsScreen');
     });
 
     it('should call setStatus with respective values', () => {

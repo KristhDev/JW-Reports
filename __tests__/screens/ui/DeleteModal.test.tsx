@@ -11,9 +11,10 @@ import { useTheme } from '../../../src/hooks';
 /* Theme */
 import { darkColors } from '../../../src/theme';
 
+/* Setup */
+import { onCloseMock, onCofirmMock } from '../../../jest.setup';
+
 const modalTitle = 'Are you sure you want to delete this resource?';
-const onCofirmMock = jest.fn();
-const onCloseMock = jest.fn();
 
 /* Mock hooks */
 jest.mock('../../../src/hooks/useTheme.ts');
@@ -45,11 +46,11 @@ describe('Test in <DeleteModal /> screen', () => {
     it('should render the modal title', () => {
 
         /* Get title */
-        const title = screen.getByTestId('delete-modal-title');
+        const title = screen.queryByTestId('delete-modal-title');
 
         /* Check if title exists and containt value pass by props */
         expect(title).toBeTruthy();
-        expect(title.props.children).toBe(modalTitle)
+        expect(title!.props.children).toBe(modalTitle)
     });
 
     it('should call onConfirm when the confirm button is pressed', () => {
@@ -84,7 +85,7 @@ describe('Test in <DeleteModal /> screen', () => {
         );
 
         /* Get loader and check if exists */
-        const loader = screen.getByTestId('delete-modal-loading');
+        const loader = screen.queryByTestId('delete-modal-loading');
         expect(loader).toBeTruthy();
     });
 });

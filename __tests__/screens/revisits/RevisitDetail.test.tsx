@@ -5,16 +5,15 @@ import dayjs from 'dayjs';
 /* Screens */
 import { RevisitDetail } from '../../../src/screens/revisits';
 
-/* Features */
-import { selectedRevisitState } from '../../features/revisits';
-
 /* Hooks */
 import { useRevisits, useStatus, useTheme } from '../../../src/hooks';
 
 /* Theme */
 import { darkColors } from '../../../src/theme';
 
-const setSelectedRevisitMock = jest.fn();
+/* Mocks */
+import { selectedRevisitStateMock, setSelectedRevisitMock } from '../../mocks';
+
 const revisitPhoto = 'https://img.freepik.com/free-vector/nature-scene-with-river-hills-forest-mountain-landscape-flat-cartoon-style-illustration_1150-37326.jpg';
 
 /* Mock hooks */
@@ -22,9 +21,9 @@ jest.mock('../../../src/hooks/useRevisits.ts');
 jest.mock('../../../src/hooks/useStatus.ts');
 jest.mock('../../../src/hooks/useTheme.ts');
 
-describe('Test in <RevistDetail /> screen', () => {
+describe('Test in <RevisitDetail /> screen', () => {
     (useRevisits as jest.Mock).mockReturnValue({
-        state: selectedRevisitState,
+        state: selectedRevisitStateMock,
         completeRevisit: jest.fn(),
         saveRevisit: jest.fn(),
         setSelectedRevisit: setSelectedRevisitMock,
@@ -48,7 +47,7 @@ describe('Test in <RevistDetail /> screen', () => {
     });
 
     it('should render revisit date', () => {
-        const selectedRevisit = selectedRevisitState.selectedRevisit;
+        const selectedRevisit = selectedRevisitStateMock.selectedRevisit;
 
         /* Get elements with data of revisit */
         const title = screen.getByTestId('title-text');
@@ -58,11 +57,11 @@ describe('Test in <RevistDetail /> screen', () => {
 
         /* Check if title exists and contain respective values */
         expect(title).toBeTruthy();
-        expect(title.props.children).toBe(selectedRevisit.person_name.toUpperCase());
+        expect(title.props.children).toBe(selectedRevisit.personName.toUpperCase());
 
         /* Check if about section exists and contain respective value */
         expect(aboutSection).toBeTruthy();
-        expect(aboutSection.props.children[0].props.children.join('')).toBe(`Información de ${ selectedRevisit.person_name }:`);
+        expect(aboutSection.props.children[0].props.children.join('')).toBe(`Información de ${ selectedRevisit.personName }:`);
         expect(aboutSection.props.children[1].props.children).toBe(selectedRevisit.about);
 
         /* Check if address section exists and contain respective value */
@@ -72,11 +71,11 @@ describe('Test in <RevistDetail /> screen', () => {
 
         /* Check if date exists and contain respective value */
         expect(createdDate).toBeTruthy();
-        expect(createdDate.props.children).toBe(dayjs(selectedRevisit.created_at).format('DD/MM/YYYY'));
+        expect(createdDate.props.children).toBe(dayjs(selectedRevisit.createdAt).format('DD/MM/YYYY'));
     });
 
     it('should render next visit when selectedRevisit.done is false', () => {
-        const nextVisit = dayjs(selectedRevisitState.selectedRevisit.next_visit);
+        const nextVisit = dayjs(selectedRevisitStateMock.selectedRevisit.nextVisit);
 
         /* Get next visit text */
         const nextVisitText = screen.getByTestId('revisit-detail-next-visit');
@@ -91,9 +90,9 @@ describe('Test in <RevistDetail /> screen', () => {
         /* Mock data of useRevisits */
         (useRevisits as jest.Mock).mockReturnValue({
             state: {
-                ...selectedRevisitState,
+                ...selectedRevisitStateMock,
                 selectedRevisit: {
-                    ...selectedRevisitState.selectedRevisit,
+                    ...selectedRevisitStateMock.selectedRevisit,
                     done: true
                 }
             },
@@ -114,9 +113,9 @@ describe('Test in <RevistDetail /> screen', () => {
         /* Mock data of useRevisits */
         (useRevisits as jest.Mock).mockReturnValue({
             state: {
-                ...selectedRevisitState,
+                ...selectedRevisitStateMock,
                 selectedRevisit: {
-                    ...selectedRevisitState.selectedRevisit,
+                    ...selectedRevisitStateMock.selectedRevisit,
                     photo: revisitPhoto
                 }
             },
@@ -128,7 +127,7 @@ describe('Test in <RevistDetail /> screen', () => {
         render(<RevisitDetail />);
 
         const selectedRevisit = {
-            ...selectedRevisitState.selectedRevisit,
+            ...selectedRevisitStateMock.selectedRevisit,
             photo: revisitPhoto
         }
 
@@ -140,7 +139,7 @@ describe('Test in <RevistDetail /> screen', () => {
         expect(photoImage).toBeTruthy();
         expect(photoImage.props.source.uri).toBe(revisitPhoto);
         expect(photoText).toBeTruthy();
-        expect(photoText.props.children.join('')).toBe(`La foto es para ayudarte a recordar el lugar de residencia de ${ selectedRevisit.person_name }`);
+        expect(photoText.props.children.join('')).toBe(`La foto es para ayudarte a recordar el lugar de residencia de ${ selectedRevisit.personName }`);
     });
 
     it('should not call setSelectedRevisit when index of navigation is different of 0', () => {

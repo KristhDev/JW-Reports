@@ -3,18 +3,13 @@ import { render, screen, fireEvent } from '@testing-library/react-native';
 import dayjs from 'dayjs';
 
 /* Screens */
-import { Home } from '../../../src/screens/preaching';
+import { PrecursorHome } from '../../../src/screens/preaching';
 
 /* Features */
-import { INIT_PREACHING } from '../../../src/features/preaching';
-import { coursesState } from '../../features/courses';
-import { preachingsState } from '../../features/preaching';
+import { INIT_PREACHING } from '../../../src/features';
 
 /* Hooks */
 import { useAuth, useCourses, usePreaching, useTheme } from '../../../src/hooks';
-
-/* Interfaces */
-import { User } from '../../../src/interfaces/auth';
 
 /* Setup */
 import { navigateMock } from '../../../jest.setup';
@@ -22,19 +17,7 @@ import { navigateMock } from '../../../jest.setup';
 /* Theme */
 import { darkColors } from '../../../src/theme';
 
-const testUser: User = {
-    id: '05ef0d0c-0f7a-4512-b705-6da279d88503',
-    name: 'Celestino',
-    surname: 'Wilderman',
-    email: 'Ernestine_Doyle@yahoo.com',
-    precursor: 'ninguno',
-    hours_requirement: 20,
-    createdAt: '2021-03-10T12:00:00.000Z',
-    updatedAt: '2021-03-10T12:00:00.000Z',
-}
-
-const setSelectedPreachingMock = jest.fn();
-const loadPreachingsMock = jest.fn();
+import { coursesStateMock, loadPreachingsMock, preachingsStateMock, setSelectedPreachingMock, testUser } from '../../mocks';
 
 /* Mock hooks */
 jest.mock('../../../src/hooks/useAuth.ts');
@@ -42,17 +25,17 @@ jest.mock('../../../src/hooks/useCourses.ts');
 jest.mock('../../../src/hooks/usePreaching.ts');
 jest.mock('../../../src/hooks/useTheme.ts');
 
-describe('Test in <Home /> screen', () => {
+describe('Test in <PrecursorHome /> screen', () => {
     (useAuth as jest.Mock).mockReturnValue({
         state: { user: testUser },
     });
 
     (useCourses as jest.Mock).mockReturnValue({
-        state: coursesState,
+        state: coursesStateMock,
     });
 
     (usePreaching as jest.Mock).mockReturnValue({
-        state: preachingsState,
+        state: preachingsStateMock,
         setSelectedPreaching: setSelectedPreachingMock,
         loadPreachings: loadPreachingsMock
     });
@@ -63,7 +46,7 @@ describe('Test in <Home /> screen', () => {
     });
 
     beforeEach(() => {
-        render(<Home />);
+        render(<PrecursorHome />);
     });
 
     it('should to match snapshot', async () => {
@@ -71,8 +54,8 @@ describe('Test in <Home /> screen', () => {
     });
 
     it('should render respective title with month and year', () => {
-        const month = dayjs(preachingsState.selectedDate).format('MMMM').toUpperCase();
-        const year = dayjs(preachingsState.selectedDate).get('year');
+        const month = dayjs(preachingsStateMock.selectedDate).format('MMMM').toUpperCase();
+        const year = dayjs(preachingsStateMock.selectedDate).get('year');
 
         /* Get title */
         const title = screen.getByTestId('title-text');
@@ -94,14 +77,14 @@ describe('Test in <Home /> screen', () => {
         /* Mock data of usePreaching */
         (usePreaching as jest.Mock).mockReturnValue({
             state: {
-                ...preachingsState,
+                ...preachingsStateMock,
                 isPreachingsLoading: true
             },
             setSelectedPreaching: setSelectedPreachingMock,
             loadPreachings: loadPreachingsMock
         });
 
-        render(<Home />);
+        render(<PrecursorHome />);
 
         /* Get loader and check if exists */
         const loader = screen.getByTestId('home-loading');
@@ -113,7 +96,7 @@ describe('Test in <Home /> screen', () => {
         /* Mock data of usePreaching */
         (usePreaching as jest.Mock).mockReturnValue({
             state: {
-                ...preachingsState,
+                ...preachingsStateMock,
                 isPreachingsLoading: false,
                 preachings: []
             },
@@ -121,7 +104,7 @@ describe('Test in <Home /> screen', () => {
             loadPreachings: loadPreachingsMock
         });
 
-        render(<Home />);
+        render(<PrecursorHome />);
 
         /* Get text of empty message */
         const text = screen.getByTestId('info-text-text');
@@ -142,8 +125,8 @@ describe('Test in <Home /> screen', () => {
         expect(setSelectedPreachingMock).toHaveBeenCalledWith({
             ...INIT_PREACHING,
             day: expect.any(String),
-            init_hour: expect.any(String),
-            final_hour: expect.any(String)
+            initHour: expect.any(String),
+            finalHour: expect.any(String)
         });
 
         /* Check if navigate is called one time with respective value */

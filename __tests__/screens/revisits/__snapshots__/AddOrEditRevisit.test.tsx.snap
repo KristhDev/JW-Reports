@@ -162,7 +162,7 @@ exports[`Test in <AddOrEditRevisit /> screen should to match snapshot 1`] = `
                 ]
               }
             >
-              
+              
             </Text>
           </View>
         </View>
@@ -436,7 +436,6 @@ exports[`Test in <AddOrEditRevisit /> screen should to match snapshot 1`] = `
               {
                 "overflow": "hidden",
               },
-              false,
               [
                 {
                   "backgroundColor": "#C0A7E1",
@@ -517,7 +516,7 @@ exports[`Test in <AddOrEditRevisit /> screen should to match snapshot 1`] = `
                 ]
               }
             >
-              
+              
             </Text>
           </View>
         </View>
@@ -556,7 +555,6 @@ exports[`Test in <AddOrEditRevisit /> screen should to match snapshot 1`] = `
               {
                 "overflow": "hidden",
               },
-              false,
               [
                 {
                   "backgroundColor": "#C0A7E1",
@@ -637,7 +635,7 @@ exports[`Test in <AddOrEditRevisit /> screen should to match snapshot 1`] = `
                 ]
               }
             >
-              
+              
             </Text>
           </View>
         </View>
@@ -714,7 +712,7 @@ exports[`Test in <AddOrEditRevisit /> screen should to match snapshot 1`] = `
               ]
             }
             testID="datetimefield-text-input"
-            value="29/12/2022"
+            value="15/11/2023"
           />
         </View>
         <View
@@ -752,7 +750,6 @@ exports[`Test in <AddOrEditRevisit /> screen should to match snapshot 1`] = `
               {
                 "overflow": "hidden",
               },
-              false,
               [
                 {
                   "backgroundColor": "#C0A7E1",
@@ -832,7 +829,7 @@ exports[`Test in <AddOrEditRevisit /> screen should to match snapshot 1`] = `
                 ]
               }
             >
-              
+              
             </Text>
           </View>
         </View>
@@ -881,7 +878,6 @@ exports[`Test in <AddOrEditRevisit /> screen should to match snapshot 1`] = `
           {
             "overflow": "hidden",
           },
-          false,
           [
             {
               "backgroundColor": "#C0A7E1",

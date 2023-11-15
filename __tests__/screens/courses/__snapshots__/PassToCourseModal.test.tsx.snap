@@ -88,7 +88,6 @@ exports[`Test in <PassToCourseModal /> should to match snapshot 1`] = `
               {
                 "overflow": "hidden",
               },
-              false,
               [
                 {
                   "backgroundColor": "#C0A7E1",
@@ -192,7 +191,6 @@ exports[`Test in <PassToCourseModal /> should to match snapshot 1`] = `
               {
                 "overflow": "hidden",
               },
-              false,
               [
                 {
                   "backgroundColor": "#C0A7E1",

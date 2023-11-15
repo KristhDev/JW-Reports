@@ -5,14 +5,16 @@ import { act, render, screen, waitFor } from '@testing-library/react-native';
 import { AddOrEditPreaching } from '../../../src/screens/preaching';
 
 /* Features */
-import { INIT_PREACHING } from '../../../src/features/preaching';
-import { preachingsState } from '../../features/preaching';
+import { INIT_PREACHING } from '../../../src/features';
 
 /* Hooks */
 import { usePreaching, useStatus, useTheme } from '../../../src/hooks';
 
 /* Theme */
 import { darkColors } from '../../../src/theme';
+
+/* Mocks */
+import { preachingsStateMock } from '../../mocks';
 
 /* Mock hooks */
 jest.mock('../../../src/hooks/usePreaching.ts');
@@ -22,12 +24,12 @@ jest.mock('../../../src/hooks/useTheme.ts');
 describe('Test in <AddOrEditPreaching /> screen', () => {
     (usePreaching as jest.Mock).mockReturnValue({
         state: {
-            ...preachingsState,
+            ...preachingsStateMock,
             seletedPreaching: {
                 ...INIT_PREACHING,
                 day: '2022-12-29 00:00:00',
-                init_hour: '2022-12-30 09:00:00',
-                final_hour: '2022-12-30 09:00:00'
+                initHour: '2022-12-30 09:00:00',
+                finalHour: '2022-12-30 09:00:00'
             }
         },
         savePreaching: jest.fn(),
@@ -59,17 +61,12 @@ describe('Test in <AddOrEditPreaching /> screen', () => {
             render(<AddOrEditPreaching />);
         });
 
-        await act(async () => {
-            await waitFor(() => {
+        /* Get title */
+        const title = await screen.findByTestId('title-text');
 
-                /* Get title */
-                const title = screen.getByTestId('title-text');
-
-                /* Check if title exists and contain value pass by props */
-                expect(title).toBeTruthy();
-                expect(title.props.children).toBe('Agregar día de predicación');
-            });
-        })
+        /* Check if title exists and contain value pass by props */
+        expect(title).toBeTruthy();
+        expect(title.props.children).toBe('Agregar día de predicación');
     });
 
     it('should render respective title when seletedPreaching isnt empty', async () => {
@@ -77,14 +74,14 @@ describe('Test in <AddOrEditPreaching /> screen', () => {
         /* Mock data in usePreaching */
         (usePreaching as jest.Mock).mockReturnValue({
             state: {
-                ...preachingsState,
+                ...preachingsStateMock,
                 seletedPreaching: {
                     ...INIT_PREACHING,
                     id: '0c0d257e-5031-4111-9f0b-d10cdb2efb92',
-                    user_id: 'f366c803-37cc-43c9-91c1-c78ec6a0718d',
+                    userId: 'f366c803-37cc-43c9-91c1-c78ec6a0718d',
                     day: '2022-12-29 00:00:00',
-                    init_hour: '2022-12-30 09:00:00',
-                    final_hour: '2022-12-30 10:30:00'
+                    initHour: '2022-12-30 09:00:00',
+                    finalHour: '2022-12-30 10:30:00'
                 }
             },
             savePreaching: jest.fn(),
@@ -95,16 +92,11 @@ describe('Test in <AddOrEditPreaching /> screen', () => {
             render(<AddOrEditPreaching />);
         });
 
-        await act(async () => {
-            await waitFor(() => {
+        /* Get title */
+        const title = await screen.findByTestId('title-text');
 
-                /* Get title */
-                const title = screen.getByTestId('title-text');
-
-                /* Check if title exists and contain value pass by props */
-                expect(title).toBeTruthy();
-                expect(title.props.children).toBe('Editar día de predicación');
-            });
-        });
+        /* Check if title exists and contain value pass by props */
+        expect(title).toBeTruthy();
+        expect(title.props.children).toBe('Editar día de predicación');
     });
 });

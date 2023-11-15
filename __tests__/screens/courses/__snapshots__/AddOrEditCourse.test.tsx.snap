@@ -162,7 +162,7 @@ exports[`Test in <AddOrEditCourse /> screen should to match snapshot 1`] = `
                 ]
               }
             >
-              
+              
             </Text>
           </View>
         </View>
@@ -466,7 +466,7 @@ exports[`Test in <AddOrEditCourse /> screen should to match snapshot 1`] = `
                 ]
               }
             >
-              
+              
             </Text>
           </View>
         </View>
@@ -507,7 +507,6 @@ exports[`Test in <AddOrEditCourse /> screen should to match snapshot 1`] = `
           {
             "overflow": "hidden",
           },
-          false,
           [
             {
               "backgroundColor": "#C0A7E1",

@@ -5,16 +5,14 @@ import dayjs from 'dayjs';
 /* Screens */
 import { LessonDetail } from '../../../src/screens/courses';
 
-/* Features */
-import { lessonSelectedState } from '../../features/courses';
-
 /* Hooks */
 import { useCourses, useTheme } from '../../../src/hooks';
 
 /* Theme */
 import { darkColors } from '../../../src/theme';
 
-const setSelectedLessonMock = jest.fn();
+/* Mocks */
+import { lessonSelectedStateMock, setSelectedLessonMock } from '../../mocks';
 
 /* Mock hooks */
 jest.mock('../../../src/hooks/useCourses.ts');
@@ -22,7 +20,7 @@ jest.mock('../../../src/hooks/useTheme.ts');
 
 describe('Test in <LessonDetail /> screen', () => {
     (useCourses as jest.Mock).mockReturnValue({
-        state: lessonSelectedState,
+        state: lessonSelectedStateMock,
         finishOrStartLesson: jest.fn(),
         setSelectedLesson: setSelectedLessonMock
     });
@@ -41,9 +39,9 @@ describe('Test in <LessonDetail /> screen', () => {
     });
 
     it('should render lesson data', () => {
-        const selectedCourse = lessonSelectedState.selectedCourse;
-        const selectedLesson = lessonSelectedState.selectedLesson;
-        const nextVisit = dayjs(selectedLesson.next_lesson);
+        const selectedCourse = lessonSelectedStateMock.selectedCourse;
+        const selectedLesson = lessonSelectedStateMock.selectedLesson;
+        const nextVisit = dayjs(selectedLesson.nextLesson);
         const statusLessonText = (selectedLesson.done) ? 'Impartida' : 'Por impartir';
 
         /* Get elements to contain data of lesson */
@@ -56,7 +54,7 @@ describe('Test in <LessonDetail /> screen', () => {
 
         /* Check if title and publication are exists and contain respective values */
         expect(title).toBeTruthy();
-        expect(title.props.children).toBe(`CLASE DEL CURSO CON ${ selectedCourse.person_name.toUpperCase() }`);
+        expect(title.props.children).toBe(`CLASE DEL CURSO CON ${ selectedCourse.personName.toUpperCase() }`);
         expect(publication).toBeTruthy();
         expect(publication.props.children).toBe(selectedCourse.publication.toUpperCase());
 
@@ -76,7 +74,7 @@ describe('Test in <LessonDetail /> screen', () => {
 
         /* Check if create date exists and contain respective values */
         expect(createDate).toBeTruthy();
-        expect(createDate.props.children).toBe(dayjs(selectedLesson.created_at).format('DD/MM/YYYY'));
+        expect(createDate.props.children).toBe(dayjs(selectedLesson.createdAt).format('DD/MM/YYYY'));
     });
 
     it('should not call setSelectedLesson when index of state navigation is 4', () => {

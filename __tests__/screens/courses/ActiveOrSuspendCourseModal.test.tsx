@@ -5,17 +5,17 @@ import hexToRgba from 'hex-to-rgba';
 /* Screens */
 import { ActiveOrSuspendCourseModal } from '../../../src/screens/courses';
 
-/* Features */
-import { courseSelectedState } from '../../features/courses';
-
 /* Hooks */
 import { useCourses, useTheme } from '../../../src/hooks';
 
 /* Theme */
 import { darkColors } from '../../../src/theme';
 
-const onCloseMock = jest.fn();
-const activeOrSuspendCourseMock = jest.fn();
+/* Setup */
+import { onCloseMock } from '../../../jest.setup';
+
+/* Mocks */
+import { activeOrSuspendCourseMock, courseSelectedStateMock } from '../../mocks';
 
 /* Mock hooks */
 jest.mock('../../../src/hooks/useCourses.ts');
@@ -23,7 +23,7 @@ jest.mock('../../../src/hooks/useTheme.ts');
 
 describe('Test in <ActiveOrSuspendCourseModal /> screen', () => {
     (useCourses as jest.Mock).mockReturnValue({
-        state: courseSelectedState,
+        state: courseSelectedStateMock,
         activeOrSuspendCourse: activeOrSuspendCourseMock
     });
 
@@ -57,7 +57,7 @@ describe('Test in <ActiveOrSuspendCourseModal /> screen', () => {
         expect(msg).toBeTruthy();
         expect(msg.props.children).toBe('¿Está seguro de suspender este curso?');
         expect(touchable).toBeTruthy();
-        expect(touchable.props.children[0].props.children[0].props.children).toBe('SUSPENDER');
+        expect(touchable.props.children[0].props.children[1].props.children[0].props.children).toBe('SUSPENDER');
     });
 
     it('should call activeOrSuspendCourse when confirm button is pressed', () => {
@@ -89,7 +89,7 @@ describe('Test in <ActiveOrSuspendCourseModal /> screen', () => {
         /* Mock data of useCourses */
         (useCourses as jest.Mock).mockReturnValue({
             state: {
-                ...courseSelectedState,
+                ...courseSelectedStateMock,
                 isCourseLoading: true
             },
             activeOrSuspendCourse: activeOrSuspendCourseMock
