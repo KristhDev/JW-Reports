@@ -118,8 +118,7 @@ export const RevisitCard: FC<RevisitCardProps> = ({ onDelete, onPass, onRevisit,
                         <Icon
                             color={ colors.button }
                             name="ellipsis-vertical"
-                            size={ 20 }
-                            style={{ marginLeft: 2 }}
+                            size={ 21 }
                         />
                     }
                     onPress={ () => setIsOpen(true) }

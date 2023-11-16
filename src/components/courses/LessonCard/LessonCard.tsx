@@ -109,8 +109,7 @@ export const LessonCard: FC<LessonCardProps> = ({ lesson, screenToNavigate, onCl
                         <Icon
                             color={ colors.button }
                             name="ellipsis-vertical"
-                            size={ 20 }
-                            style={{ marginLeft: 2 }}
+                            size={ 21 }
                         />
                     }
                     onPress={ () => setIsOpen(true) }

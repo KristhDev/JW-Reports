@@ -83,7 +83,6 @@ export const HeaderButtons: FC<HeaderButtonsProps> = ({
                                 color={ colors.button }
                                 name="log-out-outline"
                                 size={ 34 }
-                                style={{ marginLeft: 3 }}
                             />
                         }
                         style={{ marginRight: -2 }}
@@ -100,7 +99,7 @@ export const HeaderButtons: FC<HeaderButtonsProps> = ({
                                 color={ colors.button }
                                 name="calendar-outline"
                                 size={ 28 }
-                                style={{ marginLeft: 0.5 }}
+                                style={{ marginBottom: 2 }}
                             />
                         }
                         onPress={ () => setShowMonthPicker(true) }
@@ -116,8 +115,7 @@ export const HeaderButtons: FC<HeaderButtonsProps> = ({
                             <Icon
                                 color={ colors.button }
                                 name="settings-outline"
-                                size={ 28 }
-                                style={{ marginLeft: 1 }}
+                                size={ 30 }
                             />
                         }
                         onPress={ () => navigate('SettingsStackNavigation' as never) }
@@ -132,8 +130,7 @@ export const HeaderButtons: FC<HeaderButtonsProps> = ({
                             <Icon
                                 color={ colors.button }
                                 name="pencil-outline"
-                                size={ 26 }
-                                style={{ marginLeft: 2 }}
+                                size={ 30 }
                             />
                         }
                         onPress={ onPressEditButton }
@@ -150,13 +147,12 @@ export const HeaderButtons: FC<HeaderButtonsProps> = ({
                                 color={ colors.button }
                                 name="trash-outline"
                                 size={ 30 }
-                                style={{ marginLeft: 2 }}
                             />
                         }
                         onPress={ onShowDeleteModal }
                         style={{ marginRight: 6 }}
                         touchColor={ BUTTON_TRANSPARENT_COLOR }
-                        />
+                    />
                 ) }
             </View>
 

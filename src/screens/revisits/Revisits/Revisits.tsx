@@ -78,7 +78,6 @@ const Revisits: FC<RevisitsProps> = ({ route }): JSX.Element => {
                             color={ colors.contentHeader }
                             name="add-circle-outline"
                             size={ 40 }
-                            style={{ marginLeft: 1.5 }}
                         />
                     }
                     onPress={ handleNavigate }
