@@ -1,20 +1,18 @@
-
-/* Features */
-import { initialState as authInitState } from '../../features/auth';
-import { initialState as statusInitState } from '../../features/status';
-
 /* Hooks */
 import { useNetwork } from '../../../src/hooks';
 
 /* Setup */
 import { getMockStore, render } from './setup';
 
+/* Mocks */
+import { initialAuthStateMock, initialStatusStateMock, wifiMock } from '../../mocks';
+
 /* Mock hooks */
 jest.mock('../../../src/hooks/useNetwork.ts');
 
 describe('Test in useAuth hook', () => {
     (useNetwork as jest.Mock).mockReturnValue({
-        isConnected: true,
+        wifi: wifiMock
     });
 
     beforeEach(() => {
@@ -22,12 +20,12 @@ describe('Test in useAuth hook', () => {
     });
 
     it('should return respective props', () => {
-        const mockStore = getMockStore({ auth: authInitState, status: statusInitState });
+        const mockStore = getMockStore({ auth: initialAuthStateMock, status: initialStatusStateMock });
         const { result } = render(mockStore);
 
         /* Check if hook return respective properties */
         expect(result.current.useAuth).toEqual({
-            state: authInitState,
+            state: initialAuthStateMock,
             clearAuth: expect.any(Function),
             renew: expect.any(Function),
             resetPassword: expect.any(Function),

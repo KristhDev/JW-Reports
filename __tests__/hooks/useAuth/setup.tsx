@@ -4,21 +4,13 @@ import { Provider } from 'react-redux';
 import { renderHook } from '@testing-library/react-native';
 
 /* Features */
-import { authReducer } from '../../../src/features/auth';
-import { coursesReducer } from '../../../src/features/courses';
-import { revisitsReducer } from '../../../src/features/revisits';
-import { preachingReducer } from '../../../src/features/preaching';
-import { statusReducer } from '../../../src/features/status';
+import { authReducer, coursesReducer, revisitsReducer, preachingReducer, statusReducer } from '../../../src/features';
 
 /* Hooks */
 import { useAuth, useStatus } from '../../../src/hooks';
 
 /* Interfaces */
-import { AuthState } from '../../../src/interfaces/auth';
-import { CoursesState } from '../../../src/interfaces/courses';
-import { PreachingState } from '../../../src/interfaces/preaching';
-import { RevisitsState } from '../../../src/interfaces/revisits';
-import { StatusState } from '../../../src/interfaces/status';
+import { AuthState, CoursesState, PreachingState, RevisitsState, StatusState } from '../../../src/interfaces';
 
 /* Defining an interface called `InitialState` which specifies the initial state of the `auth` and
 `status` slices of the Redux store. The `AuthState` and `StatusState` types are likely defined
