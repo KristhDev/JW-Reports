@@ -59,11 +59,9 @@ exports[`Test in <BackButton /> component should to match snapshot 1`] = `
       [
         {
           "color": "#C0A7E1",
-          "fontSize": 28,
+          "fontSize": 30,
         },
-        {
-          "marginLeft": 1,
-        },
+        undefined,
         {
           "fontFamily": "Ionicons",
           "fontStyle": "normal",

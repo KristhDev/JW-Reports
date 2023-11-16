@@ -558,11 +558,9 @@ exports[`Test in <Revisits /> screen should to match snapshot 1`] = `
                     [
                       {
                         "color": "#C0A7E1",
-                        "fontSize": 20,
+                        "fontSize": 21,
                       },
-                      {
-                        "marginLeft": 2,
-                      },
+                      undefined,
                       {
                         "fontFamily": "Ionicons",
                         "fontStyle": "normal",
@@ -796,11 +794,9 @@ exports[`Test in <Revisits /> screen should to match snapshot 1`] = `
                     [
                       {
                         "color": "#C0A7E1",
-                        "fontSize": 20,
+                        "fontSize": 21,
                       },
-                      {
-                        "marginLeft": 2,
-                      },
+                      undefined,
                       {
                         "fontFamily": "Ionicons",
                         "fontStyle": "normal",
@@ -1034,11 +1030,9 @@ exports[`Test in <Revisits /> screen should to match snapshot 1`] = `
                     [
                       {
                         "color": "#C0A7E1",
-                        "fontSize": 20,
+                        "fontSize": 21,
                       },
-                      {
-                        "marginLeft": 2,
-                      },
+                      undefined,
                       {
                         "fontFamily": "Ionicons",
                         "fontStyle": "normal",
@@ -1272,11 +1266,9 @@ exports[`Test in <Revisits /> screen should to match snapshot 1`] = `
                     [
                       {
                         "color": "#C0A7E1",
-                        "fontSize": 20,
+                        "fontSize": 21,
                       },
-                      {
-                        "marginLeft": 2,
-                      },
+                      undefined,
                       {
                         "fontFamily": "Ionicons",
                         "fontStyle": "normal",
@@ -1510,11 +1502,9 @@ exports[`Test in <Revisits /> screen should to match snapshot 1`] = `
                     [
                       {
                         "color": "#C0A7E1",
-                        "fontSize": 20,
+                        "fontSize": 21,
                       },
-                      {
-                        "marginLeft": 2,
-                      },
+                      undefined,
                       {
                         "fontFamily": "Ionicons",
                         "fontStyle": "normal",
@@ -1748,11 +1738,9 @@ exports[`Test in <Revisits /> screen should to match snapshot 1`] = `
                     [
                       {
                         "color": "#C0A7E1",
-                        "fontSize": 20,
+                        "fontSize": 21,
                       },
-                      {
-                        "marginLeft": 2,
-                      },
+                      undefined,
                       {
                         "fontFamily": "Ionicons",
                         "fontStyle": "normal",
@@ -1986,11 +1974,9 @@ exports[`Test in <Revisits /> screen should to match snapshot 1`] = `
                     [
                       {
                         "color": "#C0A7E1",
-                        "fontSize": 20,
+                        "fontSize": 21,
                       },
-                      {
-                        "marginLeft": 2,
-                      },
+                      undefined,
                       {
                         "fontFamily": "Ionicons",
                         "fontStyle": "normal",
@@ -2224,11 +2210,9 @@ exports[`Test in <Revisits /> screen should to match snapshot 1`] = `
                     [
                       {
                         "color": "#C0A7E1",
-                        "fontSize": 20,
+                        "fontSize": 21,
                       },
-                      {
-                        "marginLeft": 2,
-                      },
+                      undefined,
                       {
                         "fontFamily": "Ionicons",
                         "fontStyle": "normal",
@@ -2462,11 +2446,9 @@ exports[`Test in <Revisits /> screen should to match snapshot 1`] = `
                     [
                       {
                         "color": "#C0A7E1",
-                        "fontSize": 20,
+                        "fontSize": 21,
                       },
-                      {
-                        "marginLeft": 2,
-                      },
+                      undefined,
                       {
                         "fontFamily": "Ionicons",
                         "fontStyle": "normal",
@@ -2700,11 +2682,9 @@ exports[`Test in <Revisits /> screen should to match snapshot 1`] = `
                     [
                       {
                         "color": "#C0A7E1",
-                        "fontSize": 20,
+                        "fontSize": 21,
                       },
-                      {
-                        "marginLeft": 2,
-                      },
+                      undefined,
                       {
                         "fontFamily": "Ionicons",
                         "fontStyle": "normal",
@@ -2881,9 +2861,7 @@ exports[`Test in <Revisits /> screen should to match snapshot 1`] = `
               "color": "#121212",
               "fontSize": 40,
             },
-            {
-              "marginLeft": 1.5,
-            },
+            undefined,
             {
               "fontFamily": "Ionicons",
               "fontStyle": "normal",
