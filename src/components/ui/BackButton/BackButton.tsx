@@ -27,8 +27,7 @@ export const BackButton: FC<{ color?: string, onPress?: () => void }> = ({ color
                 <Icon
                     color={ color ?? colors.button }
                     name="arrow-back-outline"
-                    style={{ marginLeft: 1 }}
-                    size={ 28 }
+                    size={ 30 }
                 />
             }
             onPress={ () => onPress && onPress() }
