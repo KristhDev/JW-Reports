@@ -37,7 +37,7 @@ describe('Test in useAuth hook renew', () => {
                 surname: 'Rivera',
                 email: 'andredev@gmail.com',
                 precursor: 'ninguno',
-                hoursRequirement: 20,
+                hoursRequirement: 0,
                 createdAt: expect.any(String),
                 updatedAt: expect.any(String)
             }

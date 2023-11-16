@@ -1,33 +1,37 @@
 import { act } from '@testing-library/react-native';
 
-/* Features */
-import { initialState as authInitState, authenticateState, testCredentials } from '../../features/auth';
-import { coursesState } from '../../features/courses';
-import { initialState as statusInitState } from '../../features/status';
-import { preachingsState } from '../../features/preaching';
-import { revisitsState } from '../../features/revisits';
-
 /* Hooks */
 import { useNetwork } from '../../../src/hooks';
 
 /* Setup */
 import { getMockStoreComplete, renderComplete } from './setup';
 
+/* Mocks */
+import {
+    coursesStateMock,
+    initialAuthStateMock,
+    initialStatusStateMock,
+    preachingsStateMock,
+    revisitsStateMock,
+    testCredentials,
+    wifiMock
+} from '../../mocks';
+
 /* Mock hooks */
 jest.mock('../../../src/hooks/useNetwork.ts');
 
 describe('Test in useAuth hook signOut', () => {
     (useNetwork as jest.Mock).mockReturnValue({
-        isConnected: true,
+        wifi: wifiMock
     });
 
     it('should close session', async () => {
         const mockStore = getMockStoreComplete({
-            auth: authInitState,
-            courses: coursesState,
-            preaching: preachingsState,
-            revisits: revisitsState,
-            status: statusInitState
+            auth: initialAuthStateMock,
+            courses: coursesStateMock,
+            preaching: preachingsStateMock,
+            revisits: revisitsStateMock,
+            status: initialStatusStateMock
         });
 
         const { result } = renderComplete(mockStore);
@@ -42,9 +46,9 @@ describe('Test in useAuth hook signOut', () => {
 
         /* Check if state is equal to initial state */
         expect(result.current.useAuth.state).toEqual({
-            ...authInitState,
+            ...initialAuthStateMock,
             user: {
-                ...authInitState.user,
+                ...initialAuthStateMock.user,
                 createdAt: expect.any(String),
                 updatedAt: expect.any(String)
             }
@@ -54,13 +58,13 @@ describe('Test in useAuth hook signOut', () => {
     it('should fail when isAutheticated is false', async () => {
         const mockStore = getMockStoreComplete({
             auth: {
-                ...authenticateState,
+                ...initialAuthStateMock,
                 isAuthenticated: false
             },
-            courses: coursesState,
-            preaching: preachingsState,
-            revisits: revisitsState,
-            status: statusInitState
+            courses: coursesStateMock,
+            preaching: preachingsStateMock,
+            revisits: revisitsStateMock,
+            status: initialStatusStateMock
         });
 
         const { result } = renderComplete(mockStore);
@@ -71,7 +75,7 @@ describe('Test in useAuth hook signOut', () => {
 
         /* Check if state is equal to authenticated state */
         expect(result.current.useAuth.state).toEqual({
-            ...authenticateState,
+            ...initialAuthStateMock,
             isAuthenticated: false
         });
 
