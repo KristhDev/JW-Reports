@@ -3,26 +3,25 @@ import { act } from '@testing-library/react-native';
 /* Supabase admin client */
 import { supabase } from '../../supabase';
 
-/* Features */
-import { initialState as authInitState, newUserData } from '../../features/auth';
-import { initialState as statusInitState } from '../../features/status';
-
 /* Hooks */
 import { useNetwork } from '../../../src/hooks';
 
 /* Setup */
 import { getMockStore, render } from './setup';
 
+/* Mocks */
+import { initialAuthStateMock, initialStatusStateMock, newUserData, wifiMock } from '../../mocks';
+
 /* Mock hooks */
 jest.mock('../../../src/hooks/useNetwork.ts');
 
 describe('Test in useAuth hook signUp', () => {
     (useNetwork as jest.Mock).mockReturnValue({
-        isConnected: true,
+        wifi: wifiMock
     });
 
     it('should create new account', async () => {
-        const mockStore = getMockStore({ auth: authInitState, status: statusInitState });
+        const mockStore = getMockStore({ auth: initialAuthStateMock, status: initialStatusStateMock });
         const { result } = render(mockStore);
 
         await act(async () => {
@@ -31,7 +30,7 @@ describe('Test in useAuth hook signUp', () => {
 
         /* Check if state is equal to initial state */
         expect(result.current.useAuth.state).toEqual({
-            ...authInitState,
+            ...initialAuthStateMock,
             isAuthenticated: true,
             token: undefined,
             user: {
@@ -40,6 +39,7 @@ describe('Test in useAuth hook signUp', () => {
                 surname: newUserData.surname,
                 email: newUserData.email,
                 precursor: 'ninguno',
+                hoursRequirement: 0,
                 createdAt: expect.any(String),
                 updatedAt: expect.any(String)
             }
@@ -55,7 +55,7 @@ describe('Test in useAuth hook signUp', () => {
     });
 
     it('should fail when email is invalid', async () => {
-        const mockStore = getMockStore({ auth: authInitState, status: statusInitState });
+        const mockStore = getMockStore({ auth: initialAuthStateMock, status: initialStatusStateMock });
         const { result } = render(mockStore);
 
         await act(async () => {
@@ -64,9 +64,9 @@ describe('Test in useAuth hook signUp', () => {
 
         /* Check if state is equal to initial state */
         expect(result.current.useAuth.state).toEqual({
-            ...authInitState,
+            ...initialAuthStateMock,
             user: {
-                ...authInitState.user,
+                ...initialAuthStateMock.user,
                 createdAt: expect.any(String),
                 updatedAt: expect.any(String)
             }
@@ -80,7 +80,7 @@ describe('Test in useAuth hook signUp', () => {
     });
 
     it('should fail when email already exisits', async () => {
-        const mockStore = getMockStore({ auth: authInitState, status: statusInitState });
+        const mockStore = getMockStore({ auth: initialAuthStateMock, status: initialStatusStateMock });
         const { result } = render(mockStore);
 
         await act(async () => {
@@ -89,9 +89,9 @@ describe('Test in useAuth hook signUp', () => {
 
         /* Check if state is equal to initial state */
         expect(result.current.useAuth.state).toEqual({
-            ...authInitState,
+            ...initialAuthStateMock,
             user: {
-                ...authInitState.user,
+                ...initialAuthStateMock.user,
                 createdAt: expect.any(String),
                 updatedAt: expect.any(String)
             }
@@ -105,7 +105,7 @@ describe('Test in useAuth hook signUp', () => {
     });
 
     it('should fail when password is invalid', async () => {
-        const mockStore = getMockStore({ auth: authInitState, status: statusInitState });
+        const mockStore = getMockStore({ auth: initialAuthStateMock, status: initialStatusStateMock });
         const { result } = render(mockStore);
 
         await act(async () => {
@@ -114,9 +114,9 @@ describe('Test in useAuth hook signUp', () => {
 
         /* Check if state is equal to initial state */
         expect(result.current.useAuth.state).toEqual({
-            ...authInitState,
+            ...initialAuthStateMock,
             user: {
-                ...authInitState.user,
+                ...initialAuthStateMock.user,
                 createdAt: expect.any(String),
                 updatedAt: expect.any(String)
             }

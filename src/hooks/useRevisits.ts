@@ -99,7 +99,7 @@ const useRevisits = () => {
         if (next) return;
 
         dispatch(setLastRevisit({
-            revisit: data ? revisitAdapter(data[0]) : INIT_REVISIT
+            revisit: (data?.length && data.length > 0) ? revisitAdapter(data[0]) : INIT_REVISIT
         }));
     }
 
