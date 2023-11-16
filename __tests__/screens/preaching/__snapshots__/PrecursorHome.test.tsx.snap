@@ -1999,9 +1999,7 @@ exports[`Test in <PrecursorHome /> screen should to match snapshot 1`] = `
             "color": "#121212",
             "fontSize": 40,
           },
-          {
-            "marginBottom": 1,
-          },
+          undefined,
           {
             "fontFamily": "Ionicons",
             "fontStyle": "normal",
@@ -2080,9 +2078,7 @@ exports[`Test in <PrecursorHome /> screen should to match snapshot 1`] = `
             "color": "#121212",
             "fontSize": 40,
           },
-          {
-            "marginLeft": 1.5,
-          },
+          undefined,
           {
             "fontFamily": "Ionicons",
             "fontStyle": "normal",
