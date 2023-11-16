@@ -27,15 +27,17 @@ jest.mock('@react-native-community/netinfo', () => ({
 }));
 
 jest.mock('react-native-onesignal', () => ({
-    setLogLevel: jest.fn(),
-    setAppId: jest.fn(),
-    promptForPushNotificationsWithUserResponse: jest.fn(),
-    setNotificationWillShowInForegroundHandler: jest.fn().mockImplementation(() => ({
-        thengetNotification: jest.fn(),
-        complete: jest.fn()
-    })),
-    setExternalUserId: jest.fn(),
-    removeExternalUserId: jest.fn(),
+    OneSignal: {
+        Debug: {
+            setLogLevel: jest.fn()
+        },
+        initialize: jest.fn(),
+        Notifications: {
+            requestPermission: jest.fn()
+        },
+        login: jest.fn(),
+        logout: jest.fn()
+    }
 }));
 
 jest.mock('react-native-keyboard-aware-scroll-view', () => {
