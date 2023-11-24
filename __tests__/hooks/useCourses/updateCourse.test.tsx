@@ -75,7 +75,7 @@ describe('Test useCourses hook updateCourse', () => {
         /* Check if status state is equal to respective status */
         expect(result.current.useStatus.state).toEqual({
             code: 200,
-            msg: 'Has actualizado el curso correctamente.'
+            msg: 'Haz actualizado el curso correctamente.'
         });
 
         /* Check if goBack is called one time */

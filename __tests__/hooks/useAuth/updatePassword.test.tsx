@@ -1,21 +1,20 @@
 import { act } from '@testing-library/react-native';
 
-/* Features */
-import { initialState as authInitState, authenticateState, testCredentials } from '../../features/auth';
-import { initialState as statusInitState } from '../../features/status';
-
 /* Hooks */
 import { useNetwork } from '../../../src/hooks';
 
 /* Setup */
 import { getMockStore, onFinishMock, render } from './setup';
 
+/* Mocks */
+import { authenticateStateMock, initialAuthStateMock, initialStatusStateMock, testCredentials, wifiMock } from '../../mocks';
+
 /* Mock hooks */
 jest.mock('../../../src/hooks/useNetwork.ts');
 
 describe('Test in useAuth hook updatePassword', () => {
     (useNetwork as jest.Mock).mockReturnValue({
-        isConnected: true,
+        wifi: wifiMock
     });
 
     beforeEach(() => {
@@ -23,7 +22,7 @@ describe('Test in useAuth hook updatePassword', () => {
     });
 
     it('should update password', async () => {
-        const mockStore = getMockStore({ auth: authInitState, status: statusInitState });
+        const mockStore = getMockStore({ auth: initialAuthStateMock, status: initialStatusStateMock });
         const { result } = render(mockStore);
 
         await act(async () => {
@@ -38,7 +37,7 @@ describe('Test in useAuth hook updatePassword', () => {
 
         /* Check if state is equal to authenticated state */
         expect(result.current.useAuth.state).toEqual({
-            ...authenticateState,
+            ...authenticateStateMock,
             token: expect.any(String),
             user: {
                 id: expect.any(String),
@@ -46,6 +45,7 @@ describe('Test in useAuth hook updatePassword', () => {
                 surname: 'Rivera',
                 email: testCredentials.email,
                 precursor: 'ninguno',
+                hoursRequirement: 0,
                 createdAt: expect.any(String),
                 updatedAt: expect.any(String)
             }
@@ -57,7 +57,7 @@ describe('Test in useAuth hook updatePassword', () => {
         /* Check if status state is equal to respective object */
         expect(result.current.useStatus.state).toEqual({
             code: 200,
-            msg: 'Has actualizado tu contraseña correctamente.'
+            msg: 'Haz actualizado tu contraseña correctamente.'
         });
 
         await act(async () => {
@@ -67,7 +67,7 @@ describe('Test in useAuth hook updatePassword', () => {
     });
 
     it('should fail when password is empty', async () => {
-        const mockStore = getMockStore({ auth: authInitState, status: statusInitState });
+        const mockStore = getMockStore({ auth: initialAuthStateMock, status: initialStatusStateMock });
         const { result } = render(mockStore);
 
         await act(async () => {
@@ -80,7 +80,7 @@ describe('Test in useAuth hook updatePassword', () => {
 
         /* Check if state is equal to authenticated state */
         expect(result.current.useAuth.state).toEqual({
-            ...authenticateState,
+            ...authenticateStateMock,
             token: expect.any(String),
             user: {
                 id: expect.any(String),
@@ -88,6 +88,7 @@ describe('Test in useAuth hook updatePassword', () => {
                 surname: 'Rivera',
                 email: testCredentials.email,
                 precursor: 'ninguno',
+                hoursRequirement: 0,
                 createdAt: expect.any(String),
                 updatedAt: expect.any(String)
             }
@@ -108,7 +109,7 @@ describe('Test in useAuth hook updatePassword', () => {
     });
 
     it('should fail when password is invalid', async () => {
-        const mockStore = getMockStore({ auth: authInitState, status: statusInitState });
+        const mockStore = getMockStore({ auth: initialAuthStateMock, status: initialStatusStateMock });
         const { result } = render(mockStore);
 
         await act(async () => {
@@ -121,7 +122,7 @@ describe('Test in useAuth hook updatePassword', () => {
 
         /* Check if state is equal to authenticated state */
         expect(result.current.useAuth.state).toEqual({
-            ...authenticateState,
+            ...authenticateStateMock,
             token: expect.any(String),
             user: {
                 id: expect.any(String),
@@ -129,6 +130,7 @@ describe('Test in useAuth hook updatePassword', () => {
                 surname: 'Rivera',
                 email: testCredentials.email,
                 precursor: 'ninguno',
+                hoursRequirement: 0,
                 createdAt: expect.any(String),
                 updatedAt: expect.any(String)
             }

@@ -105,7 +105,7 @@ describe('Test in usePreaching updatePreaching', () => {
         /* Check if status state is equal to respective object */
         expect(result.current.useStatus.state).toEqual({
             code: 200,
-            msg: 'Has actualizado tu día de predicación correctamente.'
+            msg: 'Haz actualizado tu día de predicación correctamente.'
         });
 
         /* Check if goBack is called two times */

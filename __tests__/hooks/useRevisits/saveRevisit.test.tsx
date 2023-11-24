@@ -68,7 +68,7 @@ describe('Test useRevisits hook saveRevisit', () => {
         /* Check if status state is equal to respective status */
         expect(result.current.useStatus.state).toEqual({
             code: 201,
-            msg: 'Has agregado tu revisita correctamente.'
+            msg: 'Haz agregado tu revisita correctamente.'
         });
 
         /* Check if onFinish and navigate is called one time with respective arg */
@@ -123,7 +123,7 @@ describe('Test useRevisits hook saveRevisit', () => {
         /* Check if status state is equal to respective status */
         expect(result.current.useStatus.state).toEqual({
             code: 201,
-            msg: `Has agregado correctamente a ${ testRevisit.person_name } para volverla a visitar.`
+            msg: `Haz agregado correctamente a ${ testRevisit.person_name } para volverla a visitar.`
         });
 
         /* Check if onFinish is called one time and navigate inst called */
