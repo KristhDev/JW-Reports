@@ -24,7 +24,7 @@ exports[`Test in <LessonsList /> component should to match snapshot 1`] = `
     <RCTScrollView
       ListEmptyComponent={
         <ListEmptyComponent
-          msg="No has agregado clases a este curso."
+          msg="No haz agregado clases a este curso."
           showMsg={false}
         />
       }
@@ -433,11 +433,9 @@ exports[`Test in <LessonsList /> component should to match snapshot 1`] = `
                     [
                       {
                         "color": "#C0A7E1",
-                        "fontSize": 20,
+                        "fontSize": 21,
                       },
-                      {
-                        "marginLeft": 2,
-                      },
+                      undefined,
                       {
                         "fontFamily": "Ionicons",
                         "fontStyle": "normal",
