@@ -181,7 +181,7 @@ const PublisherHome = (): JSX.Element => {
                 { (!isLastLessonLoading && !lastLesson?.id) && (
                     <InfoText
                         containerStyle={{ marginBottom: 63.75, marginTop: 63.75 }}
-                        text="No has agregado ninguna lección para un curso biblíco."
+                        text="No haz agregado ninguna lección para un curso biblíco."
                     />
                 ) }
 
@@ -215,7 +215,7 @@ const PublisherHome = (): JSX.Element => {
                 { (!isLastRevisitLoading && !lastRevisit?.id) && (
                     <InfoText
                         containerStyle={{ marginBottom: 63.75, marginTop: 63.75 }}
-                        text="No has agregado ninguna revisita."
+                        text="No haz agregado ninguna revisita."
                     />
                 ) }
 

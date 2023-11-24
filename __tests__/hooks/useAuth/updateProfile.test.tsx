@@ -1,25 +1,24 @@
 import { act } from '@testing-library/react-native';
 
-/* Features */
-import { initialState as authInitState, authenticateState, testCredentials } from '../../features/auth';
-import { initialState as statusInitState } from '../../features/status';
-
 /* Hooks */
 import { useNetwork } from '../../../src/hooks';
 
 /* Setup */
 import { getMockStore, render } from './setup';
 
+/* Mocks */
+import { authenticateStateMock, initialAuthStateMock, initialStatusStateMock, testCredentials, wifiMock } from '../../mocks';
+
 /* Mock hooks */
 jest.mock('../../../src/hooks/useNetwork.ts');
 
 describe('Test in useAuth hook updateProfile', () => {
     (useNetwork as jest.Mock).mockReturnValue({
-        isConnected: true,
+        wifi: wifiMock
     });
 
     it('should update user info', async () => {
-        const mockStore = getMockStore({ auth: authInitState, status: statusInitState });
+        const mockStore = getMockStore({ auth: initialAuthStateMock, status: initialStatusStateMock });
         const { result } = render(mockStore);
 
         const newName = 'Gerard';
@@ -30,12 +29,12 @@ describe('Test in useAuth hook updateProfile', () => {
         });
 
         await act(async () => {
-            await result.current.useAuth.updateProfile({ name: newName, surname: newSurname, precursor: 'regular' });
+            await result.current.useAuth.updateProfile({ name: newName, surname: newSurname, precursor: 'regular', hoursRequirement: 50 });
         });
 
         /* Check if state is equal to authenticated state */
         expect(result.current.useAuth.state).toEqual({
-            ...authenticateState,
+            ...authenticateStateMock,
             token: expect.any(String),
             user: {
                 id: expect.any(String),
@@ -43,30 +42,31 @@ describe('Test in useAuth hook updateProfile', () => {
                 surname: newSurname,
                 email: testCredentials.email,
                 precursor: 'regular',
+                hoursRequirement: 50,
                 createdAt: expect.any(String),
                 updatedAt: expect.any(String)
             }
         });
 
         await act(async () => {
-            await result.current.useAuth.updateProfile({ name: 'André', surname: 'Rivera', precursor: 'ninguno' });
+            await result.current.useAuth.updateProfile({ name: 'André', surname: 'Rivera', precursor: 'ninguno', hoursRequirement: 0 });
             await result.current.useAuth.signOut();
         });
     });
 
     it('should fail when user is unauthenticated', async () => {
-        const mockStore = getMockStore({ auth: authInitState, status: statusInitState });
+        const mockStore = getMockStore({ auth: initialAuthStateMock, status: initialStatusStateMock });
         const { result } = render(mockStore);
 
         await act(async () => {
-            await result.current.useAuth.updateProfile({ name: 'AnyName', surname: 'AnySurname', precursor: 'regular' });
+            await result.current.useAuth.updateProfile({ name: 'AnyName', surname: 'AnySurname', precursor: 'regular', hoursRequirement: 50 });
         });
 
         /* Check if state is equal to initial state */
         expect(result.current.useAuth.state).toEqual({
-            ...authInitState,
+            ...initialAuthStateMock,
             user: {
-                ...authInitState.user,
+                ...initialAuthStateMock.user,
                 createdAt: expect.any(String),
                 updatedAt: expect.any(String)
             }

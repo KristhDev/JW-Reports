@@ -53,7 +53,7 @@ describe('Test useCourses hook saveCourse', () => {
         /* Check if status state is equal to respective status */
         expect(result.current.useStatus.state).toEqual({
             code: 201,
-            msg: 'Has agregado un curso correctamente.'
+            msg: 'Haz agregado un curso correctamente.'
         });
 
         /* Check if onFinish and navigate is called one time with respective arg */

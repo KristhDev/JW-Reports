@@ -14,7 +14,7 @@ import { darkColors } from '../../../src/theme';
 /* Mocks */
 import { courseSelectedStateMock, deleteLessonMock, finishOrStartLessonMock, lessonsStateMock, loadLessonsMock, removeLessonsMock, setLessonsPaginationMock, setSelectedLessonMock, wifiMock } from '../../mocks';
 
-const emptyMessageTest = 'No has agregado clases a este curso.';
+const emptyMessageTest = 'No haz agregado clases a este curso.';
 const titleTest = `Clases del curso con ${ lessonsStateMock.selectedCourse.personName }`;
 
 /* Mock hooks */
