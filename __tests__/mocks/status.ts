@@ -18,3 +18,8 @@ export const errorStateMock: StatusState = {
     msg: 'Ocurrio un error',
     code: 400
 }
+
+export const networkStateMock: StatusState = {
+    code: 500,
+    msg: 'Lo sentimos pero no dispones de conexion a Internet. Los datos que hay en la aplicación no son actualizados. Hasta que recuperes la conexión no podras obtener, guardar, editar o eliminar ningún dato.',
+}

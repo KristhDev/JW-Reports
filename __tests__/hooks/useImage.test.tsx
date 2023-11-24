@@ -5,23 +5,22 @@ import { Image } from 'react-native-image-crop-picker';
 import { configureStore } from '@reduxjs/toolkit';
 
 /* Features */
-import { deniedState, grantedState, unavailableState } from '../features/permissions';
-import { initialState as statusInitState } from '../features/status';
-import { permissionsReducer } from '../../src/features/permissions';
-import { statusReducer } from '../../src/features/status';
+import { permissionsReducer, statusReducer } from '../../src/features';
 
 /* Hooks */
 import { useImage, usePermissions, useStatus, useTheme } from '../../src/hooks';
 
 /* Interfaces */
-import { PermissionsState } from '../../src/interfaces/permissions';
-import { StatusState } from '../../src/interfaces/status';
+import { PermissionsState, StatusState } from '../../src/interfaces';
 
 /* Theme */
 import { darkColors } from '../../src/theme/colors';
 
 /* Setup */
 import { openCameraMock, openPickerMock } from '../../jest.setup';
+
+/* Mocks */
+import { deniedStateMock, grantedStateMock, initialStatusStateMock, unavailableStateMock } from '../mocks';
 
 /* Mock hooks */
 jest.mock('../../src/hooks/useTheme.ts');
@@ -107,7 +106,7 @@ describe('Test in useImage hook', () => {
     });
 
     it('should return respective props', () => {
-        const mockStore = getMockStore({ permissions: grantedState, status: statusInitState });
+        const mockStore = getMockStore({ permissions: grantedStateMock, status: initialStatusStateMock });
         const { result } = render(mockStore);
 
         /* Check if hook return respective properties */
@@ -124,7 +123,7 @@ describe('Test in useImage hook', () => {
     it('should get image with takeImageToGallery', async () => {
         openPickerMock.mockImplementation(() => Promise.resolve(mockImage));
 
-        const mockStore = getMockStore({ permissions: grantedState, status: statusInitState });
+        const mockStore = getMockStore({ permissions: grantedStateMock, status: initialStatusStateMock });
         const { result } = render(mockStore);
 
         await act(() => {
@@ -132,12 +131,12 @@ describe('Test in useImage hook', () => {
         });
 
         /* Check if openPicker is called one time and image is equal to mock */
-        expect(openPickerMock).toBeCalledTimes(1);
+        expect(openPickerMock).toHaveBeenCalledTimes(1);
         expect(result.current.useImage.image).toEqual(mockImage);
     });
 
     it('should not access to gallery when permission is denied', async () => {
-        const mockStore = getMockStore({ permissions: deniedState, status: statusInitState });
+        const mockStore = getMockStore({ permissions: deniedStateMock, status: initialStatusStateMock });
 
         const { result } = render(mockStore);
 
@@ -151,7 +150,7 @@ describe('Test in useImage hook', () => {
     });
 
     it('should not access to gallery when permission is unavailable', async () => {
-        const mockStore = getMockStore({ permissions: unavailableState, status: statusInitState });
+        const mockStore = getMockStore({ permissions: unavailableStateMock, status: initialStatusStateMock });
         const { result } = render(mockStore);
 
         await act(async () => {
@@ -166,7 +165,7 @@ describe('Test in useImage hook', () => {
     it('should get image with takePhoto', async () => {
         openCameraMock.mockImplementation(() => Promise.resolve(mockImage));
 
-        const mockStore = getMockStore({ permissions: grantedState, status: statusInitState });
+        const mockStore = getMockStore({ permissions: grantedStateMock, status: initialStatusStateMock });
         const { result } = render(mockStore);
 
         await act(() => {
@@ -174,12 +173,12 @@ describe('Test in useImage hook', () => {
         });
 
         /* Check if openCamera is called one time and image is equal to mock */
-        expect(openCameraMock).toBeCalledTimes(1);
+        expect(openCameraMock).toHaveBeenCalledTimes(1);
         expect(result.current.useImage.image).toEqual(mockImage);
     });
 
     it('should not access to camera when permission is denied', async () => {
-        const mockStore = getMockStore({ permissions: deniedState, status: statusInitState });
+        const mockStore = getMockStore({ permissions: deniedStateMock, status: initialStatusStateMock });
 
         const { result } = render(mockStore);
 
@@ -193,7 +192,7 @@ describe('Test in useImage hook', () => {
     });
 
     it('should not access to camera when permission is unavailable', async () => {
-        const mockStore = getMockStore({ permissions: unavailableState, status: statusInitState });
+        const mockStore = getMockStore({ permissions: unavailableStateMock, status: initialStatusStateMock });
         const { result } = render(mockStore);
 
         await act(async () => {

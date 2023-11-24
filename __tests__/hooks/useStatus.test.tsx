@@ -7,11 +7,13 @@ import { configureStore } from '@reduxjs/toolkit';
 import { useStatus } from '../../src/hooks';
 
 /* Features */
-import { statusReducer } from '../../src/features/status';
-import { errorState, initialState as statusInitState, successState } from '../features/status';
+import { statusReducer } from '../../src/features';
 
 /* Interfaces */
-import { StatusState } from '../../src/interfaces/status';
+import { StatusState } from '../../src/interfaces';
+
+/* Mocks */
+import { initialStatusStateMock, successStateMock, errorStateMock, networkStateMock } from '../mocks';
 
 /**
  * This function returns a mock Redux store with an initial state for a specific reducer.
@@ -52,14 +54,15 @@ const render = (store: any) => {
 
 describe('Test in useStatus hook', () => {
     it('should return the initial state', () => {
-        const mockStore = getMockStore({ ...statusInitState });
+        const mockStore = getMockStore({ ...initialStatusStateMock });
         const { result } = render(mockStore);
 
         /* Check if hook return respective properties */
         expect(result.current).toEqual({
-            state: statusInitState,
+            state: initialStatusStateMock,
             clearStatus: expect.any(Function),
             setErrorForm: expect.any(Function),
+            setNetworkError: expect.any(Function),
             setStatus: expect.any(Function),
             setSupabaseError: expect.any(Function),
             setUnauthenticatedError: expect.any(Function)
@@ -67,26 +70,26 @@ describe('Test in useStatus hook', () => {
     });
 
     it('should change the state with setStatus', () => {
-        const mockStore = getMockStore({ ...statusInitState });
+        const mockStore = getMockStore({ ...initialStatusStateMock });
         const { result } = render(mockStore);
 
         /* Check if state is equal to initial state */
-        expect(result.current.state).toEqual(statusInitState);
+        expect(result.current.state).toEqual(initialStatusStateMock);
 
         act(() => {
-            result.current.setStatus({ ...successState });
+            result.current.setStatus({ ...successStateMock });
         });
 
         /* Check if state is updated */
-        expect(result.current.state).toEqual(successState);
+        expect(result.current.state).toEqual(successStateMock);
     });
 
     it('should change the state with setErrorForm', () => {
-        const mockStore = getMockStore({ ...statusInitState });
+        const mockStore = getMockStore({ ...initialStatusStateMock });
         const { result } = render(mockStore);
 
         /* Check if state is equal to initial state */
-        expect(result.current.state).toEqual(statusInitState);
+        expect(result.current.state).toEqual(initialStatusStateMock);
 
         act(() => {
             result.current.setErrorForm({ name: 'El nombre es obligatorio' });
@@ -100,17 +103,28 @@ describe('Test in useStatus hook', () => {
     });
 
     it('should clean state with clearStatus', () => {
-        const mockStore = getMockStore({ ...errorState });
+        const mockStore = getMockStore({ ...errorStateMock });
         const { result } = render(mockStore);
 
         /* Check if state is equal to error state */
-        expect(result.current.state).toEqual(errorState);
+        expect(result.current.state).toEqual(errorStateMock);
 
         act(() => {
             result.current.clearStatus();
         });
 
         /* Check if state is cleaning */
-        expect(result.current.state).toEqual(statusInitState);
+        expect(result.current.state).toEqual(initialStatusStateMock);
+    });
+
+    it('should set network error with setNetworkError', () => {
+        const mockStore = getMockStore({ ...initialStatusStateMock });
+        const { result } = render(mockStore);
+
+        act(() => {
+            result.current.setNetworkError();
+        });
+
+        expect(result.current.state).toEqual(networkStateMock);
     });
 });

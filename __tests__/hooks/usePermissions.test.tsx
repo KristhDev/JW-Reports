@@ -5,19 +5,16 @@ import { Provider } from 'react-redux';
 import { request } from 'react-native-permissions';
 
 /* Features */
-import { statusReducer } from '../../src/features/status';
-import { permissionsReducer } from '../../src/features/permissions';
+import { statusReducer, permissionsReducer } from '../../src/features';
 
 /* Hooks */
 import { useStatus, usePermissions } from '../../src/hooks';
 
-/* Features test */
-import { initialState as statusInitState, } from '../features/status';
-import { grantedState, initialState as permissionsInitState, } from '../features/permissions';
-
 /* Interfaces */
-import { StatusState } from '../../src/interfaces/status';
-import { PermissionsState } from '../../src/interfaces/permissions';
+import { StatusState, PermissionsState } from '../../src/interfaces';
+
+/* Mocks */
+import { grantedStateMock, initialPermissionsStateMock, initialStatusStateMock } from '../mocks';
 
 /* The `interface InitialState` is defining the shape of an object that contains the initial state for
 the `permissions` and `status` features in the Redux store. This interface is used in the
@@ -72,19 +69,19 @@ const render = (store: any) => {
 
 describe('Test in usePermissions hook', () => {
     it('should return respective props', () => {
-        const mockStore = getMockStore({ permissions: permissionsInitState, status: statusInitState });
+        const mockStore = getMockStore({ permissions: initialPermissionsStateMock, status: initialStatusStateMock });
         const { result } = render(mockStore);
 
         /* Check if hook return respective properties */
         expect(result.current.usePermissions).toEqual({
-            state: permissionsInitState,
+            state: initialPermissionsStateMock,
             checkPermissions: expect.any(Function),
             askPermission: expect.any(Function),
         });
     });
 
     it('should getPermissions with checkPermissions', async () => {
-        const mockStore = getMockStore({ permissions: permissionsInitState, status: statusInitState });
+        const mockStore = getMockStore({ permissions: initialPermissionsStateMock, status: initialStatusStateMock });
         const { result } = render(mockStore);
 
         await act(async () => {
@@ -92,13 +89,13 @@ describe('Test in usePermissions hook', () => {
         });
 
         /* Check if permissions are updated */
-        expect(result.current.usePermissions.state).toEqual(grantedState);
+        expect(result.current.usePermissions.state).toEqual(grantedStateMock);
     });
 
     it('should getPermission with askPermission', async () => {
         (request as jest.Mock).mockImplementation(() => Promise.resolve('denied'));
 
-        const mockStore = getMockStore({ permissions: permissionsInitState, status: statusInitState });
+        const mockStore = getMockStore({ permissions: initialPermissionsStateMock, status: initialStatusStateMock });
         const { result } = render(mockStore);
 
         await act(async () => {
@@ -108,7 +105,7 @@ describe('Test in usePermissions hook', () => {
         /* Check if permissions are updated in property mediaLibrary */
         expect(result.current.usePermissions.state).toEqual({
             permissions: {
-                ...permissionsInitState.permissions,
+                ...initialPermissionsStateMock.permissions,
                 mediaLibrary: 'denied'
             }
         });
@@ -117,7 +114,7 @@ describe('Test in usePermissions hook', () => {
     it('should change status when permission is unavailable', async () => {
         (request as jest.Mock).mockImplementation(() => Promise.resolve('unavailable'));
 
-        const mockStore = getMockStore({ permissions: permissionsInitState, status: statusInitState });
+        const mockStore = getMockStore({ permissions: initialPermissionsStateMock, status: initialStatusStateMock });
         const { result } = render(mockStore);
 
         await act(async () => {
@@ -128,7 +125,7 @@ describe('Test in usePermissions hook', () => {
          * Check if premissions is equal to initial state and status
          * is update with respective data
          */
-        expect(result.current.usePermissions.state).toEqual(permissionsInitState);
+        expect(result.current.usePermissions.state).toEqual(initialPermissionsStateMock);
         expect(result.current.useStatus.state).toEqual({
             msg: 'Lo sentimos pero su dispositivo no soporta está funcionalidad.',
             code: 418
