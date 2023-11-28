@@ -1,10 +1,5 @@
 import { act } from '@testing-library/react-native';
 
-/* Features */
-import { initialState as authInitState } from '../../features/auth';
-import { initialState as revisitsInitState } from '../../features/revisits';
-import { initialState as statusInitState } from '../../features/status';
-
 /* Hooks */
 import { useNetwork, useTheme } from '../../../src/hooks';
 
@@ -14,13 +9,16 @@ import { getMockStore, render } from './setup';
 /* Theme */
 import { darkColors } from '../../../src/theme';
 
+/* Mocks */
+import { initialAuthStateMock, initialRevisitsStateMock, initialStatusStateMock, wifiMock } from '../../mocks';
+
 /* Mock hooks */
 jest.mock('../../../src/hooks/useNetwork.ts');
 jest.mock('../../../src/hooks/useTheme.ts')
 
 describe('Test useRevisits hook setRevisitsPagination', () => {
     (useNetwork as jest.Mock).mockReturnValue({
-        isConnected: true,
+        wifi: wifiMock
     });
 
     (useTheme as jest.Mock).mockReturnValue({
@@ -28,11 +26,11 @@ describe('Test useRevisits hook setRevisitsPagination', () => {
     });
 
     it('should change respective property', async () => {
-        const mockStore = getMockStore({ auth: authInitState, revisits: revisitsInitState, status: statusInitState });
+        const mockStore = getMockStore({ auth: initialAuthStateMock, revisits: initialRevisitsStateMock, status: initialStatusStateMock });
         const { result } = render(mockStore);
 
         await act(async () => {
-            await result.current.useRevisits.setRevisitsPagination({
+            result.current.useRevisits.setRevisitsPagination({
                 from: 10,
                 to: 19
             });
@@ -40,7 +38,7 @@ describe('Test useRevisits hook setRevisitsPagination', () => {
 
         /* Check if revisitsPagination is updated */
         expect(result.current.useRevisits.state).toEqual({
-            ...revisitsInitState,
+            ...initialRevisitsStateMock,
             revisitsPagination: {
                 from: 10,
                 to: 19
@@ -48,7 +46,7 @@ describe('Test useRevisits hook setRevisitsPagination', () => {
         });
 
         await act(async () => {
-            await result.current.useRevisits.setRevisitsPagination({
+            result.current.useRevisits.setRevisitsPagination({
                 from: 0,
                 to: 9
             });
@@ -56,7 +54,7 @@ describe('Test useRevisits hook setRevisitsPagination', () => {
 
         /* Check if revisitsPagination is updated */
         expect(result.current.useRevisits.state).toEqual({
-            ...revisitsInitState,
+            ...initialRevisitsStateMock,
             revisitsPagination: {
                 from: 0,
                 to: 9

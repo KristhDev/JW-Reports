@@ -1,10 +1,5 @@
 import { act } from '@testing-library/react-native';
 
-/* Features */
-import { initialState as authInitState } from '../../features/auth';
-import { initialState as revisitsInitState } from '../../features/revisits';
-import { initialState as statusInitState } from '../../features/status';
-
 /* Hooks */
 import { useNetwork, useTheme } from '../../../src/hooks';
 
@@ -14,13 +9,16 @@ import { getMockStore, render } from './setup';
 /* Theme */
 import { darkColors } from '../../../src/theme';
 
+/* Mocks */
+import { initialAuthStateMock, initialRevisitsStateMock, initialStatusStateMock, wifiMock } from '../../mocks';
+
 /* Mock hooks */
 jest.mock('../../../src/hooks/useNetwork.ts');
 jest.mock('../../../src/hooks/useTheme.ts')
 
 describe('Test useRevisits hook setRefreshRevisits', () => {
     (useNetwork as jest.Mock).mockReturnValue({
-        isConnected: true,
+        wifi: wifiMock
     });
 
     (useTheme as jest.Mock).mockReturnValue({
@@ -28,26 +26,26 @@ describe('Test useRevisits hook setRefreshRevisits', () => {
     });
 
     it('should change respective property', async () => {
-        const mockStore = getMockStore({ auth: authInitState, revisits: revisitsInitState, status: statusInitState });
+        const mockStore = getMockStore({ auth: initialAuthStateMock, revisits: initialRevisitsStateMock, status: initialStatusStateMock });
         const { result } = render(mockStore);
 
         await act(async () => {
-            await result.current.useRevisits.setRefreshRevisits(true);
+            result.current.useRevisits.setRefreshRevisits(true);
         });
 
         /* Check if refreshRevisits is changed */
         expect(result.current.useRevisits.state).toEqual({
-            ...revisitsInitState,
+            ...initialRevisitsStateMock,
             refreshRevisits: true
         });
 
         await act(async () => {
-            await result.current.useRevisits.setRefreshRevisits(false);
+            result.current.useRevisits.setRefreshRevisits(false);
         });
 
         /* Check if refreshRevisits is changed */
         expect(result.current.useRevisits.state).toEqual({
-            ...revisitsInitState,
+            ...initialRevisitsStateMock,
             refreshRevisits: false
         });
     });

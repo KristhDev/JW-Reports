@@ -1,15 +1,10 @@
 import { act } from '@testing-library/react-native';
 
-/* Features */
-import { initialState as authInitState, testCredentials } from '../../features/auth';
-import { initialState as revisitsInitState } from '../../features/revisits';
-import { initialState as statusInitState } from '../../features/status';
-
 /* Hooks */
 import { useNetwork, useTheme } from '../../../src/hooks';
 
 /* Setup */
-import { getMockStore, onFinishMock, render, testRevisit } from './setup';
+import { getMockStore, onFinishMock, render } from './setup';
 
 /* Theme */
 import { darkColors } from '../../../src/theme';
@@ -17,13 +12,16 @@ import { darkColors } from '../../../src/theme';
 /* Setup */
 import { goBackMock } from '../../../jest.setup';
 
+/* Mocks */
+import { initialAuthStateMock, initialRevisitsStateMock, initialStatusStateMock, testCredentials, testRevisit, wifiMock } from '../../mocks';
+
 /* Mock hooks */
 jest.mock('../../../src/hooks/useNetwork.ts');
 jest.mock('../../../src/hooks/useTheme.ts');
 
 describe('Test useRevisits hook updateRevisit', () => {
     (useNetwork as jest.Mock).mockReturnValue({
-        isConnected: true,
+        wifi: wifiMock,
     });
 
     (useTheme as jest.Mock).mockReturnValue({
@@ -35,7 +33,7 @@ describe('Test useRevisits hook updateRevisit', () => {
     });
 
     it('should update revisit successfully', async () => {
-        const mockStore = getMockStore({ auth: authInitState, revisits: revisitsInitState, status: statusInitState });
+        const mockStore = getMockStore({ auth: initialAuthStateMock, revisits: initialRevisitsStateMock, status: initialStatusStateMock });
         const { result } = render(mockStore);
 
         await act(async () => {
@@ -51,37 +49,48 @@ describe('Test useRevisits hook updateRevisit', () => {
         });
 
         await act(async () => {
-            await result.current.useRevisits.setSelectedRevisit(result.current.useRevisits.state.revisits[0]);
+            result.current.useRevisits.setSelectedRevisit(result.current.useRevisits.state.revisits[0]);
         });
 
         await act(async () => {
-            await result.current.useRevisits.updateRevisit({ ...testRevisit, person_name: 'Chris Frami' });
+            await result.current.useRevisits.updateRevisit({ ...testRevisit, personName: 'Chris Frami' });
         });
 
         /* Check if revisits and selectedRevisit is updated */
         expect(result.current.useRevisits.state).toEqual({
-            ...revisitsInitState,
+            ...initialRevisitsStateMock,
             revisits: [{
                 ...testRevisit,
                 id: expect.any(String),
-                user_id: result.current.useAuth.state.user.id,
-                person_name: 'Chris Frami',
-                next_visit: expect.any(String),
+                userId: result.current.useAuth.state.user.id,
+                personName: 'Chris Frami',
+                nextVisit: expect.any(String),
                 photo: null,
                 done: false,
-                created_at: expect.any(String),
-                updated_at: expect.any(String)
+                createdAt: expect.any(String),
+                updatedAt: expect.any(String)
             }],
             selectedRevisit: {
                 ...testRevisit,
                 id: expect.any(String),
-                user_id: result.current.useAuth.state.user.id,
-                person_name: 'Chris Frami',
-                next_visit: expect.any(String),
+                userId: result.current.useAuth.state.user.id,
+                personName: 'Chris Frami',
+                nextVisit: expect.any(String),
                 photo: null,
                 done: false,
-                created_at: expect.any(String),
-                updated_at: expect.any(String)
+                createdAt: expect.any(String),
+                updatedAt: expect.any(String)
+            },
+            lastRevisit: {
+                ...testRevisit,
+                id: expect.any(String),
+                userId: result.current.useAuth.state.user.id,
+                personName: 'Chris Frami',
+                nextVisit: expect.any(String),
+                photo: null,
+                done: false,
+                createdAt: expect.any(String),
+                updatedAt: expect.any(String)
             }
         });
 
@@ -104,7 +113,7 @@ describe('Test useRevisits hook updateRevisit', () => {
     });
 
     it('should fail when user inst authenticated', async () => {
-        const mockStore = getMockStore({ auth: authInitState, revisits: revisitsInitState, status: statusInitState });
+        const mockStore = getMockStore({ auth: initialAuthStateMock, revisits: initialRevisitsStateMock, status: initialStatusStateMock });
         const { result } = render(mockStore);
 
         await act(async () => {
@@ -112,7 +121,7 @@ describe('Test useRevisits hook updateRevisit', () => {
         });
 
         /* Check if revisits state inst changed */
-        expect(result.current.useRevisits.state).toEqual(revisitsInitState);
+        expect(result.current.useRevisits.state).toEqual(initialRevisitsStateMock);
 
         /* Check if status state is equal to respective status */
         expect(result.current.useStatus.state).toEqual({
@@ -122,7 +131,7 @@ describe('Test useRevisits hook updateRevisit', () => {
     });
 
     it('should fail when selectedRevisit is empty', async () => {
-        const mockStore = getMockStore({ auth: authInitState, revisits: revisitsInitState, status: statusInitState });
+        const mockStore = getMockStore({ auth: initialAuthStateMock, revisits: initialRevisitsStateMock, status: initialStatusStateMock });
         const { result } = render(mockStore);
 
         await act(async () => {
@@ -134,7 +143,7 @@ describe('Test useRevisits hook updateRevisit', () => {
         });
 
         /* Check if revisits state inst changed */
-        expect(result.current.useRevisits.state).toEqual(revisitsInitState);
+        expect(result.current.useRevisits.state).toEqual(initialRevisitsStateMock);
 
         /* Check if status state is equal to respective status */
         expect(result.current.useStatus.state).toEqual({
@@ -144,7 +153,7 @@ describe('Test useRevisits hook updateRevisit', () => {
     });
 
     it('should fail when data is invalid', async () => {
-        const mockStore = getMockStore({ auth: authInitState, revisits: revisitsInitState, status: statusInitState });
+        const mockStore = getMockStore({ auth: initialAuthStateMock, revisits: initialRevisitsStateMock, status: initialStatusStateMock });
         const { result } = render(mockStore);
 
         await act(async () => {
@@ -160,35 +169,45 @@ describe('Test useRevisits hook updateRevisit', () => {
         });
 
         await act(async () => {
-            await result.current.useRevisits.setSelectedRevisit(result.current.useRevisits.state.revisits[0]);
+            result.current.useRevisits.setSelectedRevisit(result.current.useRevisits.state.revisits[0]);
         });
 
         await act(async () => {
-            await result.current.useRevisits.updateRevisit({ ...testRevisit, next_visit: new Date('invalid') });
+            await result.current.useRevisits.updateRevisit({ ...testRevisit, nextVisit: new Date('invalid') });
         });
 
         /* Check if revisits and selectedRevisits inst updated */
         expect(result.current.useRevisits.state).toEqual({
-            ...revisitsInitState,
+            ...initialRevisitsStateMock,
             revisits: [{
                 ...testRevisit,
                 id: expect.any(String),
-                user_id: result.current.useAuth.state.user.id,
-                next_visit: expect.any(String),
+                userId: result.current.useAuth.state.user.id,
+                nextVisit: expect.any(String),
                 photo: null,
                 done: false,
-                created_at: expect.any(String),
-                updated_at: expect.any(String)
+                createdAt: expect.any(String),
+                updatedAt: expect.any(String)
             }],
             selectedRevisit: {
                 ...testRevisit,
                 id: expect.any(String),
-                user_id: result.current.useAuth.state.user.id,
-                next_visit: expect.any(String),
+                userId: result.current.useAuth.state.user.id,
+                nextVisit: expect.any(String),
                 photo: null,
                 done: false,
-                created_at: expect.any(String),
-                updated_at: expect.any(String)
+                createdAt: expect.any(String),
+                updatedAt: expect.any(String)
+            },
+            lastRevisit: {
+                ...testRevisit,
+                id: expect.any(String),
+                userId: result.current.useAuth.state.user.id,
+                nextVisit: expect.any(String),
+                photo: null,
+                done: false,
+                createdAt: expect.any(String),
+                updatedAt: expect.any(String)
             }
         });
 

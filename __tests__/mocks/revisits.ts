@@ -14,6 +14,13 @@ export const setRevisitsPaginationMock = jest.fn();
 export const setSelectedRevisitMock = jest.fn();
 export const updateRevisitMock = jest.fn();
 
+export const testRevisit = {
+    about: 'Itaque quidem enim neque laudantium ducimus nesciunt provident consequuntur.',
+    address: 'Ut non et similique aliquam quaerat consequatur iste ut quod.',
+    nextVisit: new Date('2023-03-20T00:00:00.000Z'),
+    personName: 'Karlee Senger'
+}
+
 export const revisitsMock: Revisit[] = [
     {
         id: '7345fc2b-b5d3-4000-ba17-a85ae1d5a85d',
