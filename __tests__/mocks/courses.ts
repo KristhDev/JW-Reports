@@ -7,6 +7,7 @@ export const deleteLessonMock = jest.fn();
 export const finishOrStartCourseMock = jest.fn();
 export const finishOrStartLessonMock = jest.fn();
 export const loadCoursesMock = jest.fn();
+export const loadLastLessonMock = jest.fn();
 export const loadLessonsMock = jest.fn();
 export const removeCoursesMock = jest.fn();
 export const removeLessonsMock = jest.fn();
@@ -270,6 +271,38 @@ export const courseSelectedStateMock: CoursesState = {
         updatedAt: '2021-08-26T15:00:00.000Z'
     },
     lessons: [],
+    lessonsPagination: {
+        from: 0,
+        to: 9
+    },
+    refreshCourses: false,
+    refreshLessons: false,
+    selectedCourse: coursesMock[0],
+    selectedLesson: INIT_LESSON
+}
+
+export const lastLessonStateMock: CoursesState = {
+    courseFilter: 'all',
+    courses: coursesMock,
+    coursesPagination: {
+        from: 0,
+        to: 9
+    },
+    coursesScreenHistory: [],
+    hasMoreCourses: false,
+    hasMoreLessons: false,
+    isCourseDeleting: false,
+    isCourseLoading: false,
+    isCoursesLoading: false,
+    isLastLessonLoading: false,
+    isLessonDeleting: false,
+    isLessonLoading: false,
+    isLessonsLoading: false,
+    lastLesson: {
+        ...lessonsMock[0],
+        course: coursesMock[0]
+    },
+    lessons: [ lessonsMock[0] ],
     lessonsPagination: {
         from: 0,
         to: 9

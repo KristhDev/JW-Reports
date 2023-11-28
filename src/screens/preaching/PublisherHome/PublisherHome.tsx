@@ -173,7 +173,7 @@ const PublisherHome = (): JSX.Element => {
                         color={ colors.button }
                         size={ 50 }
                         style={{ marginBottom: 63.75, marginTop: 63.75 }}
-                        testID="home-loading"
+                        testID="last-lesson-loading"
                     />
                 ) }
 
@@ -207,7 +207,7 @@ const PublisherHome = (): JSX.Element => {
                         color={ colors.button }
                         size={ 50 }
                         style={{ marginBottom: 63.75, marginTop: 63.75 }}
-                        testID="home-loading"
+                        testID="last-revisit-loading"
                     />
                 ) }
 

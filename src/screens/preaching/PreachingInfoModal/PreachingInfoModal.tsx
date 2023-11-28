@@ -30,7 +30,7 @@ import styles from './styles';
  *
  * @param {ModalProps} isOpen - Whether the modal is open or not.
  * @param {() => void} onClose - Function to close the modal.
- * @return {ReactNode} - The preaching information modal component.
+ * @return {JSX.Element} - The preaching information modal component.
  */
 const PreachingInfoModal: FC<ModalProps> = ({ isOpen, onClose }): JSX.Element => {
     const { state: { user } } = useAuth();

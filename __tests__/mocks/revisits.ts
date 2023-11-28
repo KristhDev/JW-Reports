@@ -3,6 +3,7 @@ import { Revisit, RevisitsState } from '../../src/interfaces';
 
 export const completeRevisitMock = jest.fn();
 export const deleteRevisitMock = jest.fn();
+export const loadLastRevisitMock = jest.fn();
 export const loadRevisitsMock = jest.fn();
 export const onDeleteMock = jest.fn();
 export const onPassMock = jest.fn();
@@ -171,6 +172,24 @@ export const initialRevisitsStateMock: RevisitsState = {
         createdAt: '2023-03-19T00:00:00.000Z',
         updatedAt: '2023-03-19T00:00:00.000Z'
     }
+}
+
+export const lastRevisitStateMock: RevisitsState = {
+    hasMoreRevisits: true,
+    isLastRevisitLoading: false,
+    isRevisitDeleting: false,
+    isRevisitLoading: false,
+    isRevisitsLoading: false,
+    refreshRevisits: false,
+    revisitFilter: 'all',
+    revisits: [],
+    revisitsPagination: {
+        from: 10,
+        to: 19,
+    },
+    revisitsScreenHistory: [],
+    selectedRevisit: INIT_REVISIT,
+    lastRevisit: revisitsMock[0]
 }
 
 export const revisitsStateMock: RevisitsState = {
