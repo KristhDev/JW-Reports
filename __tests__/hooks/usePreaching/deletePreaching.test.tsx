@@ -1,24 +1,20 @@
 import { act } from '@testing-library/react-native';
 
-/* Features */
-import { initialState as authInitState, testCredentials } from '../../features/auth';
-import { coursesState } from '../../features/courses';
-import { initialState as preachingInitState, preachingSelectedState } from '../../features/preaching';
-import { revisitsState } from '../../features/revisits';
-import { initialState as statusInitState } from '../../features/status';
-
 /* Hooks */
 import { useNetwork } from '../../../src/hooks';
 
 /* Setup */
 import { getMockStoreComplete, onFinishMock, render } from './setup';
 
+/* Mocks */
+import { coursesStateMock, initialAuthStateMock, initialPreachingStateMock, initialStatusStateMock, preachingSelectedStateMock, revisitsStateMock, testCredentials, wifiMock } from '../../mocks';
+
 /* Mock hooks */
 jest.mock('../../../src/hooks/useNetwork.ts');
 
 describe('Test usePreaching hook deletePreaching', () => {
     (useNetwork as jest.Mock).mockReturnValue({
-        isConnected: true,
+        wifi: wifiMock
     });
 
     beforeEach(() => {
@@ -27,14 +23,14 @@ describe('Test usePreaching hook deletePreaching', () => {
 
     it('should delete preaching day successfully', async () => {
         const mockStore = getMockStoreComplete({
-            auth: authInitState,
-            courses: coursesState,
+            auth: initialAuthStateMock,
+            courses: coursesStateMock,
             preaching: {
-                ...preachingInitState,
+                ...initialPreachingStateMock,
                 selectedDate: new Date()
             },
-            revisits: revisitsState,
-            status: statusInitState
+            revisits: revisitsStateMock,
+            status: initialStatusStateMock
         });
 
         const { result } = render(mockStore);
@@ -46,14 +42,11 @@ describe('Test usePreaching hook deletePreaching', () => {
         await act(async () => {
             await result.current.usePreaching.savePreaching({
                 day: new Date(),
-                init_hour: new Date(),
-                final_hour: new Date(),
-                publications: 2,
-                revisits: 0,
-                videos: 0
+                initHour: new Date(),
+                finalHour: new Date(),
             });
 
-            await result.current.usePreaching.setSelectedPreaching(result.current.usePreaching.state.preachings[0]);
+            result.current.usePreaching.setSelectedPreaching(result.current.usePreaching.state.preachings[0]);
         });
 
         await act(async () => {
@@ -65,15 +58,15 @@ describe('Test usePreaching hook deletePreaching', () => {
 
         /* Check if state is equal to preachings state */
         expect(result.current.usePreaching.state).toEqual({
-            ...preachingInitState,
+            ...initialPreachingStateMock,
             selectedDate: expect.any(Date),
             seletedPreaching: {
-                ...preachingInitState.seletedPreaching,
+                ...initialPreachingStateMock.seletedPreaching,
                 day: expect.any(String),
-                init_hour: expect.any(String),
-                final_hour: expect.any(String),
-                created_at: expect.any(String),
-                updated_at: expect.any(String)
+                initHour: expect.any(String),
+                finalHour: expect.any(String),
+                createdAt: expect.any(String),
+                updatedAt: expect.any(String)
             }
         });
 
@@ -90,11 +83,11 @@ describe('Test usePreaching hook deletePreaching', () => {
 
     it('should fail when selectedPreaching is empty', async () => {
         const mockStore = getMockStoreComplete({
-            auth: authInitState,
-            courses: coursesState,
-            preaching: preachingInitState,
-            revisits: revisitsState,
-            status: statusInitState
+            auth: initialAuthStateMock,
+            courses: coursesStateMock,
+            preaching: initialPreachingStateMock,
+            revisits: revisitsStateMock,
+            status: initialStatusStateMock
         });
 
         const { result } = render(mockStore);
@@ -118,15 +111,15 @@ describe('Test usePreaching hook deletePreaching', () => {
 
         /* Check if state is equal to preachings state */
         expect(result.current.usePreaching.state).toEqual({
-            ...preachingInitState,
+            ...initialPreachingStateMock,
             selectedDate: expect.any(Date),
             seletedPreaching: {
-                ...preachingInitState.seletedPreaching,
+                ...initialPreachingStateMock.seletedPreaching,
                 day: expect.any(String),
-                init_hour: expect.any(String),
-                final_hour: expect.any(String),
-                created_at: expect.any(String),
-                updated_at: expect.any(String)
+                initHour: expect.any(String),
+                finalHour: expect.any(String),
+                createdAt: expect.any(String),
+                updatedAt: expect.any(String)
             }
         });
 
@@ -137,11 +130,11 @@ describe('Test usePreaching hook deletePreaching', () => {
 
     it('should fail when user is unauthenticated', async () => {
         const mockStore = getMockStoreComplete({
-            auth: authInitState,
-            courses: coursesState,
-            preaching: preachingSelectedState,
-            revisits: revisitsState,
-            status: statusInitState
+            auth: initialAuthStateMock,
+            courses: coursesStateMock,
+            preaching: preachingSelectedStateMock,
+            revisits: revisitsStateMock,
+            status: initialStatusStateMock
         });
 
         const { result } = render(mockStore);
@@ -161,26 +154,26 @@ describe('Test usePreaching hook deletePreaching', () => {
 
         /* Check if state is equal to preachings state */
         expect(result.current.usePreaching.state).toEqual({
-            ...preachingSelectedState,
+            ...preachingSelectedStateMock,
             selectedDate: expect.any(Date),
             seletedPreaching: {
-                ...preachingSelectedState.seletedPreaching,
+                ...preachingSelectedStateMock.seletedPreaching,
                 day: expect.any(String),
-                init_hour: expect.any(String),
-                final_hour: expect.any(String),
-                created_at: expect.any(String),
-                updated_at: expect.any(String)
+                initHour: expect.any(String),
+                finalHour: expect.any(String),
+                createdAt: expect.any(String),
+                updatedAt: expect.any(String)
             }
         });
     });
 
     it('should fail when preaching day does not belong to user', async () => {
         const mockStore = getMockStoreComplete({
-            auth: authInitState,
-            courses: coursesState,
-            preaching: preachingSelectedState,
-            revisits: revisitsState,
-            status: statusInitState
+            auth: initialAuthStateMock,
+            courses: coursesStateMock,
+            preaching: preachingSelectedStateMock,
+            revisits: revisitsStateMock,
+            status: initialStatusStateMock
         });
 
         const { result } = render(mockStore);
@@ -204,15 +197,15 @@ describe('Test usePreaching hook deletePreaching', () => {
 
         /* Check if state is equal to preachings state */
         expect(result.current.usePreaching.state).toEqual({
-            ...preachingSelectedState,
+            ...preachingSelectedStateMock,
             selectedDate: expect.any(Date),
             seletedPreaching: {
-                ...preachingSelectedState.seletedPreaching,
+                ...preachingSelectedStateMock.seletedPreaching,
                 day: expect.any(String),
-                init_hour: expect.any(String),
-                final_hour: expect.any(String),
-                created_at: expect.any(String),
-                updated_at: expect.any(String)
+                initHour: expect.any(String),
+                finalHour: expect.any(String),
+                createdAt: expect.any(String),
+                updatedAt: expect.any(String)
             }
         });
 
