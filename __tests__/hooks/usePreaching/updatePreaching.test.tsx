@@ -1,12 +1,5 @@
 import { act } from '@testing-library/react-native';
 
-/* Features */
-import { initialState as authInitState, testCredentials } from '../../features/auth';
-import { coursesState } from '../../features/courses';
-import { initialState as preachingInitState } from '../../features/preaching';
-import { revisitsState } from '../../features/revisits';
-import { initialState as statusInitState } from '../../features/status';
-
 /* Hooks */
 import { useNetwork } from '../../../src/hooks';
 
@@ -14,12 +7,15 @@ import { useNetwork } from '../../../src/hooks';
 import { getMockStoreComplete, render } from './setup';
 import { goBackMock } from '../../../jest.setup';
 
+/* Mocks */
+import { coursesStateMock, initialAuthStateMock, initialPreachingStateMock, initialStatusStateMock, revisitsStateMock, testCredentials, wifiMock } from '../../mocks';
+
 /* Mock hooks */
 jest.mock('../../../src/hooks/useNetwork.ts');
 
 describe('Test in usePreaching updatePreaching', () => {
     (useNetwork as jest.Mock).mockReturnValue({
-        isConnected: true,
+        wifi: wifiMock,
     });
 
     beforeEach(() => {
@@ -28,14 +24,14 @@ describe('Test in usePreaching updatePreaching', () => {
 
     it('should update preaching day successfully', async () => {
         const mockStore = getMockStoreComplete({
-            auth: authInitState,
-            courses: coursesState,
+            auth: initialAuthStateMock,
+            courses: coursesStateMock,
             preaching: {
-                ...preachingInitState,
+                ...initialPreachingStateMock,
                 selectedDate: new Date()
             },
-            revisits: revisitsState,
-            status: statusInitState
+            revisits: revisitsStateMock,
+            status: initialStatusStateMock
         });
 
         const { result } = render(mockStore);
@@ -47,56 +43,44 @@ describe('Test in usePreaching updatePreaching', () => {
         await act(async () => {
             await result.current.usePreaching.savePreaching({
                 day: new Date(),
-                init_hour: new Date(),
-                final_hour: new Date(),
-                publications: 2,
-                revisits: 0,
-                videos: 0
+                initHour: new Date(),
+                finalHour: new Date()
             });
         });
 
-        await act(async () => {
-            await result.current.usePreaching.setSelectedPreaching(result.current.usePreaching.state.preachings[0]);
+        await act(() => {
+            result.current.usePreaching.setSelectedPreaching(result.current.usePreaching.state.preachings[0]);
         });
 
         await act(async () => {
             await result.current.usePreaching.updatePreaching({
                 day: new Date(),
-                init_hour: new Date(),
-                final_hour: new Date(),
-                publications: 2,
-                revisits: 2,
-                videos: 1
+                initHour: new Date(),
+                finalHour: new Date()
             });
         });
 
         /* Check if state is equal to initial state */
         expect(result.current.usePreaching.state).toEqual({
-            ...preachingInitState,
+            ...initialPreachingStateMock,
             selectedDate: expect.any(Date),
             preachings: [{
                 id: expect.any(String),
-                user_id: result.current.useAuth.state.user.id,
+                userId: result.current.useAuth.state.user.id,
                 day: expect.any(String),
-                init_hour: expect.any(String),
-                final_hour: expect.any(String),
-                publications: 2,
-                revisits: 2,
-                videos: 1,
-                created_at: expect.any(String),
-                updated_at: expect.any(String)
+                initHour: expect.any(String),
+                finalHour: expect.any(String),
+                createdAt: expect.any(String),
+                updatedAt: expect.any(String)
             }],
             seletedPreaching: {
                 id: '',
-                user_id: '',
+                userId: '',
                 day: expect.any(String),
-                init_hour: expect.any(String),
-                final_hour: expect.any(String),
-                publications: 0,
-                revisits: 0,
-                videos: 0,
-                created_at: expect.any(String),
-                updated_at: expect.any(String)
+                initHour: expect.any(String),
+                finalHour: expect.any(String),
+                createdAt: expect.any(String),
+                updatedAt: expect.any(String)
             }
         });
 
@@ -122,14 +106,14 @@ describe('Test in usePreaching updatePreaching', () => {
 
     it('should fail when user inst authenticated', async () => {
         const mockStore = getMockStoreComplete({
-            auth: authInitState,
-            courses: coursesState,
+            auth: initialAuthStateMock,
+            courses: coursesStateMock,
             preaching: {
-                ...preachingInitState,
+                ...initialPreachingStateMock,
                 selectedDate: new Date()
             },
-            revisits: revisitsState,
-            status: statusInitState
+            revisits: revisitsStateMock,
+            status: initialStatusStateMock
         });
 
         const { result } = render(mockStore);
@@ -137,17 +121,14 @@ describe('Test in usePreaching updatePreaching', () => {
         await act(async () => {
             await result.current.usePreaching.updatePreaching({
                 day: new Date(),
-                init_hour: new Date(),
-                final_hour: new Date(),
-                publications: 2,
-                revisits: 2,
-                videos: 1
+                initHour: new Date(),
+                finalHour: new Date()
             });
         });
 
         /* Check if state is equal to initial state */
         expect(result.current.usePreaching.state).toEqual({
-            ...preachingInitState,
+            ...initialPreachingStateMock,
             selectedDate: expect.any(Date)
         });
 
@@ -160,14 +141,14 @@ describe('Test in usePreaching updatePreaching', () => {
 
     it('should fail when selectedPreaching is empty', async () => {
         const mockStore = getMockStoreComplete({
-            auth: authInitState,
-            courses: coursesState,
+            auth: initialAuthStateMock,
+            courses: coursesStateMock,
             preaching: {
-                ...preachingInitState,
+                ...initialPreachingStateMock,
                 selectedDate: new Date()
             },
-            revisits: revisitsState,
-            status: statusInitState
+            revisits: revisitsStateMock,
+            status: initialStatusStateMock
         });
 
         const { result } = render(mockStore);
@@ -179,17 +160,14 @@ describe('Test in usePreaching updatePreaching', () => {
         await act(async () => {
             await result.current.usePreaching.updatePreaching({
                 day: new Date(),
-                init_hour: new Date(),
-                final_hour: new Date(),
-                publications: 2,
-                revisits: 2,
-                videos: 1
+                initHour: new Date(),
+                finalHour: new Date()
             });
         });
 
         /* Check if state is equal to initial state */
         expect(result.current.usePreaching.state).toEqual({
-            ...preachingInitState,
+            ...initialPreachingStateMock,
             selectedDate: expect.any(Date)
         });
 

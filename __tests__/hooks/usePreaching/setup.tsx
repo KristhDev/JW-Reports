@@ -4,21 +4,13 @@ import { configureStore } from '@reduxjs/toolkit';
 import { renderHook } from '@testing-library/react-native';
 
 /* Features */
-import { authReducer } from '../../../src/features/auth';
-import { coursesReducer } from '../../../src/features/courses';
-import { preachingReducer } from '../../../src/features/preaching';
-import { revisitsReducer } from '../../../src/features/revisits';
-import { statusReducer } from '../../../src/features/status';
+import { authReducer, coursesReducer, preachingReducer, revisitsReducer, statusReducer } from '../../../src/features';
 
 /* Hooks */
 import { useAuth, usePreaching, useStatus } from '../../../src/hooks';
 
 /* Interfaces */
-import { AuthState } from '../../../src/interfaces/auth';
-import { CoursesState } from '../../../src/interfaces/courses';
-import { PreachingState } from '../../../src/interfaces/preaching';
-import { RevisitsState } from '../../../src/interfaces/revisits';
-import { StatusState } from '../../../src/interfaces/status';
+import { AuthState, CoursesState, PreachingState, RevisitsState, StatusState } from '../../../src/interfaces';
 
 /* `export interface InitialState` is defining an interface for the initial state of the Redux store.
 It includes three properties: `auth`, `preaching`, and `status`, each of which corresponds to a

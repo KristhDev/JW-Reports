@@ -1,35 +1,33 @@
 import { act } from '@testing-library/react-native';
 
-/* Features */
-import { initialState as authInitState } from '../../features/auth';
-import { initialState as preachingInitState } from '../../features/preaching';
-import { initialState as statusInitState } from '../../features/status';
-
 /* Hooks */
 import { useNetwork } from '../../../src/hooks';
 
 /* Setup */
 import { getMockStore, render } from './setup';
 
+/* Mocks */
+import { initialAuthStateMock, initialPreachingStateMock, initialStatusStateMock, wifiMock } from '../../mocks';
+
 /* Mock hooks */
 jest.mock('../../../src/hooks/useNetwork.ts');
 
 describe('Test usePreaching hook setSelectedDate', () => {
     (useNetwork as jest.Mock).mockReturnValue({
-        isConnected: true,
+        wifi: wifiMock,
     });
 
     it('should change respective property', async () => {
-        const mockStore = getMockStore({ auth: authInitState, preaching: preachingInitState, status: statusInitState });
+        const mockStore = getMockStore({ auth: initialAuthStateMock, preaching: initialPreachingStateMock, status: initialStatusStateMock });
         const { result } = render(mockStore);
 
-        await act(async () => {
-            await result.current.usePreaching.setSelectedDate(new Date('2023-03-17'));
+        await act(() => {
+            result.current.usePreaching.setSelectedDate(new Date('2023-03-17'));
         });
 
         /* Check if selectedDate is changed */
         expect(result.current.usePreaching.state).toEqual({
-            ...preachingInitState,
+            ...initialPreachingStateMock,
             selectedDate: new Date('2023-03-17')
         });
     });
