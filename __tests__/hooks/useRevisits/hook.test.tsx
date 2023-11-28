@@ -1,9 +1,3 @@
-
-/* Features */
-import { initialState as authInitState } from '../../features/auth';
-import { initialState as revisitsInitState } from '../../features/revisits';
-import { initialState as statusInitState } from '../../features/status';
-
 /* Hooks */
 import { useNetwork, useTheme } from '../../../src/hooks';
 
@@ -13,13 +7,16 @@ import { getMockStore, render } from './setup';
 /* Theme */
 import { darkColors } from '../../../src/theme';
 
+/* Mocks */
+import { initialAuthStateMock, initialRevisitsStateMock, initialStatusStateMock, wifiMock } from '../../mocks';
+
 /* Mock hooks */
 jest.mock('../../../src/hooks/useNetwork.ts');
 jest.mock('../../../src/hooks/useTheme.ts');
 
 describe('Test useRevisits hook', () => {
     (useNetwork as jest.Mock).mockReturnValue({
-        isConnected: true,
+        wifi: wifiMock
     });
 
     (useTheme as jest.Mock).mockReturnValue({
@@ -27,23 +24,26 @@ describe('Test useRevisits hook', () => {
     });
 
     it('should return respective props', () => {
-        const mockStore = getMockStore({ auth: authInitState, revisits: revisitsInitState, status: statusInitState });
+        const mockStore = getMockStore({ auth: initialAuthStateMock, revisits: initialRevisitsStateMock, status: initialStatusStateMock });
         const { result } = render(mockStore);
 
         /* Check if the hook return respective properties */
         expect(result.current.useRevisits).toEqual({
-            state: revisitsInitState,
+            state: initialRevisitsStateMock,
+
             clearRevisits: expect.any(Function),
             removeRevisits: expect.any(Function),
             setRefreshRevisits: expect.any(Function),
             setRevisitsPagination: expect.any(Function),
             setRevisitsScreenHistory: expect.any(Function),
             setSelectedRevisit: expect.any(Function),
+
+            completeRevisit: expect.any(Function),
             deleteRevisit: expect.any(Function),
+            loadLastRevisit: expect.any(Function),
             loadRevisits: expect.any(Function),
             saveRevisit: expect.any(Function),
             updateRevisit: expect.any(Function),
-            completeRevisit: expect.any(Function)
         });
     });
 });

@@ -1,10 +1,5 @@
 import { act } from '@testing-library/react-native';
 
-/* Features */
-import { initialState as authInitState, testCredentials } from '../../features/auth';
-import { initialState as revisitsInitState } from '../../features/revisits';
-import { initialState as statusInitState } from '../../features/status';
-
 /* Hooks */
 import { useNetwork, useTheme } from '../../../src/hooks';
 
@@ -14,13 +9,16 @@ import { getMockStore, render } from './setup';
 /* Theme */
 import { darkColors } from '../../../src/theme';
 
+/* Mocks */
+import { initialAuthStateMock, initialRevisitsStateMock, initialStatusStateMock, testCredentials, wifiMock } from '../../mocks';
+
 /* Mock hooks */
 jest.mock('../../../src/hooks/useNetwork.ts');
 jest.mock('../../../src/hooks/useTheme.ts');
 
 describe('Test in useRevisits hook loadRevisits', () => {
     (useNetwork as jest.Mock).mockReturnValue({
-        isConnected: true,
+        wifi: wifiMock
     });
 
     (useTheme as jest.Mock).mockReturnValue({
@@ -28,7 +26,7 @@ describe('Test in useRevisits hook loadRevisits', () => {
     });
 
     it('should load revisits successfully', async () => {
-        const mockStore = getMockStore({ auth: authInitState, revisits: revisitsInitState, status: statusInitState });
+        const mockStore = getMockStore({ auth: initialAuthStateMock, revisits: initialRevisitsStateMock, status: initialStatusStateMock });
         const { result } = render(mockStore);
 
         await act(async () => {
@@ -41,7 +39,7 @@ describe('Test in useRevisits hook loadRevisits', () => {
 
         /* Check if hasMoreRevisits is updated */
         expect(result.current.useRevisits.state).toEqual({
-            ...revisitsInitState,
+            ...initialRevisitsStateMock,
             hasMoreRevisits: false
         });
 
@@ -51,7 +49,7 @@ describe('Test in useRevisits hook loadRevisits', () => {
     });
 
     it('should fail when user inst authenticated', async () => {
-        const mockStore = getMockStore({ auth: authInitState, revisits: revisitsInitState, status: statusInitState });
+        const mockStore = getMockStore({ auth: initialAuthStateMock, revisits: initialRevisitsStateMock, status: initialStatusStateMock });
         const { result } = render(mockStore);
 
         await act(async () => {
@@ -60,7 +58,7 @@ describe('Test in useRevisits hook loadRevisits', () => {
 
         /* Check if revisitFilter is changed */
         expect(result.current.useRevisits.state).toEqual({
-            ...revisitsInitState,
+            ...initialRevisitsStateMock,
             revisitFilter: 'visited'
         });
 

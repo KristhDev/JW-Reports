@@ -1,10 +1,5 @@
 import { act } from '@testing-library/react-native';
 
-/* Features */
-import { initialState as authInitState } from '../../features/auth';
-import { revisitsState } from '../../features/revisits';
-import { initialState as statusInitState } from '../../features/status';
-
 /* Hooks */
 import { useNetwork, useTheme } from '../../../src/hooks';
 
@@ -14,13 +9,16 @@ import { getMockStore, render } from './setup';
 /* Theme */
 import { darkColors } from '../../../src/theme';
 
+/* Mocks */
+import { initialAuthStateMock, initialStatusStateMock, revisitsStateMock, wifiMock } from '../../mocks';
+
 /* Mock hooks */
 jest.mock('../../../src/hooks/useNetwork.ts');
 jest.mock('../../../src/hooks/useTheme.ts')
 
 describe('Test useRevisits hook removeRevisits', () => {
     (useNetwork as jest.Mock).mockReturnValue({
-        isConnected: true,
+        wifi: wifiMock
     });
 
     (useTheme as jest.Mock).mockReturnValue({
@@ -28,33 +26,33 @@ describe('Test useRevisits hook removeRevisits', () => {
     });
 
     it('should remove revisits of state', async () => {
-        const mockStore = getMockStore({ auth: authInitState, revisits: revisitsState, status: statusInitState });
+        const mockStore = getMockStore({ auth: initialAuthStateMock, revisits: revisitsStateMock, status: initialStatusStateMock });
         const { result } = render(mockStore);
 
         /* Check if revisits contain a value */
         expect(result.current.useRevisits.state).toEqual({
-            ...revisitsState,
+            ...revisitsStateMock,
             selectedRevisit: {
-                ...revisitsState.selectedRevisit,
-                next_visit: expect.any(String),
-                created_at: expect.any(String),
-                updated_at: expect.any(String)
+                ...revisitsStateMock.selectedRevisit,
+                nextVisit: expect.any(String),
+                createdAt: expect.any(String),
+                updatedAt: expect.any(String)
             }
         });
 
         await act(async () => {
-            await result.current.useRevisits.removeRevisits();
+            result.current.useRevisits.removeRevisits();
         });
 
         /* Check if revisits is empty array */
         expect(result.current.useRevisits.state).toEqual({
-            ...revisitsState,
+            ...revisitsStateMock,
             revisits: [],
             selectedRevisit: {
-                ...revisitsState.selectedRevisit,
-                next_visit: expect.any(String),
-                created_at: expect.any(String),
-                updated_at: expect.any(String)
+                ...revisitsStateMock.selectedRevisit,
+                nextVisit: expect.any(String),
+                createdAt: expect.any(String),
+                updatedAt: expect.any(String)
             }
         });
 

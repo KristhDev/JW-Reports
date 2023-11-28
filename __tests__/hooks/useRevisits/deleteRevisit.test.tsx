@@ -1,15 +1,10 @@
 import { act } from '@testing-library/react-native';
 
-/* Features */
-import { initialState as authInitState, testCredentials } from '../../features/auth';
-import { initialState as revisitsInitState } from '../../features/revisits';
-import { initialState as statusInitState } from '../../features/status';
-
 /* Hooks */
 import { useNetwork, useTheme } from '../../../src/hooks';
 
 /* Setup */
-import { getMockStore, onFinishMock, render, testRevisit } from './setup';
+import { getMockStore, onFinishMock, render } from './setup';
 
 /* Theme */
 import { darkColors } from '../../../src/theme';
@@ -17,13 +12,16 @@ import { darkColors } from '../../../src/theme';
 /* Setup */
 import { navigateMock } from '../../../jest.setup';
 
+/* Mocks */
+import { initialAuthStateMock, initialRevisitsStateMock, initialStatusStateMock, testCredentials, testRevisit, wifiMock } from '../../mocks';
+
 /* Mock hooks */
 jest.mock('../../../src/hooks/useNetwork.ts');
 jest.mock('../../../src/hooks/useTheme.ts');
 
 describe('Test useRevisits hook deleteRevisit', () => {
     (useNetwork as jest.Mock).mockReturnValue({
-        isConnected: true,
+        wifi: wifiMock
     });
 
     (useTheme as jest.Mock).mockReturnValue({
@@ -35,7 +33,7 @@ describe('Test useRevisits hook deleteRevisit', () => {
     });
 
     it('should delete revisit successfully', async () => {
-        const mockStore = getMockStore({ auth: authInitState, revisits: revisitsInitState, status: statusInitState });
+        const mockStore = getMockStore({ auth: initialAuthStateMock, revisits: initialRevisitsStateMock, status: initialStatusStateMock });
         const { result } = render(mockStore);
 
         await act(async () => {
@@ -51,7 +49,7 @@ describe('Test useRevisits hook deleteRevisit', () => {
         });
 
         await act(async () => {
-            await result.current.useRevisits.setSelectedRevisit(result.current.useRevisits.state.revisits[0]);
+            result.current.useRevisits.setSelectedRevisit(result.current.useRevisits.state.revisits[0]);
         });
 
         await act(async () => {
@@ -60,14 +58,20 @@ describe('Test useRevisits hook deleteRevisit', () => {
 
         /* Check if revisits state not contain revisit deleted */
         expect(result.current.useRevisits.state).toEqual({
-            ...revisitsInitState,
+            ...initialRevisitsStateMock,
             selectedRevisit: {
-                ...revisitsInitState.selectedRevisit,
-                next_visit: expect.any(String),
-                created_at: expect.any(String),
-                updated_at: expect.any(String)
+                ...initialRevisitsStateMock.selectedRevisit,
+                nextVisit: expect.any(String),
+                createdAt: expect.any(String),
+                updatedAt: expect.any(String)
             },
-            revisits: []
+            revisits: [],
+            lastRevisit: {
+                ...result.current.useRevisits.state.lastRevisit,
+                nextVisit: expect.any(String),
+                createdAt: expect.any(String),
+                updatedAt: expect.any(String)
+            }
         });
 
         /**
@@ -89,7 +93,7 @@ describe('Test useRevisits hook deleteRevisit', () => {
     });
 
     it('should fail when user inst authenticated', async () => {
-        const mockStore = getMockStore({ auth: authInitState, revisits: revisitsInitState, status: statusInitState });
+        const mockStore = getMockStore({ auth: initialAuthStateMock, revisits: initialRevisitsStateMock, status: initialStatusStateMock });
         const { result } = render(mockStore);
 
         await act(async () => {
@@ -97,7 +101,7 @@ describe('Test useRevisits hook deleteRevisit', () => {
         });
 
         /* Check if revisits state inst changed and onFinish is called one time */
-        expect(result.current.useRevisits.state).toEqual(revisitsInitState);
+        expect(result.current.useRevisits.state).toEqual(initialRevisitsStateMock);
         expect(onFinishMock).toHaveBeenCalledTimes(1);
 
         /* Check if status state is equal to respective status */
@@ -108,7 +112,7 @@ describe('Test useRevisits hook deleteRevisit', () => {
     });
 
     it('should fail when selectedRevisit is empty', async () => {
-        const mockStore = getMockStore({ auth: authInitState, revisits: revisitsInitState, status: statusInitState });
+        const mockStore = getMockStore({ auth: initialAuthStateMock, revisits: initialRevisitsStateMock, status: initialStatusStateMock });
         const { result } = render(mockStore);
 
         await act(async () => {
@@ -120,7 +124,7 @@ describe('Test useRevisits hook deleteRevisit', () => {
         });
 
         /* Check if revisits state inst changed and onFinish is called one time */
-        expect(result.current.useRevisits.state).toEqual(revisitsInitState);
+        expect(result.current.useRevisits.state).toEqual(initialRevisitsStateMock);
         expect(onFinishMock).toHaveBeenCalledTimes(1);
 
         /* Check if status state is equal to respective status */
