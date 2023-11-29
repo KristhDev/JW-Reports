@@ -403,27 +403,6 @@ configuraciones de cada tabla:
             <td>No posee</td>
         </tr>
         <tr>
-            <td>publications</td>
-            <td>INT2</td>
-            <td>No</td>
-            <td>No</td>
-            <td>0</td>
-        </tr>
-        <tr>
-            <td>videos</td>
-            <td>INT2</td>
-            <td>No</td>
-            <td>No</td>
-            <td>0</td>
-        </tr>
-        <tr>
-            <td>revisits</td>
-            <td>INT2</td>
-            <td>No</td>
-            <td>No</td>
-            <td>0</td>
-        </tr>
-        <tr>
             <td>created_at</td>
             <td>TIMESTAMP</td>
             <td>No</td>
