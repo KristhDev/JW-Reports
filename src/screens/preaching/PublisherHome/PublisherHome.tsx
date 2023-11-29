@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ActivityIndicator, ScrollView, useWindowDimensions, RefreshControl } from 'react-native';
+import { ActivityIndicator, ScrollView, RefreshControl } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import dayjs from 'dayjs';
 
@@ -41,7 +41,6 @@ const PublisherHome = (): JSX.Element => {
     const [ showPassModal, setShowPassModal ] = useState<boolean>(false);
     const [ showReportModal, setShowReportModal ] = useState<boolean>(false);
     const [ showRevisitModal, setShowRevisitModal ] = useState<boolean>(false);
-    const { height } = useWindowDimensions();
 
     const { state: { selectedDate } } = usePreaching();
 
@@ -174,15 +173,15 @@ const PublisherHome = (): JSX.Element => {
                         color={ colors.button }
                         size={ 50 }
                         style={{ marginBottom: 63.75, marginTop: 63.75 }}
-                        testID="home-loading"
+                        testID="last-lesson-loading"
                     />
                 ) }
 
                 {/* If the last lesson not loading and last lesson not found, show a message */}
                 { (!isLastLessonLoading && !lastLesson?.id) && (
                     <InfoText
-                        containerStyle={{ marginTop: height * 0.30 }}
-                        text="No has agregado ninguna lección para un curso biblíco."
+                        containerStyle={{ marginBottom: 63.75, marginTop: 63.75 }}
+                        text="No haz agregado ninguna lección para un curso biblíco."
                     />
                 ) }
 
@@ -208,15 +207,15 @@ const PublisherHome = (): JSX.Element => {
                         color={ colors.button }
                         size={ 50 }
                         style={{ marginBottom: 63.75, marginTop: 63.75 }}
-                        testID="home-loading"
+                        testID="last-revisit-loading"
                     />
                 ) }
 
                 {/* If the last revisit not loading and last revisit not found, show a message */}
                 { (!isLastRevisitLoading && !lastRevisit?.id) && (
                     <InfoText
-                        containerStyle={{ marginTop: height * 0.30 }}
-                        text="No has agregado ninguna revisita."
+                        containerStyle={{ marginBottom: 63.75, marginTop: 63.75 }}
+                        text="No haz agregado ninguna revisita."
                     />
                 ) }
 
@@ -238,7 +237,6 @@ const PublisherHome = (): JSX.Element => {
                         color={ colors.contentHeader }
                         name="reader-outline"
                         size={ 40 }
-                        style={{ marginBottom: 1 }}
                     />
                 }
                 onPress={ () => setShowReportModal(true) }

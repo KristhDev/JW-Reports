@@ -154,8 +154,7 @@ export const CourseCard: FC<CourseCardProps> = ({ course, onActiveOrSuspend, onD
                         <Icon
                             color={ colors.button }
                             name="ellipsis-vertical"
-                            size={ 20 }
-                            style={{ marginLeft: 2 }}
+                            size={ 21 }
                         />
                     }
                     onPress={ () => setIsOpen(true) }

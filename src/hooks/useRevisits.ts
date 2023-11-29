@@ -17,7 +17,7 @@ import {
     removeRevisit,
     removeRevisits as removeRevisitsAction,
     setHasMoreRevisits,
-    setIsLastRevisitLoading as setIsLastRevisitLoadingAction,
+    setIsLastRevisitLoading,
     setIsRevisitDeleting,
     setIsRevisitLoading,
     setIsRevisitsLoading as setIsRevisitsLoadingAction,
@@ -63,7 +63,6 @@ const useRevisits = () => {
     const addRevisits = (revisits: Revisit[]) => dispatch(addRevisitsAction({ revisits }));
     const clearRevisits = () => dispatch(clearRevisitsAction());
     const removeRevisits = () => dispatch(removeRevisitsAction());
-    const setIsLastRevisitLoading = (isLoading: boolean) => dispatch(setIsLastRevisitLoadingAction({ isLoading }));
     const setIsRevisitsLoading = (isLoading: boolean) => dispatch(setIsRevisitsLoadingAction({ isLoading }));
     const setRefreshRevisits = (refresh: boolean) => dispatch(setRefreshRevisitsAction({ refresh }));
     const setRevisits = (revisits: Revisit[]) => dispatch(setRevisitsAction({ revisits }));
@@ -82,10 +81,10 @@ const useRevisits = () => {
             return;
         }
 
-        setIsLastRevisitLoading(true);
+        dispatch(setIsLastRevisitLoading({ isLoading: true }));
 
         if (!isAuthenticated) {
-            setUnauthenticatedError(() => setIsLastRevisitLoading(false));
+            setUnauthenticatedError(() => dispatch(setIsLastRevisitLoading({ isLoading: false })));
             return;
         }
 
@@ -95,11 +94,11 @@ const useRevisits = () => {
             .order('next_visit', { ascending: false })
             .limit(1);
 
-        const next = setSupabaseError(error, status, () => setIsLastRevisitLoading(false));
+        const next = setSupabaseError(error, status, () => dispatch(setIsLastRevisitLoading({ isLoading: false })));
         if (next) return;
 
         dispatch(setLastRevisit({
-            revisit: data ? revisitAdapter(data[0]) : INIT_REVISIT
+            revisit: (data?.length && data.length > 0) ? revisitAdapter(data[0]) : INIT_REVISIT
         }));
     }
 
@@ -239,7 +238,7 @@ const useRevisits = () => {
         setStatus({ code: status, msg: successMsg });
 
         back && navigate('RevisitsTopTabsNavigation' as never);
-        if (user.precursor === 'ninguno') loadLastRevisit();
+        if (user.precursor === 'ninguno') await loadLastRevisit();
     }
 
     /**
@@ -315,7 +314,7 @@ const useRevisits = () => {
             msg: 'Haz actualizado tu revisita correctamente.'
         });
 
-        if (user.precursor === 'ninguno') loadLastRevisit();
+        if (user.precursor === 'ninguno') await loadLastRevisit();
 
         goBack();
     }
@@ -388,7 +387,7 @@ const useRevisits = () => {
         setSelectedRevisit(INIT_REVISIT);
 
         if (user.precursor === 'ninguno' && state.lastRevisit.id === state.selectedRevisit.id) {
-            loadLastRevisit();
+            await loadLastRevisit();
         }
 
         setStatus({

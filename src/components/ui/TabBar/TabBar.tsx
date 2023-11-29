@@ -1,5 +1,6 @@
 import React, { FC, useEffect, useState } from 'react';
 import { Keyboard, View } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 import { BottomTabBarProps } from '@react-navigation/bottom-tabs';
 
 /* Components */
@@ -10,7 +11,6 @@ import { useTheme } from '../../../hooks';
 
 /* Styles */
 import styles from './styles';
-import { useNavigation } from '@react-navigation/native';
 
 /**
  * This component is responsible for displaying a custom navigation bar
