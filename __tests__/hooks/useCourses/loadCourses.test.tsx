@@ -1,22 +1,20 @@
 import { act } from '@testing-library/react-native';
 
-/* Features */
-import { initialState as authInitState, testCredentials } from '../../features/auth';
-import { initialState as coursesInitState } from '../../features/courses';
-import { initialState as statusInitState } from '../../features/status';
-
 /* Hooks */
 import { useNetwork } from '../../../src/hooks';
 
 /* Setup */
 import { getMockStore, render } from './setup';
 
+/* Mocks */
+import { initialAuthStateMock, initialCoursesStateMock, initialStatusStateMock, testCredentials, wifiMock } from '../../mocks';
+
 /* Mock hooks */
 jest.mock('../../../src/hooks/useNetwork.ts');
 
 describe('Test useCourses hook loadCourses', () => {
     (useNetwork as jest.Mock).mockReturnValue({
-        isConnected: true,
+        wifi: wifiMock
     });
 
     beforeEach(() => {
@@ -24,7 +22,7 @@ describe('Test useCourses hook loadCourses', () => {
     });
 
     it('should load courses successfully', async () => {
-        const mockStore = getMockStore({ auth: authInitState, courses: coursesInitState, status: statusInitState });
+        const mockStore = getMockStore({ auth: initialAuthStateMock, courses: initialCoursesStateMock, status: initialStatusStateMock });
         const { result } = render(mockStore);
 
         await act(async () => {
@@ -38,7 +36,7 @@ describe('Test useCourses hook loadCourses', () => {
 
         /* Check if courses state is equal to initial state */
         expect(result.current.useCourses.state).toEqual({
-            ...coursesInitState,
+            ...initialCoursesStateMock,
             hasMoreCourses: false
         });
 
@@ -48,7 +46,7 @@ describe('Test useCourses hook loadCourses', () => {
     });
 
     it('should fail when user inst authenticated', async () => {
-        const mockStore = getMockStore({ auth: authInitState, courses: coursesInitState, status: statusInitState });
+        const mockStore = getMockStore({ auth: initialAuthStateMock, courses: initialCoursesStateMock, status: initialStatusStateMock });
         const { result } = render(mockStore);
 
         await act(async () => {
@@ -59,7 +57,7 @@ describe('Test useCourses hook loadCourses', () => {
          * Check if courses state is equal to initial state and status
          * state is equal to respective status
          */
-        expect(result.current.useCourses.state).toEqual(coursesInitState);
+        expect(result.current.useCourses.state).toEqual(initialCoursesStateMock);
         expect(result.current.useStatus.state).toEqual({
             code: 401,
             msg: 'Para realizar está acción debe iniciar sesión.'

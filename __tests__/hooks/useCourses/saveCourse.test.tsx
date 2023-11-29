@@ -1,23 +1,21 @@
 import { act } from '@testing-library/react-native';
 
-/* Features */
-import { initialState as authInitState, testCredentials } from '../../features/auth';
-import { initialState as coursesInitState } from '../../features/courses';
-import { initialState as statusInitState } from '../../features/status';
-
 /* Hooks */
 import { useNetwork } from '../../../src/hooks';
 
 /* Setup */
-import { getMockStore, onFinishMock, render, testCourse } from './setup';
+import { getMockStore, onFinishMock, render } from './setup';
 import { navigateMock } from '../../../jest.setup';
+
+/* Mocks */
+import { initialAuthStateMock, initialCoursesStateMock, initialStatusStateMock, testCourse, testCredentials, wifiMock } from '../../mocks';
 
 /* Mock hooks */
 jest.mock('../../../src/hooks/useNetwork.ts');
 
 describe('Test useCourses hook saveCourse', () => {
     (useNetwork as jest.Mock).mockReturnValue({
-        isConnected: true,
+        wifi: wifiMock
     });
 
     beforeEach(() => {
@@ -25,7 +23,7 @@ describe('Test useCourses hook saveCourse', () => {
     });
 
     it('should save course successfully', async () => {
-        const mockStore = getMockStore({ auth: authInitState, courses: coursesInitState, status: statusInitState });
+        const mockStore = getMockStore({ auth: initialAuthStateMock, courses: initialCoursesStateMock, status: initialStatusStateMock });
         const { result } = render(mockStore);
 
         await act(async () => {
@@ -38,15 +36,15 @@ describe('Test useCourses hook saveCourse', () => {
 
         /* Check if courses state contain new course added */
         expect(result.current.useCourses.state).toEqual({
-            ...coursesInitState,
+            ...initialCoursesStateMock,
             courses: [{
                 id: expect.any(String),
-                user_id: result.current.useAuth.state.user.id,
+                userId: result.current.useAuth.state.user.id,
                 ...testCourse,
                 suspended: false,
                 finished: false,
-                created_at: expect.any(String),
-                updated_at: expect.any(String)
+                createdAt: expect.any(String),
+                updatedAt: expect.any(String)
             }]
         });
 
@@ -66,8 +64,8 @@ describe('Test useCourses hook saveCourse', () => {
             }
         });
 
-        await act(async () => {
-            await result.current.useCourses.setSelectedCourse(result.current.useCourses.state.courses[0]);
+        await act(() => {
+            result.current.useCourses.setSelectedCourse(result.current.useCourses.state.courses[0]);
         });
 
         await act(async () => {
@@ -80,7 +78,7 @@ describe('Test useCourses hook saveCourse', () => {
     });
 
     it('should fail when user inst autenticated', async () => {
-        const mockStore = getMockStore({ auth: authInitState, courses: coursesInitState, status: statusInitState });
+        const mockStore = getMockStore({ auth: initialAuthStateMock, courses: initialCoursesStateMock, status: initialStatusStateMock });
         const { result } = render(mockStore);
 
         await act(async () => {
@@ -88,7 +86,7 @@ describe('Test useCourses hook saveCourse', () => {
         });
 
         /* Check if courses state is equal to initial state */
-        expect(result.current.useCourses.state).toEqual(coursesInitState);
+        expect(result.current.useCourses.state).toEqual(initialCoursesStateMock);
 
         /* Check if status state is equal to respective status */
         expect(result.current.useStatus.state).toEqual({
@@ -102,7 +100,7 @@ describe('Test useCourses hook saveCourse', () => {
     });
 
     it('should fail when data is invalid', async () => {
-        const mockStore = getMockStore({ auth: authInitState, courses: coursesInitState, status: statusInitState });
+        const mockStore = getMockStore({ auth: initialAuthStateMock, courses: initialCoursesStateMock, status: initialStatusStateMock });
         const { result } = render(mockStore);
 
         await act(async () => {
@@ -117,7 +115,7 @@ describe('Test useCourses hook saveCourse', () => {
         });
 
         /* Check if courses state is equal to initial state */
-        expect(result.current.useCourses.state).toEqual(coursesInitState);
+        expect(result.current.useCourses.state).toEqual(initialCoursesStateMock);
 
         /* Check if status state is equal to respective status */
         expect(result.current.useStatus.state).toEqual({

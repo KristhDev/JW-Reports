@@ -1,23 +1,21 @@
 import { act } from '@testing-library/react-native';
 
-/* Features */
-import { initialState as authInitState, testCredentials } from '../../features/auth';
-import { initialState as coursesInitState } from '../../features/courses';
-import { initialState as statusInitState } from '../../features/status';
-
 /* Hooks */
 import { useNetwork } from '../../../src/hooks';
 
 /* Setup */
-import { getMockStore, render, testCourse, testLesson } from './setup';
+import { getMockStore, render } from './setup';
 import { goBackMock } from '../../../jest.setup';
+
+/* Mocks */
+import { initialAuthStateMock, initialCoursesStateMock, initialStatusStateMock, testCourse, testCredentials, testLesson, wifiMock } from '../../mocks';
 
 /* Mock hooks */
 jest.mock('../../../src/hooks/useNetwork.ts');
 
 describe('Test useCourses hook updateLesson', () => {
     (useNetwork as jest.Mock).mockReturnValue({
-        isConnected: true,
+        wifi: wifiMock
     });
 
     beforeEach(() => {
@@ -25,7 +23,7 @@ describe('Test useCourses hook updateLesson', () => {
     });
 
     it('should update lesson successfully', async () => {
-        const mockStore = getMockStore({ auth: authInitState, courses: coursesInitState, status: statusInitState });
+        const mockStore = getMockStore({ auth: initialAuthStateMock, courses: initialCoursesStateMock, status: initialStatusStateMock });
         const { result } = render(mockStore);
 
         await act(async () => {
@@ -36,8 +34,8 @@ describe('Test useCourses hook updateLesson', () => {
             await result.current.useCourses.saveCourse(testCourse);
         });
 
-        await act(async () => {
-            await result.current.useCourses.setSelectedCourse(result.current.useCourses.state.courses[0]);
+        await act(() => {
+            result.current.useCourses.setSelectedCourse(result.current.useCourses.state.courses[0]);
         });
 
         await act(async () => {
@@ -48,8 +46,8 @@ describe('Test useCourses hook updateLesson', () => {
             await result.current.useCourses.loadLessons({});
         });
 
-        await act(async () => {
-            await result.current.useCourses.setSelectedLesson(result.current.useCourses.state.lessons[0]);
+        await act(() => {
+            result.current.useCourses.setSelectedLesson(result.current.useCourses.state.lessons[0]);
         });
 
         await act(async () => {
@@ -64,60 +62,79 @@ describe('Test useCourses hook updateLesson', () => {
          * lessons and courses are updated
          */
         expect(result.current.useCourses.state).toEqual({
-            ...coursesInitState,
+            ...initialCoursesStateMock,
             selectedCourse: {
                 id: expect.any(String),
-                user_id: result.current.useAuth.state.user.id,
+                userId: result.current.useAuth.state.user.id,
                 ...testCourse,
-                last_lesson: {
+                lastLesson: {
                     id: expect.any(String),
-                    course_id: result.current.useCourses.state.selectedCourse.id,
+                    courseId: result.current.useCourses.state.selectedCourse.id,
                     description: 'Quisquam blanditiis sapiente et amet quia mollitia.',
                     done: false,
-                    next_lesson: expect.any(String),
-                    created_at: expect.any(String),
-                    updated_at: expect.any(String)
+                    nextLesson: expect.any(String),
+                    createdAt: expect.any(String),
+                    updatedAt: expect.any(String)
                 },
                 suspended: false,
                 finished: false,
-                created_at: expect.any(String),
-                updated_at: expect.any(String)
+                createdAt: expect.any(String),
+                updatedAt: expect.any(String)
             },
             selectedLesson: {
                 id: expect.any(String),
-                course_id: result.current.useCourses.state.selectedCourse.id,
+                courseId: result.current.useCourses.state.selectedCourse.id,
                 description: 'Quisquam blanditiis sapiente et amet quia mollitia.',
                 done: false,
-                next_lesson: expect.any(String),
-                created_at: expect.any(String),
-                updated_at: expect.any(String)
+                nextLesson: expect.any(String),
+                createdAt: expect.any(String),
+                updatedAt: expect.any(String)
             },
             courses: [{
                 id: expect.any(String),
-                user_id: result.current.useAuth.state.user.id,
+                userId: result.current.useAuth.state.user.id,
                 ...testCourse,
-                last_lesson: {
+                lastLesson: {
                     id: expect.any(String),
-                    course_id: result.current.useCourses.state.selectedCourse.id,
+                    courseId: result.current.useCourses.state.selectedCourse.id,
                     description: 'Quisquam blanditiis sapiente et amet quia mollitia.',
                     done: false,
-                    next_lesson: expect.any(String),
-                    created_at: expect.any(String),
-                    updated_at: expect.any(String)
+                    nextLesson: expect.any(String),
+                    createdAt: expect.any(String),
+                    updatedAt: expect.any(String)
                 },
                 suspended: false,
                 finished: false,
-                created_at: expect.any(String),
-                updated_at: expect.any(String)
+                createdAt: expect.any(String),
+                updatedAt: expect.any(String)
             }],
-            lessons: [{
+            lastLesson: {
                 id: expect.any(String),
-                course_id: result.current.useCourses.state.selectedCourse.id,
+                courseId: result.current.useCourses.state.selectedCourse.id,
+                course: {
+                    id: expect.any(String),
+                    userId: result.current.useAuth.state.user.id,
+                    ...testCourse,
+                    lastLesson: undefined,
+                    suspended: false,
+                    finished: false,
+                    createdAt: expect.any(String),
+                    updatedAt: expect.any(String)
+                },
                 description: 'Quisquam blanditiis sapiente et amet quia mollitia.',
                 done: false,
-                next_lesson: expect.any(String),
-                created_at: expect.any(String),
-                updated_at: expect.any(String)
+                nextLesson: expect.any(String),
+                createdAt: expect.any(String),
+                updatedAt: expect.any(String)
+            },
+            lessons: [{
+                id: expect.any(String),
+                courseId: result.current.useCourses.state.selectedCourse.id,
+                description: 'Quisquam blanditiis sapiente et amet quia mollitia.',
+                done: false,
+                nextLesson: expect.any(String),
+                createdAt: expect.any(String),
+                updatedAt: expect.any(String)
             }],
             hasMoreLessons: false
         });
@@ -141,7 +158,7 @@ describe('Test useCourses hook updateLesson', () => {
     });
 
     it('should fail when user inst authenticate', async () => {
-        const mockStore = getMockStore({ auth: authInitState, courses: coursesInitState, status: statusInitState });
+        const mockStore = getMockStore({ auth: initialAuthStateMock, courses: initialCoursesStateMock, status: initialStatusStateMock });
         const { result } = render(mockStore);
 
         await act(async () => {
@@ -149,7 +166,7 @@ describe('Test useCourses hook updateLesson', () => {
         });
 
         /* Check if courses state is equal to initial state */
-        expect(result.current.useCourses.state).toEqual(coursesInitState);
+        expect(result.current.useCourses.state).toEqual(initialCoursesStateMock);
 
         /* Check if status state is equal to respective status */
         expect(result.current.useStatus.state).toEqual({
@@ -159,7 +176,7 @@ describe('Test useCourses hook updateLesson', () => {
     });
 
     it('should fail when selectedLesson is empty', async () => {
-        const mockStore = getMockStore({ auth: authInitState, courses: coursesInitState, status: statusInitState });
+        const mockStore = getMockStore({ auth: initialAuthStateMock, courses: initialCoursesStateMock, status: initialStatusStateMock });
         const { result } = render(mockStore);
 
         await act(async () => {
@@ -176,15 +193,15 @@ describe('Test useCourses hook updateLesson', () => {
 
         /* Check if courses state contain courses */
         expect(result.current.useCourses.state).toEqual({
-            ...coursesInitState,
+            ...initialCoursesStateMock,
             courses: [{
                 id: expect.any(String),
-                user_id: result.current.useAuth.state.user.id,
+                userId: result.current.useAuth.state.user.id,
                 ...testCourse,
                 suspended: false,
                 finished: false,
-                created_at: expect.any(String),
-                updated_at: expect.any(String)
+                createdAt: expect.any(String),
+                updatedAt: expect.any(String)
             }]
         });
 
@@ -194,8 +211,8 @@ describe('Test useCourses hook updateLesson', () => {
             msg: 'No hay una clase seleccionada para actualizar.'
         });
 
-        await act(async () => {
-            await result.current.useCourses.setSelectedCourse(result.current.useCourses.state.courses[0]);
+        await act(() => {
+            result.current.useCourses.setSelectedCourse(result.current.useCourses.state.courses[0]);
         });
 
         await act(async () => {
@@ -208,7 +225,7 @@ describe('Test useCourses hook updateLesson', () => {
     });
 
     it('should fail when data is invalid', async () => {
-        const mockStore = getMockStore({ auth: authInitState, courses: coursesInitState, status: statusInitState });
+        const mockStore = getMockStore({ auth: initialAuthStateMock, courses: initialCoursesStateMock, status: initialStatusStateMock });
         const { result } = render(mockStore);
 
         await act(async () => {
@@ -219,8 +236,8 @@ describe('Test useCourses hook updateLesson', () => {
             await result.current.useCourses.saveCourse(testCourse);
         });
 
-        await act(async () => {
-            await result.current.useCourses.setSelectedCourse(result.current.useCourses.state.courses[0]);
+        await act(() => {
+            result.current.useCourses.setSelectedCourse(result.current.useCourses.state.courses[0]);
         });
 
         await act(async () => {
@@ -231,73 +248,92 @@ describe('Test useCourses hook updateLesson', () => {
             await result.current.useCourses.loadLessons({});
         });
 
-        await act(async () => {
-            await result.current.useCourses.setSelectedLesson(result.current.useCourses.state.lessons[0]);
+        await act(() => {
+            result.current.useCourses.setSelectedLesson(result.current.useCourses.state.lessons[0]);
         });
 
         await act(async () => {
             await result.current.useCourses.updateLesson({
                 ...testLesson,
-                next_lesson: new Date('invalid')
+                nextLesson: new Date('invalid')
             });
         });
 
         /* Check if courses state isnt changed by updateLesson */
         expect(result.current.useCourses.state).toEqual({
-            ...coursesInitState,
+            ...initialCoursesStateMock,
             selectedCourse: {
                 id: expect.any(String),
-                user_id: result.current.useAuth.state.user.id,
+                userId: result.current.useAuth.state.user.id,
                 ...testCourse,
-                last_lesson: {
+                lastLesson: {
                     id: expect.any(String),
-                    course_id: result.current.useCourses.state.selectedCourse.id,
+                    courseId: result.current.useCourses.state.selectedCourse.id,
                     description: testLesson.description,
                     done: false,
-                    next_lesson: expect.any(String),
-                    created_at: expect.any(String),
-                    updated_at: expect.any(String)
+                    nextLesson: expect.any(String),
+                    createdAt: expect.any(String),
+                    updatedAt: expect.any(String)
                 },
                 suspended: false,
                 finished: false,
-                created_at: expect.any(String),
-                updated_at: expect.any(String)
+                createdAt: expect.any(String),
+                updatedAt: expect.any(String)
             },
             selectedLesson: {
                 id: expect.any(String),
-                course_id: result.current.useCourses.state.selectedCourse.id,
+                courseId: result.current.useCourses.state.selectedCourse.id,
                 description: testLesson.description,
                 done: false,
-                next_lesson: expect.any(String),
-                created_at: expect.any(String),
-                updated_at: expect.any(String)
+                nextLesson: expect.any(String),
+                createdAt: expect.any(String),
+                updatedAt: expect.any(String)
             },
             courses: [{
                 id: expect.any(String),
-                user_id: result.current.useAuth.state.user.id,
+                userId: result.current.useAuth.state.user.id,
                 ...testCourse,
-                last_lesson: {
+                lastLesson: {
                     id: expect.any(String),
-                    course_id: result.current.useCourses.state.selectedCourse.id,
+                    courseId: result.current.useCourses.state.selectedCourse.id,
                     description: testLesson.description,
                     done: false,
-                    next_lesson: expect.any(String),
-                    created_at: expect.any(String),
-                    updated_at: expect.any(String)
+                    nextLesson: expect.any(String),
+                    createdAt: expect.any(String),
+                    updatedAt: expect.any(String)
                 },
                 suspended: false,
                 finished: false,
-                created_at: expect.any(String),
-                updated_at: expect.any(String)
+                createdAt: expect.any(String),
+                updatedAt: expect.any(String)
             }],
-            lessons: [{
+            lastLesson: {
                 id: expect.any(String),
-                course_id: result.current.useCourses.state.selectedCourse.id,
+                courseId: result.current.useCourses.state.selectedCourse.id,
+                course: {
+                    id: expect.any(String),
+                    userId: result.current.useAuth.state.user.id,
+                    ...testCourse,
+                    lastLesson: undefined,
+                    suspended: false,
+                    finished: false,
+                    createdAt: expect.any(String),
+                    updatedAt: expect.any(String)
+                },
                 description: testLesson.description,
                 done: false,
-                next_lesson: expect.any(String),
-                created_at: expect.any(String),
-                updated_at: expect.any(String)
+                nextLesson: expect.any(String),
+                createdAt: expect.any(String),
+                updatedAt: expect.any(String)
+            },
+            lessons: [{
+                id: expect.any(String),
+                courseId: result.current.useCourses.state.selectedCourse.id,
+                description: testLesson.description,
+                done: false,
+                nextLesson: expect.any(String),
+                createdAt: expect.any(String),
+                updatedAt: expect.any(String)
             }],
             hasMoreLessons: false
         });

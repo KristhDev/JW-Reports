@@ -4,12 +4,7 @@ import { configureStore } from '@reduxjs/toolkit';
 import { renderHook } from '@testing-library/react-native';
 
 /* Features */
-import { authReducer } from '../../../src/features/auth';
-import { coursesReducer } from '../../../src/features/courses';
-import { preachingReducer } from '../../../src/features/preaching';
-import { revisitsReducer } from '../../../src/features/revisits';
-import { statusReducer } from '../../../src/features/status';
-import { permissionsReducer } from '../../../src/features/permissions';
+import { authReducer, coursesReducer, preachingReducer, revisitsReducer, statusReducer, permissionsReducer } from '../../../src/features';
 
 /* Features - test */
 import { grantedState } from '../../features/permissions';
@@ -18,11 +13,7 @@ import { grantedState } from '../../features/permissions';
 import { useAuth, useCourses, useStatus } from '../../../src/hooks';
 
 /* Interfaces */
-import { AuthState } from '../../../src/interfaces/auth';
-import { CoursesState } from '../../../src/interfaces/courses';
-import { PreachingState } from '../../../src/interfaces/preaching';
-import { RevisitsState } from '../../../src/interfaces/revisits';
-import { StatusState } from '../../../src/interfaces/status';
+import { AuthState, CoursesState, PreachingState, RevisitsState, StatusState } from '../../../src/interfaces';
 
 /* The `export interface InitialState` is defining an interface that describes the initial state of the
 Redux store. It includes properties for `auth`, `courses`, and `status`, which are all objects that
@@ -53,9 +44,9 @@ export const onFinishMock = jest.fn();
 `person_about`, `person_address`, `person_name`, and `publication`. This object can be used in tests
 to simulate a course object in the application. */
 export const testCourse = {
-    person_about: 'Itaque quidem enim neque laudantium ducimus nesciunt provident consequuntur.',
-    person_address: 'Ut non et similique aliquam quaerat consequatur iste ut quod.',
-    person_name: 'Karlee Senger',
+    personAbout: 'Itaque quidem enim neque laudantium ducimus nesciunt provident consequuntur.',
+    personAddress: 'Ut non et similique aliquam quaerat consequatur iste ut quod.',
+    personName: 'Karlee Senger',
     publication: 'dolorem ut non'
 }
 
@@ -64,7 +55,7 @@ export const testCourse = {
 application. The `next_lesson` property is a `Date` object set to March 20, 2023 at midnight UTC. */
 export const testLesson = {
     description: 'Temporibus ut dignissimos aliquam dignissimos facere recusandae. Illo a provident quasi iusto quidem qui tempora vel adipisci. Quia eum ut recusandae laudantium quidem. Quisquam non fugiat dicta qui voluptatem.',
-    next_lesson: new Date('2023-03-20T00:00:00.000Z')
+    nextLesson: new Date('2023-03-20T00:00:00.000Z')
 }
 
 /**

@@ -1,30 +1,28 @@
 import { act } from '@testing-library/react-native';
 
-/* Features */
-import { initialState as authInitState } from '../../features/auth';
-import { initialState as coursesInitState } from '../../features/courses';
-import { initialState as statusInitState } from '../../features/status';
-
 /* Hooks */
 import { useNetwork } from '../../../src/hooks';
 
 /* Setup */
 import { getMockStore, render } from './setup';
 
+/* Mocks */
+import { initialAuthStateMock, initialCoursesStateMock, initialStatusStateMock, wifiMock } from '../../mocks';
+
 /* Mock hooks */
 jest.mock('../../../src/hooks/useNetwork.ts');
 
 describe('Test useCourses hook setLessonsPagination ', () => {
     (useNetwork as jest.Mock).mockReturnValue({
-        isConnected: true,
+        wifi: wifiMock
     });
 
     it('should change lessons pagination', async () => {
-        const mockStore = getMockStore({ auth: authInitState, courses: coursesInitState, status: statusInitState });
+        const mockStore = getMockStore({ auth: initialAuthStateMock, courses: initialCoursesStateMock, status: initialStatusStateMock });
         const { result } = render(mockStore);
 
         await act(async () => {
-            await result.current.useCourses.setLessonsPagination({
+            result.current.useCourses.setLessonsPagination({
                 from: 19,
                 to: 10
             });
@@ -32,7 +30,7 @@ describe('Test useCourses hook setLessonsPagination ', () => {
 
         /* Check if lessonsPagination is changed */
         expect(result.current.useCourses.state).toEqual({
-            ...coursesInitState,
+            ...initialCoursesStateMock,
             lessonsPagination: {
                 from: 19,
                 to: 10
@@ -40,7 +38,7 @@ describe('Test useCourses hook setLessonsPagination ', () => {
         });
 
         await act(async () => {
-            await result.current.useCourses.setLessonsPagination({
+            result.current.useCourses.setLessonsPagination({
                 from: 0,
                 to: 9
             });
@@ -48,7 +46,7 @@ describe('Test useCourses hook setLessonsPagination ', () => {
 
         /* Check if lessonsPagination is changed */
         expect(result.current.useCourses.state).toEqual({
-            ...coursesInitState,
+            ...initialCoursesStateMock,
             lessonsPagination: {
                 from: 0,
                 to: 9
