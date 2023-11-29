@@ -237,7 +237,7 @@ const useCourses = () => {
         if (next) return;
 
         if (user.precursor === 'ninguno' && state.lastLesson.courseId === state.selectedCourse.id) {
-            loadLastLesson();
+            await loadLastLesson();
         }
 
         dispatch(removeCourse({ id: state.selectedCourse.id }));
@@ -313,6 +313,10 @@ const useCourses = () => {
         });
 
         if (next) return;
+
+        if (user.precursor === 'ninguno' && state.selectedLesson.id === state.lastLesson.id) {
+            await loadLastLesson();
+        }
 
         dispatch(removeLesson({ id: state.selectedLesson.id }));
         onFinish && onFinish();
@@ -485,9 +489,9 @@ const useCourses = () => {
             ? 'Haz terminado la clase correctamente.'
             : 'Haz reprogrado la clase correctamente.'
 
-        dispatch(updateLessonAction({ lesson: (data as any)![0] }));
+        dispatch(updateLessonAction({ lesson: lessonAdapter((data as any)![0]) }));
 
-        if ((user.precursor !== 'ninguno')) loadLastLesson();
+        if ((user.precursor !== 'ninguno')) await loadLastLesson();
 
         onFinish && onFinish();
 
@@ -764,7 +768,9 @@ const useCourses = () => {
         if (next) return;
 
         if (state.lessons.length > 0) dispatch(addLesson({ lesson: lessonAdapter(data![0]) }));
-        if (user.precursor === 'ninguno') loadLastLesson();
+        else dispatch(setIsLessonLoading({ isLoading: false }));
+
+        if (user.precursor === 'ninguno') await loadLastLesson();
 
         setStatus({
             code: 201,

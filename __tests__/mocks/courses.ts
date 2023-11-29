@@ -22,6 +22,18 @@ export const setSelectedLessonMock = jest.fn();
 export const updateCourseMock = jest.fn();
 export const updateLessonMock = jest.fn();
 
+export const testCourse = {
+    personAbout: 'Itaque quidem enim neque laudantium ducimus nesciunt provident consequuntur.',
+    personAddress: 'Ut non et similique aliquam quaerat consequatur iste ut quod.',
+    personName: 'Karlee Senger',
+    publication: 'dolorem ut non'
+}
+
+export const testLesson = {
+    description: 'Temporibus ut dignissimos aliquam dignissimos facere recusandae. Illo a provident quasi iusto quidem qui tempora vel adipisci. Quia eum ut recusandae laudantium quidem. Quisquam non fugiat dicta qui voluptatem.',
+    nextLesson: new Date('2023-03-20T00:00:00.000Z')
+}
+
 export const lessonsMock: Lesson[] = [
     {
         id: '0fb579e4-de87-4336-9375-76611c889f76',

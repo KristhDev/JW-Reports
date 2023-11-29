@@ -1,23 +1,21 @@
 import { act } from '@testing-library/react-native';
 
-/* Features */
-import { initialState as authInitState, testCredentials } from '../../features/auth';
-import { initialState as coursesInitState } from '../../features/courses';
-import { initialState as statusInitState } from '../../features/status';
-
 /* Hooks */
 import { useNetwork } from '../../../src/hooks';
 
 /* Setup */
-import { getMockStore, onFinishMock, render, testCourse, testLesson } from './setup';
+import { getMockStore, onFinishMock, render } from './setup';
 import { navigateMock } from '../../../jest.setup';
+
+/* Mocks */
+import { initialAuthStateMock, initialCoursesStateMock, initialStatusStateMock, testCourse, testCredentials, testLesson, wifiMock } from '../../mocks';
 
 /* Mock hooks */
 jest.mock('../../../src/hooks/useNetwork.ts');
 
 describe('Test useCourses hook saveLesson', () => {
     (useNetwork as jest.Mock).mockReturnValue({
-        isConnected: true,
+        wifi: wifiMock
     });
 
     beforeEach(() => {
@@ -25,7 +23,7 @@ describe('Test useCourses hook saveLesson', () => {
     });
 
     it('should save lesson successfully', async () => {
-        const mockStore = getMockStore({ auth: authInitState, courses: coursesInitState, status: statusInitState });
+        const mockStore = getMockStore({ auth: initialAuthStateMock, courses: initialCoursesStateMock, status: initialStatusStateMock });
         const { result } = render(mockStore);
 
         await act(async () => {
@@ -36,8 +34,8 @@ describe('Test useCourses hook saveLesson', () => {
             await result.current.useCourses.saveCourse(testCourse, onFinishMock);
         });
 
-        await act(async () => {
-            await result.current.useCourses.setSelectedCourse(result.current.useCourses.state.courses[0]);
+        await act(() => {
+            result.current.useCourses.setSelectedCourse(result.current.useCourses.state.courses[0]);
         });
 
         await act(async () => {
@@ -46,25 +44,47 @@ describe('Test useCourses hook saveLesson', () => {
 
         /* Check if courses state contain selectedCouerse and courses */
         expect(result.current.useCourses.state).toEqual({
-            ...coursesInitState,
+            ...initialCoursesStateMock,
             selectedCourse: {
                 id: expect.any(String),
-                user_id: result.current.useAuth.state.user.id,
+                userId: result.current.useAuth.state.user.id,
                 ...testCourse,
+                lastLesson: undefined,
                 suspended: false,
                 finished: false,
-                created_at: expect.any(String),
-                updated_at: expect.any(String)
+                createdAt: expect.any(String),
+                updatedAt: expect.any(String)
             },
             courses: [{
                 id: expect.any(String),
-                user_id: result.current.useAuth.state.user.id,
+                userId: result.current.useAuth.state.user.id,
                 ...testCourse,
+                lastLesson: undefined,
                 suspended: false,
                 finished: false,
-                created_at: expect.any(String),
-                updated_at: expect.any(String)
-            }]
+                createdAt: expect.any(String),
+                updatedAt: expect.any(String)
+            }],
+            lastLesson: {
+                id: expect.any(String),
+                courseId: expect.any(String),
+                course: {
+                    id: expect.any(String),
+                    userId: result.current.useAuth.state.user.id,
+                    ...testCourse,
+                    lastLesson: undefined,
+                    suspended: false,
+                    finished: false,
+                    createdAt: expect.any(String),
+                    updatedAt: expect.any(String)
+                },
+                ...testLesson,
+                description: expect.any(String),
+                nextLesson: expect.any(String),
+                done: false,
+                createdAt: expect.any(String),
+                updatedAt: expect.any(String)
+            }
         });
 
         /* Check if status state is equal to respective status */
@@ -87,7 +107,7 @@ describe('Test useCourses hook saveLesson', () => {
     });
 
     it('should fail when user inst autenticated', async () => {
-        const mockStore = getMockStore({ auth: authInitState, courses: coursesInitState, status: statusInitState });
+        const mockStore = getMockStore({ auth: initialAuthStateMock, courses: initialCoursesStateMock, status: initialStatusStateMock });
         const { result } = render(mockStore);
 
         await act(async () => {
@@ -95,7 +115,7 @@ describe('Test useCourses hook saveLesson', () => {
         });
 
         /* Check if courses state is equal to initial state */
-        expect(result.current.useCourses.state).toEqual(coursesInitState);
+        expect(result.current.useCourses.state).toEqual(initialCoursesStateMock);
 
         /* Check if status state is equal to respective status */
         expect(result.current.useStatus.state).toEqual({
@@ -108,7 +128,7 @@ describe('Test useCourses hook saveLesson', () => {
     });
 
     it('should fail when selectedCourse is empty', async () => {
-        const mockStore = getMockStore({ auth: authInitState, courses: coursesInitState, status: statusInitState });
+        const mockStore = getMockStore({ auth: initialAuthStateMock, courses: initialCoursesStateMock, status: initialStatusStateMock });
         const { result } = render(mockStore);
 
         await act(async () => {
@@ -125,15 +145,15 @@ describe('Test useCourses hook saveLesson', () => {
 
         /* Check if courses state contain courses */
         expect(result.current.useCourses.state).toEqual({
-            ...coursesInitState,
+            ...initialCoursesStateMock,
             courses: [{
                 id: expect.any(String),
-                user_id: result.current.useAuth.state.user.id,
+                userId: result.current.useAuth.state.user.id,
                 ...testCourse,
                 suspended: false,
                 finished: false,
-                created_at: expect.any(String),
-                updated_at: expect.any(String)
+                createdAt: expect.any(String),
+                updatedAt: expect.any(String)
             }]
         });
 
@@ -143,8 +163,8 @@ describe('Test useCourses hook saveLesson', () => {
             msg: expect.any(String),
         });
 
-        await act(async () => {
-            await result.current.useCourses.setSelectedCourse(result.current.useCourses.state.courses[0]);
+        await act(() => {
+            result.current.useCourses.setSelectedCourse(result.current.useCourses.state.courses[0]);
         });
 
         await act(async () => {
@@ -157,7 +177,7 @@ describe('Test useCourses hook saveLesson', () => {
     });
 
     it('should fail when data is invalid', async () => {
-        const mockStore = getMockStore({ auth: authInitState, courses: coursesInitState, status: statusInitState });
+        const mockStore = getMockStore({ auth: initialAuthStateMock, courses: initialCoursesStateMock, status: initialStatusStateMock });
         const { result } = render(mockStore);
 
         await act(async () => {
@@ -169,36 +189,36 @@ describe('Test useCourses hook saveLesson', () => {
         });
 
         await act(async () => {
-            await result.current.useCourses.setSelectedCourse(result.current.useCourses.state.courses[0]);
+            result.current.useCourses.setSelectedCourse(result.current.useCourses.state.courses[0]);
         });
 
         await act(async () => {
             await result.current.useCourses.saveLesson({
                 ...testLesson,
-                next_lesson: new Date('invalid')
+                nextLesson: new Date('invalid')
             });
         });
 
         /* Check if courses state contain selectedCourse and courses */
         expect(result.current.useCourses.state).toEqual({
-            ...coursesInitState,
+            ...initialCoursesStateMock,
             selectedCourse: {
                 id: expect.any(String),
-                user_id: result.current.useAuth.state.user.id,
+                userId: result.current.useAuth.state.user.id,
                 ...testCourse,
                 suspended: false,
                 finished: false,
-                created_at: expect.any(String),
-                updated_at: expect.any(String)
+                createdAt: expect.any(String),
+                updatedAt: expect.any(String)
             },
             courses: [{
                 id: expect.any(String),
-                user_id: result.current.useAuth.state.user.id,
+                userId: result.current.useAuth.state.user.id,
                 ...testCourse,
                 suspended: false,
                 finished: false,
-                created_at: expect.any(String),
-                updated_at: expect.any(String)
+                createdAt: expect.any(String),
+                updatedAt: expect.any(String)
             }]
         });
 

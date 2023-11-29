@@ -1,45 +1,49 @@
 import { act } from '@testing-library/react-native';
 
-/* Features */
-import { initialState as authInitState } from '../../features/auth';
-import { initialState as coursesInitState, coursesState } from '../../features/courses';
-import { initialState as statusInitState } from '../../features/status';
-
 /* Hooks */
 import { useNetwork } from '../../../src/hooks';
 
 /* Setup */
 import { getMockStore, render } from './setup';
 
+/* Mocks */
+import { coursesStateMock, initialAuthStateMock, initialCoursesStateMock, initialStatusStateMock, wifiMock } from '../../mocks';
+
 /* Mock hooks */
 jest.mock('../../../src/hooks/useNetwork.ts');
 
 describe('Test useCourses hook clearCourses', () => {
     (useNetwork as jest.Mock).mockReturnValue({
-        isConnected: true,
+        wifi: wifiMock,
     });
 
     it('should clear state', async () => {
-        const mockStore = getMockStore({ auth: authInitState, courses: coursesState, status: statusInitState });
+        const mockStore = getMockStore({ auth: initialAuthStateMock, courses: coursesStateMock, status: initialStatusStateMock });
         const { result } = render(mockStore);
 
-        await act(async () => {
-            await result.current.useCourses.clearCourses();
+        await act(() => {
+            result.current.useCourses.clearCourses();
         });
 
         /* Check if courses state is equal to initial state */
         expect(result.current.useCourses.state).toEqual({
-            ...coursesInitState,
+            ...initialCoursesStateMock,
             selectedCourse: {
-                ...coursesInitState.selectedCourse,
-                created_at: expect.any(String),
-                updated_at: expect.any(String)
+                ...initialCoursesStateMock.selectedCourse,
+                createdAt: expect.any(String),
+                updatedAt: expect.any(String)
             },
             selectedLesson: {
-                ...coursesInitState.selectedLesson,
-                next_lesson: expect.any(String),
-                created_at: expect.any(String),
-                updated_at: expect.any(String)
+                ...initialCoursesStateMock.selectedLesson,
+                nextLesson: expect.any(String),
+                createdAt: expect.any(String),
+                updatedAt: expect.any(String)
+            },
+            lastLesson: {
+                ...initialCoursesStateMock.lastLesson,
+                nextLesson: expect.any(String),
+                createdAt: expect.any(String),
+                updatedAt: expect.any(String)
             }
         });
     });

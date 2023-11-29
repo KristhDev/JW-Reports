@@ -1,23 +1,21 @@
 import { act } from '@testing-library/react-native';
 
-/* Features */
-import { initialState as authInitState, testCredentials } from '../../features/auth';
-import { initialState as coursesInitState } from '../../features/courses';
-import { initialState as statusInitState } from '../../features/status';
-
 /* Hooks */
 import { useNetwork } from '../../../src/hooks';
 
 /* Setup */
-import { getMockStore, render, testCourse } from './setup';
+import { getMockStore, render } from './setup';
 import { goBackMock } from '../../../jest.setup';
+
+/* Mocks */
+import { initialAuthStateMock, initialCoursesStateMock, initialStatusStateMock, testCourse, testCredentials, wifiMock } from '../../mocks';
 
 /* Mock hooks */
 jest.mock('../../../src/hooks/useNetwork.ts');
 
 describe('Test useCourses hook updateCourse', () => {
     (useNetwork as jest.Mock).mockReturnValue({
-        isConnected: true,
+        wifi: wifiMock
     });
 
     beforeEach(() => {
@@ -25,7 +23,7 @@ describe('Test useCourses hook updateCourse', () => {
     });
 
     it('should update course successfully', async () => {
-        const mockStore = getMockStore({ auth: authInitState, courses: coursesInitState, status: statusInitState });
+        const mockStore = getMockStore({ auth: initialAuthStateMock, courses: initialCoursesStateMock, status: initialStatusStateMock });
         const { result } = render(mockStore);
 
         await act(async () => {
@@ -37,38 +35,38 @@ describe('Test useCourses hook updateCourse', () => {
         });
 
         await act(async () => {
-            await result.current.useCourses.setSelectedCourse(result.current.useCourses.state.courses[0]);
+            result.current.useCourses.setSelectedCourse(result.current.useCourses.state.courses[0]);
         });
 
         await act(async () => {
             await result.current.useCourses.updateCourse({
                 ...testCourse,
-                person_name: 'Alvah Simonis'
+                personName: 'Alvah Simonis'
             });
         });
 
         /* Check if selectedCourse and courses are updated */
         expect(result.current.useCourses.state).toEqual({
-            ...coursesInitState,
+            ...initialCoursesStateMock,
             selectedCourse: {
                 id: expect.any(String),
-                user_id: result.current.useAuth.state.user.id,
+                userId: result.current.useAuth.state.user.id,
                 ...testCourse,
-                person_name: 'Alvah Simonis',
+                personName: 'Alvah Simonis',
                 suspended: false,
                 finished: false,
-                created_at: expect.any(String),
-                updated_at: expect.any(String)
+                createdAt: expect.any(String),
+                updatedAt: expect.any(String)
             },
             courses: [{
                 id: expect.any(String),
-                user_id: result.current.useAuth.state.user.id,
+                userId: result.current.useAuth.state.user.id,
                 ...testCourse,
-                person_name: 'Alvah Simonis',
+                personName: 'Alvah Simonis',
                 suspended: false,
                 finished: false,
-                created_at: expect.any(String),
-                updated_at: expect.any(String)
+                createdAt: expect.any(String),
+                updatedAt: expect.any(String)
             }]
         });
 
@@ -91,18 +89,18 @@ describe('Test useCourses hook updateCourse', () => {
     });
 
     it('should fail when user inst authenticate', async () => {
-        const mockStore = getMockStore({ auth: authInitState, courses: coursesInitState, status: statusInitState });
+        const mockStore = getMockStore({ auth: initialAuthStateMock, courses: initialCoursesStateMock, status: initialStatusStateMock });
         const { result } = render(mockStore);
 
         await act(async () => {
             await result.current.useCourses.updateCourse({
                 ...testCourse,
-                person_name: 'Alvah Simonis'
+                personName: 'Alvah Simonis'
             });
         });
 
         /* Check if courses state inst changed */
-        expect(result.current.useCourses.state).toEqual(coursesInitState);
+        expect(result.current.useCourses.state).toEqual(initialCoursesStateMock);
 
         /* Check if status state is equal to respective status */
         expect(result.current.useStatus.state).toEqual({
@@ -112,7 +110,7 @@ describe('Test useCourses hook updateCourse', () => {
     });
 
     it('should fail when selectedCourse is empty', async () => {
-        const mockStore = getMockStore({ auth: authInitState, courses: coursesInitState, status: statusInitState });
+        const mockStore = getMockStore({ auth: initialAuthStateMock, courses: initialCoursesStateMock, status: initialStatusStateMock });
         const { result } = render(mockStore);
 
         await act(async () => {
@@ -126,21 +124,21 @@ describe('Test useCourses hook updateCourse', () => {
         await act(async () => {
             await result.current.useCourses.updateCourse({
                 ...testCourse,
-                person_name: 'Alvah Simonis'
+                personName: 'Alvah Simonis'
             });
         });
 
         /* Check if courses state contain courses */
         expect(result.current.useCourses.state).toEqual({
-            ...coursesInitState,
+            ...initialCoursesStateMock,
             courses: [{
                 id: expect.any(String),
-                user_id: result.current.useAuth.state.user.id,
+                userId: result.current.useAuth.state.user.id,
                 ...testCourse,
                 suspended: false,
                 finished: false,
-                created_at: expect.any(String),
-                updated_at: expect.any(String)
+                createdAt: expect.any(String),
+                updatedAt: expect.any(String)
             }]
         });
 
@@ -151,7 +149,7 @@ describe('Test useCourses hook updateCourse', () => {
         });
 
         await act(async () => {
-            await result.current.useCourses.setSelectedCourse(result.current.useCourses.state.courses[0]);
+            result.current.useCourses.setSelectedCourse(result.current.useCourses.state.courses[0]);
         });
 
         await act(async () => {
@@ -164,7 +162,7 @@ describe('Test useCourses hook updateCourse', () => {
     });
 
     it('should fail when data is invalid', async () => {
-        const mockStore = getMockStore({ auth: authInitState, courses: coursesInitState, status: statusInitState });
+        const mockStore = getMockStore({ auth: initialAuthStateMock, courses: initialCoursesStateMock, status: initialStatusStateMock });
         const { result } = render(mockStore);
 
         await act(async () => {
@@ -176,36 +174,36 @@ describe('Test useCourses hook updateCourse', () => {
         });
 
         await act(async () => {
-            await result.current.useCourses.setSelectedCourse(result.current.useCourses.state.courses[0]);
+            result.current.useCourses.setSelectedCourse(result.current.useCourses.state.courses[0]);
         });
 
         await act(async () => {
             await result.current.useCourses.updateCourse({
                 ...testCourse,
-                person_name: undefined as any,
+                personName: undefined as any,
             });
         });
 
         /* Check if courses state contain selectedCourse and courses */
         expect(result.current.useCourses.state).toEqual({
-            ...coursesInitState,
+            ...initialCoursesStateMock,
             selectedCourse: {
                 id: expect.any(String),
-                user_id: result.current.useAuth.state.user.id,
+                userId: result.current.useAuth.state.user.id,
                 ...testCourse,
                 suspended: false,
                 finished: false,
-                created_at: expect.any(String),
-                updated_at: expect.any(String)
+                createdAt: expect.any(String),
+                updatedAt: expect.any(String)
             },
             courses: [{
                 id: expect.any(String),
-                user_id: result.current.useAuth.state.user.id,
+                userId: result.current.useAuth.state.user.id,
                 ...testCourse,
                 suspended: false,
                 finished: false,
-                created_at: expect.any(String),
-                updated_at: expect.any(String)
+                createdAt: expect.any(String),
+                updatedAt: expect.any(String)
             }]
         });
 

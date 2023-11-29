@@ -205,7 +205,7 @@ const courseSlice = createSlice({
 
             state.courses = state.courses.map(c =>
                 (state.lessons.length > 0 && c.id === state.lessons[0].courseId && (!c.lastLesson || c.lastLesson.id !== state.lessons[0].id))
-                    ? { ...c, last_lesson: state.lessons[0] }
+                    ? { ...c, lastLesson: state.lessons[0] }
                     : c
             );
 
@@ -314,12 +314,12 @@ const courseSlice = createSlice({
 
             state.courses = state.courses.map(c =>
                 (c.lastLesson && c.id === action.payload.lesson.courseId)
-                    ? { ...c, last_lesson: state.lessons[0] }
+                    ? { ...c, lastLesson: action.payload.lesson }
                     : c
             );
 
             state.selectedCourse = (state.selectedCourse.lastLesson && state.selectedCourse.id === action.payload.lesson.courseId)
-                ? { ...state.selectedCourse, lastLesson: state.lessons[0] }
+                ? { ...state.selectedCourse, lastLesson: action.payload.lesson }
                 : state.selectedCourse;
 
             state.isLessonLoading = false;
