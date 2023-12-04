@@ -1,16 +1,19 @@
 import { useNavigation } from '@react-navigation/native';
 import dayjs from 'dayjs';
 
-/* Supabase - config */
-import { supabase } from '../supabase/config';
+/* Supabase */
+import { supabase } from '../supabase';
+
+/* Adapters */
+import { courseAdapter, courseFormValuesAdapter, lessonAdapter } from '../adapters';
 
 /* Features */
-import { useAppDispatch, useAppSelector } from '../features';
 import {
     INIT_COURSE,
     INIT_LESSON,
     addCourse,
     addCourses as addCoursesAction,
+    addLastLesson,
     addLesson,
     addLessons as addLessonsAction,
     clearCourses as clearCoursesAction,
@@ -27,6 +30,7 @@ import {
     setIsCourseDeleting,
     setIsCourseLoading,
     setIsCoursesLoading as setIsCoursesLoadingAction,
+    setIsLastLessonLoading as setIsLastLessonLoadingAction,
     setIsLessonDeleting,
     setIsLessonLoading,
     setIsLessonsLoading as setIsLessonsLoadingAction,
@@ -36,23 +40,34 @@ import {
     setSelectedCourse as setSelectedCourseAction,
     setSelectedLesson as setSelectedLessonAction,
     updateCourse as updateCourseAction,
-    updateLesson as updateLessonAction
-} from '../features/courses';
+    updateLesson as updateLessonAction,
+    useAppDispatch,
+    useAppSelector
+} from '../features';
 
 /* Hooks */
 import { useAuth, useStatus, useNetwork } from './';
 
 /* Interfaces */
-import { Course, CourseFormValues, Lesson, LessonFormValues, loadCoursesOptions } from '../interfaces/courses';
-import { LoadResourcesOptions, Pagination } from '../interfaces/ui';
-
+import {
+    Course,
+    CourseFormValues,
+    Lesson,
+    LessonWithCourseEndpoint,
+    LessonFormValues,
+    loadCoursesOptions,
+    LoadResourcesOptions,
+    Pagination,
+    CourseEndpoint,
+    LessonEndpoint
+} from '../interfaces';
 /**
  * Hook to management courses of store with state and actions
  */
 const useCourses = () => {
     const dispatch = useAppDispatch();
     const { goBack, navigate } = useNavigation();
-    const { isConnected } = useNetwork();
+    const { wifi } = useNetwork();
 
     const state = useAppSelector(store => store.courses);
 
@@ -68,6 +83,7 @@ const useCourses = () => {
     const setCoursesPagination = (pagination: Pagination) => dispatch(setCoursesPaginationAction({ pagination }));
     const setCoursesScreenHistory = (newScreen: string) => dispatch(setCoursesScreenHistoryAction({ newScreen }));
     const setIsCoursesLoading = (isLoading: boolean) => dispatch(setIsCoursesLoadingAction({ isLoading }));
+    const setIsLastLessonLoading = (isLoading: boolean) => dispatch(setIsLastLessonLoadingAction({ isLoading }));
     const setIsLessonsLoading = (isLoading: boolean) => dispatch(setIsLessonsLoadingAction({ isLoading }));
     const setLessons = (lessons: Lesson[]) => dispatch(setLessonsAction({ lessons }));
     const setLessonsPagination = (pagination: Pagination) => dispatch(setLessonsPaginationAction({ pagination }));
@@ -82,7 +98,7 @@ const useCourses = () => {
      * @return {Promise<void>} This function does not return anything.
      */
     const activeOrSuspendCourse = async (onFinish?: () => void): Promise<void> => {
-        if (!isConnected) {
+        if (!wifi.isConnected) {
             setNetworkError();
             return;
         }
@@ -98,7 +114,6 @@ const useCourses = () => {
             return;
         }
 
-
         /* Should not update if selectedCourse.id is an empty string */
         if (state.selectedCourse.id === '') {
             dispatch(setIsCourseLoading({ isLoading: false }));
@@ -112,11 +127,8 @@ const useCourses = () => {
             return;
         }
 
-        console.log('Selected course: ', state.selectedCourse.finished);
-
         /* If the selectedCourse is finished it should not be updated */
         if (state.selectedCourse.finished) {
-            console.log('No puedes activar o suspendir un curso terminado.');
             dispatch(setIsCourseLoading({ isLoading: false }));
             onFinish && onFinish();
 
@@ -135,7 +147,7 @@ const useCourses = () => {
             })
             .eq('id', state.selectedCourse.id)
             .eq('user_id', user.id)
-            .select<'*', Course>();
+            .select<'*', CourseEndpoint>();
 
         const next = setSupabaseError(error, status, () => {
             dispatch(setIsCourseLoading({ isLoading: false }));
@@ -145,10 +157,19 @@ const useCourses = () => {
         if (next) return;
 
         const msg = (data![0].suspended)
-            ? 'Has suspendido el curso correctamente.'
-            : 'Has renovado el curso correctamente.'
+            ? 'Haz suspendido el curso correctamente.'
+            : 'Haz renovado el curso correctamente.'
 
-        dispatch(updateCourseAction({ course: data![0] }));
+        dispatch(updateCourseAction({ course: courseAdapter(data![0]) }));
+
+        if (user.precursor === 'ninguno' && state.lastLesson.courseId === state.selectedCourse.id) {
+            dispatch(addLastLesson({
+                lesson: {
+                    ...state.lastLesson,
+                    course: courseAdapter(data![0])
+                }
+            }));
+        }
 
         onFinish && onFinish();
 
@@ -163,7 +184,7 @@ const useCourses = () => {
      * @return {Promise<void>} This function does not return anything.
      */
     const deleteCourse = async (back: boolean = false, onFinish?: () => void): Promise<void> => {
-        if (!isConnected) {
+        if (!wifi.isConnected) {
             setNetworkError();
             return;
         }
@@ -215,7 +236,12 @@ const useCourses = () => {
 
         if (next) return;
 
+        if (user.precursor === 'ninguno' && state.lastLesson.courseId === state.selectedCourse.id) {
+            await loadLastLesson();
+        }
+
         dispatch(removeCourse({ id: state.selectedCourse.id }));
+
         onFinish && onFinish();
         back && navigate('CoursesScreen' as never);
 
@@ -223,7 +249,7 @@ const useCourses = () => {
 
         setStatus({
             code: 200,
-            msg: 'Has eliminado el curso correctamente.'
+            msg: 'Haz eliminado el curso correctamente.'
         });
     }
 
@@ -235,7 +261,7 @@ const useCourses = () => {
      * @return {Promise<void>} This function does not return anything.
      */
     const deleteLesson = async (back: boolean = false, onFinish?: () => void): Promise<void> => {
-        if (!isConnected) {
+        if (!wifi.isConnected) {
             setNetworkError();
             return;
         }
@@ -265,7 +291,7 @@ const useCourses = () => {
         }
 
         /* Cannot delete a class if the selectedCourse.user_id is different from user.id */
-        if (state.selectedCourse.user_id !== user.id) {
+        if (state.selectedCourse.userId !== user.id) {
             onFinish && onFinish();
             dispatch(setIsLessonDeleting({ isDeleting: false }));
 
@@ -288,18 +314,22 @@ const useCourses = () => {
 
         if (next) return;
 
+        if (user.precursor === 'ninguno' && state.selectedLesson.id === state.lastLesson.id) {
+            await loadLastLesson();
+        }
+
         dispatch(removeLesson({ id: state.selectedLesson.id }));
         onFinish && onFinish();
-        back && navigate('LessonsScreen' as never);
+        back && goBack();
 
         setSelectedLesson({
             ...INIT_LESSON,
-            next_lesson: new Date().toString()
+            nextLesson: new Date().toString()
         });
 
         setStatus({
             code: 200,
-            msg: 'Has eliminado la clase correctamente.'
+            msg: 'Haz eliminado la clase correctamente.'
         });
     }
 
@@ -310,7 +340,7 @@ const useCourses = () => {
      * @return {Promise<void>} This function does not return anything.
      */
     const finishOrStartCourse = async (onFinish?: () => void): Promise<void> => {
-        if (!isConnected) {
+        if (!wifi.isConnected) {
             setNetworkError();
             return;
         }
@@ -359,7 +389,7 @@ const useCourses = () => {
             })
             .eq('id', state.selectedCourse.id)
             .eq('user_id', user.id)
-            .select<'*', Course>();
+            .select<'*', CourseEndpoint>();
 
         const next = setSupabaseError(error, status, () => {
             dispatch(setIsCourseLoading({ isLoading: false }));
@@ -369,10 +399,19 @@ const useCourses = () => {
         if (next) return;
 
         const msg = (data![0].finished)
-            ? 'Has terminado el curso correctamente.'
-            : 'Has comenzado de nuevo el curso correctamente.'
+            ? 'Haz terminado el curso correctamente.'
+            : 'Haz comenzado de nuevo el curso correctamente.'
 
-        dispatch(updateCourseAction({ course: data![0] }));
+        dispatch(updateCourseAction({ course: courseAdapter(data![0]) }));
+
+        if (user.precursor === 'ninguno' && state.lastLesson.courseId === state.selectedCourse.id) {
+            dispatch(addLastLesson({
+                lesson: {
+                    ...state.lastLesson,
+                    course: courseAdapter(data![0])
+                }
+            }));
+        }
 
         onFinish && onFinish();
 
@@ -387,7 +426,7 @@ const useCourses = () => {
      * @return {Promise<void>} This function does not return anything.
      */
     const finishOrStartLesson = async (next_lesson: Date, onFinish?: () => void): Promise<void> => {
-        if (!isConnected) {
+        if (!wifi.isConnected) {
             setNetworkError();
             return;
         }
@@ -437,7 +476,7 @@ const useCourses = () => {
             })
             .eq('id', state.selectedLesson.id)
             .eq('course_id', state.selectedCourse.id)
-            .select<'*', Lesson>();
+            .select<'*', LessonEndpoint>();
 
         const next = setSupabaseError(error, status, () => {
             dispatch(setIsLessonLoading({ isLoading: false }));
@@ -447,10 +486,12 @@ const useCourses = () => {
         if (next) return;
 
         const msg = (data![0].done)
-            ? 'Has terminado la clase correctamente.'
-            : 'Has reprogrado la clase correctamente.'
+            ? 'Haz terminado la clase correctamente.'
+            : 'Haz reprogrado la clase correctamente.'
 
-        dispatch(updateLessonAction({ lesson: (data as any)![0] }));
+        dispatch(updateLessonAction({ lesson: lessonAdapter((data as any)![0]) }));
+
+        if ((user.precursor !== 'ninguno')) await loadLastLesson();
 
         onFinish && onFinish();
 
@@ -471,7 +512,7 @@ const useCourses = () => {
     const loadCourses = async ({ filter, loadMore = false, refresh = false, search = '' }: loadCoursesOptions): Promise<void> => {
         dispatch(setCourseFilter({ filter }));
 
-        if (!isConnected) {
+        if (!wifi.isConnected) {
             setNetworkError();
             return;
         }
@@ -487,15 +528,9 @@ const useCourses = () => {
             .select('*, lessons (*)')
             .eq('user_id', user.id)
 
-        if (filter === 'active') {
-            coursesPromise.eq('suspended', false).eq('finished', false)
-        }
-        else if (filter === 'suspended') {
-            coursesPromise.eq('suspended', true).eq('finished', false)
-        }
-        else if (filter === 'finished') {
-            coursesPromise.eq('suspended', false).eq('finished', true);
-        }
+        if (filter === 'active') coursesPromise.eq('suspended', false).eq('finished', false)
+        else if (filter === 'suspended') coursesPromise.eq('suspended', true).eq('finished', false)
+        else if (filter === 'finished') coursesPromise.eq('suspended', false).eq('finished', true);
 
         if (search.trim().length > 0) {
             let searchQuery = `person_name.ilike.%${ search }%,`;
@@ -526,13 +561,60 @@ const useCourses = () => {
             });
         }
 
-        const courses = data!.map(({ lessons, ...rest }) => ({
+        const courses = data!.map(({ lessons, ...rest }) => courseAdapter({
             ...rest,
             last_lesson: lessons[0]
-        })) as any[];
+        } as CourseEndpoint));
 
         dispatch(setHasMoreCourses({ hasMore: (courses!.length >= 10) }));
         (loadMore) ? addCourses(courses!) : setCourses(courses!);
+    }
+
+    /**
+     * Loads the last lesson asynchronously.
+     *
+     * @return {Promise<void>} Promise that resolves when the last lesson is loaded.
+     */
+    const loadLastLesson = async (): Promise<void> => {
+        if (!wifi.isConnected) {
+            setNetworkError();
+            return;
+        }
+
+        setIsLastLessonLoading(true);
+
+        if (!isAuthenticated) {
+            setUnauthenticatedError(() => setIsLastLessonLoading(false));
+            return;
+        }
+
+        const { data: dataCourses, error: errorCourses, status: statusCourses, } = await supabase.from('courses')
+            .select('id')
+            .eq('user_id', user.id);
+
+        const next = setSupabaseError(errorCourses, statusCourses, () => setIsLastLessonLoading(false));
+        if (next) return;
+
+        const { data, error, status } = await supabase.from('lessons')
+            .select<'*, courses (*)', LessonWithCourseEndpoint>('*, courses (*)')
+            .in('course_id', [ dataCourses!.map(({ id }) => id) ])
+            .order('next_lesson', { ascending: false })
+            .limit(1);
+
+        const nextLesson = setSupabaseError(error, status, () => setIsLastLessonLoading(false));
+        if (nextLesson) return;
+
+        dispatch(addLastLesson({
+            lesson: (data?.length && data.length > 0)
+                ? {
+                    ...lessonAdapter(data![0]),
+                    course: courseAdapter(data![0].courses)
+                }
+                : {
+                    ...INIT_LESSON,
+                    course: INIT_COURSE
+                },
+        }));
     }
 
     /**
@@ -546,7 +628,7 @@ const useCourses = () => {
      * @return {Promise<void>} This function does not return anything.
      */
     const loadLessons = async ({ loadMore = false, refresh = false, search = '' }: LoadResourcesOptions): Promise<void> => {
-        if (!isConnected) {
+        if (!wifi.isConnected) {
             setNetworkError();
             return;
         }
@@ -571,12 +653,10 @@ const useCourses = () => {
         }
 
         const lessonsPromise = supabase.from('lessons')
-            .select<'*', Lesson>()
+            .select<'*', LessonEndpoint>()
             .eq('course_id', state.selectedCourse.id);
 
-        if (search.trim().length > 0) {
-            lessonsPromise.ilike('description', `%${ search }%`);
-        }
+        if (search.trim().length > 0) lessonsPromise.ilike('description', `%${ search }%`);
 
         lessonsPromise.order('next_lesson', { ascending: false })
             .range(
@@ -596,8 +676,10 @@ const useCourses = () => {
             });
         }
 
+        const lessons = data!.map(lessonAdapter);
+
         dispatch(setHasMoreLessons({ hasMore: (data!.length >= 10) }));
-        (loadMore) ? addLessons(data!) : setLessons(data!);
+        (loadMore) ? addLessons(lessons) : setLessons(lessons);
     }
 
     /**
@@ -609,7 +691,7 @@ const useCourses = () => {
      * @return {Promise<void>} This function does not return anything.
      */
     const saveCourse = async (courseValues: CourseFormValues, onFinish?: () => void): Promise<void> => {
-        if (!isConnected) {
+        if (!wifi.isConnected) {
             setNetworkError();
             return;
         }
@@ -626,8 +708,8 @@ const useCourses = () => {
         }
 
         const { data, error, status } = await supabase.from('courses')
-            .insert({ ...courseValues, user_id: user.id })
-            .select();
+            .insert({ ...courseFormValuesAdapter(courseValues), user_id: user.id })
+            .select<'*', CourseEndpoint>();
 
         const next = setSupabaseError(error, status, () => {
             dispatch(setIsCourseLoading({ isLoading: false }));
@@ -636,12 +718,12 @@ const useCourses = () => {
 
         if (next) return;
 
-        dispatch(addCourse({ course: (data as any)![0] }));
+        dispatch(addCourse({ course: courseAdapter((data)![0]) }));
         onFinish && onFinish();
 
         setStatus({
             code: 201,
-            msg: 'Has agregado un curso correctamente.'
+            msg: 'Haz agregado un curso correctamente.'
         });
 
         navigate({
@@ -659,7 +741,7 @@ const useCourses = () => {
      * @return {Promise<void>} This function does not return anything.
      */
     const saveLesson = async (lessonValues: LessonFormValues): Promise<void> => {
-        if (!isConnected) {
+        if (!wifi.isConnected) {
             setNetworkError();
             return;
         }
@@ -678,19 +760,21 @@ const useCourses = () => {
             .insert({
                 course_id: state.selectedCourse.id,
                 description: lessonValues.description,
-                next_lesson: dayjs(lessonValues.next_lesson).format('YYYY-MM-DD HH:mm:ss.SSSSSS')
+                next_lesson: dayjs(lessonValues.nextLesson).format('YYYY-MM-DD HH:mm:ss.SSSSSS')
             })
-            .select<'*', Lesson>();
+            .select<'*', LessonEndpoint>();
 
         const next = setSupabaseError(error, status, () => dispatch(setIsLessonLoading({ isLoading: false })));
         if (next) return;
 
-        dispatch(setIsLessonLoading({ isLoading: false }));
-        if (state.lessons.length > 0) dispatch(addLesson({ lesson: data![0] }));
+        if (state.lessons.length > 0) dispatch(addLesson({ lesson: lessonAdapter(data![0]) }));
+        else dispatch(setIsLessonLoading({ isLoading: false }));
+
+        if (user.precursor === 'ninguno') await loadLastLesson();
 
         setStatus({
             code: 201,
-            msg: 'Has agregado una clase al curso correctamente.'
+            msg: 'Haz agregado una clase al curso correctamente.'
         });
 
         navigate('LessonsScreen' as never);
@@ -704,7 +788,7 @@ const useCourses = () => {
      * @return {Promise<void>} This function does not return anything.
      */
     const updateCourse = async (courseValues: CourseFormValues): Promise<void> => {
-        if (!isConnected) {
+        if (!wifi.isConnected) {
             setNetworkError();
             return;
         }
@@ -732,21 +816,30 @@ const useCourses = () => {
 
         const { data, error, status } = await supabase.from('courses')
             .update({
-                ...courseValues,
+                ...courseFormValuesAdapter(courseValues),
                 updated_at: dayjs().format('YYYY-MM-DD HH:mm:ss.SSSSSS')
             })
             .eq('id', state.selectedCourse.id)
             .eq('user_id', user.id)
-            .select<'*', Course>();
+            .select<'*', CourseEndpoint>();
 
         const next = setSupabaseError(error, status, () => dispatch(setIsCourseLoading({ isLoading: false })));
         if (next) return;
 
-        dispatch(updateCourseAction({ course: data![0] }));
+        dispatch(updateCourseAction({ course: courseAdapter(data![0]) }));
+
+        if (user.precursor === 'ninguno' && state.lastLesson.courseId === state.selectedCourse.id) {
+            dispatch(addLastLesson({
+                lesson: {
+                    ...state.lastLesson,
+                    course: courseAdapter(data![0])
+                }
+            }));
+        }
 
         setStatus({
             code: 200,
-            msg: 'Has actualizado el curso correctamente.'
+            msg: 'Haz actualizado el curso correctamente.'
         });
 
         goBack();
@@ -759,7 +852,7 @@ const useCourses = () => {
      * @return {Promise<void>} This function does not return anything.
      */
     const updateLesson = async (lessonValues: LessonFormValues): Promise<void> => {
-        if (!isConnected) {
+        if (!wifi.isConnected) {
             setNetworkError();
             return;
         }
@@ -787,22 +880,31 @@ const useCourses = () => {
 
         const { data, error, status } = await supabase.from('lessons')
             .update({
-                ...lessonValues,
-                next_lesson: dayjs(lessonValues.next_lesson).format('YYYY-MM-DD HH:mm:ss.SSSSSS'),
+                description: lessonValues.description,
+                next_lesson: dayjs(lessonValues.nextLesson).format('YYYY-MM-DD HH:mm:ss.SSSSSS'),
                 updated_at: dayjs().format('YYYY-MM-DD HH:mm:ss.SSSSSS')
             })
             .eq('id', state.selectedLesson.id)
             .eq('course_id', state.selectedCourse.id)
-            .select<'*', Lesson>();
+            .select<'*', LessonEndpoint>();
 
         const next = setSupabaseError(error, status, () => dispatch(setIsLessonLoading({ isLoading: false })));
         if (next) return;
 
-        dispatch(updateLessonAction({ lesson: data![0] }));
+        const lesson = lessonAdapter(data![0]);
+
+        dispatch(updateLessonAction({ lesson }));
+
+        if ((user.precursor !== 'ninguno') && data![0].id === state.lastLesson.id) {
+            dispatch(addLastLesson({ lesson: {
+                ...lesson,
+                course: state.lastLesson.course
+            } }));
+        }
 
         setStatus({
             code: 200,
-            msg: 'Has actualizado la clase correctamente.'
+            msg: 'Haz actualizado la clase correctamente.'
         });
 
         goBack();
@@ -829,6 +931,7 @@ const useCourses = () => {
         finishOrStartCourse,
         finishOrStartLesson,
         loadCourses,
+        loadLastLesson,
         loadLessons,
         saveCourse,
         saveLesson,

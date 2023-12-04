@@ -1,12 +1,16 @@
 import React, { FC } from 'react';
 import { View } from 'react-native';
 
+/* Components */
 import { Button } from '../../../components/ui';
 
+/* Hooks */
 import { useRevisits, useTheme } from '../../../hooks';
 
+/* Interfaces */
 import { ModalActionProps } from './interfaces';
 
+/* Styles */
 import { styles as themeStyles } from '../../../theme';
 
 /**

@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, useWindowDimensions, ActivityIndicator } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { Formik } from 'formik';
-import { object, string } from 'yup';
 import Icon from 'react-native-vector-icons/Ionicons';
 
 /* Components */
@@ -10,6 +9,9 @@ import { Button, EyeBtn, FormField } from '../../ui';
 
 /* Hooks */
 import { useAuth, useStatus, useTheme } from '../../../hooks';
+
+/* Schemas */
+import { loginFormSchema } from './schemas';
 
 /* Theme */
 import { styles as themeStyles } from '../../../theme';
@@ -28,16 +30,6 @@ export const LoginForm = (): JSX.Element => {
     const { state: { isAuthLoading }, signIn } = useAuth();
     const { setErrorForm } = useStatus();
     const { state: { colors } } = useTheme();
-
-    /* Validation schema for login values (email and password) */
-    const loginFormSchema = object().shape({
-        email: string()
-            .email('Correo electrónico inválido.')
-            .required('El correo electrónico es requerido.'),
-        password: string()
-            .min(6, 'La contraseña debe tener al menos 6 caracteres.')
-            .required('La contraseña es requerida.')
-    });
 
     return (
         <Formik

@@ -1,3 +1,3 @@
-export { RevisitCard } from './RevisitCard';
-export { RevisitForm } from './RevisitForm';
-export { RevisitsList } from './RevisitsList';
+export * from './RevisitCard';
+export * from './RevisitForm';
+export * from './RevisitsList';

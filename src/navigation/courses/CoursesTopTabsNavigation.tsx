@@ -9,7 +9,7 @@ import { Courses } from '../../screens/courses';
 import { useTheme } from '../../hooks';
 
 /* Interfaces */
-import { CoursesTopTabsParamsList } from '../../interfaces/courses';
+import { CoursesTopTabsParamsList } from '../../interfaces';
 
 const Tabs = createMaterialTopTabNavigator<CoursesTopTabsParamsList>();
 
@@ -58,7 +58,7 @@ const CoursesTopTabsNavigation = (): JSX.Element => {
             <Tabs.Screen
                 component={ Courses }
                 initialParams={{
-                    emptyMessage: 'No has agregado ningún curso.',
+                    emptyMessage: 'No haz agregado ningún curso.',
                     filter: 'all',
                     title: 'TODOS MIS CURSOS',
                 }}

@@ -2,41 +2,41 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 /* Interfaces */
 import {
-    RevisitPayload,
-    RevisitsState,
-    SetRevisitsPayload,
-    SetRefreshRevisitsPayload,
-    Revisit,
-    RevisitFilter
-} from '../../interfaces/revisits';
-
-import {
-    RemoveResourcePayload,
-    SetIsDeletingPayload,
-    SetIsLoadingPayload,
+    HasMorePayload,
     HistoryPayload,
     PaginationPayload,
-    HasMorePayload
-} from '../../interfaces/features';
+    RemoveResourcePayload,
+    Revisit,
+    RevisitFilter,
+    RevisitPayload,
+    RevisitsState,
+    SetIsDeletingPayload,
+    SetIsLoadingPayload,
+    SetRefreshRevisitsPayload,
+    SetRevisitsPayload
+} from '../../interfaces';
 
 /* Initial revisit */
 export const INIT_REVISIT: Revisit = {
     id: '',
-    user_id: '',
-    person_name: '',
+    userId: '',
+    personName: '',
     about: '',
     address: '',
-    next_visit: new Date().toString(),
+    nextVisit: new Date().toString(),
     done: false,
-    created_at: new Date().toString(),
-    updated_at: new Date().toString()
+    createdAt: new Date().toString(),
+    updatedAt: new Date().toString()
 }
+
 /* Initial state */
-const INITIAL_STATE: RevisitsState = {
+export const REVISITS_INITIAL_STATE: RevisitsState = {
     hasMoreRevisits: true,
+    isLastRevisitLoading: false,
     isRevisitDeleting: false,
     isRevisitLoading: false,
     isRevisitsLoading: false,
+    lastRevisit: INIT_REVISIT,
     refreshRevisits: false,
     revisitFilter: 'all',
     revisits: [],
@@ -67,11 +67,11 @@ const filterRevisits = (revisits: Revisit[], filter: RevisitFilter) => {
 /* Slice of management state */
 const revisitsSlice = createSlice({
     name: 'revisits',
-    initialState: INITIAL_STATE,
+    initialState: REVISITS_INITIAL_STATE,
     reducers: {
         addRevisit: (state, action: PayloadAction<RevisitPayload>) => {
             state.revisits = filterRevisits([ action.payload.revisit, ...state.revisits ], state.revisitFilter);
-            state.revisits = state.revisits.sort((a, b) => new Date(b.next_visit).getTime() - new Date(a.next_visit).getTime());
+            state.revisits = state.revisits.sort((a, b) => new Date(b.nextVisit).getTime() - new Date(a.nextVisit).getTime());
             state.isRevisitLoading = false;
         },
 
@@ -81,16 +81,16 @@ const revisitsSlice = createSlice({
         },
 
         clearRevisits: (state) => {
-            state.hasMoreRevisits = INITIAL_STATE.hasMoreRevisits;
-            state.isRevisitDeleting = INITIAL_STATE.isRevisitDeleting;
-            state.isRevisitLoading = INITIAL_STATE.isRevisitLoading;
-            state.isRevisitsLoading = INITIAL_STATE.isRevisitsLoading;
-            state.refreshRevisits = INITIAL_STATE.refreshRevisits;
-            state.revisitFilter = INITIAL_STATE.revisitFilter;
-            state.revisits = INITIAL_STATE.revisits;
-            state.revisitsPagination = INITIAL_STATE.revisitsPagination;
-            state.revisitsScreenHistory = INITIAL_STATE.revisitsScreenHistory;
-            state.selectedRevisit = INITIAL_STATE.selectedRevisit;
+            state.hasMoreRevisits = REVISITS_INITIAL_STATE.hasMoreRevisits;
+            state.isRevisitDeleting = REVISITS_INITIAL_STATE.isRevisitDeleting;
+            state.isRevisitLoading = REVISITS_INITIAL_STATE.isRevisitLoading;
+            state.isRevisitsLoading = REVISITS_INITIAL_STATE.isRevisitsLoading;
+            state.refreshRevisits = REVISITS_INITIAL_STATE.refreshRevisits;
+            state.revisitFilter = REVISITS_INITIAL_STATE.revisitFilter;
+            state.revisits = REVISITS_INITIAL_STATE.revisits;
+            state.revisitsPagination = REVISITS_INITIAL_STATE.revisitsPagination;
+            state.revisitsScreenHistory = REVISITS_INITIAL_STATE.revisitsScreenHistory;
+            state.selectedRevisit = REVISITS_INITIAL_STATE.selectedRevisit;
         },
 
         removeRevisit: (state, action: PayloadAction<RemoveResourcePayload>) => {
@@ -106,6 +106,10 @@ const revisitsSlice = createSlice({
             state.hasMoreRevisits = action.payload.hasMore;
         },
 
+        setIsLastRevisitLoading: (state, action: PayloadAction<SetIsLoadingPayload>) => {
+            state.isLastRevisitLoading = action.payload.isLoading;
+        },
+
         setIsRevisitDeleting: (state, action: PayloadAction<SetIsDeletingPayload>) => {
             state.isRevisitDeleting = action.payload.isDeleting;
         },
@@ -116,6 +120,11 @@ const revisitsSlice = createSlice({
 
         setIsRevisitsLoading: (state, action: PayloadAction<SetIsLoadingPayload>) => {
             state.isRevisitsLoading = action.payload.isLoading;
+        },
+
+        setLastRevisit: (state, action: PayloadAction<RevisitPayload>) => {
+            state.lastRevisit = action.payload.revisit;
+            state.isLastRevisitLoading = false;
         },
 
         setRefreshRevisits: (state, action: PayloadAction<SetRefreshRevisitsPayload>) => {
@@ -150,7 +159,7 @@ const revisitsSlice = createSlice({
                     ? action.payload.revisit
                     : revisit
             ), state.revisitFilter);
-            state.revisits = state.revisits.sort((a, b) => new Date(b.next_visit).getTime() - new Date(a.next_visit).getTime());
+            state.revisits = state.revisits.sort((a, b) => new Date(b.nextVisit).getTime() - new Date(a.nextVisit).getTime());
             state.selectedRevisit = (state.selectedRevisit.id === action.payload.revisit.id)
                 ? action.payload.revisit
                 : state.selectedRevisit;
@@ -166,9 +175,11 @@ export const {
     removeRevisit,
     removeRevisits,
     setHasMoreRevisits,
+    setIsLastRevisitLoading,
     setIsRevisitDeleting,
     setIsRevisitLoading,
     setIsRevisitsLoading,
+    setLastRevisit,
     setRefreshRevisits,
     setRevisitFilter,
     setRevisits,

@@ -53,8 +53,8 @@ const Home = (): JSX.Element => {
         setSelectedPreaching({
             ...INIT_PREACHING,
             day: new Date().toString(),
-            init_hour: new Date().toString(),
-            final_hour: new Date().toString()
+            initHour: new Date().toString(),
+            finalHour: new Date().toString()
         });
 
         navigate('AddOrEditPreachingScreen' as never);
@@ -110,20 +110,19 @@ const Home = (): JSX.Element => {
                 { (!isPreachingsLoading && preachings.length === 0) && (
                     <InfoText
                         containerStyle={{ marginTop: height * 0.30 }}
-                        text="No has agregado ningún día de predicación para el informe de este mes."
+                        text="No haz agregado ningún día de predicación para el informe de este mes."
                     />
                 ) }
             </ScrollView>
 
-            { ((currentMonth === month) && preachings.length > 0 && user?.hours_requirement && user?.hours_requirement > 0) && (
+            { ((currentMonth === month) && preachings.length > 0 && Boolean(user?.hoursRequirement) && user?.hoursRequirement > 0) && (
                 <Fab
                     color={ colors.button }
                     icon={
                         <Icon
                             color={ colors.contentHeader }
                             name="information-circle-outline"
-                            size={ 40 }
-                            style={{ marginLeft: 1 }}
+                            size={ 41 }
                         />
                     }
                     onPress={ () => setShowPreachingInfoModal(true) }
@@ -153,7 +152,6 @@ const Home = (): JSX.Element => {
                         color={ colors.contentHeader }
                         name="add-circle-outline"
                         size={ 40 }
-                        style={{ marginLeft: 3 }}
                     />
                 }
                 onPress={ handleNavigate }

@@ -5,7 +5,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#3C3547',
         borderWidth: 1,
         height: 60,
-        justifyContent: 'center'
+        justifyContent: 'center',
     },
 
     tableCellText: {

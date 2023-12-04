@@ -1,4 +1,4 @@
-import { Colors } from '../interfaces/theme';
+import { Colors } from '../interfaces';
 
 /* Exporting the object `lightColors` as a constant. */
 export const lightColors: Colors = {

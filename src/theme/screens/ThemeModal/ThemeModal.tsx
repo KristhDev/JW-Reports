@@ -7,8 +7,7 @@ import { OptionsModal } from '../../../screens/ui';
 import { useTheme } from '../../../hooks';
 
 /* Interfaces */
-import { Theme } from '../../../interfaces/theme';
-import { ModalProps } from '../../../interfaces/ui';
+import { Theme, ModalProps } from '../../../interfaces';
 
 /* Utils */
 import { THEME_OPTIONS } from '../../../utils';

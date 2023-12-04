@@ -1,12 +1,10 @@
 import { AuthError, PostgrestError } from '@supabase/supabase-js';
 
 /* Features */
-import { useAppDispatch, useAppSelector } from '../features';
-import { clearStatus as clearStatusAction, setStatus as setStatusAction } from '../features/status';
+import { clearStatus as clearStatusAction, setStatus as setStatusAction, useAppDispatch, useAppSelector } from '../features';
 
 /* Interfaces */
-import { SetStatusPayload } from '../interfaces/status';
-import { StorageError } from '../interfaces/ui';
+import { SetStatusPayload, StorageError } from '../interfaces';
 
 /* Utils */
 import { translateErrorMsg } from '../utils';
@@ -37,6 +35,22 @@ const useStatus = () => {
     }
 
     /**
+     * Sets the network error status and dispatches an action if provided.
+     *
+     * @param {string} msg - An optional error message.
+     * @param {function} onDispatch - An optional function to be called on dispatch.
+     * @return {void} This function does not return anything
+     */
+    const setNetworkError = (msg?: string, onDispatch?: () => void): void => {
+        onDispatch && onDispatch();
+
+        setStatus({
+            code: 500,
+            msg: msg || 'Lo sentimos pero no dispones de conexion a Internet. Los datos que hay en la aplicación no son actualizados. Hasta que recuperes la conexión no podras obtener, guardar, editar o eliminar ningún dato.',
+        });
+    }
+
+    /**
      * If there's an error, log it, call the onDispatch function if it exists, set the status, and
      * return true. Otherwise, return false
      *
@@ -52,6 +66,7 @@ const useStatus = () => {
 
             onDispatch && onDispatch();
             setStatus({ code: status, msg });
+            console.log(error);
 
             return true;
         }
@@ -74,22 +89,6 @@ const useStatus = () => {
         });
     }
 
-
-    /**
-     * Sets the network error status and dispatches an action if provided.
-     *
-     * @param {string} msg - An optional error message.
-     * @param {function} onDispatch - An optional function to be called on dispatch.
-     * @return {void} This function does not return anything
-     */
-    const setNetworkError = (msg?: string, onDispatch?: () => void): void => {
-        onDispatch && onDispatch();
-
-        setStatus({
-            code: 500,
-            msg: msg || 'Lo sentimos pero no dispones de conexion a Internet. Los datos que hay en la aplicación no son actualizados. Hasta que recuperes la conexión no podras obtener, guardar, editar o eliminar ningún dato.',
-        });
-    }
 
     return {
         state,

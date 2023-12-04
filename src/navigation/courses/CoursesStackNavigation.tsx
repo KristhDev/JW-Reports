@@ -15,7 +15,7 @@ import { BackButton, HeaderButtons } from '../../components/ui';
 import { useCourses, useTheme } from '../../hooks';
 
 /* Interfaces */
-import { CoursesStackParamsList } from '../../interfaces/courses';
+import { CoursesStackParamsList } from '../../interfaces';
 
 const Stack = createStackNavigator<CoursesStackParamsList>();
 
@@ -42,7 +42,7 @@ const CoursesStackNavigation = (): JSX.Element => {
 
     const { state: { colors } } = useTheme();
 
-    const courseDetailTitle = `Curso a ${ selectedCourse.person_name }`;
+    const courseDetailTitle = `Curso a ${ selectedCourse.personName }`;
 
     /**
      * When the user clicks the delete button, the deleteCourse function is called, which sets the
@@ -171,11 +171,11 @@ const CoursesStackNavigation = (): JSX.Element => {
                             onShowDeleteModal={ () => setShowDeleteLessonModal(true) }
                             showDeleteModal={ showDeleteLessonModal }
 
-                            editButton={ !selectedCourse.finished || !selectedLesson.done }
+                            editButton={ !selectedCourse.finished || !selectedCourse.suspended }
                             onPressEditButton={ () => navigate('AddOrEditLessonScreen' as never) }
                         />
                     ),
-                    title: `Clase con ${ selectedCourse.person_name }`
+                    title: `Clase con ${ selectedCourse.personName }`
                 }}
             />
         </Stack.Navigator>

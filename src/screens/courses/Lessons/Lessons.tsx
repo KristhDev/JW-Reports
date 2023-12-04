@@ -36,7 +36,7 @@ const Lessons = (): JSX.Element => {
     const handleNavigate = (): void => {
         setSelectedLesson({
             ...INIT_LESSON,
-            next_lesson: new Date().toString(),
+            nextLesson: new Date().toString(),
         });
 
         navigate('AddOrEditLessonScreen' as never);
@@ -53,7 +53,6 @@ const Lessons = (): JSX.Element => {
                         color={ colors.contentHeader }
                         name="add-circle-outline"
                         size={ 40 }
-                        style={{ marginLeft: 3 }}
                     />
                 }
                 onPress={ handleNavigate }

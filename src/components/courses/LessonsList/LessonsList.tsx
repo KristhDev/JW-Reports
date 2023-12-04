@@ -16,7 +16,7 @@ import { ListEmptyComponent, ListFooterComponent, SearchInput, Title } from '../
 import { useCourses, useNetwork } from '../../../hooks';
 
 /* Interfaces */
-import { Lesson } from '../../../interfaces/courses';
+import { Lesson } from '../../../interfaces';
 
 /**
  * Render a list of lessons.
@@ -43,7 +43,8 @@ export const LessonsList = (): JSX.Element => {
         setSelectedLesson,
         loadLessons,
     } = useCourses();
-    const { isConnected } = useNetwork();
+
+    const { wifi } = useNetwork();
 
     /**
      * When the user refreshes the page, reset the search term, reset the pagination, remove the
@@ -54,7 +55,7 @@ export const LessonsList = (): JSX.Element => {
     const handleRefreshing = (): void => {
         setSearchTerm('');
 
-        if (isConnected) {
+        if (wifi.isConnected) {
             setLessonsPagination({ from: 0, to: 9 });
             removeLessons();
         }
@@ -69,7 +70,7 @@ export const LessonsList = (): JSX.Element => {
      * @return {void} This function does not return any value.
      */
     const handleEndReach = (): void => {
-        if (!hasMoreLessons || isLessonsLoading || !isConnected) return;
+        if (!hasMoreLessons || isLessonsLoading || !wifi.isConnected) return;
         loadLessons({ search: searchTerm, loadMore: true });
     }
 
@@ -97,7 +98,7 @@ export const LessonsList = (): JSX.Element => {
         setShowModal(false);
         setSelectedLesson({
             ...INIT_LESSON,
-            next_lesson: new Date().toString()
+            nextLesson: new Date().toString()
         });
     }
 
@@ -126,7 +127,7 @@ export const LessonsList = (): JSX.Element => {
      */
     useEffect(() => {
         if (searchTerm.trim().length > 0) {
-            if (isConnected) {
+            if (wifi.isConnected) {
                 setLessonsPagination({ from: 0, to: 9 });
                 removeLessons();
             }
@@ -134,7 +135,7 @@ export const LessonsList = (): JSX.Element => {
             loadLessons({ search: searchTerm, refresh: true });
             setIsRefreshing(false);
         }
-        else if (searchTerm.trim().length === 0 && lessons.length === 0 && isConnected) {
+        else if (searchTerm.trim().length === 0 && lessons.length === 0 && wifi.isConnected) {
             setLessonsPagination({ from: 0, to: 9 });
             removeLessons();
             loadLessons({ search: '', refresh: true });
@@ -158,7 +159,7 @@ export const LessonsList = (): JSX.Element => {
                     <>
                         <Title
                             containerStyle={{ marginVertical: 8 }}
-                            text={ `Clases del curso con ${ selectedCourse.person_name }` }
+                            text={ `Clases del curso con ${ selectedCourse.personName }` }
                             textStyle={{ fontSize: 24 }}
                         />
 
@@ -175,7 +176,7 @@ export const LessonsList = (): JSX.Element => {
                         msg={
                             (searchTerm.trim().length > 0 && lessons.length === 0)
                                 ? `No se encontraron resultados para: ${ searchTerm.trim() }`
-                                : 'No has agregado clases a este curso.'
+                                : 'No haz agregado clases a este curso.'
                         }
                         showMsg={ !isLessonsLoading && lessons.length === 0 }
                     />
@@ -194,6 +195,7 @@ export const LessonsList = (): JSX.Element => {
                         lesson={ item }
                         onDelete={ () => handleShowModal(item, setShowDeleteModal) }
                         onFinish={ () => handleShowModal(item, setShowFSModal) }
+                        screenToNavigate="LessonDetailScreen"
                     />
                 ) }
             />

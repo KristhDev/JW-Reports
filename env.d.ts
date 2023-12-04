@@ -1,4 +1,5 @@
 declare module '@env' {
+    export const APP_VERSION: string;
     export const REPOSITORY_URL: string;
     export const SITIE_URL: string;
     export const SUPABASE_APY_KEY: string;

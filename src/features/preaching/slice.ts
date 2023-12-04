@@ -1,25 +1,30 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 /* Interfaces */
-import { Preaching, PreachingPayload, PreachingState, SetPreachingsPayload, SetSelectedDatePayload } from '../../interfaces/preaching';
-import { RemoveResourcePayload, SetIsDeletingPayload, SetIsLoadingPayload } from '../../interfaces/features';
+import {
+    Preaching,
+    PreachingPayload,
+    PreachingState,
+    RemoveResourcePayload,
+    SetIsDeletingPayload,
+    SetIsLoadingPayload,
+    SetPreachingsPayload,
+    SetSelectedDatePayload
+} from '../../interfaces';
 
 /* Initial preaching */
 export const INIT_PREACHING: Preaching = {
     id: '',
-    user_id: '',
+    userId: '',
     day: new Date().toString(),
-    init_hour: new Date().toString(),
-    final_hour: new Date().toString(),
-    publications: 0,
-    videos: 0,
-    revisits: 0,
-    created_at: new Date().toString(),
-    updated_at: new Date().toString()
+    initHour: new Date().toString(),
+    finalHour: new Date().toString(),
+    createdAt: new Date().toString(),
+    updatedAt: new Date().toString()
 }
 
 /* Initial state */
-const INITIAL_STATE: PreachingState = {
+export const PREACHING_INITIAL_STATE: PreachingState = {
     isPreachingDeleting: false,
     isPreachingsLoading: false,
     isPreachingLoading: false,
@@ -31,7 +36,7 @@ const INITIAL_STATE: PreachingState = {
 /* Slice of management state */
 const preachingSlice = createSlice({
     name: 'preaching',
-    initialState: INITIAL_STATE,
+    initialState: PREACHING_INITIAL_STATE,
     reducers: {
         addPreaching: (state, action: PayloadAction<PreachingPayload>) => {
             state.preachings = [ ...state.preachings, action.payload.preaching ];
@@ -40,12 +45,12 @@ const preachingSlice = createSlice({
         },
 
         clearPreaching: (state) => {
-            state.isPreachingDeleting = INITIAL_STATE.isPreachingDeleting;
-            state.isPreachingLoading = INITIAL_STATE.isPreachingLoading;
-            state.isPreachingsLoading = INITIAL_STATE.isPreachingsLoading;
-            state.preachings = INITIAL_STATE.preachings;
-            state.selectedDate = INITIAL_STATE.selectedDate;
-            state.seletedPreaching = INITIAL_STATE.seletedPreaching;
+            state.isPreachingDeleting = PREACHING_INITIAL_STATE.isPreachingDeleting;
+            state.isPreachingLoading = PREACHING_INITIAL_STATE.isPreachingLoading;
+            state.isPreachingsLoading = PREACHING_INITIAL_STATE.isPreachingsLoading;
+            state.preachings = PREACHING_INITIAL_STATE.preachings;
+            state.selectedDate = PREACHING_INITIAL_STATE.selectedDate;
+            state.seletedPreaching = PREACHING_INITIAL_STATE.seletedPreaching;
         },
 
         removePreaching: (state, action: PayloadAction<RemoveResourcePayload>) => {

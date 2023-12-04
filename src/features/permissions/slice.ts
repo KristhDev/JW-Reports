@@ -4,10 +4,10 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { checkPermissions } from './thunks';
 
 /* Interfaces */
-import { PermissionsState, SetPermissionPayload } from '../../interfaces/permissions';
+import { PermissionsState, SetPermissionPayload } from '../../interfaces';
 
 /* Initial state */
-const INITIAL_STATE: PermissionsState = {
+export const PERMISSIONS_INITIAL_STATE: PermissionsState = {
     permissions: {
         camera: 'unavailable',
         mediaLibrary: 'unavailable'
@@ -17,7 +17,7 @@ const INITIAL_STATE: PermissionsState = {
 /* Slice of management state */
 const permissionsSlice = createSlice({
     name: 'permissions',
-    initialState: INITIAL_STATE,
+    initialState: PERMISSIONS_INITIAL_STATE,
     reducers: {
         setPermission: (state, action: PayloadAction<SetPermissionPayload>) => {
             state.permissions[action.payload.key] = action.payload.value;

@@ -63,6 +63,7 @@ export type CoursesTopTabsParamsList = {
  * @property {boolean} isCoursesLoading - Whether the courses are being loaded
  * @property {boolean} isLessonLoading - Whether the lessons are being loaded
  * @property {boolean} isLessonsLoading - Whether the lessons are being loaded
+ * @property {LessonWithCourse} lastLesson - The last lesson of the course
  * @property {Lesson[]} lessons - The lessons to be displayed
  * @property {Pagination} lessonsPagination - The pagination for the lessons
  * @property {boolean} refreshCourses - Whether the courses should be refreshed
@@ -77,12 +78,14 @@ export interface CoursesState {
     coursesScreenHistory: string[];
     hasMoreCourses: boolean;
     hasMoreLessons: boolean;
-    isLessonDeleting: boolean;
     isCourseDeleting: boolean;
     isCourseLoading: boolean;
     isCoursesLoading: boolean;
+    isLastLessonLoading: boolean;
+    isLessonDeleting: boolean;
     isLessonLoading: boolean;
     isLessonsLoading: boolean;
+    lastLesson: LessonWithCourse;
     lessons: Lesson[];
     lessonsPagination: Pagination;
     refreshCourses: boolean;
@@ -93,6 +96,35 @@ export interface CoursesState {
 
 /**
  * Defining the structure of the Course object.
+ *
+ * @property {string} id - The id of the course
+ * @property {string} userId - The id of the user
+ * @property {string} personName - The name of the person
+ * @property {string} personAbout - The about of the person
+ * @property {string} personAddress - The address of the person
+ * @property {string} publication - The publication of the course
+ * @property {Lesson | undefined} lastLesson - The last lesson of the course
+ * @property {boolean} suspended - Whether the course is suspended
+ * @property {boolean} finished - Whether the course is finished
+ * @property {string} createdAt - The created at of the course
+ * @property {string} updatedAt - The updated at of the course
+ */
+export interface Course {
+    id: string;
+    userId: string;
+    personName: string;
+    personAbout: string;
+    personAddress: string;
+    publication: string;
+    lastLesson?: Lesson;
+    suspended: boolean;
+    finished: boolean;
+    createdAt: string;
+    updatedAt: string;
+}
+
+/**
+ * Defining the structure of the Course Endpoint object.
  *
  * @property {string} id - The id of the course
  * @property {string} user_id - The id of the user
@@ -106,7 +138,7 @@ export interface CoursesState {
  * @property {string} created_at - The created at of the course
  * @property {string} updated_at - The updated at of the course
  */
-export interface Course {
+export interface CourseEndpoint {
     id: string;
     user_id: string;
     person_name: string;
@@ -124,6 +156,27 @@ export interface Course {
  * Defining the structure of the Lesson object.
  *
  * @property {string} id - The id of the lesson
+ * @property {string} courseId - The id of the course
+ * @property {string} description - The description of the lesson
+ * @property {string} nextLesson - The next lesson of the course
+ * @property {boolean} done - Whether the lesson is done
+ * @property {string} createdAt - The created at of the lesson
+ * @property {string} updatedAt - The updated at of the lesson
+ */
+export interface Lesson {
+    id: string;
+    courseId: string;
+    description: string;
+    nextLesson: string;
+    done: boolean;
+    createdAt: string;
+    updatedAt: string;
+}
+
+/**
+ * Defining the structure of the Lesson Endpoint object.
+ *
+ * @property {string} id - The id of the lesson
  * @property {string} course_id - The id of the course
  * @property {string} description - The description of the lesson
  * @property {string} next_lesson - The next lesson of the course
@@ -131,7 +184,7 @@ export interface Course {
  * @property {string} created_at - The created at of the lesson
  * @property {string} updated_at - The updated at of the lesson
  */
-export interface Lesson {
+export interface LessonEndpoint {
     id: string;
     course_id: string;
     description: string;
@@ -142,17 +195,35 @@ export interface Lesson {
 }
 
 /**
+ * Defining the structure of the LessonWithCourse object.
+ *
+ * @property {Course} courses - The course of the lesson
+ */
+export interface LessonWithCourseEndpoint extends LessonEndpoint {
+    courses: CourseEndpoint;
+}
+
+/**
+ * Defining the structure of the LessonWithCourse object.
+ *
+ * @property {Course} course - The course of the lesson
+ */
+export interface LessonWithCourse extends Lesson {
+    course: Course;
+}
+
+/**
  * Defining the structure of the CourseFormValues object.
  *
- * @property {string} person_name - The name of the person
- * @property {string} person_about - The about of the person
- * @property {string} person_address - The address of the person
+ * @property {string} personName - The name of the person
+ * @property {string} personAbout - The about of the person
+ * @property {string} personAddress - The address of the person
  * @property {string} publication - The publication of the course
  */
 export interface CourseFormValues {
-    person_name: string;
-    person_about: string;
-    person_address: string;
+    personName: string;
+    personAbout: string;
+    personAddress: string;
     publication: string;
 }
 
@@ -164,7 +235,7 @@ export interface CourseFormValues {
  */
 export interface LessonFormValues {
     description: string;
-    next_lesson: Date;
+    nextLesson: Date;
 }
 
 /* Extending the LoadResourcesOptions interface with a new property called filter. */
@@ -190,6 +261,15 @@ export type LessonPayload = {
  */
 export type CoursePayload = {
     course: Course;
+}
+
+/**
+ * SetLessonWithCoursePayload is a type that has a property called lesson that is of type LessonWithCourse.
+ *
+ * @property {LessonWithCourse} lesson - LessonWithCourse
+ */
+export type SetLessonWithCoursePayload = {
+    lesson: LessonWithCourse;
 }
 
 /**

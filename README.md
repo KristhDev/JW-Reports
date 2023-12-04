@@ -403,27 +403,6 @@ configuraciones de cada tabla:
             <td>No posee</td>
         </tr>
         <tr>
-            <td>publications</td>
-            <td>INT2</td>
-            <td>No</td>
-            <td>No</td>
-            <td>0</td>
-        </tr>
-        <tr>
-            <td>videos</td>
-            <td>INT2</td>
-            <td>No</td>
-            <td>No</td>
-            <td>0</td>
-        </tr>
-        <tr>
-            <td>revists</td>
-            <td>INT2</td>
-            <td>No</td>
-            <td>No</td>
-            <td>0</td>
-        </tr>
-        <tr>
             <td>created_at</td>
             <td>TIMESTAMP</td>
             <td>No</td>
@@ -605,15 +584,16 @@ proyecto, la única que tiene un valor es **REPOSITORY_URL** que es este mismo r
 has seguido todos los pasos ya tienes todos los valores, simplemente **ponlos en el archivo .env**. A continuación una tabla con la
 explicación de cada una de las variables:
 
-| Variable                 | Explicación                                             |
-|--------------------------|---------------------------------------------------------|
-| REPOSITORY_URL           | https://github.com/KristhDev/JW-Reports                 |
-| SITIE_URL                | Sitio de Internet para la autenticación de los usuarios |
-| SUPABASE_APY_KEY         | Clave de aplicación de Supabase                         |
-| SUPABASE_BUCKET          | Nombre del bucket para la subida de archivos            |
-| SUPABASE_REVISITS_FOLDER | Nombre del directorio de revisits                       |
-| SUPABASE_URL             | URL del proyecto de Supabase                            |
-| ONESIGNAL_APP_ID         | ID de la aplicación de OneSignal                        |
+| Variable                  | Explicación                                                   |
+|---------------------------|---------------------------------------------------------------|
+| REPOSITORY_URL            | https://github.com/KristhDev/JW-Reports                       |
+| SITIE_URL                 | Sitio de Internet para la autenticación de los usuarios       |
+| SUPABASE_APY_KEY          | Clave de aplicación de Supabase                               |
+| SUPABASE_BUCKET           | Nombre del bucket para la subida de archivos                  |
+| SUPABASE_REVISITS_FOLDER  | Nombre del directorio de revisits                             |
+| SUPABASE_URL              | URL del proyecto de Supabase                                  |
+| SUPABASE_SERVICE_ROLE_KEY | Clave de rol para el servicio de Supabase (solo para testing) |
+| ONESIGNAL_APP_ID          | ID de la aplicación de OneSignal                              |
 
 ### 5.11) Correr aplicación
 Para esto necesitas tener una **máquina virtual de Android Studio** ejecutándose, usa la versión del **SDK de Android** más

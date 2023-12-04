@@ -1,8 +1,13 @@
-import React, { useEffect, useState, FC, PropsWithChildren  } from 'react';
-import NetInfo from '@react-native-community/netinfo';
+import React, { useEffect, useState, FC, PropsWithChildren, useMemo  } from 'react';
+import NetInfo, { NetInfoStateType } from '@react-native-community/netinfo';
 
 /* Context */
-import { NetworkContext } from './';
+import { NetworkContext, Wifi } from './';
+
+export const INIT_WIFI_STATE: Wifi = {
+    isConnected: true,
+    type: NetInfoStateType.unknown
+}
 
 /**
  * This code is using the `useEffect` hook to subscribe to changes in the device's
@@ -12,7 +17,7 @@ import { NetworkContext } from './';
  * @return {JSX.Element} The rendered NetworkProvider component.
  */
 const NetworkProvider: FC<PropsWithChildren> = ({ children }): JSX.Element => {
-    const [ isConnected, setIsConnected ] = useState<boolean>(true);
+    const [ wifi, setWifi ] = useState<Wifi>(INIT_WIFI_STATE);
 
     /**
      * This code is using the `useEffect` hook to subscribe to changes in the device's
@@ -20,7 +25,7 @@ const NetworkProvider: FC<PropsWithChildren> = ({ children }): JSX.Element => {
      */
     useEffect(() => {
         const unSubscribreNetInfo = NetInfo.addEventListener((state) => {
-            setIsConnected(state?.isInternetReachable || false);
+            setWifi({ isConnected: state?.isInternetReachable || false, type: state.type });
         });
 
         return () => {
@@ -28,10 +33,10 @@ const NetworkProvider: FC<PropsWithChildren> = ({ children }): JSX.Element => {
         }
     }, []);
 
+    const store = useMemo(() => ({ wifi }), [ wifi ]);
+
     return (
-        <NetworkContext.Provider
-            value={{ isConnected }}
-        >
+        <NetworkContext.Provider value={ store }>
             { children }
         </NetworkContext.Provider>
     );

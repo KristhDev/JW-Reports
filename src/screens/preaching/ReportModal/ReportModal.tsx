@@ -1,18 +1,19 @@
-import React, { FC, useState } from 'react';
+import React, { Children, FC, useState } from 'react';
 import { KeyboardAvoidingView, ScrollView, View, Text, Share, TextInput, useWindowDimensions } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { RadioButton } from 'react-native-paper';
 
 /* Screens */
 import { Modal } from '../../ui';
 
 /* Components */
-import { Button } from '../../../components/ui';
+import { Button, RadioBtn } from '../../../components/ui';
 
 /* Hooks */
 import { useAuth, useCourses, usePreaching, useTheme } from '../../../hooks';
 
 /* Utils */
-import { sumHours, sumNumbers, getRestMins } from '../../../utils';
+import { sumHours, getRestMins } from '../../../utils';
 
 /* Interfaces */
 import { ReportModalProps } from './interfaces';
@@ -20,6 +21,11 @@ import { ReportModalProps } from './interfaces';
 /* Styles */
 import { styles as themeStyles } from '../../../theme';
 import styles from './styles';
+
+const particitions = [
+    { label: 'Si', value: 'si' },
+    { label: 'No', value: 'no' }
+];
 
 /**
  * This modal is responsible for grouping all the components to display and deliver
@@ -30,6 +36,7 @@ import styles from './styles';
  */
 const ReportModal: FC<ReportModalProps> = ({ isOpen, month, onClose }): JSX.Element => {
     const [ comment, setComment ] = useState<string>('');
+    const [ participated, setParticipated ] = useState<string>('si');
     const [ isFocused, setIsFocused ] = useState<boolean>(false);
     const [ selection, setSelection ] = useState({
         start: comment.length || 0,
@@ -45,12 +52,9 @@ const ReportModal: FC<ReportModalProps> = ({ isOpen, month, onClose }): JSX.Elem
     const { state: { colors }, BUTTON_TRANSLUCENT_COLOR } = useTheme();
 
     const username = `${ user.name } ${ user.surname }`;
-    const totalPublications = sumNumbers(preachings.map(p => p.publications));
-    const totalVideos = sumNumbers(preachings.map(p => p.videos));
-    const totalHours = sumHours(preachings.map(p => ({ init: p.init_hour, finish: p.final_hour })));
-    const totalRevisits = sumNumbers(preachings.map(p => p.revisits));
+    const totalHours = sumHours(preachings.map(p => ({ init: p.initHour, finish: p.finalHour })));
     const totalCourses = courses.filter(c => !c.suspended && !c.finished)?.length;
-    const restMins = getRestMins(preachings.map(p => ({ init: p.init_hour, finish: p.final_hour })));
+    const restMins = getRestMins(preachings.map(p => ({ init: p.initHour, finish: p.finalHour })));
 
     /**
      * When the user clicks the button, the function will close the modal, create a report string, and
@@ -64,18 +68,15 @@ const ReportModal: FC<ReportModalProps> = ({ isOpen, month, onClose }): JSX.Elem
         let report = '*Informe De Predicación* \n \n';
         report += `Nombre: ${ username }\n`;
         report += `Mes: ${ month.toLowerCase() }\n`;
-        report += `Publicaciones: ${ totalPublications }\n`;
-        report += `Videos: ${ totalVideos }\n`;
-        report += `Horas: ${ totalHours }\n`;
-        report += `Revisitas: ${ totalRevisits }\n`;
+
+        if (user.precursor !== 'ninguno') report += `Horas: ${ totalHours }\n`;
+        else report += `Participo en el ministerio: ${ participated }`;
+
         report += `Cursos: ${ totalCourses } \n`;
         report += 'Comentarios: \n';
         report += `${ (comment.trim().length > 0) ? comment : 'Ninguno' }`;
 
-        const { action } = await Share.share({
-            message: report
-        });
-
+        const { action } = await Share.share({ message: report });
         if (action === 'sharedAction') setComment('');
     }
 
@@ -121,30 +122,38 @@ const ReportModal: FC<ReportModalProps> = ({ isOpen, month, onClose }): JSX.Elem
                                 <Text style={{ ...styles.reportText, color: colors.modalText }}>{ month.toLowerCase() }</Text>
                             </View>
 
-                            <View style={{ flexDirection: 'row' }}>
-                                <Text style={{ ...styles.reportText, color: colors.text }}>Pulicaciones: </Text>
-                                <Text style={{ ...styles.reportText, color: colors.modalText }}>{ totalPublications }</Text>
-                            </View>
-
-                            <View style={{ flexDirection: 'row' }}>
-                                <Text style={{ ...styles.reportText, color: colors.text }}>Videos: </Text>
-                                <Text style={{ ...styles.reportText, color: colors.modalText }}>{ totalVideos }</Text>
-                            </View>
-
-                            <View style={{ flexDirection: 'row' }}>
-                                <Text style={{ ...styles.reportText, color: colors.text }}>Horas: </Text>
-                                <Text style={{ ...styles.reportText, color: colors.modalText }}>{ totalHours }</Text>
-                            </View>
-
-                            <View style={{ flexDirection: 'row' }}>
-                                <Text style={{ ...styles.reportText, color: colors.text }}>Revisitas: </Text>
-                                <Text style={{ ...styles.reportText, color: colors.modalText }}>{ totalRevisits }</Text>
-                            </View>
+                            { (user.precursor !== 'ninguno') && (
+                                <View style={{ flexDirection: 'row' }}>
+                                    <Text style={{ ...styles.reportText, color: colors.text }}>Horas: </Text>
+                                    <Text style={{ ...styles.reportText, color: colors.modalText }}>{ totalHours }</Text>
+                                </View>
+                            ) }
 
                             <View style={{ flexDirection: 'row' }}>
                                 <Text style={{ ...styles.reportText, color: colors.text }}>Cursos: </Text>
                                 <Text style={{ ...styles.reportText, color: colors.modalText }}>{ totalCourses }</Text>
                             </View>
+
+                            { (user.precursor === 'ninguno') && (
+                                <View style={{ flexDirection: 'column' }}>
+                                    <Text style={{ ...styles.reportText, color: colors.text, marginBottom: 5 }}>Participo en el ministerio: </Text>
+
+                                    <RadioButton.Group
+                                        onValueChange={ setParticipated }
+                                        value={ participated }
+                                    >
+                                        <View style={{ flexDirection: 'row', gap: 32, paddingVertical: 8 }}>
+                                            { Children.toArray(particitions.map(particition => (
+                                                <RadioBtn
+                                                    label={ particition.label }
+                                                    onPress={ () => setParticipated(particition.value) }
+                                                    value={ particition.value }
+                                                />
+                                            ))) }
+                                        </View>
+                                    </RadioButton.Group>
+                                </View>
+                            ) }
 
                             {/* Comment section */}
                             <View style={{ flexDirection: 'column' }}>
@@ -199,13 +208,11 @@ const ReportModal: FC<ReportModalProps> = ({ isOpen, month, onClose }): JSX.Elem
                             </View>
                         </View>
 
-                        {
-                            (restMins > 0) && (
-                                <Text style={{ color: colors.modalText, fontSize: 16, marginBottom: 24 }}>
-                                    Para este mes te sobraron { restMins } minutos, guardalos para el siguiente mes.
-                                </Text>
-                            )
-                        }
+                        { (restMins > 0) && (
+                            <Text style={{ color: colors.modalText, fontSize: 16, marginBottom: 24 }}>
+                                Para este mes te sobraron { restMins } minutos, guardalos para el siguiente mes.
+                            </Text>
+                        ) }
 
                         {/* Modal actions */}
                         <View style={{ flexDirection: 'row', justifyContent: 'flex-end' }}>
