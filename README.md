@@ -23,7 +23,7 @@ los conocimientos debidos puedan, si ellos lo quieren, **hacer su propia impleme
 Este documento explica las tecnologías utilizadas, el entorno de desarrollo, arquitectura, la base de datos, cómo crear su 
 implementación propia, el testing, etc.
 
-Te dejo el link para que puedas descargarla y probarla, has click [aquí](https://www.mediafire.com/file/yxrs5irz2g1dxyq/JW_Reports_1.1.2.apk/file)
+Te dejo el link para que puedas descargarla y probarla, has click [aquí](https://www.mediafire.com/file/m3l7ya8k0clhrh3/JW_Reports_2.0.0.apk/file).
 
 <br>
 
