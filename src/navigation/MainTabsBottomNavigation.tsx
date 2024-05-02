@@ -2,17 +2,13 @@ import React, { useEffect } from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { OneSignal } from 'react-native-onesignal';
 
-/* Navigations */
-import { CoursesStackNavigation, PreachingStackNavigation, RevisitsStackNavigation } from './';
-
-/* Components */
-import { TabBar } from '../components/ui';
-
-/* Hooks */
-import { useAuth, useTheme } from '../hooks';
-
-/* Interfaces */
-import { MainTabsBottomParamsList } from '../interfaces';
+/* Modules */
+import { CoursesStackNavigation } from '../modules/courses';
+import { MainTabsBottomParamsList, TabBar } from '../modules/ui';
+import { PreachingStackNavigation } from '../modules/preaching';
+import { RevisitsStackNavigation } from '../modules/revisits';
+import { useAuth } from '../modules/auth';
+import { useTheme } from '../modules/theme';
 
 const Tabs = createBottomTabNavigator<MainTabsBottomParamsList>();
 

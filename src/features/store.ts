@@ -5,12 +5,11 @@ import { combineReducers } from 'redux';
 import reduxFlipper from 'redux-flipper';
 
 /* Reducers */
-import { authReducer } from './auth';
-import { coursesReducer } from './courses';
-import { permissionsReducer } from './permissions';
-import { preachingReducer } from './preaching';
-import { revisitsReducer } from './revisits';
-import { statusReducer } from './status';
+import { authReducer } from '../modules/auth';
+import { coursesReducer } from '../modules/courses';
+import { permissionsReducer, statusReducer } from '../modules/shared';
+import { preachingReducer } from '../modules/preaching';
+import { revisitsReducer } from '../modules/revisits';
 
 /* Combining all the reducers into one reducer. */
 const reducers = combineReducers({

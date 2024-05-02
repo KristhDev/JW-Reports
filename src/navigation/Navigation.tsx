@@ -2,17 +2,17 @@ import React, { useEffect } from 'react';
 import { AppState, StatusBar } from 'react-native';
 import { CardStyleInterpolators, createStackNavigator } from '@react-navigation/stack';
 
+/* Modules */
+import { NavigationParamsList } from '../modules/ui';
+import { AuthStackNavigation, useAuth } from '../modules/auth';
+import { SettingsStackNavigation, StatusModal, useNetwork, usePermissions, useStatus } from '../modules/shared';
+import { useCourses } from '../modules/courses';
+import { usePreaching } from '../modules/preaching';
+import { useRevisits } from '../modules/revisits';
+import { useTheme } from '../modules/theme';
+
 /* Navigation */
-import { AuthStackNavigation, MainTabsBottomNavigation, SettingsStackNavigation } from './';
-
-/* Screens */
-import { StatusModal } from '../screens/status';
-
-/* Hooks */
-import { useAuth, useCourses, useNetwork, usePermissions, usePreaching, useRevisits, useStatus, useTheme } from '../hooks';
-
-/* Interfaces */
-import { NavigationParamsList } from '../interfaces';
+import MainTabsBottomNavigation from './MainTabsBottomNavigation';
 
 const Stack = createStackNavigator<NavigationParamsList>();
 
