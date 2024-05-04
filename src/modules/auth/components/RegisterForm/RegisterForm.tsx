@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, useWindowDimensions, ActivityIndicator } from 'react-native';
+import { useStyles } from 'react-native-unistyles';
 import { useNavigation } from '@react-navigation/native';
 import { Formik } from 'formik';
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -15,7 +16,7 @@ import { useStatus } from '../../../shared';
 import { registerFormSchema } from './schemas';
 
 /* Theme */
-import { styles as themeStyles, useTheme } from '../../../theme';
+import { styles as themeStylesheet } from '../../../theme';
 
 /**
  * This component is responsible for rendering the fields so that a user
@@ -32,7 +33,7 @@ export const RegisterForm = (): JSX.Element => {
 
     const { state: { isAuthLoading }, signUp } = useAuth();
     const { setErrorForm } = useStatus();
-    const { state: { colors } } = useTheme();
+    const { styles: themeStyles, theme: { colors } } = useStyles(themeStylesheet);
 
     return (
         <Formik
@@ -145,12 +146,7 @@ export const RegisterForm = (): JSX.Element => {
 
                     {/* Sign in link */}
                     <View style={{ ...themeStyles.btnLink, width: width * 0.9 }}>
-                        <Text
-                            style={{
-                                ...themeStyles.formText,
-                                color: colors.titleText
-                            }}
-                        >
+                        <Text style={ themeStyles.formText }>
                             ¿Ya tienes cuenta?
                         </Text>
 
@@ -159,12 +155,7 @@ export const RegisterForm = (): JSX.Element => {
                             onPress={ () => navigate('LoginScreen' as never) }
                             testID="register-form-sign-in"
                         >
-                            <Text
-                                style={{
-                                    ...themeStyles.formLink,
-                                    color: colors.linkText
-                                }}
-                            >
+                            <Text style={ themeStyles.formLink }>
                                 Ingresa aquí
                             </Text>
                         </TouchableOpacity>

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { ActivityIndicator, ScrollView, useWindowDimensions, RefreshControl } from 'react-native';
+import { useStyles } from 'react-native-unistyles';
 import { useNavigation } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import dayjs from 'dayjs';
@@ -20,7 +21,7 @@ import { useAuth } from '../../../auth';
 import { usePreaching } from '../../hooks';
 
 /* Theme */
-import { styles as themeStyles, useTheme } from '../../../theme';
+import { styles as themeStylesheet } from '../../../theme';
 
 /**
  * This screen is in charge of grouping the components to list the preaching days by
@@ -38,7 +39,7 @@ const Home = (): JSX.Element => {
 
     const { state: { user } } = useAuth();
     const { state: { selectedDate, preachings, isPreachingsLoading }, setSelectedPreaching, loadPreachings } = usePreaching();
-    const { state: { colors } } = useTheme();
+    const { styles: themeStyles, theme: { colors, margins } } = useStyles(themeStylesheet);
 
     const month = dayjs(selectedDate).format('MMMM').toUpperCase();
     const currentMonth = dayjs().format('MMMM').toUpperCase();
@@ -75,7 +76,7 @@ const Home = (): JSX.Element => {
     return (
         <>
             <ScrollView
-                contentContainerStyle={{ alignItems: 'center', padding: 24, paddingBottom: 100 }}
+                contentContainerStyle={{ alignItems: 'center', padding: margins.md, paddingBottom: 100 }}
                 overScrollMode="never"
                 refreshControl={
                     <RefreshControl

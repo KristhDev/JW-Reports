@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { ActivityIndicator, ScrollView, RefreshControl } from 'react-native';
+import { useStyles } from 'react-native-unistyles';
 import Icon from 'react-native-vector-icons/Ionicons';
 import dayjs from 'dayjs';
 
@@ -15,7 +16,7 @@ import { DeleteModal, Fab, InfoText, Title } from '../../../ui';
 import { usePreaching } from '../../hooks';
 
 /* Theme */
-import { styles as themeStyles, useTheme } from '../../../theme';
+import { styles as themeStylesheet } from '../../../theme';
 
 /**
  * This screen is in charge of grouping the components to list the preaching days by
@@ -57,7 +58,7 @@ const PublisherHome = (): JSX.Element => {
         loadLastRevisit
     } = useRevisits();
 
-    const { state: { colors } } = useTheme();
+    const { styles: themeStyles, theme: { colors, margins } } = useStyles(themeStylesheet);
 
     const month = dayjs(selectedDate).format('MMMM').toUpperCase();
 
@@ -141,7 +142,7 @@ const PublisherHome = (): JSX.Element => {
     return (
         <>
             <ScrollView
-                contentContainerStyle={{ alignItems: 'center', padding: 24, paddingBottom: 100 }}
+                contentContainerStyle={{ alignItems: 'center', padding: margins.md, paddingBottom: 100 }}
                 overScrollMode="never"
                 refreshControl={
                     <RefreshControl
@@ -153,7 +154,7 @@ const PublisherHome = (): JSX.Element => {
                 style={{ flex: 1 }}
             >
                 <Title
-                    containerStyle={{ ...themeStyles.titleContainer, marginBottom: 16 }}
+                    containerStyle={{ ...themeStyles.titleContainer, marginBottom: margins.sm }}
                     text="ÚLTIMA LECCIÓN"
                     textStyle={{ fontSize: 24 }}
                 />
@@ -187,7 +188,7 @@ const PublisherHome = (): JSX.Element => {
                 ) }
 
                 <Title
-                    containerStyle={{ ...themeStyles.titleContainer, paddingTop: 32, marginBottom: 16 }}
+                    containerStyle={{ ...themeStyles.titleContainer, paddingTop: 32, marginBottom: margins.sm }}
                     text="ÚLTIMA REVISITA"
                     textStyle={{ fontSize: 24 }}
                 />

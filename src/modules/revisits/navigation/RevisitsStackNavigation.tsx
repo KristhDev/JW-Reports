@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useStyles } from 'react-native-unistyles';
 import { CardStyleInterpolators, createStackNavigator } from '@react-navigation/stack';
 import { useNavigation } from '@react-navigation/native';
 
@@ -7,7 +8,6 @@ import RevisitsTopTabsNavigation from './RevisitsTopTabsNavigation';
 
 /* Modules */
 import { AddOrEditRevisit, RevisitDetail, RevisitsStackParamsList, useRevisits } from '../';
-import { useTheme } from '../../theme';
 import { BackButton, HeaderButtons } from '../../ui/';
 
 const Stack = createStackNavigator<RevisitsStackParamsList>();
@@ -22,7 +22,7 @@ const RevisitsStackNavigation = (): JSX.Element => {
     const { navigate } = useNavigation();
 
     const { state: { isRevisitDeleting, selectedRevisit }, deleteRevisit } = useRevisits();
-    const { state: { colors } } = useTheme();
+    const { theme: { colors } } = useStyles();
 
     const revisitDetailTitle = `Revisita ${ selectedRevisit.personName }`;
 

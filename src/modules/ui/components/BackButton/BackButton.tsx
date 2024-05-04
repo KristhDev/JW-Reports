@@ -1,11 +1,9 @@
 import React, { FC } from 'react';
 import Icon from 'react-native-vector-icons/Ionicons';
+import { useStyles } from 'react-native-unistyles';
 
 /* Components */
 import { Fab } from '../Fab';
-
-/* Hooks */
-import { useTheme } from '../../../theme';
 
 /**
  * This component shows a custom button to navigate to the
@@ -18,7 +16,7 @@ import { useTheme } from '../../../theme';
  * @return {JSX.Element} Return jsx element to render back button
  */
 export const BackButton: FC<{ color?: string, onPress?: () => void }> = ({ color, onPress }): JSX.Element => {
-    const { state: { colors }, BUTTON_TRANSPARENT_COLOR } = useTheme();
+    const { theme: { colors } } = useStyles();
 
     return (
         <Fab
@@ -31,7 +29,7 @@ export const BackButton: FC<{ color?: string, onPress?: () => void }> = ({ color
                 />
             }
             onPress={ () => onPress && onPress() }
-            touchColor={ BUTTON_TRANSPARENT_COLOR }
+            touchColor={ colors.buttonTransparent }
         />
     );
 }

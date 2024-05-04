@@ -1,9 +1,7 @@
 import React, { FC } from 'react';
 import { View, Text } from 'react-native';
+import { useStyles } from 'react-native-unistyles';
 import { TouchableRipple } from 'react-native-paper';
-
-/* Hooks */
-import { useTheme } from '../../../theme';
 
 /* Interfaces */
 import { SectionBtnProps } from './interfaces';
@@ -20,20 +18,20 @@ import { SectionBtnProps } from './interfaces';
  * @return {JSX.Element} Return jsx element to render section with button
  */
 export const SectionBtn: FC<SectionBtnProps> = ({ onPress, subText, text }): JSX.Element => {
-    const { state: { colors }, BUTTON_TRANSPARENT_COLOR } = useTheme();
+    const { theme: { colors, margins } } = useStyles();
 
     return (
         <TouchableRipple
             borderless
             centered
             onPress={ onPress }
-            rippleColor={ BUTTON_TRANSPARENT_COLOR }
-            style={{ padding: 16 }}
+            rippleColor={ colors.buttonTransparent }
+            style={{ padding: margins.sm }}
             testID="section-btn-touchable"
         >
             <View>
                 <Text
-                    style={{ color: colors.text, fontSize: 16 }}
+                    style={{ color: colors.text, fontSize: margins.sm }}
                     testID="section-btn-text"
                 >
                     { text }

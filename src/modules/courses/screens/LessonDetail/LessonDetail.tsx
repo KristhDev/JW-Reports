@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { ScrollView, Text, TouchableOpacity, View } from 'react-native';
+import { useStyles } from 'react-native-unistyles';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import dayjs from 'dayjs';
 
@@ -16,8 +17,8 @@ import { InfoText, Title } from '../../../ui';
 import { useCourses } from '../../hooks';
 
 /* Styles */
-import { styles as themeStyles, useTheme } from '../../../theme';
-import styles from './styles';
+import { styles as themeStylesheet } from '../../../theme';
+import stylesheet from './styles';
 
 /**
  * This screen is responsible for grouping the components to
@@ -31,7 +32,8 @@ const LessonDetail = (): JSX.Element => {
     const { name } = useRoute();
 
     const { state: { selectedCourse, selectedLesson }, setSelectedLesson } = useCourses();
-    const { state: { colors } } = useTheme();
+    const { styles: themeStyles, theme: { colors, margins } } = useStyles(themeStylesheet);
+    const { styles } = useStyles(stylesheet);
 
     const statusLessonText = (selectedLesson.done) ? 'Impartida' : 'Por impartir';
     const nextVisit = dayjs(selectedLesson.nextLesson);
@@ -61,7 +63,7 @@ const LessonDetail = (): JSX.Element => {
     return (
         <>
             <ScrollView
-                contentContainerStyle={{ alignItems: 'center', padding: 24, paddingBottom: 100, flexGrow: 1 }}
+                contentContainerStyle={{ alignItems: 'center', padding: margins.md, paddingBottom: 100, flexGrow: 1 }}
                 overScrollMode="never"
                 style={{ flex: 1 }}
             >
@@ -75,7 +77,7 @@ const LessonDetail = (): JSX.Element => {
 
                 {/* Text publication */}
                 <InfoText
-                    containerStyle={{ padding: 0, paddingBottom: 24, width: '100%' }}
+                    containerStyle={{ padding: 0, paddingBottom: margins.md, width: '100%' }}
                     text={ selectedCourse.publication.toUpperCase() }
                     textStyle={{ fontSize: 16, fontWeight: 'bold', textAlign: 'left' }}
                 />
@@ -85,13 +87,7 @@ const LessonDetail = (): JSX.Element => {
                     style={ styles.sectionStyle }
                     testID="lesson-detail-status-section"
                 >
-                    <Text
-                        style={{
-                            ...styles.sectionSubTitle,
-                            color: colors.text,
-                            marginBottom: 0
-                        }}
-                    >
+                    <Text style={{ ...styles.sectionSubTitle, marginBottom: 0 }}>
                         Estado de la clase: { statusLessonText }
                     </Text>
 
@@ -110,12 +106,7 @@ const LessonDetail = (): JSX.Element => {
                     style={ styles.sectionStyle }
                     testID="lesson-detail-description-section"
                 >
-                    <Text
-                        style={{
-                            ...styles.sectionSubTitle,
-                            color: colors.text
-                        }}
-                    >
+                    <Text style={ styles.sectionSubTitle }>
                         {
                             (selectedLesson.done)
                                 ? 'Se analizo:'
@@ -130,12 +121,7 @@ const LessonDetail = (): JSX.Element => {
 
                 {/* Lesson create date */}
                 <View style={ styles.sectionStyle }>
-                    <Text
-                        style={{
-                            ...styles.sectionSubTitle,
-                            color: colors.text
-                        }}
-                    >
+                    <Text style={ styles.sectionSubTitle }>
                         Fecha:
                     </Text>
 
@@ -148,7 +134,7 @@ const LessonDetail = (): JSX.Element => {
                 </View>
 
                 <Text
-                    style={{ ...styles.dateCreatedText, color: colors.modalText }}
+                    style={ styles.dateCreatedText }
                     testID="lesson-detail-date-created-text"
                 >
                     { dayjs(selectedLesson.createdAt).format('DD/MM/YYYY') }

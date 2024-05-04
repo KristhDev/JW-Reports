@@ -7,6 +7,8 @@ import dayjs from 'dayjs';
 import weekday from 'dayjs/plugin/weekday';
 import 'dayjs/locale/es';
 
+import './src/config/unistyles';
+
 /* Env */
 import { ONESIGNAL_APP_ID } from '@env';
 

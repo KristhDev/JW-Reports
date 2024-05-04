@@ -1,15 +1,13 @@
 import React, { FC } from 'react';
 import { View, Text } from 'react-native';
+import { useStyles } from 'react-native-unistyles';
 import { RadioButton } from 'react-native-paper';
-
-/* Hooks */
-import { useTheme } from '../../../theme';
 
 /* Interfaces */
 import { RadioBtnProps } from './interfaces';
 
 /* Styles */
-import styles from './styles';
+import stylesheet from './styles';
 
 /**
  * This component is responsible for displaying a radio button with a
@@ -23,7 +21,7 @@ import styles from './styles';
  * @return {JSX.Element} Returns the component to show the field with radio
  */
 export const RadioBtn: FC<RadioBtnProps> = ({ label, onPress, value }): JSX.Element => {
-    const { state: { colors } } = useTheme();
+    const { styles, theme: { colors } } = useStyles(stylesheet);
 
     return (
         <View
@@ -38,7 +36,7 @@ export const RadioBtn: FC<RadioBtnProps> = ({ label, onPress, value }): JSX.Elem
 
             <Text
                 onPress={ onPress }
-                style={{ ...styles.radioLabel, color: colors.text }}
+                style={ styles.radioLabel }
                 testID="radio-btn-text"
             >
                 { label }

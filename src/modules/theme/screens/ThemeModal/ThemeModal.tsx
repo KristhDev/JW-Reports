@@ -19,7 +19,7 @@ import { THEME_OPTIONS } from '../../utils';
  * @return {JSX.Element} Return jsx element to render modal of theme
  */
 const ThemeModal: FC<ModalProps> = ({ isOpen, onClose }): JSX.Element => {
-    const { state: { theme }, setTheme } = useTheme();
+    const { state: { selectedTheme }, setTheme } = useTheme();
 
     return (
         <OptionsModal
@@ -28,7 +28,7 @@ const ThemeModal: FC<ModalProps> = ({ isOpen, onClose }): JSX.Element => {
             onCancel={ onClose }
             onChangeValue={ (value) => setTheme(value as Theme) }
             title="Apariencia"
-            value={ theme }
+            value={ selectedTheme }
         />
     );
 }

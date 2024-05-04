@@ -1,4 +1,5 @@
 import React, { FC, useEffect } from 'react';
+import { useStyles } from 'react-native-unistyles';
 import { MaterialTopTabScreenProps } from '@react-navigation/material-top-tabs';
 import { useNavigation } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -17,7 +18,7 @@ import { useCourses } from '../../hooks';
 import { CoursesTopTabsParamsList } from '../../interfaces';
 
 /* Theme */
-import { styles as themeStyles, useTheme } from '../../../theme';
+import { styles as themeStylesheet } from '../../../theme';
 
 type CoursesProps = MaterialTopTabScreenProps<CoursesTopTabsParamsList>;
 
@@ -32,7 +33,7 @@ const Courses: FC<CoursesProps> = ({ route }): JSX.Element => {
     const { addListener, removeListener, getState, navigate } = useNavigation();
 
     const { setCoursesScreenHistory, setSelectedCourse } = useCourses();
-    const { state: { colors } } = useTheme();
+    const { styles: themeStyles, theme: { colors } } = useStyles(themeStylesheet);
 
     /**
      * The function handleNavigate is a function that takes no parameters and returns nothing. It sets

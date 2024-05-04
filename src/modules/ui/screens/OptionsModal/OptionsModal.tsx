@@ -1,5 +1,6 @@
 import React, { Children, FC } from 'react';
 import { View, useWindowDimensions } from 'react-native';
+import { useStyles } from 'react-native-unistyles';
 import { RadioButton } from 'react-native-paper';
 
 /* Screens */
@@ -12,8 +13,8 @@ import { Button, InfoText, RadioBtn } from '../../components';
 import { OptionsModalProps } from './interfaces';
 
 /* Styles */
-import { styles as themeStyles, useTheme } from '../../../theme';
-import styles from './styles';
+import { styles as themeStylesheet } from '../../../theme';
+import stylesheet from './styles';
 
 /**
  * This modal is responsible for displaying various options with radio buttons
@@ -31,20 +32,20 @@ import styles from './styles';
  */
 const OptionsModal: FC<OptionsModalProps> = ({ isOpen, items, onCancel, onChangeValue, title, value }): JSX.Element => {
     const { width } = useWindowDimensions();
-    const { state: { colors }, BUTTON_TRANSLUCENT_COLOR } = useTheme();
+    const { styles: themeStyles, theme: { colors, } } = useStyles(themeStylesheet);
+    const { styles } = useStyles(stylesheet);
 
     return (
         <Modal isOpen={ isOpen }>
             <View
                 style={{
                     ...themeStyles.modalContainer,
-                    backgroundColor: colors.modal,
                     width: width - 48
                 }}
             >
                 <InfoText
                     text={ title }
-                    textStyle={{ ...styles.modalTitle, color: colors.text }}
+                    textStyle={ styles.modalTitle }
                     containerStyle={ styles.modalTitleContainer }
                 />
 
@@ -58,7 +59,7 @@ const OptionsModal: FC<OptionsModalProps> = ({ isOpen, items, onCancel, onChange
                     ))) }
                 </RadioButton.Group>
 
-                <View style={{ ...themeStyles.modalActions }}>
+                <View style={ themeStyles.modalActions }>
 
                     {/* Cancel button */}
                     <Button
@@ -67,7 +68,7 @@ const OptionsModal: FC<OptionsModalProps> = ({ isOpen, items, onCancel, onChange
                         text="CANCELAR"
                         textStyle={{ color: colors.button, fontSize: 16 }}
                         touchableStyle={{ backgroundColor: 'transparent' }}
-                        underlayColor={ BUTTON_TRANSLUCENT_COLOR }
+                        underlayColor={ colors.buttonTranslucent }
                     />
                 </View>
             </View>

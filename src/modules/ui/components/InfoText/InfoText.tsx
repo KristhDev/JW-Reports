@@ -1,14 +1,12 @@
 import React, { FC } from 'react';
 import { View, Text } from 'react-native';
-
-/* Hooks */
-import { useTheme } from '../../../theme';
+import { useStyles } from 'react-native-unistyles';
 
 /* Interfaces */
 import { InfoTextProps } from './interfaces';
 
 /* Styles */
-import styles from './styles';
+import stylesheet from './styles';
 
 /**
  * This component is responsible for displaying a help text
@@ -22,12 +20,12 @@ import styles from './styles';
  * @return {JSX.Element} Return jsx element to render an info text
  */
 export const InfoText: FC<InfoTextProps> = ({ text, containerStyle, textStyle }): JSX.Element => {
-    const { state: { colors } } = useTheme();
+    const { styles } = useStyles(stylesheet);
 
     return (
         <View style={[ styles.container, containerStyle ]}>
             <Text
-                style={[ { ...styles.text, color: colors.icon }, textStyle ]}
+                style={[ styles.text, textStyle ]}
                 testID="info-text-text"
             >
                 { text }

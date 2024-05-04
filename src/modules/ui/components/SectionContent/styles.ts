@@ -1,16 +1,18 @@
-import { StyleSheet } from 'react-native';
+import { createStyleSheet } from 'react-native-unistyles';
 
-const styles = StyleSheet.create({
+const styles = createStyleSheet(({ colors, margins }) => ({
     sectionContainer: {
+        borderBottomColor: colors.header,
         borderBottomWidth: 1,
-        paddingTop: 24,
+        paddingTop: margins.md,
     },
 
     sectionTitle: {
+        color: colors.titleSecondary,
         fontSize: 15,
         fontWeight: 'bold',
         textAlign: 'left'
     }
-});
+}));
 
 export default styles;

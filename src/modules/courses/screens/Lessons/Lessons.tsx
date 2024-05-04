@@ -1,4 +1,5 @@
 import React from 'react';
+import { useStyles } from 'react-native-unistyles';
 import { useNavigation } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/Ionicons';
 
@@ -13,7 +14,7 @@ import { Fab } from '../../../ui';
 import { useCourses } from '../../hooks';
 
 /* Theme */
-import { styles as themeStyles, useTheme } from '../../../theme';
+import { styles as themeStylesheet } from '../../../theme';
 
 /**
  * This screen is responsible for grouping the components to show
@@ -25,7 +26,7 @@ const Lessons = (): JSX.Element => {
     const { navigate } = useNavigation();
 
     const { setSelectedLesson } = useCourses();
-    const { state: { colors } } = useTheme();
+    const { styles: themeStyles, theme: { colors } } = useStyles(themeStylesheet);
 
     /**
      * I want to set the selectedLesson to the INIT_LESSON, but I want to change the next_lesson

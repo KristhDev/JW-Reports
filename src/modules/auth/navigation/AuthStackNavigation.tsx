@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import { useStyles } from 'react-native-unistyles';
 import { CardStyleInterpolators, createStackNavigator } from '@react-navigation/stack';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
@@ -7,7 +8,6 @@ import { ForgotPassword, Login, Register } from '../screens';
 
 /* Hooks */
 import { useAuth } from '../hooks';
-import { useTheme } from '../../theme';
 
 /* Interfaces */
 import { AuthStackParamsList } from '../interfaces';
@@ -23,7 +23,7 @@ const AuthStackNavigation = (): JSX.Element => {
     const { top } = useSafeAreaInsets();
 
     const { clearAuth } = useAuth();
-    const { state: { colors } } = useTheme();
+    const { theme: { colors } } = useStyles();
 
     /**
      * Effect to clean authentication when mount component.

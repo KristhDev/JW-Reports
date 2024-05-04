@@ -1,11 +1,11 @@
 import React from 'react';
+import { useStyles } from 'react-native-unistyles';
 import { CardStyleInterpolators, createStackNavigator } from '@react-navigation/stack';
 import { useNavigation } from '@react-navigation/native';
 
 /* Modules */
 import { Profile, Credentials } from '../../auth';
 import { Settings } from '../screens';
-import { useTheme } from '../../theme';
 import { BackButton } from '../../ui';
 
 const Stack = createStackNavigator();
@@ -17,7 +17,7 @@ const Stack = createStackNavigator();
  */
 const SettingsStackNavigation = (): JSX.Element => {
     const { goBack } = useNavigation();
-    const { state: { colors } } = useTheme();
+    const { theme: { colors } } = useStyles();
 
     return (
         <Stack.Navigator

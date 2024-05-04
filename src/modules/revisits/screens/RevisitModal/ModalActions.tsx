@@ -1,5 +1,6 @@
 import React, { FC } from 'react';
 import { View } from 'react-native';
+import { useStyles } from 'react-native-unistyles';
 
 /* Components */
 import { Button } from '../../../ui';
@@ -11,7 +12,7 @@ import { useRevisits } from '../../hooks';
 import { ModalActionProps } from './interfaces';
 
 /* Styles */
-import { styles as themeStyles, useTheme } from '../../../theme';
+import { styles as themeStylesheet } from '../../../theme';
 
 /**
  * This component is responsible for grouping actions for modal.
@@ -21,7 +22,7 @@ import { styles as themeStyles, useTheme } from '../../../theme';
  */
 export const ModalActions: FC<ModalActionProps> = ({ onClose, onConfirm, revisitPerson }): JSX.Element => {
     const { state: { selectedRevisit } } = useRevisits();
-    const { state: { colors }, BUTTON_TRANSLUCENT_COLOR } = useTheme();
+    const { styles: themeStyles, theme: { colors } } = useStyles(themeStylesheet);
 
     const confirmTextButton = (revisitPerson)
         ? 'GUARDAR'
@@ -39,7 +40,7 @@ export const ModalActions: FC<ModalActionProps> = ({ onClose, onConfirm, revisit
                 text="CANCELAR"
                 textStyle={{ color: colors.button, fontSize: 16 }}
                 touchableStyle={{ backgroundColor: 'transparent', marginRight: 5 }}
-                underlayColor={ BUTTON_TRANSLUCENT_COLOR }
+                underlayColor={ colors.buttonTranslucent }
             />
 
             {/* Confirm button */}
@@ -49,7 +50,7 @@ export const ModalActions: FC<ModalActionProps> = ({ onClose, onConfirm, revisit
                 text={ confirmTextButton }
                 textStyle={{ color: colors.button, fontSize: 16 }}
                 touchableStyle={{ backgroundColor: 'transparent' }}
-                underlayColor={ BUTTON_TRANSLUCENT_COLOR }
+                underlayColor={ colors.buttonTranslucent }
             />
         </View>
     );

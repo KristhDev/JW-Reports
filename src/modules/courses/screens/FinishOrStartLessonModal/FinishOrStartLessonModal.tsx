@@ -1,5 +1,6 @@
 import React, { FC, useState } from 'react';
 import { ActivityIndicator, Text, View, useWindowDimensions } from 'react-native';
+import { useStyles } from 'react-native-unistyles';
 import { Formik } from 'formik';
 import Icon from 'react-native-vector-icons/Ionicons';
 
@@ -7,7 +8,7 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import { Modal, DatetimeField, ModalProps } from '../../../ui';
 import { ModalActions } from './ModalActions';
 import { useCourses } from '../../hooks';
-import { styles as themeStyles, useTheme } from '../../../theme';
+import { styles as themeStylesheet } from '../../../theme';
 
 /**
  * This modal is responsible for grouping the components to finish
@@ -21,7 +22,7 @@ const FinishOrStartLessonModal: FC<ModalProps> = ({ isOpen, onClose }) => {
     const { width } = useWindowDimensions();
 
     const { state: { selectedLesson, isLessonLoading }, finishOrStartLesson } = useCourses();
-    const { state: { colors } } = useTheme();
+    const { styles: themeStyles, theme: { colors, margins } } = useStyles(themeStylesheet);
 
     const modalMsg = (selectedLesson.done)
         ? '¿Está seguro de reprogramar esta clase?'
@@ -60,23 +61,14 @@ const FinishOrStartLessonModal: FC<ModalProps> = ({ isOpen, onClose }) => {
     return (
         <Modal isOpen={ isOpen }>
             { (!isLessonLoading) ? (
-                <View
-                    style={{
-                        ...themeStyles.modalContainer,
-                        backgroundColor: colors.modal,
-                        width: width - 48
-                    }}
-                >
+                <View style={{ ...themeStyles.modalContainer, width: width - 48 }}>
                     {
                         (!reschedule) ? (
                             <>
 
                                 {/* Modal title  */}
                                 <Text
-                                    style={{
-                                        ...themeStyles.modalText,
-                                        color: colors.modalText
-                                    }}
+                                    style={ themeStyles.modalText }
                                     testID="modal-text"
                                 >
                                     { modalMsg }
@@ -100,13 +92,7 @@ const FinishOrStartLessonModal: FC<ModalProps> = ({ isOpen, onClose }) => {
                                     <>
 
                                         {/* Modal title in form */}
-                                        <Text
-                                            style={{
-                                                ...themeStyles.modalText,
-                                                color: colors.modalText,
-                                                marginBottom: 24
-                                            }}
-                                        >
+                                        <Text style={{ ...themeStyles.modalText, marginBottom: margins.md }}>
                                             Por favor ingrese la fecha en la se dará la clase
                                         </Text>
 

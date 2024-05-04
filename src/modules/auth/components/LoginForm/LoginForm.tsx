@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, useWindowDimensions, ActivityIndicator } from 'react-native';
+import { useStyles } from 'react-native-unistyles';
 import { useNavigation } from '@react-navigation/native';
 import { Formik } from 'formik';
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -15,7 +16,7 @@ import { useStatus } from '../../../shared';
 import { loginFormSchema } from './schemas';
 
 /* Theme */
-import { styles as themeStyles, useTheme } from '../../../theme';
+import { styles as themeStylesheet } from '../../../theme';
 
 /**
  * Renders a login form component.
@@ -30,7 +31,7 @@ export const LoginForm = (): JSX.Element => {
 
     const { state: { isAuthLoading }, signIn } = useAuth();
     const { setErrorForm } = useStatus();
-    const { state: { colors } } = useTheme();
+    const { styles: themeStyles, theme: { colors, margins } } = useStyles(themeStylesheet);
 
     return (
         <Formik
@@ -43,7 +44,7 @@ export const LoginForm = (): JSX.Element => {
             validateOnMount
         >
             { ({ handleSubmit, isValid, errors }) => (
-                <View style={{ ...themeStyles.formContainer, flex: 0, marginBottom: 40 }}>
+                <View style={{ ...themeStyles.formContainer, flex: 0, marginBottom: margins.lg }}>
 
                     <View style={{ height: width / 4 }} />
 
@@ -76,7 +77,7 @@ export const LoginForm = (): JSX.Element => {
                         name="password"
                         placeholder="Ingrese su contraseña"
                         secureTextEntry={ !showPassword }
-                        style={{ marginBottom: 40 }}
+                        style={{ marginBottom: margins.lg }}
                     />
 
                     {/* Submit button */}
@@ -97,12 +98,7 @@ export const LoginForm = (): JSX.Element => {
 
                     {/* Sign up link */}
                     <View style={ themeStyles.btnLink }>
-                        <Text
-                            style={{
-                                ...themeStyles.formText,
-                                color: colors.titleText
-                            }}
-                        >
+                        <Text style={ themeStyles.formText }>
                             ¿No tienes cuenta?
                         </Text>
 
@@ -111,30 +107,20 @@ export const LoginForm = (): JSX.Element => {
                             onPress={ () => navigate('RegisterScreen' as never) }
                             testID="login-form-sign-up"
                         >
-                            <Text
-                                style={{
-                                    ...themeStyles.formLink,
-                                    color: colors.linkText
-                                }}
-                            >
+                            <Text style={ themeStyles.formLink }>
                                 Crea una aquí
                             </Text>
                         </TouchableOpacity>
                     </View>
 
                     {/* Forgot password link */}
-                    <View style={{ ...themeStyles.btnLink, marginTop: 16 }}>
+                    <View style={{ ...themeStyles.btnLink, marginTop: margins.sm }}>
                         <TouchableOpacity
                             activeOpacity={ 0.75 }
                             onPress={ () => navigate('ForgotPasswordScreen' as never) }
                             testID="login-form-forgor-pass"
                         >
-                            <Text
-                                style={{
-                                    ...themeStyles.formLink,
-                                    color: colors.linkText
-                                }}
-                            >
+                            <Text style={ themeStyles.formLink }>
                                 Olvide mi contraseña
                             </Text>
                         </TouchableOpacity>

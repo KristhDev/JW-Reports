@@ -1,6 +1,7 @@
 import React, { FC } from 'react';
 import { ActivityIndicator, Text, View } from 'react-native';
 
+import { useStyles } from 'react-native-unistyles';
 /* Screens */
 import { Modal } from '../../../ui/screens';
 
@@ -14,7 +15,7 @@ import { useCourses } from '../../hooks';
 import { ModalProps } from '../../../ui';
 
 /* Theme */
-import { styles as themeStyles, useTheme } from '../../../theme';
+import { styles as themeStylesheet } from '../../../theme';
 
 /**
  * This is a modal that groups the components to activate
@@ -25,7 +26,7 @@ import { styles as themeStyles, useTheme } from '../../../theme';
  */
 const ActiveOrSuspendCourseModal: FC<ModalProps> = ({ onClose, isOpen }): JSX.Element => {
     const { state: { selectedCourse, isCourseLoading }, activeOrSuspendCourse } = useCourses();
-    const { state: { colors }, BUTTON_TRANSLUCENT_COLOR } = useTheme();
+    const { styles: themeStyles, theme: { colors } } = useStyles(themeStylesheet);
 
     const modalMsg = (selectedCourse.suspended)
         ? '¿Está seguro de continuar este curso?'
@@ -48,20 +49,11 @@ const ActiveOrSuspendCourseModal: FC<ModalProps> = ({ onClose, isOpen }): JSX.El
     return (
         <Modal isOpen={ isOpen }>
             { (!isCourseLoading) ? (
-                <View
-                    style={{
-                        ...themeStyles.modalContainer,
-                        backgroundColor: colors.modal
-                    }}
-                >
+                <View style={ themeStyles.modalContainer }>
 
                     {/* Modal text */}
                     <Text
-                        style={{
-                            ...themeStyles.modalText,
-                            color: colors.modalText,
-                            marginBottom: 0
-                        }}
+                        style={{ ...themeStyles.modalText, marginBottom: 0 }}
                         testID="modal-text"
                     >
                         { modalMsg }
@@ -75,7 +67,7 @@ const ActiveOrSuspendCourseModal: FC<ModalProps> = ({ onClose, isOpen }): JSX.El
                             text="CANCELAR"
                             textStyle={{ color: colors.button, fontSize: 16 }}
                             touchableStyle={{ backgroundColor: 'transparent', marginRight: 5 }}
-                            underlayColor={ BUTTON_TRANSLUCENT_COLOR }
+                            underlayColor={ colors.buttonTranslucent }
                         />
 
                         <Button
@@ -84,7 +76,7 @@ const ActiveOrSuspendCourseModal: FC<ModalProps> = ({ onClose, isOpen }): JSX.El
                             text={ confirmTextButton }
                             textStyle={{ color: colors.button, fontSize: 16 }}
                             touchableStyle={{ backgroundColor: 'transparent' }}
-                            underlayColor={ BUTTON_TRANSLUCENT_COLOR }
+                            underlayColor={ colors.buttonTranslucent }
                         />
                     </View>
                 </View>

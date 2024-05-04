@@ -1,5 +1,6 @@
 import React, { useState, FC } from 'react';
 import { View, Text, TextInput } from 'react-native';
+import { useStyles } from 'react-native-unistyles';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import { useField } from 'formik';
 import dayjs from 'dayjs';
@@ -11,7 +12,7 @@ import { Button } from '../Button';
 import { DatetimeFieldProps } from './interfaces';
 
 /* Theme */
-import { styles as themeStyles, useTheme } from '../../../theme';
+import { styles as themeStylesheet } from '../../../theme';
 
 /**
  * This component is responsible for displaying a field to select a
@@ -53,9 +54,8 @@ export const DatetimeField: FC<DatetimeFieldProps> = ({
     ...rest
 }): JSX.Element => {
     const [ open, setOpen ] = useState<boolean>(false);
-
     const [ field, meta, helpers ] = useField({ name });
-    const { state: { colors } } = useTheme();
+    const { styles: themeStyles, theme: { colors } } = useStyles(themeStylesheet);
 
     /**
      * The function handleConfirm takes a date as an argument and sets the state of open to false and
@@ -81,10 +81,7 @@ export const DatetimeField: FC<DatetimeFieldProps> = ({
 
             {/* Field label */}
             <Text
-                style={[
-                    { ...themeStyles.formLabel, color: colors.titleText },
-                    labelStyle
-                ]}
+                style={[ themeStyles.formLabel, labelStyle ]}
                 testID="datetimefield-label"
             >
                 { label }
@@ -94,7 +91,7 @@ export const DatetimeField: FC<DatetimeFieldProps> = ({
             <View style={{ flexDirection: 'row', width: '100%', alignItems: 'center' }}>
                 <View
                     style={[
-                        { ...themeStyles.formControl, borderColor: colors.text, flex: 1 },
+                        { ...themeStyles.formControl, flex: 1 },
                         controlStyle
                     ]}
                 >
@@ -104,10 +101,7 @@ export const DatetimeField: FC<DatetimeFieldProps> = ({
                         autoCorrect={ false }
                         placeholderTextColor={ colors.icon }
                         selectionColor={ colors.linkText }
-                        style={[
-                            { ...themeStyles.formInput, color: colors.inputText },
-                            inputStyle
-                        ]}
+                        style={[ themeStyles.formInput, inputStyle ]}
                         testID="datetimefield-text-input"
                         value={ dayjs(field.value).format(inputDateFormat) }
                         { ...rest }

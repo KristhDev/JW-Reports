@@ -1,6 +1,6 @@
-import { StyleSheet } from 'react-native';
+import { createStyleSheet } from 'react-native-unistyles';
 
-const styles = StyleSheet.create({
+const styles = createStyleSheet(({ colors }) => ({
     container: {
         alignItems: 'center',
         flexDirection: 'row',
@@ -9,10 +9,11 @@ const styles = StyleSheet.create({
     },
 
     text: {
+        color: colors.text,
         fontSize: 18,
         paddingLeft: 8,
         textAlign: 'left',
     }
-});
+}));
 
 export default styles;

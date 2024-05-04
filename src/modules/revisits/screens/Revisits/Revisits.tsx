@@ -1,5 +1,6 @@
 import React, { FC, useEffect } from 'react';
 import { useNavigation } from '@react-navigation/native';
+import { useStyles } from 'react-native-unistyles';
 import { MaterialTopTabScreenProps } from '@react-navigation/material-top-tabs';
 import Icon from 'react-native-vector-icons/Ionicons';
 
@@ -17,7 +18,7 @@ import { useRevisits } from '../../hooks';
 import { RevisitsTopTabsParamsList } from '../../interfaces';
 
 /* Theme */
-import { styles as themeStyles, useTheme } from '../../../theme';
+import { styles as themeStylesheet } from '../../../theme';
 
 type RevisitsProps = MaterialTopTabScreenProps<RevisitsTopTabsParamsList>;
 
@@ -32,7 +33,7 @@ const Revisits: FC<RevisitsProps> = ({ route }): JSX.Element => {
     const { navigate, addListener, removeListener, getState } = useNavigation();
 
     const { setSelectedRevisit, setRevisitsScreenHistory } = useRevisits();
-    const { state: { colors } } = useTheme();
+    const { styles: themeStyles, theme: { colors } } = useStyles(themeStylesheet);
 
     /**
      * I'm going to set the selectedRevisit to the INIT_REVISIT object, but I'm going to override the

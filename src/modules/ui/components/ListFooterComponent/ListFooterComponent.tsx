@@ -1,8 +1,6 @@
 import React, { FC } from 'react';
 import { useWindowDimensions, ActivityIndicator } from 'react-native';
-
-/* Hooks */
-import { useTheme } from '../../../theme';
+import { useStyles } from 'react-native-unistyles';
 
 /* Interfaces */
 import { ListFooterComponentProps } from './interfaces';
@@ -20,7 +18,7 @@ import { ListFooterComponentProps } from './interfaces';
 export const ListFooterComponent: FC<ListFooterComponentProps> = ({ marginTopPlus, showLoader }): JSX.Element => {
     const { height } = useWindowDimensions();
 
-    const { state: { colors } } = useTheme();
+    const { theme: { colors } } = useStyles();
 
     return (
         <>

@@ -1,15 +1,13 @@
 import React, { FC } from 'react';
 import { View } from 'react-native';
 import { Checkbox as CheckboxPaper, Text } from 'react-native-paper';
-
-/* Hooks */
-import { useTheme } from '../../../theme';
+import { useStyles } from 'react-native-unistyles';
 
 /* Interfaces */
 import { CheckboxProps } from './interfaces';
 
 /* Styles */
-import styles from './styles';
+import stylesheet from './styles';
 
 /**
  * Renders a checkbox component with the specified props.
@@ -23,7 +21,7 @@ import styles from './styles';
  * @returns {ReactElement} The rendered checkbox component.
  */
 export const Checkbox: FC<CheckboxProps> = ({ label, onPress, status, style, textStyle }) => {
-    const { state: { colors } } = useTheme();
+    const { styles, theme: { colors } } = useStyles(stylesheet);
 
     return (
         <View style={[ styles.container, style ]}>
@@ -36,7 +34,7 @@ export const Checkbox: FC<CheckboxProps> = ({ label, onPress, status, style, tex
             />
 
             <Text
-                style={[ { ...styles.text, color: colors.text }, textStyle ]}
+                style={[ styles.text, textStyle ]}
                 testID="checkbox-text"
             >
                 { label }

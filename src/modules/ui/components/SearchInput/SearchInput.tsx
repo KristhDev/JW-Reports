@@ -1,5 +1,6 @@
 import React, { FC, useEffect, useState } from 'react';
 import { View, TextInput } from 'react-native';
+import { useStyles } from 'react-native-unistyles';
 import { TouchableRipple } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/Ionicons';
 
@@ -7,8 +8,8 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import { SearchInputProps } from './interfaces';
 
 /* Styles */
-import { styles as themeStyles, useTheme } from '../../../theme';
-import styles from './styles';
+import { styles as themeStylesheet } from '../../../theme';
+import stylesheet from './styles';
 
 /**
  * This component is responsible for displaying a text box to perform searches
@@ -26,7 +27,8 @@ export const SearchInput: FC<SearchInputProps> = ({ onClean, onSearch, refreshin
     const [ searchText, setSearchText ] = useState<string>(searchTerm);
     const [ isFocused, setIsFocused ] = useState<boolean>(false);
 
-    const { state: { colors }, BUTTON_TRANSPARENT_COLOR } = useTheme();
+    const { styles: themeStyles, theme: { colors } } = useStyles(themeStylesheet);
+    const { styles } = useStyles(stylesheet);
 
     /**
      * When the user clicks the clear button, clear the search text, call the onClean function, and set
@@ -77,11 +79,7 @@ export const SearchInput: FC<SearchInputProps> = ({ onClean, onSearch, refreshin
                     placeholder="Buscar"
                     placeholderTextColor={ colors.icon }
                     returnKeyType="search"
-                    style={{
-                        ...themeStyles.formInput,
-                        color: colors.inputText,
-                        flex: 1
-                    }}
+                    style={{ ...themeStyles.formInput, flex: 1 }}
                     testID="search-input-text-input"
                     value={ searchText }
                 />
@@ -92,7 +90,7 @@ export const SearchInput: FC<SearchInputProps> = ({ onClean, onSearch, refreshin
                     centered
                     disabled={ searchText.length === 0}
                     onPress={ handleClearInput }
-                    rippleColor={ BUTTON_TRANSPARENT_COLOR }
+                    rippleColor={ colors.buttonTransparent }
                     style={ styles.cleanBtn }
                     testID="search-input-clear-btn"
                 >

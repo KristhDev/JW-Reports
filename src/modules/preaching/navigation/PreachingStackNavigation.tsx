@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useStyles } from 'react-native-unistyles';
 import { CardStyleInterpolators, createStackNavigator } from '@react-navigation/stack';
 import { useNavigation } from '@react-navigation/native';
 
@@ -14,7 +15,6 @@ import { BackButton, HeaderButtons } from '../../ui';
 import { useAuth } from '../../auth';
 import { useNetwork, useStatus } from '../../shared';
 import { usePreaching } from '../hooks';
-import { useTheme } from '../../theme';
 
 /* Interfaces */
 import { PreachingStackParamsList } from '../interfaces';
@@ -64,7 +64,7 @@ const PreachingStackNavigation = (): JSX.Element => {
         loadLastRevisit
     } = useRevisits();
 
-    const { state: { colors } } = useTheme();
+    const { theme: { colors } } = useStyles();
     const { setNetworkError } = useStatus();
     const { wifi } = useNetwork();
 

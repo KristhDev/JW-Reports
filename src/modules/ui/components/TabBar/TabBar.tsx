@@ -1,16 +1,14 @@
 import React, { FC, useEffect, useState } from 'react';
 import { Keyboard, View } from 'react-native';
+import { useStyles } from 'react-native-unistyles';
 import { useNavigation } from '@react-navigation/native';
 import { BottomTabBarProps } from '@react-navigation/bottom-tabs';
 
 /* Components */
 import { TabBarBtn } from '../TabBarBtn';
 
-/* Hooks */
-import { useTheme } from '../../../theme';
-
 /* Styles */
-import styles from './styles';
+import stylesheet from './styles';
 
 /**
  * This component is responsible for displaying a custom navigation bar
@@ -23,7 +21,7 @@ import styles from './styles';
 export const TabBar: FC<BottomTabBarProps> = ({ state, descriptors }): JSX.Element => {
     const [ hideTabBar, setHideTabBar ] = useState<boolean>(false);
     const { navigate } = useNavigation();
-    const { state: { colors } } = useTheme();
+    const { styles } = useStyles(stylesheet);
 
     const icons = [ 'home-outline', 'briefcase-outline', 'book-outline' ];
     const firstScreens = {
@@ -53,12 +51,7 @@ export const TabBar: FC<BottomTabBarProps> = ({ state, descriptors }): JSX.Eleme
     return (
         <>
             { (!hideTabBar) && (
-                <View
-                    style={{
-                        ...styles.container,
-                        backgroundColor: colors.bottom,
-                    }}
-                >
+                <View style={styles.container }>
                     { state.routes.map((route, index) => (
                         <TabBarBtn
                             active={ state.index === index }

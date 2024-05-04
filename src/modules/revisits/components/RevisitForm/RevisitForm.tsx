@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { ActivityIndicator, Image, Text, View, useWindowDimensions } from 'react-native';
+import { useStyles } from 'react-native-unistyles';
 import { Formik } from 'formik';
 import Icon from 'react-native-vector-icons/Ionicons';
 
@@ -17,7 +18,7 @@ import { revisitFormSchema } from './schemas';
 import { RevisitFormValues } from '../../interfaces';
 
 /* Theme */
-import { styles as themeStyles, useTheme } from '../../../theme';
+import { styles as themeStylesheet } from '../../../theme';
 
 const defaultRevisit = require('../../../../assets/revisit-default.jpg');
 
@@ -35,7 +36,7 @@ export const RevisitForm = (): JSX.Element => {
     const { image, takeImageToGallery, takePhoto } = useImage();
     const { state: { selectedRevisit, isRevisitLoading }, saveRevisit, updateRevisit } = useRevisits();
     const { setErrorForm } = useStatus();
-    const { state: { colors } } = useTheme();
+    const { styles: themeStyles, theme: { colors, margins } } = useStyles(themeStylesheet);
 
     /**
      * If the selectedRevisit.id is an empty string, then saveRevisit is called with the revisitValues
@@ -109,7 +110,7 @@ export const RevisitForm = (): JSX.Element => {
             validationSchema={ revisitFormSchema }
         >
             { ({ handleSubmit, errors, isValid }) => (
-                <View style={{ ...themeStyles.formContainer, paddingBottom: 40 }}>
+                <View style={{ ...themeStyles.formContainer, paddingBottom: margins.lg }}>
 
                     {/* Person name field */}
                     <FormField
@@ -144,8 +145,8 @@ export const RevisitForm = (): JSX.Element => {
                     />
 
                     {/* Photo field */}
-                    <View style={{ ...themeStyles.formField }}>
-                        <Text style={{ ...themeStyles.formLabel, color: colors.titleText }}>
+                    <View style={ themeStyles.formField }>
+                        <Text style={ themeStyles.formLabel }>
                             Foto
                         </Text>
 
@@ -155,7 +156,7 @@ export const RevisitForm = (): JSX.Element => {
                             style={{ borderRadius: 5, height: imageHeight, width: '100%' }}
                         />
 
-                        <View style={{ flexDirection: 'row', justifyContent: 'space-around', marginTop: 16 }}>
+                        <View style={{ flexDirection: 'row', justifyContent: 'space-around', marginTop: margins.sm }}>
 
                             {/* Gallery button */}
                             <Button
@@ -204,7 +205,7 @@ export const RevisitForm = (): JSX.Element => {
                         mode="date"
                         name="nextVisit"
                         placeholder="Seleccione el día"
-                        style={{ marginBottom: 40 }}
+                        style={{ marginBottom: margins.lg }}
                     />
 
                     {/* Submit button */}

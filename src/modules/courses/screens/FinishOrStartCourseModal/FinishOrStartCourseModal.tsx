@@ -1,10 +1,11 @@
 import React, { FC } from 'react';
 import { ActivityIndicator, Text, useWindowDimensions, View } from 'react-native';
+import { useStyles } from 'react-native-unistyles';
 
 /* Modules */
 import { Modal, Button, ModalProps } from '../../../ui';
 import { useCourses } from '../../hooks';
-import { styles as themeStyles, useTheme } from '../../../theme';
+import { styles as themeStylesheet } from '../../../theme';
 
 /**
  * This modal is responsible for grouping the components to finish
@@ -16,7 +17,7 @@ import { styles as themeStyles, useTheme } from '../../../theme';
 const FinishOrStartCourseModal: FC<ModalProps> = ({ isOpen, onClose }): JSX.Element => {
     const { width } = useWindowDimensions();
     const { state: { selectedCourse, isCourseLoading }, finishOrStartCourse } = useCourses();
-    const { state: { colors }, BUTTON_TRANSLUCENT_COLOR } = useTheme();
+    const { styles: themeStyles, theme: { colors } } = useStyles(themeStylesheet);
 
     const modalMsg = (selectedCourse.finished)
         ? '¿Está seguro de volver a comenzar este curso?'
@@ -37,19 +38,9 @@ const FinishOrStartCourseModal: FC<ModalProps> = ({ isOpen, onClose }): JSX.Elem
     return (
         <Modal isOpen={ isOpen }>
             { (!isCourseLoading) ? (
-                <View
-                    style={{
-                        ...themeStyles.modalContainer,
-                        backgroundColor: colors.modal,
-                        width: width - 48
-                    }}
-                >
+                <View style={{ ...themeStyles.modalContainer, width: width - 48 }}>
                     <Text
-                        style={{
-                            ...themeStyles.modalText,
-                            color: colors.modalText,
-                            marginBottom: 0
-                        }}
+                        style={{ ...themeStyles.modalText, marginBottom: 0 }}
                         testID="modal-text"
                     >
                         { modalMsg }
@@ -62,7 +53,7 @@ const FinishOrStartCourseModal: FC<ModalProps> = ({ isOpen, onClose }): JSX.Elem
                             text="CANCELAR"
                             textStyle={{ color: colors.button, fontSize: 16 }}
                             touchableStyle={{ backgroundColor: 'transparent' }}
-                            underlayColor={ BUTTON_TRANSLUCENT_COLOR }
+                            underlayColor={ colors.buttonTranslucent }
                         />
 
                         <Button
@@ -71,7 +62,7 @@ const FinishOrStartCourseModal: FC<ModalProps> = ({ isOpen, onClose }): JSX.Elem
                             text={ confirmTextButton }
                             textStyle={{ color: colors.button, fontSize: 16 }}
                             touchableStyle={{ backgroundColor: 'transparent' }}
-                            underlayColor={ BUTTON_TRANSLUCENT_COLOR }
+                            underlayColor={ colors.buttonTranslucent }
                         />
                     </View>
                 </View>

@@ -1,5 +1,6 @@
 import React, { Children } from 'react';
 import { TouchableHighlight, View, useWindowDimensions } from 'react-native';
+import { useStyles } from 'react-native-unistyles';
 import { useNavigation } from '@react-navigation/native';
 import dayjs from 'dayjs';
 
@@ -18,7 +19,7 @@ import { TABLE_PREACHING_HEADERS } from '../../utils';
 import { date } from '../../../../utils';
 
 /* Styles */
-import styles from './styles';
+import stylesheet from './styles';
 
 /**
  * This component is responsible for displaying a table that contains the data
@@ -31,7 +32,8 @@ export const PreachingTable = (): JSX.Element => {
     const { width } = useWindowDimensions();
 
     const { state: { preachings }, setSelectedPreaching } = usePreaching();
-    const { state: { selectedTheme, colors } } = useTheme();
+    const { state: { theme } } = useTheme();
+    const { styles } = useStyles(stylesheet);
 
     const cellWidth = (width - 24) / 6;
     const cellWidthHours = (width - 24) / 3;
@@ -50,7 +52,7 @@ export const PreachingTable = (): JSX.Element => {
 
     return (
         <View
-            style={{ ...styles.table, borderColor: colors.background }}
+            style={ styles.table }
             testID="preaching-table"
         >
 
@@ -70,9 +72,9 @@ export const PreachingTable = (): JSX.Element => {
                 <TouchableHighlight
                     onPress={ () => handleGoToEditPreaching(preaching) }
                     testID="preaching-table-row"
-                    underlayColor={ (selectedTheme === 'dark') ? 'rgba(255, 255, 255, 0.15)' : 'rgba(0, 0, 0, 0.15)' }
+                    underlayColor={ (theme === 'dark') ? 'rgba(255, 255, 255, 0.15)' : 'rgba(0, 0, 0, 0.15)' }
                 >
-                    <View style={{ ...styles.tableRow }}>
+                    <View style={ styles.tableRow }>
                         <TableCell
                             text={ (index + 1).toString() }
                             style={{ backgroundColor: '#746C84', width: cellWidth }}

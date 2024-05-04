@@ -1,14 +1,12 @@
 import React, { FC } from 'react';
 import { View, Text } from 'react-native';
-
-/* Hooks */
-import { useTheme } from '../../../theme';
+import { useStyles } from 'react-native-unistyles';
 
 /* Interfaces */
 import { TitleProps } from './interfaces';
 
 /* Styles */
-import styles from './styles';
+import stylesheet from './styles';
 
 /**
  * This component is responsible for render a title for screens.\
@@ -21,15 +19,12 @@ import styles from './styles';
  * @return {JSX.Element} Return jsx element to render title of screens
  */
 export const Title: FC<TitleProps> = ({ text, containerStyle, textStyle }): JSX.Element => {
-    const { state: { colors } } = useTheme();
+    const { styles } = useStyles(stylesheet);
 
     return (
         <View style={[ styles.titleContainer, containerStyle ]}>
             <Text
-                style={[
-                    { ...styles.title, color: colors.titleText },
-                    textStyle
-                ]}
+                style={[ styles.title, textStyle ]}
                 testID="title-text"
             >
                 { text }

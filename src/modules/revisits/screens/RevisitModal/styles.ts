@@ -1,6 +1,6 @@
-import { StyleSheet } from 'react-native';
+import { createStyleSheet } from 'react-native-unistyles';
 
-const styles = StyleSheet.create({
+const styles = createStyleSheet(() => ({
     container: {
         borderRadius: 10,
         padding: 15,
@@ -19,6 +19,6 @@ const styles = StyleSheet.create({
         justifyContent: 'flex-end',
         marginTop: 20
     }
-});
+}));
 
 export default styles;

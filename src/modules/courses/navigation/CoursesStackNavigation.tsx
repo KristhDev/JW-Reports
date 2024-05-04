@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useStyles } from 'react-native-unistyles';
 import { CardStyleInterpolators, createStackNavigator } from '@react-navigation/stack';
 import { useNavigation } from '@react-navigation/native';
 
@@ -13,7 +14,6 @@ import { BackButton, HeaderButtons } from '../../ui';
 
 /* Hooks */
 import { useCourses } from '../hooks';
-import { useTheme } from '../../theme';
 
 /* Interfaces */
 import { CoursesStackParamsList } from '../interfaces';
@@ -41,7 +41,7 @@ const CoursesStackNavigation = (): JSX.Element => {
         deleteLesson
     } = useCourses();
 
-    const { state: { colors } } = useTheme();
+    const { theme: { colors } } = useStyles();
 
     const courseDetailTitle = `Curso a ${ selectedCourse.personName }`;
 

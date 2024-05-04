@@ -1,5 +1,6 @@
 import React from 'react';
 import Icon from 'react-native-vector-icons/Ionicons';
+import { useStyles } from 'react-native-unistyles';
 
 /* Components */
 import { Fab } from '../Fab';
@@ -14,7 +15,8 @@ import { useTheme } from '../../../theme';
  * @return {JSX.Element} Return jsx element to render a button of theme
  */
 export const ThemeBtn = (): JSX.Element => {
-    const { state: { selectedTheme, colors }, setTheme } = useTheme();
+    const { theme: { colors, margins } } = useStyles();
+    const { setTheme, state: { theme } } = useTheme();
 
     return (
         <Fab
@@ -22,13 +24,13 @@ export const ThemeBtn = (): JSX.Element => {
             icon={
                 <Icon
                     color={ colors.contentHeader }
-                    name={ (selectedTheme === 'dark') ? 'sunny-outline' : 'moon-outline' }
-                    size={ (selectedTheme === 'dark') ? 35 : 30 }
-                    style={{ marginLeft: (selectedTheme === 'dark') ? 0 : 1, marginBottom: 1 }}
+                    name={ (theme === 'dark') ? 'sunny-outline' : 'moon-outline' }
+                    size={ (theme === 'dark') ? 35 : 30 }
+                    style={{ marginLeft: (theme === 'dark') ? 0 : 1, marginBottom: 1 }}
                 />
             }
-            onPress={ () => setTheme((selectedTheme === 'dark') ? 'light' : 'dark') }
-            style={{ top: 24, right: 24, position: 'absolute' }}
+            onPress={ () => setTheme((theme === 'dark') ? 'light' : 'dark') }
+            style={{ top: margins.md, right: margins.md, position: 'absolute' }}
             touchColor="rgba(0, 0, 0, 0.15)"
         />
     );

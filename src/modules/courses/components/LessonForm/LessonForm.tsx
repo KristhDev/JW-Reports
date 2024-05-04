@@ -1,5 +1,6 @@
 import React from 'react';
 import { ActivityIndicator, View } from 'react-native';
+import { useStyles } from 'react-native-unistyles';
 import { Formik } from 'formik';
 import Icon from 'react-native-vector-icons/Ionicons';
 
@@ -17,7 +18,7 @@ import { lessonFormSchema } from './schemas';
 import { LessonFormValues } from '../../interfaces';
 
 /* Theme */
-import { styles as themeStyles, useTheme } from '../../../theme';
+import { styles as themeStylesheet } from '../../../theme';
 
 /**
  * This component is responsible for rendering the fields to create
@@ -28,7 +29,7 @@ import { styles as themeStyles, useTheme } from '../../../theme';
 export const LessonForm = (): JSX.Element => {
     const { state: { isLessonLoading, selectedLesson }, saveLesson, updateLesson } = useCourses();
     const { setErrorForm } = useStatus();
-    const { state: { colors } } = useTheme();
+    const { styles: themeStyles, theme: { colors, margins } } = useStyles(themeStylesheet);
 
     /**
      * If the selectedLesson.id is an empty string, then saveLesson, otherwise updateLesson.
@@ -56,7 +57,7 @@ export const LessonForm = (): JSX.Element => {
             validationSchema={ lessonFormSchema }
         >
             { ({ handleSubmit, errors, isValid }) => (
-                <View style={{ ...themeStyles.formContainer, paddingBottom: 40 }}>
+                <View style={{ ...themeStyles.formContainer, paddingBottom: margins.lg }}>
 
                     {/* Description field */}
                     <FormField
@@ -82,7 +83,7 @@ export const LessonForm = (): JSX.Element => {
                         mode="date"
                         name="nextLesson"
                         placeholder="Seleccione el día"
-                        style={{ marginBottom: 40 }}
+                        style={{ marginBottom: margins.lg }}
                     />
 
                     <View style={{ flex: 1 }} />

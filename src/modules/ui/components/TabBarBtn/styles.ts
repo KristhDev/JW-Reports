@@ -1,6 +1,6 @@
-import { StyleSheet } from 'react-native';
+import { createStyleSheet } from 'react-native-unistyles';
 
-const styles = StyleSheet.create({
+const styles = createStyleSheet({
     touchable: {
         alignItems: 'center',
         borderRadius: 50,

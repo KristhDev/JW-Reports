@@ -1,15 +1,13 @@
 import React, { useState, FC, useRef, useEffect } from 'react';
 import { View, Text, TextInput, Keyboard } from 'react-native';
+import { useStyles } from 'react-native-unistyles';
 import { useField } from 'formik';
-
-/* Hooks */
-import { useTheme } from '../../../theme';
 
 /* Interfaces */
 import { FormFieldProps } from './interfaces';
 
 /* Theme */
-import { styles as themeStyles } from '../../../theme';
+import { styles as themeStylesheet } from '../../../theme';
 
 /**
  * This component is responsible for displaying fields for forms of
@@ -54,7 +52,7 @@ export const FormField: FC<FormFieldProps> = ({
 
     const textInputRef = useRef<TextInput>(null);
 
-    const { state: { colors } } = useTheme();
+    const { styles: themeStyles, theme: { colors } } = useStyles(themeStylesheet);
 
     /**
      * Handles the blur event for the input field.
@@ -79,19 +77,11 @@ export const FormField: FC<FormFieldProps> = ({
     }, []);
 
     return (
-        <View
-            style={{
-                ...themeStyles.formField,
-                ...style as any
-            }}
-        >
+        <View style={[ themeStyles.formField, style ]}>
 
             {/* Field label */}
             <Text
-                style={[
-                    { ...themeStyles.formLabel, color: colors.titleText },
-                    labelStyle,
-                ]}
+                style={[ themeStyles.formLabel, labelStyle ]}
                 testID="form-field-label"
             >
                 { label }
@@ -134,7 +124,6 @@ export const FormField: FC<FormFieldProps> = ({
                             style={[
                                 {
                                     ...themeStyles.formInput,
-                                    color: colors.inputText,
                                     flex: 1,
                                     paddingRight: 5,
                                     textAlignVertical: (rest.multiline) ? 'top' : 'center',

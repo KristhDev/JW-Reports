@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useStyles } from 'react-native-unistyles';
 import { openPicker, openCamera, Image } from 'react-native-image-crop-picker';
 import { decode } from 'base64-arraybuffer';
 
@@ -10,7 +11,6 @@ import { supabase } from '../../../config';
 
 /* Hooks */
 import { usePermissions, useStatus } from './';
-import { useTheme } from '../../theme';
 
 /* Interfaces */
 import { StorageError } from '../../ui';
@@ -21,7 +21,7 @@ import { StorageError } from '../../ui';
 const useImage = () => {
     const { state: { permissions }, askPermission } = usePermissions();
     const { setStatus } = useStatus();
-    const { state: { colors } } = useTheme();
+    const { theme: { colors } } = useStyles();
 
     const [ image, setImage ] = useState<Image>({} as Image);
 

@@ -1,15 +1,13 @@
 import React, { FC } from 'react';
 import { View } from 'react-native';
 import { TouchableRipple, Text } from 'react-native-paper';
-
-/* Hooks */
-import { useTheme } from '../../../theme';
+import { useStyles } from 'react-native-unistyles';
 
 /* Interfaces */
 import { ButtonProps } from './interfaces';
 
 /* Styles */
-import styles from './styles';
+import stylesheet from './styles';
 
 /**
  * This component shows a custom button for the different actions of the app.
@@ -44,7 +42,7 @@ export const Button: FC<ButtonProps> = ({
     touchableStyle,
     underlayColor
 }): JSX.Element => {
-    const { state: { colors } } = useTheme();
+    const { styles } = useStyles(stylesheet);
 
     return (
         <TouchableRipple
@@ -52,18 +50,12 @@ export const Button: FC<ButtonProps> = ({
             disabled={ disabled }
             onPress={ onPress }
             rippleColor={ underlayColor || 'rgba(0, 0, 0, 0.30)' }
-            style={[
-                { ...styles.buttonTouchable, backgroundColor: colors.button },
-                touchableStyle
-            ]}
+            style={[ styles.buttonTouchable, touchableStyle ]}
             testID="button-touchable"
         >
             <View style={[ styles.buttonContainer, containerStyle ]}>
                 <Text
-                    style={[
-                        { ...styles.buttonText, color: colors.contentHeader },
-                        textStyle
-                    ]}
+                    style={[ styles.buttonText, textStyle ]}
                     testID="button-text"
                 >
                     { text }

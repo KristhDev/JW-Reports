@@ -1,30 +1,35 @@
-import { StyleSheet } from 'react-native';
+import { createStyleSheet } from 'react-native-unistyles';
 
-const styles = StyleSheet.create({
+const styles = createStyleSheet(({ colors, margins }) => ({
     touchable: {
-        marginVertical: 8,
+        marginVertical: margins.xs,
     },
 
     container: {
-        padding: 16
+        backgroundColor: colors.card,
+        padding: margins.sm
     },
 
     textDate: {
+        color: colors.icon,
         fontSize: 14,
         marginBottom: 15
     },
 
     textName: {
+        color: colors.text,
         fontWeight: 'bold',
         fontSize: 18
     },
 
     textBook: {
+        color: colors.icon,
         fontSize: 16,
         marginBottom: 15
     },
 
     textDescription: {
+        color: colors.text,
         fontSize: 16,
     },
 
@@ -43,10 +48,11 @@ const styles = StyleSheet.create({
     },
 
     textMenuOpt: {
+        color: colors.text,
         fontSize: 18,
         paddingHorizontal: 5,
         paddingVertical: 2.5
     }
-});
+}));
 
 export default styles;

@@ -1,5 +1,6 @@
 import React from 'react';
 import { View, Text, TouchableOpacity, ActivityIndicator } from 'react-native';
+import { useStyles } from 'react-native-unistyles';
 import { useNavigation } from '@react-navigation/native';
 import { Formik } from 'formik';
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -15,7 +16,7 @@ import { useAuth } from '../../hooks';
 import { forgotPasswordFormSchema } from './schemas';
 
 /* Theme */
-import { styles as themeStyles, useTheme } from '../../../theme';
+import { styles as themeStylesheet } from '../../../theme';
 
 /**
  * This component is responsible for rendering the fields to request a user's
@@ -28,7 +29,7 @@ export const ForgotPasswordForm = (): JSX.Element => {
 
     const { state: { isAuthLoading }, resetPassword } = useAuth();
     const { setErrorForm } = useStatus();
-    const { state: { colors } } = useTheme();
+    const { styles: themeStyles, theme: { colors, margins } } = useStyles(themeStylesheet);
 
     /**
      * Handles the reset password functionality.
@@ -51,14 +52,8 @@ export const ForgotPasswordForm = (): JSX.Element => {
         >
             { ({ handleSubmit, isValid, errors }) => (
                 <View style={ themeStyles.formContainer }>
-                    <View style={{ ...themeStyles.btnLink, marginTop: 0, marginBottom: 40 }}>
-                        <Text
-                            style={{
-                                ...themeStyles.formText,
-                                color: colors.titleText,
-                                fontSize: 18
-                            }}
-                        >
+                    <View style={{ ...themeStyles.btnLink, marginTop: 0, marginBottom: margins.lg }}>
+                        <Text style={{ ...themeStyles.formText, fontSize: 18 }}>
                             Ingresa tu correo electrónico para restablecer tu contraseña y recuperar tu cuenta.
                         </Text>
                     </View>
@@ -103,12 +98,7 @@ export const ForgotPasswordForm = (): JSX.Element => {
                             onPress={ () => navigate('LoginScreen' as never) }
                             testID="forgot-pass-form-sign-in"
                         >
-                            <Text
-                                style={{
-                                    ...themeStyles.formLink,
-                                    color: colors.linkText
-                                }}
-                            >
+                            <Text style={ themeStyles.formLink }>
                                 Ingresar con mi cuenta
                             </Text>
                         </TouchableOpacity>

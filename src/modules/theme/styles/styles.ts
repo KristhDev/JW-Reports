@@ -1,10 +1,10 @@
-import { StyleSheet } from 'react-native';
+import { createStyleSheet } from 'react-native-unistyles';
 
-const styles = StyleSheet.create({
+const styles = createStyleSheet(({ colors, margins }) => ({
     btnLink: {
         flexDirection: 'row',
         justifyContent: 'center',
-        marginTop: 40,
+        marginTop: margins.lg,
     },
 
     defaultBorder: {
@@ -38,6 +38,7 @@ const styles = StyleSheet.create({
     },
 
     formControl: {
+        borderColor: colors.text,
         alignItems: 'center',
         borderRadius: 5,
         borderWidth: 0.5,
@@ -46,27 +47,31 @@ const styles = StyleSheet.create({
 
     formField: {
         display: 'flex',
-        marginBottom: 16,
+        marginBottom: margins.sm,
         width: '100%'
     },
 
     formInput: {
+        color: colors.inputText,
         fontSize: 17,
         paddingLeft: 10,
     },
 
     formInputText: {
+        color: colors.inputText,
         flex: 1,
         fontSize: 17
     },
 
     formLabel: {
+        color: colors.titleText,
         fontSize: 18,
-        marginBottom: 16,
+        marginBottom: margins.sm,
     },
 
     formLink: {
-        fontSize: 16,
+        color: colors.linkText,
+        fontSize: margins.sm
     },
 
     formSelectTouchableContainer: {
@@ -76,36 +81,39 @@ const styles = StyleSheet.create({
     },
 
     formText: {
-        fontSize: 16,
+        color: colors.titleText,
+        fontSize: margins.sm,
         marginRight: 10,
     },
 
     modalActions: {
         flexDirection: 'row',
         justifyContent: 'flex-end',
-        marginTop: 40
+        marginTop: margins.lg
     },
 
     modalContainer: {
+        backgroundColor: colors.modal,
         borderRadius: 10,
         justifyContent: 'space-between',
-        padding: 24
+        padding: margins.md
     },
 
     modalText: {
+        color: colors.modalText,
         fontSize: 19,
-        marginBottom: 16
+        marginBottom: margins.sm
     },
 
     titleContainer: {
         paddingBottom: 0,
-        paddingTop: 8
+        paddingTop: margins.xs
     },
 
     titleContainerSpacingVertical: {
         paddingBottom: 60,
         paddingTop: 30
     }
-});
+}));
 
 export default styles;

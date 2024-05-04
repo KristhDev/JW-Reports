@@ -1,10 +1,11 @@
 import React from 'react';
 import { Linking, useWindowDimensions, Text, View } from 'react-native';
+import { useStyles } from 'react-native-unistyles';
 
 /* Modules */
 import { Modal, Button } from '../../../../ui';
 import { useStatus } from '../../../hooks';
-import { styles as themeStyles, useTheme } from '../../../../theme';
+import { styles as themeStylesheet } from '../../../../theme';
 
 /**
  * This modal is responsible for displaying the success and error
@@ -15,7 +16,7 @@ import { styles as themeStyles, useTheme } from '../../../../theme';
 const StatusModal = (): JSX.Element => {
     const { width } = useWindowDimensions();
     const { state: { msg }, clearStatus } = useStatus();
-    const { state: { colors }, BUTTON_TRANSLUCENT_COLOR } = useTheme();
+    const { styles: themeStyles, theme: { colors } } = useStyles(themeStylesheet);
 
     const configMsg = 'Para realizar está acción necesitas permisos del dispositivo, por favor abra la configuración de su dispositivo y active los permisos de la aplicación.';
 
@@ -38,7 +39,6 @@ const StatusModal = (): JSX.Element => {
             <View
                 style={{
                     ...themeStyles.modalContainer,
-                    backgroundColor: colors.modal,
                     width: width - 48,
                     minHeight: 120,
                 }}
@@ -49,7 +49,6 @@ const StatusModal = (): JSX.Element => {
                     <Text
                         style={{
                             ...themeStyles.modalText,
-                            color: colors.modalText,
                             marginBottom: 0,
                             width: '100%',
                         }}
@@ -69,7 +68,7 @@ const StatusModal = (): JSX.Element => {
                             text="CANCELAR"
                             textStyle={{ color: colors.button, fontSize: 16 }}
                             touchableStyle={{ backgroundColor: 'transparent', marginRight: 5 }}
-                            underlayColor={ BUTTON_TRANSLUCENT_COLOR }
+                            underlayColor={ colors.buttonTranslucent }
                         />
                     ) }
 
@@ -80,7 +79,7 @@ const StatusModal = (): JSX.Element => {
                         text={ btnText }
                         textStyle={{ color: colors.button, fontSize: 16 }}
                         touchableStyle={{ backgroundColor: 'transparent' }}
-                        underlayColor={ BUTTON_TRANSLUCENT_COLOR }
+                        underlayColor={ colors.buttonTranslucent }
                     />
                 </View>
             </View>

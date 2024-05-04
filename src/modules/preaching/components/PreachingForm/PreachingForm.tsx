@@ -1,5 +1,6 @@
 import React from 'react';
 import { ActivityIndicator, View } from 'react-native';
+import { useStyles } from 'react-native-unistyles';
 import { Formik } from 'formik';
 import Icon from 'react-native-vector-icons/Ionicons';
 
@@ -17,7 +18,7 @@ import { preachingFormSchema } from './schemas';
 import { PreachingFormValues } from '../../interfaces';
 
 /* Theme */
-import { styles as themeStyles, useTheme } from '../../../theme';
+import { styles as themeStylesheet } from '../../../theme';
 
 /**
  * This component is responsible for rendering the fields to create
@@ -27,7 +28,7 @@ import { styles as themeStyles, useTheme } from '../../../theme';
  */
 export const PreachingForm = (): JSX.Element => {
     const { setErrorForm } = useStatus();
-    const { state: { colors } } = useTheme();
+    const { styles: themeStyles, theme: { colors, margins } } = useStyles(themeStylesheet);
     const { state: { isPreachingLoading, seletedPreaching }, savePreaching, updatePreaching } = usePreaching();
 
     /**
@@ -54,7 +55,7 @@ export const PreachingForm = (): JSX.Element => {
             validateOnMount
         >
             { ({ handleSubmit, errors, isValid }) => (
-                <View style={{ ...themeStyles.formContainer, justifyContent: 'flex-start', paddingBottom: 40 }}>
+                <View style={{ ...themeStyles.formContainer, justifyContent: 'flex-start', paddingBottom: margins.lg }}>
 
                     {/* Day field */}
                     <DatetimeField

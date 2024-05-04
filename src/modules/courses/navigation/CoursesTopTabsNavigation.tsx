@@ -1,12 +1,10 @@
 import React from 'react';
 import { useWindowDimensions } from 'react-native';
+import { useStyles } from 'react-native-unistyles';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 
 /* Screens */
 import { Courses } from '../screens';
-
-/* Hooks */
-import { useTheme } from '../../theme';
 
 /* Interfaces */
 import { CoursesTopTabsParamsList } from '../interfaces';
@@ -20,7 +18,7 @@ const Tabs = createMaterialTopTabNavigator<CoursesTopTabsParamsList>();
  */
 const CoursesTopTabsNavigation = (): JSX.Element => {
     const { width } = useWindowDimensions();
-    const { state: { colors }, BUTTON_TRANSLUCENT_COLOR, BUTTON_TRANSPARENT_COLOR } = useTheme();
+    const { theme: { colors } } = useStyles();
 
     return (
         <Tabs.Navigator
@@ -30,7 +28,7 @@ const CoursesTopTabsNavigation = (): JSX.Element => {
             }}
             screenOptions={ ({ navigation }) => {
                 const { isFocused } = navigation;
-                const pressColor = (isFocused()) ? BUTTON_TRANSLUCENT_COLOR : BUTTON_TRANSPARENT_COLOR;
+                const pressColor = (isFocused()) ? colors.buttonTranslucent : colors.buttonTransparent;
 
                 return {
                     tabBarActiveTintColor: colors.button,

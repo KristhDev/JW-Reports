@@ -1,5 +1,6 @@
 import React from 'react';
 import { ActivityIndicator, View } from 'react-native';
+import { useStyles } from 'react-native-unistyles';
 import { Formik } from 'formik';
 import Icon from 'react-native-vector-icons/Ionicons';
 
@@ -15,8 +16,9 @@ import { courseFormSchema } from './schemas';
 
 /* Interfaces */
 import { CourseFormValues } from '../../interfaces';
+
 /* Theme */
-import { styles as themeStyles, useTheme } from '../../../theme';
+import { styles as themeStylesheet } from '../../../theme';
 
 /**
  * This component is responsible for rendering the fields to create
@@ -27,7 +29,7 @@ import { styles as themeStyles, useTheme } from '../../../theme';
 export const CourseForm = (): JSX.Element => {
     const { state: { isCourseLoading, selectedCourse }, saveCourse, updateCourse } = useCourses();
     const { setErrorForm } = useStatus();
-    const { state: { colors } } = useTheme();
+    const { styles: themeStyles, theme: { colors, margins } } = useStyles(themeStylesheet);
 
     /**
      * If the selectedCourse.id is an empty string, then save the formValues, otherwise update the
@@ -55,7 +57,7 @@ export const CourseForm = (): JSX.Element => {
             validationSchema={ courseFormSchema }
         >
             { ({ handleSubmit, errors, isValid }) => (
-                <View style={{ ...themeStyles.formContainer, paddingBottom: 40 }}>
+                <View style={{ ...themeStyles.formContainer, paddingBottom: margins.lg }}>
 
                     {/* Person name field */}
                     <FormField
@@ -101,7 +103,7 @@ export const CourseForm = (): JSX.Element => {
                         label="Publicación de estudio:"
                         name="publication"
                         placeholder="Ingrese la publicación"
-                        style={{ marginBottom: 40 }}
+                        style={{ marginBottom: margins.lg }}
                     />
 
                     {/* Submit button */}

@@ -1,5 +1,6 @@
 import React, { FC } from 'react';
 import { ActivityIndicator, View, Text, useWindowDimensions } from 'react-native';
+import { useStyles } from 'react-native-unistyles';
 
 /* Screens */
 import { Modal } from '../';
@@ -11,7 +12,7 @@ import { Button } from '../../components';
 import { DeleteModalProps } from './interfaces';
 
 /* Theme */
-import { styles as themeStyles, useTheme } from '../../../theme';
+import { styles as themeStylesheet } from '../../../theme';
 
 /**
  * This modal is for removing resources of all kinds.
@@ -26,7 +27,7 @@ import { styles as themeStyles, useTheme } from '../../../theme';
  * @return {JSX.Element} rendered component to show delete modal
  */
 const DeleteModal: FC<DeleteModalProps> = ({ text, isLoading, isOpen, onClose, onConfirm }): JSX.Element => {
-    const { state: { colors }, BUTTON_TRANSLUCENT_COLOR } = useTheme();
+    const { styles: themeStyles, theme: { colors } } = useStyles(themeStylesheet);
     const { width } = useWindowDimensions();
 
     return (
@@ -35,7 +36,6 @@ const DeleteModal: FC<DeleteModalProps> = ({ text, isLoading, isOpen, onClose, o
                 <View
                     style={{
                         ...themeStyles.modalContainer,
-                        backgroundColor: colors.modal,
                         width: width - 48
                     }}
                 >
@@ -44,8 +44,7 @@ const DeleteModal: FC<DeleteModalProps> = ({ text, isLoading, isOpen, onClose, o
                     <Text
                         style={{
                             ...themeStyles.modalText,
-                            marginBottom: 0,
-                            color: colors.modalText
+                            marginBottom: 0
                         }}
                         testID="delete-modal-title"
                     >
@@ -62,7 +61,7 @@ const DeleteModal: FC<DeleteModalProps> = ({ text, isLoading, isOpen, onClose, o
                             text="CANCELAR"
                             textStyle={{ color: colors.button, fontSize: 16 }}
                             touchableStyle={{ backgroundColor: 'transparent', marginRight: 5 }}
-                            underlayColor={ BUTTON_TRANSLUCENT_COLOR }
+                            underlayColor={ colors.buttonTranslucent }
                         />
 
                         {/* Confirm button */}
@@ -72,7 +71,7 @@ const DeleteModal: FC<DeleteModalProps> = ({ text, isLoading, isOpen, onClose, o
                             text="ELIMINAR"
                             textStyle={{ color: colors.button, fontSize: 16 }}
                             touchableStyle={{ backgroundColor: 'transparent' }}
-                            underlayColor={ BUTTON_TRANSLUCENT_COLOR }
+                            underlayColor={ colors.buttonTranslucent }
                         />
                     </View>
                 </View>

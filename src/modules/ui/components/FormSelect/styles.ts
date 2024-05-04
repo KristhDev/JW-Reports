@@ -1,6 +1,6 @@
-import { StyleSheet } from 'react-native';
+import { createStyleSheet } from 'react-native-unistyles';
 
-const styles = StyleSheet.create({
+const styles = createStyleSheet(() => ({
     modalTitle: {
         fontSize: 20,
         fontWeight: 'bold',
@@ -23,6 +23,6 @@ const styles = StyleSheet.create({
         fontSize: 18,
         marginLeft: 15
     }
-});
+}));
 
 export default styles;

@@ -1,5 +1,6 @@
 import React, { FC, useState } from 'react';
 import { Text, View, useWindowDimensions } from 'react-native';
+import { useStyles } from 'react-native-unistyles';
 import { TouchableRipple } from 'react-native-paper';
 import { useNavigation } from '@react-navigation/native';
 import { Menu, MenuOption, MenuOptions, MenuTrigger } from 'react-native-popup-menu';
@@ -11,13 +12,12 @@ import { Fab } from '../../../ui';
 
 /* Hooks */
 import { useRevisits } from '../../hooks';
-import { useTheme } from '../../../theme';
 
 /* Interfaces */
 import { RevisitCardProps } from './interfaces';
 
 /* Styles */
-import styles from './styles';
+import stylesheet from './styles';
 
 /**
  * This component is responsible for rendering part of the information of a
@@ -37,7 +37,7 @@ export const RevisitCard: FC<RevisitCardProps> = ({ onDelete, onPass, onRevisit,
     const { width } = useWindowDimensions();
 
     const { setSelectedRevisit } = useRevisits();
-    const { state: { colors }, BUTTON_TRANSPARENT_COLOR } = useTheme();
+    const { styles, theme: { colors } } = useStyles(stylesheet);
 
     const nextVisit = dayjs(revisit.nextVisit);
 
@@ -80,15 +80,15 @@ export const RevisitCard: FC<RevisitCardProps> = ({ onDelete, onPass, onRevisit,
         <TouchableRipple
             borderless
             onPress={ handleRevisitDetail }
-            rippleColor={ BUTTON_TRANSPARENT_COLOR  }
+            rippleColor={ colors.buttonTransparent  }
             style={{ ...styles.touchable, width: width - 16 }}
             testID="revisit-card-touchable"
         >
-            <View style={{ ...styles.container, backgroundColor: colors.card }}>
+            <View style={ styles.container }>
 
                 {/* Revisit status or date for next visit */}
                 <Text
-                    style={{ ...styles.textDate, color: colors.icon }}
+                    style={ styles.textDate }
                     testID="revisit-card-next-visit-text"
                 >
                     { (revisit.done)
@@ -99,7 +99,7 @@ export const RevisitCard: FC<RevisitCardProps> = ({ onDelete, onPass, onRevisit,
 
                 {/* Text person name */}
                 <Text
-                    style={{ ...styles.textName, color: colors.text }}
+                    style={ styles.textName }
                     testID="revisit-card-person-name-text"
                 >
                     { revisit.personName }
@@ -107,7 +107,7 @@ export const RevisitCard: FC<RevisitCardProps> = ({ onDelete, onPass, onRevisit,
 
                 {/* Text about person */}
                 <Text
-                    style={{ ...styles.textDescription, color: colors.text }}
+                    style={ styles.textDescription }
                     testID="revisit-card-about-text"
                 >
                     { (revisit.about.length > 200) ? revisit.about.substring(0, 200) + '...' : revisit.about }
@@ -124,7 +124,7 @@ export const RevisitCard: FC<RevisitCardProps> = ({ onDelete, onPass, onRevisit,
                     }
                     onPress={ () => setIsOpen(true) }
                     style={ styles.fab }
-                    touchColor={ BUTTON_TRANSPARENT_COLOR }
+                    touchColor={ colors.buttonTransparent }
                 />
 
                 {/* Context menu */}
@@ -139,45 +139,25 @@ export const RevisitCard: FC<RevisitCardProps> = ({ onDelete, onPass, onRevisit,
                         optionsContainerStyle={{ backgroundColor: colors.card, borderRadius: 5, width: 220 }}
                     >
                         <MenuOption onSelect={ handleEdit }>
-                            <Text
-                                style={{
-                                    color: colors.text,
-                                    ...styles.textMenuOpt
-                                }}
-                            >
+                            <Text style={ styles.textMenuOpt }>
                                 Editar
                             </Text>
                         </MenuOption>
 
                         <MenuOption onSelect={ () => handleAction(onRevisit) }>
-                            <Text
-                                style={{
-                                    color: colors.text,
-                                    ...styles.textMenuOpt
-                                }}
-                            >
+                            <Text style={ styles.textMenuOpt }>
                                 { (revisit.done) ? 'Volver a visitar' : 'Marcar como visitada' }
                             </Text>
                         </MenuOption>
 
                         <MenuOption onSelect={ () => handleAction(onPass) }>
-                            <Text
-                                style={{
-                                    color: colors.text,
-                                    ...styles.textMenuOpt
-                                }}
-                            >
+                            <Text style={ styles.textMenuOpt }>
                                 Pasar a curso bíblico
                             </Text>
                         </MenuOption>
 
                         <MenuOption onSelect={ () => handleAction(onDelete) }>
-                            <Text
-                                style={{
-                                    color: colors.text,
-                                    ...styles.textMenuOpt
-                                }}
-                            >
+                            <Text style={ styles.textMenuOpt }>
                                 Eliminar
                             </Text>
                         </MenuOption>

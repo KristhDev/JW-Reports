@@ -28,7 +28,7 @@ const Navigation = (): JSX.Element => {
     const { clearPreaching } = usePreaching();
     const { clearRevisits } = useRevisits();
     const { clearStatus } = useStatus();
-    const { state: { selectedTheme, } } = useTheme();
+    const { state: { theme } } = useTheme();
     const { wifi } = useNetwork();
 
     /**
@@ -66,17 +66,13 @@ const Navigation = (): JSX.Element => {
             <StatusBar
                 animated
                 backgroundColor="transparent"
-                barStyle={ (selectedTheme === 'dark') ? 'light-content' : 'dark-content' }
+                barStyle={ (theme === 'dark') ? 'light-content' : 'dark-content' }
                 translucent
             />
 
             <StatusModal />
 
-            <Stack.Navigator
-                screenOptions={{
-                    headerShown: false
-                }}
-            >
+            <Stack.Navigator screenOptions={{ headerShown: false }}>
                 { (isAuthenticated) ? (
                     <>
                         <Stack.Screen

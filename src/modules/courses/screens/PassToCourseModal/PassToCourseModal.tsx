@@ -1,5 +1,6 @@
 import React, { FC, useState } from 'react';
 import { View, ActivityIndicator, Text } from 'react-native';
+import { useStyles } from 'react-native-unistyles';
 import { Formik } from 'formik';
 import Icon from 'react-native-vector-icons/Ionicons';
 
@@ -15,7 +16,7 @@ import { useRevisits } from '../../../revisits';
 import { useStatus } from '../../../shared';
 
 /* Theme */
-import { styles as themeStyles, useTheme } from '../../../theme';
+import { styles as themeStylesheet } from '../../../theme';
 
 /**
  * This modal is responsible for grouping the components to
@@ -30,7 +31,7 @@ const PassToCourseModal: FC<ModalProps> = ({ isOpen, onClose }): JSX.Element => 
     const { state: { selectedRevisit } } = useRevisits();
     const { state: { isCourseLoading }, saveCourse } = useCourses();
     const { setStatus } = useStatus();
-    const { state: { colors } } = useTheme();
+    const { styles: themeStyles, theme: { colors, margins } } = useStyles(themeStylesheet);
 
     /**
      * This is the confirmation function of the modal that executes one or another function
@@ -79,22 +80,13 @@ const PassToCourseModal: FC<ModalProps> = ({ isOpen, onClose }): JSX.Element => 
     return (
         <Modal isOpen={ isOpen }>
             { (!isCourseLoading) ? (
-                <View
-                    style={{
-                        ...themeStyles.modalContainer,
-                        backgroundColor: colors.modal
-                    }}
-                >
+                <View style={ themeStyles.modalContainer }>
                     { (!startCourse) ? (
                         <>
 
                             {/* Modal title */}
                             <Text
-                                style={{
-                                    ...themeStyles.modalText,
-                                    marginBottom: 0,
-                                    color: colors.modalText
-                                }}
+                                style={{ ...themeStyles.modalText, marginBottom: 0 }}
                                 testID="modal-text"
                             >
                                 ¿Está seguro de comenzar un curso bíblico con { selectedRevisit.personName }?
@@ -115,13 +107,7 @@ const PassToCourseModal: FC<ModalProps> = ({ isOpen, onClose }): JSX.Element => 
                                 <View>
 
                                     {/* Modal title in form */}
-                                    <Text
-                                        style={{
-                                            ...themeStyles.modalText,
-                                            marginBottom: 24,
-                                            color: colors.modalText
-                                        }}
-                                    >
+                                    <Text style={{ ...themeStyles.modalText, marginBottom: margins.md }}>
                                         Por favor ingrese el nombre de la publicación de estudio
                                     </Text>
 

@@ -1,4 +1,6 @@
-export type Theme = 'dark' | 'light' | 'default';
+import { breakpoints, darkTheme, lightTheme } from '../styles';
+
+export type Theme = 'dark' | 'light';
 
 /**
  * Defining the interface for the ThemeState.
@@ -10,11 +12,8 @@ export type Theme = 'dark' | 'light' | 'default';
  * @property {Theme} theme - The theme.
  */
 export interface ThemeState {
-    colors: Colors;
-    deviceTheme: Theme;
-    isLoadedTheme: boolean;
-    selectedTheme: Theme,
-    theme: Theme,
+    theme: Theme;
+    selectedTheme: Theme | 'default';
 }
 
 /* Defining the interface for the Colors object. */
@@ -22,6 +21,8 @@ export interface Colors {
     background: string;
     bottom: string;
     button: string;
+    buttonTranslucent: string;
+    buttonTransparent: string;
     buttonDark: string;
     card: string;
     contentHeader: string;
@@ -42,8 +43,7 @@ export interface Colors {
 /* Defining the interface for the context. */
 export interface ThemeContextProps {
     state: ThemeState;
-    setTheme: (theme: Theme) => void;
-    setDefaultTheme: () => void;
+    setTheme: (theme: Theme | 'default') => Promise<void>;
 }
 
 /**
@@ -54,3 +54,10 @@ export interface ThemeContextProps {
 export type SetThemePayload = {
     theme: Theme
 }
+
+export type AppThemes = {
+    light: typeof lightTheme,
+    dark: typeof darkTheme
+}
+
+export type AppBreakpoints = typeof breakpoints;

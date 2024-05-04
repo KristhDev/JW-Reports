@@ -1,5 +1,6 @@
-import React, { useEffect, useState, FC } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import { Text, TouchableRipple } from 'react-native-paper';
+import { useStyles } from 'react-native-unistyles';
 import Icon from 'react-native-vector-icons/Ionicons';
 
 /* Hooks */
@@ -9,7 +10,7 @@ import { useTheme } from '../../../theme';
 import { TabBarBtnProps } from './interfaces';
 
 /* Styles */
-import styles from './styles';
+import stylesheet from './styles';
 
 /**
  * This component is responsible for displaying a button for the navigation bar.
@@ -29,8 +30,9 @@ import styles from './styles';
  * @return {JSX.Element} Return jsx element to render tab bar btn of navigation
  */
 export const TabBarBtn: FC<TabBarBtnProps> = ({ active, color, iconName, onPress, title }): JSX.Element => {
-    const { state: { selectedTheme }, BUTTON_TRANSLUCENT_COLOR, BUTTON_TRANSPARENT_COLOR } = useTheme();
-    const [ pressColor, setPressColor ] = useState<string>(BUTTON_TRANSPARENT_COLOR);
+    const { styles, theme: { colors } } = useStyles(stylesheet);
+    const [ pressColor, setPressColor ] = useState((active) ? colors.buttonTranslucent : colors.buttonTransparent);
+    const { state: { theme } } = useTheme()
 
     /**
      * Effect to change pressColor when the button is pressed
@@ -38,11 +40,11 @@ export const TabBarBtn: FC<TabBarBtnProps> = ({ active, color, iconName, onPress
      */
     useEffect(() => {
         const timeout = setTimeout(() => {
-            setPressColor((active) ? BUTTON_TRANSLUCENT_COLOR : BUTTON_TRANSPARENT_COLOR);
+            setPressColor((active) ? colors.buttonTranslucent : colors.buttonTransparent);
         }, 700);
 
         return () => clearTimeout(timeout);
-    }, [ active, selectedTheme ]);
+    }, [ active, theme ]);
 
     return (
         <TouchableRipple

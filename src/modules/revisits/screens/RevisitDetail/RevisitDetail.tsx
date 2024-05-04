@@ -1,15 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import { Image, ScrollView, Text, TouchableOpacity, View, useWindowDimensions } from 'react-native';
+import { useStyles } from 'react-native-unistyles';
 import { useNavigation } from '@react-navigation/native';
 import dayjs from 'dayjs';
 
 /* Modules */
 import { INIT_REVISIT, RevisitModal, useRevisits } from '../../';
-import { styles as themeStyles, useTheme } from '../../../theme';
+import { styles as themeStylesheet } from '../../../theme';
 import { Title } from '../../../ui';
 
 /* Styles */
-import styles from './styles';
+import stylesheet from './styles';
 
 /**
  * This screen is responsible for grouping the components to show
@@ -24,7 +25,8 @@ const RevisitDetail = (): JSX.Element => {
     const { width: windowWidth } = useWindowDimensions();
 
     const { state: { selectedRevisit }, setSelectedRevisit } = useRevisits();
-    const { state: { colors } } = useTheme();
+    const { styles: themeStyles, theme: { colors } } = useStyles(themeStylesheet);
+    const { styles } = useStyles(stylesheet);
 
     const nextVisit = dayjs(selectedRevisit.nextVisit);
 
@@ -65,7 +67,7 @@ const RevisitDetail = (): JSX.Element => {
     return (
         <>
             <ScrollView
-                contentContainerStyle={{ alignItems: 'center', flexGrow: 1, padding: 24, paddingBottom: 100 }}
+                contentContainerStyle={ styles.scrollView }
                 overScrollMode="never"
                 style={{ flex: 1 }}
             >
@@ -79,15 +81,9 @@ const RevisitDetail = (): JSX.Element => {
 
                 {/* Revisit status */}
                 { (!selectedRevisit.done) ? (
-                    <View style={{ ...styles.sectionStyle }}>
+                    <View style={ styles.sectionStyle }>
                         <View style={{ flexDirection: 'row' }}>
-                            <Text
-                                style={{
-                                    ...styles.sectionSubTitle,
-                                    color: colors.text,
-                                    marginBottom: 0
-                                }}
-                            >
+                            <Text style={{ ...styles.sectionSubTitle, marginBottom: 0 }}>
                                 Próxima visita:
                             </Text>
 
@@ -133,12 +129,7 @@ const RevisitDetail = (): JSX.Element => {
                     style={ styles.sectionStyle }
                     testID="revisit-detail-about-section"
                 >
-                    <Text
-                        style={{
-                            ...styles.sectionSubTitle,
-                            color: colors.text
-                        }}
-                    >
+                    <Text style={ styles.sectionSubTitle }>
                         Información de { selectedRevisit.personName }:
                     </Text>
 
@@ -152,12 +143,7 @@ const RevisitDetail = (): JSX.Element => {
                     style={ styles.sectionStyle }
                     testID="revisit-detail-address-section"
                 >
-                    <Text
-                        style={{
-                            ...styles.sectionSubTitle,
-                            color: colors.text
-                        }}
-                    >
+                    <Text style={ styles.sectionSubTitle }>
                         Dirección:
                     </Text>
 
@@ -169,12 +155,7 @@ const RevisitDetail = (): JSX.Element => {
                 {/* Photo section of revisit */}
                 { (selectedRevisit.photo) && (
                     <View style={ styles.sectionStyle }>
-                        <Text
-                            style={{
-                                ...styles.sectionSubTitle,
-                                color: colors.text,
-                            }}
-                        >
+                        <Text style={ styles.sectionSubTitle }>
                             Foto:
                         </Text>
 
@@ -185,7 +166,7 @@ const RevisitDetail = (): JSX.Element => {
                         />
 
                         <Text
-                            style={{ ...styles.imageText, color: colors.modalText }}
+                            style={ styles.imageText }
                             testID="revisit-detail-photo-text"
                         >
                             La foto es para ayudarte a recordar el lugar de residencia de { selectedRevisit.personName }
@@ -195,7 +176,7 @@ const RevisitDetail = (): JSX.Element => {
 
                 {/* Date create revisit */}
                 <Text
-                    style={{ ...styles.dateCreatedText, color: colors.modalText }}
+                    style={ styles.dateCreatedText }
                     testID="revisit-detail-created-date"
                 >
                     { dayjs(selectedRevisit.createdAt).format('DD/MM/YYYY') }

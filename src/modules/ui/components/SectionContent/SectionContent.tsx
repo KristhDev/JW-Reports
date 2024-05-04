@@ -1,17 +1,15 @@
 import React, { FC, PropsWithChildren } from 'react';
 import { View } from 'react-native';
+import { useStyles } from 'react-native-unistyles';
 
 /* Components */
 import { InfoText } from '../InfoText';
-
-/* Hooks */
-import { useTheme } from '../../../theme';
 
 /* Interfaces */
 import { SectionContentProps } from './interfaces';
 
 /* Styles */
-import styles from './styles';
+import stylesheet from './styles';
 
 /**
  * This component renders the content of a section with title that
@@ -25,22 +23,14 @@ import styles from './styles';
  * @return {JSX.Element} Return jsx element to render section
  */
 export const SectionContent: FC<PropsWithChildren<SectionContentProps>> = ({ containerStyle, children, title }): JSX.Element => {
-    const { state: { colors } } = useTheme();
+    const { styles, theme: { margins } } = useStyles(stylesheet);
 
     return (
-        <View
-            style={[
-                { borderBottomColor: colors.header, ...styles.sectionContainer },
-                containerStyle
-            ]}
-        >
+        <View style={[ styles.sectionContainer, containerStyle ]}>
             <InfoText
-                containerStyle={{ padding: 16, paddingTop: 0 }}
+                containerStyle={{ padding: margins.sm, paddingTop: 0 }}
                 text={ title }
-                textStyle={{
-                    color: colors.titleSecondary,
-                    ...styles.sectionTitle
-                }}
+                textStyle={ styles.sectionTitle }
             />
 
             { children }

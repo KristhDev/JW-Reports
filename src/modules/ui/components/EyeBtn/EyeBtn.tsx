@@ -1,9 +1,7 @@
 import React, { FC } from 'react';
 import { TouchableOpacity } from 'react-native';
+import { useStyles } from 'react-native-unistyles';
 import Icon from 'react-native-vector-icons/Ionicons';
-
-/* Hooks */
-import { useTheme } from '../../../theme';
 
 /* Interfaces */
 import { EyeBtnProps } from './interfaces';
@@ -19,7 +17,7 @@ import { EyeBtnProps } from './interfaces';
  * @return {JSX.Element} Return jsx element to render eye button
  */
 export const EyeBtn: FC<EyeBtnProps> = ({ onToggle, value }): JSX.Element => {
-    const { state: { colors } } = useTheme();
+    const { theme: { colors } } = useStyles();
 
     return (
         <TouchableOpacity

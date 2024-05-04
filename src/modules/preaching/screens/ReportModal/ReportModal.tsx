@@ -1,5 +1,6 @@
 import React, { Children, FC, useState } from 'react';
 import { KeyboardAvoidingView, ScrollView, View, Text, Share, TextInput, useWindowDimensions } from 'react-native';
+import { useStyles } from 'react-native-unistyles';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { RadioButton } from 'react-native-paper';
 
@@ -18,8 +19,8 @@ import { ReportModalProps } from './interfaces';
 import { date } from '../../../../utils';
 
 /* Styles */
-import { styles as themeStyles, useTheme } from '../../../theme';
-import styles from './styles';
+import { styles as themeStylesheet } from '../../../theme';
+import stylesheet from './styles';
 
 const particitions = [
     { label: 'Si', value: 'si' },
@@ -48,7 +49,8 @@ const ReportModal: FC<ReportModalProps> = ({ isOpen, month, onClose }): JSX.Elem
     const { state: { user } } = useAuth();
     const { state: { preachings } } = usePreaching();
     const { state: { courses } } = useCourses();
-    const { state: { colors }, BUTTON_TRANSLUCENT_COLOR } = useTheme();
+    const { styles: themeStyles, theme: { colors, margins } } = useStyles(themeStylesheet);
+    const { styles } = useStyles(stylesheet);
 
     const username = `${ user.name } ${ user.surname }`;
     const totalHours = date.sumHours(preachings.map(p => ({ init: p.initHour, finish: p.finalHour })));
@@ -105,11 +107,11 @@ const ReportModal: FC<ReportModalProps> = ({ isOpen, month, onClose }): JSX.Elem
                     overScrollMode="never"
                     showsVerticalScrollIndicator={ false }
                 >
-                    <View style={{ ...styles.reportModal, backgroundColor: colors.modal, width: width - 48 }}>
-                        <Text style={{ ...styles.reportModalInfo, color: colors.modalText }}>Estás a punto de entregar tu informe predicación, por favor revisalo.</Text>
+                    <View style={{ ...styles.reportModal, width: width - 48 }}>
+                        <Text style={ styles.reportModalInfo }>Estás a punto de entregar tu informe predicación, por favor revisalo.</Text>
 
-                        <View style={{ marginTop: 40, marginBottom: 24 }}>
-                            <Text style={{ ...styles.reportTitle, color: colors.text }}>Informe De Predicación</Text>
+                        <View style={{ marginTop: margins.lg, marginBottom: margins.md }}>
+                            <Text style={ styles.reportTitle }>Informe De Predicación</Text>
 
                             <View style={{ flexDirection: 'row' }}>
                                 <Text style={{ ...styles.reportText, color: colors.text }}>Nombre: </Text>
@@ -141,7 +143,7 @@ const ReportModal: FC<ReportModalProps> = ({ isOpen, month, onClose }): JSX.Elem
                                         onValueChange={ setParticipated }
                                         value={ participated }
                                     >
-                                        <View style={{ flexDirection: 'row', gap: 32, paddingVertical: 8 }}>
+                                        <View style={{ flexDirection: 'row', gap: 32, paddingVertical: margins.xs }}>
                                             { Children.toArray(particitions.map(particition => (
                                                 <RadioBtn
                                                     label={ particition.label }
@@ -193,7 +195,6 @@ const ReportModal: FC<ReportModalProps> = ({ isOpen, month, onClose }): JSX.Elem
                                                 selectionColor={ colors.linkText }
                                                 style={{
                                                     ...themeStyles.formInput,
-                                                    color: colors.inputText,
                                                     flex: 1,
                                                     maxHeight: 105,
                                                     paddingRight: 5,
@@ -208,7 +209,7 @@ const ReportModal: FC<ReportModalProps> = ({ isOpen, month, onClose }): JSX.Elem
                         </View>
 
                         { (restMins > 0) && (
-                            <Text style={{ color: colors.modalText, fontSize: 16, marginBottom: 24 }}>
+                            <Text style={{ color: colors.modalText, fontSize: 16, marginBottom: margins.md }}>
                                 Para este mes te sobraron { restMins } minutos, guardalos para el siguiente mes.
                             </Text>
                         ) }
@@ -221,7 +222,7 @@ const ReportModal: FC<ReportModalProps> = ({ isOpen, month, onClose }): JSX.Elem
                                 text="CANCELAR"
                                 textStyle={{ color: colors.button, fontSize: 16 }}
                                 touchableStyle={{ backgroundColor: 'transparent', marginRight: 5 }}
-                                underlayColor={ BUTTON_TRANSLUCENT_COLOR }
+                                underlayColor={ colors.buttonTranslucent }
                             />
 
                             <Button
@@ -230,7 +231,7 @@ const ReportModal: FC<ReportModalProps> = ({ isOpen, month, onClose }): JSX.Elem
                                 text="ENTREGAR"
                                 textStyle={{ color: colors.button, fontSize: 16 }}
                                 touchableStyle={{ backgroundColor: 'transparent' }}
-                                underlayColor={ BUTTON_TRANSLUCENT_COLOR }
+                                underlayColor={ colors.buttonTranslucent }
                             />
                         </View>
                     </View>

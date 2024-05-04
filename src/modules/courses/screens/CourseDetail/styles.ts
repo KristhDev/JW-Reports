@@ -1,39 +1,44 @@
-import { StyleSheet } from 'react-native';
+import { createStyleSheet } from 'react-native-unistyles';
 
-const styles = StyleSheet.create({
+const styles = createStyleSheet(({ colors, margins }) => ({
     sectionStyle: {
-        paddingBottom: 24,
+        paddingBottom: margins.md,
         width: '100%'
     },
 
     sectionSubTitle: {
+        color: colors.text,
         fontSize: 19,
         fontWeight: 'bold',
-        marginBottom: 8
+        marginBottom: margins.xs
     },
 
     dateCreatedText: {
-        bottom: 24,
+        bottom: margins.md,
+        color: colors.modalText,
         fontSize: 16,
         position: 'absolute',
-        right: 24,
+        right: margins.md,
     },
 
     cardContainer: {
+        borderColor: colors.text,
         borderWidth: 0.5,
     },
 
     cardHeaderText: {
+        color: colors.text,
         fontSize: 24,
         fontWeight: 'bold',
-        padding: 8,
+        padding: margins.xs,
         textAlign: 'center'
     },
 
     cardContentText: {
+        color: colors.text,
         fontSize: 19,
-        padding: 24
+        padding: margins.md
     }
-});
+}));
 
 export default styles;

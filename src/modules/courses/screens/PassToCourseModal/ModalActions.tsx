@@ -1,5 +1,6 @@
 import React, { FC } from 'react';
 import { View } from 'react-native';
+import { useStyles } from 'react-native-unistyles';
 
 /* Components */
 import { Button } from '../../../ui/components';
@@ -8,14 +9,14 @@ import { Button } from '../../../ui/components';
 import { ModalActionProps } from './interfaces';
 
 /* Theme */
-import { styles as themeStyles, useTheme } from '../../../theme';
+import { styles as themeStylesheet } from '../../../theme';
 
 /**
  * This component is responsible for grouping actions for modal.
  * @param {ModalActionProps} { onClose: () => void, onConfirm: () => void, reschedule: boolean }
  */
 export const ModalActions: FC<ModalActionProps> = ({ onClose, onConfirm }) => {
-    const { state: { colors }, BUTTON_TRANSLUCENT_COLOR } = useTheme();
+    const { styles: themeStyles, theme: { colors } } = useStyles(themeStylesheet);
 
     return (
         <View style={{ ...themeStyles.modalActions, alignSelf: 'flex-end' }}>
@@ -27,7 +28,7 @@ export const ModalActions: FC<ModalActionProps> = ({ onClose, onConfirm }) => {
                 text="CANCELAR"
                 textStyle={{ color: colors.button, fontSize: 16 }}
                 touchableStyle={{ backgroundColor: 'transparent', marginRight: 10 }}
-                underlayColor={ BUTTON_TRANSLUCENT_COLOR }
+                underlayColor={ colors.buttonTranslucent }
             />
 
             {/* Confirm button */}
@@ -37,7 +38,7 @@ export const ModalActions: FC<ModalActionProps> = ({ onClose, onConfirm }) => {
                 text="ACEPTAR"
                 textStyle={{ color: colors.button, fontSize: 16 }}
                 touchableStyle={{ backgroundColor: 'transparent' }}
-                underlayColor={ BUTTON_TRANSLUCENT_COLOR }
+                underlayColor={ colors.buttonTranslucent }
             />
         </View>
     );

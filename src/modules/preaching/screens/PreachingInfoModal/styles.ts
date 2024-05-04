@@ -1,24 +1,26 @@
-import { StyleSheet } from 'react-native';
+import { createStyleSheet } from 'react-native-unistyles';
 
-const styles = StyleSheet.create({
+const styles = createStyleSheet(({ colors, margins }) => ({
     modal: {
+        backgroundColor: colors.modal,
         borderRadius: 10,
-        padding: 24
+        padding: margins.md
     },
 
     modalTitle: {
+        color: colors.text,
         fontSize: 18,
         fontWeight: 'bold',
-        marginBottom: 24
+        marginBottom: margins.md
     },
 
     modalSection: {
-        marginBottom: 16
+        marginBottom: margins.sm
     },
 
     modalSectionText: {
         fontSize: 17,
     }
-});
+}));
 
 export default styles;

@@ -1,9 +1,9 @@
 import React from 'react';
+import { useStyles } from 'react-native-unistyles';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 
 /* Modules */
 import { Revisits, RevisitsTopTabsParamsList } from '../';
-import { useTheme } from '../../theme';
 
 const Tabs = createMaterialTopTabNavigator<RevisitsTopTabsParamsList>();
 
@@ -13,7 +13,7 @@ const Tabs = createMaterialTopTabNavigator<RevisitsTopTabsParamsList>();
  * @return {JSX.Element} rendered top taps navigation of revisits
  */
 const RevisitsTopTabsNavigation = (): JSX.Element => {
-    const { state: { colors }, BUTTON_TRANSLUCENT_COLOR, BUTTON_TRANSPARENT_COLOR } = useTheme();
+    const { theme: { colors } } = useStyles();
 
     return (
         <Tabs.Navigator
@@ -23,7 +23,7 @@ const RevisitsTopTabsNavigation = (): JSX.Element => {
             }}
             screenOptions={ ({ navigation }) => {
                 const { isFocused } = navigation;
-                const pressColor = (isFocused()) ? BUTTON_TRANSLUCENT_COLOR : BUTTON_TRANSPARENT_COLOR;
+                const pressColor = (isFocused()) ? colors.buttonTranslucent : colors.buttonTransparent;
 
                 return {
                     tabBarActiveTintColor: colors.button,

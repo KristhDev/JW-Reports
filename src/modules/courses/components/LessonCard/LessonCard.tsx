@@ -1,5 +1,6 @@
 import React, { FC, useState } from 'react';
 import { Text, View, useWindowDimensions } from 'react-native';
+import { useStyles } from 'react-native-unistyles';
 import { TouchableRipple } from 'react-native-paper';
 import { Menu, MenuOption, MenuOptions, MenuTrigger } from 'react-native-popup-menu';
 import { useNavigation } from '@react-navigation/native';
@@ -11,13 +12,12 @@ import { Fab } from '../../../ui';
 
 /* Hooks */
 import { useCourses } from '../../hooks';
-import { useTheme } from '../../../theme';
 
 /* Interfaces */
 import { LessonCardProps } from './interfaces';
 
 /* Styles */
-import styles from './styles';
+import stylesheet from './styles';
 
 /**
  * This component is responsible for rendering part of the information of a
@@ -36,7 +36,7 @@ export const LessonCard: FC<LessonCardProps> = ({ lesson, screenToNavigate, onCl
     const { width } = useWindowDimensions();
 
     const { setSelectedLesson } = useCourses();
-    const { state: { colors }, BUTTON_TRANSPARENT_COLOR } = useTheme();
+    const { styles, theme: { colors } } = useStyles(stylesheet);
 
     const nextVisit = dayjs(lesson.nextLesson);
 
@@ -79,15 +79,15 @@ export const LessonCard: FC<LessonCardProps> = ({ lesson, screenToNavigate, onCl
         <TouchableRipple
             borderless
             onPress={ handleLessonDetail }
-            rippleColor={ BUTTON_TRANSPARENT_COLOR }
+            rippleColor={ colors.buttonTransparent }
             style={{ ...styles.touchable, width: width - 16 }}
             testID="lesson-card-touchable"
         >
-            <View style={{ ...styles.container, backgroundColor: colors.card }}>
+            <View style={ styles.container }>
 
                 {/* Lesson status  */}
                 <Text
-                    style={{ ...styles.textDate, color: colors.icon }}
+                    style={ styles.textDate }
                     testID="lesson-card-status-text"
                 >
                     { (lesson.done)
@@ -98,7 +98,7 @@ export const LessonCard: FC<LessonCardProps> = ({ lesson, screenToNavigate, onCl
 
                 {/* Text */}
                 <Text
-                    style={{ ...styles.textDescription, color: colors.text }}
+                    style={ styles.textDescription }
                     testID="lesson-card-description-text"
                 >
                     { (lesson.description.length > 200) ? lesson.description.substring(0, 200) + '...' : lesson.description }
@@ -115,7 +115,7 @@ export const LessonCard: FC<LessonCardProps> = ({ lesson, screenToNavigate, onCl
                     }
                     onPress={ () => setIsOpen(true) }
                     style={ styles.fab }
-                    touchColor={ BUTTON_TRANSPARENT_COLOR }
+                    touchColor={ colors.buttonTransparent }
                 />
 
                 {/* Menu context */}
@@ -133,12 +133,7 @@ export const LessonCard: FC<LessonCardProps> = ({ lesson, screenToNavigate, onCl
                         { (!lesson.done) && (
                             <>
                                 <MenuOption onSelect={ handleEdit }>
-                                    <Text
-                                        style={{
-                                            color: colors.text,
-                                            ...styles.textMenuOpt
-                                        }}
-                                    >
+                                    <Text style={ styles.textMenuOpt }>
                                         Editar
                                     </Text>
                                 </MenuOption>
@@ -146,23 +141,13 @@ export const LessonCard: FC<LessonCardProps> = ({ lesson, screenToNavigate, onCl
                         ) }
 
                         <MenuOption onSelect={ () => handleSelect(onFinish) }>
-                            <Text
-                                style={{
-                                    color: colors.text,
-                                    ...styles.textMenuOpt
-                                }}
-                            >
+                            <Text style={ styles.textMenuOpt }>
                                 { (lesson.done) ? 'Reprogramar' : 'Terminar clase' }
                             </Text>
                         </MenuOption>
 
                         <MenuOption onSelect={  () => handleSelect(onDelete) }>
-                            <Text
-                                style={{
-                                    color: colors.text,
-                                    ...styles.textMenuOpt
-                                }}
-                            >
+                            <Text style={ styles.textMenuOpt }>
                                 Eliminar
                             </Text>
                         </MenuOption>

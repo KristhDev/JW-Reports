@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { View, ActivityIndicator } from 'react-native';
+import { useStyles } from 'react-native-unistyles';
 import { Formik } from 'formik';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -19,7 +20,7 @@ import { PRECURSORS_OPTIONS } from '../../utils';
 import { HOURS_REQUIREMENTS } from '../../../preaching';
 
 /* Theme */
-import { styles as themeStyles, useTheme } from '../../../theme';
+import { styles as themeStylesheet } from '../../../theme';
 
 /**
  * This component is responsible for rendering the fields so that an
@@ -32,7 +33,7 @@ export const ProfileForm = (): JSX.Element => {
 
     const { state: { user, isAuthLoading }, updateProfile } = useAuth();
     const { setErrorForm } = useStatus();
-    const { state: { colors } } = useTheme();
+    const { styles: themeStyles, theme: { colors, margins } } = useStyles(themeStylesheet);
 
     const [ editHoursRequirement, setEditHoursRequirement ] = useState<boolean>(![ 0, 30, 50, 90 ].includes(user?.hoursRequirement || 0));
 
@@ -91,7 +92,7 @@ export const ProfileForm = (): JSX.Element => {
                             setEditHoursRequirement(false);
                         } }
                         placeholder="Seleccione una opción"
-                        style={{ marginBottom: (values.precursor !== 'ninguno') ? 16 : 40 }}
+                        style={{ marginBottom: (values.precursor !== 'ninguno') ? margins.sm : margins.lg }}
                         title="Seleccione su precursorado"
                     />
 

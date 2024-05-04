@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import { useStyles } from 'react-native-unistyles';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { OneSignal } from 'react-native-onesignal';
 
@@ -8,7 +9,6 @@ import { MainTabsBottomParamsList, TabBar } from '../modules/ui';
 import { PreachingStackNavigation } from '../modules/preaching';
 import { RevisitsStackNavigation } from '../modules/revisits';
 import { useAuth } from '../modules/auth';
-import { useTheme } from '../modules/theme';
 
 const Tabs = createBottomTabNavigator<MainTabsBottomParamsList>();
 
@@ -19,7 +19,7 @@ const Tabs = createBottomTabNavigator<MainTabsBottomParamsList>();
  */
 const MainTabsBottomNavigation = (): JSX.Element => {
     const { state: { user } } = useAuth();
-    const { state: { colors } } = useTheme();
+    const { theme: { colors } } = useStyles();
 
     /**
      * Effect to set the external user id for push notifications.

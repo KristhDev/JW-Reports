@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { View, ActivityIndicator } from 'react-native';
+import { useStyles } from 'react-native-unistyles';
 import { Formik } from 'formik';
 import Icon from 'react-native-vector-icons/Ionicons';
 
@@ -9,7 +10,6 @@ import { Button, EyeBtn, FormField } from '../../../ui';
 /* Hooks */
 import { useAuth } from '../../hooks';
 import { useStatus } from '../../../shared';
-import { useTheme } from '../../../theme';
 
 /* Schemas */
 import { emailFormSchema, passwordFormSchema } from './schemas';
@@ -28,7 +28,7 @@ export const CredentialsForm = (): JSX.Element => {
 
     const { state: { user, isAuthLoading }, updateEmail, updatePassword } = useAuth();
     const { setErrorForm } = useStatus();
-    const { state: { colors } } = useTheme();
+    const { theme: { colors, margins } } = useStyles();
 
     /**
      * Handles updating the email.
@@ -80,7 +80,7 @@ export const CredentialsForm = (): JSX.Element => {
                             label="Correo:"
                             name="email"
                             placeholder="Ingrese su correo"
-                            style={{ marginBottom: 40 }}
+                            style={{ marginBottom: margins.lg }}
                         />
 
                         {/* Submit button */}
@@ -97,7 +97,7 @@ export const CredentialsForm = (): JSX.Element => {
                             }
                             onPress={ (isValid) ? handleSubmit : () => setErrorForm(errors)  }
                             text="Cambiar correo"
-                            touchableStyle={{ marginBottom: 40 }}
+                            touchableStyle={{ marginBottom: margins.lg }}
                         />
                     </View>
                 ) }
@@ -143,7 +143,7 @@ export const CredentialsForm = (): JSX.Element => {
                             name="confirmPassword"
                             placeholder="Confirme su contraseña"
                             secureTextEntry={ !showConfirmPassword }
-                            style={{ marginBottom: 40 }}
+                            style={{ marginBottom: margins.lg }}
                         />
 
                         {/* Submit button */}
@@ -160,7 +160,7 @@ export const CredentialsForm = (): JSX.Element => {
                             }
                             onPress={ (isValid) ? handleSubmit : () => setErrorForm(errors)  }
                             text="Cambiar contraseña"
-                            touchableStyle={{ marginBottom: 40 }}
+                            touchableStyle={{ marginBottom: margins.lg }}
                         />
                     </View>
                 ) }

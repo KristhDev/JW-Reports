@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { ScrollView, Text, TouchableOpacity, View } from 'react-native';
+import { useStyles } from 'react-native-unistyles';
 import { useNavigation } from '@react-navigation/native';
 import dayjs from 'dayjs';
 
@@ -17,8 +18,8 @@ import { InfoText, Title } from '../../../ui/components';
 import { useCourses } from '../../hooks';
 
 /* Styles */
-import { styles as themeStyles, useTheme } from '../../../theme';
-import styles from './styles';
+import { styles as themeStylesheet } from '../../../theme';
+import stylesheet from './styles';
 
 /**
  * This screen is responsible for grouping the components to
@@ -32,7 +33,8 @@ const CourseDetail = (): JSX.Element => {
     const { addListener, getState, navigate, removeListener } = useNavigation();
 
     const { state: { selectedCourse }, setSelectedCourse, setSelectedLesson } = useCourses();
-    const { state: { colors } } = useTheme();
+    const { styles: themeStyles, theme: { colors, margins } } = useStyles(themeStylesheet);
+    const { styles } = useStyles(stylesheet);
 
     const statusCourseText = (selectedCourse.finished)
         ? 'Terminado'
@@ -84,7 +86,7 @@ const CourseDetail = (): JSX.Element => {
     return (
         <>
             <ScrollView
-                contentContainerStyle={{ alignItems: 'center', flexGrow: 1, padding: 24, paddingBottom: 100 }}
+                contentContainerStyle={{ alignItems: 'center', flexGrow: 1, padding: margins.md, paddingBottom: 100 }}
                 overScrollMode="never"
                 style={{ flex: 1 }}
             >
@@ -98,7 +100,7 @@ const CourseDetail = (): JSX.Element => {
 
                 {/* Text publication */}
                 <InfoText
-                    containerStyle={{ padding: 0, paddingBottom: 24, width: '100%' }}
+                    containerStyle={{ padding: 0, paddingBottom: margins.md, width: '100%' }}
                     text={ selectedCourse.publication.toUpperCase() }
                     textStyle={{ fontSize: 16, fontWeight: 'bold', textAlign: 'left' }}
                 />
@@ -106,11 +108,7 @@ const CourseDetail = (): JSX.Element => {
                 {/* Course status */}
                 <View style={ styles.sectionStyle }>
                     <Text
-                        style={{
-                            ...styles.sectionSubTitle,
-                            color: colors.text,
-                            marginBottom: 0
-                        }}
+                        style={{ ...styles.sectionSubTitle, marginBottom: 0 }}
                         testID="course-detail-status"
                     >
                         Estado del curso: { statusCourseText }
@@ -144,12 +142,7 @@ const CourseDetail = (): JSX.Element => {
                     style={ styles.sectionStyle }
                     testID="course-detail-about-section"
                 >
-                    <Text
-                        style={{
-                            ...styles.sectionSubTitle,
-                            color: colors.text
-                        }}
-                    >
+                    <Text style={ styles.sectionSubTitle }>
                         Información de { selectedCourse.personName }:
                     </Text>
 
@@ -163,12 +156,7 @@ const CourseDetail = (): JSX.Element => {
                     style={ styles.sectionStyle }
                     testID="course-detail-address-section"
                 >
-                    <Text
-                        style={{
-                            ...styles.sectionSubTitle,
-                            color: colors.text
-                        }}
-                    >
+                    <Text style={ styles.sectionSubTitle }>
                         Dirección:
                     </Text>
 
@@ -179,29 +167,16 @@ const CourseDetail = (): JSX.Element => {
 
                 {/* Course last lesson */}
                 <View style={ styles.sectionStyle }>
-                    <Text
-                        style={{
-                            ...styles.sectionSubTitle,
-                            color: colors.text
-                        }}
-                    >
+                <Text style={ styles.sectionSubTitle }>
                         Última clase:
                     </Text>
 
                     {/* Card of last lesson */}
                     { (selectedCourse?.lastLesson) && (
-                        <View
-                            style={{
-                                ...styles.cardContainer,
-                                borderColor: colors.text,
-                            }}
-                        >
+                        <View style={ styles.cardContainer }>
                             <View style={{ backgroundColor: colors.header }}>
                                 <Text
-                                    style={{
-                                        ...styles.cardHeaderText,
-                                        color: colors.text
-                                    }}
+                                    style={ styles.cardHeaderText }
                                     testID="course-detail-last-lesson-status"
                                 >
                                     {
@@ -214,10 +189,7 @@ const CourseDetail = (): JSX.Element => {
 
                             <View>
                                 <Text
-                                    style={{
-                                        ...styles.cardContentText,
-                                        color: colors.text,
-                                    }}
+                                    style={ styles.cardContentText }
                                     testID="course-detail-last-lesson-description"
                                 >
                                     { selectedCourse.lastLesson.description }
@@ -251,7 +223,7 @@ const CourseDetail = (): JSX.Element => {
 
                 {/* Date of create course */}
                 <Text
-                    style={{ ...styles.dateCreatedText, color: colors.modalText }}
+                    style={ styles.dateCreatedText }
                     testID="course-detail-text-date"
                 >
                     { dayjs(selectedCourse.createdAt).format('DD/MM/YYYY') }

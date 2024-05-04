@@ -1,14 +1,12 @@
 import React, { FC } from 'react';
 import { Text, View } from 'react-native';
-
-/* Hooks */
-import { useTheme } from '../../../theme';
+import { useStyles } from 'react-native-unistyles';
 
 /* Interfaces */
 import { TableCellProps } from './interfaces';
 
 /* Styles */
-import styles from './styles';
+import stylesheet from './styles';
 
 /**
  * This component is responsible for displaying a cell for the tables
@@ -20,14 +18,11 @@ import styles from './styles';
  * @return {JSX.Element} Return jsx element to render cell of table
  */
 export const TableCell: FC<TableCellProps> = ({ text, style }): JSX.Element => {
-    const { state: { colors } } = useTheme();
+    const { styles } = useStyles(stylesheet);
 
     return (
         <View
-            style={[
-                { ...styles.tableCell, borderColor: colors.background },
-                style
-            ]}
+            style={[ styles.tableCell, style ]}
         >
             <Text
                 style={ styles.tableCellText }

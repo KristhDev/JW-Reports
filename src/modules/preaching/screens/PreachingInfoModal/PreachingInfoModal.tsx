@@ -1,5 +1,6 @@
 import React, { FC } from 'react';
 import { Text, View, useWindowDimensions } from 'react-native';
+import { useStyles } from 'react-native-unistyles';
 import dayjs from 'dayjs';
 
 /* Screens */
@@ -8,7 +9,6 @@ import { Button, Modal } from '../../../ui';
 /* Hooks */
 import { useAuth } from '../../../auth';
 import { usePreaching } from '../../hooks';
-import { useTheme } from '../../../theme';
 
 /* Interfaces */
 import { ModalProps } from '../../../ui';
@@ -17,7 +17,7 @@ import { ModalProps } from '../../../ui';
 import { report } from '../../utils';
 
 /* Styles */
-import styles from './styles';
+import stylesheet from './styles';
 
 /**
  * Generates a preaching information modal component.
@@ -29,7 +29,7 @@ import styles from './styles';
 const PreachingInfoModal: FC<ModalProps> = ({ isOpen, onClose }): JSX.Element => {
     const { state: { user } } = useAuth();
     const { state: { preachings } } = usePreaching();
-    const { state: { colors }, BUTTON_TRANSLUCENT_COLOR } = useTheme();
+    const { styles, theme: { colors } } = useStyles(stylesheet);
     const { width } = useWindowDimensions();
 
     const firstDayOfWeek = dayjs().startOf('week').format('YYYY-MM-DD');
@@ -49,19 +49,8 @@ const PreachingInfoModal: FC<ModalProps> = ({ isOpen, onClose }): JSX.Element =>
 
     return (
         <Modal isOpen={ isOpen }>
-            <View
-                style={{
-                    ...styles.modal,
-                    backgroundColor: colors.modal,
-                    width: width - 48
-                }}
-            >
-                <Text
-                    style={{
-                        ...styles.modalTitle,
-                        color: colors.text
-                    }}
-                >
+            <View style={{ ...styles.modal, width: width - 48 }}>
+                <Text style={ styles.modalTitle }>
                     Información de Predicación
                 </Text>
 
@@ -120,7 +109,7 @@ const PreachingInfoModal: FC<ModalProps> = ({ isOpen, onClose }): JSX.Element =>
                         text="ESTA BIEN"
                         textStyle={{ color: colors.button, fontSize: 16 }}
                         touchableStyle={{ backgroundColor: 'transparent' }}
-                        underlayColor={ BUTTON_TRANSLUCENT_COLOR }
+                        underlayColor={ colors.buttonTranslucent }
                     />
                 </View>
             </View>

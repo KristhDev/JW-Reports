@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Linking, ScrollView, Text } from 'react-native';
+import { useStyles } from 'react-native-unistyles';
 import { useNavigation } from '@react-navigation/native';
 import dayjs from 'dayjs';
 
@@ -23,9 +24,10 @@ import { THEME_OPTIONS } from '../../../../theme';
 const Settings = (): JSX.Element => {
     const [ showThemeModal, setShowThemeModal ] = useState<boolean>(false);
     const { navigate } = useNavigation();
+    const { theme: { colors } } = useStyles();
 
     const { setStatus } = useStatus();
-    const { state: { colors, theme } } = useTheme();
+    const { state: { theme } } = useTheme();
 
     /**
      * When the user clicks the button, set the status to a new object with a code of 200 and a msg of

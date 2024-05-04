@@ -1,5 +1,6 @@
 import React, { FC } from 'react';
 import { View } from 'react-native';
+import { useStyles } from 'react-native-unistyles';
 
 /* Components */
 import { Button } from '../../../ui';
@@ -11,7 +12,7 @@ import { useCourses } from '../../hooks';
 import { ModalActionProps } from './interfaces';
 
 /* Theme */
-import { styles as themeStyles, useTheme } from '../../../theme';
+import { styles as themeStylesheet } from '../../../theme';
 
 /**
  * This component is responsible for grouping actions for modal.
@@ -21,7 +22,7 @@ import { styles as themeStyles, useTheme } from '../../../theme';
  */
 export const ModalActions: FC<ModalActionProps> = ({ onClose, onConfirm, reschedule }): JSX.Element => {
     const { state: { selectedLesson } } = useCourses();
-    const { state: { colors }, BUTTON_TRANSLUCENT_COLOR } = useTheme();
+    const { styles: themeStyles, theme: { colors } } = useStyles(themeStylesheet);
 
     const confirmTextButton = (reschedule)
         ? 'ACEPTAR'
@@ -38,7 +39,7 @@ export const ModalActions: FC<ModalActionProps> = ({ onClose, onConfirm, resched
                 text="CANCELAR"
                 textStyle={{ color: colors.button, fontSize: 16 }}
                 touchableStyle={{ backgroundColor: 'transparent', marginRight: 5 }}
-                underlayColor={ BUTTON_TRANSLUCENT_COLOR }
+                underlayColor={ colors.buttonTranslucent }
             />
 
             {/* Confirm button */}
@@ -48,7 +49,7 @@ export const ModalActions: FC<ModalActionProps> = ({ onClose, onConfirm, resched
                 text={ confirmTextButton }
                 textStyle={{ color: colors.button, fontSize: 16 }}
                 touchableStyle={{ backgroundColor: 'transparent' }}
-                underlayColor={ BUTTON_TRANSLUCENT_COLOR }
+                underlayColor={ colors.buttonTranslucent }
             />
         </View>
     );

@@ -1,5 +1,6 @@
 import React, { useState, FC  } from 'react';
 import { View, Text, TouchableHighlight } from 'react-native';
+import { useStyles } from 'react-native-unistyles';
 import { useField } from 'formik';
 import Icon from 'react-native-vector-icons/Ionicons';
 
@@ -10,7 +11,7 @@ import { OptionsModal } from '../../screens';
 import { FormSelectProps } from './interfaces';
 
 /* Theme */
-import { styles as themeStyles, useTheme } from '../../../theme';
+import { styles as themeStylesheet } from '../../../theme';
 
 /**
  * This component is responsible for displaying a field to select a value among
@@ -58,7 +59,7 @@ export const FormSelect: FC<FormSelectProps> = ({
     const [ isFocused, setIsFocused ] = useState<boolean>(false);
     const [ showModal, setShowModal ] = useState<boolean>(false);
 
-    const { state: { colors } } = useTheme();
+    const { styles: themeStyles, theme: { colors } } = useStyles(themeStylesheet);
 
     /**
      * When the user clicks on the button, the modal will show and the input will be focused.
@@ -96,19 +97,11 @@ export const FormSelect: FC<FormSelectProps> = ({
 
     return (
         <>
-            <View
-                style={{
-                    ...themeStyles.formField,
-                    ...style as any
-                }}
-            >
+            <View style={[ themeStyles.formField, style ]}>
 
                 {/* Field label */}
                 <Text
-                    style={[
-                        { ...themeStyles.formLabel, color: colors.titleText },
-                        labelStyle
-                    ]}
+                    style={[ themeStyles.formLabel, labelStyle ]}
                     testID="form-select-label"
                 >
                     { label }
@@ -150,10 +143,7 @@ export const FormSelect: FC<FormSelectProps> = ({
                             >
                                 <View style={[ themeStyles.formSelectTouchableContainer, inputContainerStyle ]}>
                                     <Text
-                                        style={[
-                                            { ...themeStyles.formInputText, color: colors.inputText },
-                                            inputTextStyle
-                                        ]}
+                                        style={[ themeStyles.formInputText, inputTextStyle ]}
                                         testID="form-select-text-value"
                                     >
                                         { String(items.find(i => i.value === field?.value)?.label || placeholder) }

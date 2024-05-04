@@ -1,8 +1,9 @@
-import { StyleSheet } from 'react-native';
+import { createStyleSheet } from 'react-native-unistyles';
 
-const styles = StyleSheet.create({
+const styles = createStyleSheet(({ colors }) =>({
     buttonTouchable: {
-        borderRadius: 10
+        borderRadius: 10,
+        backgroundColor: colors.button
     },
 
     buttonContainer: {
@@ -15,11 +16,12 @@ const styles = StyleSheet.create({
     },
 
     buttonText: {
+        color: colors.contentHeader,
         fontSize: 18,
         fontWeight: 'bold',
         marginBottom: 2,
         textAlign: 'center',
     },
-});
+}));
 
 export default styles;

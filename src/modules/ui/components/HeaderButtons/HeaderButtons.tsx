@@ -1,5 +1,6 @@
 import React, { FC, useState } from 'react';
 import { View } from 'react-native';
+import { useStyles } from 'react-native-unistyles';
 import { useNavigation } from '@react-navigation/native';
 import MonthPicker from 'react-native-month-year-picker';
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -13,7 +14,6 @@ import { Fab } from '../Fab';
 /* Hooks */
 import { useAuth } from '../../../auth';
 import { usePreaching } from '../../../preaching';
-import { useTheme } from '../../../theme';
 
 /* Interfaces */
 import { HeaderButtonsProps } from './interfaces';
@@ -60,7 +60,7 @@ export const HeaderButtons: FC<HeaderButtonsProps> = ({
 
     const { signOut } = useAuth();
     const { setSelectedDate, state: { selectedDate } } = usePreaching();
-    const { state: { colors }, BUTTON_TRANSPARENT_COLOR } = useTheme();
+    const { theme: { colors } } = useStyles();
 
     /**
      * When the user selects a date, hide the month picker and set the selected date to the date the
@@ -89,7 +89,7 @@ export const HeaderButtons: FC<HeaderButtonsProps> = ({
                         }
                         style={{ marginRight: -2 }}
                         onPress={ signOut }
-                        touchColor={ BUTTON_TRANSPARENT_COLOR }
+                        touchColor={ colors.buttonTransparent }
                     />
                 ) }
 
@@ -106,7 +106,7 @@ export const HeaderButtons: FC<HeaderButtonsProps> = ({
                         }
                         onPress={ () => setShowMonthPicker(true) }
                         style={{ marginRight: -2 }}
-                        touchColor={ BUTTON_TRANSPARENT_COLOR }
+                        touchColor={ colors.buttonTransparent }
                     />
                 ) }
 
@@ -121,7 +121,7 @@ export const HeaderButtons: FC<HeaderButtonsProps> = ({
                             />
                         }
                         onPress={ () => navigate('SettingsStackNavigation' as never) }
-                        touchColor={ BUTTON_TRANSPARENT_COLOR }
+                        touchColor={ colors.buttonTransparent }
                     />
                 ) }
 
@@ -137,7 +137,7 @@ export const HeaderButtons: FC<HeaderButtonsProps> = ({
                         }
                         onPress={ onPressEditButton }
                         style={{ marginRight: -2 }}
-                        touchColor={ BUTTON_TRANSPARENT_COLOR }
+                        touchColor={ colors.buttonTransparent }
                     />
                 ) }
 
@@ -153,7 +153,7 @@ export const HeaderButtons: FC<HeaderButtonsProps> = ({
                         }
                         onPress={ onShowDeleteModal }
                         style={{ marginRight: 6 }}
-                        touchColor={ BUTTON_TRANSPARENT_COLOR }
+                        touchColor={ colors.buttonTransparent }
                     />
                 ) }
             </View>
