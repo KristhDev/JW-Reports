@@ -11,5 +11,5 @@ module.exports = {
     'react-native/no-inline-styles': 0,
     'react/no-unstable-nested-components': 0,
     semi: 0
-  },
+  }
 };

@@ -41,7 +41,7 @@ export const store = configureStore({
         /* Checking if the app is in development mode. If it is, it will add the reduxFlipper
         middleware to the store. */
         if (__DEV__ && !process.env.JEST_WORKER_ID) {
-            middleware.push(reduxFlipper());
+            middleware.push(reduxFlipper() as any);
         }
 
         return middleware;
