@@ -27,7 +27,7 @@ export const ModalActions: FC<ModalActionProps> = ({ onClose, onConfirm }) => {
                 onPress={ onClose }
                 text="CANCELAR"
                 textStyle={{ color: colors.button, fontSize: 16 }}
-                touchableStyle={{ backgroundColor: 'transparent', marginRight: 10 }}
+                touchableStyle={{ backgroundColor: 'transparent' }}
                 underlayColor={ colors.buttonTranslucent }
             />
 

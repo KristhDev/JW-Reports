@@ -1,5 +1,5 @@
 import React, { FC, useState } from 'react';
-import { ActivityIndicator, Text, View, useWindowDimensions } from 'react-native';
+import { ActivityIndicator, Text, View } from 'react-native';
 import { useStyles } from 'react-native-unistyles';
 import { Formik } from 'formik';
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -19,7 +19,6 @@ import { styles as themeStylesheet } from '../../../theme';
  */
 const FinishOrStartLessonModal: FC<ModalProps> = ({ isOpen, onClose }) => {
     const [ reschedule, setReschedule ] = useState<boolean>(false);
-    const { width } = useWindowDimensions();
 
     const { state: { selectedLesson, isLessonLoading }, finishOrStartLesson } = useCourses();
     const { styles: themeStyles, theme: { colors, margins } } = useStyles(themeStylesheet);
@@ -61,70 +60,68 @@ const FinishOrStartLessonModal: FC<ModalProps> = ({ isOpen, onClose }) => {
     return (
         <Modal isOpen={ isOpen }>
             { (!isLessonLoading) ? (
-                <View style={{ ...themeStyles.modalContainer, width: width - 48 }}>
-                    {
-                        (!reschedule) ? (
-                            <>
+                <View style={ themeStyles.modalContainer }>
+                    { (!reschedule) ? (
+                        <>
 
-                                {/* Modal title  */}
-                                <Text
-                                    style={ themeStyles.modalText }
-                                    testID="modal-text"
-                                >
-                                    { modalMsg }
-                                </Text>
-
-                                {/* Modal actions */}
-                                <ModalActions
-                                    onClose={ handleClose }
-                                    onConfirm={ handleConfirm }
-                                    reschedule={ reschedule }
-                                />
-                            </>
-                        ) : (
-                            <Formik
-                                initialValues={{
-                                    nextLesson: new Date(selectedLesson.nextLesson)
-                                }}
-                                onSubmit={ handleConfirm }
+                            {/* Modal title  */}
+                            <Text
+                                style={ themeStyles.modalText }
+                                testID="modal-text"
                             >
-                                { ({ handleSubmit }) => (
-                                    <>
+                                { modalMsg }
+                            </Text>
 
-                                        {/* Modal title in form */}
-                                        <Text style={{ ...themeStyles.modalText, marginBottom: margins.md }}>
-                                            Por favor ingrese la fecha en la se dará la clase
-                                        </Text>
+                            {/* Modal actions */}
+                            <ModalActions
+                                onClose={ handleClose }
+                                onConfirm={ handleConfirm }
+                                reschedule={ reschedule }
+                            />
+                        </>
+                    ) : (
+                        <Formik
+                            initialValues={{
+                                nextLesson: new Date(selectedLesson.nextLesson)
+                            }}
+                            onSubmit={ handleConfirm }
+                        >
+                            { ({ handleSubmit }) => (
+                                <>
 
-                                        {/* Next lesson field */}
-                                        <DatetimeField
-                                            icon={
-                                                <Icon
-                                                    color={ colors.contentHeader }
-                                                    name="calendar-outline"
-                                                    size={ 25 }
-                                                />
-                                            }
-                                            inputDateFormat="DD/MM/YYYY"
-                                            label="Reprogramar clase:"
-                                            modalTitle="Reprogramar clase"
-                                            mode="date"
-                                            name="nextLesson"
-                                            placeholder="Seleccione el día"
-                                            style={{ marginBottom: 0 }}
-                                        />
+                                    {/* Modal title in form */}
+                                    <Text style={{ ...themeStyles.modalText, marginBottom: margins.md }}>
+                                        Por favor ingrese la fecha en la se dará la clase
+                                    </Text>
 
-                                        {/* Modal actions */}
-                                        <ModalActions
-                                            onClose={ handleClose }
-                                            onConfirm={ handleSubmit }
-                                            reschedule={ reschedule }
-                                        />
-                                    </>
-                                ) }
-                            </Formik>
-                        )
-                    }
+                                    {/* Next lesson field */}
+                                    <DatetimeField
+                                        icon={
+                                            <Icon
+                                                color={ colors.contentHeader }
+                                                name="calendar-outline"
+                                                size={ 25 }
+                                            />
+                                        }
+                                        inputDateFormat="DD/MM/YYYY"
+                                        label="Reprogramar clase:"
+                                        modalTitle="Reprogramar clase"
+                                        mode="date"
+                                        name="nextLesson"
+                                        placeholder="Seleccione el día"
+                                        style={{ marginBottom: 0 }}
+                                    />
+
+                                    {/* Modal actions */}
+                                    <ModalActions
+                                        onClose={ handleClose }
+                                        onConfirm={ handleSubmit }
+                                        reschedule={ reschedule }
+                                    />
+                                </>
+                            ) }
+                        </Formik>
+                    ) }
                 </View>
             ) : (
                 <ActivityIndicator

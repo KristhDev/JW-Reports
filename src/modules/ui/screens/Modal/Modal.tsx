@@ -1,11 +1,12 @@
 import React, { FC } from 'react';
 import { Modal as ModalRN, View } from 'react-native';
+import { useStyles } from 'react-native-unistyles';
 
 /* Interfaces */
 import { ModalProps } from './interfaces';
 
 /* Styles */
-import styles from './styles';
+import stylesheet from './styles';
 
 /**
  * This modal is a layout for the other modals of the app.
@@ -14,6 +15,8 @@ import styles from './styles';
  * @return {JSX.Element} Return jsx element to render the modal
  */
 const Modal: FC<ModalProps> = ({ children, isOpen }): JSX.Element => {
+    const { styles } = useStyles(stylesheet);
+
     return (
         <ModalRN
             animationType="fade"

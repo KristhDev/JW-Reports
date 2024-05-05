@@ -89,14 +89,16 @@ const styles = createStyleSheet(({ colors, margins }) => ({
     modalActions: {
         flexDirection: 'row',
         justifyContent: 'flex-end',
-        marginTop: margins.lg
+        marginTop: margins.lg,
+        gap: margins.xs
     },
 
     modalContainer: {
         backgroundColor: colors.modal,
         borderRadius: 10,
         justifyContent: 'space-between',
-        padding: margins.md
+        padding: margins.md,
+        width: '100%'
     },
 
     modalText: {

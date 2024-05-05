@@ -1,5 +1,5 @@
 import React, { Children, FC, useState } from 'react';
-import { KeyboardAvoidingView, ScrollView, View, Text, Share, TextInput, useWindowDimensions } from 'react-native';
+import { KeyboardAvoidingView, ScrollView, View, Text, Share, TextInput } from 'react-native';
 import { useStyles } from 'react-native-unistyles';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { RadioButton } from 'react-native-paper';
@@ -43,7 +43,6 @@ const ReportModal: FC<ReportModalProps> = ({ isOpen, month, onClose }): JSX.Elem
         end: comment.length || 0
     });
 
-    const { width } = useWindowDimensions();
     const { top } = useSafeAreaInsets();
 
     const { state: { user } } = useAuth();
@@ -107,7 +106,7 @@ const ReportModal: FC<ReportModalProps> = ({ isOpen, month, onClose }): JSX.Elem
                     overScrollMode="never"
                     showsVerticalScrollIndicator={ false }
                 >
-                    <View style={{ ...styles.reportModal, width: width - 48 }}>
+                    <View style={ styles.reportModal }>
                         <Text style={ styles.reportModalInfo }>Estás a punto de entregar tu informe predicación, por favor revisalo.</Text>
 
                         <View style={{ marginTop: margins.lg, marginBottom: margins.md }}>
@@ -215,13 +214,13 @@ const ReportModal: FC<ReportModalProps> = ({ isOpen, month, onClose }): JSX.Elem
                         ) }
 
                         {/* Modal actions */}
-                        <View style={{ flexDirection: 'row', justifyContent: 'flex-end' }}>
+                        <View style={{ flexDirection: 'row', justifyContent: 'flex-end', gap: margins.xs }}>
                             <Button
                                 containerStyle={{ paddingHorizontal: 12, minWidth: 0 }}
                                 onPress={ handleClose }
                                 text="CANCELAR"
                                 textStyle={{ color: colors.button, fontSize: 16 }}
-                                touchableStyle={{ backgroundColor: 'transparent', marginRight: 5 }}
+                                touchableStyle={{ backgroundColor: 'transparent' }}
                                 underlayColor={ colors.buttonTranslucent }
                             />
 

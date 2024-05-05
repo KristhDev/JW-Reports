@@ -1,6 +1,5 @@
 import React, { FC } from 'react';
-import { View } from 'react-native';
-import { TouchableRipple, Text } from 'react-native-paper';
+import { Text, Pressable, View } from 'react-native';
 import { useStyles } from 'react-native-unistyles';
 
 /* Interfaces */
@@ -45,24 +44,28 @@ export const Button: FC<ButtonProps> = ({
     const { styles } = useStyles(stylesheet);
 
     return (
-        <TouchableRipple
-            borderless
-            disabled={ disabled }
-            onPress={ onPress }
-            rippleColor={ underlayColor || 'rgba(0, 0, 0, 0.30)' }
-            style={[ styles.buttonTouchable, touchableStyle ]}
-            testID="button-touchable"
-        >
-            <View style={[ styles.buttonContainer, containerStyle ]}>
-                <Text
-                    style={[ styles.buttonText, textStyle ]}
-                    testID="button-text"
-                >
-                    { text }
-                </Text>
+        <View style={{ overflow: 'hidden', borderRadius: 10 }}>
+            <Pressable
+                android_ripple={{
+                    color: underlayColor || 'rgba(0, 0, 0, 0.30)',
+                    borderless: false
+                }}
+                disabled={ disabled }
+                onPress={ onPress }
+                style={[ styles.buttonTouchable, touchableStyle ]}
+                testID="button-touchable"
+            >
+                <View style={[ styles.buttonContainer, containerStyle ]}>
+                    <Text
+                        style={[ styles.buttonText, textStyle ]}
+                        testID="button-text"
+                    >
+                        { text }
+                    </Text>
 
-                { icon }
-            </View>
-        </TouchableRipple>
+                    { icon }
+                </View>
+            </Pressable>
+        </View>
     );
 }

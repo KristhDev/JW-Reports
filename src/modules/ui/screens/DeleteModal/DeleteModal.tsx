@@ -1,5 +1,5 @@
 import React, { FC } from 'react';
-import { ActivityIndicator, View, Text, useWindowDimensions } from 'react-native';
+import { ActivityIndicator, View, Text } from 'react-native';
 import { useStyles } from 'react-native-unistyles';
 
 /* Screens */
@@ -28,24 +28,15 @@ import { styles as themeStylesheet } from '../../../theme';
  */
 const DeleteModal: FC<DeleteModalProps> = ({ text, isLoading, isOpen, onClose, onConfirm }): JSX.Element => {
     const { styles: themeStyles, theme: { colors } } = useStyles(themeStylesheet);
-    const { width } = useWindowDimensions();
 
     return (
         <Modal isOpen={ isOpen }>
             { (!isLoading) ? (
-                <View
-                    style={{
-                        ...themeStyles.modalContainer,
-                        width: width - 48
-                    }}
-                >
+                <View style={ themeStyles.modalContainer }>
 
                     {/* Modal text */}
                     <Text
-                        style={{
-                            ...themeStyles.modalText,
-                            marginBottom: 0
-                        }}
+                        style={{ ...themeStyles.modalText, marginBottom: 0 }}
                         testID="delete-modal-title"
                     >
                         { text }
@@ -60,7 +51,7 @@ const DeleteModal: FC<DeleteModalProps> = ({ text, isLoading, isOpen, onClose, o
                             onPress={ onClose }
                             text="CANCELAR"
                             textStyle={{ color: colors.button, fontSize: 16 }}
-                            touchableStyle={{ backgroundColor: 'transparent', marginRight: 5 }}
+                            touchableStyle={{ backgroundColor: 'transparent' }}
                             underlayColor={ colors.buttonTranslucent }
                         />
 

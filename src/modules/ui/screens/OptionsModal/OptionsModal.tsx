@@ -1,5 +1,5 @@
 import React, { Children, FC } from 'react';
-import { View, useWindowDimensions } from 'react-native';
+import { View } from 'react-native';
 import { useStyles } from 'react-native-unistyles';
 import { RadioButton } from 'react-native-paper';
 
@@ -31,18 +31,12 @@ import stylesheet from './styles';
  * @return {JSX.Element} Returns the component to show the field with radio
  */
 const OptionsModal: FC<OptionsModalProps> = ({ isOpen, items, onCancel, onChangeValue, title, value }): JSX.Element => {
-    const { width } = useWindowDimensions();
     const { styles: themeStyles, theme: { colors, } } = useStyles(themeStylesheet);
     const { styles } = useStyles(stylesheet);
 
     return (
         <Modal isOpen={ isOpen }>
-            <View
-                style={{
-                    ...themeStyles.modalContainer,
-                    width: width - 48
-                }}
-            >
+            <View style={ themeStyles.modalContainer }>
                 <InfoText
                     text={ title }
                     textStyle={ styles.modalTitle }

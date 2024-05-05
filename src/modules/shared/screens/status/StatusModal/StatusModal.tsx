@@ -1,5 +1,5 @@
 import React from 'react';
-import { Linking, useWindowDimensions, Text, View } from 'react-native';
+import { Linking, Text, View } from 'react-native';
 import { useStyles } from 'react-native-unistyles';
 
 /* Modules */
@@ -14,7 +14,6 @@ import { styles as themeStylesheet } from '../../../../theme';
  * @return {JSX.Element} return jsx element to render status modal
  */
 const StatusModal = (): JSX.Element => {
-    const { width } = useWindowDimensions();
     const { state: { msg }, clearStatus } = useStatus();
     const { styles: themeStyles, theme: { colors } } = useStyles(themeStylesheet);
 
@@ -36,23 +35,11 @@ const StatusModal = (): JSX.Element => {
 
     return (
         <Modal isOpen={ !!msg }>
-            <View
-                style={{
-                    ...themeStyles.modalContainer,
-                    width: width - 48,
-                    minHeight: 120,
-                }}
-            >
+            <View style={{ ...themeStyles.modalContainer, minHeight: 120 }}>
 
                 {/* Modal text */}
                 <View>
-                    <Text
-                        style={{
-                            ...themeStyles.modalText,
-                            marginBottom: 0,
-                            width: '100%',
-                        }}
-                    >
+                    <Text style={{ ...themeStyles.modalText, marginBottom: 0 }}>
                         { msg }
                     </Text>
                 </View>
@@ -67,7 +54,7 @@ const StatusModal = (): JSX.Element => {
                             onPress={ clearStatus }
                             text="CANCELAR"
                             textStyle={{ color: colors.button, fontSize: 16 }}
-                            touchableStyle={{ backgroundColor: 'transparent', marginRight: 5 }}
+                            touchableStyle={{ backgroundColor: 'transparent' }}
                             underlayColor={ colors.buttonTranslucent }
                         />
                     ) }

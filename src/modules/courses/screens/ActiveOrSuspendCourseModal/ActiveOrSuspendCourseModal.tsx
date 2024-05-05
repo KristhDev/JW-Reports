@@ -66,7 +66,7 @@ const ActiveOrSuspendCourseModal: FC<ModalProps> = ({ onClose, isOpen }): JSX.El
                             onPress={ onClose }
                             text="CANCELAR"
                             textStyle={{ color: colors.button, fontSize: 16 }}
-                            touchableStyle={{ backgroundColor: 'transparent', marginRight: 5 }}
+                            touchableStyle={{ backgroundColor: 'transparent' }}
                             underlayColor={ colors.buttonTranslucent }
                         />
 

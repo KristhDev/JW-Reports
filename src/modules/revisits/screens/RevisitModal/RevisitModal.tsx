@@ -93,12 +93,7 @@ const RevisitModal: FC<ModalProps> = ({ isOpen, onClose }) => {
                     showsVerticalScrollIndicator={ false }
                 >
                     { (!isRevisitLoading) ? (
-                        <View
-                            style={{
-                                ...themeStyles.modalContainer,
-                                width: width - 16,
-                            }}
-                        >
+                        <View style={ themeStyles.modalContainer }>
 
                             {/* Complete message */}
                             { (completeMsg !== '') && (

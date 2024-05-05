@@ -3,7 +3,7 @@ import { createStyleSheet } from 'react-native-unistyles';
 const styles = createStyleSheet(({ colors }) =>({
     buttonTouchable: {
         borderRadius: 10,
-        backgroundColor: colors.button
+        backgroundColor: colors.button,
     },
 
     buttonContainer: {

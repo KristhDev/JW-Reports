@@ -1,5 +1,5 @@
 import React, { FC } from 'react';
-import { ActivityIndicator, Text, useWindowDimensions, View } from 'react-native';
+import { ActivityIndicator, Text, View } from 'react-native';
 import { useStyles } from 'react-native-unistyles';
 
 /* Modules */
@@ -15,7 +15,6 @@ import { styles as themeStylesheet } from '../../../theme';
  * @return {JSX.Element} rendered component to show modal
  */
 const FinishOrStartCourseModal: FC<ModalProps> = ({ isOpen, onClose }): JSX.Element => {
-    const { width } = useWindowDimensions();
     const { state: { selectedCourse, isCourseLoading }, finishOrStartCourse } = useCourses();
     const { styles: themeStyles, theme: { colors } } = useStyles(themeStylesheet);
 
@@ -38,7 +37,7 @@ const FinishOrStartCourseModal: FC<ModalProps> = ({ isOpen, onClose }): JSX.Elem
     return (
         <Modal isOpen={ isOpen }>
             { (!isCourseLoading) ? (
-                <View style={{ ...themeStyles.modalContainer, width: width - 48 }}>
+                <View style={ themeStyles.modalContainer }>
                     <Text
                         style={{ ...themeStyles.modalText, marginBottom: 0 }}
                         testID="modal-text"
@@ -46,7 +45,7 @@ const FinishOrStartCourseModal: FC<ModalProps> = ({ isOpen, onClose }): JSX.Elem
                         { modalMsg }
                     </Text>
 
-                    <View style={{ ...themeStyles.modalActions, gap: 16, alignSelf: 'flex-end' }}>
+                    <View style={{ ...themeStyles.modalActions, alignSelf: 'flex-end' }}>
                         <Button
                             containerStyle={{ paddingHorizontal: 12, minWidth: 0 }}
                             onPress={ onClose }
