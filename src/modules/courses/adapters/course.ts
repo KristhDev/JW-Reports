@@ -1,4 +1,5 @@
 import { Course, CourseEndpoint, CourseFormValues } from '../interfaces';
+import { lessonAdapter } from './lesson';
 
 /**
  * Adapts a CourseEndpoint object to a Course object.
@@ -13,7 +14,7 @@ export const courseAdapter = (course: CourseEndpoint): Course => ({
     personAbout: course.person_about,
     personAddress: course.person_address,
     publication: course.publication,
-    lastLesson: course.last_lesson,
+    lastLesson: course.last_lesson ? lessonAdapter(course?.last_lesson) : undefined,
     suspended: course.suspended,
     finished: course.finished,
     createdAt: course.created_at,

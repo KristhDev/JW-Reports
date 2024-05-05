@@ -484,15 +484,15 @@ const useCourses = () => {
 
         if (next) return;
 
+        dispatch(updateLessonAction({ lesson: lessonAdapter((data as any)![0]) }));
+        if ((user.precursor !== 'ninguno')) await loadLastLesson();
+
+        dispatch(setIsLessonLoading({ isLoading: false }));
+        onFinish && onFinish();
+
         const msg = (data![0].done)
             ? 'Haz terminado la clase correctamente.'
             : 'Haz reprogrado la clase correctamente.'
-
-        dispatch(updateLessonAction({ lesson: lessonAdapter((data as any)![0]) }));
-
-        if ((user.precursor !== 'ninguno')) await loadLastLesson();
-
-        onFinish && onFinish();
 
         setStatus({ code: 200, msg });
     }
@@ -541,7 +541,7 @@ const useCourses = () => {
         }
 
         coursesPromise.order('created_at', { ascending: false })
-            .order('next_lesson', { ascending: false, foreignTable: 'lessons' })
+            .order('next_lesson', { ascending: false, referencedTable: 'lessons' })
             .limit(1, { foreignTable: 'lessons' })
             .range(
                 (refresh) ? 0 : state.coursesPagination.from,
@@ -562,7 +562,7 @@ const useCourses = () => {
 
         const courses = data!.map(({ lessons, ...rest }) => courseAdapter({
             ...rest,
-            last_lesson: lessons[0]
+            last_lesson: lessons[0],
         } as CourseEndpoint));
 
         dispatch(setHasMoreCourses({ hasMore: (courses!.length >= 10) }));

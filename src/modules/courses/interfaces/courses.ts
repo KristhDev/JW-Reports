@@ -145,7 +145,7 @@ export interface CourseEndpoint {
     person_about: string;
     person_address: string;
     publication: string;
-    last_lesson?: Lesson;
+    last_lesson?: LessonEndpoint;
     suspended: boolean;
     finished: boolean;
     created_at: string;

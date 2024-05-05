@@ -324,8 +324,6 @@ const courseSlice = createSlice({
             state.selectedCourse = (state.selectedCourse.lastLesson && state.selectedCourse.id === action.payload.lesson.courseId)
                 ? { ...state.selectedCourse, lastLesson: action.payload.lesson }
                 : state.selectedCourse;
-
-            state.isLessonLoading = false;
         }
     }
 });
