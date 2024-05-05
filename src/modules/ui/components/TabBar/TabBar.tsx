@@ -59,6 +59,7 @@ export const TabBar: FC<BottomTabBarProps> = ({ state, descriptors }): JSX.Eleme
                             onPress={ () => navigate({ name: route.name, params: { screen: firstScreens[(route.name as keyof typeof firstScreens)] } } as never) }
                             iconName={ icons[index] }
                             title={ descriptors[route.key]?.options.title || '' }
+                            totalTabs={ state.routes.length }
                             color={
                                 (state.index === index)
                                     ? descriptors[route.key]?.options.tabBarActiveTintColor

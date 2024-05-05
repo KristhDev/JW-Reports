@@ -3,6 +3,7 @@ import { createStyleSheet } from 'react-native-unistyles';
 const styles = createStyleSheet(({ colors, margins }) => ({
     touchable: {
         marginVertical: margins.xs,
+        width: '100%'
     },
 
     container: {
@@ -35,8 +36,8 @@ const styles = createStyleSheet(({ colors, margins }) => ({
 
     fab: {
         position: 'absolute',
-        right: -2.5,
-        top: 5,
+        right: margins.xs,
+        top: margins.xs,
         height: 35,
         width: 35,
     },

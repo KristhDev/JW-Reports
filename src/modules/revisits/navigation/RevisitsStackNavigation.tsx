@@ -22,7 +22,7 @@ const RevisitsStackNavigation = (): JSX.Element => {
     const { navigate } = useNavigation();
 
     const { state: { isRevisitDeleting, selectedRevisit }, deleteRevisit } = useRevisits();
-    const { theme: { colors } } = useStyles();
+    const { theme: { colors, margins } } = useStyles();
 
     const revisitDetailTitle = `Revisita ${ selectedRevisit.personName }`;
 
@@ -59,6 +59,7 @@ const RevisitsStackNavigation = (): JSX.Element => {
                 component={ RevisitDetail }
                 name="RevisitDetailScreen"
                 options={{
+                    headerTitleStyle: { marginLeft: -margins.xs },
                     headerLeft: ({ onPress }) => <BackButton onPress={ onPress } />,
                     headerRight: () => (
                         <HeaderButtons
@@ -82,6 +83,7 @@ const RevisitsStackNavigation = (): JSX.Element => {
                 component={ AddOrEditRevisit }
                 name="AddOrEditRevisitScreen"
                 options={{
+                    headerTitleStyle: { marginLeft: -margins.xs },
                     headerLeft: ({ onPress }) => <BackButton onPress={ onPress } />,
                     headerRight: () => (
                         <HeaderButtons

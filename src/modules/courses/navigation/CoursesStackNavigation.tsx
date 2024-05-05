@@ -41,7 +41,7 @@ const CoursesStackNavigation = (): JSX.Element => {
         deleteLesson
     } = useCourses();
 
-    const { theme: { colors } } = useStyles();
+    const { theme: { colors, margins } } = useStyles();
 
     const courseDetailTitle = `Curso a ${ selectedCourse.personName }`;
 
@@ -89,6 +89,7 @@ const CoursesStackNavigation = (): JSX.Element => {
                 component={ CourseDetail }
                 name="CourseDetailScreen"
                 options={{
+                    headerTitleStyle: { marginLeft: -margins.xs },
                     headerLeft: ({ onPress }) => <BackButton onPress={ onPress } />,
                     headerRight: () => (
                         <HeaderButtons
@@ -104,7 +105,7 @@ const CoursesStackNavigation = (): JSX.Element => {
                             onPressEditButton={ () => navigate('AddOrEditCourseScreen' as never) }
                         />
                     ),
-                    title: (courseDetailTitle.length >= 22) ? courseDetailTitle.slice(0, 22) + '...' : courseDetailTitle
+                    title: (courseDetailTitle.length >= 22) ? courseDetailTitle.slice(0, 22) + '...' : courseDetailTitle,
                 }}
             />
 
@@ -112,6 +113,7 @@ const CoursesStackNavigation = (): JSX.Element => {
                 component={ AddOrEditCourse }
                 name="AddOrEditCourseScreen"
                 options={{
+                    headerTitleStyle: { marginLeft: -margins.xs },
                     headerLeft: ({ onPress }) => <BackButton onPress={ onPress } />,
                     headerRight: () => (
                         <HeaderButtons
@@ -132,6 +134,7 @@ const CoursesStackNavigation = (): JSX.Element => {
                 component={ AddOrEditLesson }
                 name="AddOrEditLessonScreen"
                 options={{
+                    headerTitleStyle: { marginLeft: -margins.xs },
                     headerLeft: ({ onPress }) => <BackButton onPress={ onPress } />,
                     headerRight: () => (
                         <HeaderButtons
@@ -152,6 +155,7 @@ const CoursesStackNavigation = (): JSX.Element => {
                 component={ Lessons }
                 name="LessonsScreen"
                 options={{
+                    headerTitleStyle: { marginLeft: -margins.xs },
                     headerLeft: ({ onPress }) => <BackButton onPress={ onPress } />,
                     title: 'Clases'
                 }}
@@ -161,6 +165,7 @@ const CoursesStackNavigation = (): JSX.Element => {
                 component={ LessonDetail }
                 name="LessonDetailScreen"
                 options={{
+                    headerTitleStyle: { marginLeft: -margins.xs },
                     headerLeft: ({ onPress }) => <BackButton onPress={ onPress } />,
                     headerRight: () => (
                         <HeaderButtons

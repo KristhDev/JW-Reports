@@ -7,5 +7,6 @@ export interface FabProps {
     icon: ReactNode;
     onPress: () => void;
     style?: StyleProp<ViewStyle>;
+    pressableStyle?: StyleProp<ViewStyle>;
     touchColor: string;
 }

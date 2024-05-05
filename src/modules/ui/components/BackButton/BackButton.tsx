@@ -30,6 +30,7 @@ export const BackButton: FC<{ color?: string, onPress?: () => void }> = ({ color
             }
             onPress={ () => onPress && onPress() }
             touchColor={ colors.buttonTransparent }
+            style={{ marginLeft: 6 }}
         />
     );
 }

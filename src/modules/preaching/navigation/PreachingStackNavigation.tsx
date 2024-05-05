@@ -64,7 +64,7 @@ const PreachingStackNavigation = (): JSX.Element => {
         loadLastRevisit
     } = useRevisits();
 
-    const { theme: { colors } } = useStyles();
+    const { theme: { colors, margins } } = useStyles();
     const { setNetworkError } = useStatus();
     const { wifi } = useNetwork();
 
@@ -148,6 +148,7 @@ const PreachingStackNavigation = (): JSX.Element => {
                     component={ AddOrEditPreaching }
                     name="AddOrEditPreachingScreen"
                     options={{
+                        headerTitleStyle: { marginLeft: -margins.xs },
                         headerLeft: ({ onPress }) => <BackButton onPress={ onPress } />,
                         headerRight: () => (
                             <HeaderButtons
@@ -169,6 +170,7 @@ const PreachingStackNavigation = (): JSX.Element => {
                         component={ AddOrEditLesson }
                         name="AddOrEditLessonScreen"
                         options={{
+                            headerTitleStyle: { marginLeft: -margins.xs },
                             headerLeft: ({ onPress }) => <BackButton onPress={ onPress } />,
                             headerRight: () => (
                                 <HeaderButtons
@@ -189,6 +191,7 @@ const PreachingStackNavigation = (): JSX.Element => {
                         component={ LessonDetail }
                         name="HomeLessonDetailScreen"
                         options={{
+                            headerTitleStyle: { marginLeft: -margins.xs },
                             headerLeft: ({ onPress }) => <BackButton onPress={ onPress } />,
                             headerRight: () => (
                                 <HeaderButtons
@@ -212,6 +215,7 @@ const PreachingStackNavigation = (): JSX.Element => {
                         component={ AddOrEditRevisit }
                         name="AddOrEditRevisitScreen"
                         options={{
+                            headerTitleStyle: { marginLeft: -margins.xs },
                             headerLeft: ({ onPress }) => <BackButton onPress={ onPress } />,
                             headerRight: () => (
                                 <HeaderButtons
@@ -234,6 +238,7 @@ const PreachingStackNavigation = (): JSX.Element => {
                         component={ RevisitDetail }
                         name="HomeRevisitDetailScreen"
                         options={{
+                            headerTitleStyle: { marginLeft: -margins.xs },
                             headerLeft: ({ onPress }) => <BackButton onPress={ onPress } />,
                             headerRight: () => (
                                 <HeaderButtons

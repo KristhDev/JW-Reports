@@ -120,6 +120,7 @@ export const HeaderButtons: FC<HeaderButtonsProps> = ({
                                 size={ 30 }
                             />
                         }
+                        style={{ marginRight: 6 }}
                         onPress={ () => navigate('SettingsStackNavigation' as never) }
                         touchColor={ colors.buttonTransparent }
                     />

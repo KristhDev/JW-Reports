@@ -128,7 +128,7 @@ const Home = (): JSX.Element => {
                         />
                     }
                     onPress={ () => setShowPreachingInfoModal(true) }
-                    style={{ ...themeStyles.fabBottomRight, bottom: 145 }}
+                    style={{ ...themeStyles.fabBottomRight, bottom: 150 }}
                     touchColor="rgba(0, 0, 0, 0.15)"
                 />
             ) }
@@ -143,7 +143,7 @@ const Home = (): JSX.Element => {
                     />
                 }
                 onPress={ () => setShowReportModal(true) }
-                style={{ ...themeStyles.fabBottomRight, bottom: 75 }}
+                style={{ ...themeStyles.fabBottomRight, bottom: 84 }}
                 touchColor="rgba(0, 0, 0, 0.15)"
             />
 

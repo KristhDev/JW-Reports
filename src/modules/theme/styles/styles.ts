@@ -13,11 +13,11 @@ const styles = createStyleSheet(({ colors, margins }) => ({
     },
 
     fabBottomRight: {
-        bottom: 5,
+        bottom: margins.sm,
         height: 60,
         position: 'absolute',
-        right: 10,
-        width: 60,
+        right: margins.sm,
+        width: 60
     },
 
     focusExternalBorder: {

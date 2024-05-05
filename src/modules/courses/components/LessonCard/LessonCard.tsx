@@ -1,7 +1,6 @@
 import React, { FC, useState } from 'react';
-import { Text, View, useWindowDimensions } from 'react-native';
+import { Pressable, Text, View, useWindowDimensions } from 'react-native';
 import { useStyles } from 'react-native-unistyles';
-import { TouchableRipple } from 'react-native-paper';
 import { Menu, MenuOption, MenuOptions, MenuTrigger } from 'react-native-popup-menu';
 import { useNavigation } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -76,10 +75,12 @@ export const LessonCard: FC<LessonCardProps> = ({ lesson, screenToNavigate, onCl
     }
 
     return (
-        <TouchableRipple
-            borderless
+        <Pressable
+            android_ripple={{
+                color: colors.buttonTransparent,
+                foreground: true
+            }}
             onPress={ handleLessonDetail }
-            rippleColor={ colors.buttonTransparent }
             style={{ ...styles.touchable, width: width - 16 }}
             testID="lesson-card-touchable"
         >
@@ -154,6 +155,6 @@ export const LessonCard: FC<LessonCardProps> = ({ lesson, screenToNavigate, onCl
                     </MenuOptions>
                 </Menu>
             </View>
-        </TouchableRipple>
+        </Pressable>
     );
 }

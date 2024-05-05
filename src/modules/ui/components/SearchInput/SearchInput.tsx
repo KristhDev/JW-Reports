@@ -1,7 +1,6 @@
 import React, { FC, useEffect, useState } from 'react';
-import { View, TextInput } from 'react-native';
+import { View, TextInput, Pressable } from 'react-native';
 import { useStyles } from 'react-native-unistyles';
-import { TouchableRipple } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/Ionicons';
 
 /* Interfaces */
@@ -85,21 +84,21 @@ export const SearchInput: FC<SearchInputProps> = ({ onClean, onSearch, refreshin
                 />
 
                 {/* Clear button */}
-                <TouchableRipple
-                    borderless
-                    centered
-                    disabled={ searchText.length === 0}
-                    onPress={ handleClearInput }
-                    rippleColor={ colors.buttonTransparent }
-                    style={ styles.cleanBtn }
-                    testID="search-input-clear-btn"
-                >
-                    <Icon
-                        color={ (searchText.length === 0) ? 'transparent' : colors.icon }
-                        name="close-outline"
-                        size={ 30 }
-                    />
-                </TouchableRipple>
+                <View style={{ borderRadius: styles.cleanBtn.borderRadius, overflow: 'hidden' }}>
+                    <Pressable
+                        android_ripple={{ color: colors.buttonTransparent }}
+                        disabled={ searchText.length === 0}
+                        onPress={ handleClearInput }
+                        style={ styles.cleanBtn }
+                        testID="search-input-clear-btn"
+                    >
+                        <Icon
+                            color={ (searchText.length === 0) ? 'transparent' : colors.icon }
+                            name="close-outline"
+                            size={ 30 }
+                        />
+                    </Pressable>
+                </View>
             </View>
         </View>
     );

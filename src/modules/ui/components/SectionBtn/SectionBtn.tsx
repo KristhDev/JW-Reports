@@ -1,7 +1,6 @@
 import React, { FC } from 'react';
-import { View, Text } from 'react-native';
+import { View, Text, Pressable } from 'react-native';
 import { useStyles } from 'react-native-unistyles';
-import { TouchableRipple } from 'react-native-paper';
 
 /* Interfaces */
 import { SectionBtnProps } from './interfaces';
@@ -21,11 +20,9 @@ export const SectionBtn: FC<SectionBtnProps> = ({ onPress, subText, text }): JSX
     const { theme: { colors, margins } } = useStyles();
 
     return (
-        <TouchableRipple
-            borderless
-            centered
+        <Pressable
+            android_ripple={{ color: colors.buttonTransparent }}
             onPress={ onPress }
-            rippleColor={ colors.buttonTransparent }
             style={{ padding: margins.sm }}
             testID="section-btn-touchable"
         >
@@ -44,6 +41,6 @@ export const SectionBtn: FC<SectionBtnProps> = ({ onPress, subText, text }): JSX
                     { subText }
                 </Text>
             </View>
-        </TouchableRipple>
+        </Pressable>
     );
 }

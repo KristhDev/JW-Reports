@@ -5,4 +5,5 @@ export interface TabBarBtnProps {
     iconName?: string;
     onPress: () => void;
     title: string;
+    totalTabs: number;
 }

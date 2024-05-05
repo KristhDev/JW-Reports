@@ -23,8 +23,8 @@ const styles = createStyleSheet(({ colors, margins }) => ({
 
     fab: {
         position: 'absolute',
-        right: -2.5,
-        top: 5,
+        right: margins.xs,
+        top: margins.xs,
         height: 35,
         width: 35,
     },

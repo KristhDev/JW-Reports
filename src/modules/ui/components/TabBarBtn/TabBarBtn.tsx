@@ -1,5 +1,5 @@
 import React, { FC, useEffect, useState } from 'react';
-import { Text, TouchableRipple } from 'react-native-paper';
+import { Pressable, Text, useWindowDimensions } from 'react-native';
 import { useStyles } from 'react-native-unistyles';
 import Icon from 'react-native-vector-icons/Ionicons';
 
@@ -29,10 +29,11 @@ import stylesheet from './styles';
  * - title: This is the title of the button
  * @return {JSX.Element} Return jsx element to render tab bar btn of navigation
  */
-export const TabBarBtn: FC<TabBarBtnProps> = ({ active, color, iconName, onPress, title }): JSX.Element => {
+export const TabBarBtn: FC<TabBarBtnProps> = ({ active, color, iconName, onPress, title, totalTabs }): JSX.Element => {
     const { styles, theme: { colors } } = useStyles(stylesheet);
     const [ pressColor, setPressColor ] = useState((active) ? colors.buttonTranslucent : colors.buttonTransparent);
-    const { state: { theme } } = useTheme()
+    const { state: { theme } } = useTheme();
+    const { width } = useWindowDimensions();
 
     /**
      * Effect to change pressColor when the button is pressed
@@ -47,10 +48,13 @@ export const TabBarBtn: FC<TabBarBtnProps> = ({ active, color, iconName, onPress
     }, [ active, theme ]);
 
     return (
-        <TouchableRipple
-            borderless
+        <Pressable
+            android_ripple={{
+                color: pressColor,
+                borderless: true,
+                radius: width / (totalTabs * 2)
+            }}
             onPress={ onPress }
-            rippleColor={ pressColor }
             style={ styles.touchable }
         >
             <>
@@ -64,6 +68,6 @@ export const TabBarBtn: FC<TabBarBtnProps> = ({ active, color, iconName, onPress
                     { title }
                 </Text>
             </>
-        </TouchableRipple>
+        </Pressable>
     );
 }
