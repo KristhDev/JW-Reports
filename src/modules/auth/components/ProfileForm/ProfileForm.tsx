@@ -112,6 +112,7 @@ export const ProfileForm = (): JSX.Element => {
                                 label="Requerimiento de horas:"
                                 name="hoursRequirement"
                                 placeholder="Ingrese su requerimiento de horas"
+                                style={{ marginBottom: margins.md }}
                             />
 
                             {/* Checkbox to edit hours requirement */}

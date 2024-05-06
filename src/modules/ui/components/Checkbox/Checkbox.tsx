@@ -1,6 +1,6 @@
 import React, { FC } from 'react';
-import { View } from 'react-native';
-import { Checkbox as CheckboxPaper, Text } from 'react-native-paper';
+import { Pressable, Text, View } from 'react-native';
+import Icon from 'react-native-vector-icons/Ionicons';
 import { useStyles } from 'react-native-unistyles';
 
 /* Interfaces */
@@ -25,13 +25,30 @@ export const Checkbox: FC<CheckboxProps> = ({ label, onPress, status, style, tex
 
     return (
         <View style={[ styles.container, style ]}>
-            <CheckboxPaper
-                status={ status }
-                uncheckedColor={ colors.text }
-                color={ colors.button }
+            <Pressable
                 onPress={ onPress }
-                testID="checkbox-checkbox"
-            />
+                android_ripple={{
+                    color: colors.button,
+                    borderless: true,
+                    radius: styles.checkbox.width - 2
+                }}
+                testID="checkbox-touchable"
+            >
+                <View
+                    style={{
+                        ...styles.checkbox,
+                        borderColor: (status === 'checked') ? colors.button : colors.text,
+                        backgroundColor: (status === 'checked') ? colors.button : 'transparent',
+                    }}
+                >
+                    <Icon
+                        name="checkmark-sharp"
+                        color={ (status === 'checked') ? colors.contentHeader : 'transparent' }
+                        size={ 20 }
+                        style={{ marginLeft: -2, marginTop: -2 }}
+                    />
+                </View>
+            </Pressable>
 
             <Text
                 style={[ styles.text, textStyle ]}
