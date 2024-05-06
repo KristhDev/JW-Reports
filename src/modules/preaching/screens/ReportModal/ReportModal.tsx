@@ -2,7 +2,6 @@ import React, { Children, FC, useState } from 'react';
 import { KeyboardAvoidingView, ScrollView, View, Text, Share, TextInput } from 'react-native';
 import { useStyles } from 'react-native-unistyles';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { RadioButton } from 'react-native-paper';
 
 /* Screens */
 import { Modal, Button, RadioBtn } from '../../../ui';
@@ -94,7 +93,7 @@ const ReportModal: FC<ReportModalProps> = ({ isOpen, month, onClose }): JSX.Elem
         <Modal isOpen={ isOpen }>
             <KeyboardAvoidingView
                 behavior="padding"
-                style={{ flex: 1 }}
+                style={{ flex: 1, width: '100%' }}
             >
                 <ScrollView
                     contentContainerStyle={{
@@ -102,6 +101,7 @@ const ReportModal: FC<ReportModalProps> = ({ isOpen, month, onClose }): JSX.Elem
                         flexGrow: 1,
                         justifyContent: 'center',
                         paddingVertical: top,
+                        width: '100%'
                     }}
                     overScrollMode="never"
                     showsVerticalScrollIndicator={ false }
@@ -138,20 +138,15 @@ const ReportModal: FC<ReportModalProps> = ({ isOpen, month, onClose }): JSX.Elem
                                 <View style={{ flexDirection: 'column' }}>
                                     <Text style={{ ...styles.reportText, color: colors.text, marginBottom: 5 }}>Participo en el ministerio: </Text>
 
-                                    <RadioButton.Group
-                                        onValueChange={ setParticipated }
-                                        value={ participated }
-                                    >
-                                        <View style={{ flexDirection: 'row', gap: 32, paddingVertical: margins.xs }}>
-                                            { Children.toArray(particitions.map(particition => (
-                                                <RadioBtn
-                                                    label={ particition.label }
-                                                    onPress={ () => setParticipated(particition.value) }
-                                                    value={ particition.value }
-                                                />
-                                            ))) }
-                                        </View>
-                                    </RadioButton.Group>
+                                    <View style={{ flexDirection: 'row', gap: 32, paddingVertical: margins.xs }}>
+                                        { Children.toArray(particitions.map(particition => (
+                                            <RadioBtn
+                                                isSelected={ (participated === particition.value) }
+                                                label={ particition.label }
+                                                onPress={ () => setParticipated(particition.value) }
+                                            />
+                                        ))) }
+                                    </View>
                                 </View>
                             ) }
 

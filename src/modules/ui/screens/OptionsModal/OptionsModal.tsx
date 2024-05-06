@@ -1,7 +1,6 @@
 import React, { Children, FC } from 'react';
 import { View } from 'react-native';
 import { useStyles } from 'react-native-unistyles';
-import { RadioButton } from 'react-native-paper';
 
 /* Screens */
 import { Modal } from '../Modal';
@@ -31,7 +30,7 @@ import stylesheet from './styles';
  * @return {JSX.Element} Returns the component to show the field with radio
  */
 const OptionsModal: FC<OptionsModalProps> = ({ isOpen, items, onCancel, onChangeValue, title, value }): JSX.Element => {
-    const { styles: themeStyles, theme: { colors, } } = useStyles(themeStylesheet);
+    const { styles: themeStyles, theme: { colors, margins } } = useStyles(themeStylesheet);
     const { styles } = useStyles(stylesheet);
 
     return (
@@ -43,15 +42,15 @@ const OptionsModal: FC<OptionsModalProps> = ({ isOpen, items, onCancel, onChange
                     containerStyle={ styles.modalTitleContainer }
                 />
 
-                <RadioButton.Group onValueChange={ onChangeValue } value={ value }>
+                <View style={{ gap: margins.xs }}>
                     { Children.toArray(items.map(item => (
                         <RadioBtn
                             label={ item.label }
                             onPress={ () => onChangeValue(item.value) }
-                            value={ item.value }
+                            isSelected={ item.value === value }
                         />
                     ))) }
-                </RadioButton.Group>
+                </View>
 
                 <View style={ themeStyles.modalActions }>
 

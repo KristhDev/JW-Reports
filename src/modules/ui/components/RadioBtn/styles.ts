@@ -7,6 +7,22 @@ const styles = createStyleSheet(({ colors, margins }) => ({
         marginBottom: 5
     },
 
+    radioPressable: {
+        alignItems: 'center',
+        borderRadius: 999,
+        borderWidth: 2,
+        height: 20,
+        justifyContent: 'center',
+        padding: 3,
+        width: 20
+    },
+
+    radioCircle: {
+        borderRadius: 999,
+        height: '100%',
+        width: '100%'
+    },
+
     radioLabel: {
         color: colors.text,
         fontSize: 18,

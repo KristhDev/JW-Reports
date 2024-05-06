@@ -1,7 +1,6 @@
 import React, { FC } from 'react';
-import { View, Text } from 'react-native';
+import { View, Text, Pressable } from 'react-native';
 import { useStyles } from 'react-native-unistyles';
-import { RadioButton } from 'react-native-paper';
 
 /* Interfaces */
 import { RadioBtnProps } from './interfaces';
@@ -20,19 +19,36 @@ import stylesheet from './styles';
  * - value: This is the value of the radio button
  * @return {JSX.Element} Returns the component to show the field with radio
  */
-export const RadioBtn: FC<RadioBtnProps> = ({ label, onPress, value }): JSX.Element => {
+export const RadioBtn: FC<RadioBtnProps> = ({ isSelected, label, onPress, style }): JSX.Element => {
     const { styles, theme: { colors } } = useStyles(stylesheet);
 
     return (
         <View
-            style={ styles.radioContainer }
+            style={[ styles.radioContainer, style ]}
             testID="radio-btn-container"
         >
-            <RadioButton
-                value={ value }
-                color={ colors.button }
-                uncheckedColor={ colors.icon }
-            />
+            <Pressable
+                android_ripple={{
+                    color: colors.button,
+                    borderless: true,
+                    radius: 15
+                }}
+                onPress={ onPress }
+            >
+                <View
+                    style={{
+                        ...styles.radioPressable,
+                        borderColor: (isSelected) ? colors.button : colors.icon,
+                    }}
+                >
+                    <View
+                        style={{
+                            ...styles.radioCircle,
+                            backgroundColor: (isSelected) ? colors.button : 'transparent'
+                        }}
+                    />
+                </View>
+            </Pressable>
 
             <Text
                 onPress={ onPress }

@@ -5,6 +5,7 @@ const styles = createStyleSheet(({ colors, margins }) => ({
         backgroundColor: colors.modal,
         borderRadius: 10,
         padding: margins.md,
+        width: '100%'
     },
 
     reportModalInfo: {
