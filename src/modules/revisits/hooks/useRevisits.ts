@@ -231,8 +231,8 @@ const useRevisits = () => {
         onFinish && onFinish();
 
         const successMsg = (back)
-            ? 'Haz agregado tu revisita correctamente.'
-            : `Haz agregado correctamente a ${ data!.person_name } para volverla a visitar.`
+            ? 'Has agregado tu revisita correctamente.'
+            : `Has agregado correctamente a ${ data!.person_name } para volverla a visitar.`
 
         setStatus({ code: status, msg: successMsg });
 
@@ -310,7 +310,7 @@ const useRevisits = () => {
 
         setStatus({
             code: 200,
-            msg: 'Haz actualizado tu revisita correctamente.'
+            msg: 'Has actualizado tu revisita correctamente.'
         });
 
         if (user.precursor === 'ninguno') await loadLastRevisit();
@@ -391,7 +391,7 @@ const useRevisits = () => {
 
         setStatus({
             code: 200,
-            msg: 'Haz eliminado tu revisita correctamente.'
+            msg: 'Has eliminado tu revisita correctamente.'
         });
     }
 
@@ -458,7 +458,7 @@ const useRevisits = () => {
             dispatch(setLastRevisit({ revisit }));
         }
 
-        return 'Haz marcado como completa tu revisita correctamente.';
+        return 'Has marcado como completa tu revisita correctamente.';
     }
 
     return {

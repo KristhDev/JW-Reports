@@ -135,7 +135,7 @@ const useLessons = () => {
 
         setStatus({
             code: 200,
-            msg: 'Haz eliminado la clase correctamente.'
+            msg: 'Has eliminado la clase correctamente.'
         });
     }
 
@@ -213,8 +213,8 @@ const useLessons = () => {
         onFinish && onFinish();
 
         const msg = (data![0].done)
-            ? 'Haz terminado la clase correctamente.'
-            : 'Haz reprogrado la clase correctamente.'
+            ? 'Has terminado la clase correctamente.'
+            : 'Has reprogrado la clase correctamente.'
 
         setStatus({ code: 200, msg });
     }
@@ -381,7 +381,7 @@ const useLessons = () => {
 
         setStatus({
             code: 201,
-            msg: 'Haz agregado una clase al curso correctamente.'
+            msg: 'Has agregado una clase al curso correctamente.'
         });
 
         navigate('LessonsScreen' as never);
@@ -447,7 +447,7 @@ const useLessons = () => {
 
         setStatus({
             code: 200,
-            msg: 'Haz actualizado la clase correctamente.'
+            msg: 'Has actualizado la clase correctamente.'
         });
 
         goBack();

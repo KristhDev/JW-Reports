@@ -114,7 +114,7 @@ const Home = (): JSX.Element => {
                 { (!isPreachingsLoading && preachings.length === 0) && (
                     <InfoText
                         containerStyle={{ marginTop: height * 0.30 }}
-                        text="No haz agregado ningún día de predicación para el informe de este mes."
+                        text="No has agregado ningún día de predicación para el informe de este mes."
                     />
                 ) }
             </ScrollView>

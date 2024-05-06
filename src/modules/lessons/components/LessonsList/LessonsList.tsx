@@ -179,7 +179,7 @@ export const LessonsList = (): JSX.Element => {
                         msg={
                             (searchTerm.trim().length > 0 && lessons.length === 0)
                                 ? `No se encontraron resultados para: ${ searchTerm.trim() }`
-                                : 'No haz agregado clases a este curso.'
+                                : 'No has agregado clases a este curso.'
                         }
                         showMsg={ !isLessonsLoading && lessons.length === 0 }
                     />

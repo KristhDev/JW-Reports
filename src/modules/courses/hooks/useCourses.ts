@@ -130,8 +130,8 @@ const useCourses = () => {
         if (next) return;
 
         const msg = (data![0].suspended)
-            ? 'Haz suspendido el curso correctamente.'
-            : 'Haz renovado el curso correctamente.'
+            ? 'Has suspendido el curso correctamente.'
+            : 'Has renovado el curso correctamente.'
 
         dispatch(updateCourseAction({ course: courseAdapter(data![0]) }));
 
@@ -222,7 +222,7 @@ const useCourses = () => {
 
         setStatus({
             code: 200,
-            msg: 'Haz eliminado el curso correctamente.'
+            msg: 'Has eliminado el curso correctamente.'
         });
     }
 
@@ -292,8 +292,8 @@ const useCourses = () => {
         if (next) return;
 
         const msg = (data![0].finished)
-            ? 'Haz terminado el curso correctamente.'
-            : 'Haz comenzado de nuevo el curso correctamente.'
+            ? 'Has terminado el curso correctamente.'
+            : 'Has comenzado de nuevo el curso correctamente.'
 
         dispatch(updateCourseAction({ course: courseAdapter(data![0]) }));
 
@@ -424,7 +424,7 @@ const useCourses = () => {
 
         setStatus({
             code: 201,
-            msg: 'Haz agregado un curso correctamente.'
+            msg: 'Has agregado un curso correctamente.'
         });
 
         navigate({
@@ -494,7 +494,7 @@ const useCourses = () => {
 
         setStatus({
             code: 200,
-            msg: 'Haz actualizado el curso correctamente.'
+            msg: 'Has actualizado el curso correctamente.'
         });
 
         goBack();
