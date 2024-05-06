@@ -1,10 +1,18 @@
 import dayjs from 'dayjs';
 
+/* Interfaces */
 import { Preaching, ReamainingOfHoursRequirement, RemainingHoursOfWeeklyRequirement } from '../interfaces';
 
+/* Utils */
 import { date } from '../../../utils';
 
 export const report = {
+    /**
+     * Calculates the total hours worked in a week based on the given array of preachings.
+     *
+     * @param {Preaching[]} preachingsOfWeek - An array of preaching objects representing the preachings of a week.
+     * @return {string} The total hours worked in the week formatted as "hours:minutes".
+     */
     getHoursDoneByWeek: (preachingsOfWeek: Preaching[]): string => {
         const hours = date.sumHours(preachingsOfWeek.map(p => ({ init: p.initHour, finish: p.finalHour })));
         const { restMins } = date.sumMins(preachingsOfWeek.map(p => ({ init: p.initHour, finish: p.finalHour })));
@@ -12,6 +20,12 @@ export const report = {
         return `${ hours }:${ (restMins === 0) ? '00' : restMins }`;
     },
 
+    /**
+     * Calculates the required hours per week based on the given total hours requirement.
+     *
+     * @param {number} hoursRequirement - The total hours requirement.
+     * @return {string} The required hours per week formatted as "hours:minutes".
+     */
     getHoursRequirementByWeek: (hoursRequirement: number): string => {
         const hoursByDay = hoursRequirement / 28;
         const minsByDay = hoursByDay * 60;
@@ -26,6 +40,13 @@ export const report = {
         return `${ (minsRest === '00') ? hourByWeek + 1 : hourByWeek }:${ minsRest }`;
     },
 
+    /**
+     * Calculates the remaining hours of the weekly requirement based on the given hours requirement by week and hours done by week.
+     *
+     * @param {string} hoursRequirementByWeek - The hours requirement by week in the format "hours:minutes".
+     * @param {string} hoursDoneByWeek - The hours done by week in the format "hours:minutes".
+     * @return {RemainingHoursOfWeeklyRequirement} - An object containing the remaining hours of the weekly requirement and a flag indicating if it is negative.
+     */
     getRemainingHoursOfWeeklyRequirement: (hoursRequirementByWeek: string, hoursDoneByWeek: string): RemainingHoursOfWeeklyRequirement => {
         const [ hoursDone, minsDone ] = hoursDoneByWeek.split(':');
         const [ hoursRequired, minsRequired ] = hoursRequirementByWeek.split(':');
@@ -50,6 +71,13 @@ export const report = {
         }
     },
 
+    /**
+     * Calculates the remaining hours of the requirement based on the preachings and the specified hours requirement.
+     *
+     * @param {Preaching[]} preachings - The array of preachings to calculate hours from.
+     * @param {number} hoursRequirement - The total hours required for the specified period.
+     * @return {ReamainingOfHoursRequirement} - An object containing the remaining hours of the requirement and a flag indicating if it is negative.
+     */
     getReamainingOfHoursRequirement: (preachings: Preaching[], hoursRequirement: number): ReamainingOfHoursRequirement => {
         const hours = date.sumHours(preachings.map(p => ({ init: p.initHour, finish: p.finalHour })));
         const restMins = date.getRestMins(preachings.map(p => ({ init: p.initHour, finish: p.finalHour })));

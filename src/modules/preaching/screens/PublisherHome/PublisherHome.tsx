@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { ActivityIndicator, ScrollView, RefreshControl } from 'react-native';
 import { useStyles } from 'react-native-unistyles';
 import Icon from 'react-native-vector-icons/Ionicons';
-import dayjs from 'dayjs';
 
 /* Modules */
 import { LessonCard, useCourses, PassToCourseModal } from '../../../courses';
@@ -15,6 +14,9 @@ import { DeleteModal, Fab, InfoText, Title } from '../../../ui';
 
 /* Hooks */
 import { usePreaching } from '../../hooks';
+
+/* Utils */
+import { date } from '../../../../utils';
 
 /* Theme */
 import { styles as themeStylesheet } from '../../../theme';
@@ -52,7 +54,7 @@ const PublisherHome = (): JSX.Element => {
 
     const { styles: themeStyles, theme: { colors, margins } } = useStyles(themeStylesheet);
 
-    const month = dayjs(selectedDate).format('MMMM').toUpperCase();
+    const month = date.format(selectedDate, 'MMMM').toUpperCase();
 
     /**
      * When the user swipes down to refresh, load the preachings for the selected date and set the

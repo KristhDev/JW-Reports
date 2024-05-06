@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { Linking, ScrollView, Text } from 'react-native';
 import { useStyles } from 'react-native-unistyles';
 import { useNavigation } from '@react-navigation/native';
-import dayjs from 'dayjs';
 
 /* Env */
 import { APP_VERSION, REPOSITORY_URL } from '@env';
@@ -109,7 +108,7 @@ const Settings = (): JSX.Element => {
                     style={{ color: colors.icon, fontSize: 14, padding: 20 }}
                     testID="settings-copyright-text"
                 >
-                    Copyright © { dayjs().year() }
+                    Copyright © { new Date().getFullYear() }
                 </Text>
             </ScrollView>
 

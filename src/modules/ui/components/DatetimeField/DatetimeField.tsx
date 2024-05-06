@@ -3,13 +3,15 @@ import { View, Text, TextInput } from 'react-native';
 import { useStyles } from 'react-native-unistyles';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import { useField } from 'formik';
-import dayjs from 'dayjs';
 
 /* Components */
 import { Button } from '../Button';
 
 /* Interfaces */
 import { DatetimeFieldProps } from './interfaces';
+
+/* Utils */
+import { date } from '../../../../utils';
 
 /* Theme */
 import { styles as themeStylesheet } from '../../../theme';
@@ -103,7 +105,7 @@ export const DatetimeField: FC<DatetimeFieldProps> = ({
                         selectionColor={ colors.linkText }
                         style={[ themeStyles.formInput, inputStyle ]}
                         testID="datetimefield-text-input"
-                        value={ dayjs(field.value).format(inputDateFormat) }
+                        value={ date.format(field.value, inputDateFormat) }
                         { ...rest }
                         editable={ false }
                     />

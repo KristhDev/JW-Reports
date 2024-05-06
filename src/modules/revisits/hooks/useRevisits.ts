@@ -1,6 +1,5 @@
 import { useNavigation } from '@react-navigation/native';
 import { Image } from 'react-native-image-crop-picker';
-import dayjs from 'dayjs';
 
 /* Supabase */
 import { supabase } from '../../../config';
@@ -44,6 +43,7 @@ import {
     RevisitFormValues,
     SaveRevisitOptions
 } from '../interfaces';
+import { date } from '../../../utils';
 
 /**
  * Hook to management revisits of store with state and actions
@@ -215,10 +215,10 @@ const useRevisits = () => {
             .insert({
                 ...revisitFormValuesAdapter(revisitValues),
                 photo,
-                next_visit: dayjs(revisitValues.nextVisit).format('YYYY-MM-DD HH:mm:ss.SSSSSS'),
+                next_visit: date.format(revisitValues.nextVisit, 'YYYY-MM-DD HH:mm:ss.SSSSSS'),
                 user_id: user.id
             })
-            .select<'*', RevisitEndpoint>();
+            .single<RevisitEndpoint>();
 
         const next = setSupabaseError(error, status, () => {
             dispatch(setIsRevisitLoading({ isLoading: false }));
@@ -227,12 +227,12 @@ const useRevisits = () => {
 
         if (next) return;
 
-        dispatch(addRevisit({ revisit: revisitAdapter(data![0]) }));
+        dispatch(addRevisit({ revisit: revisitAdapter(data!) }));
         onFinish && onFinish();
 
         const successMsg = (back)
             ? 'Haz agregado tu revisita correctamente.'
-            : `Haz agregado correctamente a ${ data![0].person_name } para volverla a visitar.`
+            : `Haz agregado correctamente a ${ data!.person_name } para volverla a visitar.`
 
         setStatus({ code: status, msg: successMsg });
 
@@ -296,17 +296,17 @@ const useRevisits = () => {
             .update({
                 ...revisitFormValuesAdapter(revisitValues),
                 photo,
-                next_visit: dayjs(revisitValues.nextVisit).format('YYYY-MM-DD HH:mm:ss.SSSSSS'),
-                updated_at: dayjs().format('YYYY-MM-DD HH:mm:ss.SSSSSS')
+                next_visit: date.format(revisitValues.nextVisit, 'YYYY-MM-DD HH:mm:ss.SSSSSS'),
+                updated_at: date.format(new Date(), 'YYYY-MM-DD HH:mm:ss.SSSSSS')
             })
             .eq('id', state.selectedRevisit.id)
             .eq('user_id', user.id)
-            .select<'*', RevisitEndpoint>();
+            .single<RevisitEndpoint>();
 
         const next = setSupabaseError(error, status, () => dispatch(setIsRevisitLoading({ isLoading: false })));
         if (next) return;
 
-        dispatch(updateRevisitAction({ revisit: revisitAdapter(data![0]) }));
+        dispatch(updateRevisitAction({ revisit: revisitAdapter(data!) }));
 
         setStatus({
             code: 200,
@@ -434,11 +434,11 @@ const useRevisits = () => {
         const { data, error } = await supabase.from('revisits')
             .update({
                 done: true,
-                updated_at: dayjs().format('YYYY-MM-DD HH:mm:ss.SSSSSS')
+                updated_at: date.format(new Date(), 'YYYY-MM-DD HH:mm:ss.SSSSSS')
             })
             .eq('id', state.selectedRevisit.id)
             .eq('user_id', user.id)
-            .select<'*', RevisitEndpoint>();
+            .single<RevisitEndpoint>();
 
         if (error) {
             console.log(error);
@@ -449,7 +449,7 @@ const useRevisits = () => {
             return '';
         }
 
-        const revisit = revisitAdapter(data![0]);
+        const revisit = revisitAdapter(data!);
 
         dispatch(updateRevisitAction({ revisit }));
         setSelectedRevisit(revisit);

@@ -2,7 +2,6 @@ import React, { Children } from 'react';
 import { TouchableHighlight, View, useWindowDimensions } from 'react-native';
 import { useStyles } from 'react-native-unistyles';
 import { useNavigation } from '@react-navigation/native';
-import dayjs from 'dayjs';
 
 /* Components */
 import { TableCell } from '../../../ui';
@@ -81,17 +80,17 @@ export const PreachingTable = (): JSX.Element => {
                         />
 
                         <TableCell
-                            text={ dayjs(preaching.day).format('DD') }
+                            text={ date.format(preaching.day, 'DD') }
                             style={{ backgroundColor: '#746C84', width: cellWidth }}
                         />
 
                         <TableCell
-                            text={ dayjs(preaching.initHour).format('HH:mm') }
+                            text={ date.format(preaching.initHour, 'HH:mm') }
                             style={{ backgroundColor: '#746C84', width: cellWidthHours }}
                         />
 
                         <TableCell
-                            text={ dayjs(preaching.finalHour).format('HH:mm') }
+                            text={ date.format(preaching.finalHour, 'HH:mm') }
                             style={{ backgroundColor: '#746C84', width: cellWidthHours }}
                         />
                     </View>

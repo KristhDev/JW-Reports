@@ -1,7 +1,6 @@
 import React, { FC } from 'react';
 import { Text, View, useWindowDimensions } from 'react-native';
 import { useStyles } from 'react-native-unistyles';
-import dayjs from 'dayjs';
 
 /* Screens */
 import { Button, Modal } from '../../../ui';
@@ -14,6 +13,7 @@ import { usePreaching } from '../../hooks';
 import { ModalProps } from '../../../ui';
 
 /* Utils */
+import { date } from '../../../../utils';
 import { report } from '../../utils';
 
 /* Styles */
@@ -32,15 +32,7 @@ const PreachingInfoModal: FC<ModalProps> = ({ isOpen, onClose }): JSX.Element =>
     const { styles, theme: { colors } } = useStyles(stylesheet);
     const { width } = useWindowDimensions();
 
-    const firstDayOfWeek = dayjs().startOf('week').format('YYYY-MM-DD');
-    const lastDayOfWeek = dayjs().endOf('week').format('YYYY-MM-DD');
-
-    const preachingsOfWeek = preachings.filter(
-        p => dayjs(p.day).isSame(firstDayOfWeek)
-        || dayjs(p.day).isAfter(firstDayOfWeek)
-        && dayjs(p.day).isBefore(lastDayOfWeek)
-        || dayjs(p.day).isSame(lastDayOfWeek)
-    );
+    const preachingsOfWeek = date.getArrayValuesOfWeek(preachings);
 
     const hoursRequirementByWeek = report.getHoursRequirementByWeek(user.hoursRequirement);
     const hoursDoneByWeek = report.getHoursDoneByWeek(preachingsOfWeek);

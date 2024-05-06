@@ -4,7 +4,6 @@ import { useStyles } from 'react-native-unistyles';
 import { useNavigation } from '@react-navigation/native';
 import { Menu, MenuOption, MenuOptions, MenuTrigger } from 'react-native-popup-menu';
 import Icon from 'react-native-vector-icons/Ionicons';
-import dayjs from 'dayjs';
 
 /* Components */
 import { Fab } from '../../../ui';
@@ -14,6 +13,9 @@ import { useRevisits } from '../../hooks';
 
 /* Interfaces */
 import { RevisitCardProps } from './interfaces';
+
+/* Utils */
+import { date } from '../../../../utils';
 
 /* Styles */
 import stylesheet from './styles';
@@ -38,7 +40,7 @@ export const RevisitCard: FC<RevisitCardProps> = ({ onDelete, onPass, onRevisit,
     const { setSelectedRevisit } = useRevisits();
     const { styles, theme: { colors } } = useStyles(stylesheet);
 
-    const nextVisit = dayjs(revisit.nextVisit);
+    const nextVisit = date.format(revisit.nextVisit, 'DD [de] MMMM [del] YYYY');
 
     /**
      * When the user clicks on a revisit, set the selected revisit to the revisit that was clicked on
@@ -92,10 +94,7 @@ export const RevisitCard: FC<RevisitCardProps> = ({ onDelete, onPass, onRevisit,
                     style={ styles.textDate }
                     testID="revisit-card-next-visit-text"
                 >
-                    { (revisit.done)
-                        ? 'Visita hecha'
-                        : `Visitar el ${ nextVisit.format('DD') } de ${ nextVisit.format('MMMM') } del ${ nextVisit.format('YYYY') }`
-                    }
+                    { (revisit.done) ? 'Visita hecha' : `Visitar el ${ nextVisit }` }
                 </Text>
 
                 {/* Text person name */}

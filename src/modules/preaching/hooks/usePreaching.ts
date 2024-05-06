@@ -1,5 +1,4 @@
 import { useNavigation } from '@react-navigation/native';
-import dayjs from 'dayjs';
 
 /* Supabase */
 import { supabase } from '../../../config';
@@ -28,6 +27,9 @@ import { useNetwork, useStatus } from '../../shared';
 
 /* Interfaces */
 import { Preaching, PreachingFormValues, PreachingEndpoint } from '../interfaces';
+
+/* Utils */
+import { date as dateUtil } from '../../../utils';
 
 /**
  * Hook to management preaching of store with state and actions
@@ -66,8 +68,8 @@ const usePreaching = () => {
             return;
         }
 
-        const init_date = dayjs(date).startOf('month').format('YYYY-MM-DD');
-        const final_date = dayjs(date).endOf('month').format('YYYY-MM-DD');
+        const init_date = dateUtil.getFirstDateOfMonth(date, 'YYYY-MM-DD');
+        const final_date = dateUtil.getLastDateOfMonth(date, 'YYYY-MM-DD');
 
         const { data, error, status } = await supabase.from('preachings')
             .select<'*', PreachingEndpoint>()
@@ -104,18 +106,18 @@ const usePreaching = () => {
 
         const { data, error, status } = await supabase.from('preachings')
             .insert({
-                day: dayjs(preachingValues.day).format('YYYY-MM-DD'),
-                init_hour: dayjs(preachingValues.initHour).format('YYYY-MM-DD HH:mm:ss.SSSSSS'),
-                final_hour: dayjs(preachingValues.finalHour).format('YYYY-MM-DD HH:mm:ss.SSSSSS'),
+                day: dateUtil.format(preachingValues.day, 'YYYY-MM-DD'),
+                init_hour: dateUtil.format(preachingValues.initHour, 'YYYY-MM-DD HH:mm:ss.SSSSSS'),
+                final_hour: dateUtil.format(preachingValues.finalHour, 'YYYY-MM-DD HH:mm:ss.SSSSSS'),
                 user_id: user.id
             })
-            .select<'*', PreachingEndpoint>();
+            .single<PreachingEndpoint>();
 
         const next = setSupabaseError(error, status, () => dispatch(setIsPreachingLoading({ isLoading: false })));
         if (next) return;
 
-        if (dayjs(data![0].day).format('MMMM') === dayjs(state.selectedDate).format('MMMM')) {
-            dispatch(addPreaching({ preaching: preachingAdapter(data![0]) }));
+        if (dateUtil.format(data!.day, 'MMMM') === dateUtil.format(state.selectedDate, 'MMMM')) {
+            dispatch(addPreaching({ preaching: preachingAdapter(data!) }));
         }
 
         setStatus({
@@ -158,19 +160,19 @@ const usePreaching = () => {
 
         const { data, error, status } = await supabase.from('preachings')
             .update({
-                day: dayjs(preachingValues.day).format('YYYY-MM-DD'),
-                init_hour: dayjs(preachingValues.initHour).format('YYYY-MM-DD HH:mm:ss.SSSSSS'),
-                final_hour: dayjs(preachingValues.finalHour).format('YYYY-MM-DD HH:mm:ss.SSSSSS'),
-                updated_at: dayjs().format('YYYY-MM-DD HH:mm:ss.SSSSSS')
+                day: dateUtil.format(preachingValues.day, 'YYYY-MM-DD'),
+                init_hour: dateUtil.format(preachingValues.initHour, 'YYYY-MM-DD HH:mm:ss.SSSSSS'),
+                final_hour: dateUtil.format(preachingValues.finalHour, 'YYYY-MM-DD HH:mm:ss.SSSSSS'),
+                updated_at: dateUtil.format(new Date(),'YYYY-MM-DD HH:mm:ss.SSSSSS')
             })
             .eq('id', state.seletedPreaching.id)
             .eq('user_id', user.id)
-            .select<'*', PreachingEndpoint>();
+            .single<PreachingEndpoint>();
 
         const next = setSupabaseError(error, status, () => dispatch(setIsPreachingLoading({ isLoading: false })));
         if (next) return;
 
-        dispatch(updatePreachingAction({ preaching: preachingAdapter(data![0]) }));
+        dispatch(updatePreachingAction({ preaching: preachingAdapter(data!) }));
 
         setStatus({
             code: 200,

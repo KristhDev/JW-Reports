@@ -2,12 +2,14 @@ import React, { useEffect, useState } from 'react';
 import { Image, ScrollView, Text, TouchableOpacity, View, useWindowDimensions } from 'react-native';
 import { useStyles } from 'react-native-unistyles';
 import { useNavigation } from '@react-navigation/native';
-import dayjs from 'dayjs';
 
 /* Modules */
 import { INIT_REVISIT, RevisitModal, useRevisits } from '../../';
 import { styles as themeStylesheet } from '../../../theme';
 import { Title } from '../../../ui';
+
+/* Utils */
+import { date } from '../../../../utils';
 
 /* Styles */
 import stylesheet from './styles';
@@ -28,7 +30,7 @@ const RevisitDetail = (): JSX.Element => {
     const { styles: themeStyles, theme: { colors } } = useStyles(themeStylesheet);
     const { styles } = useStyles(stylesheet);
 
-    const nextVisit = dayjs(selectedRevisit.nextVisit);
+    const nextVisit = date.format(selectedRevisit.nextVisit, 'DD [de] MMMM [del] YYYY');
 
     /**
      * Effect to set imageHeight when changing the selectedRevisit.photo
@@ -91,7 +93,7 @@ const RevisitDetail = (): JSX.Element => {
                                 style={{ color: colors.text, fontSize: 19 }}
                                 testID="revisit-detail-next-visit"
                             >
-                                { ` ${ nextVisit.format('DD') } de ${ nextVisit.format('MMMM') } del ${ nextVisit.format('YYYY') }` }
+                                { ` ${ nextVisit }` }
                             </Text >
                         </View>
 
@@ -179,7 +181,7 @@ const RevisitDetail = (): JSX.Element => {
                     style={ styles.dateCreatedText }
                     testID="revisit-detail-created-date"
                 >
-                    { dayjs(selectedRevisit.createdAt).format('DD/MM/YYYY') }
+                    { date.format(selectedRevisit.createdAt, 'DD/MM/YYYY') }
                 </Text>
             </ScrollView>
 

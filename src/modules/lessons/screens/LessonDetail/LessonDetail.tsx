@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { ScrollView, Text, TouchableOpacity, View } from 'react-native';
 import { useStyles } from 'react-native-unistyles';
 import { useNavigation, useRoute } from '@react-navigation/native';
-import dayjs from 'dayjs';
 
 /* Features */
 import { INIT_LESSON } from '../../features';
@@ -16,6 +15,9 @@ import { InfoText, Title } from '../../../ui';
 /* Hooks */
 import { useCourses } from '../../../courses';
 import { useLessons } from '../../hooks';
+
+/* Utils */
+import { date } from '../../../../utils';
 
 /* Styles */
 import { styles as themeStylesheet } from '../../../theme';
@@ -38,7 +40,7 @@ const LessonDetail = (): JSX.Element => {
     const { styles } = useStyles(stylesheet);
 
     const statusLessonText = (selectedLesson.done) ? 'Impartida' : 'Por impartir';
-    const nextVisit = dayjs(selectedLesson.nextLesson);
+    const nextVisit = date.format(selectedLesson.nextLesson, 'DD [de] MMMM [del] YYYY');
 
     /**
      * Effect to reset selectedLesson when index in navigation
@@ -131,7 +133,7 @@ const LessonDetail = (): JSX.Element => {
                         style={{ color: colors.text, fontSize: 19 }}
                         testID="lesson-detail-next-visit-text"
                     >
-                        { `${ nextVisit.format('DD') } de ${ nextVisit.format('MMMM') } del ${ nextVisit.format('YYYY') }` }
+                        { `${ nextVisit }` }
                     </Text>
                 </View>
 
@@ -139,7 +141,7 @@ const LessonDetail = (): JSX.Element => {
                     style={ styles.dateCreatedText }
                     testID="lesson-detail-date-created-text"
                 >
-                    { dayjs(selectedLesson.createdAt).format('DD/MM/YYYY') }
+                    { date.format(selectedLesson.createdAt, 'DD/MM/YYYY') }
                 </Text>
             </ScrollView>
 

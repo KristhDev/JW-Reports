@@ -3,7 +3,6 @@ import { ActivityIndicator, ScrollView, useWindowDimensions, RefreshControl } fr
 import { useStyles } from 'react-native-unistyles';
 import { useNavigation } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/Ionicons';
-import dayjs from 'dayjs';
 
 /* Features */
 import { INIT_PREACHING } from '../../features';
@@ -19,6 +18,9 @@ import { Fab, InfoText, Title } from '../../../ui';
 /* Hooks */
 import { useAuth } from '../../../auth';
 import { usePreaching } from '../../hooks';
+
+/* Utils */
+import { date } from '../../../../utils';
 
 /* Theme */
 import { styles as themeStylesheet } from '../../../theme';
@@ -41,9 +43,9 @@ const Home = (): JSX.Element => {
     const { state: { selectedDate, preachings, isPreachingsLoading }, setSelectedPreaching, loadPreachings } = usePreaching();
     const { styles: themeStyles, theme: { colors, margins } } = useStyles(themeStylesheet);
 
-    const month = dayjs(selectedDate).format('MMMM').toUpperCase();
-    const currentMonth = dayjs().format('MMMM').toUpperCase();
-    const year = dayjs(selectedDate).get('year');
+    const month = date.format(selectedDate,'MMMM').toUpperCase();
+    const currentMonth = date.format(new Date(), 'MMMM').toUpperCase();
+    const year = date.getYearOfDate(selectedDate);
 
     /**
      * I'm trying to set the state of the selectedPreaching object to the INIT_PREACHING object, but I

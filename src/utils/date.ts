@@ -1,6 +1,133 @@
 import dayjs from 'dayjs';
 
 export const date = {
+    /**
+     * Formats the given data using the specified format.
+     *
+     * @param {string | number | Date} date - The data to be formatted. It can be a string, number, or Date object.
+     * @param {string} format - The format string specifying the desired output format.
+     * @return {string} The formatted data as a string.
+     */
+    format: (date: string | number | Date, format: string): string => {
+        return dayjs(date).format(format);
+    },
+
+    /**
+     * Sets the locale for dayjs library.
+     *
+     * @param {string} locale - The locale to set for dayjs.
+     * @return {void} This function does not return anything.
+     */
+    setLocale: (locale: string): void => {
+        dayjs.locale(locale);
+    },
+
+    /**
+     * Extends the functionality of the dayjs library with the specified plugin.
+     *
+     * @param {any} plugin - The plugin to be extended.
+     * @return {void} This function does not return anything.
+     */
+    extend: (plugin: any): void => {
+        dayjs.extend(plugin);
+    },
+
+    /**
+     * Filters an array of objects based on the day property to get values within the current week.
+     *
+     * @param {T[]} array - The array of objects with a 'day' property.
+     * @return {T[]} The filtered array containing objects within the current week.
+     */
+    getArrayValuesOfWeek: <T extends { day: string }>(array: T[]): Array<T> => {
+        const firstDayOfWeek = date.getFirstDayOfCurrentWeek();
+        const lastDayOfWeek = date.getLastDayOfCurrentWeek();
+
+        return array.filter(
+            el => dayjs(el.day).isSame(firstDayOfWeek)
+            || dayjs(el.day).isAfter(firstDayOfWeek)
+            && dayjs(el.day).isBefore(lastDayOfWeek)
+            || dayjs(el.day).isSame(lastDayOfWeek)
+        );
+    },
+
+    /**
+     * Returns the first day of the current week in the format 'YYYY-MM-DD'.
+     *
+     * @return {string} The first day of the current week in the format 'YYYY-MM-DD'.
+     */
+    getFirstDayOfCurrentWeek: (): string => {
+        return dayjs().startOf('week').format('YYYY-MM-DD');
+    },
+
+    /**
+     * Returns the last day of the current week in the format 'YYYY-MM-DD'.
+     *
+     * @return {string} The last day of the current week.
+     */
+    getLastDayOfCurrentWeek: (): string => {
+        return dayjs().endOf('week').format('YYYY-MM-DD');
+    },
+
+    /**
+     * Returns the first date of the month for the given date in the specified format.
+     *
+     * @param {string | number | Date} date - The date to get the first date of the month for.
+     * @param {string} format - The format string specifying the desired output format.
+     * @return {string} The formatted first date of the month.
+     */
+    getFirstDateOfMonth: (date: string | number | Date, format: string): string => {
+        return dayjs(date).startOf('month').format(format);
+    },
+
+    /**
+     * Returns the last date of the month for a given date in the specified format.
+     *
+     * @param {string | number | Date} date - The input date.
+     * @param {string} format - The desired format for the output date.
+     * @return {string} The last date of the month in the specified format.
+     */
+    getLastDateOfMonth: (date: string | number | Date, format: string): string => {
+        return dayjs(date).endOf('month').format(format);
+    },
+
+    /**
+     * Calculates and returns the remaining minutes from the sum of minutes in a given array of date ranges.
+     *
+     * @param {{ init: string, finish: string }[]} dates - Array of date ranges with start and end times.
+     * @return {number} The remaining minutes after summing up the minutes from the date ranges.
+     */
+    getRestMins: (dates: { init: string, finish: string }[]): number => {
+        const { restMins } = date.sumMins(dates);
+        return restMins;
+    },
+
+    /**
+     * Returns the year of the given date.
+     *
+     * @param {string | number | Date} date - The date to extract the year from.
+     * @return {number} The year of the given date.
+     */
+    getYearOfDate: (date: string | number | Date): number => {
+        return dayjs(date).get('year');
+    },
+
+    /**
+     * Checks if the initial hour is before the final hour.
+     *
+     * @param {string | number | Date} initHour - The initial hour to compare.
+     * @param {string | number | Date} finalHour - The final hour to compare.
+     * @return {boolean} Returns true if the initial hour is before the final hour, otherwise returns false.
+     */
+    isBefore: (initHour: string | number | Date, finalHour: string | number | Date): boolean => {
+        return dayjs(initHour).isBefore(dayjs(finalHour));
+    },
+
+    /**
+     * Calculates the total hours from an array of date ranges and adjusts it based on the sum of minutes.
+     *
+     * @param {{ init: string, finish: string }[]} dates - Array of date ranges with start and end times.
+     * @return {number} The total hours calculated from the date ranges after adjusting with the sum of minutes.
+     */
     sumHours: (dates: { init: string, finish: string }[]): number => {
         const hours = dates.map(date => {
             const start = dayjs(date.init);
@@ -16,6 +143,14 @@ export const date = {
             : date.sumNumbers(hours);
     },
 
+    /**
+     * Calculates the total hours and remaining minutes from an array of date ranges.
+     *
+     * @param {Array<{ init: string, finish: string }>} dates - Array of date ranges with start and end times.
+     * @return {Object} An object containing the total hours and remaining minutes.
+     * - hours: The total number of hours calculated from the date ranges.
+     * - restMins: The remaining number of minutes after calculating the total hours.
+     */
     sumMins: (dates: { init: string, finish: string }[]): { hours: number, restMins: number } => {
         const mins = dates.map(date => {
             const start = dayjs(date.init, 'HH:mm');
@@ -38,12 +173,13 @@ export const date = {
         }
     },
 
+    /**
+     * Calculates the sum of all numbers in the given array.
+     *
+     * @param {number[]} numbers - The array of numbers to be summed.
+     * @return {number} The sum of all numbers in the array.
+     */
     sumNumbers: (numbers: number[]): number => {
         return numbers.reduce((total, number) => total + number, 0);
-    },
-
-    getRestMins: (dates: { init: string, finish: string }[]): number => {
-        const { restMins } = date.sumMins(dates);
-        return restMins;
     }
 }

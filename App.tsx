@@ -3,7 +3,6 @@ import { NavigationContainer, useNavigationContainerRef } from '@react-navigatio
 import { useFlipper } from '@react-navigation/devtools';
 import SplashScreen from 'react-native-splash-screen';
 import { LogLevel, OneSignal } from 'react-native-onesignal';
-import dayjs from 'dayjs';
 import weekday from 'dayjs/plugin/weekday';
 import 'dayjs/locale/es';
 
@@ -12,14 +11,18 @@ import './src/config/unistyles';
 /* Env */
 import { ONESIGNAL_APP_ID } from '@env';
 
+/* Providers */
 import { Provider } from './src/providers';
 
 /* Navigation */
 import { Navigation } from './src/navigation';
 
-/* Global config of dayjs */
-dayjs.extend(weekday);
-dayjs.locale('es');
+/* Utils */
+import { date } from './src/utils';
+
+/* Global config of date util */
+date.extend(weekday);
+date.setLocale('es');
 
 /**
  * This is the entry point of the app that renders all the necessary

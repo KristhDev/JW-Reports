@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { ScrollView, Text, TouchableOpacity, View } from 'react-native';
 import { useStyles } from 'react-native-unistyles';
 import { useNavigation } from '@react-navigation/native';
-import dayjs from 'dayjs';
 
 /* Features */
 import { INIT_COURSE } from '../../features';
@@ -17,6 +16,9 @@ import { InfoText, Title } from '../../../ui/components';
 /* Hooks */
 import { useCourses } from '../../hooks';
 import { INIT_LESSON, useLessons } from '../../../lessons';
+
+/* Utils */
+import { date } from '../../../../utils';
 
 /* Styles */
 import { styles as themeStylesheet } from '../../../theme';
@@ -184,7 +186,7 @@ const CourseDetail = (): JSX.Element => {
                                     {
                                         (selectedCourse.lastLesson.done)
                                             ? 'Clase impartida'
-                                            : `Próxima clase ${ dayjs(selectedCourse.lastLesson.nextLesson).format('DD/MM/YYYY') }`
+                                            : `Próxima clase ${ date.format(selectedCourse.lastLesson.nextLesson, 'DD/MM/YYYY') }`
                                         }
                                 </Text>
                             </View>
@@ -228,7 +230,7 @@ const CourseDetail = (): JSX.Element => {
                     style={ styles.dateCreatedText }
                     testID="course-detail-text-date"
                 >
-                    { dayjs(selectedCourse.createdAt).format('DD/MM/YYYY') }
+                    { date.format(selectedCourse.createdAt, 'DD/MM/YYYY') }
                 </Text>
             </ScrollView>
 

@@ -4,7 +4,6 @@ import { useStyles } from 'react-native-unistyles';
 import { Menu, MenuOption, MenuOptions, MenuTrigger } from 'react-native-popup-menu';
 import { useNavigation } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/Ionicons';
-import dayjs from 'dayjs';
 
 /* Components */
 import { Fab } from '../../../ui';
@@ -14,6 +13,9 @@ import { useLessons } from '../../hooks';
 
 /* Interfaces */
 import { LessonCardProps } from './interfaces';
+
+/* Utils */
+import { date } from '../../../../utils';
 
 /* Styles */
 import stylesheet from './styles';
@@ -37,7 +39,7 @@ export const LessonCard: FC<LessonCardProps> = ({ lesson, screenToNavigate, onCl
     const { setSelectedLesson } = useLessons();
     const { styles, theme: { colors } } = useStyles(stylesheet);
 
-    const nextVisit = dayjs(lesson.nextLesson);
+    const nextVisit = date.format(lesson.nextLesson, 'DD [de] MMMM [del] YYYY');
 
     /**
      * When the user clicks on a lesson, the lesson is set as the selected lesson and the user is
@@ -93,7 +95,7 @@ export const LessonCard: FC<LessonCardProps> = ({ lesson, screenToNavigate, onCl
                 >
                     { (lesson.done)
                         ? 'Clase impartida'
-                        : `Clase para el ${ nextVisit.format('DD') } de ${ nextVisit.format('MMMM') } del ${ nextVisit.format('YYYY') }`
+                        : `Clase para el ${ nextVisit }`
                     }
                 </Text>
 

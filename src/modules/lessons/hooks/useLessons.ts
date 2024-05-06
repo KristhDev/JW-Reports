@@ -1,5 +1,4 @@
 import { useNavigation } from '@react-navigation/native';
-import dayjs from 'dayjs';
 
 /* Supabase */
 import { supabase } from '../../../config';
@@ -35,6 +34,9 @@ import { useNetwork, useStatus } from '../../shared';
 /* Interfaces */
 import { Lesson, LessonEndpoint, LessonFormValues, LessonWithCourseEndpoint } from '../interfaces';
 import { LoadResourcesOptions, Pagination } from '../../ui';
+
+/* Utils */
+import { date } from '../../../utils';
 
 const useLessons = () => {
     const dispatch = useAppDispatch();
@@ -190,8 +192,8 @@ const useLessons = () => {
         const { data, error, status } = await supabase.from('lessons')
             .update({
                 done: !state.selectedLesson.done,
-                next_lesson: dayjs(next_lesson).format('YYYY-MM-DD HH:mm:ss.SSSSSS'),
-                updated_at: dayjs().format('YYYY-MM-DD HH:mm:ss.SSSSSS')
+                next_lesson: date.format(next_lesson, 'YYYY-MM-DD HH:mm:ss.SSSSSS'),
+                updated_at: date.format(new Date(), 'YYYY-MM-DD HH:mm:ss.SSSSSS')
             })
             .eq('id', state.selectedLesson.id)
             .eq('course_id', selectedCourse.id)
@@ -360,7 +362,7 @@ const useLessons = () => {
             .insert({
                 course_id: selectedCourse.id,
                 description: lessonValues.description,
-                next_lesson: dayjs(lessonValues.nextLesson).format('YYYY-MM-DD HH:mm:ss.SSSSSS')
+                next_lesson: date.format(lessonValues.nextLesson, 'YYYY-MM-DD HH:mm:ss.SSSSSS')
             })
             .select<'*', LessonEndpoint>();
 
@@ -421,8 +423,8 @@ const useLessons = () => {
         const { data, error, status } = await supabase.from('lessons')
             .update({
                 description: lessonValues.description,
-                next_lesson: dayjs(lessonValues.nextLesson).format('YYYY-MM-DD HH:mm:ss.SSSSSS'),
-                updated_at: dayjs().format('YYYY-MM-DD HH:mm:ss.SSSSSS')
+                next_lesson: date.format(lessonValues.nextLesson, 'YYYY-MM-DD HH:mm:ss.SSSSSS'),
+                updated_at: date.format(new Date(), 'YYYY-MM-DD HH:mm:ss.SSSSSS')
             })
             .eq('id', state.selectedLesson.id)
             .eq('course_id', selectedCourse.id)

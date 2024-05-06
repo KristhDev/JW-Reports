@@ -56,13 +56,13 @@ const useStatus = () => {
      * If there's an error, log it, call the onDispatch function if it exists, set the status, and
      * return true. Otherwise, return false
      *
-     * @param {AuthError | PostgrestError | StorageError |  null} error - AuthError | PostgrestError |
+     * @param {AuthError | PostgrestError | StorageError | null } error - AuthError | PostgrestError |
      * StorageError |  null
      * @param {number} status - number - The status code of the error
      * @param {Function} onDispatch - This is a function that will be called if there is an error.
      * @return {boolean} Returns true if there's an error, false otherwise
      */
-    const setSupabaseError = (error: AuthError | PostgrestError | StorageError |  null, status: number, onDispatch?: () => void): boolean => {
+    const setSupabaseError = (error: AuthError | PostgrestError | StorageError | null, status: number, onDispatch?: () => void): boolean => {
         if (error) {
             const msg = translateErrorMsg(error.message);
 
