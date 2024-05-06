@@ -14,10 +14,5 @@ module.exports = {
       'verbose': false
     } ],
     'react-native-reanimated/plugin'
-  ],
-  env: {
-    production: {
-      plugins: ['react-native-paper/babel'],
-    },
-  }
+  ]
 };
