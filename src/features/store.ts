@@ -12,6 +12,9 @@ import { permissionsReducer, statusReducer } from '../modules/shared';
 import { preachingReducer } from '../modules/preaching';
 import { revisitsReducer } from '../modules/revisits';
 
+/* Utils */
+import { asyncStorageKeys } from '../utils';
+
 /* Combining all the reducers into one reducer. */
 const reducers = combineReducers({
     auth: authReducer,
@@ -25,7 +28,7 @@ const reducers = combineReducers({
 
 /* Persisting the store. */
 const persistConfig = {
-    key: 'jwreports-store',
+    key: asyncStorageKeys.STORE,
     storage: AsyncStorage
 };
 

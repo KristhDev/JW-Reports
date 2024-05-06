@@ -10,6 +10,9 @@ import { ThemeContext } from './';
 /* Interfaces */
 import { Theme } from '../interfaces';
 
+/* Utils */
+import { asyncStorageKeys } from '../../../utils';
+
 /**
  * A function that sets the theme, and then sets the selected theme, and then sets the colors, and
  * then sets the isLoaded theme.
@@ -23,6 +26,12 @@ const ThemeProvider: FC<PropsWithChildren> = ({ children }) => {
     const [ themeState, setThemeState ] = useState<Theme>(UnistylesRuntime.themeName);
     const [ selectedTheme, setSelectedTheme ] = useState<Theme | 'default'>('default');
 
+    /**
+     * Sets the theme for the application.
+     *
+     * @param {Theme | 'default'} theme - The theme to set. If 'default', the theme will be set based on the color scheme.
+     * @return {Promise<void>} - A promise that resolves when the theme is set.
+     */
     const setTheme = async (theme: Theme | 'default') => {
         let userTheme = theme;
         if (userTheme === 'default') userTheme = UnistylesRuntime.colorScheme as any;
@@ -31,7 +40,7 @@ const ThemeProvider: FC<PropsWithChildren> = ({ children }) => {
         setThemeState(userTheme as Theme);
         setSelectedTheme(theme);
 
-        await AsyncStorage.setItem('jw-reports-theme', theme);
+        await AsyncStorage.setItem(asyncStorageKeys.THEME, theme);
     }
 
     const store = useMemo(() => ({
@@ -51,7 +60,7 @@ const ThemeProvider: FC<PropsWithChildren> = ({ children }) => {
     }, []);
 
     useEffect(() => {
-        AsyncStorage.getItem('jw-reports-theme').then(theme => {
+        AsyncStorage.getItem(asyncStorageKeys.THEME).then(theme => {
             setTheme(theme as Theme || 'default');
         });
     }, []);
