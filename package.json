@@ -2,6 +2,7 @@
   "name": "jwreports",
   "version": "2.0.0",
   "private": true,
+  "license": "CC-BY 4.0",
   "scripts": {
     "android": "react-native run-android",
     "ios": "react-native run-ios",
