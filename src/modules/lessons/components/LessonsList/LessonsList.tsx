@@ -13,7 +13,8 @@ import { LessonCard } from '../LessonCard';
 import { ListEmptyComponent, ListFooterComponent, SearchInput, Title } from '../../../ui';
 
 /* Hooks */
-import { useCourses } from '../../hooks';
+import { useCourses } from '../../../courses';
+import { useLessons } from '../../hooks';
 import { useNetwork } from '../../../shared';
 
 /* Interfaces */
@@ -30,20 +31,21 @@ export const LessonsList = (): JSX.Element => {
     const [ showDeleteModal, setShowDeleteModal ] = useState<boolean>(false);
     const [ showFSModal, setShowFSModal ] = useState<boolean>(false);
 
+    const { state: { selectedCourse } } = useCourses();
+
     const {
         state: {
             hasMoreLessons,
             isLessonDeleting,
             isLessonsLoading,
-            lessons,
-            selectedCourse,
+            lessons
         },
         deleteLesson,
         removeLessons,
         setLessonsPagination,
         setSelectedLesson,
         loadLessons,
-    } = useCourses();
+    } = useLessons();
 
     const { wifi } = useNetwork();
 

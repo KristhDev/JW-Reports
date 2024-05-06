@@ -7,7 +7,8 @@ import { useNavigation } from '@react-navigation/native';
 import CoursesTopTabsNavigation from './CoursesTopTabsNavigation';
 
 /* Screens */
-import { AddOrEditCourse, AddOrEditLesson, CourseDetail, LessonDetail, Lessons } from '../screens';
+import { AddOrEditCourse, CourseDetail } from '../screens';
+import { AddOrEditLesson, LessonDetail, Lessons, useLessons } from '../../lessons';
 
 /* Components */
 import { BackButton, HeaderButtons } from '../../ui';
@@ -30,16 +31,8 @@ const CoursesStackNavigation = (): JSX.Element => {
     const [ showDeleteLessonModal, setShowDeleteLessonModal ] = useState<boolean>(false);
     const { navigate } = useNavigation();
 
-    const {
-        state: {
-            isCourseDeleting,
-            selectedCourse,
-            selectedLesson,
-            isLessonDeleting
-        },
-        deleteCourse,
-        deleteLesson
-    } = useCourses();
+    const { state: { isCourseDeleting, selectedCourse }, deleteCourse } = useCourses();
+    const { state: { selectedLesson, isLessonDeleting }, deleteLesson } = useLessons();
 
     const { theme: { colors, margins } } = useStyles();
 

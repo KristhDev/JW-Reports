@@ -4,7 +4,7 @@ import { PersistGate } from 'reduxjs-toolkit-persist/lib/integration/react';
 import { MenuProvider } from 'react-native-popup-menu';
 
 /* Features */
-import { persistor, store } from '../features';
+import { store, persistor } from '../features';
 
 /* Modules */
 import { NetworkProvider } from '../modules/shared';

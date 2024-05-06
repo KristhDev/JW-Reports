@@ -8,7 +8,7 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import { Button, DatetimeField, FormField } from '../../../ui';
 
 /* Hooks */
-import { useCourses } from '../../hooks';
+import { useLessons } from '../../../lessons';
 import { useStatus } from '../../../shared';
 
 /* Schemas */
@@ -27,7 +27,7 @@ import { styles as themeStylesheet } from '../../../theme';
  * @returns {JSX.Element} The lesson form component.
  */
 export const LessonForm = (): JSX.Element => {
-    const { state: { isLessonLoading, selectedLesson }, saveLesson, updateLesson } = useCourses();
+    const { state: { isLessonLoading, selectedLesson }, saveLesson, updateLesson } = useLessons();
     const { setErrorForm } = useStatus();
     const { styles: themeStyles, theme: { colors, margins } } = useStyles(themeStylesheet);
 

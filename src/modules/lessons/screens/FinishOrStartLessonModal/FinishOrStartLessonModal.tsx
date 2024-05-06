@@ -7,7 +7,7 @@ import Icon from 'react-native-vector-icons/Ionicons';
 /* Modules */
 import { Modal, DatetimeField, ModalProps } from '../../../ui';
 import { ModalActions } from './ModalActions';
-import { useCourses } from '../../hooks';
+import { useLessons } from '../../hooks';
 import { styles as themeStylesheet } from '../../../theme';
 
 /**
@@ -20,7 +20,7 @@ import { styles as themeStylesheet } from '../../../theme';
 const FinishOrStartLessonModal: FC<ModalProps> = ({ isOpen, onClose }) => {
     const [ reschedule, setReschedule ] = useState<boolean>(false);
 
-    const { state: { selectedLesson, isLessonLoading }, finishOrStartLesson } = useCourses();
+    const { state: { selectedLesson, isLessonLoading }, finishOrStartLesson } = useLessons();
     const { styles: themeStyles, theme: { colors, margins } } = useStyles(themeStylesheet);
 
     const modalMsg = (selectedLesson.done)

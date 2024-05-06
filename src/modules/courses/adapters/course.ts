@@ -1,5 +1,5 @@
 import { Course, CourseEndpoint, CourseFormValues } from '../interfaces';
-import { lessonAdapter } from './lesson';
+import { lessonAdapter } from '../../lessons/adapters/lesson';
 
 /**
  * Adapts a CourseEndpoint object to a Course object.

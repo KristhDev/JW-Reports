@@ -5,7 +5,8 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import dayjs from 'dayjs';
 
 /* Modules */
-import { INIT_LESSON, LessonCard, LessonWithCourse, useCourses, FinishOrStartLessonModal, PassToCourseModal } from '../../../courses';
+import { LessonCard, useCourses, PassToCourseModal } from '../../../courses';
+import { FinishOrStartLessonModal, INIT_LESSON, LessonWithCourse, useLessons } from '../../../lessons';
 import { INIT_REVISIT, RevisitCard, Revisit, RevisitModal, useRevisits } from '../../../revisits';
 
 /* Components */
@@ -36,17 +37,8 @@ const PublisherHome = (): JSX.Element => {
 
     const { state: { selectedDate } } = usePreaching();
 
-    const {
-        state: {
-            isLastLessonLoading,
-            isLessonDeleting,
-            lastLesson
-        },
-        deleteLesson,
-        loadLastLesson,
-        setSelectedCourse,
-        setSelectedLesson
-    } = useCourses();
+    const { setSelectedCourse } = useCourses();
+    const { state: { isLastLessonLoading, isLessonDeleting, lastLesson }, deleteLesson, loadLastLesson, setSelectedLesson } = useLessons();
 
     const {
         state: {

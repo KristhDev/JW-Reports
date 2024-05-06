@@ -33,7 +33,6 @@ import {
 } from '../features';
 
 /* Hooks */
-import { useAuth } from '../../auth';
 import { useImage, useNetwork, useStatus } from '../../shared/hooks';
 
 /* Interfaces */
@@ -53,12 +52,12 @@ const useRevisits = () => {
     const dispatch = useAppDispatch();
     const { goBack, navigate } = useNavigation();
 
-    const { state: { isAuthenticated, user } } = useAuth();
+    const state = useAppSelector(store => store.revisits);
+    const { isAuthenticated, user } = useAppSelector(store => store.auth);
+
     const { uploadImage, deleteImage } = useImage();
     const { setStatus, setSupabaseError, setUnauthenticatedError, setNetworkError } = useStatus();
     const { wifi } = useNetwork();
-
-    const state = useAppSelector(store => store.revisits);
 
     const addRevisits = (revisits: Revisit[]) => dispatch(addRevisitsAction({ revisits }));
     const clearRevisits = () => dispatch(clearRevisitsAction());

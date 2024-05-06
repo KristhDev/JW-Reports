@@ -6,7 +6,7 @@ import { useStyles } from 'react-native-unistyles';
 import { Button } from '../../../ui';
 
 /* Hooks */
-import { useCourses } from '../../hooks';
+import { useLessons } from '../../hooks';
 
 /* Interfaces */
 import { ModalActionProps } from './interfaces';
@@ -21,7 +21,7 @@ import { styles as themeStylesheet } from '../../../theme';
  * @return {JSX.Element} rendered component to show actions of modal
  */
 export const ModalActions: FC<ModalActionProps> = ({ onClose, onConfirm, reschedule }): JSX.Element => {
-    const { state: { selectedLesson } } = useCourses();
+    const { state: { selectedLesson } } = useLessons();
     const { styles: themeStyles, theme: { colors } } = useStyles(themeStylesheet);
 
     const confirmTextButton = (reschedule)

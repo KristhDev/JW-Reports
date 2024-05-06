@@ -16,6 +16,7 @@ import { CourseCardProps } from './interfaces';
 
 /* Styles */
 import stylesheet from './styles';
+import { useLessons } from '../../../lessons';
 
 /**
  * This component is responsible for rendering part of the information of a
@@ -34,7 +35,8 @@ export const CourseCard: FC<CourseCardProps> = ({ course, onActiveOrSuspend, onD
     const { navigate } = useNavigation();
     const { width } = useWindowDimensions();
 
-    const { state: { selectedLesson }, setSelectedLesson, setSelectedCourse } = useCourses();
+    const { setSelectedCourse } = useCourses();
+    const { state: { selectedLesson }, setSelectedLesson } = useLessons();
     const { styles, theme: { colors } } = useStyles(stylesheet);
 
     /**

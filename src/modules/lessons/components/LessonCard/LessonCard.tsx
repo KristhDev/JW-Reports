@@ -10,7 +10,7 @@ import dayjs from 'dayjs';
 import { Fab } from '../../../ui';
 
 /* Hooks */
-import { useCourses } from '../../hooks';
+import { useLessons } from '../../hooks';
 
 /* Interfaces */
 import { LessonCardProps } from './interfaces';
@@ -34,7 +34,7 @@ export const LessonCard: FC<LessonCardProps> = ({ lesson, screenToNavigate, onCl
     const { navigate } = useNavigation();
     const { width } = useWindowDimensions();
 
-    const { setSelectedLesson } = useCourses();
+    const { setSelectedLesson } = useLessons();
     const { styles, theme: { colors } } = useStyles(stylesheet);
 
     const nextVisit = dayjs(lesson.nextLesson);

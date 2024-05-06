@@ -8,7 +8,7 @@ import { LessonForm } from '../../components';
 import { Title } from '../../../ui';
 
 /* Hooks */
-import { useCourses } from '../../hooks';
+import { useLessons } from '../../hooks';
 
 /* Theme */
 import { styles as themeStylesheet } from '../../../theme';
@@ -21,7 +21,7 @@ import { styles as themeStylesheet } from '../../../theme';
  */
 const AddOrEditLesson = (): JSX.Element => {
     const { styles: themeStyles, theme: { margins } } = useStyles(themeStylesheet);
-    const { state: { selectedLesson } } = useCourses();
+    const { state: { selectedLesson } } = useLessons();
 
     return (
         <KeyboardAwareScrollView

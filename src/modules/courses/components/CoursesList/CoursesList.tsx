@@ -19,6 +19,7 @@ import { useNetwork } from '../../../shared';
 /* Interfaces */
 import { CoursesListProps } from './interfaces';
 import { Course } from '../../interfaces';
+import { useLessons } from '../../../lessons';
 
 /**
  * This component is responsible for rendering a list of courses based
@@ -49,18 +50,17 @@ export const CoursesList: FC<CoursesListProps> = ({ emptyMessage, filter, title 
             hasMoreCourses,
             isCourseDeleting,
             isCoursesLoading,
-            lessons,
             refreshCourses,
         },
         deleteCourse,
         loadCourses,
         removeCourses,
-        removeLessons,
         setCoursesPagination,
-        setLessonsPagination,
         setRefreshCourses,
         setSelectedCourse,
     } = useCourses();
+
+    const { state: { lessons }, removeLessons, setLessonsPagination } = useLessons();
 
     const { wifi } = useNetwork();
 

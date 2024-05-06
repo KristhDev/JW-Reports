@@ -24,7 +24,6 @@ import {
 } from '../features';
 
 /* Hooks */
-import { useAuth } from '../../auth';
 import { useNetwork, useStatus } from '../../shared';
 
 /* Interfaces */
@@ -37,11 +36,11 @@ const usePreaching = () => {
     const dispatch = useAppDispatch();
     const { goBack } = useNavigation();
 
-    const { state: { user, isAuthenticated } } = useAuth();
+    const state = useAppSelector(store => store.preaching);
+    const { user, isAuthenticated } = useAppSelector(store => store.auth);
+
     const { setStatus, setSupabaseError, setUnauthenticatedError, setNetworkError } = useStatus();
     const { wifi } = useNetwork();
-
-    const state = useAppSelector(store => store.preaching);
 
     const clearPreaching = () => dispatch(clearPreachingAction());
     const setIsPreachingsLoading = (isLoading: boolean) => dispatch(setIsPreachingsLoadingAction({ isLoading }));

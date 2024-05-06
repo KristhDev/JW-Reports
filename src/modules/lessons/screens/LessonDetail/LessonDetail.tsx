@@ -14,7 +14,8 @@ import { FinishOrStartLessonModal } from '../FinishOrStartLessonModal';
 import { InfoText, Title } from '../../../ui';
 
 /* Hooks */
-import { useCourses } from '../../hooks';
+import { useCourses } from '../../../courses';
+import { useLessons } from '../../hooks';
 
 /* Styles */
 import { styles as themeStylesheet } from '../../../theme';
@@ -31,7 +32,8 @@ const LessonDetail = (): JSX.Element => {
     const { addListener, getState, removeListener } = useNavigation();
     const { name } = useRoute();
 
-    const { state: { selectedCourse, selectedLesson }, setSelectedLesson } = useCourses();
+    const { state: { selectedCourse } } = useCourses();
+    const { state: { selectedLesson }, setSelectedLesson } = useLessons();
     const { styles: themeStyles, theme: { colors, margins } } = useStyles(themeStylesheet);
     const { styles } = useStyles(stylesheet);
 

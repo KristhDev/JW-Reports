@@ -5,7 +5,7 @@ import { useNavigation } from '@react-navigation/native';
 import dayjs from 'dayjs';
 
 /* Features */
-import { INIT_COURSE, INIT_LESSON } from '../../features';
+import { INIT_COURSE } from '../../features';
 
 /* Screens */
 import { ActiveOrSuspendCourseModal } from '../ActiveOrSuspendCourseModal';
@@ -16,6 +16,7 @@ import { InfoText, Title } from '../../../ui/components';
 
 /* Hooks */
 import { useCourses } from '../../hooks';
+import { INIT_LESSON, useLessons } from '../../../lessons';
 
 /* Styles */
 import { styles as themeStylesheet } from '../../../theme';
@@ -32,7 +33,8 @@ const CourseDetail = (): JSX.Element => {
     const [ showFSModal, setShowFSModal ] = useState<boolean>(false);
     const { addListener, getState, navigate, removeListener } = useNavigation();
 
-    const { state: { selectedCourse }, setSelectedCourse, setSelectedLesson } = useCourses();
+    const { state: { selectedCourse }, setSelectedCourse } = useCourses();
+    const { setSelectedLesson } = useLessons();
     const { styles: themeStyles, theme: { colors, margins } } = useStyles(themeStylesheet);
     const { styles } = useStyles(stylesheet);
 

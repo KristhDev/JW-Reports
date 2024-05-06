@@ -11,7 +11,7 @@ import { LessonsList } from '../../components';
 import { Fab } from '../../../ui';
 
 /* Hooks */
-import { useCourses } from '../../hooks';
+import { useLessons } from '../../hooks';
 
 /* Theme */
 import { styles as themeStylesheet } from '../../../theme';
@@ -25,7 +25,7 @@ import { styles as themeStylesheet } from '../../../theme';
 const Lessons = (): JSX.Element => {
     const { navigate } = useNavigation();
 
-    const { setSelectedLesson } = useCourses();
+    const { setSelectedLesson } = useLessons();
     const { styles: themeStyles, theme: { colors } } = useStyles(themeStylesheet);
 
     /**

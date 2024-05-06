@@ -14,6 +14,7 @@ import { userAdpater } from '../adapters';
 import { clearAuth as clearAuthAction, setIsAuthLoading, setUser as setUserAction, updateUser } from '../features';
 import { useAppDispatch, useAppSelector } from '../../../features';
 import { clearCourses } from '../../courses';
+import { clearLessons } from '../../lessons';
 import { clearPreaching } from '../../preaching';
 import { clearRevisits } from '../../revisits';
 
@@ -157,6 +158,7 @@ const useAuth = () => {
         }
 
         dispatch(clearCourses());
+        dispatch(clearLessons());
         dispatch(clearPreaching());
         dispatch(clearRevisits());
         dispatch(clearAuthAction());

@@ -13,6 +13,7 @@ import { useTheme } from '../modules/theme';
 
 /* Navigation */
 import MainTabsBottomNavigation from './MainTabsBottomNavigation';
+import { useLessons } from '../modules/lessons';
 
 const Stack = createStackNavigator<NavigationParamsList>();
 
@@ -22,12 +23,13 @@ const Stack = createStackNavigator<NavigationParamsList>();
  * @return {JSX.Element} rendered component to show navigation
  */
 const Navigation = (): JSX.Element => {
-    const { state: { isAuthenticated }, renew } = useAuth();
     const { checkPermissions } = usePermissions();
     const { clearCourses } = useCourses();
+    const { clearLessons } = useLessons();
     const { clearPreaching } = usePreaching();
     const { clearRevisits } = useRevisits();
     const { clearStatus } = useStatus();
+    const { state: { isAuthenticated }, renew } = useAuth();
     const { state: { theme } } = useTheme();
     const { wifi } = useNetwork();
 
@@ -40,6 +42,7 @@ const Navigation = (): JSX.Element => {
 
         if (wifi.isConnected) {
             clearCourses();
+            clearLessons();
             clearPreaching();
             clearRevisits();
 

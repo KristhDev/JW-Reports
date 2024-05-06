@@ -4,7 +4,8 @@ import { CardStyleInterpolators, createStackNavigator } from '@react-navigation/
 import { useNavigation } from '@react-navigation/native';
 
 /* Screens */
-import { AddOrEditLesson, LessonDetail, useCourses } from '../../courses';
+import { useCourses } from '../../courses';
+import { AddOrEditLesson, LessonDetail, useLessons } from '../../lessons';
 import { AddOrEditRevisit, RevisitDetail, useRevisits } from '../../revisits';
 import { AddOrEditPreaching, PrecursorHome, PublisherHome } from '../screens';
 
@@ -33,17 +34,8 @@ const PreachingStackNavigation = (): JSX.Element => {
     const { navigate } = useNavigation();
 
     const { state: { user } } = useAuth();
-
-    const {
-        state: {
-            isLessonDeleting,
-            selectedCourse,
-            selectedLesson
-        },
-        deleteLesson,
-        loadCourses,
-        loadLastLesson
-    } = useCourses();
+    const { state: { selectedCourse }, loadCourses } = useCourses();
+    const { state: { isLessonDeleting, selectedLesson }, deleteLesson, loadLastLesson } = useLessons();
 
     const {
         state: {

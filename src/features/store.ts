@@ -1,12 +1,13 @@
 import { configureStore } from '@reduxjs/toolkit';
+import { combineReducers } from 'redux';
 import { persistReducer, persistStore } from 'reduxjs-toolkit-persist';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { combineReducers } from 'redux';
 import reduxFlipper from 'redux-flipper';
 
 /* Reducers */
 import { authReducer } from '../modules/auth';
 import { coursesReducer } from '../modules/courses';
+import { lessonsReducer } from '../modules/lessons';
 import { permissionsReducer, statusReducer } from '../modules/shared';
 import { preachingReducer } from '../modules/preaching';
 import { revisitsReducer } from '../modules/revisits';
@@ -15,17 +16,18 @@ import { revisitsReducer } from '../modules/revisits';
 const reducers = combineReducers({
     auth: authReducer,
     courses: coursesReducer,
+    lessons: lessonsReducer,
     permissions: permissionsReducer,
     preaching: preachingReducer,
     revisits: revisitsReducer,
     status: statusReducer
 });
 
-/* Setting the key and storage for the persistor. */
+/* Persisting the store. */
 const persistConfig = {
-    key: 'jw-reports-root',
-    storage: AsyncStorage,
-}
+    key: 'jwreports-store',
+    storage: AsyncStorage
+};
 
 const reducer = persistReducer(persistConfig, reducers);
 

@@ -12,27 +12,15 @@ import {
 } from '../../shared';
 
 import {
+    AddLastLessonInCoursePayload,
     Course,
     CourseFilter,
     CoursePayload,
     CoursesState,
-    Lesson,
-    LessonPayload,
+    ReplaceLastLessonInCoursePayload,
     SetCoursesPayload,
-    SetLessonsPayload,
-    SetLessonWithCoursePayload
 } from '../interfaces';
-
-/* Initial lesson */
-export const INIT_LESSON: Lesson = {
-    id: '',
-    courseId: '',
-    description: '',
-    nextLesson: new Date().toString(),
-    done: false,
-    createdAt: new Date().toString(),
-    updatedAt: new Date().toString(),
-}
+import { LessonPayload, SetLessonsPayload } from '../../lessons';
 
 /* Initial course */
 export const INIT_COURSE: Course = {
@@ -59,27 +47,11 @@ export const COURSES_INITIAL_STATE: CoursesState = {
     },
     coursesScreenHistory: [],
     hasMoreCourses: true,
-    hasMoreLessons: true,
     isCourseDeleting: false,
     isCourseLoading: false,
     isCoursesLoading: false,
-    isLastLessonLoading: false,
-    isLessonDeleting: false,
-    isLessonLoading: false,
-    isLessonsLoading: false,
-    lastLesson: {
-        ...INIT_LESSON,
-        course: INIT_COURSE
-    },
-    lessons: [],
-    lessonsPagination: {
-        from: 0,
-        to: 9
-    },
     refreshCourses: false,
-    refreshLessons: false,
     selectedCourse: INIT_COURSE,
-    selectedLesson: INIT_LESSON,
 }
 
 /**
@@ -115,32 +87,16 @@ const courseSlice = createSlice({
             state.isCoursesLoading = false;
         },
 
-        addLesson: (state, action: PayloadAction<LessonPayload>) => {
-            const lessonsArr = new Set([ action.payload.lesson, ...state.lessons ]);
-
-            state.lessons = [ ...lessonsArr ];
-            state.lessons = state.lessons.sort((a, b) => new Date(b.nextLesson).getTime() - new Date(a.nextLesson).getTime());
-            state.isLessonLoading = false;
-
+        addLastLessonInCourse: (state, action: PayloadAction<AddLastLessonInCoursePayload>) => {
             state.courses = state.courses.map(c =>
-                (c.id === action.payload.lesson.courseId)
-                    ? { ...c, lastLesson: state.lessons[0] }
+                (c.id === action.payload.courseId)
+                    ? { ...c, lastLesson: action.payload.lastLesson }
                     : c
             );
 
-            state.selectedCourse = (state.selectedCourse.id === action.payload.lesson.courseId)
-                ? { ...state.selectedCourse, lastLesson: state.lessons[0] }
+            state.selectedCourse = (state.selectedCourse.id === action.payload.courseId)
+                ? { ...state.selectedCourse, lastLesson: action.payload.lastLesson }
                 : state.selectedCourse;
-        },
-
-        addLastLesson: (state, action: PayloadAction<SetLessonWithCoursePayload>) => {
-            state.lastLesson = action.payload.lesson;
-            state.isLastLessonLoading = false;
-        },
-
-        addLessons: (state, action: PayloadAction<SetLessonsPayload>) => {
-            state.lessons = [ ...state.lessons, ...action.payload.lessons ];
-            state.isLessonsLoading = false;
         },
 
         clearCourses: (state) => {
@@ -149,19 +105,23 @@ const courseSlice = createSlice({
             state.coursesPagination = COURSES_INITIAL_STATE.coursesPagination;
             state.coursesScreenHistory = COURSES_INITIAL_STATE.coursesScreenHistory;
             state.hasMoreCourses = COURSES_INITIAL_STATE.hasMoreCourses;
-            state.hasMoreLessons = COURSES_INITIAL_STATE.hasMoreLessons;
             state.isCourseDeleting = COURSES_INITIAL_STATE.isCourseDeleting;
             state.isCourseLoading = COURSES_INITIAL_STATE.isCourseLoading;
             state.isCoursesLoading = COURSES_INITIAL_STATE.isCoursesLoading;
-            state.isLessonDeleting = COURSES_INITIAL_STATE.isLessonDeleting;
-            state.isLessonLoading = COURSES_INITIAL_STATE.isLessonLoading;
-            state.isLessonsLoading = COURSES_INITIAL_STATE.isLessonsLoading;
-            state.lessons = COURSES_INITIAL_STATE.lessons;
-            state.lessonsPagination = COURSES_INITIAL_STATE.lessonsPagination;
             state.refreshCourses = COURSES_INITIAL_STATE.refreshCourses;
-            state.refreshLessons = COURSES_INITIAL_STATE.refreshLessons;
             state.selectedCourse = COURSES_INITIAL_STATE.selectedCourse;
-            state.selectedLesson = COURSES_INITIAL_STATE.selectedLesson;
+        },
+
+        replaceLastLessonInCourse: (state, action: PayloadAction<ReplaceLastLessonInCoursePayload>) => {
+            state.courses = state.courses.map(c =>
+                (c.lastLesson && c.lastLesson.id === action.payload.lessonId)
+                ? { ...c, lastLesson: action.payload.lastLesson }
+                : c
+            );
+
+            state.selectedCourse = (state.selectedCourse.lastLesson && state.selectedCourse.lastLesson.id === action.payload.lessonId)
+                ? { ...state.selectedCourse, lastLesson: action.payload.lastLesson }
+                : state.selectedCourse;
         },
 
         removeCourse: (state, action: PayloadAction<RemoveResourcePayload>) => {
@@ -173,26 +133,6 @@ const courseSlice = createSlice({
             state.courses = [];
         },
 
-        removeLesson: (state, action: PayloadAction<RemoveResourcePayload>) => {
-            state.lessons = state.lessons.filter(l => l.id !== action.payload.id);
-
-            state.courses = state.courses.map(c =>
-                (c.lastLesson && c.lastLesson.id === action.payload.id)
-                ? { ...c, lastLesson: state.lessons[0] }
-                : c
-            );
-
-            state.selectedCourse = (state.selectedCourse.lastLesson && state.selectedCourse.lastLesson.id === action.payload.id)
-                ? { ...state.selectedCourse, lastLesson: state.lessons[0] }
-                : state.selectedCourse;
-
-            state.isLessonDeleting = false;
-        },
-
-        removeLessons: (state) => {
-            state.lessons = [];
-        },
-
         setCourseFilter: (state, action: PayloadAction<{ filter: CourseFilter }>) => {
             state.courseFilter = action.payload.filter;
         },
@@ -200,24 +140,6 @@ const courseSlice = createSlice({
         setCourses: (state, action: PayloadAction<SetCoursesPayload>) => {
             state.courses = [ ...action.payload.courses ];
             state.isCoursesLoading = false;
-        },
-
-        setLessons: (state, action: PayloadAction<SetLessonsPayload>) => {
-            state.lessons = [ ...action.payload.lessons ];
-            state.isLessonsLoading = false;
-
-            state.courses = state.courses.map(c =>
-                (state.lessons.length > 0 && c.id === state.lessons[0].courseId && (!c.lastLesson || c.lastLesson.id !== state.lessons[0].id))
-                    ? { ...c, lastLesson: state.lessons[0] }
-                    : c
-            );
-
-            state.selectedCourse =
-                (state.lessons.length > 0 && state.selectedCourse.id === state.lessons[0].courseId
-                    && (!state.selectedCourse.lastLesson || state.selectedCourse.lastLesson.id !== state.lessons[0].id)
-                )
-                    ? { ...state.selectedCourse, lastLesson: state.lessons[0] }
-                    : state.selectedCourse;
         },
 
         setCoursesPagination: (state, action: PayloadAction<PaginationPayload>) => {
@@ -232,10 +154,6 @@ const courseSlice = createSlice({
             state.hasMoreCourses = action.payload.hasMore;
         },
 
-        setHasMoreLessons: (state, action: PayloadAction<HasMorePayload>) => {
-            state.hasMoreLessons = action.payload.hasMore;
-        },
-
         setIsCourseDeleting: (state, action: PayloadAction<SetIsDeletingPayload>) => {
             state.isCourseDeleting = action.payload.isDeleting;
         },
@@ -248,42 +166,28 @@ const courseSlice = createSlice({
             state.isCoursesLoading = action.payload.isLoading;
         },
 
-        setIsLessonDeleting: (state, action: PayloadAction<SetIsDeletingPayload>) => {
-            state.isLessonDeleting = action.payload.isDeleting;
-        },
-
-        setIsLastLessonLoading: (state, action: PayloadAction<SetIsLoadingPayload>) => {
-            state.isLastLessonLoading = action.payload.isLoading;
-        },
-
-        setIsLessonLoading: (state, action: PayloadAction<SetIsLoadingPayload>) => {
-            state.isLessonLoading = action.payload.isLoading;
-        },
-
-        setIsLessonsLoading: (state, action: PayloadAction<SetIsLoadingPayload>) => {
-            state.isLessonsLoading = action.payload.isLoading;
-        },
-
-        setLessonsPagination: (state, action: PayloadAction<PaginationPayload>) => {
-            state.lessonsPagination = action.payload.pagination;
-        },
-
         setRefreshCourses: (state, action: PayloadAction<RefreshPayload>) => {
             state.refreshCourses = action.payload.refresh;
-        },
-
-        setRefreshLessons: (state, action: PayloadAction<RefreshPayload>) => {
-            state.refreshLessons = action.payload.refresh;
-        },
-
-        setSelectedLesson: (state, action: PayloadAction<LessonPayload>) => {
-            state.selectedLesson = action.payload.lesson;
-            state.isLessonLoading = false;
         },
 
         setSelectedCourse: (state, action: PayloadAction<CoursePayload>) => {
             state.selectedCourse = action.payload.course;
             state.isCourseLoading = false;
+        },
+
+        setLastLessonInCourses: (state, action: PayloadAction<SetLessonsPayload>) => {
+            state.courses = state.courses.map(c =>
+                (action.payload.lessons.length > 0 && c.id === action.payload.lessons[0].courseId && (!c.lastLesson || c.lastLesson.id !== action.payload.lessons[0].id))
+                    ? { ...c, lastLesson: action.payload.lessons[0] }
+                    : c
+            );
+
+            state.selectedCourse =
+                (action.payload.lessons.length > 0 && state.selectedCourse.id === action.payload.lessons[0].courseId
+                    && (!state.selectedCourse.lastLesson || state.selectedCourse.lastLesson.id !== action.payload.lessons[0].id)
+                )
+                    ? { ...state.selectedCourse, lastLesson: action.payload.lessons[0] }
+                    : state.selectedCourse;
         },
 
         updateCourse: (state, action: PayloadAction<CoursePayload>) => {
@@ -302,19 +206,7 @@ const courseSlice = createSlice({
             state.isCourseLoading = false;
         },
 
-        updateLesson: (state, action: PayloadAction<LessonPayload>) => {
-            state.lessons = state.lessons.map(lesson =>
-                (lesson.id === action.payload.lesson.id)
-                    ? action.payload.lesson
-                    : lesson
-            );
-
-            state.lessons = state.lessons.sort((a, b) => new Date(b.nextLesson).getTime() - new Date(a.nextLesson).getTime());
-
-            state.selectedLesson = (state.selectedLesson.id === action.payload.lesson.id)
-                ? action.payload.lesson
-                : state.selectedLesson;
-
+        updateLastLessonInCourse: (state, action: PayloadAction<LessonPayload>) => {
             state.courses = state.courses.map(c =>
                 (c.lastLesson && c.id === action.payload.lesson.courseId)
                     ? { ...c, lastLesson: action.payload.lesson }
@@ -331,35 +223,24 @@ const courseSlice = createSlice({
 export const {
     addCourse,
     addCourses,
-    addLastLesson,
-    addLesson,
-    addLessons,
+    addLastLessonInCourse,
     clearCourses,
+    replaceLastLessonInCourse,
     removeCourse,
     removeCourses,
-    removeLesson,
-    removeLessons,
     setCourseFilter,
     setCourses,
     setCoursesPagination,
     setCoursesScreenHistory,
     setHasMoreCourses,
-    setHasMoreLessons,
     setIsCourseDeleting,
     setIsCourseLoading,
     setIsCoursesLoading,
-    setIsLastLessonLoading,
-    setIsLessonDeleting,
-    setIsLessonLoading,
-    setIsLessonsLoading,
-    setLessons,
-    setLessonsPagination,
+    setLastLessonInCourses,
     setRefreshCourses,
-    setRefreshLessons,
     setSelectedCourse,
-    setSelectedLesson,
     updateCourse,
-    updateLesson
+    updateLastLessonInCourse
 } = courseSlice.actions;
 
 export default courseSlice.reducer;
