@@ -2,7 +2,6 @@ import { configureStore } from '@reduxjs/toolkit';
 import { combineReducers } from 'redux';
 import { persistReducer, persistStore } from 'reduxjs-toolkit-persist';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import reduxFlipper from 'redux-flipper';
 
 /* Reducers */
 import { authReducer } from '../modules/auth';
@@ -14,7 +13,7 @@ import { revisitsReducer } from '../modules/revisits';
 
 /* Utils */
 import { asyncStorageKeys } from '../utils';
-
+import reactotron from '../../ReactotronConfig';
 /* Combining all the reducers into one reducer. */
 const reducers = combineReducers({
     auth: authReducer,
@@ -38,19 +37,13 @@ const reducer = persistReducer(persistConfig, reducers);
 export const store = configureStore({
     reducer,
     devTools: false,
-    middleware: (getDefaultMiddleware) => {
-        const middleware = getDefaultMiddleware({
-            serializableCheck: false
-        });
+    enhancers: (getDefaultEnhancers) => {
+        const enhancers = getDefaultEnhancers();
 
-        /* Checking if the app is in development mode. If it is, it will add the reduxFlipper
-        middleware to the store. */
-        if (__DEV__ && !process.env.JEST_WORKER_ID) {
-            middleware.push(reduxFlipper() as any);
-        }
-
-        return middleware;
-    }
+        if (__DEV__) enhancers.push(reactotron.createEnhancer!());
+        return enhancers;
+    },
+    middleware: (getDefaultMiddleware) => getDefaultMiddleware({ serializableCheck: false })
 });
 
 export const persistor = persistStore(store);

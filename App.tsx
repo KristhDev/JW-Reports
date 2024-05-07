@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react';
-import { NavigationContainer, useNavigationContainerRef } from '@react-navigation/native';
-import { useFlipper } from '@react-navigation/devtools';
+import { NavigationContainer } from '@react-navigation/native';
 import SplashScreen from 'react-native-splash-screen';
 import weekday from 'dayjs/plugin/weekday';
 import 'dayjs/locale/es';
@@ -28,9 +27,6 @@ date.setLocale('es');
  * parts for its operation.
  */
 const App = () => {
-  const navigationRef = useNavigationContainerRef();
-  useFlipper(navigationRef);
-
   /**
    * Effect to listen for push notifications.
    */
@@ -44,7 +40,7 @@ const App = () => {
 
   return (
     <Provider>
-      <NavigationContainer ref={ navigationRef }>
+      <NavigationContainer>
         <Navigation />
       </NavigationContainer>
     </Provider>

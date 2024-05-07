@@ -7,13 +7,13 @@ import { NavigationParamsList } from '../modules/ui';
 import { AuthStackNavigation, useAuth } from '../modules/auth';
 import { SettingsStackNavigation, StatusModal, useNetwork, usePermissions, useStatus } from '../modules/shared';
 import { useCourses } from '../modules/courses';
+import { useLessons } from '../modules/lessons';
 import { usePreaching } from '../modules/preaching';
 import { useRevisits } from '../modules/revisits';
 import { useTheme } from '../modules/theme';
 
 /* Navigation */
 import MainTabsBottomNavigation from './MainTabsBottomNavigation';
-import { useLessons } from '../modules/lessons';
 
 const Stack = createStackNavigator<NavigationParamsList>();
 
