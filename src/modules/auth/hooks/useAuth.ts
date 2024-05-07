@@ -1,5 +1,4 @@
 import { AuthResponse } from '@supabase/supabase-js';
-import { OneSignal } from 'react-native-onesignal';
 
 /* Env */
 import { SITIE_URL } from '@env';
@@ -23,6 +22,9 @@ import { useNetwork, useStatus } from '../../shared';
 
 /* Interfaces */
 import { SignIn, IProfile, SignUp, UserEndpoint } from '../interfaces';
+
+/* Services */
+import { notifications } from '../../../services';
 
 /**
  * Hook to management authentication of store with state and actions
@@ -48,7 +50,7 @@ const useAuth = () => {
     const setUser = ({ data: { user, session }, error }: AuthResponse, isNew: boolean = false): void => {
         const next = setSupabaseError(error, 400, () => {
             dispatch(clearAuthAction());
-            OneSignal.logout();
+            notifications.close();
         });
 
         if (next) return;
@@ -152,7 +154,7 @@ const useAuth = () => {
 
         if (wifi.isConnected) {
             const { error } = await supabase.auth.signOut();
-            OneSignal.logout();
+            notifications.close();
             const next = setSupabaseError(error, 500);
             if (next) return;
         }

@@ -28,12 +28,15 @@ date.setLocale('es');
  */
 const App = () => {
   /**
-   * Effect to listen for push notifications.
+   * Effect to mount service for notifications.
    */
   useEffect(() => {
-    notifications.listen();
+    notifications.mount();
   }, []);
 
+  /**
+   * Effect to hide splash screen
+   */
   useEffect(() => {
     SplashScreen.hide();
   }, []);

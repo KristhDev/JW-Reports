@@ -4,10 +4,18 @@ import { LogLevel, OneSignal } from 'react-native-onesignal';
 import { ONESIGNAL_APP_ID } from '@env';
 
 export const notifications = {
-    listen: () => {
+    mount: () => {
         OneSignal.Debug.setLogLevel(LogLevel.Verbose);
         OneSignal.initialize(ONESIGNAL_APP_ID);
 
         OneSignal.Notifications.requestPermission(true);
+    },
+
+    listenNotificationsByUser: (userId: string) => {
+        OneSignal.login(userId);
+    },
+
+    close: () => {
+        OneSignal.logout();
     }
 }

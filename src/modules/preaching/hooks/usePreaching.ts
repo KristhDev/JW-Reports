@@ -111,7 +111,8 @@ const usePreaching = () => {
                 final_hour: dateUtil.format(preachingValues.finalHour, 'YYYY-MM-DD HH:mm:ss.SSSSSS'),
                 user_id: user.id
             })
-            .single<PreachingEndpoint>();
+            .select<'*', PreachingEndpoint>()
+            .single();
 
         const next = setSupabaseError(error, status, () => dispatch(setIsPreachingLoading({ isLoading: false })));
         if (next) return;
@@ -167,7 +168,8 @@ const usePreaching = () => {
             })
             .eq('id', state.seletedPreaching.id)
             .eq('user_id', user.id)
-            .single<PreachingEndpoint>();
+            .select<'*', PreachingEndpoint>()
+            .single();
 
         const next = setSupabaseError(error, status, () => dispatch(setIsPreachingLoading({ isLoading: false })));
         if (next) return;

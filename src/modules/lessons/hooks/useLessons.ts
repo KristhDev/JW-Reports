@@ -197,7 +197,8 @@ const useLessons = () => {
             })
             .eq('id', state.selectedLesson.id)
             .eq('course_id', selectedCourse.id)
-            .select<'*', LessonEndpoint>();
+            .select<'*', LessonEndpoint>()
+            .single();
 
         const next = setSupabaseError(error, status, () => {
             dispatch(setIsLessonLoading({ isLoading: false }));
@@ -212,7 +213,7 @@ const useLessons = () => {
         dispatch(setIsLessonLoading({ isLoading: false }));
         onFinish && onFinish();
 
-        const msg = (data![0].done)
+        const msg = (data!.done)
             ? 'Has terminado la clase correctamente.'
             : 'Has reprogrado la clase correctamente.'
 
@@ -237,7 +238,7 @@ const useLessons = () => {
             return;
         }
 
-        const { data: dataCourses, error: errorCourses, status: statusCourses, } = await supabase.from('courses')
+        const { data: dataCourses, error: errorCourses, status: statusCourses } = await supabase.from('courses')
             .select('id')
             .eq('user_id', user.id);
 
@@ -364,13 +365,14 @@ const useLessons = () => {
                 description: lessonValues.description,
                 next_lesson: date.format(lessonValues.nextLesson, 'YYYY-MM-DD HH:mm:ss.SSSSSS')
             })
-            .select<'*', LessonEndpoint>();
+            .select<'*', LessonEndpoint>()
+            .single();
 
         const next = setSupabaseError(error, status, () => dispatch(setIsLessonLoading({ isLoading: false })));
         if (next) return;
 
         if (state.lessons.length > 0) {
-            const lesson = lessonAdapter(data![0]);
+            const lesson = lessonAdapter(data!);
 
             dispatch(addLesson({ lesson }));
             dispatch(addLastLessonInCourse({ courseId: selectedCourse.id, lastLesson: lesson }));
@@ -428,17 +430,18 @@ const useLessons = () => {
             })
             .eq('id', state.selectedLesson.id)
             .eq('course_id', selectedCourse.id)
-            .select<'*', LessonEndpoint>();
+            .select<'*', LessonEndpoint>()
+            .single();
 
         const next = setSupabaseError(error, status, () => dispatch(setIsLessonLoading({ isLoading: false })));
         if (next) return;
 
-        const lesson = lessonAdapter(data![0]);
+        const lesson = lessonAdapter(data!);
 
         dispatch(updateLessonAction({ lesson }));
         dispatch(updateLastLessonInCourse({ lesson }));
 
-        if ((user.precursor !== 'ninguno') && data![0].id === state.lastLesson.id) {
+        if ((user.precursor !== 'ninguno') && data!.id === state.lastLesson.id) {
             dispatch(addLastLesson({ lesson: {
                 ...lesson,
                 course: state.lastLesson.course

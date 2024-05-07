@@ -120,7 +120,8 @@ const useCourses = () => {
             })
             .eq('id', state.selectedCourse.id)
             .eq('user_id', user.id)
-            .select<'*', CourseEndpoint>();
+            .select<'*', CourseEndpoint>()
+            .single();
 
         const next = setSupabaseError(error, status, () => {
             dispatch(setIsCourseLoading({ isLoading: false }));
@@ -129,17 +130,17 @@ const useCourses = () => {
 
         if (next) return;
 
-        const msg = (data![0].suspended)
+        const msg = (data!.suspended)
             ? 'Has suspendido el curso correctamente.'
             : 'Has renovado el curso correctamente.'
 
-        dispatch(updateCourseAction({ course: courseAdapter(data![0]) }));
+        dispatch(updateCourseAction({ course: courseAdapter(data!) }));
 
         if (user.precursor === 'ninguno' && lastLesson.courseId === state.selectedCourse.id) {
             dispatch(addLastLesson({
                 lesson: {
                     ...lastLesson,
-                    course: courseAdapter(data![0])
+                    course: courseAdapter(data!)
                 }
             }));
         }
@@ -282,7 +283,8 @@ const useCourses = () => {
             })
             .eq('id', state.selectedCourse.id)
             .eq('user_id', user.id)
-            .select<'*', CourseEndpoint>();
+            .select<'*', CourseEndpoint>()
+            .single();
 
         const next = setSupabaseError(error, status, () => {
             dispatch(setIsCourseLoading({ isLoading: false }));
@@ -291,17 +293,17 @@ const useCourses = () => {
 
         if (next) return;
 
-        const msg = (data![0].finished)
+        const msg = (data!.finished)
             ? 'Has terminado el curso correctamente.'
             : 'Has comenzado de nuevo el curso correctamente.'
 
-        dispatch(updateCourseAction({ course: courseAdapter(data![0]) }));
+        dispatch(updateCourseAction({ course: courseAdapter(data!) }));
 
         if (user.precursor === 'ninguno' && lastLesson.courseId === state.selectedCourse.id) {
             dispatch(addLastLesson({
                 lesson: {
                     ...lastLesson,
-                    course: courseAdapter(data![0])
+                    course: courseAdapter(data!)
                 }
             }));
         }
@@ -410,7 +412,8 @@ const useCourses = () => {
 
         const { data, error, status } = await supabase.from('courses')
             .insert({ ...courseFormValuesAdapter(courseValues), user_id: user.id })
-            .select<'*', CourseEndpoint>();
+            .select<'*', CourseEndpoint>()
+            .single();
 
         const next = setSupabaseError(error, status, () => {
             dispatch(setIsCourseLoading({ isLoading: false }));
@@ -419,7 +422,7 @@ const useCourses = () => {
 
         if (next) return;
 
-        dispatch(addCourse({ course: courseAdapter((data)![0]) }));
+        dispatch(addCourse({ course: courseAdapter(data!) }));
         onFinish && onFinish();
 
         setStatus({
@@ -476,18 +479,19 @@ const useCourses = () => {
             })
             .eq('id', state.selectedCourse.id)
             .eq('user_id', user.id)
-            .select<'*', CourseEndpoint>();
+            .select<'*', CourseEndpoint>()
+            .single();
 
         const next = setSupabaseError(error, status, () => dispatch(setIsCourseLoading({ isLoading: false })));
         if (next) return;
 
-        dispatch(updateCourseAction({ course: courseAdapter(data![0]) }));
+        dispatch(updateCourseAction({ course: courseAdapter(data!) }));
 
         if (user.precursor === 'ninguno' && lastLesson.courseId === state.selectedCourse.id) {
             dispatch(addLastLesson({
                 lesson: {
                     ...lastLesson,
-                    course: courseAdapter(data![0])
+                    course: courseAdapter(data!)
                 }
             }));
         }

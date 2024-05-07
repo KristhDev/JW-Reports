@@ -1,14 +1,16 @@
 import React, { useEffect } from 'react';
 import { useStyles } from 'react-native-unistyles';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { OneSignal } from 'react-native-onesignal';
 
 /* Modules */
+import { useAuth } from '../modules/auth';
 import { CoursesStackNavigation } from '../modules/courses';
 import { MainTabsBottomParamsList, TabBar } from '../modules/ui';
 import { PreachingStackNavigation } from '../modules/preaching';
 import { RevisitsStackNavigation } from '../modules/revisits';
-import { useAuth } from '../modules/auth';
+
+/* Services */
+import { notifications } from '../services';
 
 const Tabs = createBottomTabNavigator<MainTabsBottomParamsList>();
 
@@ -22,11 +24,12 @@ const MainTabsBottomNavigation = (): JSX.Element => {
     const { theme: { colors } } = useStyles();
 
     /**
-     * Effect to set the external user id for push notifications.
+     * Effect to listen notifications by user.
      */
     useEffect(() => {
-        OneSignal.login(user.id);
-    }, []);
+        if (!user.id) return;
+        notifications.listenNotificationsByUser(user.id);
+    }, [ user.id ]);
 
     return (
         <Tabs.Navigator

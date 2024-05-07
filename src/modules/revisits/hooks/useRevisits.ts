@@ -91,13 +91,14 @@ const useRevisits = () => {
             .select<'*', RevisitEndpoint>('*')
             .eq('user_id', user.id)
             .order('next_visit', { ascending: false })
-            .limit(1);
+            .limit(1)
+            .single();
 
         const next = setSupabaseError(error, status, () => dispatch(setIsLastRevisitLoading({ isLoading: false })));
         if (next) return;
 
         dispatch(setLastRevisit({
-            revisit: (data?.length && data.length > 0) ? revisitAdapter(data[0]) : INIT_REVISIT
+            revisit: (data) ? revisitAdapter(data) : INIT_REVISIT
         }));
     }
 
@@ -218,7 +219,8 @@ const useRevisits = () => {
                 next_visit: date.format(revisitValues.nextVisit, 'YYYY-MM-DD HH:mm:ss.SSSSSS'),
                 user_id: user.id
             })
-            .single<RevisitEndpoint>();
+            .select<'*', RevisitEndpoint>()
+            .single();
 
         const next = setSupabaseError(error, status, () => {
             dispatch(setIsRevisitLoading({ isLoading: false }));
@@ -301,7 +303,8 @@ const useRevisits = () => {
             })
             .eq('id', state.selectedRevisit.id)
             .eq('user_id', user.id)
-            .single<RevisitEndpoint>();
+            .select<'*', RevisitEndpoint>()
+            .single();
 
         const next = setSupabaseError(error, status, () => dispatch(setIsRevisitLoading({ isLoading: false })));
         if (next) return;
@@ -438,7 +441,8 @@ const useRevisits = () => {
             })
             .eq('id', state.selectedRevisit.id)
             .eq('user_id', user.id)
-            .single<RevisitEndpoint>();
+            .select<'*', RevisitEndpoint>()
+            .single();
 
         if (error) {
             console.log(error);
