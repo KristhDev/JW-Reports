@@ -116,7 +116,7 @@ const useCourses = () => {
         const { data, error, status } = await supabase.from('courses')
             .update({
                 suspended: !state.selectedCourse.suspended,
-                updated_at: date.format(Date.toString(), 'YYYY-MM-DD HH:mm:ss.SSSSSS')
+                updated_at: date.format(new Date(), 'YYYY-MM-DD HH:mm:ss.SSSSSS')
             })
             .eq('id', state.selectedCourse.id)
             .eq('user_id', user.id)
@@ -279,7 +279,7 @@ const useCourses = () => {
         const { data, error, status } = await supabase.from('courses')
             .update({
                 finished: !state.selectedCourse.finished,
-                updated_at: date.format(Date.toString(), 'YYYY-MM-DD HH:mm:ss.SSSSSS')
+                updated_at: date.format(new Date(), 'YYYY-MM-DD HH:mm:ss.SSSSSS')
             })
             .eq('id', state.selectedCourse.id)
             .eq('user_id', user.id)
@@ -475,7 +475,7 @@ const useCourses = () => {
         const { data, error, status } = await supabase.from('courses')
             .update({
                 ...courseFormValuesAdapter(courseValues),
-                updated_at: date.format(Date.toString(), 'YYYY-MM-DD HH:mm:ss.SSSSSS')
+                updated_at: date.format(new Date(), 'YYYY-MM-DD HH:mm:ss.SSSSSS')
             })
             .eq('id', state.selectedCourse.id)
             .eq('user_id', user.id)

@@ -249,21 +249,16 @@ const useLessons = () => {
             .select<'*, courses (*)', LessonWithCourseEndpoint>('*, courses (*)')
             .in('course_id', [ dataCourses!.map(({ id }) => id) ])
             .order('next_lesson', { ascending: false })
-            .limit(1);
+            .limit(1)
+            .single();
 
         const nextLesson = setSupabaseError(error, status, () => setIsLastLessonLoading(false));
         if (nextLesson) return;
 
         dispatch(addLastLesson({
-            lesson: (data?.length && data.length > 0)
-                ? {
-                    ...lessonAdapter(data![0]),
-                    course: courseAdapter(data![0].courses)
-                }
-                : {
-                    ...INIT_LESSON,
-                    course: INIT_COURSE
-                },
+            lesson: (data)
+                ? { ...lessonAdapter(data!), course: courseAdapter(data!.courses) }
+                : { ...INIT_LESSON, course: INIT_COURSE }
         }));
     }
 

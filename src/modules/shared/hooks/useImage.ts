@@ -26,6 +26,21 @@ const useImage = () => {
     const [ image, setImage ] = useState<Image>({} as Image);
 
     /**
+     * It takes a URI, splits it into an array, and then removes the last item in the array
+     * @param {string} uri - The uri of the image you want to delete.
+     * @return {Promise<{ data: any[] | null, error: StorageError | null }>} This function return object.
+     */
+    const deleteImage = async (uri: string): Promise<{ data: any[] | null, error: StorageError | null }> => {
+        const imageId = uri.split('/')[uri.split('/').length - 1];
+
+        const result = await supabase.storage
+            .from('jw-reports')
+            .remove([ `${ SUPABASE_REVISITS_FOLDER }/${ imageId }` ]);
+
+        return result;
+    }
+
+    /**
      * It opens the image picker, and if the user selects an image, it sets the image state.
      *
      * @return {Promise<void>} This function does not return anything.
@@ -135,28 +150,16 @@ const useImage = () => {
         }
     }
 
-    /**
-     * It takes a URI, splits it into an array, and then removes the last item in the array
-     * @param {string} uri - The uri of the image you want to delete.
-     * @return {Promise<{ data: any[] | null, error: StorageError | null }>} This function return object.
-     */
-    const deleteImage = async (uri: string): Promise<{ data: any[] | null, error: StorageError | null }> => {
-        const imageId = uri.split('/')[uri.split('/').length - 1];
-
-        const result = await supabase.storage
-            .from('jw-reports')
-            .remove([ `${ SUPABASE_REVISITS_FOLDER }/${ imageId }` ]);
-
-        return result;
-    }
-
     return {
+        /* State */
         image,
         setImage,
+
+        /* Functions */
+        deleteImage,
         takeImageToGallery,
         takePhoto,
         uploadImage,
-        deleteImage
     }
 }
 

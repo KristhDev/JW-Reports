@@ -70,6 +70,150 @@ const useRevisits = () => {
     const setSelectedRevisit = (revisit: Revisit) => dispatch(setSelectedRevisitAction({ revisit }));
 
     /**
+     * This function is to mark a revisit as complete.
+     *
+     * @param {Function} onFailFinish - This callback executed when the process is failed
+     * @return {Promise<string | void>} This function returns a string
+     */
+    const completeRevisit = async (onFailFinish?: () => void): Promise<string> => {
+        if (!wifi.isConnected) {
+            setNetworkError();
+            return '';
+        }
+
+        dispatch(setIsRevisitLoading({ isLoading: true }));
+
+        if (!isAuthenticated) {
+            setUnauthenticatedError(() => {
+                onFailFinish && onFailFinish();
+                dispatch(setIsRevisitLoading({ isLoading: false }));
+            });
+
+            return '';
+        }
+
+        /* Should not update if selectedRevisit.id is an empty string */
+        if (state.selectedRevisit.id === '') {
+            onFailFinish && onFailFinish();
+            dispatch(setIsRevisitLoading({ isLoading: false }));
+
+            setStatus({
+                code: 400,
+                msg: 'No hay una revisita seleccionada para completar.'
+            });
+
+            return '';
+        }
+
+        const { data, error } = await supabase.from('revisits')
+            .update({
+                done: true,
+                updated_at: date.format(new Date(), 'YYYY-MM-DD HH:mm:ss.SSSSSS')
+            })
+            .eq('id', state.selectedRevisit.id)
+            .eq('user_id', user.id)
+            .select<'*', RevisitEndpoint>()
+            .single();
+
+        if (error) {
+            console.log(error);
+            onFailFinish && onFailFinish();
+            dispatch(setIsRevisitLoading({ isLoading: false }));
+            setStatus({ code: 400, msg: error.message });
+
+            return '';
+        }
+
+        const revisit = revisitAdapter(data!);
+
+        dispatch(updateRevisitAction({ revisit }));
+        setSelectedRevisit(revisit);
+
+        if (user.precursor === 'ninguno' && state.lastRevisit.id === state.selectedRevisit.id) {
+            dispatch(setLastRevisit({ revisit }));
+        }
+
+        return 'Has marcado como completa tu revisita correctamente.';
+    }
+
+    /**
+     * This function is to delete a revisit.
+     *
+     * @param {boolean} back - This is a flag to indicate whether to navigate to the previous screen or not, default is `false`
+     * @param {Function} onFinish - This callback executed when the process is finished (success or failure), default is `undefined`
+     * @return {Promise<void>} This function does not return anything
+     */
+    const deleteRevisit = async (back: boolean = false, onFinish?: () => void): Promise<void> => {
+        if (!wifi.isConnected) {
+            setNetworkError();
+            return;
+        }
+
+        dispatch(setIsRevisitDeleting({ isDeleting: true }));
+
+        if (!isAuthenticated) {
+            setUnauthenticatedError(() => {
+                onFinish && onFinish();
+                dispatch(setIsRevisitDeleting({ isDeleting: false }));
+            });
+
+            return;
+        }
+
+        /* Should not delete if selectedRevisit.id is an empty string */
+        if (state.selectedRevisit.id === '') {
+            onFinish && onFinish();
+            dispatch(setIsRevisitDeleting({ isDeleting: false }));
+
+            setStatus({
+                code: 400,
+                msg: 'No hay una revisita seleccionada para eliminar.'
+            });
+
+            return;
+        }
+
+        /* If revisit has a photo you have to delete it */
+        if (state.selectedRevisit.photo) {
+            const { error: errorDelete } = await deleteImage(state.selectedRevisit.photo);
+
+            const next = setSupabaseError(errorDelete, 400, () => {
+                onFinish && onFinish();
+                dispatch(setIsRevisitDeleting({ isDeleting: false }));
+            });
+
+            if (next) return;
+        }
+
+        const { error, status } = await supabase.from('revisits')
+            .delete()
+            .eq('id', state.selectedRevisit.id)
+            .eq('user_id', user.id);
+
+        const next = setSupabaseError(error, status, () => {
+            onFinish && onFinish();
+            dispatch(setIsRevisitDeleting({ isDeleting: false }));
+        });
+
+        if (next) return;
+
+        dispatch(removeRevisit({ id: state.selectedRevisit.id }));
+        onFinish && onFinish();
+        back && navigate('RevisitsTopTabsNavigation' as never);
+
+        setSelectedRevisit(INIT_REVISIT);
+
+        if (user.precursor === 'ninguno' && state.lastRevisit.id === state.selectedRevisit.id) {
+            await loadLastRevisit();
+        }
+
+        setStatus({
+            code: 200,
+            msg: 'Has eliminado tu revisita correctamente.'
+        });
+    }
+
+    /**
      * Loads the last revisit from the database.
      *
      * @return {Promise<void>} - Returns a promise that resolves when the last revisit is loaded.
@@ -319,150 +463,6 @@ const useRevisits = () => {
         if (user.precursor === 'ninguno') await loadLastRevisit();
 
         goBack();
-    }
-
-    /**
-     * This function is to delete a revisit.
-     *
-     * @param {boolean} back - This is a flag to indicate whether to navigate to the previous screen or not, default is `false`
-     * @param {Function} onFinish - This callback executed when the process is finished (success or failure), default is `undefined`
-     * @return {Promise<void>} This function does not return anything
-     */
-    const deleteRevisit = async (back: boolean = false, onFinish?: () => void): Promise<void> => {
-        if (!wifi.isConnected) {
-            setNetworkError();
-            return;
-        }
-
-        dispatch(setIsRevisitDeleting({ isDeleting: true }));
-
-        if (!isAuthenticated) {
-            setUnauthenticatedError(() => {
-                onFinish && onFinish();
-                dispatch(setIsRevisitDeleting({ isDeleting: false }));
-            });
-
-            return;
-        }
-
-        /* Should not delete if selectedRevisit.id is an empty string */
-        if (state.selectedRevisit.id === '') {
-            onFinish && onFinish();
-            dispatch(setIsRevisitDeleting({ isDeleting: false }));
-
-            setStatus({
-                code: 400,
-                msg: 'No hay una revisita seleccionada para eliminar.'
-            });
-
-            return;
-        }
-
-        /* If revisit has a photo you have to delete it */
-        if (state.selectedRevisit.photo) {
-            const { error: errorDelete } = await deleteImage(state.selectedRevisit.photo);
-
-            const next = setSupabaseError(errorDelete, 400, () => {
-                onFinish && onFinish();
-                dispatch(setIsRevisitDeleting({ isDeleting: false }));
-            });
-
-            if (next) return;
-        }
-
-        const { error, status } = await supabase.from('revisits')
-            .delete()
-            .eq('id', state.selectedRevisit.id)
-            .eq('user_id', user.id);
-
-        const next = setSupabaseError(error, status, () => {
-            onFinish && onFinish();
-            dispatch(setIsRevisitDeleting({ isDeleting: false }));
-        });
-
-        if (next) return;
-
-        dispatch(removeRevisit({ id: state.selectedRevisit.id }));
-        onFinish && onFinish();
-        back && navigate('RevisitsTopTabsNavigation' as never);
-
-        setSelectedRevisit(INIT_REVISIT);
-
-        if (user.precursor === 'ninguno' && state.lastRevisit.id === state.selectedRevisit.id) {
-            await loadLastRevisit();
-        }
-
-        setStatus({
-            code: 200,
-            msg: 'Has eliminado tu revisita correctamente.'
-        });
-    }
-
-    /**
-     * This function is to mark a revisit as complete.
-     *
-     * @param {Function} onFailFinish - This callback executed when the process is failed
-     * @return {Promise<string | void>} This function returns a string
-     */
-    const completeRevisit = async (onFailFinish?: () => void): Promise<string> => {
-        if (!wifi.isConnected) {
-            setNetworkError();
-            return '';
-        }
-
-        dispatch(setIsRevisitLoading({ isLoading: true }));
-
-        if (!isAuthenticated) {
-            setUnauthenticatedError(() => {
-                onFailFinish && onFailFinish();
-                dispatch(setIsRevisitLoading({ isLoading: false }));
-            });
-
-            return '';
-        }
-
-        /* Should not update if selectedRevisit.id is an empty string */
-        if (state.selectedRevisit.id === '') {
-            onFailFinish && onFailFinish();
-            dispatch(setIsRevisitLoading({ isLoading: false }));
-
-            setStatus({
-                code: 400,
-                msg: 'No hay una revisita seleccionada para completar.'
-            });
-
-            return '';
-        }
-
-        const { data, error } = await supabase.from('revisits')
-            .update({
-                done: true,
-                updated_at: date.format(new Date(), 'YYYY-MM-DD HH:mm:ss.SSSSSS')
-            })
-            .eq('id', state.selectedRevisit.id)
-            .eq('user_id', user.id)
-            .select<'*', RevisitEndpoint>()
-            .single();
-
-        if (error) {
-            console.log(error);
-            onFailFinish && onFailFinish();
-            dispatch(setIsRevisitLoading({ isLoading: false }));
-            setStatus({ code: 400, msg: error.message });
-
-            return '';
-        }
-
-        const revisit = revisitAdapter(data!);
-
-        dispatch(updateRevisitAction({ revisit }));
-        setSelectedRevisit(revisit);
-
-        if (user.precursor === 'ninguno' && state.lastRevisit.id === state.selectedRevisit.id) {
-            dispatch(setLastRevisit({ revisit }));
-        }
-
-        return 'Has marcado como completa tu revisita correctamente.';
     }
 
     return {

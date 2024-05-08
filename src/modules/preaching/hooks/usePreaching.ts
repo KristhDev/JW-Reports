@@ -50,6 +50,82 @@ const usePreaching = () => {
     const setSelectedPreaching = (preaching: Preaching) => dispatch(setSelectedPreachingAction({ preaching }));
 
     /**
+     * This function is to delete a preaching day and return to the previous screen.
+     *
+     * @param {Function} onFinish - This callback executed when the process is finished (success or failure)
+     * @return {Promise<void>} This function does not return anything.
+     */
+    const deletePreaching = async (onFinish?: () => void): Promise<void> => {
+        if (!wifi.isConnected) {
+            setNetworkError();
+            return;
+        }
+
+        dispatch(setIsPreachingDeleting({ isDeleting: true }));
+
+        if (!isAuthenticated) {
+            setUnauthenticatedError(() => {
+                onFinish && onFinish();
+                dispatch(setIsPreachingDeleting({ isDeleting: false }));
+            });
+
+            return;
+        }
+
+        if (state.seletedPreaching.id === '') {
+            onFinish && onFinish();
+            dispatch(setIsPreachingDeleting({ isDeleting: false }));
+
+            setStatus({
+                code: 400,
+                msg: 'No hay un día de predicación seleccionado para eliminar.'
+            });
+
+            return;
+        }
+
+        if (state.seletedPreaching.userId !== user.id) {
+            onFinish && onFinish();
+            dispatch(setIsPreachingDeleting({ isDeleting: false }));
+
+            setStatus({
+                code: 400,
+                msg: 'Lo sentimos, pero no puedes realizar está acción.'
+            });
+
+            return;
+        }
+
+        const { error, status } = await supabase.from('preachings')
+            .delete()
+            .eq('id', state.seletedPreaching.id)
+            .eq('user_id', user.id);
+
+        const next = setSupabaseError(error, status, () => {
+            onFinish && onFinish();
+            dispatch(setIsPreachingDeleting({ isDeleting: false }));
+        });
+
+        if (next) return;
+
+        dispatch(removePreaching({ id: state.seletedPreaching.id }));
+        onFinish && onFinish();
+        goBack();
+
+        setSelectedPreaching({
+            ...INIT_PREACHING,
+            day: new Date().toString(),
+            initHour: new Date().toString(),
+            finalHour: new Date().toString()
+        });
+
+        setStatus({
+            code: 200,
+            msg: 'Has eliminado tu día de predicación correctamente.'
+        });
+    }
+
+    /**
      * Load preachings from the database and set them in the state.
      *
      * @param {Date} date - Date of preaching (month)
@@ -189,82 +265,6 @@ const usePreaching = () => {
         });
 
         goBack();
-    }
-
-    /**
-     * This function is to delete a preaching day and return to the previous screen.
-     *
-     * @param {Function} onFinish - This callback executed when the process is finished (success or failure)
-     * @return {Promise<void>} This function does not return anything.
-     */
-    const deletePreaching = async (onFinish?: () => void): Promise<void> => {
-        if (!wifi.isConnected) {
-            setNetworkError();
-            return;
-        }
-
-        dispatch(setIsPreachingDeleting({ isDeleting: true }));
-
-        if (!isAuthenticated) {
-            setUnauthenticatedError(() => {
-                onFinish && onFinish();
-                dispatch(setIsPreachingDeleting({ isDeleting: false }));
-            });
-
-            return;
-        }
-
-        if (state.seletedPreaching.id === '') {
-            onFinish && onFinish();
-            dispatch(setIsPreachingDeleting({ isDeleting: false }));
-
-            setStatus({
-                code: 400,
-                msg: 'No hay un día de predicación seleccionado para eliminar.'
-            });
-
-            return;
-        }
-
-        if (state.seletedPreaching.userId !== user.id) {
-            onFinish && onFinish();
-            dispatch(setIsPreachingDeleting({ isDeleting: false }));
-
-            setStatus({
-                code: 400,
-                msg: 'Lo sentimos, pero no puedes realizar está acción.'
-            });
-
-            return;
-        }
-
-        const { error, status } = await supabase.from('preachings')
-            .delete()
-            .eq('id', state.seletedPreaching.id)
-            .eq('user_id', user.id);
-
-        const next = setSupabaseError(error, status, () => {
-            onFinish && onFinish();
-            dispatch(setIsPreachingDeleting({ isDeleting: false }));
-        });
-
-        if (next) return;
-
-        dispatch(removePreaching({ id: state.seletedPreaching.id }));
-        onFinish && onFinish();
-        goBack();
-
-        setSelectedPreaching({
-            ...INIT_PREACHING,
-            day: new Date().toString(),
-            initHour: new Date().toString(),
-            finalHour: new Date().toString()
-        });
-
-        setStatus({
-            code: 200,
-            msg: 'Has eliminado tu día de predicación correctamente.'
-        });
     }
 
     return {
