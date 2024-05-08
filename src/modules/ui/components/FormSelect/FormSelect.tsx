@@ -59,7 +59,7 @@ export const FormSelect: FC<FormSelectProps> = ({
     const [ isFocused, setIsFocused ] = useState<boolean>(false);
     const [ showModal, setShowModal ] = useState<boolean>(false);
 
-    const { styles: themeStyles, theme: { colors } } = useStyles(themeStylesheet);
+    const { styles: themeStyles, theme: { colors, fontSizes } } = useStyles(themeStylesheet);
 
     /**
      * When the user clicks on the button, the modal will show and the input will be focused.
@@ -152,7 +152,7 @@ export const FormSelect: FC<FormSelectProps> = ({
                                     <Icon
                                         name="chevron-down-outline"
                                         color={ colors.icon }
-                                        size={ 25 }
+                                        size={ fontSizes.icon }
                                     />
                                 </View>
                             </TouchableHighlight>

@@ -26,7 +26,7 @@ const AuthStackNavigation = (): JSX.Element => {
     const { theme: { colors } } = useStyles();
 
     /**
-     * Effect to clean authentication when mount component.
+     * Effect to clean authentication when mount navigation
      */
     useEffect(() => {
         clearAuth();

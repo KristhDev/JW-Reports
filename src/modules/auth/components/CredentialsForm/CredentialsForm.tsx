@@ -28,7 +28,7 @@ export const CredentialsForm = (): JSX.Element => {
 
     const { state: { user, isAuthLoading }, updateEmail, updatePassword } = useAuth();
     const { setErrorForm } = useStatus();
-    const { theme: { colors, margins } } = useStyles();
+    const { theme: { colors, fontSizes, margins } } = useStyles();
 
     /**
      * Handles updating the email.
@@ -73,31 +73,28 @@ export const CredentialsForm = (): JSX.Element => {
                                 <Icon
                                     color={ colors.icon }
                                     name="mail-outline"
-                                    size={ 25 }
+                                    size={ fontSizes.icon }
                                 />
                             }
                             keyboardType="email-address"
                             label="Correo:"
                             name="email"
                             placeholder="Ingrese su correo"
-                            style={{ marginBottom: margins.lg }}
+                            style={{ marginBottom: margins.xl }}
                         />
 
                         {/* Submit button */}
                         <Button
                             disabled={ isAuthLoading && loadingEmail }
-                            icon={
-                                (isAuthLoading && loadingEmail) && (
-                                    <ActivityIndicator
-                                        color={ colors.contentHeader }
-                                        size={ 25 }
-                                        style={{ marginLeft: 10 }}
-                                    />
-                                )
-                            }
+                            icon={ (isAuthLoading && loadingEmail) && (
+                                <ActivityIndicator
+                                    color={ colors.contentHeader }
+                                    size={ fontSizes.icon }
+                                />
+                            ) }
                             onPress={ (isValid) ? handleSubmit : () => setErrorForm(errors)  }
                             text="Cambiar correo"
-                            touchableStyle={{ marginBottom: margins.lg }}
+                            touchableStyle={{ marginBottom: margins.xl }}
                         />
                     </View>
                 ) }
@@ -143,24 +140,21 @@ export const CredentialsForm = (): JSX.Element => {
                             name="confirmPassword"
                             placeholder="Confirme su contraseña"
                             secureTextEntry={ !showConfirmPassword }
-                            style={{ marginBottom: margins.lg }}
+                            style={{ marginBottom: margins.xl }}
                         />
 
                         {/* Submit button */}
                         <Button
                             disabled={ isAuthLoading && loadingPassword }
-                            icon={
-                                (isAuthLoading && loadingPassword) && (
-                                    <ActivityIndicator
-                                        color={ colors.contentHeader }
-                                        size={ 25 }
-                                        style={{ marginLeft: 10 }}
-                                    />
-                                )
-                            }
+                            icon={ (isAuthLoading && loadingPassword) && (
+                                <ActivityIndicator
+                                    color={ colors.contentHeader }
+                                    size={ fontSizes.icon }
+                                />
+                            ) }
                             onPress={ (isValid) ? handleSubmit : () => setErrorForm(errors)  }
                             text="Cambiar contraseña"
-                            touchableStyle={{ marginBottom: margins.lg }}
+                            touchableStyle={{ marginBottom: margins.xl }}
                         />
                     </View>
                 ) }

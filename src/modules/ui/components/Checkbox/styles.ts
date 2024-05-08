@@ -1,10 +1,10 @@
 import { createStyleSheet } from 'react-native-unistyles';
 
-const styles = createStyleSheet(({ colors, margins }) => ({
+const styles = createStyleSheet(({ colors, fontSizes, margins }) => ({
     container: {
         alignItems: 'center',
         flexDirection: 'row',
-        marginBottom: margins.lg,
+        marginBottom: margins.xl,
         width: '100%',
     },
 
@@ -19,7 +19,7 @@ const styles = createStyleSheet(({ colors, margins }) => ({
 
     text: {
         color: colors.text,
-        fontSize: 18,
+        fontSize: (fontSizes.sm + 2),
         paddingLeft: margins.sm,
         textAlign: 'left',
     }

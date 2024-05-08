@@ -15,7 +15,7 @@ import { styles as themeStylesheet } from '../../../../theme';
  */
 const StatusModal = (): JSX.Element => {
     const { state: { msg }, clearStatus } = useStatus();
-    const { styles: themeStyles, theme: { colors } } = useStyles(themeStylesheet);
+    const { styles: themeStyles, theme: { colors, fontSizes, margins } } = useStyles(themeStylesheet);
 
     const configMsg = 'Para realizar está acción necesitas permisos del dispositivo, por favor abra la configuración de su dispositivo y active los permisos de la aplicación.';
 
@@ -50,10 +50,10 @@ const StatusModal = (): JSX.Element => {
                     {/* Button settings */}
                     { (msg === configMsg) && (
                         <Button
-                            containerStyle={{ paddingHorizontal: 12, minWidth: 0 }}
+                            containerStyle={{ paddingHorizontal: (margins.xs + 4), minWidth: 0 }}
                             onPress={ clearStatus }
                             text="CANCELAR"
-                            textStyle={{ color: colors.button, fontSize: 16 }}
+                            textStyle={{ color: colors.button, fontSize: fontSizes.sm }}
                             touchableStyle={{ backgroundColor: 'transparent' }}
                             underlayColor={ colors.buttonTranslucent }
                         />
@@ -61,10 +61,10 @@ const StatusModal = (): JSX.Element => {
 
                     {/* Confirm button */}
                     <Button
-                        containerStyle={{ paddingHorizontal: 12, minWidth: 0 }}
+                        containerStyle={{ paddingHorizontal: (margins.xs + 4), minWidth: 0 }}
                         onPress={ handleClose }
                         text={ btnText }
-                        textStyle={{ color: colors.button, fontSize: 16 }}
+                        textStyle={{ color: colors.button, fontSize: fontSizes.sm }}
                         touchableStyle={{ backgroundColor: 'transparent' }}
                         underlayColor={ colors.buttonTranslucent }
                     />

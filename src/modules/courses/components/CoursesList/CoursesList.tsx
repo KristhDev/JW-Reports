@@ -1,5 +1,6 @@
 import React, { FC, useEffect, useState } from 'react';
 import { FlatList } from 'react-native';
+import { useStyles } from 'react-native-unistyles';
 import { useNavigation } from '@react-navigation/native';
 
 /* Features */
@@ -14,12 +15,12 @@ import { CourseCard } from '../CourseCard';
 
 /* Hooks */
 import { useCourses } from '../../hooks';
+import { useLessons } from '../../../lessons';
 import { useNetwork } from '../../../shared';
 
 /* Interfaces */
 import { CoursesListProps } from './interfaces';
 import { Course } from '../../interfaces';
-import { useLessons } from '../../../lessons';
 
 /**
  * This component is responsible for rendering a list of courses based
@@ -42,6 +43,8 @@ export const CoursesList: FC<CoursesListProps> = ({ emptyMessage, filter, title 
 
     const { getState, isFocused } = useNavigation();
     const navigationState = getState();
+
+    const { theme: { fontSizes, margins } } = useStyles();
 
     const {
         state: {
@@ -207,7 +210,7 @@ export const CoursesList: FC<CoursesListProps> = ({ emptyMessage, filter, title 
     return (
         <>
             <FlatList
-                contentContainerStyle={{ alignItems: 'center', padding: 24, paddingBottom: 100, flexGrow: 1 }}
+                contentContainerStyle={{ alignItems: 'center', padding: margins.md, paddingBottom: 100, flexGrow: 1 }}
                 data={ courses }
                 keyExtractor={ (item) => item.id }
                 ListFooterComponent={
@@ -219,9 +222,9 @@ export const CoursesList: FC<CoursesListProps> = ({ emptyMessage, filter, title 
                 ListHeaderComponent={
                     <>
                         <Title
-                            containerStyle={{ marginVertical: 8 }}
+                            containerStyle={{ marginVertical: margins.xs }}
                             text={ title }
-                            textStyle={{ fontSize: 24 }}
+                            textStyle={{ fontSize: fontSizes.md }}
                         />
 
                         <SearchInput

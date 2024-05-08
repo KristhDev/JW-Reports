@@ -47,7 +47,7 @@ const ReportModal: FC<ReportModalProps> = ({ isOpen, month, onClose }): JSX.Elem
     const { state: { user } } = useAuth();
     const { state: { preachings } } = usePreaching();
     const { state: { courses } } = useCourses();
-    const { styles: themeStyles, theme: { colors, margins } } = useStyles(themeStylesheet);
+    const { styles: themeStyles, theme: { colors, fontSizes, margins } } = useStyles(themeStylesheet);
     const { styles } = useStyles(stylesheet);
 
     const username = `${ user.name } ${ user.surname }`;
@@ -109,7 +109,7 @@ const ReportModal: FC<ReportModalProps> = ({ isOpen, month, onClose }): JSX.Elem
                     <View style={ styles.reportModal }>
                         <Text style={ styles.reportModalInfo }>Estás a punto de entregar tu informe predicación, por favor revisalo.</Text>
 
-                        <View style={{ marginTop: margins.lg, marginBottom: margins.md }}>
+                        <View style={{ marginTop: margins.xl, marginBottom: margins.md }}>
                             <Text style={ styles.reportTitle }>Informe De Predicación</Text>
 
                             <View style={{ flexDirection: 'row' }}>
@@ -138,7 +138,7 @@ const ReportModal: FC<ReportModalProps> = ({ isOpen, month, onClose }): JSX.Elem
                                 <View style={{ flexDirection: 'column' }}>
                                     <Text style={{ ...styles.reportText, color: colors.text, marginBottom: 5 }}>Participo en el ministerio: </Text>
 
-                                    <View style={{ flexDirection: 'row', gap: 32, paddingVertical: margins.xs }}>
+                                    <View style={{ flexDirection: 'row', gap: margins.lg, paddingVertical: margins.xs }}>
                                         { Children.toArray(particitions.map(particition => (
                                             <RadioBtn
                                                 isSelected={ (participated === particition.value) }
@@ -158,7 +158,7 @@ const ReportModal: FC<ReportModalProps> = ({ isOpen, month, onClose }): JSX.Elem
                                     style={{
                                         ...themeStyles.focusExternalBorder,
                                         borderColor: (isFocused) ? '#FFFFFF' : 'transparent',
-                                        marginTop: 16
+                                        marginTop: margins.sm
                                     }}
                                 >
                                     <View
@@ -203,7 +203,7 @@ const ReportModal: FC<ReportModalProps> = ({ isOpen, month, onClose }): JSX.Elem
                         </View>
 
                         { (restMins > 0) && (
-                            <Text style={{ color: colors.modalText, fontSize: 16, marginBottom: margins.md }}>
+                            <Text style={ styles.restMinsText }>
                                 Para este mes te sobraron { restMins } minutos, guardalos para el siguiente mes.
                             </Text>
                         ) }
@@ -211,19 +211,19 @@ const ReportModal: FC<ReportModalProps> = ({ isOpen, month, onClose }): JSX.Elem
                         {/* Modal actions */}
                         <View style={{ flexDirection: 'row', justifyContent: 'flex-end', gap: margins.xs }}>
                             <Button
-                                containerStyle={{ paddingHorizontal: 12, minWidth: 0 }}
+                                containerStyle={{ paddingHorizontal: (margins.xs + 4), minWidth: 0 }}
                                 onPress={ handleClose }
                                 text="CANCELAR"
-                                textStyle={{ color: colors.button, fontSize: 16 }}
+                                textStyle={{ color: colors.button, fontSize: fontSizes.sm }}
                                 touchableStyle={{ backgroundColor: 'transparent' }}
                                 underlayColor={ colors.buttonTranslucent }
                             />
 
                             <Button
-                                containerStyle={{ paddingHorizontal: 12, minWidth: 0 }}
+                                containerStyle={{ paddingHorizontal: (margins.xs + 4), minWidth: 0 }}
                                 onPress={ handleDeliver }
                                 text="ENTREGAR"
-                                textStyle={{ color: colors.button, fontSize: 16 }}
+                                textStyle={{ color: colors.button, fontSize: fontSizes.sm }}
                                 touchableStyle={{ backgroundColor: 'transparent' }}
                                 underlayColor={ colors.buttonTranslucent }
                             />

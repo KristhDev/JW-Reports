@@ -13,7 +13,10 @@ import { revisitsReducer } from '../modules/revisits';
 
 /* Utils */
 import { asyncStorageKeys } from '../utils';
+
+/* Debugger */
 import reactotron from '../../ReactotronConfig';
+
 /* Combining all the reducers into one reducer. */
 const reducers = combineReducers({
     auth: authReducer,

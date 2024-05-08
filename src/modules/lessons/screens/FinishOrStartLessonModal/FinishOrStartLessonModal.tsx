@@ -21,7 +21,7 @@ const FinishOrStartLessonModal: FC<ModalProps> = ({ isOpen, onClose }) => {
     const [ reschedule, setReschedule ] = useState<boolean>(false);
 
     const { state: { selectedLesson, isLessonLoading }, finishOrStartLesson } = useLessons();
-    const { styles: themeStyles, theme: { colors, margins } } = useStyles(themeStylesheet);
+    const { styles: themeStyles, theme: { colors, fontSizes, margins } } = useStyles(themeStylesheet);
 
     const modalMsg = (selectedLesson.done)
         ? '¿Está seguro de reprogramar esta clase?'
@@ -100,7 +100,7 @@ const FinishOrStartLessonModal: FC<ModalProps> = ({ isOpen, onClose }) => {
                                             <Icon
                                                 color={ colors.contentHeader }
                                                 name="calendar-outline"
-                                                size={ 25 }
+                                                size={ fontSizes.icon }
                                             />
                                         }
                                         inputDateFormat="DD/MM/YYYY"
@@ -126,7 +126,7 @@ const FinishOrStartLessonModal: FC<ModalProps> = ({ isOpen, onClose }) => {
             ) : (
                 <ActivityIndicator
                     color={ colors.button }
-                    size={ 50 }
+                    size={ (fontSizes.xxl + 2) }
                     testID="modal-loading"
                 />
             ) }

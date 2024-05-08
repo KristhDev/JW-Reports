@@ -1,5 +1,5 @@
 import React, { useState, FC } from 'react';
-import { KeyboardAvoidingView, View, Text, ActivityIndicator, ScrollView, useWindowDimensions } from 'react-native';
+import { KeyboardAvoidingView, View, Text, ActivityIndicator, ScrollView } from 'react-native';
 import { useStyles } from 'react-native-unistyles';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Formik } from 'formik';
@@ -29,11 +29,10 @@ const RevisitModal: FC<ModalProps> = ({ isOpen, onClose }) => {
     const [ revisitPerson, setRevisitPerson ] = useState<boolean>(false);
 
     const { top } = useSafeAreaInsets();
-    const { width } = useWindowDimensions();
 
     const { state: { selectedRevisit, isRevisitLoading }, completeRevisit, saveRevisit } = useRevisits();
     const { setErrorForm } = useStatus();
-    const { styles: themeStyles, theme: { colors, margins } } = useStyles(themeStylesheet);
+    const { styles: themeStyles, theme: { colors, fontSizes, margins } } = useStyles(themeStylesheet);
 
     const modalTitle = (selectedRevisit.done)
         ? `¿Quieres volver a visitar a ${ selectedRevisit.personName }?`
@@ -98,7 +97,7 @@ const RevisitModal: FC<ModalProps> = ({ isOpen, onClose }) => {
                             {/* Complete message */}
                             { (completeMsg !== '') && (
                                 <Text
-                                    style={{ ...themeStyles.modalText, marginBottom: margins.lg }}
+                                    style={{ ...themeStyles.modalText, marginBottom: margins.xl }}
                                     testID="revisit-modal-complete-msg"
                                 >
                                     { completeMsg }
@@ -126,7 +125,7 @@ const RevisitModal: FC<ModalProps> = ({ isOpen, onClose }) => {
 
                                     {/* Modal title in form */}
                                     <Text
-                                        style={{ ...themeStyles.modalText, marginBottom: margins.lg }}
+                                        style={{ ...themeStyles.modalText, marginBottom: margins.xl }}
                                         testID="revisit-modal-title"
                                     >
                                         Por favor verifica los siguientes datos.
@@ -159,7 +158,7 @@ const RevisitModal: FC<ModalProps> = ({ isOpen, onClose }) => {
                                                         <Icon
                                                             color={ colors.contentHeader }
                                                             name="calendar-outline"
-                                                            size={ 25 }
+                                                            size={ fontSizes.icon }
                                                         />
                                                     }
                                                     inputDateFormat="DD/MM/YYYY"
@@ -186,7 +185,7 @@ const RevisitModal: FC<ModalProps> = ({ isOpen, onClose }) => {
                     ) : (
                         <ActivityIndicator
                             color={ colors.button }
-                            size={ 50 }
+                            size={ (fontSizes.xxl + 2) }
                             testID="revisit-modal-loading"
                         />
                     ) }

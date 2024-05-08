@@ -17,7 +17,7 @@ import { EyeBtnProps } from './interfaces';
  * @return {JSX.Element} Return jsx element to render eye button
  */
 export const EyeBtn: FC<EyeBtnProps> = ({ onToggle, value }): JSX.Element => {
-    const { theme: { colors } } = useStyles();
+    const { theme: { colors, fontSizes } } = useStyles();
 
     return (
         <TouchableOpacity
@@ -28,7 +28,7 @@ export const EyeBtn: FC<EyeBtnProps> = ({ onToggle, value }): JSX.Element => {
             <Icon
                 color={ colors.icon }
                 name={ (value) ? 'eye-off-outline' : 'eye-outline' }
-                size={ 25 }
+                size={ fontSizes.icon }
             />
         </TouchableOpacity>
     );

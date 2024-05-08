@@ -27,7 +27,7 @@ const RevisitDetail = (): JSX.Element => {
     const { width: windowWidth } = useWindowDimensions();
 
     const { state: { selectedRevisit }, setSelectedRevisit } = useRevisits();
-    const { styles: themeStyles, theme: { colors } } = useStyles(themeStylesheet);
+    const { styles: themeStyles, theme: { fontSizes, margins } } = useStyles(themeStylesheet);
     const { styles } = useStyles(stylesheet);
 
     const nextVisit = date.format(selectedRevisit.nextVisit, 'DD [de] MMMM [del] YYYY');
@@ -78,7 +78,7 @@ const RevisitDetail = (): JSX.Element => {
                 <Title
                     containerStyle={ themeStyles.titleContainer }
                     text={ selectedRevisit.personName.toUpperCase() }
-                    textStyle={{ fontSize: 24 }}
+                    textStyle={{ fontSize: fontSizes.md }}
                 />
 
                 {/* Revisit status */}
@@ -90,7 +90,7 @@ const RevisitDetail = (): JSX.Element => {
                             </Text>
 
                             <Text
-                                style={{ color: colors.text, fontSize: 19 }}
+                                style={ styles.sectionText }
                                 testID="revisit-detail-next-visit"
                             >
                                 { ` ${ nextVisit }` }
@@ -101,17 +101,17 @@ const RevisitDetail = (): JSX.Element => {
                             activeOpacity={ 0.75 }
                             onPress={ () => setShowModal(true) }
                         >
-                            <Text style={{ color: colors.linkText, fontSize: 19 }}>
+                            <Text style={ styles.sectionLinkText }>
                                 ¿Ya la visitaste?
                             </Text>
                         </TouchableOpacity>
                     </View>
                 ) : (
                     <View
-                        style={{ ...styles.sectionStyle, flexDirection: 'row' }}
+                        style={{ ...styles.sectionStyle, flexDirection: 'row', gap: margins.xs }}
                         testID="revisit-detail-revisit-again-section"
                     >
-                        <Text style={{ color: colors.text, fontSize: 19, marginRight: 10 }}>
+                        <Text style={ styles.sectionText }>
                             Revisita realizada
                         </Text>
 
@@ -119,7 +119,7 @@ const RevisitDetail = (): JSX.Element => {
                             activeOpacity={ 0.75 }
                             onPress={ () => setShowModal(true) }
                         >
-                            <Text style={{ color: colors.linkText, fontSize: 19 }}>
+                            <Text style={ styles.sectionLinkText }>
                                 ¿Visitar de nuevo?
                             </Text>
                         </TouchableOpacity>
@@ -135,7 +135,7 @@ const RevisitDetail = (): JSX.Element => {
                         Información de { selectedRevisit.personName }:
                     </Text>
 
-                    <Text style={{ color: colors.text, fontSize: 19 }}>
+                    <Text style={ styles.sectionText }>
                         { selectedRevisit.about }
                     </Text>
                 </View>
@@ -149,7 +149,7 @@ const RevisitDetail = (): JSX.Element => {
                         Dirección:
                     </Text>
 
-                    <Text style={{ color: colors.text, fontSize: 19 }}>
+                    <Text style={ styles.sectionText }>
                         { selectedRevisit.address }
                     </Text>
                 </View>

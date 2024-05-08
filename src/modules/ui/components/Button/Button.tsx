@@ -53,12 +53,14 @@ export const Button: FC<ButtonProps> = ({
                 testID="button-touchable"
             >
                 <View style={[ styles.buttonContainer, containerStyle ]}>
-                    <Text
-                        style={[ styles.buttonText, textStyle ]}
-                        testID="button-text"
-                    >
-                        { text }
-                    </Text>
+                    { (text) && (
+                        <Text
+                            style={[ styles.buttonText, textStyle ]}
+                            testID="button-text"
+                        >
+                            { text }
+                        </Text>
+                    ) }
 
                     { icon }
                 </View>

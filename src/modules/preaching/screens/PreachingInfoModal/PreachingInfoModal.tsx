@@ -1,5 +1,5 @@
 import React, { FC } from 'react';
-import { Text, View, useWindowDimensions } from 'react-native';
+import { Text, View } from 'react-native';
 import { useStyles } from 'react-native-unistyles';
 
 /* Screens */
@@ -18,6 +18,7 @@ import { report } from '../../utils';
 
 /* Styles */
 import stylesheet from './styles';
+import { styles as themeStylesheet } from '../../../theme';
 
 /**
  * Generates a preaching information modal component.
@@ -29,8 +30,9 @@ import stylesheet from './styles';
 const PreachingInfoModal: FC<ModalProps> = ({ isOpen, onClose }): JSX.Element => {
     const { state: { user } } = useAuth();
     const { state: { preachings } } = usePreaching();
-    const { styles, theme: { colors } } = useStyles(stylesheet);
-    const { width } = useWindowDimensions();
+
+    const { styles: themeStyles } = useStyles(themeStylesheet);
+    const { styles, theme: { colors, fontSizes, margins } } = useStyles(stylesheet);
 
     const preachingsOfWeek = date.getArrayValuesOfWeek(preachings);
 
@@ -41,7 +43,7 @@ const PreachingInfoModal: FC<ModalProps> = ({ isOpen, onClose }): JSX.Element =>
 
     return (
         <Modal isOpen={ isOpen }>
-            <View style={{ ...styles.modal, width: width - 48 }}>
+            <View style={ themeStyles.modalContainer }>
                 <Text style={ styles.modalTitle }>
                     Información de Predicación
                 </Text>
@@ -94,12 +96,12 @@ const PreachingInfoModal: FC<ModalProps> = ({ isOpen, onClose }): JSX.Element =>
                     </View>
                 ) }
 
-                <View style={{ flexDirection: 'row', justifyContent: 'flex-end', marginTop: 24 }}>
+                <View style={{ flexDirection: 'row', justifyContent: 'flex-end', marginTop: margins.md }}>
                     <Button
-                        containerStyle={{ paddingHorizontal: 12, minWidth: 0 }}
+                        containerStyle={{ paddingHorizontal: (margins.xs + 4), minWidth: 0 }}
                         onPress={ onClose }
                         text="ESTA BIEN"
-                        textStyle={{ color: colors.button, fontSize: 16 }}
+                        textStyle={{ color: colors.button, fontSize: fontSizes.sm }}
                         touchableStyle={{ backgroundColor: 'transparent' }}
                         underlayColor={ colors.buttonTranslucent }
                     />

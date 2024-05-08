@@ -28,7 +28,7 @@ import { styles as themeStylesheet } from '../../../theme';
  */
 export const PreachingForm = (): JSX.Element => {
     const { setErrorForm } = useStatus();
-    const { styles: themeStyles, theme: { colors, margins } } = useStyles(themeStylesheet);
+    const { styles: themeStyles, theme: { colors, fontSizes, margins } } = useStyles(themeStylesheet);
     const { state: { isPreachingLoading, seletedPreaching }, savePreaching, updatePreaching } = usePreaching();
 
     /**
@@ -55,7 +55,7 @@ export const PreachingForm = (): JSX.Element => {
             validateOnMount
         >
             { ({ handleSubmit, errors, isValid }) => (
-                <View style={{ ...themeStyles.formContainer, justifyContent: 'flex-start', paddingBottom: margins.lg }}>
+                <View style={{ ...themeStyles.formContainer, justifyContent: 'flex-start', paddingBottom: margins.xl }}>
 
                     {/* Day field */}
                     <DatetimeField
@@ -63,7 +63,7 @@ export const PreachingForm = (): JSX.Element => {
                             <Icon
                                 color={ colors.contentHeader }
                                 name="calendar-outline"
-                                size={ 25 }
+                                size={ fontSizes.icon }
                             />
                         }
                         inputDateFormat="DD"
@@ -80,7 +80,7 @@ export const PreachingForm = (): JSX.Element => {
                             <Icon
                                 color={ colors.contentHeader }
                                 name="time-outline"
-                                size={ 25 }
+                                size={ fontSizes.icon }
                             />
                         }
                         inputDateFormat="HH:mm"
@@ -97,7 +97,7 @@ export const PreachingForm = (): JSX.Element => {
                             <Icon
                                 color={ colors.contentHeader }
                                 name="time-outline"
-                                size={ 25 }
+                                size={ fontSizes.icon }
                             />
                         }
                         inputDateFormat="HH:mm"
@@ -106,21 +106,18 @@ export const PreachingForm = (): JSX.Element => {
                         mode="time"
                         name="finalHour"
                         placeholder="Seleccione la hora"
-                        style={{ marginBottom: 40 }}
+                        style={{ marginBottom: margins.xl }}
                     />
 
                     {/* Submit button */}
                     <Button
                         disabled={ isPreachingLoading }
-                        icon={
-                            (isPreachingLoading) && (
-                                <ActivityIndicator
-                                    color={ colors.contentHeader }
-                                    size={ 25 }
-                                    style={{ marginLeft: 10 }}
-                                />
-                            )
-                        }
+                        icon={ (isPreachingLoading) && (
+                            <ActivityIndicator
+                                color={ colors.contentHeader }
+                                size={ fontSizes.icon }
+                            />
+                        ) }
                         onPress={ (isValid) ? handleSubmit : () => setErrorForm(errors) }
                         text={ (seletedPreaching.id !== '') ? 'Actualizar' : 'Guardar' }
                     />

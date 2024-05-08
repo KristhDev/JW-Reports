@@ -1,6 +1,6 @@
 import { createStyleSheet } from 'react-native-unistyles';
 
-const styles = createStyleSheet(({ colors, margins }) => ({
+const styles = createStyleSheet(({ colors, fontSizes, margins }) => ({
     sectionStyle: {
         paddingBottom: margins.md,
         width: '100%'
@@ -8,15 +8,25 @@ const styles = createStyleSheet(({ colors, margins }) => ({
 
     sectionSubTitle: {
         color: colors.text,
-        fontSize: 19,
+        fontSize: (fontSizes.sm + 3),
         fontWeight: 'bold',
         marginBottom: margins.xs
+    },
+
+    sectionTextLink: {
+        color: colors.linkText,
+        fontSize: (fontSizes.sm + 3),
+    },
+
+    sectionText: {
+        color: colors.text,
+        fontSize: (fontSizes.sm + 3),
     },
 
     dateCreatedText: {
         bottom: margins.md,
         color: colors.modalText,
-        fontSize: 16,
+        fontSize: fontSizes.sm,
         position: 'absolute',
         right: margins.md,
     },
@@ -28,7 +38,7 @@ const styles = createStyleSheet(({ colors, margins }) => ({
 
     cardHeaderText: {
         color: colors.text,
-        fontSize: 24,
+        fontSize: fontSizes.md,
         fontWeight: 'bold',
         padding: margins.xs,
         textAlign: 'center'
@@ -36,7 +46,7 @@ const styles = createStyleSheet(({ colors, margins }) => ({
 
     cardContentText: {
         color: colors.text,
-        fontSize: 19,
+        fontSize: (fontSizes.sm + 3),
         padding: margins.md
     }
 }));

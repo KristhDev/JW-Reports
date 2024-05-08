@@ -29,7 +29,7 @@ import { styles as themeStylesheet } from '../../../theme';
 export const LessonForm = (): JSX.Element => {
     const { state: { isLessonLoading, selectedLesson }, saveLesson, updateLesson } = useLessons();
     const { setErrorForm } = useStatus();
-    const { styles: themeStyles, theme: { colors, margins } } = useStyles(themeStylesheet);
+    const { styles: themeStyles, theme: { colors, fontSizes, margins } } = useStyles(themeStylesheet);
 
     /**
      * If the selectedLesson.id is an empty string, then saveLesson, otherwise updateLesson.
@@ -57,7 +57,7 @@ export const LessonForm = (): JSX.Element => {
             validationSchema={ lessonFormSchema }
         >
             { ({ handleSubmit, errors, isValid }) => (
-                <View style={{ ...themeStyles.formContainer, paddingBottom: margins.lg }}>
+                <View style={{ ...themeStyles.formContainer, paddingBottom: margins.xl }}>
 
                     {/* Description field */}
                     <FormField
@@ -74,7 +74,7 @@ export const LessonForm = (): JSX.Element => {
                             <Icon
                                 color={ colors.contentHeader }
                                 name="calendar-outline"
-                                size={ 25 }
+                                size={ fontSizes.icon }
                             />
                         }
                         inputDateFormat="DD/MM/YYYY"
@@ -83,7 +83,7 @@ export const LessonForm = (): JSX.Element => {
                         mode="date"
                         name="nextLesson"
                         placeholder="Seleccione el día"
-                        style={{ marginBottom: margins.lg }}
+                        style={{ marginBottom: margins.xl }}
                     />
 
                     <View style={{ flex: 1 }} />
@@ -95,8 +95,7 @@ export const LessonForm = (): JSX.Element => {
                             (isLessonLoading) && (
                                 <ActivityIndicator
                                     color={ colors.contentHeader }
-                                    size={ 25 }
-                                    style={{ marginLeft: 10 }}
+                                    size={ fontSizes.icon }
                                 />
                             )
                         }

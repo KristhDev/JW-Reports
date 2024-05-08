@@ -38,7 +38,7 @@ export const RevisitCard: FC<RevisitCardProps> = ({ onDelete, onPass, onRevisit,
     const { width } = useWindowDimensions();
 
     const { setSelectedRevisit } = useRevisits();
-    const { styles, theme: { colors } } = useStyles(stylesheet);
+    const { styles, theme: { colors, fontSizes, margins } } = useStyles(stylesheet);
 
     const nextVisit = date.format(revisit.nextVisit, 'DD [de] MMMM [del] YYYY');
 
@@ -84,7 +84,7 @@ export const RevisitCard: FC<RevisitCardProps> = ({ onDelete, onPass, onRevisit,
                 foreground: true
             }}
             onPress={ handleRevisitDetail }
-            style={{ ...styles.touchable, width: width - 16 }}
+            style={{ ...styles.touchable, width: width - margins.sm }}
             testID="revisit-card-touchable"
         >
             <View style={ styles.container }>
@@ -119,7 +119,7 @@ export const RevisitCard: FC<RevisitCardProps> = ({ onDelete, onPass, onRevisit,
                         <Icon
                             color={ colors.button }
                             name="ellipsis-vertical"
-                            size={ 21 }
+                            size={ (fontSizes.md - 3) }
                         />
                     }
                     onPress={ () => setIsOpen(true) }

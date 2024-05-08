@@ -15,6 +15,9 @@ import { useAuth } from '../../hooks';
 /* Schemas */
 import { forgotPasswordFormSchema } from './schemas';
 
+/* Interfaces */
+import { EmailData } from '../../interfaces';
+
 /* Theme */
 import { styles as themeStylesheet } from '../../../theme';
 
@@ -29,7 +32,7 @@ export const ForgotPasswordForm = (): JSX.Element => {
 
     const { state: { isAuthLoading }, resetPassword } = useAuth();
     const { setErrorForm } = useStatus();
-    const { styles: themeStyles, theme: { colors, margins } } = useStyles(themeStylesheet);
+    const { styles: themeStyles, theme: { colors, fontSizes, margins } } = useStyles(themeStylesheet);
 
     /**
      * Handles the reset password functionality.
@@ -38,7 +41,7 @@ export const ForgotPasswordForm = (): JSX.Element => {
      * @param {Function} resetForm - A function to reset the form.
      * @return {void} This function does not return any value.
      */
-    const handleResetPassword = (values: { email: string }, resetForm: ()  => void): void => {
+    const handleResetPassword = (values: EmailData, resetForm: ()  => void): void => {
         resetPassword(values);
         resetForm();
     }
@@ -52,8 +55,8 @@ export const ForgotPasswordForm = (): JSX.Element => {
         >
             { ({ handleSubmit, isValid, errors }) => (
                 <View style={ themeStyles.formContainer }>
-                    <View style={{ ...themeStyles.btnLink, marginTop: 0, marginBottom: margins.lg }}>
-                        <Text style={{ ...themeStyles.formText, fontSize: 18 }}>
+                    <View style={{ ...themeStyles.btnLink, marginTop: 0, marginBottom: margins.xl }}>
+                        <Text style={{ ...themeStyles.formText, fontSize: (fontSizes.sm + 2) }}>
                             Ingresa tu correo electrónico para restablecer tu contraseña y recuperar tu cuenta.
                         </Text>
                     </View>
@@ -65,28 +68,25 @@ export const ForgotPasswordForm = (): JSX.Element => {
                             <Icon
                                 color={ colors.icon }
                                 name="mail-outline"
-                                size={ 25 }
+                                size={ fontSizes.icon }
                             />
                         }
                         keyboardType="email-address"
                         label="Correo:"
                         name="email"
                         placeholder="Ingrese su correo"
-                        style={{ marginBottom: 40 }}
+                        style={{ marginBottom: margins.xl }}
                     />
 
                     {/* Submit button */}
                     <Button
                         disabled={ isAuthLoading }
-                        icon={
-                            (isAuthLoading) && (
-                                <ActivityIndicator
-                                    color={ colors.contentHeader }
-                                    size={ 25 }
-                                    style={{ marginLeft: 10 }}
-                                />
-                            )
-                        }
+                        icon={ (isAuthLoading) && (
+                            <ActivityIndicator
+                                color={ colors.contentHeader }
+                                size={ fontSizes.icon }
+                            />
+                        ) }
                         onPress={ (isValid) ? handleSubmit : () => setErrorForm(errors)  }
                         text="Restablecer contraseña"
                     />

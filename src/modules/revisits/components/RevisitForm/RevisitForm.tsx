@@ -36,7 +36,7 @@ export const RevisitForm = (): JSX.Element => {
     const { image, takeImageToGallery, takePhoto } = useImage();
     const { state: { selectedRevisit, isRevisitLoading }, saveRevisit, updateRevisit } = useRevisits();
     const { setErrorForm } = useStatus();
-    const { styles: themeStyles, theme: { colors, margins } } = useStyles(themeStylesheet);
+    const { styles: themeStyles, theme: { colors, fontSizes, margins } } = useStyles(themeStylesheet);
 
     /**
      * If the selectedRevisit.id is an empty string, then saveRevisit is called with the revisitValues
@@ -110,7 +110,7 @@ export const RevisitForm = (): JSX.Element => {
             validationSchema={ revisitFormSchema }
         >
             { ({ handleSubmit, errors, isValid }) => (
-                <View style={{ ...themeStyles.formContainer, paddingBottom: margins.lg }}>
+                <View style={{ ...themeStyles.formContainer, paddingBottom: margins.xl }}>
 
                     {/* Person name field */}
                     <FormField
@@ -118,7 +118,7 @@ export const RevisitForm = (): JSX.Element => {
                             <Icon
                                 color={ colors.icon }
                                 name="person-outline"
-                                size={ 25 }
+                                size={ fontSizes.icon }
                             />
                         }
                         label="Nombre de la persona:"
@@ -165,8 +165,7 @@ export const RevisitForm = (): JSX.Element => {
                                     <Icon
                                         color={ colors.contentHeader }
                                         name="image-outline"
-                                        size={ 25 }
-                                        style={{ marginLeft: 5 }}
+                                        size={ fontSizes.icon }
                                     />
                                 }
                                 onPress={ takeImageToGallery }
@@ -180,8 +179,7 @@ export const RevisitForm = (): JSX.Element => {
                                     <Icon
                                         color={ colors.contentHeader }
                                         name="camera-outline"
-                                        size={ 25 }
-                                        style={{ marginLeft: 5 }}
+                                        size={ fontSizes.icon }
                                     />
                                 }
                                 onPress={ takePhoto }
@@ -196,7 +194,7 @@ export const RevisitForm = (): JSX.Element => {
                             <Icon
                                 color={ colors.contentHeader }
                                 name="calendar-outline"
-                                size={ 25 }
+                                size={ fontSizes.icon }
                             />
                         }
                         inputDateFormat="DD/MM/YYYY"
@@ -205,21 +203,18 @@ export const RevisitForm = (): JSX.Element => {
                         mode="date"
                         name="nextVisit"
                         placeholder="Seleccione el día"
-                        style={{ marginBottom: margins.lg }}
+                        style={{ marginBottom: margins.xl }}
                     />
 
                     {/* Submit button */}
                     <Button
                         disabled={ isRevisitLoading }
-                        icon={
-                            (isRevisitLoading) && (
-                                <ActivityIndicator
-                                    color={ colors.contentHeader }
-                                    size={ 25 }
-                                    style={{ marginLeft: 10 }}
-                                />
-                            )
-                        }
+                        icon={ (isRevisitLoading) && (
+                            <ActivityIndicator
+                                color={ colors.contentHeader }
+                                size={ fontSizes.icon }
+                            />
+                        ) }
                         onPress={ (isValid) ? handleSubmit : () => setErrorForm(errors) }
                         text={ (selectedRevisit.id !== '') ? 'Actualizar' : 'Guardar' }
                     />

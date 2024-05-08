@@ -20,7 +20,7 @@ import { styles as themeStylesheet } from '../../../theme';
  * @return {JSX.Element} rendered component to show form to add or edit a revisit
  */
 const AddOrEditRevisit = (): JSX.Element => {
-    const { styles: themeStyles, theme: { margins } } = useStyles(themeStylesheet);
+    const { styles: themeStyles, theme: { fontSizes, margins } } = useStyles(themeStylesheet);
     const { state: { selectedRevisit } } = useRevisits();
 
     return (
@@ -32,7 +32,7 @@ const AddOrEditRevisit = (): JSX.Element => {
                 <Title
                     containerStyle={ themeStyles.titleContainer }
                     text={ `${ (selectedRevisit.id === '') ? 'Agregar' : 'Editar' } revisita` }
-                    textStyle={{ fontSize: 24 }}
+                    textStyle={{ fontSize: fontSizes.md }}
                 />
 
                 <RevisitForm />

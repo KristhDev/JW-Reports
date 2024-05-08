@@ -18,7 +18,7 @@ const Register = (): JSX.Element => {
 
     return (
         <KeyboardAwareScrollView
-            contentContainerStyle={{ flexGrow: 1, paddingBottom: 25 }}
+            contentContainerStyle={{ flexGrow: 1, paddingBottom: margins.md }}
             extraHeight={ 50 }
             overScrollMode="never"
         >

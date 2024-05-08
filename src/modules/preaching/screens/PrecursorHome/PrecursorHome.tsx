@@ -41,7 +41,7 @@ const Home = (): JSX.Element => {
 
     const { state: { user } } = useAuth();
     const { state: { selectedDate, preachings, isPreachingsLoading }, setSelectedPreaching, loadPreachings } = usePreaching();
-    const { styles: themeStyles, theme: { colors, margins } } = useStyles(themeStylesheet);
+    const { styles: themeStyles, theme: { colors, fontSizes, margins } } = useStyles(themeStylesheet);
 
     const month = date.format(selectedDate,'MMMM').toUpperCase();
     const currentMonth = date.format(new Date(), 'MMMM').toUpperCase();
@@ -92,14 +92,14 @@ const Home = (): JSX.Element => {
                 <Title
                     containerStyle={ themeStyles.titleContainer }
                     text={ `INFORME DE ${ month } ${ year }` }
-                    textStyle={{ fontSize: 24 }}
+                    textStyle={{ fontSize: fontSizes.md }}
                 />
 
                 {/* If the preachings are loading, show a loading indicator */}
                 { (isPreachingsLoading) && (
                     <ActivityIndicator
                         color={ colors.button }
-                        size={ 50 }
+                        size={ (fontSizes.xxl + 2) }
                         style={{ marginTop: height * 0.32 }}
                         testID="home-loading"
                     />
@@ -126,7 +126,7 @@ const Home = (): JSX.Element => {
                         <Icon
                             color={ colors.contentHeader }
                             name="information-circle-outline"
-                            size={ 41 }
+                            size={ (fontSizes.xl + 1) }
                         />
                     }
                     onPress={ () => setShowPreachingInfoModal(true) }
@@ -141,7 +141,7 @@ const Home = (): JSX.Element => {
                     <Icon
                         color={ colors.contentHeader }
                         name="reader-outline"
-                        size={ 40 }
+                        size={ fontSizes.xl }
                     />
                 }
                 onPress={ () => setShowReportModal(true) }
@@ -155,7 +155,7 @@ const Home = (): JSX.Element => {
                     <Icon
                         color={ colors.contentHeader }
                         name="add-circle-outline"
-                        size={ 40 }
+                        size={ fontSizes.xl }
                     />
                 }
                 onPress={ handleNavigate }

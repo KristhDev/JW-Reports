@@ -52,7 +52,7 @@ export const FormField: FC<FormFieldProps> = ({
 
     const textInputRef = useRef<TextInput>(null);
 
-    const { styles: themeStyles, theme: { colors } } = useStyles(themeStylesheet);
+    const { styles: themeStyles, theme: { colors, margins } } = useStyles(themeStylesheet);
 
     /**
      * Handles the blur event for the input field.
@@ -125,7 +125,7 @@ export const FormField: FC<FormFieldProps> = ({
                                 {
                                     ...themeStyles.formInput,
                                     flex: 1,
-                                    paddingRight: 5,
+                                    paddingRight: (margins.xs - 3),
                                     textAlignVertical: (rest.multiline) ? 'top' : 'center',
                                 },
                                 inputStyle

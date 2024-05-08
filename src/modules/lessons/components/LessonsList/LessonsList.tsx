@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { FlatList } from 'react-native';
+import { useStyles } from 'react-native-unistyles';
 
 /* Features */
 import { INIT_LESSON } from '../../features';
@@ -30,6 +31,8 @@ export const LessonsList = (): JSX.Element => {
     const [ isRefreshing, setIsRefreshing ] = useState<boolean>(false);
     const [ showDeleteModal, setShowDeleteModal ] = useState<boolean>(false);
     const [ showFSModal, setShowFSModal ] = useState<boolean>(false);
+
+    const { theme: { fontSizes, margins } } = useStyles();
 
     const { state: { selectedCourse } } = useCourses();
 
@@ -149,7 +152,7 @@ export const LessonsList = (): JSX.Element => {
     return (
         <>
             <FlatList
-                contentContainerStyle={{ alignItems: 'center', padding: 24, paddingBottom: 100, flexGrow: 1 }}
+                contentContainerStyle={{ alignItems: 'center', padding: margins.md, paddingBottom: 100, flexGrow: 1 }}
                 data={ lessons }
                 keyExtractor={ (item) => item.id }
                 ListFooterComponent={
@@ -161,9 +164,9 @@ export const LessonsList = (): JSX.Element => {
                 ListHeaderComponent={
                     <>
                         <Title
-                            containerStyle={{ marginVertical: 8 }}
+                            containerStyle={{ marginVertical: margins.xs }}
                             text={ `Clases del curso con ${ selectedCourse.personName }` }
-                            textStyle={{ fontSize: 24 }}
+                            textStyle={{ fontSize: fontSizes.md }}
                         />
 
                         <SearchInput

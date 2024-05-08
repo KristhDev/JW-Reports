@@ -26,7 +26,7 @@ import { styles as themeStylesheet } from '../../../theme';
  */
 const ActiveOrSuspendCourseModal: FC<ModalProps> = ({ onClose, isOpen }): JSX.Element => {
     const { state: { selectedCourse, isCourseLoading }, activeOrSuspendCourse } = useCourses();
-    const { styles: themeStyles, theme: { colors } } = useStyles(themeStylesheet);
+    const { styles: themeStyles, theme: { colors, fontSizes, margins } } = useStyles(themeStylesheet);
 
     const modalMsg = (selectedCourse.suspended)
         ? '¿Está seguro de continuar este curso?'
@@ -62,19 +62,19 @@ const ActiveOrSuspendCourseModal: FC<ModalProps> = ({ onClose, isOpen }): JSX.El
                     {/* Modal actions */}
                     <View style={{ ...themeStyles.modalActions, alignSelf: 'flex-end' }}>
                         <Button
-                            containerStyle={{ paddingHorizontal: 12, minWidth: 0 }}
+                            containerStyle={{ paddingHorizontal: (margins.xs + 4), minWidth: 0 }}
                             onPress={ onClose }
                             text="CANCELAR"
-                            textStyle={{ color: colors.button, fontSize: 16 }}
+                            textStyle={{ color: colors.button, fontSize: fontSizes.sm }}
                             touchableStyle={{ backgroundColor: 'transparent' }}
                             underlayColor={ colors.buttonTranslucent }
                         />
 
                         <Button
-                            containerStyle={{ paddingHorizontal: 12, minWidth: 0 }}
+                            containerStyle={{ paddingHorizontal: (margins.xs + 4), minWidth: 0 }}
                             onPress={ handleConfirm }
                             text={ confirmTextButton }
-                            textStyle={{ color: colors.button, fontSize: 16 }}
+                            textStyle={{ color: colors.button, fontSize: fontSizes.sm }}
                             touchableStyle={{ backgroundColor: 'transparent' }}
                             underlayColor={ colors.buttonTranslucent }
                         />

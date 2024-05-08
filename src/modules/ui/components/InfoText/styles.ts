@@ -1,13 +1,13 @@
 import { createStyleSheet } from 'react-native-unistyles';
 
-const styles = createStyleSheet(({ colors, margins }) => ({
+const styles = createStyleSheet(({ colors, margins, fontSizes }) => ({
     container: {
         padding: margins.sm
     },
 
     text: {
         color: colors.icon,
-        fontSize: 17,
+        fontSize: (fontSizes.sm + 1),
         textAlign: 'center'
     }
 }));

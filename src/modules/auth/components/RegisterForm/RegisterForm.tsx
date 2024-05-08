@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, TouchableOpacity, useWindowDimensions, ActivityIndicator } from 'react-native';
+import { ActivityIndicator, Text, TouchableOpacity, View } from 'react-native';
 import { useStyles } from 'react-native-unistyles';
 import { useNavigation } from '@react-navigation/native';
 import { Formik } from 'formik';
@@ -29,11 +29,10 @@ export const RegisterForm = (): JSX.Element => {
     const [ showConfirmPassword, setShowConfirmPassword ] = useState<boolean>(false);
 
     const { navigate } = useNavigation();
-    const { width } = useWindowDimensions();
 
     const { state: { isAuthLoading }, signUp } = useAuth();
     const { setErrorForm } = useStatus();
-    const { styles: themeStyles, theme: { colors } } = useStyles(themeStylesheet);
+    const { styles: themeStyles, theme: { colors, fontSizes, margins } } = useStyles(themeStylesheet);
 
     return (
         <Formik
@@ -58,7 +57,7 @@ export const RegisterForm = (): JSX.Element => {
                             <Icon
                                 color={ colors.icon }
                                 name="person-outline"
-                                size={ 25 }
+                                size={ fontSizes.icon }
                             />
                         }
                         label="Nombre:"
@@ -73,7 +72,7 @@ export const RegisterForm = (): JSX.Element => {
                             <Icon
                                 color={ colors.icon }
                                 name="people-outline"
-                                size={ 25 }
+                                size={ fontSizes.icon }
                             />
                         }
                         label="Apellidos:"
@@ -88,7 +87,7 @@ export const RegisterForm = (): JSX.Element => {
                             <Icon
                                 color={ colors.icon }
                                 name="mail-outline"
-                                size={ 25 }
+                                size={ fontSizes.icon }
                             />
                         }
                         keyboardType="email-address"
@@ -130,22 +129,19 @@ export const RegisterForm = (): JSX.Element => {
                     {/* Submit button */}
                     <Button
                         disabled={ isAuthLoading }
-                        icon={
-                            (isAuthLoading) && (
-                                <ActivityIndicator
-                                    color={ colors.contentHeader }
-                                    size={ 25 }
-                                    style={{ marginLeft: 10 }}
-                                />
-                            )
-                        }
+                        icon={ (isAuthLoading) && (
+                            <ActivityIndicator
+                                color={ colors.contentHeader }
+                                size={ fontSizes.icon }
+                            />
+                        ) }
                         onPress={ (isValid) ? handleSubmit : () => setErrorForm(errors) }
                         text="Crear cuenta"
-                        touchableStyle={{ marginTop: 30 }}
+                        touchableStyle={{ marginTop: (margins.lg - 2) }}
                     />
 
                     {/* Sign in link */}
-                    <View style={{ ...themeStyles.btnLink, width: width * 0.9 }}>
+                    <View style={ themeStyles.btnLink }>
                         <Text style={ themeStyles.formText }>
                             ¿Ya tienes cuenta?
                         </Text>

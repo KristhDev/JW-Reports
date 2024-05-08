@@ -21,7 +21,7 @@ import { styles as themeStylesheet } from '../../../theme';
  */
 const AddOrEditPreaching = (): JSX.Element => {
     const { state: { seletedPreaching } } = usePreaching();
-    const { styles: themeStyles, theme: { margins } } = useStyles(themeStylesheet);
+    const { styles: themeStyles, theme: { fontSizes, margins } } = useStyles(themeStylesheet);
 
     return (
         <KeyboardAwareScrollView
@@ -31,7 +31,7 @@ const AddOrEditPreaching = (): JSX.Element => {
             <View style={{ flex: 1, alignItems: 'center', padding: margins.md }}>
                 <Title
                     containerStyle={ themeStyles.titleContainer }
-                    textStyle={{ fontSize: 24 }}
+                    textStyle={{ fontSize: fontSizes.md }}
                     text={ `${ (seletedPreaching.id === '') ? 'Agregar' : 'Editar' } día de predicación` }
                 />
 

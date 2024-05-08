@@ -29,7 +29,7 @@ import { styles as themeStylesheet } from '../../../theme';
 export const CourseForm = (): JSX.Element => {
     const { state: { isCourseLoading, selectedCourse }, saveCourse, updateCourse } = useCourses();
     const { setErrorForm } = useStatus();
-    const { styles: themeStyles, theme: { colors, margins } } = useStyles(themeStylesheet);
+    const { styles: themeStyles, theme: { colors, fontSizes, margins } } = useStyles(themeStylesheet);
 
     /**
      * If the selectedCourse.id is an empty string, then save the formValues, otherwise update the
@@ -57,7 +57,7 @@ export const CourseForm = (): JSX.Element => {
             validationSchema={ courseFormSchema }
         >
             { ({ handleSubmit, errors, isValid }) => (
-                <View style={{ ...themeStyles.formContainer, paddingBottom: margins.lg }}>
+                <View style={{ ...themeStyles.formContainer, paddingBottom: margins.xl }}>
 
                     {/* Person name field */}
                     <FormField
@@ -65,7 +65,7 @@ export const CourseForm = (): JSX.Element => {
                             <Icon
                                 color={ colors.icon }
                                 name="person-outline"
-                                size={ 25 }
+                                size={ fontSizes.icon }
                             />
                         }
                         label="Nombre del estudiante:"
@@ -97,27 +97,24 @@ export const CourseForm = (): JSX.Element => {
                             <Icon
                                 color={ colors.icon }
                                 name="book-outline"
-                                size={ 25 }
+                                size={ fontSizes.icon }
                             />
                         }
                         label="Publicación de estudio:"
                         name="publication"
                         placeholder="Ingrese la publicación"
-                        style={{ marginBottom: margins.lg }}
+                        style={{ marginBottom: margins.xl }}
                     />
 
                     {/* Submit button */}
                     <Button
                         disabled={ isCourseLoading }
-                        icon={
-                            (isCourseLoading) && (
-                                <ActivityIndicator
-                                    color={ colors.contentHeader }
-                                    size={ 25 }
-                                    style={{ marginLeft: 10 }}
-                                />
-                            )
-                        }
+                        icon={ (isCourseLoading) && (
+                            <ActivityIndicator
+                                color={ colors.contentHeader }
+                                size={ fontSizes.icon }
+                            />
+                        ) }
                         onPress={ (isValid) ? handleSubmit : () => setErrorForm(errors) }
                         text={ (selectedCourse.id !== '') ? 'Actualizar' : 'Guardar' }
                     />

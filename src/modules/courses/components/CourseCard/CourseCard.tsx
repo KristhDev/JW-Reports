@@ -10,25 +10,24 @@ import { Fab } from '../../../ui';
 
 /* Hooks */
 import { useCourses } from '../../hooks';
+import { useLessons } from '../../../lessons';
 
 /* Interfaces */
 import { CourseCardProps } from './interfaces';
 
 /* Styles */
 import stylesheet from './styles';
-import { useLessons } from '../../../lessons';
 
 /**
  * This component is responsible for rendering part of the information of a
  * course in the form of a card.
  *
- * @param {CourseCardProps} props { course: Course, onActiveOrSuspend: () => void, onDelete: () =>, onFinishOrStart: () => void } - This a props
- * to functionality of the component
- * - course: Its course object that render in the card
- * - onActiveOrSuspend: Function to active or suspend the course
- * - onDelete: Function to delete the course
- * - onFinishOrStart: Function to finish or start again the course
- * @return {JSX.Element} rendered component to show the course
+ * @param {CourseCardProps} props The props to functionality of the component
+ * @param {Course} props.course The course object that render in the card
+ * @param {() => void} props.onActiveOrSuspend The function to active or suspend the course
+ * @param {() => void} props.onDelete The function to delete the course
+ * @param {() => void} props.onFinishOrStart The function to finish or start again the course
+ * @return {JSX.Element} The JSX element representing the course card
  */
 export const CourseCard: FC<CourseCardProps> = ({ course, onActiveOrSuspend, onDelete, onFinishOrStart }): JSX.Element => {
     const [ isOpen, setIsOpen ] = useState<boolean>(false);
@@ -37,7 +36,7 @@ export const CourseCard: FC<CourseCardProps> = ({ course, onActiveOrSuspend, onD
 
     const { setSelectedCourse } = useCourses();
     const { state: { selectedLesson }, setSelectedLesson } = useLessons();
-    const { styles, theme: { colors } } = useStyles(stylesheet);
+    const { styles, theme: { colors, fontSizes, margins } } = useStyles(stylesheet);
 
     /**
      * When the user clicks on a course, set the selected course to the course that was clicked on and
@@ -111,14 +110,14 @@ export const CourseCard: FC<CourseCardProps> = ({ course, onActiveOrSuspend, onD
                 foreground: true
             }}
             onPress={ handleCourseDetail }
-            style={{ ...styles.touchable, width: width - 16 }}
+            style={{ ...styles.touchable, width: width - margins.sm }}
             testID="course-card-touchable"
         >
             <View style={ styles.container }>
 
                 {/* Course status */}
                 <Text
-                    style={ styles.textDate }
+                    style={ styles.textStatus }
                     testID="course-card-status-text"
                 >
                     { (course.finished)
@@ -158,7 +157,7 @@ export const CourseCard: FC<CourseCardProps> = ({ course, onActiveOrSuspend, onD
                         <Icon
                             color={ colors.button }
                             name="ellipsis-vertical"
-                            size={ 21 }
+                            size={ (fontSizes.md - 3) }
                         />
                     }
                     onPress={ () => setIsOpen(true) }
@@ -177,7 +176,7 @@ export const CourseCard: FC<CourseCardProps> = ({ course, onActiveOrSuspend, onD
                     <MenuOptions optionsContainerStyle={{ backgroundColor: colors.card, borderRadius: 5, width: 220 }}>
 
                         {/* Show menu options then course.finished is false */}
-                        {/* It is not possible edit, continue or suspend the course if it is finished */}
+                        {/* It is not possible edit, continue or suspend the course if this is finished */}
                         { (!course.finished) && (
                             <>
                                 <MenuOption onSelect={ handleEdit }>
@@ -201,7 +200,7 @@ export const CourseCard: FC<CourseCardProps> = ({ course, onActiveOrSuspend, onD
                         </MenuOption>
 
                         {/* Show menu options then course.suspended is false */}
-                        {/* It is not possible to finish or add lessons to the course if it is suspended */}
+                        {/* It is not possible to finish or add lessons to the course if this is suspended */}
                         { (!course.suspended) && (
                             <>
                                 <MenuOption onSelect={ handleAddClass }>

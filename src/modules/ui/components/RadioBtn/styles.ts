@@ -1,10 +1,10 @@
 import { createStyleSheet } from 'react-native-unistyles';
 
-const styles = createStyleSheet(({ colors, margins }) => ({
+const styles = createStyleSheet(({ colors, margins, fontSizes }) => ({
     radioContainer: {
         alignItems: 'center',
         flexDirection: 'row',
-        marginBottom: 5
+        marginBottom: (margins.xs - 3)
     },
 
     radioPressable: {
@@ -13,7 +13,7 @@ const styles = createStyleSheet(({ colors, margins }) => ({
         borderWidth: 2,
         height: 20,
         justifyContent: 'center',
-        padding: 3,
+        padding: (margins.xs - 5),
         width: 20
     },
 
@@ -25,7 +25,7 @@ const styles = createStyleSheet(({ colors, margins }) => ({
 
     radioLabel: {
         color: colors.text,
-        fontSize: 18,
+        fontSize: (fontSizes.sm + 2),
         marginLeft: margins.xs
     }
 }));

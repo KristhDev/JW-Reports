@@ -33,7 +33,7 @@ export const ProfileForm = (): JSX.Element => {
 
     const { state: { user, isAuthLoading }, updateProfile } = useAuth();
     const { setErrorForm } = useStatus();
-    const { styles: themeStyles, theme: { colors, margins } } = useStyles(themeStylesheet);
+    const { styles: themeStyles, theme: { colors, fontSizes, margins } } = useStyles(themeStylesheet);
 
     const [ editHoursRequirement, setEditHoursRequirement ] = useState<boolean>(![ 0, 30, 50, 90 ].includes(user?.hoursRequirement || 0));
 
@@ -59,7 +59,7 @@ export const ProfileForm = (): JSX.Element => {
                             <Icon
                                 color={ colors.icon }
                                 name="person-outline"
-                                size={ 25 }
+                                size={ fontSizes.icon }
                             />
                         }
                         label="Nombre:"
@@ -74,7 +74,7 @@ export const ProfileForm = (): JSX.Element => {
                             <Icon
                                 color={ colors.icon }
                                 name="people-outline"
-                                size={ 25 }
+                                size={ fontSizes.icon }
                             />
                         }
                         label="Apellidos:"
@@ -92,7 +92,7 @@ export const ProfileForm = (): JSX.Element => {
                             setEditHoursRequirement(false);
                         } }
                         placeholder="Seleccione una opción"
-                        style={{ marginBottom: (values.precursor !== 'ninguno') ? margins.sm : margins.lg }}
+                        style={{ marginBottom: (values.precursor !== 'ninguno') ? margins.sm : margins.xl }}
                         title="Seleccione su precursorado"
                     />
 
@@ -106,7 +106,7 @@ export const ProfileForm = (): JSX.Element => {
                                     <Icon
                                         color={ colors.icon }
                                         name="time-outline"
-                                        size={ 25 }
+                                        size={ fontSizes.icon }
                                     />
                                 }
                                 label="Requerimiento de horas:"
@@ -127,15 +127,12 @@ export const ProfileForm = (): JSX.Element => {
                     {/* Submit button */}
                     <Button
                         disabled={ isAuthLoading }
-                        icon={
-                            (isAuthLoading) && (
-                                <ActivityIndicator
-                                    color={ colors.contentHeader }
-                                    size={ 25 }
-                                    style={{ marginLeft: 10 }}
-                                />
-                            )
-                        }
+                        icon={ (isAuthLoading) && (
+                            <ActivityIndicator
+                                color={ colors.contentHeader }
+                                size={ fontSizes.icon }
+                            />
+                        ) }
                         onPress={ (isValid) ? handleSubmit : () => setErrorForm(errors)  }
                         text="Guardar"
                         touchableStyle={{ marginBottom: top }}

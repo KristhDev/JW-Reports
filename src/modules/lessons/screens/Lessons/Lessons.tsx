@@ -26,7 +26,7 @@ const Lessons = (): JSX.Element => {
     const { navigate } = useNavigation();
 
     const { setSelectedLesson } = useLessons();
-    const { styles: themeStyles, theme: { colors } } = useStyles(themeStylesheet);
+    const { styles: themeStyles, theme: { colors, fontSizes } } = useStyles(themeStylesheet);
 
     /**
      * I want to set the selectedLesson to the INIT_LESSON, but I want to change the next_lesson
@@ -53,7 +53,7 @@ const Lessons = (): JSX.Element => {
                     <Icon
                         color={ colors.contentHeader }
                         name="add-circle-outline"
-                        size={ 40 }
+                        size={ fontSizes.xl }
                     />
                 }
                 onPress={ handleNavigate }

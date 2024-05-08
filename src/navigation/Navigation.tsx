@@ -29,7 +29,7 @@ const Navigation = (): JSX.Element => {
     const { clearPreaching } = usePreaching();
     const { clearRevisits } = useRevisits();
     const { clearStatus } = useStatus();
-    const { state: { isAuthenticated }, renew } = useAuth();
+    const { state: { isAuthenticated }, refreshAuth } = useAuth();
     const { state: { theme } } = useTheme();
     const { wifi } = useNetwork();
 
@@ -46,7 +46,7 @@ const Navigation = (): JSX.Element => {
             clearPreaching();
             clearRevisits();
 
-            renew();
+            refreshAuth();
         }
     }, []);
 

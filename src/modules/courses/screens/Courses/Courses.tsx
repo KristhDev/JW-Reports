@@ -33,7 +33,7 @@ const Courses: FC<CoursesProps> = ({ route }): JSX.Element => {
     const { addListener, removeListener, getState, navigate } = useNavigation();
 
     const { setCoursesScreenHistory, setSelectedCourse } = useCourses();
-    const { styles: themeStyles, theme: { colors } } = useStyles(themeStylesheet);
+    const { styles: themeStyles, theme: { colors, fontSizes } } = useStyles(themeStylesheet);
 
     /**
      * The function handleNavigate is a function that takes no parameters and returns nothing. It sets
@@ -78,7 +78,7 @@ const Courses: FC<CoursesProps> = ({ route }): JSX.Element => {
                         <Icon
                             color={ colors.contentHeader }
                             name="add-circle-outline"
-                            size={ 40 }
+                            size={ fontSizes.xl }
                         />
                     }
                     onPress={ handleNavigate }

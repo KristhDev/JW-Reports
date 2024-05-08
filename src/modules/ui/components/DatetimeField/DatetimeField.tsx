@@ -57,7 +57,7 @@ export const DatetimeField: FC<DatetimeFieldProps> = ({
 }): JSX.Element => {
     const [ open, setOpen ] = useState<boolean>(false);
     const [ field, meta, helpers ] = useField({ name });
-    const { styles: themeStyles, theme: { colors } } = useStyles(themeStylesheet);
+    const { styles: themeStyles, theme: { colors, margins } } = useStyles(themeStylesheet);
 
     /**
      * The function handleConfirm takes a date as an argument and sets the state of open to false and
@@ -113,11 +113,11 @@ export const DatetimeField: FC<DatetimeFieldProps> = ({
 
                 {/* Field button */}
                 <Button
-                    containerStyle={{ minWidth: 0, paddingHorizontal: 9 }}
+                    containerStyle={{ minWidth: 0, paddingHorizontal: (margins.xs + 1) }}
                     icon={ icon }
                     onPress={ () => setOpen(true) }
                     text=""
-                    touchableStyle={{ marginLeft: 16 }}
+                    touchableStyle={{ marginLeft: margins.sm }}
                 />
             </View>
 

@@ -23,7 +23,7 @@ import { THEME_OPTIONS } from '../../../../theme';
 const Settings = (): JSX.Element => {
     const [ showThemeModal, setShowThemeModal ] = useState<boolean>(false);
     const { navigate } = useNavigation();
-    const { theme: { colors } } = useStyles();
+    const { theme: { colors, fontSizes, margins } } = useStyles();
 
     const { setStatus } = useStatus();
     const { state: { theme } } = useTheme();
@@ -105,7 +105,7 @@ const Settings = (): JSX.Element => {
 
                 {/* Copyright text */}
                 <Text
-                    style={{ color: colors.icon, fontSize: 14, padding: 20 }}
+                    style={{ color: colors.icon, fontSize: (fontSizes.sm - 2), padding: margins.sm }}
                     testID="settings-copyright-text"
                 >
                     Copyright © { new Date().getFullYear() }

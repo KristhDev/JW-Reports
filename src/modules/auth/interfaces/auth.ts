@@ -83,7 +83,7 @@ export type Precursor = 'ninguno' | 'auxiliar' | 'regular' | 'especial';
  * @property {string} precursor - The precursor of the user
  * @property {number} hoursRequirement - The hours requirement of the user
  */
-export interface IProfile {
+export interface ProfileData {
     name: string;
     surname: string;
     precursor: Precursor;
@@ -96,7 +96,7 @@ export interface IProfile {
  * @property {string} email - The email of the user
  * @property {string} password - The password of the user
  */
-export interface SignIn {
+export interface SignInData {
     email: string;
     password: string
 }
@@ -109,10 +109,28 @@ export interface SignIn {
  * @property {string} email - The email of the user
  * @property {string} password - The password of the user
  */
-export interface SignUp {
+export interface SignUpData {
     name: string;
     surname: string;
     email: string;
+    password: string;
+}
+
+/**
+ * Defining the interface of the Email object.
+ *
+ * @property {string} email - The email of the user
+ */
+export interface EmailData {
+    email: string;
+}
+
+/**
+ * Defining the interface of the UpdatePassword object.
+ *
+ * @property {string} password - The password of the user
+ */
+export interface UpdatePasswordData {
     password: string;
 }
 

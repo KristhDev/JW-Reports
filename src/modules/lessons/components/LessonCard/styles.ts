@@ -1,6 +1,6 @@
 import { createStyleSheet } from 'react-native-unistyles';
 
-const styles = createStyleSheet(({ colors, margins }) => ({
+const styles = createStyleSheet(({ colors, fontSizes, margins }) => ({
     touchable: {
         marginVertical: margins.xs,
     },
@@ -12,13 +12,13 @@ const styles = createStyleSheet(({ colors, margins }) => ({
 
     textDate: {
         color: colors.icon,
-        fontSize: 14,
-        marginBottom: 15
+        fontSize: (fontSizes.sm - 2),
+        marginBottom: margins.sm
     },
 
     textDescription: {
         color: colors.text,
-        fontSize: 16,
+        fontSize: fontSizes.sm,
     },
 
     fab: {
@@ -37,7 +37,7 @@ const styles = createStyleSheet(({ colors, margins }) => ({
 
     textMenuOpt: {
         color: colors.text,
-        fontSize: 18,
+        fontSize: (fontSizes.sm + 2),
         paddingHorizontal: 5,
         paddingVertical: 2.5
     }

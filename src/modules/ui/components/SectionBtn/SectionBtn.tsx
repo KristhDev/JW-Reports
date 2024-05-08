@@ -17,7 +17,7 @@ import { SectionBtnProps } from './interfaces';
  * @return {JSX.Element} Return jsx element to render section with button
  */
 export const SectionBtn: FC<SectionBtnProps> = ({ onPress, subText, text }): JSX.Element => {
-    const { theme: { colors, margins } } = useStyles();
+    const { theme: { colors, fontSizes, margins } } = useStyles();
 
     return (
         <Pressable
@@ -28,14 +28,14 @@ export const SectionBtn: FC<SectionBtnProps> = ({ onPress, subText, text }): JSX
         >
             <View>
                 <Text
-                    style={{ color: colors.text, fontSize: margins.sm }}
+                    style={{ color: colors.text, fontSize: fontSizes.sm }}
                     testID="section-btn-text"
                 >
                     { text }
                 </Text>
 
                 <Text
-                    style={{ color: colors.icon, fontSize: 14 }}
+                    style={{ color: colors.icon, fontSize: (fontSizes.sm - 2) }}
                     testID="section-btn-sub-text"
                 >
                     { subText }

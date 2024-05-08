@@ -1,6 +1,6 @@
 import { createStyleSheet } from 'react-native-unistyles';
 
-const styles = createStyleSheet(({ colors, margins }) => ({
+const styles = createStyleSheet(({ colors, fontSizes, margins }) => ({
     sectionContainer: {
         borderBottomColor: colors.header,
         borderBottomWidth: 1,
@@ -9,7 +9,7 @@ const styles = createStyleSheet(({ colors, margins }) => ({
 
     sectionTitle: {
         color: colors.titleSecondary,
-        fontSize: 15,
+        fontSize: (fontSizes.sm - 1),
         fontWeight: 'bold',
         textAlign: 'left'
     }

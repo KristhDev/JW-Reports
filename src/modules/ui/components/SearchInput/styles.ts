@@ -19,9 +19,9 @@ const styles = createStyleSheet(({ margins }) => ({
     cleanBtn: {
         alignItems: 'center',
         borderRadius: 999,
-        height: margins.lg,
+        height: margins.xl,
         justifyContent: 'center',
-        width: margins.lg
+        width: margins.xl
     }
 }));
 

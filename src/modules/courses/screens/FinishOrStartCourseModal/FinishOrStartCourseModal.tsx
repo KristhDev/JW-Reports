@@ -16,7 +16,7 @@ import { styles as themeStylesheet } from '../../../theme';
  */
 const FinishOrStartCourseModal: FC<ModalProps> = ({ isOpen, onClose }): JSX.Element => {
     const { state: { selectedCourse, isCourseLoading }, finishOrStartCourse } = useCourses();
-    const { styles: themeStyles, theme: { colors } } = useStyles(themeStylesheet);
+    const { styles: themeStyles, theme: { colors, fontSizes, margins } } = useStyles(themeStylesheet);
 
     const modalMsg = (selectedCourse.finished)
         ? '¿Está seguro de volver a comenzar este curso?'
@@ -47,19 +47,19 @@ const FinishOrStartCourseModal: FC<ModalProps> = ({ isOpen, onClose }): JSX.Elem
 
                     <View style={{ ...themeStyles.modalActions, alignSelf: 'flex-end' }}>
                         <Button
-                            containerStyle={{ paddingHorizontal: 12, minWidth: 0 }}
+                            containerStyle={{ paddingHorizontal: (margins.xs + 4), minWidth: 0 }}
                             onPress={ onClose }
                             text="CANCELAR"
-                            textStyle={{ color: colors.button, fontSize: 16 }}
+                            textStyle={{ color: colors.button, fontSize: fontSizes.sm }}
                             touchableStyle={{ backgroundColor: 'transparent' }}
                             underlayColor={ colors.buttonTranslucent }
                         />
 
                         <Button
-                            containerStyle={{ paddingHorizontal: 12, minWidth: 0 }}
+                            containerStyle={{ paddingHorizontal: (margins.xs + 4), minWidth: 0 }}
                             onPress={ handleConfirm }
                             text={ confirmTextButton }
-                            textStyle={{ color: colors.button, fontSize: 16 }}
+                            textStyle={{ color: colors.button, fontSize: fontSizes.sm }}
                             touchableStyle={{ backgroundColor: 'transparent' }}
                             underlayColor={ colors.buttonTranslucent }
                         />
@@ -68,7 +68,7 @@ const FinishOrStartCourseModal: FC<ModalProps> = ({ isOpen, onClose }): JSX.Elem
             ) : (
                 <ActivityIndicator
                     color={ colors.button }
-                    size={ 50 }
+                    size={ (fontSizes.xxl + 2) }
                     testID="modal-loading"
                 />
             ) }

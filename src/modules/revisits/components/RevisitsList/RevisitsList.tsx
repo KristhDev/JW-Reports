@@ -1,5 +1,6 @@
 import React, { FC, useEffect, useState } from 'react';
 import { FlatList } from 'react-native';
+import { useStyles } from 'react-native-unistyles';
 import { useNavigation } from '@react-navigation/native';
 
 /* Features */
@@ -32,6 +33,8 @@ export const RevisitsList: FC<RevisitsListProps> = ({ emptyMessage, filter, titl
     const [ showRevisitModal, setShowRevisitModal ] = useState<boolean>(false);
     const [ showPassModal, setShowPassModal ] = useState<boolean>(false);
     const [ showDeleteModal, setShowDeleteModal ] = useState<boolean>(false);
+
+    const { theme: { fontSizes, margins } } = useStyles();
 
     const { getState, isFocused } = useNavigation();
     const navigationState = getState();
@@ -196,7 +199,7 @@ export const RevisitsList: FC<RevisitsListProps> = ({ emptyMessage, filter, titl
     return (
         <>
             <FlatList
-                contentContainerStyle={{ alignItems: 'center', padding: 24, paddingBottom: 100, flexGrow: 1 }}
+                contentContainerStyle={{ alignItems: 'center', padding: margins.md, paddingBottom: 100, flexGrow: 1 }}
                 data={ revisits }
                 keyExtractor={ (item) => item.id }
                 ListFooterComponent={
@@ -208,9 +211,9 @@ export const RevisitsList: FC<RevisitsListProps> = ({ emptyMessage, filter, titl
                 ListHeaderComponent={
                     <>
                         <Title
-                            containerStyle={{ marginVertical: 8 }}
+                            containerStyle={{ marginVertical: margins.xs }}
                             text={ title }
-                            textStyle={{ fontSize: 24 }}
+                            textStyle={{ fontSize: fontSizes.md }}
                         />
 
                         <SearchInput

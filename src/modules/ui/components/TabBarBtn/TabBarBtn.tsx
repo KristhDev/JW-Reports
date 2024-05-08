@@ -30,7 +30,7 @@ import stylesheet from './styles';
  * @return {JSX.Element} Return jsx element to render tab bar btn of navigation
  */
 export const TabBarBtn: FC<TabBarBtnProps> = ({ active, color, iconName, onPress, title, totalTabs }): JSX.Element => {
-    const { styles, theme: { colors } } = useStyles(stylesheet);
+    const { styles, theme: { colors, fontSizes } } = useStyles(stylesheet);
     const [ pressColor, setPressColor ] = useState((active) ? colors.buttonTranslucent : colors.buttonTransparent);
     const { state: { theme } } = useTheme();
     const { width } = useWindowDimensions();
@@ -61,10 +61,10 @@ export const TabBarBtn: FC<TabBarBtnProps> = ({ active, color, iconName, onPress
                 <Icon
                     color={ color }
                     name={ iconName || '' }
-                    size={ 25 }
+                    size={ fontSizes.icon }
                 />
 
-                <Text style={{ color, fontSize: 12 }}>
+                <Text style={{ color, fontSize: (fontSizes.xs + 4) }}>
                     { title }
                 </Text>
             </>

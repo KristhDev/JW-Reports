@@ -26,7 +26,7 @@ export const SearchInput: FC<SearchInputProps> = ({ onClean, onSearch, refreshin
     const [ searchText, setSearchText ] = useState<string>(searchTerm);
     const [ isFocused, setIsFocused ] = useState<boolean>(false);
 
-    const { styles: themeStyles, theme: { colors } } = useStyles(themeStylesheet);
+    const { styles: themeStyles, theme: { colors, fontSizes } } = useStyles(themeStylesheet);
     const { styles } = useStyles(stylesheet);
 
     /**
@@ -55,7 +55,7 @@ export const SearchInput: FC<SearchInputProps> = ({ onClean, onSearch, refreshin
             <Icon
                 color={ colors.icon }
                 name="search-outline"
-                size={ 25 }
+                size={ fontSizes.icon }
             />
 
             {/* Input container */}
@@ -95,7 +95,7 @@ export const SearchInput: FC<SearchInputProps> = ({ onClean, onSearch, refreshin
                         <Icon
                             color={ (searchText.length === 0) ? 'transparent' : colors.icon }
                             name="close-outline"
-                            size={ 30 }
+                            size={ (fontSizes.icon + 5) }
                         />
                     </Pressable>
                 </View>

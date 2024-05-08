@@ -15,7 +15,7 @@ import { useTheme } from '../../../theme';
  * @return {JSX.Element} Return jsx element to render a button of theme
  */
 export const ThemeBtn = (): JSX.Element => {
-    const { theme: { colors, margins } } = useStyles();
+    const { theme: { colors, fontSizes, margins } } = useStyles();
     const { setTheme, state: { theme } } = useTheme();
 
     return (
@@ -25,7 +25,7 @@ export const ThemeBtn = (): JSX.Element => {
                 <Icon
                     color={ colors.contentHeader }
                     name={ (theme === 'dark') ? 'sunny-outline' : 'moon-outline' }
-                    size={ (theme === 'dark') ? 35 : 30 }
+                    size={ (theme === 'dark') ? (fontSizes.lg + 3) : (fontSizes.icon + 5) }
                     style={{ marginLeft: (theme === 'dark') ? 0 : 1, marginBottom: 1 }}
                 />
             }

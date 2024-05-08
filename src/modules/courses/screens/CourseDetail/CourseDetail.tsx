@@ -37,7 +37,7 @@ const CourseDetail = (): JSX.Element => {
 
     const { state: { selectedCourse }, setSelectedCourse } = useCourses();
     const { setSelectedLesson } = useLessons();
-    const { styles: themeStyles, theme: { colors, margins } } = useStyles(themeStylesheet);
+    const { styles: themeStyles, theme: { colors, fontSizes, margins } } = useStyles(themeStylesheet);
     const { styles } = useStyles(stylesheet);
 
     const statusCourseText = (selectedCourse.finished)
@@ -99,14 +99,14 @@ const CourseDetail = (): JSX.Element => {
                 <Title
                     containerStyle={ themeStyles.titleContainer }
                     text={ selectedCourse.personName.toUpperCase() }
-                    textStyle={{ fontSize: 24 }}
+                    textStyle={{ fontSize: fontSizes.md }}
                 />
 
                 {/* Text publication */}
                 <InfoText
                     containerStyle={{ padding: 0, paddingBottom: margins.md, width: '100%' }}
                     text={ selectedCourse.publication.toUpperCase() }
-                    textStyle={{ fontSize: 16, fontWeight: 'bold', textAlign: 'left' }}
+                    textStyle={{ fontSize: fontSizes.sm, fontWeight: 'bold', textAlign: 'left' }}
                 />
 
                 {/* Course status */}
@@ -124,7 +124,7 @@ const CourseDetail = (): JSX.Element => {
                             onPress={ () => setShowASModal(true) }
                             testID="course-detail-status-touchable"
                         >
-                            <Text style={{ color: colors.linkText, fontSize: 19 }}>
+                            <Text style={ styles.sectionTextLink }>
                                 { (selectedCourse.suspended) ? '¿Continuar?' : '¿Suspender?' }
                             </Text>
                         </TouchableOpacity>
@@ -134,7 +134,7 @@ const CourseDetail = (): JSX.Element => {
                             onPress={ () => setShowFSModal(true) }
                             testID="course-detail-status-touchable"
                         >
-                            <Text style={{ color: colors.linkText, fontSize: 19 }}>
+                            <Text style={ styles.sectionTextLink }>
                                 ¿Comenzar de nuevo?
                             </Text>
                         </TouchableOpacity>
@@ -150,7 +150,7 @@ const CourseDetail = (): JSX.Element => {
                         Información de { selectedCourse.personName }:
                     </Text>
 
-                    <Text style={{ color: colors.text, fontSize: 19 }}>
+                    <Text style={ styles.sectionText }>
                         { selectedCourse.personAbout }
                     </Text>
                 </View>
@@ -164,14 +164,14 @@ const CourseDetail = (): JSX.Element => {
                         Dirección:
                     </Text>
 
-                    <Text style={{ color: colors.text, fontSize: 19 }}>
+                    <Text style={ styles.sectionText }>
                         { selectedCourse.personAddress }
                     </Text>
                 </View>
 
                 {/* Course last lesson */}
                 <View style={ styles.sectionStyle }>
-                <Text style={ styles.sectionSubTitle }>
+                    <Text style={ styles.sectionSubTitle }>
                         Última clase:
                     </Text>
 
@@ -205,10 +205,10 @@ const CourseDetail = (): JSX.Element => {
                     <TouchableOpacity
                         activeOpacity={ 0.75 }
                         onPress={ handleLessonsList }
-                        style={{ marginTop: 24 }}
+                        style={{ marginTop: margins.md }}
                         testID="course-detail-lessons-touchable"
                     >
-                        <Text style={{ color: colors.linkText, fontSize: 19 }}>
+                        <Text style={ styles.sectionTextLink }>
                             Ver todas las clases
                         </Text>
                     </TouchableOpacity>
@@ -216,10 +216,10 @@ const CourseDetail = (): JSX.Element => {
                     <TouchableOpacity
                         activeOpacity={ 0.75 }
                         onPress={ handleAddLesson }
-                        style={{ marginTop: 8 }}
+                        style={{ marginTop: margins.xs }}
                         testID="course-detail-add-lesson-touchable"
                     >
-                        <Text style={{ color: colors.linkText, fontSize: 19 }}>
+                        <Text style={ styles.sectionTextLink }>
                             Agregar clase
                         </Text>
                     </TouchableOpacity>

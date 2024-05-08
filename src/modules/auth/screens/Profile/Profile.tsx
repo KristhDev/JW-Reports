@@ -17,7 +17,7 @@ import { styles as themeStylesheet } from '../../../theme';
  * @return {JSX.Element} The rendered form screen of profile
  */
 const Profile = (): JSX.Element => {
-    const { styles: themeStyles, theme: { margins } } = useStyles(themeStylesheet);
+    const { styles: themeStyles, theme: { fontSizes, margins } } = useStyles(themeStylesheet);
 
     return (
         <KeyboardAwareScrollView
@@ -28,7 +28,7 @@ const Profile = (): JSX.Element => {
                 <Title
                     containerStyle={ themeStyles.titleContainer }
                     text="Mi perfil"
-                    textStyle={{ fontSize: 24 }}
+                    textStyle={{ fontSize: fontSizes.md }}
                 />
 
                 <ProfileForm />

@@ -1,6 +1,6 @@
 import { createStyleSheet } from 'react-native-unistyles';
 
-const styles = createStyleSheet(({ colors, margins }) => ({
+const styles = createStyleSheet(({ colors, fontSizes, margins }) => ({
     scrollView: {
         alignItems: 'center',
         flexGrow: 1,
@@ -9,27 +9,37 @@ const styles = createStyleSheet(({ colors, margins }) => ({
     },
 
     sectionStyle: {
-        marginBottom: 32,
+        marginBottom: margins.lg,
         width: '100%'
     },
 
     sectionSubTitle: {
         color: colors.text,
-        fontSize: 19,
+        fontSize: (fontSizes.sm + 3),
         fontWeight: 'bold',
         marginBottom: margins.sm
     },
 
+    sectionLinkText: {
+        color: colors.linkText,
+        fontSize: (fontSizes.sm + 3),
+    },
+
+    sectionText: {
+        color: colors.text,
+        fontSize: (fontSizes.sm + 3)
+    },
+
     imageText: {
         color: colors.modalText,
-        fontSize: 16,
-        marginTop: 10
+        fontSize: fontSizes.sm,
+        marginTop: (margins.xs + 2)
     },
 
     dateCreatedText: {
         bottom: margins.md,
         color: colors.modalText,
-        fontSize: 16,
+        fontSize: fontSizes.sm,
         position: 'absolute',
         right: margins.md,
     }

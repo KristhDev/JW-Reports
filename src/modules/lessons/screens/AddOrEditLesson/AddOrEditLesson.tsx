@@ -20,7 +20,7 @@ import { styles as themeStylesheet } from '../../../theme';
  * @return {JSX.Element} rendered component to show form to add or edit a lesson
  */
 const AddOrEditLesson = (): JSX.Element => {
-    const { styles: themeStyles, theme: { margins } } = useStyles(themeStylesheet);
+    const { styles: themeStyles, theme: { fontSizes, margins } } = useStyles(themeStylesheet);
     const { state: { selectedLesson } } = useLessons();
 
     return (
@@ -31,7 +31,7 @@ const AddOrEditLesson = (): JSX.Element => {
             <View style={{ flex: 1, alignItems: 'center', padding: margins.md }}>
                 <Title
                     containerStyle={ themeStyles.titleContainer }
-                    textStyle={{ fontSize: 24 }}
+                    textStyle={{ fontSize: fontSizes.md }}
                     text={ (selectedLesson.id === '') ? 'Agregar clase para el curso' : 'Editar clase del curso' }
                 />
 

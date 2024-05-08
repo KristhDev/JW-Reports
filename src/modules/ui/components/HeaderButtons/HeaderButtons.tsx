@@ -60,7 +60,7 @@ export const HeaderButtons: FC<HeaderButtonsProps> = ({
 
     const { signOut } = useAuth();
     const { setSelectedDate, state: { selectedDate } } = usePreaching();
-    const { theme: { colors } } = useStyles();
+    const { theme: { colors, fontSizes, margins } } = useStyles();
 
     /**
      * When the user selects a date, hide the month picker and set the selected date to the date the
@@ -84,7 +84,7 @@ export const HeaderButtons: FC<HeaderButtonsProps> = ({
                             <Icon
                                 color={ colors.button }
                                 name="log-out-outline"
-                                size={ 34 }
+                                size={ (fontSizes.lg + 2) }
                             />
                         }
                         style={{ marginRight: -2 }}
@@ -117,10 +117,10 @@ export const HeaderButtons: FC<HeaderButtonsProps> = ({
                             <Icon
                                 color={ colors.button }
                                 name="settings-outline"
-                                size={ 30 }
+                                size={ (fontSizes.lg - 2) }
                             />
                         }
-                        style={{ marginRight: 6 }}
+                        style={{ marginRight: (margins.xs - 2) }}
                         onPress={ () => navigate('SettingsStackNavigation' as never) }
                         touchColor={ colors.buttonTransparent }
                     />
@@ -133,7 +133,7 @@ export const HeaderButtons: FC<HeaderButtonsProps> = ({
                             <Icon
                                 color={ colors.button }
                                 name="pencil-outline"
-                                size={ 30 }
+                                size={ (fontSizes.lg - 2) }
                             />
                         }
                         onPress={ onPressEditButton }
@@ -149,11 +149,11 @@ export const HeaderButtons: FC<HeaderButtonsProps> = ({
                             <Icon
                                 color={ colors.button }
                                 name="trash-outline"
-                                size={ 30 }
+                                size={ (fontSizes.lg - 2) }
                             />
                         }
                         onPress={ onShowDeleteModal }
-                        style={{ marginRight: 6 }}
+                        style={{ marginRight: (margins.xs - 2) }}
                         touchColor={ colors.buttonTransparent }
                     />
                 ) }

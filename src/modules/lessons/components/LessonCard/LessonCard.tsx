@@ -37,7 +37,7 @@ export const LessonCard: FC<LessonCardProps> = ({ lesson, screenToNavigate, onCl
     const { width } = useWindowDimensions();
 
     const { setSelectedLesson } = useLessons();
-    const { styles, theme: { colors } } = useStyles(stylesheet);
+    const { styles, theme: { colors, fontSizes, margins } } = useStyles(stylesheet);
 
     const nextVisit = date.format(lesson.nextLesson, 'DD [de] MMMM [del] YYYY');
 
@@ -83,7 +83,7 @@ export const LessonCard: FC<LessonCardProps> = ({ lesson, screenToNavigate, onCl
                 foreground: true
             }}
             onPress={ handleLessonDetail }
-            style={{ ...styles.touchable, width: width - 16 }}
+            style={{ ...styles.touchable, width: width - margins.sm }}
             testID="lesson-card-touchable"
         >
             <View style={ styles.container }>
@@ -113,7 +113,7 @@ export const LessonCard: FC<LessonCardProps> = ({ lesson, screenToNavigate, onCl
                         <Icon
                             color={ colors.button }
                             name="ellipsis-vertical"
-                            size={ 21 }
+                            size={ (fontSizes.md - 3) }
                         />
                     }
                     onPress={ () => setIsOpen(true) }

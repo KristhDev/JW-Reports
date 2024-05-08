@@ -31,7 +31,7 @@ export const LoginForm = (): JSX.Element => {
 
     const { state: { isAuthLoading }, signIn } = useAuth();
     const { setErrorForm } = useStatus();
-    const { styles: themeStyles, theme: { colors, margins } } = useStyles(themeStylesheet);
+    const { styles: themeStyles, theme: { colors, fontSizes, margins } } = useStyles(themeStylesheet);
 
     return (
         <Formik
@@ -44,7 +44,7 @@ export const LoginForm = (): JSX.Element => {
             validateOnMount
         >
             { ({ handleSubmit, isValid, errors }) => (
-                <View style={{ ...themeStyles.formContainer, flex: 0, marginBottom: margins.lg }}>
+                <View style={{ ...themeStyles.formContainer, flex: 0, marginBottom: margins.xl }}>
 
                     <View style={{ height: width / 4 }} />
 
@@ -55,7 +55,7 @@ export const LoginForm = (): JSX.Element => {
                             <Icon
                                 color={ colors.icon }
                                 name="mail-outline"
-                                size={ 25 }
+                                size={ fontSizes.icon }
                             />
                         }
                         keyboardType="email-address"
@@ -77,21 +77,18 @@ export const LoginForm = (): JSX.Element => {
                         name="password"
                         placeholder="Ingrese su contraseña"
                         secureTextEntry={ !showPassword }
-                        style={{ marginBottom: margins.lg }}
+                        style={{ marginBottom: margins.xl }}
                     />
 
                     {/* Submit button */}
                     <Button
                         disabled={ isAuthLoading }
-                        icon={
-                            (isAuthLoading) && (
-                                <ActivityIndicator
-                                    color={ colors.contentHeader }
-                                    size={ 25 }
-                                    style={{ marginLeft: 10 }}
-                                />
-                            )
-                        }
+                        icon={ (isAuthLoading) && (
+                            <ActivityIndicator
+                                color={ colors.contentHeader }
+                                size={ fontSizes.icon }
+                            />
+                        ) }
                         onPress={ (isValid) ? handleSubmit : () => setErrorForm(errors)  }
                         text="Ingresar"
                     />

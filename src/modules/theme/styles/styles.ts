@@ -1,10 +1,10 @@
 import { createStyleSheet } from 'react-native-unistyles';
 
-const styles = createStyleSheet(({ colors, margins }) => ({
+const styles = createStyleSheet(({ colors, fontSizes, margins }) => ({
     btnLink: {
         flexDirection: 'row',
         justifyContent: 'center',
-        marginTop: margins.lg,
+        marginTop: margins.xl,
     },
 
     defaultBorder: {
@@ -27,7 +27,7 @@ const styles = createStyleSheet(({ colors, margins }) => ({
 
     focusInternalBorder: {
         borderWidth: 1.5,
-        paddingRight: 10
+        paddingRight: (margins.xs + 2)
     },
 
     formContainer: {
@@ -53,19 +53,19 @@ const styles = createStyleSheet(({ colors, margins }) => ({
 
     formInput: {
         color: colors.inputText,
-        fontSize: 17,
-        paddingLeft: 10,
+        fontSize: (fontSizes.sm + 1),
+        paddingLeft: (margins.xs + 2),
     },
 
     formInputText: {
         color: colors.inputText,
         flex: 1,
-        fontSize: 17
+        fontSize: (fontSizes.sm + 1)
     },
 
     formLabel: {
         color: colors.titleText,
-        fontSize: 18,
+        fontSize: (fontSizes.sm + 2),
         marginBottom: margins.sm,
     },
 
@@ -77,19 +77,19 @@ const styles = createStyleSheet(({ colors, margins }) => ({
     formSelectTouchableContainer: {
         alignItems: 'center',
         flexDirection: 'row',
-        padding: 10
+        padding: (margins.xs + 2)
     },
 
     formText: {
         color: colors.titleText,
         fontSize: margins.sm,
-        marginRight: 10,
+        marginRight: (margins.xs + 2)
     },
 
     modalActions: {
         flexDirection: 'row',
         justifyContent: 'flex-end',
-        marginTop: margins.lg,
+        marginTop: margins.xl,
         gap: margins.xs
     },
 
@@ -103,7 +103,7 @@ const styles = createStyleSheet(({ colors, margins }) => ({
 
     modalText: {
         color: colors.modalText,
-        fontSize: 19,
+        fontSize: (fontSizes.sm + 3),
         marginBottom: margins.sm
     },
 
@@ -113,8 +113,8 @@ const styles = createStyleSheet(({ colors, margins }) => ({
     },
 
     titleContainerSpacingVertical: {
-        paddingBottom: 60,
-        paddingTop: 30
+        paddingBottom: (margins.xxxl + 4),
+        paddingTop: (margins.lg - 2)
     }
 }));
 

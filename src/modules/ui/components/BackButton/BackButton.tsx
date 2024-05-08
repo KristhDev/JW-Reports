@@ -16,7 +16,7 @@ import { Fab } from '../Fab';
  * @return {JSX.Element} Return jsx element to render back button
  */
 export const BackButton: FC<{ color?: string, onPress?: () => void }> = ({ color, onPress }): JSX.Element => {
-    const { theme: { colors } } = useStyles();
+    const { theme: { colors, fontSizes, margins } } = useStyles();
 
     return (
         <Fab
@@ -25,12 +25,12 @@ export const BackButton: FC<{ color?: string, onPress?: () => void }> = ({ color
                 <Icon
                     color={ color ?? colors.button }
                     name="arrow-back-outline"
-                    size={ 30 }
+                    size={ (fontSizes.lg - 2) }
                 />
             }
             onPress={ () => onPress && onPress() }
             touchColor={ colors.buttonTransparent }
-            style={{ marginLeft: 6 }}
+            style={{ marginLeft: (margins.xs - 2) }}
         />
     );
 }

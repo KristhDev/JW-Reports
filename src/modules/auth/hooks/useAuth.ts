@@ -21,7 +21,7 @@ import { clearRevisits } from '../../revisits';
 import { useNetwork, useStatus } from '../../shared';
 
 /* Interfaces */
-import { SignIn, IProfile, SignUp, UserEndpoint } from '../interfaces';
+import { SignInData, ProfileData, SignUpData, UserEndpoint, EmailData, UpdatePasswordData } from '../interfaces';
 
 /* Services */
 import { notifications } from '../../../services';
@@ -75,12 +75,11 @@ const useAuth = () => {
     }
 
     /**
-     * `renew` is an async function that checks if the token is empty, if it is, it returns. If it's
-     * not empty, it calls `supabase.auth.refreshSession` with the token as a parameter
+     * Refreshes the authentication session by checking if the token is present and valid.
      *
      * @return {Promise<void>} This function does not return any value.
      */
-    const renew = async (): Promise<void> => {
+    const refreshAuth = async (): Promise<void> => {
         if (state.token?.trim().length <= 0) return;
 
         if (!wifi.isConnected) {
@@ -93,16 +92,12 @@ const useAuth = () => {
     }
 
     /**
-     * If the user enters a valid email address, we send them an email with a link to reset their
-     * password.
+     * Resets the password for a user with the given email.
      *
-     * We pass the error object to the setSupabaseError function. This function will check the error
-     * code and display an error message to the user if
-     * @param {{ email: string }} { email: string } - This a object with email property
-     * to reset password for authenticated user
-     * @return {Promise<void>} This function does not return any value.
+     * @param {EmailData} email - The email of the user whose password is being reset.
+     * @return {Promise<void>} A promise that resolves when the password reset is complete.
      */
-    const resetPassword = async ({ email }: { email: string }): Promise<void> => {
+    const resetPassword = async ({ email }: EmailData): Promise<void> => {
         if (!wifi.isConnected) {
             setNetworkError();
             return;
@@ -125,13 +120,13 @@ const useAuth = () => {
     }
 
     /**
-     * The function signIn takes an object with the properties email and password, and returns a promise
-     * that resolves to an object with the properties email, id, and token.
+     * Sign in a user with the provided email and password.
      *
-     * @param {SignIn} { email: string, password: string } - This is a values for sign in a user
-     * @return {Promise<void>} This function does not return any value.
+     * @param {SignInData} email - The email of the user.
+     * @param {SignInData} password - The password of the user.
+     * @return {Promise<void>} A promise that resolves when the sign-in process is complete.
      */
-    const signIn = async ({ email, password }: SignIn): Promise<void> => {
+    const signIn = async ({ email, password }: SignInData): Promise<void> => {
         if (!wifi.isConnected) {
             setNetworkError('Lo sentimos pero no dispones de conexión a Internet.');
             return;
@@ -144,10 +139,10 @@ const useAuth = () => {
     }
 
     /**
-     * If the user is not authenticated, return. If the user is authenticated, sign them out and clear
-     * the redux store.
+     * Signs out the user if they are authenticated and connected to WiFi. If not connected to WiFi,
+     * the user is still signed out. Clears the redux store of all user data.
      *
-     * @return {Promise<void>} This function does not return any value.
+     * @return {Promise<void>} This function does not return anything.
      */
     const signOut = async (): Promise<void> => {
         if (!state.isAuthenticated) return;
@@ -167,13 +162,15 @@ const useAuth = () => {
     }
 
     /**
-     * This function is to register a new user and authenticate it.
+     * Signs up a user with the provided name, surname, email, and password.
      *
-     * @param {SignUp} { name: string, surname: string, email: string, password: string } - This is a
-     * values for sign up a new user
-     * @return {Promise<void>} This function does not return any value.
+     * @param {SignUpData} name - The name of the user.
+     * @param {SignUpData} surname - The surname of the user.
+     * @param {SignUpData} email - The email of the user.
+     * @param {SignUpData} password - The password of the user.
+     * @return {Promise<void>} A promise that resolves when the sign-up process is complete.
      */
-    const signUp = async ({ name, surname, email, password }: SignUp): Promise<void> => {
+    const signUp = async ({ name, surname, email, password }: SignUpData): Promise<void> => {
         if (!wifi.isConnected) {
             setNetworkError('Lo sentimos pero no dispones de conexión a Internet.');
             return;
@@ -208,16 +205,15 @@ const useAuth = () => {
         setUser(result, true);
     }
 
+
     /**
-     * If the user's email is the same as the email passed in, then set the status to 400 and return,
-     * otherwise, update the user's email and set the status to 200.
+     * Updates the user's email and handles the necessary validations and status updates.
      *
-     * @param {{ email: string }} { email: string } - This a object with email property to
-     * update email for authenticated user
-     * @param {Function} onFinish - This callback executed when the process is finished (success or failure)
-     * @return {Promise<void>} This function does not return any value.
+     * @param {EmailData} emailData - The object containing the email to be updated.
+     * @param {() => void} [onFinish] - Optional callback function to be executed after the update is finished.
+     * @return {Promise<void>} - A promise that resolves when the update is complete.
      */
-    const updateEmail = async ({ email }: { email: string }, onFinish?: () => void): Promise<void> => {
+    const updateEmail = async ({ email }: EmailData, onFinish?: () => void): Promise<void> => {
         if (!wifi.isConnected) {
             setNetworkError();
             return;
@@ -269,15 +265,13 @@ const useAuth = () => {
     }
 
     /**
-     * If the password is empty, set the status to 400 and return, otherwise, if there's an error, set
-     * the status to 400 and return, otherwise, set the status to 200 and return.
+     * Updates the user's password if the Wi-Fi connection is available.
      *
-     * @param {{ password: string }} { password: string } - This is a object with password property
-     * for update password
-     * @param {Function} onFinish - This callback executed when the process is finished (success or failure)
-     * @return {Promise<void>} This function does not return anything.
+     * @param {UpdatePasswordData} passwordData - The new password data.
+     * @param {() => void} [onFinish] - Optional callback function to be executed after the update is finished.
+     * @return {Promise<void>} A promise that resolves when the password update is complete.
      */
-    const updatePassword = async ({ password }: { password: string }, onFinish?: () => void): Promise<void> => {
+    const updatePassword = async ({ password }: UpdatePasswordData, onFinish?: () => void): Promise<void> => {
         if (!wifi.isConnected) {
             setNetworkError();
             return;
@@ -318,10 +312,10 @@ const useAuth = () => {
     /**
      * If the user updates their profile, then update the user's profile.
      *
-     * @param {IProfile} values - This is a values for update profile
+     * @param {ProfileData} values - This is a values for update profile
      * @return {Promise<void>} This function does not return anything.
      */
-    const updateProfile = async (values: IProfile): Promise<void> => {
+    const updateProfile = async (values: ProfileData): Promise<void> => {
         if (!wifi.isConnected) {
             setNetworkError();
             return;
@@ -330,7 +324,6 @@ const useAuth = () => {
         dispatch(setIsAuthLoading({ isLoading: true }));
 
         const { hoursRequirement, ...rest } = values;
-
         const { error } = await supabase.auth.updateUser({ data: { ...rest, hours_requirement: hoursRequirement } });
 
         const next = setSupabaseError(error, 400, () => dispatch(setIsAuthLoading({ isLoading: false })));
@@ -351,7 +344,7 @@ const useAuth = () => {
         clearAuth,
 
         // Functions
-        renew,
+        refreshAuth,
         resetPassword,
         signIn,
         signOut,

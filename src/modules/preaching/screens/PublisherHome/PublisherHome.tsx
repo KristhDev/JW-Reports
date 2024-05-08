@@ -52,7 +52,7 @@ const PublisherHome = (): JSX.Element => {
         loadLastRevisit
     } = useRevisits();
 
-    const { styles: themeStyles, theme: { colors, margins } } = useStyles(themeStylesheet);
+    const { styles: themeStyles, theme: { colors, fontSizes, margins } } = useStyles(themeStylesheet);
 
     const month = date.format(selectedDate, 'MMMM').toUpperCase();
 
@@ -150,15 +150,15 @@ const PublisherHome = (): JSX.Element => {
                 <Title
                     containerStyle={{ ...themeStyles.titleContainer, marginBottom: margins.sm }}
                     text="ÚLTIMA LECCIÓN"
-                    textStyle={{ fontSize: 24 }}
+                    textStyle={{ fontSize: fontSizes.md }}
                 />
 
                 {/* If the last lesson loading, show a loading indicator */}
                 { (isLastLessonLoading) && (
                     <ActivityIndicator
                         color={ colors.button }
-                        size={ 50 }
-                        style={{ marginBottom: 63.75, marginTop: 63.75 }}
+                        size={ (fontSizes.xxl + 2) }
+                        style={{ marginVertical: 63.75 }}
                         testID="last-lesson-loading"
                     />
                 ) }
@@ -166,7 +166,7 @@ const PublisherHome = (): JSX.Element => {
                 {/* If the last lesson not loading and last lesson not found, show a message */}
                 { (!isLastLessonLoading && !lastLesson?.id) && (
                     <InfoText
-                        containerStyle={{ marginBottom: 63.75, marginTop: 63.75 }}
+                        containerStyle={{ marginVertical: 63.75 }}
                         text="No has agregado ninguna lección para un curso biblíco."
                     />
                 ) }
@@ -182,9 +182,9 @@ const PublisherHome = (): JSX.Element => {
                 ) }
 
                 <Title
-                    containerStyle={{ ...themeStyles.titleContainer, paddingTop: 32, marginBottom: margins.sm }}
+                    containerStyle={{ ...themeStyles.titleContainer, paddingTop: margins.lg, marginBottom: margins.sm }}
                     text="ÚLTIMA REVISITA"
-                    textStyle={{ fontSize: 24 }}
+                    textStyle={{ fontSize: fontSizes.md }}
                 />
 
                 {/* If the last revisit loading, show a loading indicator */}
@@ -192,7 +192,7 @@ const PublisherHome = (): JSX.Element => {
                     <ActivityIndicator
                         color={ colors.button }
                         size={ 50 }
-                        style={{ marginBottom: 63.75, marginTop: 63.75 }}
+                        style={{ marginVertical: 63.75 }}
                         testID="last-revisit-loading"
                     />
                 ) }
@@ -200,7 +200,7 @@ const PublisherHome = (): JSX.Element => {
                 {/* If the last revisit not loading and last revisit not found, show a message */}
                 { (!isLastRevisitLoading && !lastRevisit?.id) && (
                     <InfoText
-                        containerStyle={{ marginBottom: 63.75, marginTop: 63.75 }}
+                        containerStyle={{ marginVertical: 63.75 }}
                         text="No has agregado ninguna revisita."
                     />
                 ) }
@@ -222,7 +222,7 @@ const PublisherHome = (): JSX.Element => {
                     <Icon
                         color={ colors.contentHeader }
                         name="reader-outline"
-                        size={ 40 }
+                        size={ fontSizes.xl }
                     />
                 }
                 onPress={ () => setShowReportModal(true) }

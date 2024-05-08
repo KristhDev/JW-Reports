@@ -36,7 +36,7 @@ const LessonDetail = (): JSX.Element => {
 
     const { state: { selectedCourse } } = useCourses();
     const { state: { selectedLesson }, setSelectedLesson } = useLessons();
-    const { styles: themeStyles, theme: { colors, margins } } = useStyles(themeStylesheet);
+    const { styles: themeStyles, theme: { fontSizes, margins } } = useStyles(themeStylesheet);
     const { styles } = useStyles(stylesheet);
 
     const statusLessonText = (selectedLesson.done) ? 'Impartida' : 'Por impartir';
@@ -76,14 +76,14 @@ const LessonDetail = (): JSX.Element => {
                 <Title
                     containerStyle={ themeStyles.titleContainer }
                     text={ `CLASE DEL CURSO CON ${ selectedCourse.personName.toUpperCase() }` }
-                    textStyle={{ fontSize: 24 }}
+                    textStyle={{ fontSize: fontSizes.md }}
                 />
 
                 {/* Text publication */}
                 <InfoText
                     containerStyle={{ padding: 0, paddingBottom: margins.md, width: '100%' }}
                     text={ selectedCourse.publication.toUpperCase() }
-                    textStyle={{ fontSize: 16, fontWeight: 'bold', textAlign: 'left' }}
+                    textStyle={{ fontSize: fontSizes.sm, fontWeight: 'bold', textAlign: 'left' }}
                 />
 
                 {/* Lesson status */}
@@ -99,7 +99,7 @@ const LessonDetail = (): JSX.Element => {
                         activeOpacity={ 0.75 }
                         onPress={ () => setShowFSModal(true) }
                     >
-                        <Text style={{ color: colors.linkText, fontSize: 19 }}>
+                        <Text style={ styles.sectionTextLink }>
                             { (!selectedLesson.done) ? '¿Terminar clase?' : '¿Reprogramar?' }
                         </Text>
                     </TouchableOpacity>
@@ -118,7 +118,7 @@ const LessonDetail = (): JSX.Element => {
                         }
                     </Text>
 
-                    <Text style={{ color: colors.text, fontSize: 19 }}>
+                    <Text style={ styles.sectionText }>
                         { selectedLesson.description }
                     </Text>
                 </View>
@@ -130,7 +130,7 @@ const LessonDetail = (): JSX.Element => {
                     </Text>
 
                     <Text
-                        style={{ color: colors.text, fontSize: 19 }}
+                        style={ styles.sectionText }
                         testID="lesson-detail-next-visit-text"
                     >
                         { `${ nextVisit }` }

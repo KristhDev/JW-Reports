@@ -31,7 +31,7 @@ const PassToCourseModal: FC<ModalProps> = ({ isOpen, onClose }): JSX.Element => 
     const { state: { selectedRevisit } } = useRevisits();
     const { state: { isCourseLoading }, saveCourse } = useCourses();
     const { setStatus } = useStatus();
-    const { styles: themeStyles, theme: { colors, margins } } = useStyles(themeStylesheet);
+    const { styles: themeStyles, theme: { colors, fontSizes, margins } } = useStyles(themeStylesheet);
 
     /**
      * This is the confirmation function of the modal that executes one or another function
@@ -117,7 +117,7 @@ const PassToCourseModal: FC<ModalProps> = ({ isOpen, onClose }): JSX.Element => 
                                             <Icon
                                                 color={ colors.icon }
                                                 name="book-outline"
-                                                size={ 25 }
+                                                size={ fontSizes.icon }
                                             />
                                         }
                                         label="Publicación de estudio:"
@@ -139,7 +139,7 @@ const PassToCourseModal: FC<ModalProps> = ({ isOpen, onClose }): JSX.Element => 
             ) : (
                 <ActivityIndicator
                     color={ colors.button }
-                    size={ 50 }
+                    size={ (fontSizes.xxl + 2) }
                 />
             ) }
         </Modal>

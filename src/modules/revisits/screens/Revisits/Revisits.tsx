@@ -33,7 +33,7 @@ const Revisits: FC<RevisitsProps> = ({ route }): JSX.Element => {
     const { navigate, addListener, removeListener, getState } = useNavigation();
 
     const { setSelectedRevisit, setRevisitsScreenHistory } = useRevisits();
-    const { styles: themeStyles, theme: { colors } } = useStyles(themeStylesheet);
+    const { styles: themeStyles, theme: { colors, fontSizes } } = useStyles(themeStylesheet);
 
     /**
      * I'm going to set the selectedRevisit to the INIT_REVISIT object, but I'm going to override the
@@ -81,7 +81,7 @@ const Revisits: FC<RevisitsProps> = ({ route }): JSX.Element => {
                         <Icon
                             color={ colors.contentHeader }
                             name="add-circle-outline"
-                            size={ 40 }
+                            size={ fontSizes.xl }
                         />
                     }
                     onPress={ handleNavigate }
