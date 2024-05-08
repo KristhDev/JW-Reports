@@ -5,8 +5,7 @@ import { Formik } from 'formik';
 import Icon from 'react-native-vector-icons/Ionicons';
 
 /* Modules */
-import { Modal, DatetimeField, ModalProps } from '../../../ui';
-import { ModalActions } from './ModalActions';
+import { Modal, ModalActions, DatetimeField, ModalProps } from '../../../ui';
 import { useLessons } from '../../hooks';
 import { styles as themeStylesheet } from '../../../theme';
 
@@ -26,6 +25,12 @@ const FinishOrStartLessonModal: FC<ModalProps> = ({ isOpen, onClose }) => {
     const modalMsg = (selectedLesson.done)
         ? '¿Está seguro de reprogramar esta clase?'
         : '¿Está seguro de terminar esta clase?';
+
+    const confirmTextButton = (reschedule)
+        ? 'ACEPTAR'
+        : (selectedLesson.done)
+            ? 'REPROGRAMAR' : 'TERMINAR';
+
 
     /**
      * When the user clicks the close button, the modal will close and the onClose function will be
@@ -74,9 +79,12 @@ const FinishOrStartLessonModal: FC<ModalProps> = ({ isOpen, onClose }) => {
 
                             {/* Modal actions */}
                             <ModalActions
-                                onClose={ handleClose }
+                                cancelButtonText="CANCELAR"
+                                confirmTextButton={ confirmTextButton }
+                                onCancel={ handleClose }
                                 onConfirm={ handleConfirm }
-                                reschedule={ reschedule }
+                                showCancelButton
+                                showConfirmButton
                             />
                         </>
                     ) : (
@@ -114,9 +122,12 @@ const FinishOrStartLessonModal: FC<ModalProps> = ({ isOpen, onClose }) => {
 
                                     {/* Modal actions */}
                                     <ModalActions
-                                        onClose={ handleClose }
+                                        cancelButtonText="CANCELAR"
+                                        confirmTextButton={ confirmTextButton }
+                                        onCancel={ handleClose }
                                         onConfirm={ handleSubmit }
-                                        reschedule={ reschedule }
+                                        showCancelButton
+                                        showConfirmButton
                                     />
                                 </>
                             ) }

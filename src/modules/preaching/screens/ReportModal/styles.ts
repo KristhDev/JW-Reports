@@ -27,7 +27,7 @@ const styles = createStyleSheet(({ colors, fontSizes, margins }) => ({
     restMinsText: {
         color: colors.modalText,
         fontSize: fontSizes.sm,
-        marginBottom: margins.md
+        marginTop: margins.sm
     }
 }));
 

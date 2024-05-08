@@ -207,7 +207,7 @@ const useLessons = () => {
 
         if (next) return;
 
-        dispatch(updateLessonAction({ lesson: lessonAdapter((data as any)![0]) }));
+        dispatch(updateLessonAction({ lesson: lessonAdapter(data!) }));
         if ((user.precursor !== 'ninguno')) await loadLastLesson();
 
         dispatch(setIsLessonLoading({ isLoading: false }));
@@ -322,7 +322,6 @@ const useLessons = () => {
         }
 
         const lessons = data!.map(lessonAdapter);
-
         dispatch(setHasMoreLessons({ hasMore: (data!.length >= 10) }));
 
         if (loadMore) addLessons(lessons);

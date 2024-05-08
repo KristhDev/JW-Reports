@@ -3,7 +3,7 @@ import { Linking, Text, View } from 'react-native';
 import { useStyles } from 'react-native-unistyles';
 
 /* Modules */
-import { Modal, Button } from '../../../../ui';
+import { Modal, ModalActions } from '../../../../ui';
 import { useStatus } from '../../../hooks';
 import { styles as themeStylesheet } from '../../../../theme';
 
@@ -15,7 +15,7 @@ import { styles as themeStylesheet } from '../../../../theme';
  */
 const StatusModal = (): JSX.Element => {
     const { state: { msg }, clearStatus } = useStatus();
-    const { styles: themeStyles, theme: { colors, fontSizes, margins } } = useStyles(themeStylesheet);
+    const { styles: themeStyles } = useStyles(themeStylesheet);
 
     const configMsg = 'Para realizar está acción necesitas permisos del dispositivo, por favor abra la configuración de su dispositivo y active los permisos de la aplicación.';
 
@@ -45,30 +45,14 @@ const StatusModal = (): JSX.Element => {
                 </View>
 
                 {/* Modal actions */}
-                <View style={ themeStyles.modalActions }>
-
-                    {/* Button settings */}
-                    { (msg === configMsg) && (
-                        <Button
-                            containerStyle={{ paddingHorizontal: (margins.xs + 4), minWidth: 0 }}
-                            onPress={ clearStatus }
-                            text="CANCELAR"
-                            textStyle={{ color: colors.button, fontSize: fontSizes.sm }}
-                            touchableStyle={{ backgroundColor: 'transparent' }}
-                            underlayColor={ colors.buttonTranslucent }
-                        />
-                    ) }
-
-                    {/* Confirm button */}
-                    <Button
-                        containerStyle={{ paddingHorizontal: (margins.xs + 4), minWidth: 0 }}
-                        onPress={ handleClose }
-                        text={ btnText }
-                        textStyle={{ color: colors.button, fontSize: fontSizes.sm }}
-                        touchableStyle={{ backgroundColor: 'transparent' }}
-                        underlayColor={ colors.buttonTranslucent }
-                    />
-                </View>
+                <ModalActions
+                    cancelButtonText="CANCELAR"
+                    confirmTextButton={ btnText }
+                    onCancel={ clearStatus }
+                    onConfirm={ handleClose }
+                    showCancelButton={ (msg === configMsg) as any }
+                    showConfirmButton
+                />
             </View>
         </Modal>
     );

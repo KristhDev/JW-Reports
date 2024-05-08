@@ -8,7 +8,7 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import { FormField, Modal, ModalProps,  } from '../../../ui';
 
 /* Components */
-import { ModalActions } from './ModalActions';
+import { ModalActions } from '../../../ui';
 
 /* Hooks */
 import { useCourses } from '../../hooks';
@@ -94,8 +94,12 @@ const PassToCourseModal: FC<ModalProps> = ({ isOpen, onClose }): JSX.Element => 
 
                             {/* Modal actions */}
                             <ModalActions
-                                onClose={ handleClose }
+                                cancelButtonText="CANCELAR"
+                                confirmTextButton="ACEPTAR"
+                                onCancel={ handleClose }
                                 onConfirm={ handleConfirm }
+                                showCancelButton
+                                showConfirmButton
                             />
                         </>
                     ) : (
@@ -128,8 +132,12 @@ const PassToCourseModal: FC<ModalProps> = ({ isOpen, onClose }): JSX.Element => 
 
                                     {/* Modal actions in form */}
                                     <ModalActions
-                                        onClose={ handleClose }
+                                        cancelButtonText="CANCELAR"
+                                        confirmTextButton="ACEPTAR"
+                                        onCancel={ handleClose }
                                         onConfirm={ handleSubmit }
+                                        showCancelButton
+                                        showConfirmButton
                                     />
                                 </View>
                             ) }

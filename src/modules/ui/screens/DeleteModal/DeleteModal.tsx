@@ -6,7 +6,7 @@ import { useStyles } from 'react-native-unistyles';
 import { Modal } from '../';
 
 /* Components */
-import { Button } from '../../components';
+import { ModalActions } from '../../components';
 
 /* Interfaces */
 import { DeleteModalProps } from './interfaces';
@@ -27,7 +27,7 @@ import { styles as themeStylesheet } from '../../../theme';
  * @return {JSX.Element} rendered component to show delete modal
  */
 const DeleteModal: FC<DeleteModalProps> = ({ text, isLoading, isOpen, onClose, onConfirm }): JSX.Element => {
-    const { styles: themeStyles, theme: { colors, fontSizes, margins } } = useStyles(themeStylesheet);
+    const { styles: themeStyles, theme: { colors } } = useStyles(themeStylesheet);
 
     return (
         <Modal isOpen={ isOpen }>
@@ -43,28 +43,14 @@ const DeleteModal: FC<DeleteModalProps> = ({ text, isLoading, isOpen, onClose, o
                     </Text>
 
                     {/* Modal actions */}
-                    <View style={ themeStyles.modalActions }>
-
-                        {/* Cancel button */}
-                        <Button
-                            containerStyle={{ paddingHorizontal: (margins.xs + 4), minWidth: 0 }}
-                            onPress={ onClose }
-                            text="CANCELAR"
-                            textStyle={{ color: colors.button, fontSize: fontSizes.sm }}
-                            touchableStyle={{ backgroundColor: 'transparent' }}
-                            underlayColor={ colors.buttonTranslucent }
-                        />
-
-                        {/* Confirm button */}
-                        <Button
-                            containerStyle={{ paddingHorizontal: (margins.xs + 4), minWidth: 0 }}
-                            onPress={ onConfirm }
-                            text="ELIMINAR"
-                            textStyle={{ color: colors.button, fontSize: fontSizes.sm }}
-                            touchableStyle={{ backgroundColor: 'transparent' }}
-                            underlayColor={ colors.buttonTranslucent }
-                        />
-                    </View>
+                    <ModalActions
+                        cancelButtonText="CANCELAR"
+                        confirmTextButton="ELIMINAR"
+                        onCancel={ onClose }
+                        onConfirm={ onConfirm }
+                        showCancelButton
+                        showConfirmButton
+                    />
                 </View>
             ) : (
                 <ActivityIndicator

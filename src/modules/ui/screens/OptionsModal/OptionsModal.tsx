@@ -6,7 +6,7 @@ import { useStyles } from 'react-native-unistyles';
 import { Modal } from '../Modal';
 
 /* Components */
-import { Button, InfoText, RadioBtn } from '../../components';
+import { InfoText, ModalActions, RadioBtn } from '../../components';
 
 /* Interfaces */
 import { OptionsModalProps } from './interfaces';
@@ -30,7 +30,7 @@ import stylesheet from './styles';
  * @return {JSX.Element} Returns the component to show the field with radio
  */
 const OptionsModal: FC<OptionsModalProps> = ({ isOpen, items, onCancel, onChangeValue, title, value }): JSX.Element => {
-    const { styles: themeStyles, theme: { colors, fontSizes, margins } } = useStyles(themeStylesheet);
+    const { styles: themeStyles, theme: { margins } } = useStyles(themeStylesheet);
     const { styles } = useStyles(stylesheet);
 
     return (
@@ -52,18 +52,11 @@ const OptionsModal: FC<OptionsModalProps> = ({ isOpen, items, onCancel, onChange
                     ))) }
                 </View>
 
-                <View style={ themeStyles.modalActions }>
-
-                    {/* Cancel button */}
-                    <Button
-                        containerStyle={{ paddingHorizontal: (margins.xs + 4), minWidth: 0 }}
-                        onPress={ onCancel }
-                        text="CANCELAR"
-                        textStyle={{ color: colors.button, fontSize: fontSizes.sm }}
-                        touchableStyle={{ backgroundColor: 'transparent' }}
-                        underlayColor={ colors.buttonTranslucent }
-                    />
-                </View>
+                <ModalActions
+                    cancelButtonText="CANCELAR"
+                    onCancel={ onCancel }
+                    showCancelButton
+                />
             </View>
         </Modal>
     );

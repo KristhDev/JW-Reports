@@ -10,6 +10,7 @@ export { HeaderButtons } from './HeaderButtons';
 export { InfoText } from './InfoText';
 export { ListEmptyComponent } from './ListEmptyComponent';
 export { ListFooterComponent } from './ListFooterComponent';
+export { ModalActions } from './ModalActions';
 export { RadioBtn } from './RadioBtn';
 export { SearchInput } from './SearchInput';
 export { SectionBtn } from './SectionBtn';

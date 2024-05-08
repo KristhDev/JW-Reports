@@ -6,11 +6,8 @@ import { Formik } from 'formik';
 import Icon from 'react-native-vector-icons/Ionicons';
 
 /* Modules */
-import { DatetimeField, FormField, Modal, ModalProps } from '../../../ui';
+import { DatetimeField, FormField, Modal, ModalActions, ModalProps } from '../../../ui';
 import { styles as themeStylesheet } from '../../../theme';
-
-/* Components */
-import { ModalActions } from './ModalActions';
 
 /* Hooks */
 import { useRevisits } from '../../hooks';
@@ -37,6 +34,12 @@ const RevisitModal: FC<ModalProps> = ({ isOpen, onClose }) => {
     const modalTitle = (selectedRevisit.done)
         ? `¿Quieres volver a visitar a ${ selectedRevisit.personName }?`
         : '¿Está seguro de marcar esta revisitada como visitada?';
+
+    const confirmTextButton = (revisitPerson)
+        ? 'GUARDAR'
+        : (selectedRevisit.done)
+            ? 'ACEPTAR'
+            : 'MARCAR';
 
     /**
      * If the selectedRevisit.done is false, then call completeRevisit, otherwise if
@@ -115,9 +118,12 @@ const RevisitModal: FC<ModalProps> = ({ isOpen, onClose }) => {
                                     </Text>
 
                                     <ModalActions
-                                        onClose={ handleClose }
+                                        cancelButtonText="CANCELAR"
+                                        confirmTextButton={ confirmTextButton }
+                                        onCancel={ handleClose }
                                         onConfirm={ handleConfirm }
-                                        revisitPerson={ revisitPerson }
+                                        showCancelButton
+                                        showConfirmButton
                                     />
                                 </>
                             ) : (
@@ -172,9 +178,12 @@ const RevisitModal: FC<ModalProps> = ({ isOpen, onClose }) => {
 
                                                 {/* Modal actions */}
                                                 <ModalActions
-                                                    onClose={ handleClose }
+                                                    cancelButtonText="CANCELAR"
+                                                    confirmTextButton={ confirmTextButton }
+                                                    onCancel={ handleClose }
                                                     onConfirm={ (isValid) ? handleSubmit : () => setErrorForm(errors) }
-                                                    revisitPerson={ revisitPerson }
+                                                    showCancelButton
+                                                    showConfirmButton
                                                 />
                                             </View>
                                         ) }

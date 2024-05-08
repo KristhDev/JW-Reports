@@ -4,7 +4,7 @@ import { useStyles } from 'react-native-unistyles';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 /* Screens */
-import { Modal, Button, RadioBtn } from '../../../ui';
+import { Modal, RadioBtn, ModalActions } from '../../../ui';
 
 /* Hooks */
 import { useAuth } from '../../../auth';
@@ -47,7 +47,7 @@ const ReportModal: FC<ReportModalProps> = ({ isOpen, month, onClose }): JSX.Elem
     const { state: { user } } = useAuth();
     const { state: { preachings } } = usePreaching();
     const { state: { courses } } = useCourses();
-    const { styles: themeStyles, theme: { colors, fontSizes, margins } } = useStyles(themeStylesheet);
+    const { styles: themeStyles, theme: { colors, margins } } = useStyles(themeStylesheet);
     const { styles } = useStyles(stylesheet);
 
     const username = `${ user.name } ${ user.surname }`;
@@ -109,7 +109,7 @@ const ReportModal: FC<ReportModalProps> = ({ isOpen, month, onClose }): JSX.Elem
                     <View style={ styles.reportModal }>
                         <Text style={ styles.reportModalInfo }>Estás a punto de entregar tu informe predicación, por favor revisalo.</Text>
 
-                        <View style={{ marginTop: margins.xl, marginBottom: margins.md }}>
+                        <View style={{ marginTop: margins.xl }}>
                             <Text style={ styles.reportTitle }>Informe De Predicación</Text>
 
                             <View style={{ flexDirection: 'row' }}>
@@ -209,25 +209,14 @@ const ReportModal: FC<ReportModalProps> = ({ isOpen, month, onClose }): JSX.Elem
                         ) }
 
                         {/* Modal actions */}
-                        <View style={{ flexDirection: 'row', justifyContent: 'flex-end', gap: margins.xs }}>
-                            <Button
-                                containerStyle={{ paddingHorizontal: (margins.xs + 4), minWidth: 0 }}
-                                onPress={ handleClose }
-                                text="CANCELAR"
-                                textStyle={{ color: colors.button, fontSize: fontSizes.sm }}
-                                touchableStyle={{ backgroundColor: 'transparent' }}
-                                underlayColor={ colors.buttonTranslucent }
-                            />
-
-                            <Button
-                                containerStyle={{ paddingHorizontal: (margins.xs + 4), minWidth: 0 }}
-                                onPress={ handleDeliver }
-                                text="ENTREGAR"
-                                textStyle={{ color: colors.button, fontSize: fontSizes.sm }}
-                                touchableStyle={{ backgroundColor: 'transparent' }}
-                                underlayColor={ colors.buttonTranslucent }
-                            />
-                        </View>
+                        <ModalActions
+                            cancelButtonText="CANCELAR"
+                            confirmTextButton="ENTREGAR"
+                            onCancel={ handleClose }
+                            onConfirm={ handleDeliver }
+                            showCancelButton
+                            showConfirmButton
+                        />
                     </View>
                 </ScrollView>
             </KeyboardAvoidingView>

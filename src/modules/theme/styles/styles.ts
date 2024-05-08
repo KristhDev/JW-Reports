@@ -86,13 +86,6 @@ const styles = createStyleSheet(({ colors, fontSizes, margins }) => ({
         marginRight: (margins.xs + 2)
     },
 
-    modalActions: {
-        flexDirection: 'row',
-        justifyContent: 'flex-end',
-        marginTop: margins.xl,
-        gap: margins.xs
-    },
-
     modalContainer: {
         backgroundColor: colors.modal,
         borderRadius: 10,

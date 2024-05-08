@@ -3,7 +3,7 @@ import { ActivityIndicator, Text, View } from 'react-native';
 import { useStyles } from 'react-native-unistyles';
 
 /* Modules */
-import { Modal, Button, ModalProps } from '../../../ui';
+import { Modal, ModalProps, ModalActions } from '../../../ui';
 import { useCourses } from '../../hooks';
 import { styles as themeStylesheet } from '../../../theme';
 
@@ -16,7 +16,7 @@ import { styles as themeStylesheet } from '../../../theme';
  */
 const FinishOrStartCourseModal: FC<ModalProps> = ({ isOpen, onClose }): JSX.Element => {
     const { state: { selectedCourse, isCourseLoading }, finishOrStartCourse } = useCourses();
-    const { styles: themeStyles, theme: { colors, fontSizes, margins } } = useStyles(themeStylesheet);
+    const { styles: themeStyles, theme: { colors, fontSizes } } = useStyles(themeStylesheet);
 
     const modalMsg = (selectedCourse.finished)
         ? '¿Está seguro de volver a comenzar este curso?'
@@ -45,25 +45,14 @@ const FinishOrStartCourseModal: FC<ModalProps> = ({ isOpen, onClose }): JSX.Elem
                         { modalMsg }
                     </Text>
 
-                    <View style={{ ...themeStyles.modalActions, alignSelf: 'flex-end' }}>
-                        <Button
-                            containerStyle={{ paddingHorizontal: (margins.xs + 4), minWidth: 0 }}
-                            onPress={ onClose }
-                            text="CANCELAR"
-                            textStyle={{ color: colors.button, fontSize: fontSizes.sm }}
-                            touchableStyle={{ backgroundColor: 'transparent' }}
-                            underlayColor={ colors.buttonTranslucent }
-                        />
-
-                        <Button
-                            containerStyle={{ paddingHorizontal: (margins.xs + 4), minWidth: 0 }}
-                            onPress={ handleConfirm }
-                            text={ confirmTextButton }
-                            textStyle={{ color: colors.button, fontSize: fontSizes.sm }}
-                            touchableStyle={{ backgroundColor: 'transparent' }}
-                            underlayColor={ colors.buttonTranslucent }
-                        />
-                    </View>
+                    <ModalActions
+                        cancelButtonText="CANCELAR"
+                        confirmTextButton={ confirmTextButton }
+                        onCancel={ onClose }
+                        onConfirm={ handleConfirm }
+                        showCancelButton
+                        showConfirmButton
+                    />
                 </View>
             ) : (
                 <ActivityIndicator
