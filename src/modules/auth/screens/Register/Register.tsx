@@ -7,6 +7,9 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 import { RegisterForm } from '../../components';
 import { Title } from '../../../ui';
 
+/* Theme */
+import { styles as themeStylesheet } from '../../../theme';
+
 /**
  * This screen is to show the form that will allow users
  * to create a new account.
@@ -14,7 +17,7 @@ import { Title } from '../../../ui';
  * @return {JSX.Element} The rendered form screen of create account
  */
 const Register = (): JSX.Element => {
-    const { theme: { margins } } = useStyles();
+    const { styles: themeStyles, theme: { margins } } = useStyles(themeStylesheet);
 
     return (
         <KeyboardAwareScrollView
@@ -22,7 +25,7 @@ const Register = (): JSX.Element => {
             extraHeight={ 50 }
             overScrollMode="never"
         >
-            <View style={{ flex: 1, alignItems: 'center', padding: margins.md }}>
+            <View style={ themeStyles.screenContainer }>
                 <Title text="Crear cuenta" />
 
                 <RegisterForm />

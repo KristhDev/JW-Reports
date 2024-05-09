@@ -21,14 +21,14 @@ import { styles as themeStylesheet } from '../../../theme';
  */
 const AddOrEditPreaching = (): JSX.Element => {
     const { state: { seletedPreaching } } = usePreaching();
-    const { styles: themeStyles, theme: { fontSizes, margins } } = useStyles(themeStylesheet);
+    const { styles: themeStyles, theme: { fontSizes } } = useStyles(themeStylesheet);
 
     return (
         <KeyboardAwareScrollView
             contentContainerStyle={{ flexGrow: 1 }}
             overScrollMode="never"
         >
-            <View style={{ flex: 1, alignItems: 'center', padding: margins.md }}>
+            <View style={ themeStyles.screenContainer }>
                 <Title
                     containerStyle={ themeStyles.titleContainer }
                     textStyle={{ fontSize: fontSizes.md }}

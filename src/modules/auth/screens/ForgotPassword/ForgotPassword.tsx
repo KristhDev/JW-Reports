@@ -7,6 +7,9 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 import { ForgotPasswordForm } from '../../components';
 import { Title } from '../../../ui';
 
+/* Styles */
+import { styles as themeStylesheet } from '../../../theme';
+
 /**
  * This screen is to display the form to request a
  * password reset.
@@ -14,14 +17,14 @@ import { Title } from '../../../ui';
  * @return {JSX.Element} The rendered form screen of credentials
  */
 const ForgotPassword = (): JSX.Element => {
-    const { theme: { margins } } = useStyles();
+    const { styles: themeStyles } = useStyles(themeStylesheet);
 
     return (
         <KeyboardAwareScrollView
             contentContainerStyle={{ flexGrow: 1 }}
             overScrollMode="never"
         >
-            <View style={{ alignItems: 'center', flex: 1, padding: margins.md }}>
+            <View style={ themeStyles.screenContainer }>
                 <Title text="Olvide mi contraseña" />
 
                 <ForgotPasswordForm />

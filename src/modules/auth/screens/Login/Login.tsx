@@ -7,6 +7,9 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 import { LoginForm } from '../../components';
 import { ThemeBtn, Title } from '../../../ui';
 
+/* Styles */
+import { styles as themeStylesheet } from '../../../theme';
+
 /**
  * This screen is to display the form to login with
  * an account.
@@ -14,14 +17,14 @@ import { ThemeBtn, Title } from '../../../ui';
  * @return {JSX.Element} The rendered form screen of credentials
  */
 const Login = (): JSX.Element => {
-    const { theme: { margins } } = useStyles();
+    const { styles: themeStyles } = useStyles(themeStylesheet);
 
     return (
         <KeyboardAwareScrollView
             contentContainerStyle={{ flexGrow: 1 }}
             overScrollMode="never"
         >
-            <View style={{ alignItems: 'center', flex: 1, padding: margins.md }}>
+            <View style={ themeStyles.screenContainer }>
                 <Title text="Ingresar" />
                 <ThemeBtn />
 

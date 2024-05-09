@@ -17,14 +17,14 @@ import { styles as themeStylesheet } from '../../../theme';
  * @return {JSX.Element} The rendered form screen of credentials
  */
 const Credentials = (): JSX.Element => {
-    const { styles: themeStyles, theme: { fontSizes, margins } } = useStyles(themeStylesheet);
+    const { styles: themeStyles, theme: { fontSizes } } = useStyles(themeStylesheet);
 
     return (
         <KeyboardAwareScrollView
             contentContainerStyle={{ flexGrow: 1 }}
             overScrollMode="never"
         >
-            <View style={{ flex: 1, alignItems: 'center', padding: margins.md }}>
+            <View style={ themeStyles.screenContainer }>
                 <Title
                     containerStyle={ themeStyles.titleContainer }
                     text="Credenciales"

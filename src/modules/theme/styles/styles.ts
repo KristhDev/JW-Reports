@@ -100,6 +100,12 @@ const styles = createStyleSheet(({ colors, fontSizes, margins }) => ({
         marginBottom: margins.sm
     },
 
+    screenContainer: {
+        alignItems: 'center',
+        flex: 1,
+        padding: margins.md
+    },
+
     titleContainer: {
         paddingBottom: 0,
         paddingTop: margins.xs
