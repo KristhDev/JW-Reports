@@ -1,15 +1,26 @@
 import type { Config } from 'jest';
 
-export default async (): Promise<Config> => {
-    return {
-        preset: 'react-native',
-        setupFilesAfterEnv: [ '@testing-library/jest-native/extend-expect' ],
-        setupFiles: [ './jest.setup.ts' ],
-        transformIgnorePatterns: [],
-        testMatch: [
-            '**/__tests__/**',
-            '!**/src/**',
-            '!**/__snapshots__/**'
-        ]
-    }
+const jestConfig: Config = {
+    bail: 1,
+    coverageDirectory: '__tests__/coverage',
+    coverageProvider: 'v8',
+    fakeTimers: {
+        enableGlobally: true
+    },
+    moduleDirectories: [ 'node_modules', '<rootDir>' ],
+    moduleFileExtensions: [ 'ts', 'tsx', 'js', 'jsx', 'json', 'node', 'setup.ts' ],
+    modulePathIgnorePatterns: [
+        '<rootDir>/__tests__/mocks/',
+        '<rootDir>/__tests__/setups/',
+        '<rootDir>/__tests__/config',
+        '<rootDir/>/src',
+        '<rootDir/>/ReactotronConfig.js'
+    ],
+    preset: 'react-native',
+    setupFiles: [ './jest.setup.ts' ],
+    setupFilesAfterEnv: [ './jest.setup-after-env.ts' ],
+    transformIgnorePatterns: [],
+    verbose: true,
 }
+
+export default jestConfig;
