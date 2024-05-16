@@ -1,4 +1,4 @@
-import { AuthState, User } from '../../src/interfaces';
+import { AuthState, User } from '../../src/modules/auth';
 
 export const testUser: User = {
     id: '05ef0d0c-0f7a-4512-b705-6da279d88503',

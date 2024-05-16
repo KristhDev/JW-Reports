@@ -1,5 +1,4 @@
-import { INIT_REVISIT } from '../../src/features';
-import { Revisit, RevisitsState } from '../../src/interfaces';
+import { INIT_REVISIT, Revisit, RevisitsState } from '../../src/modules/revisits';
 
 export const completeRevisitMock = jest.fn();
 export const deleteRevisitMock = jest.fn();

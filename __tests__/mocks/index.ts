@@ -1,6 +1,7 @@
 export * from './auth';
 export * from './courses';
 export * from './image';
+export * from './lessons';
 export * from './network';
 export * from './permissions';
 export * from './preaching';

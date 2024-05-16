@@ -1,0 +1,163 @@
+import React from 'react';
+import { render, screen, userEvent } from '@testing-library/react-native';
+import { MenuProvider } from 'react-native-popup-menu';
+
+/* Mocks */
+import {
+    activeOrSuspendCourseMock,
+    coursesStateMock,
+    deleteCourseMock,
+    finishOrStartCourseMock,
+    initialCoursesStateMock,
+    initialLessonsStateMock,
+    loadCoursesMock,
+    removeCoursesMock,
+    removeLessonsMock,
+    setCoursesPaginationMock,
+    setLessonsPaginationMock,
+    setRefreshCoursesMock,
+    setSelectedCourseMock,
+    setSelectedLessonMock
+} from '../../../../mocks';
+
+/* Modules */
+import { useLessons } from '../../../../../src/modules/lessons';
+import { CoursesList, useCourses } from '../../../../../src/modules/courses';
+
+const emptyMessageTest = 'No hay cursos disponibles';
+const titleTest = 'Mis Cursos';
+
+const user = userEvent.setup();
+
+const renderComponent = () => render(
+    <MenuProvider>
+        <CoursesList
+            emptyMessage={ emptyMessageTest }
+            filter="all"
+            title={ titleTest }
+        />
+    </MenuProvider>
+);
+
+/* Mock hooks */
+jest.mock('../../../../../src/modules/courses/hooks/useCourses.ts');
+jest.mock('../../../../../src/modules/lessons/hooks/useLessons.ts');
+
+describe('Test in <CoursesList /> component', () => {
+    (useCourses as jest.Mock).mockReturnValue({
+        state: coursesStateMock,
+        activeOrSuspendCourse: activeOrSuspendCourseMock,
+        deleteCourse: deleteCourseMock,
+        finishOrStartCourse: finishOrStartCourseMock,
+        loadCourses: loadCoursesMock,
+        removeCourses: removeCoursesMock,
+        setCoursesPagination: setCoursesPaginationMock,
+        setRefreshCourses: setRefreshCoursesMock,
+        setSelectedCourse: setSelectedCourseMock
+    });
+
+    (useLessons as jest.Mock).mockReturnValue({
+        state: initialLessonsStateMock,
+        removeLessons: removeLessonsMock,
+        setLessonsPagination: setLessonsPaginationMock,
+        setSelectedLesson: setSelectedLessonMock,
+    });
+
+    beforeEach(() => {
+        jest.clearAllMocks();
+    });
+
+    it('should to match snapshot', () => {
+        renderComponent();
+        expect(screen.toJSON()).toMatchSnapshot();
+    });
+
+    it('should render respective props', () => {
+        renderComponent();
+
+        /* Get title of list and check if is text pass for props */
+        const titleText = screen.getByTestId('title-text');
+        expect(titleText.props.children).toBe(titleTest);
+    });
+
+    it('should render message when courses is empty', () => {
+
+        /* Mock data of useCourses */
+        (useCourses as jest.Mock).mockReturnValue({
+            state: initialCoursesStateMock,
+            activeOrSuspendCourse: activeOrSuspendCourseMock,
+            deleteCourse: deleteCourseMock,
+            finishOrStartCourse: finishOrStartCourseMock,
+            loadCourses: loadCoursesMock,
+            removeCourses: removeCoursesMock,
+            setCoursesPagination: setCoursesPaginationMock,
+            setRefreshCourses: setRefreshCoursesMock,
+            setSelectedCourse: setSelectedCourseMock,
+        });
+
+        (useLessons as jest.Mock).mockReturnValue({
+            state: initialLessonsStateMock,
+            removeLessons: removeLessonsMock,
+            setLessonsPagination: setLessonsPaginationMock,
+            setSelectedLesson: setSelectedLessonMock,
+        });
+
+        renderComponent();
+
+        /* Get empty message of list and check if is text pass for props */
+        const emptyMsgText = screen.getByTestId('info-text-text');
+        expect(emptyMsgText.props.children).toBe(emptyMessageTest);
+    });
+
+    it('should render loading when isCoursesLoading is true', () => {
+
+        /* Mock data of useCourses */
+        (useCourses as jest.Mock).mockReturnValue({
+            state: {
+                ...initialCoursesStateMock,
+                isCoursesLoading: true
+            },
+            activeOrSuspendCourse: activeOrSuspendCourseMock,
+            deleteCourse: deleteCourseMock,
+            finishOrStartCourse: finishOrStartCourseMock,
+            loadCourses: loadCoursesMock,
+            removeCourses: removeCoursesMock,
+            setCoursesPagination: setCoursesPaginationMock,
+            setRefreshCourses: setRefreshCoursesMock,
+            setSelectedCourse: setSelectedCourseMock
+        });
+
+        (useLessons as jest.Mock).mockReturnValue({
+            state: initialLessonsStateMock,
+            removeLessons: removeLessonsMock,
+            setLessonsPagination: setLessonsPaginationMock,
+            setSelectedLesson: setSelectedLessonMock,
+        });
+
+        renderComponent();
+
+        /* Get loader and check if exists in component */
+        const loader = screen.getByTestId('loader');
+        expect(loader).toBeTruthy();
+    });
+
+    it('should search when searchInput is submit', async () => {
+        renderComponent();
+
+        /* Get search input text, type search and submit */
+        const searchInput = screen.getByTestId('search-input-text-input');
+        await user.type(searchInput, 'Test search', { submitEditing: true });
+
+        /**
+         * Check if setCoursesPagination, removeCourses and loadCourses is called
+         * one time with respective args
+         */
+        expect(setCoursesPaginationMock).toHaveBeenCalledTimes(1);
+        expect(setCoursesPaginationMock).toHaveBeenCalledWith({ from: 0, to: 9 });
+        expect(removeCoursesMock).toHaveBeenCalledTimes(1);
+        expect(loadCoursesMock).toHaveBeenCalledTimes(1);
+        expect(loadCoursesMock).toHaveBeenCalledWith({
+            filter: 'all', search: 'Test search', refresh: true
+        });
+    });
+});

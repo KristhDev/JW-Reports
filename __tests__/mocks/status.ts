@@ -1,4 +1,4 @@
-import { StatusState } from '../../src/interfaces';
+import { StatusState } from '../../src/modules/shared';
 
 export const clearStatusMock = jest.fn();
 export const setErrorFormMock = jest.fn();
@@ -22,4 +22,9 @@ export const errorStateMock: StatusState = {
 export const networkStateMock: StatusState = {
     code: 500,
     msg: 'Lo sentimos pero no dispones de conexion a Internet. Los datos que hay en la aplicación no son actualizados. Hasta que recuperes la conexión no podras obtener, guardar, editar o eliminar ningún dato.',
+}
+
+export const permissionsStatusStateMock: StatusState = {
+    code: 400,
+    msg: 'Para realizar está acción necesitas permisos del dispositivo, por favor abra la configuración de su dispositivo y active los permisos de la aplicación.'
 }

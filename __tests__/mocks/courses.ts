@@ -1,26 +1,17 @@
-import { INIT_COURSE, INIT_LESSON } from '../../src/features';
-import { Course, CoursesState, Lesson } from '../../src/interfaces';
+import { INIT_COURSE, Course, CoursesState } from '../../src/modules/courses';
+import { lessonsMock } from './lessons';
 
 export const activeOrSuspendCourseMock = jest.fn();
 export const deleteCourseMock = jest.fn();
-export const deleteLessonMock = jest.fn();
 export const finishOrStartCourseMock = jest.fn();
-export const finishOrStartLessonMock = jest.fn();
 export const loadCoursesMock = jest.fn();
-export const loadLastLessonMock = jest.fn();
-export const loadLessonsMock = jest.fn();
 export const removeCoursesMock = jest.fn();
-export const removeLessonsMock = jest.fn();
 export const saveCourseMock = jest.fn();
-export const saveLessonMock = jest.fn();
 export const setCoursesPaginationMock = jest.fn();
 export const setCoursesScreenHistoryMock = jest.fn();
-export const setLessonsPaginationMock = jest.fn();
 export const setRefreshCoursesMock = jest.fn();
 export const setSelectedCourseMock = jest.fn();
-export const setSelectedLessonMock = jest.fn();
 export const updateCourseMock = jest.fn();
-export const updateLessonMock = jest.fn();
 
 export const testCourse = {
     personAbout: 'Itaque quidem enim neque laudantium ducimus nesciunt provident consequuntur.',
@@ -28,50 +19,6 @@ export const testCourse = {
     personName: 'Karlee Senger',
     publication: 'dolorem ut non'
 }
-
-export const testLesson = {
-    description: 'Temporibus ut dignissimos aliquam dignissimos facere recusandae. Illo a provident quasi iusto quidem qui tempora vel adipisci. Quia eum ut recusandae laudantium quidem. Quisquam non fugiat dicta qui voluptatem.',
-    nextLesson: new Date('2023-03-20T00:00:00.000Z')
-}
-
-export const lessonsMock: Lesson[] = [
-    {
-        id: '0fb579e4-de87-4336-9375-76611c889f76',
-        courseId: '8ea3baf8-6b47-4222-8ed1-c62d5755b9a5',
-        description: 'Nemo et et non nesciunt ipsum sed rerum vero. Nostrum quae officiis qui nihil dignissimos consectetur aperiam. Vel harum ex. Ipsum ratione necessitatibus eum sint vero enim et consequatur. Ab autem rerum numquam ut. Laboriosam nihil est exercitationem unde aut reiciendis odit.',
-        nextLesson: '2021-01-01T00:00:00.000Z',
-        done: false,
-        createdAt: '2021-01-01T00:00:00.000Z',
-        updatedAt: '2021-01-01T00:00:00.000Z',
-    },
-    {
-        id: '55b56e87-e3db-4ea6-a94d-84acccdcd74f',
-        courseId: 'ab57ec1c-6b2c-4cc8-8a49-452fcdfa4042',
-        description: 'Nemo et et non nesciunt ipsum sed rerum vero. Nostrum quae officiis qui nihil dignissimos consectetur aperiam. Vel harum ex. Ipsum ratione necessitatibus eum sint vero enim et consequatur. Ab autem rerum numquam ut. Laboriosam nihil est exercitationem unde aut reiciendis odit.',
-        nextLesson: '2021-01-01T00:00:00.000Z',
-        done: false,
-        createdAt: '2021-01-01T00:00:00.000Z',
-        updatedAt: '2021-01-01T00:00:00.000Z',
-    },
-    {
-        id: 'e8a5760f-67ef-46f3-8925-ad509d724b75',
-        courseId: 'd872759d-2cce-42eb-a1a8-16de81bafd22',
-        description: 'Nemo et et non nesciunt ipsum sed rerum vero. Nostrum quae officiis qui nihil dignissimos consectetur aperiam. Vel harum ex. Ipsum ratione necessitatibus eum sint vero enim et consequatur. Ab autem rerum numquam ut. Laboriosam nihil est exercitationem unde aut reiciendis odit.',
-        nextLesson: '2021-01-01T00:00:00.000Z',
-        done: false,
-        createdAt: '2021-01-01T00:00:00.000Z',
-        updatedAt: '2021-01-01T00:00:00.000Z',
-    },
-    {
-        id: '4a312777-a5c4-4276-8b5b-c4f7a83a3ac2',
-        courseId: '0bb1b3c6-e5ff-4f01-8071-0f71d1f544b9',
-        description: 'Nemo et et non nesciunt ipsum sed rerum vero. Nostrum quae officiis qui nihil dignissimos consectetur aperiam. Vel harum ex. Ipsum ratione necessitatibus eum sint vero enim et consequatur. Ab autem rerum numquam ut. Laboriosam nihil est exercitationem unde aut reiciendis odit.',
-        nextLesson: '2021-01-01T00:00:00.000Z',
-        done: false,
-        createdAt: '2021-01-01T00:00:00.000Z',
-        updatedAt: '2021-01-01T00:00:00.000Z',
-    }
-];
 
 export const coursesMock: Course[] = [
     {
@@ -137,40 +84,12 @@ export const initialCoursesStateMock: CoursesState = {
     },
     coursesScreenHistory: [],
     hasMoreCourses: true,
-    hasMoreLessons: true,
-    isLastLessonLoading: false,
     isCourseDeleting: false,
     isCourseLoading: false,
     isCoursesLoading: false,
-    isLessonDeleting: false,
-    isLessonLoading: false,
-    isLessonsLoading: false,
-    lastLesson: {
-        ...INIT_LESSON,
-        course: {
-            ...INIT_COURSE,
-            createdAt: '2021-08-26T15:00:00.000Z',
-            updatedAt: '2021-08-26T15:00:00.000Z'
-        },
-        nextLesson: '2021-08-26T15:00:00.000Z',
-        createdAt: '2021-08-26T15:00:00.000Z',
-        updatedAt: '2021-08-26T15:00:00.000Z'
-    },
-    lessons: [],
-    lessonsPagination: {
-        from: 0,
-        to: 9
-    },
     refreshCourses: false,
-    refreshLessons: false,
     selectedCourse: {
         ...INIT_COURSE,
-        createdAt: '2021-08-26T15:00:00.000Z',
-        updatedAt: '2021-08-26T15:00:00.000Z'
-    },
-    selectedLesson: {
-        ...INIT_LESSON,
-        nextLesson: '2021-08-26T15:00:00.000Z',
         createdAt: '2021-08-26T15:00:00.000Z',
         updatedAt: '2021-08-26T15:00:00.000Z'
     }
@@ -185,34 +104,11 @@ export const coursesStateMock: CoursesState = {
     },
     coursesScreenHistory: [],
     hasMoreCourses: false,
-    hasMoreLessons: false,
     isCourseDeleting: false,
     isCourseLoading: false,
     isCoursesLoading: false,
-    isLastLessonLoading: false,
-    isLessonDeleting: false,
-    isLessonLoading: false,
-    isLessonsLoading: false,
-    lastLesson: {
-        ...INIT_LESSON,
-        course: {
-            ...INIT_COURSE,
-            createdAt: '2021-08-26T15:00:00.000Z',
-            updatedAt: '2021-08-26T15:00:00.000Z'
-        },
-        nextLesson: '2021-08-26T15:00:00.000Z',
-        createdAt: '2021-08-26T15:00:00.000Z',
-        updatedAt: '2021-08-26T15:00:00.000Z'
-    },
-    lessons: [],
-    lessonsPagination: {
-        from: 0,
-        to: 9
-    },
     refreshCourses: false,
-    refreshLessons: false,
     selectedCourse: INIT_COURSE,
-    selectedLesson: INIT_LESSON
 }
 
 export const courseSelectedInitStateMock: CoursesState = {
@@ -224,34 +120,11 @@ export const courseSelectedInitStateMock: CoursesState = {
     },
     coursesScreenHistory: [],
     hasMoreCourses: false,
-    hasMoreLessons: false,
     isCourseDeleting: false,
     isCourseLoading: false,
     isCoursesLoading: false,
-    isLastLessonLoading: false,
-    isLessonDeleting: false,
-    isLessonLoading: false,
-    isLessonsLoading: false,
-    lastLesson: {
-        ...INIT_LESSON,
-        course: {
-            ...INIT_COURSE,
-            createdAt: '2021-08-26T15:00:00.000Z',
-            updatedAt: '2021-08-26T15:00:00.000Z'
-        },
-        nextLesson: '2021-08-26T15:00:00.000Z',
-        createdAt: '2021-08-26T15:00:00.000Z',
-        updatedAt: '2021-08-26T15:00:00.000Z'
-    },
-    lessons: [],
-    lessonsPagination: {
-        from: 0,
-        to: 9
-    },
     refreshCourses: false,
-    refreshLessons: false,
-    selectedCourse: INIT_COURSE,
-    selectedLesson: INIT_LESSON
+    selectedCourse: INIT_COURSE
 }
 
 export const courseSelectedStateMock: CoursesState = {
@@ -263,142 +136,10 @@ export const courseSelectedStateMock: CoursesState = {
     },
     coursesScreenHistory: [],
     hasMoreCourses: false,
-    hasMoreLessons: false,
     isCourseDeleting: false,
     isCourseLoading: false,
     isCoursesLoading: false,
-    isLastLessonLoading: false,
-    isLessonDeleting: false,
-    isLessonLoading: false,
-    isLessonsLoading: false,
-    lastLesson: {
-        ...INIT_LESSON,
-        course: {
-            ...INIT_COURSE,
-            createdAt: '2021-08-26T15:00:00.000Z',
-            updatedAt: '2021-08-26T15:00:00.000Z'
-        },
-        nextLesson: '2021-08-26T15:00:00.000Z',
-        createdAt: '2021-08-26T15:00:00.000Z',
-        updatedAt: '2021-08-26T15:00:00.000Z'
-    },
-    lessons: [],
-    lessonsPagination: {
-        from: 0,
-        to: 9
-    },
     refreshCourses: false,
-    refreshLessons: false,
-    selectedCourse: coursesMock[0],
-    selectedLesson: INIT_LESSON
+    selectedCourse: coursesMock[0]
 }
 
-export const lastLessonStateMock: CoursesState = {
-    courseFilter: 'all',
-    courses: coursesMock,
-    coursesPagination: {
-        from: 0,
-        to: 9
-    },
-    coursesScreenHistory: [],
-    hasMoreCourses: false,
-    hasMoreLessons: false,
-    isCourseDeleting: false,
-    isCourseLoading: false,
-    isCoursesLoading: false,
-    isLastLessonLoading: false,
-    isLessonDeleting: false,
-    isLessonLoading: false,
-    isLessonsLoading: false,
-    lastLesson: {
-        ...lessonsMock[0],
-        course: coursesMock[0]
-    },
-    lessons: [ lessonsMock[0] ],
-    lessonsPagination: {
-        from: 0,
-        to: 9
-    },
-    refreshCourses: false,
-    refreshLessons: false,
-    selectedCourse: coursesMock[0],
-    selectedLesson: INIT_LESSON
-}
-
-export const lessonsStateMock: CoursesState = {
-    courseFilter: 'all',
-    courses: coursesMock,
-    coursesPagination: {
-        from: 0,
-        to: 9
-    },
-    coursesScreenHistory: [],
-    hasMoreCourses: false,
-    hasMoreLessons: false,
-    isCourseDeleting: false,
-    isCourseLoading: false,
-    isCoursesLoading: false,
-    isLastLessonLoading: false,
-    isLessonDeleting: false,
-    isLessonLoading: false,
-    isLessonsLoading: false,
-    lastLesson: {
-        ...INIT_LESSON,
-        course: {
-            ...INIT_COURSE,
-            createdAt: '2021-08-26T15:00:00.000Z',
-            updatedAt: '2021-08-26T15:00:00.000Z'
-        },
-        nextLesson: '2021-08-26T15:00:00.000Z',
-        createdAt: '2021-08-26T15:00:00.000Z',
-        updatedAt: '2021-08-26T15:00:00.000Z'
-    },
-    lessons: [ lessonsMock[0] ],
-    lessonsPagination: {
-        from: 0,
-        to: 9
-    },
-    refreshCourses: false,
-    refreshLessons: false,
-    selectedCourse: coursesMock[0],
-    selectedLesson: INIT_LESSON
-}
-
-export const lessonSelectedStateMock: CoursesState = {
-    courseFilter: 'all',
-    courses: coursesMock,
-    coursesPagination: {
-        from: 0,
-        to: 9
-    },
-    coursesScreenHistory: [],
-    hasMoreCourses: false,
-    hasMoreLessons: false,
-    isCourseDeleting: false,
-    isCourseLoading: false,
-    isCoursesLoading: false,
-    isLastLessonLoading: false,
-    isLessonDeleting: false,
-    isLessonLoading: false,
-    isLessonsLoading: false,
-    lastLesson: {
-        ...INIT_LESSON,
-        course: {
-            ...INIT_COURSE,
-            createdAt: '2021-08-26T15:00:00.000Z',
-            updatedAt: '2021-08-26T15:00:00.000Z'
-        },
-        nextLesson: '2021-08-26T15:00:00.000Z',
-        createdAt: '2021-08-26T15:00:00.000Z',
-        updatedAt: '2021-08-26T15:00:00.000Z'
-    },
-    lessons: [ lessonsMock[0] ],
-    lessonsPagination: {
-        from: 0,
-        to: 9
-    },
-    refreshCourses: false,
-    refreshLessons: false,
-    selectedCourse: coursesMock[0],
-    selectedLesson: lessonsMock[0]
-}

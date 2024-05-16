@@ -1,5 +1,4 @@
-import { INIT_PREACHING } from '../../src/features';
-import { Preaching, PreachingState } from '../../src/interfaces';
+import { INIT_PREACHING, Preaching, PreachingState } from '../../src/modules/preaching';
 
 export const loadPreachingsMock = jest.fn();
 export const savePreachingMock = jest.fn();

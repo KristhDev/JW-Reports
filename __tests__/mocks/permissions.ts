@@ -1,4 +1,4 @@
-import { PermissionsState } from '../../src/interfaces';
+import { PermissionsState } from '../../src/modules/shared';
 
 export const initialPermissionsStateMock: PermissionsState = {
     permissions: {
