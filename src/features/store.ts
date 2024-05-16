@@ -1,32 +1,38 @@
 import { configureStore } from '@reduxjs/toolkit';
+import { combineReducers } from 'redux';
 import { persistReducer, persistStore } from 'reduxjs-toolkit-persist';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { combineReducers } from 'redux';
-import reduxFlipper from 'redux-flipper';
 
 /* Reducers */
-import { authReducer } from './auth';
-import { coursesReducer } from './courses';
-import { permissionsReducer } from './permissions';
-import { preachingReducer } from './preaching';
-import { revisitsReducer } from './revisits';
-import { statusReducer } from './status';
+import { authReducer } from '../modules/auth/features';
+import { coursesReducer } from '../modules/courses/features';
+import { lessonsReducer } from '../modules/lessons/features';
+import { permissionsReducer, statusReducer } from '../modules/shared/features';
+import { preachingReducer } from '../modules/preaching/features';
+import { revisitsReducer } from '../modules/revisits/features';
+
+/* Utils */
+import { asyncStorageKeys } from '../utils';
+
+/* Debugger */
+import reactotron from '../../ReactotronConfig';
 
 /* Combining all the reducers into one reducer. */
 const reducers = combineReducers({
     auth: authReducer,
     courses: coursesReducer,
+    lessons: lessonsReducer,
     permissions: permissionsReducer,
     preaching: preachingReducer,
     revisits: revisitsReducer,
     status: statusReducer
 });
 
-/* Setting the key and storage for the persistor. */
+/* Persisting the store. */
 const persistConfig = {
-    key: 'jw-reports-root',
-    storage: AsyncStorage,
-}
+    key: asyncStorageKeys.STORE,
+    storage: AsyncStorage
+};
 
 const reducer = persistReducer(persistConfig, reducers);
 
@@ -34,19 +40,13 @@ const reducer = persistReducer(persistConfig, reducers);
 export const store = configureStore({
     reducer,
     devTools: false,
-    middleware: (getDefaultMiddleware) => {
-        const middleware = getDefaultMiddleware({
-            serializableCheck: false
-        });
+    enhancers: (getDefaultEnhancers) => {
+        const enhancers = getDefaultEnhancers();
 
-        /* Checking if the app is in development mode. If it is, it will add the reduxFlipper
-        middleware to the store. */
-        if (__DEV__ && !process.env.JEST_WORKER_ID) {
-            middleware.push(reduxFlipper());
-        }
-
-        return middleware;
-    }
+        if (__DEV__ && !process.env.JEST_WORKER_ID) enhancers.push(reactotron.createEnhancer!());
+        return enhancers;
+    },
+    middleware: (getDefaultMiddleware) => getDefaultMiddleware({ serializableCheck: false })
 });
 
 export const persistor = persistStore(store);

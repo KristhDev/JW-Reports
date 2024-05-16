@@ -1,10 +1,6 @@
 module.exports = {
-  presets: ['module:metro-react-native-babel-preset'],
+  presets: [ 'module:@react-native/babel-preset' ],
   plugins: [
-    '@babel/plugin-transform-flow-strip-types',
-    '@babel/plugin-proposal-class-properties',
-    '@babel/plugin-proposal-private-property-in-object',
-    '@babel/plugin-proposal-private-methods',
     [ 'module:react-native-dotenv', {
       'envName': 'APP_ENV',
       'moduleName': '@env',
@@ -18,10 +14,5 @@ module.exports = {
       'verbose': false
     } ],
     'react-native-reanimated/plugin'
-  ],
-  env: {
-    production: {
-      plugins: ['react-native-paper/babel'],
-    },
-  }
+  ]
 };
