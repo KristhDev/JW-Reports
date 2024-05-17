@@ -1,6 +1,5 @@
-import { INIT_COURSE } from '../../src/modules/courses';
+import { Course, INIT_COURSE } from '../../src/modules/courses';
 import { INIT_LESSON, Lesson, LessonsState } from './../../src/modules/lessons';
-import { coursesMock } from './courses';
 
 export const deleteLessonMock = jest.fn();
 export const finishOrStartLessonMock = jest.fn();
@@ -15,6 +14,19 @@ export const updateLessonMock = jest.fn();
 export const testLesson = {
     description: 'Temporibus ut dignissimos aliquam dignissimos facere recusandae. Illo a provident quasi iusto quidem qui tempora vel adipisci. Quia eum ut recusandae laudantium quidem. Quisquam non fugiat dicta qui voluptatem.',
     nextLesson: new Date('2023-03-20T00:00:00.000Z')
+}
+
+export const courseMock: Course = {
+    id: '8ea3baf8-6b47-4222-8ed1-c62d5755b9a5',
+    userId: '26ee1755-975d-4a00-9fe5-fa417eb07748',
+    personName: 'Fred Cremin',
+    personAbout: 'Voluptatem dolorem neque quia omnis odit quos non. Sed rerum est est rem et. Ut aut repellat expedita commodi ipsum. In quisquam excepturi rerum debitis. Beatae rem saepe aut molestiae.',
+    personAddress: 'Non ut fuga dolores. Laborum veniam quae minus consequuntur quisquam temporibus et. Est accusamus omnis facere facilis labore.',
+    publication: 'animi voluptas omnis',
+    suspended: false,
+    finished: false,
+    createdAt: '2021-08-26T15:00:00.000Z',
+    updatedAt: '2021-08-26T15:00:00.000Z'
 }
 
 export const lessonsMock: Lesson[] = [
@@ -95,7 +107,7 @@ export const lastLessonStateMock: LessonsState = {
     isLessonsLoading: false,
     lastLesson: {
         ...lessonsMock[0],
-        course: coursesMock[0]
+        course: courseMock
     },
     lessons: [ lessonsMock[0] ],
     lessonsPagination: {

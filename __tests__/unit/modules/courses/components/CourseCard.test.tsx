@@ -3,7 +3,7 @@ import { render, screen, userEvent } from '@testing-library/react-native';
 import { MenuProvider } from 'react-native-popup-menu';
 
 /* Setup */
-import { useNavigationMock } from '../../../../../jest.setup';
+import { mockUseNavigation } from '../../../../../jest.setup';
 
 /* Mocks */
 import { coursesStateMock, lessonSelectedStateMock, setSelectedCourseMock, setSelectedLessonMock } from '../../../../mocks';
@@ -76,7 +76,7 @@ describe('Test in <CourseCard /> component', () => {
         /* Check if setSelectedCourse and Navigate is called with respective args */
         expect(setSelectedCourseMock).toHaveBeenCalledTimes(1);
         expect(setSelectedCourseMock).toHaveBeenCalledWith(course);
-        expect(useNavigationMock.navigate).toHaveBeenCalledTimes(1);
-        expect(useNavigationMock.navigate).toHaveBeenCalledWith('CourseDetailScreen');
+        expect(mockUseNavigation.navigate).toHaveBeenCalledTimes(1);
+        expect(mockUseNavigation.navigate).toHaveBeenCalledWith('CourseDetailScreen');
     });
 });

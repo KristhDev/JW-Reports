@@ -1,19 +1,18 @@
 import React from 'react';
 import { render, screen, userEvent } from '@testing-library/react-native';
 import { MenuProvider } from 'react-native-popup-menu';
-import dayjs from 'dayjs';
 
 /* Setup */
-import { useNavigationMock } from '../../../../../jest.setup';
+import { mockUseNavigation, useLessonsSpy } from '../../../../../jest.setup';
 
 /* Mocks */
 import { lessonsMock, setSelectedLessonMock } from '../../../../mocks';
 
 /* Modules */
-import { LessonCard, useLessons } from '../../../../../src/modules/lessons';
+import { LessonCard } from '../../../../../src/modules/lessons';
 
-/* Mock hooks */
-jest.mock('../../../../../src/modules/lessons/hooks/useLessons.ts');
+/* Utils */
+import { date } from '../../../../../src/utils';
 
 const lesson = lessonsMock[0];
 
@@ -30,9 +29,9 @@ const renderScreen = () => render(
 );
 
 describe('Test in <LessonCard /> component', () => {
-    (useLessons as jest.Mock).mockReturnValue({
+    useLessonsSpy.mockImplementation(() => ({
         setSelectedLesson: setSelectedLessonMock
-    });
+    }) as any);
 
     beforeEach(() => {
         jest.clearAllMocks();
@@ -50,21 +49,21 @@ describe('Test in <LessonCard /> component', () => {
         const statusText = screen.getByTestId('lesson-card-status-text');
         const descriptionText = screen.getByTestId('lesson-card-description-text');
 
-        const nextVisit = dayjs(lesson.nextLesson);
+        const nextVisit = date.format(lesson.nextLesson, '[Clase] [para] [el] DD [de] MMMM [del] YYYY');
 
         /* Check if elemets exists and containt content of lesson */
-        expect(statusText).toBeTruthy();
-        expect(statusText).toHaveTextContent(`Clase para el ${ nextVisit.format('DD') } de ${ nextVisit.format('MMMM') } del ${ nextVisit.format('YYYY') }`);
+        expect(statusText).toBeOnTheScreen();
+        expect(statusText).toHaveTextContent(nextVisit);
         expect(descriptionText).toBeTruthy();
-        expect(typeof descriptionText.props.children).toBe('string');
+        expect(typeof descriptionText.type).toBe('string');
     });
 
-    it('should call setSelectedLesson and navigate when card is pressed', () => {
+    it('should call setSelectedLesson and navigate when card is pressed', async () => {
         renderScreen();
 
         /* Get touchable card */
         const pressable = screen.getByTestId('lesson-card-touchable');
-        user.press(pressable);
+        await user.press(pressable);
 
         /**
          * Check if setSelectedLesson and navigate are called one time
@@ -72,7 +71,7 @@ describe('Test in <LessonCard /> component', () => {
          */
         expect(setSelectedLessonMock).toHaveBeenCalledTimes(1);
         expect(setSelectedLessonMock).toHaveBeenCalledWith(lesson);
-        expect(useNavigationMock.navigate).toHaveBeenCalledTimes(1);
-        expect(useNavigationMock.navigate).toHaveBeenCalledWith('LessonDetailScreen');
+        expect(mockUseNavigation.navigate).toHaveBeenCalledTimes(1);
+        expect(mockUseNavigation.navigate).toHaveBeenCalledWith('LessonDetailScreen');
     });
 });

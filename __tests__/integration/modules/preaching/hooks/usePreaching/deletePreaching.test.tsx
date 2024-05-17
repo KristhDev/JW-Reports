@@ -85,7 +85,7 @@ describe('Test usePreaching hook - deletePreaching', () => {
         /* Check if status state is equal to respective object */
         expect(result.current.useStatus.state).toEqual({
             code: 200,
-            msg: 'Haz eliminado tu día de predicación correctamente.'
+            msg: 'Has eliminado tu día de predicación correctamente.'
         });
 
         await act(async () => {

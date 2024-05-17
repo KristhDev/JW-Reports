@@ -2,7 +2,7 @@ import React from 'react';
 import { act, render, screen, waitFor, userEvent } from '@testing-library/react-native';
 
 /* Setup */
-import { useNavigationMock } from '../../../../../jest.setup';
+import { mockUseNavigation } from '../../../../../jest.setup';
 
 /* Mocks */
 import { setErrorFormMock, signInMock } from '../../../../mocks';
@@ -86,14 +86,14 @@ describe('Test in <LoginForm /> component', () => {
         await user.press(touchableSignUp);
 
         /* Check if navigate is called with respective arg */
-        expect(useNavigationMock.navigate).toHaveBeenCalledWith('RegisterScreen');
+        expect(mockUseNavigation.navigate).toHaveBeenCalledWith('RegisterScreen');
 
         /* Get touchable to navigate of ForgotPasswordScreen */
         const touchableForgotPass = await screen.findByTestId('login-form-forgor-pass');
         await user.press(touchableForgotPass);
 
         /* Check if navigate is called with respective arg */
-        expect(useNavigationMock.navigate).toHaveBeenCalledWith('ForgotPasswordScreen');
+        expect(mockUseNavigation.navigate).toHaveBeenCalledWith('ForgotPasswordScreen');
     });
 
     it('should disabled button then isAuthLoading is true', async () => {

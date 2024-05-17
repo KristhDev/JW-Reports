@@ -1,47 +1,43 @@
 import React from 'react';
-import { render, screen, waitFor } from '@testing-library/react-native';
+import { act, render, screen } from '@testing-library/react-native';
+
+/* Setup */
+import { useAuthSpy, useStatusSpy } from '../../../../../jest.setup';
 
 /* Mocks */
 import { setErrorFormMock, testUser, updateProfileMock } from '../../../../mocks';
 
 /* Modules */
-import { Profile, useAuth } from '../../../../../src/modules/auth';
-import { useStatus } from '../../../../../src/modules/shared';
+import { Profile } from '../../../../../src/modules/auth';
 
-/* Mock hooks */
-jest.mock('../../../../../src/modules/auth/hooks/useAuth.ts');
-jest.mock('../../../../../src/modules/shared/hooks/useStatus.ts');
+const renderScreen = () => render(<Profile />);
 
 describe('Test in <Profile /> screen', () => {
-    (useAuth as jest.Mock).mockReturnValue({
+    useAuthSpy.mockImplementation(() => ({
         state: { user: testUser, isAuthLoading: false },
         updateProfile: updateProfileMock
-    });
+    }) as any);
 
-    (useStatus as jest.Mock).mockReturnValue({
+    useStatusSpy.mockImplementation(() => ({
         setErrorForm: setErrorFormMock
-    });
+    }) as any);
 
     it('should to match snapshot', async () => {
-        await waitFor(() => {
-            render(<Profile />);
-        });
+        renderScreen()
 
-        await waitFor(() => {
+        await act(() => {
             expect(screen.toJSON()).toMatchSnapshot();
         });
     });
 
     it('should render respective title', async () => {
-        await waitFor(() => {
-            render(<Profile />);
-        });
+        renderScreen();
 
         /* Get title */
         const title = await screen.findByTestId('title-text');
 
         /* Check if title exists and contain value pass by props */
-        expect(title).toBeTruthy();
-        expect(title.props.children).toBe('Mi perfil');
+        expect(title).toBeOnTheScreen();
+        expect(title).toHaveTextContent('Mi perfil');
     });
 });

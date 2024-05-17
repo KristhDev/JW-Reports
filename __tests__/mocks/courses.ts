@@ -1,5 +1,5 @@
 import { INIT_COURSE, Course, CoursesState } from '../../src/modules/courses';
-import { lessonsMock } from './lessons';
+import { Lesson } from '../../src/modules/lessons';
 
 export const activeOrSuspendCourseMock = jest.fn();
 export const deleteCourseMock = jest.fn();
@@ -20,6 +20,16 @@ export const testCourse = {
     publication: 'dolorem ut non'
 }
 
+export const lessonMock: Lesson = {
+    id: '0fb579e4-de87-4336-9375-76611c889f76',
+    courseId: '8ea3baf8-6b47-4222-8ed1-c62d5755b9a5',
+    description: 'Nemo et et non nesciunt ipsum sed rerum vero. Nostrum quae officiis qui nihil dignissimos consectetur aperiam. Vel harum ex. Ipsum ratione necessitatibus eum sint vero enim et consequatur. Ab autem rerum numquam ut. Laboriosam nihil est exercitationem unde aut reiciendis odit.',
+    nextLesson: '2021-01-01T00:00:00.000Z',
+    done: false,
+    createdAt: '2021-01-01T00:00:00.000Z',
+    updatedAt: '2021-01-01T00:00:00.000Z',
+}
+
 export const coursesMock: Course[] = [
     {
         id: '8ea3baf8-6b47-4222-8ed1-c62d5755b9a5',
@@ -28,7 +38,10 @@ export const coursesMock: Course[] = [
         personAbout: 'Voluptatem dolorem neque quia omnis odit quos non. Sed rerum est est rem et. Ut aut repellat expedita commodi ipsum. In quisquam excepturi rerum debitis. Beatae rem saepe aut molestiae.',
         personAddress: 'Non ut fuga dolores. Laborum veniam quae minus consequuntur quisquam temporibus et. Est accusamus omnis facere facilis labore.',
         publication: 'animi voluptas omnis',
-        lastLesson: lessonsMock[0],
+        lastLesson: {
+            ...lessonMock,
+            courseId: '8ea3baf8-6b47-4222-8ed1-c62d5755b9a5'
+        },
         suspended: false,
         finished: false,
         createdAt: '2021-08-26T15:00:00.000Z',
@@ -41,7 +54,10 @@ export const coursesMock: Course[] = [
         personAbout: 'Voluptatem dolorem neque quia omnis odit quos non. Sed rerum est est rem et. Ut aut repellat expedita commodi ipsum. In quisquam excepturi rerum debitis. Beatae rem saepe aut molestiae.',
         personAddress: 'Non ut fuga dolores. Laborum veniam quae minus consequuntur quisquam temporibus et. Est accusamus omnis facere facilis labore.',
         publication: 'animi voluptas omnis',
-        lastLesson: lessonsMock[1],
+        lastLesson: {
+            ...lessonMock,
+            courseId: 'ab57ec1c-6b2c-4cc8-8a49-452fcdfa4042'
+        },
         suspended: false,
         finished: false,
         createdAt: '2021-08-26T15:00:00.000Z',
@@ -54,7 +70,10 @@ export const coursesMock: Course[] = [
         personAbout: 'Voluptatem dolorem neque quia omnis odit quos non. Sed rerum est est rem et. Ut aut repellat expedita commodi ipsum. In quisquam excepturi rerum debitis. Beatae rem saepe aut molestiae.',
         personAddress: 'Non ut fuga dolores. Laborum veniam quae minus consequuntur quisquam temporibus et. Est accusamus omnis facere facilis labore.',
         publication: 'animi voluptas omnis',
-        lastLesson: lessonsMock[2],
+        lastLesson: {
+            ...lessonMock,
+            courseId: 'd872759d-2cce-42eb-a1a8-16de81bafd22'
+        },
         suspended: false,
         finished: false,
         createdAt: '2021-08-26T15:00:00.000Z',
@@ -67,7 +86,10 @@ export const coursesMock: Course[] = [
         personAbout: 'Voluptatem dolorem neque quia omnis odit quos non. Sed rerum est est rem et. Ut aut repellat expedita commodi ipsum. In quisquam excepturi rerum debitis. Beatae rem saepe aut molestiae.',
         personAddress: 'Non ut fuga dolores. Laborum veniam quae minus consequuntur quisquam temporibus et. Est accusamus omnis facere facilis labore.',
         publication: 'animi voluptas omnis',
-        lastLesson: lessonsMock[3],
+        lastLesson: {
+            ...lessonMock,
+            courseId: '0bb1b3c6-e5ff-4f01-8071-0f71d1f544b9'
+        },
         suspended: false,
         finished: false,
         createdAt: '2021-08-26T15:00:00.000Z',

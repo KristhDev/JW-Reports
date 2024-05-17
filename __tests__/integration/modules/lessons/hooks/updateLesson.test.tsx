@@ -1,7 +1,7 @@
 import { act } from '@testing-library/react-native';
 
 /* Setups */
-import { useNavigationMock } from '../../../../../jest.setup';
+import { mockUseNavigation } from '../../../../../jest.setup';
 import { getMockStoreUseLessons, renderUseLessons } from '../../../../setups';
 
 /* Mocks */
@@ -119,11 +119,11 @@ describe('Test in useLessons hook - updateLesson', () => {
         /* Check if status state is equal to respective status */
         expect(result.current.useStatus.state).toEqual({
             code: 200,
-            msg: 'Haz actualizado la clase correctamente.'
+            msg: 'Has actualizado la clase correctamente.'
         });
 
         /* Check if goBack is called one time */
-        expect(useNavigationMock.goBack).toHaveBeenCalledTimes(1);
+        expect(mockUseNavigation.goBack).toHaveBeenCalledTimes(1);
 
         await act(async () => {
             await result.current.useCourses.deleteCourse();

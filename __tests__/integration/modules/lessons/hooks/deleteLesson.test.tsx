@@ -1,7 +1,7 @@
 import { act } from '@testing-library/react-native';
 
 /* Setups */
-import { onFinishMock, useNavigationMock } from '../../../../../jest.setup';
+import { onFinishMock, mockUseNavigation } from '../../../../../jest.setup';
 import { getMockStoreUseLessons, renderUseLessons } from '../../../../setups';
 
 /* Mocks */
@@ -95,13 +95,13 @@ describe('Test in useLessons hook - deleteLesson', () => {
         /* Check if status state is equal to respective status */
         expect(result.current.useStatus.state).toEqual({
             code: 200,
-            msg: 'Haz eliminado la clase correctamente.'
+            msg: 'Has eliminado la clase correctamente.'
         });
 
         /* Check if onFinish and navigate is called with respective arg */
         expect(onFinishMock).toHaveBeenCalledTimes(2);
-        expect(useNavigationMock.navigate).toHaveBeenCalledTimes(2);
-        expect(useNavigationMock.navigate).toHaveBeenCalledWith('LessonsScreen');
+        expect(mockUseNavigation.navigate).toHaveBeenCalledTimes(2);
+        expect(mockUseNavigation.navigate).toHaveBeenCalledWith('LessonsScreen');
 
         await act(async () => {
             await result.current.useCourses.deleteCourse();

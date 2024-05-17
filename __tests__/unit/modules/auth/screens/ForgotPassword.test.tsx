@@ -1,49 +1,43 @@
 import React from 'react';
-import { render, screen, waitFor } from '@testing-library/react-native';
+import { act, render, screen } from '@testing-library/react-native';
+
+/* Setup */
+import { useAuthSpy, useStatusSpy } from '../../../../../jest.setup';
 
 /* Mocks */
 import { resetPasswordMock, setErrorFormMock } from '../../../../mocks';
 
 /* Modules */
-import { ForgotPassword, useAuth } from '../../../../../src/modules/auth';
-import { useStatus } from '../../../../../src/modules/shared';
+import { ForgotPassword } from '../../../../../src/modules/auth';
 
-/* Mock hooks */
-jest.mock('../../../../../src/modules/auth/hooks/useAuth.ts');
-jest.mock('../../../../../src/modules/status/hooks/useStatus.ts');
+const renderScreen = () => render(<ForgotPassword />);
 
 describe('Test in <ForgotPassword /> screen', () => {
-    (useAuth as jest.Mock).mockReturnValue({
+    useAuthSpy.mockImplementation(() => ({
         state: { isAuthLoading: false },
         resetPassword: resetPasswordMock
-    });
+    }) as any);
 
-    (useStatus as jest.Mock).mockReturnValue({
+    useStatusSpy.mockImplementation(() => ({
         setErrorForm: setErrorFormMock
-    });
+    }) as any);
 
     it('should to match snapshot', async () => {
-        await waitFor(() => {
-            render(<ForgotPassword />);
-        });
+        renderScreen()
 
-        await waitFor(() => {
+        await act(() => {
             expect(screen.toJSON()).toMatchSnapshot();
         });
     });
 
     it('should render respective title', async () => {
-        await waitFor(() => {
-            render(<ForgotPassword />);
-        });
+        renderScreen();
 
         /* Get title */
         const title = await screen.findByTestId('title-text');
 
-        await waitFor(() => {
-            /* Check if title exists and contain value pass by props */
-            expect(title).toBeTruthy();
-            expect(title.props.children).toBe('Olvide mi contraseña');
-        });
+        /* Check if title exists and contain value pass by props */
+        expect(title).toBeOnTheScreen();
+        expect(title).toHaveTextContent('Olvide mi contraseña');
     });
 });

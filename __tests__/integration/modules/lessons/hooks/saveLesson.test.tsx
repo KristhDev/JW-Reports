@@ -1,7 +1,7 @@
 import { act } from '@testing-library/react-native';
 
 /* Setups */
-import { onFinishMock, useNavigationMock } from '../../../../../jest.setup';
+import { onFinishMock, mockUseNavigation } from '../../../../../jest.setup';
 import { getMockStoreUseLessons, renderUseLessons } from '../../../../setups';
 
 /* Mocks */
@@ -109,12 +109,12 @@ describe('Test in useLessons hook - saveLesson', () => {
         /* Check if status state is equal to respective status */
         expect(result.current.useStatus.state).toEqual({
             code: 201,
-            msg: 'Haz agregado una clase al curso correctamente.'
+            msg: 'Has agregado una clase al curso correctamente.'
         });
 
         /* Check if navigate is called two times with respectve args */
-        expect(useNavigationMock.navigate).toHaveBeenCalledTimes(2);
-        expect(useNavigationMock.navigate).toHaveBeenCalledWith('LessonsScreen');
+        expect(mockUseNavigation.navigate).toHaveBeenCalledTimes(2);
+        expect(mockUseNavigation.navigate).toHaveBeenCalledWith('LessonsScreen');
 
         await act(async () => {
             await result.current.useCourses.deleteCourse();
@@ -142,7 +142,7 @@ describe('Test in useLessons hook - saveLesson', () => {
         });
 
         /* Check if navigate isnt called */
-        expect(useNavigationMock.navigate).not.toHaveBeenCalled();
+        expect(mockUseNavigation.navigate).not.toHaveBeenCalled();
     });
 
     it('should faild when selectedCourse is empty', async () => {

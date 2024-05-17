@@ -1,7 +1,7 @@
 import { act } from '@testing-library/react-native';
 
 /* Setups */
-import { onFinishMock, useNavigationMock } from '../../../../../../jest.setup';
+import { onFinishMock, mockUseNavigation } from '../../../../../../jest.setup';
 import { getMockStoreUseRevisits, renderUseRevisits } from '../../../../../setups';
 
 /* Mocks */
@@ -78,13 +78,13 @@ describe('Test useRevisits hook - saveRevisit', () => {
         /* Check if status state is equal to respective status */
         expect(result.current.useStatus.state).toEqual({
             code: 201,
-            msg: 'Haz agregado tu revisita correctamente.'
+            msg: 'Has agregado tu revisita correctamente.'
         });
 
         /* Check if onFinish and navigate is called one time with respective arg */
         expect(onFinishMock).toHaveBeenCalledTimes(1);
-        expect(useNavigationMock.navigate).toHaveBeenCalledTimes(1);
-        expect(useNavigationMock.navigate).toHaveBeenCalledWith('RevisitsTopTabsNavigation');
+        expect(mockUseNavigation.navigate).toHaveBeenCalledTimes(1);
+        expect(mockUseNavigation.navigate).toHaveBeenCalledWith('RevisitsTopTabsNavigation');
 
         await act(async () => {
             result.current.useRevisits.setSelectedRevisit(result.current.useRevisits.state.revisits[0]);
@@ -142,12 +142,12 @@ describe('Test useRevisits hook - saveRevisit', () => {
         /* Check if status state is equal to respective status */
         expect(result.current.useStatus.state).toEqual({
             code: 201,
-            msg: `Haz agregado correctamente a ${ testRevisit.personName } para volverla a visitar.`
+            msg: `Has agregado correctamente a ${ testRevisit.personName } para volverla a visitar.`
         });
 
         /* Check if onFinish is called one time and navigate inst called */
         expect(onFinishMock).toHaveBeenCalledTimes(1);
-        expect(useNavigationMock.navigate).not.toHaveBeenCalled();
+        expect(mockUseNavigation.navigate).not.toHaveBeenCalled();
 
         await act(async () => {
             result.current.useRevisits.setSelectedRevisit(result.current.useRevisits.state.revisits[0]);

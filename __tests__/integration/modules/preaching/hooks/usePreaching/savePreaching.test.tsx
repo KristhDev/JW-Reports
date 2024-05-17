@@ -1,7 +1,7 @@
 import { act } from '@testing-library/react-native';
 
 /* Setups */
-import { useNavigationMock } from '../../../../../../jest.setup';
+import { mockUseNavigation } from '../../../../../../jest.setup';
 import { getMockStoreUsePreaching, renderUsePreaching } from '../../../../../setups';
 
 /* Mocks */
@@ -72,11 +72,11 @@ describe('Test in usePreaching hook - savePreaching', () => {
         /* Check if status state is equal to respective object */
         expect(result.current.useStatus.state).toEqual({
             code: 201,
-            msg: 'Haz agregado tu día de predicación correctamente.'
+            msg: 'Has agregado tu día de predicación correctamente.'
         });
 
         /* Check if goBack is called one time */
-        expect(useNavigationMock.goBack).toHaveBeenCalledTimes(1);
+        expect(mockUseNavigation.goBack).toHaveBeenCalledTimes(1);
 
         await act(() => {
             result.current.usePreaching.setSelectedPreaching(result.current.usePreaching.state.preachings[0]);
@@ -115,7 +115,7 @@ describe('Test in usePreaching hook - savePreaching', () => {
         });
 
         /* Check if goBack is called one time */
-        expect(useNavigationMock.goBack).not.toHaveBeenCalled();
+        expect(mockUseNavigation.goBack).not.toHaveBeenCalled();
     });
 
     it('should fail when data is invalid', async () => {
@@ -147,7 +147,7 @@ describe('Test in usePreaching hook - savePreaching', () => {
         });
 
         /* Check if goBack isnt called */
-        expect(useNavigationMock.goBack).not.toHaveBeenCalled();
+        expect(mockUseNavigation.goBack).not.toHaveBeenCalled();
 
         await act(async () => {
             await result.current.useAuth.signOut();

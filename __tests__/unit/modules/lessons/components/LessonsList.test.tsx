@@ -2,6 +2,9 @@ import React from 'react';
 import { render, screen, userEvent } from '@testing-library/react-native';
 import { MenuProvider } from 'react-native-popup-menu';
 
+/* Setup */
+import { useCoursesSpy, useLessonsSpy, useNetworkSpy } from '../../../../../jest.setup';
+
 /* Mocks */
 import {
     courseSelectedStateMock,
@@ -17,16 +20,9 @@ import {
 } from '../../../../mocks';
 
 /* Modules */
-import { LessonsList, useLessons } from '../../../../../src/modules/lessons';
-import { useNetwork } from '../../../../../src/modules/shared';
-import { useCourses } from '../../../../../src/modules/courses';
+import { LessonsList } from '../../../../../src/modules/lessons';
 
-/* Mock hooks */
-jest.mock('../../../../../src/modules/courses/hooks/useCourses.ts');
-jest.mock('../../../../../src/modules/lessons/hooks/useLessons.ts');
-jest.mock('../../../../../src/modules/shared/hooks/useNetwork.ts');
-
-const emptyMessageTest = 'No haz agregado clases a este curso.';
+const emptyMessageTest = 'No has agregado clases a este curso.';
 const titleTest = `Clases del curso con ${ courseSelectedStateMock.selectedCourse.personName }`;
 
 const user = userEvent.setup();
@@ -37,11 +33,11 @@ const renderScreen = () => render(
 );
 
 describe('Test in <LessonsList /> component', () => {
-    (useCourses as jest.Mock).mockReturnValue({
+    useCoursesSpy.mockImplementation(() => ({
         state: courseSelectedStateMock
-    });
+    }) as any);
 
-    (useLessons as jest.Mock).mockReturnValue({
+    useLessonsSpy.mockImplementation(() => ({
         state: lessonsStateMock,
         deleteLesson: deleteLessonMock,
         loadLessons: loadLessonsMock,
@@ -49,11 +45,11 @@ describe('Test in <LessonsList /> component', () => {
         setLessonsPagination: setLessonsPaginationMock,
         setSelectedLesson: setSelectedLessonMock,
         finishOrStartLesson: finishOrStartLessonMock,
-    });
+    }) as any);
 
-    (useNetwork as jest.Mock).mockReturnValue({
+    useNetworkSpy.mockImplementation(() => ({
         wifi: wifiMock
-    });
+    }) as any);
 
     beforeEach(() => {
         jest.clearAllMocks();
@@ -76,8 +72,8 @@ describe('Test in <LessonsList /> component', () => {
 
     it('should render message when lessons is empty', () => {
 
-        /* Mock data of useCourses */
-        (useLessons as jest.Mock).mockReturnValue({
+        /* Mock data of useLessons */
+        useLessonsSpy.mockImplementation(() => ({
             state: initialLessonsStateMock,
             deleteLesson: deleteLessonMock,
             loadLessons: loadLessonsMock,
@@ -85,7 +81,7 @@ describe('Test in <LessonsList /> component', () => {
             setLessonsPagination: setLessonsPaginationMock,
             setSelectedLesson: setSelectedLessonMock,
             finishOrStartLesson: finishOrStartLessonMock,
-        });
+        }) as any);
 
         renderScreen();
 
@@ -98,8 +94,8 @@ describe('Test in <LessonsList /> component', () => {
 
     it('should render loading when isLessonsLoading is true', () => {
 
-        /* Mock data of useCourses */
-        (useLessons as jest.Mock).mockReturnValue({
+        /* Mock data of useLessons */
+        useLessonsSpy.mockImplementation(() => ({
             state: {
                 ...initialLessonsStateMock,
                 isLessonsLoading: true
@@ -110,7 +106,7 @@ describe('Test in <LessonsList /> component', () => {
             setLessonsPagination: setLessonsPaginationMock,
             setSelectedLesson: setSelectedLessonMock,
             finishOrStartLesson: finishOrStartLessonMock,
-        });
+        }) as any);
 
         renderScreen();
 

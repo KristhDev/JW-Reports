@@ -1,7 +1,7 @@
 import { act } from '@testing-library/react-native';
 
 /* Setups */
-import { onFinishMock, useNavigationMock } from '../../../../../../jest.setup';
+import { onFinishMock, mockUseNavigation } from '../../../../../../jest.setup';
 import { getMockStoreUseRevisits, renderUseRevisits } from '../../../../../setups';
 
 /* Mocks */
@@ -84,13 +84,13 @@ describe('Test useRevisits hook - deleteRevisit', () => {
         expect(onFinishMock).toHaveBeenCalledTimes(2);
 
         /* Check if navigate is called with respective arg */
-        expect(useNavigationMock.navigate).toHaveBeenCalledTimes(1);
-        expect(useNavigationMock.navigate).toHaveBeenCalledWith('RevisitsTopTabsNavigation');
+        expect(mockUseNavigation.navigate).toHaveBeenCalledTimes(1);
+        expect(mockUseNavigation.navigate).toHaveBeenCalledWith('RevisitsTopTabsNavigation');
 
         /* Check if status state is equal to respective status */
         expect(result.current.useStatus.state).toEqual({
             code: 200,
-            msg: 'Haz eliminado tu revisita correctamente.'
+            msg: 'Has eliminado tu revisita correctamente.'
         });
     });
 

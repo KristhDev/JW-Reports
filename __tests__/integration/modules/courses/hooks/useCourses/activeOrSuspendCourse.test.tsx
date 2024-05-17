@@ -90,7 +90,7 @@ describe('Test in useCourses hook - activeOrSuspendCourse', () => {
         /* Check if status state is equal to respective status */
         expect(result.current.useStatus.state).toEqual({
             code: 200,
-            msg: 'Haz suspendido el curso correctamente.'
+            msg: 'Has suspendido el curso correctamente.'
         });
 
         /* Check if onFinish is called one time */

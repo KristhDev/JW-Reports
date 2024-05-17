@@ -3,7 +3,7 @@ import { render, screen, userEvent } from '@testing-library/react-native';
 import dayjs from 'dayjs';
 
 /* Setup */
-import { useNavigationMock } from '../../../../../jest.setup';
+import { mockUseNavigation } from '../../../../../jest.setup';
 
 /* Mocks */
 import { courseSelectedStateMock, lessonSelectedStateMock, setSelectedCourseMock, setSelectedLessonMock } from '../../../../mocks';
@@ -137,8 +137,8 @@ describe('Test in <CourseDetail /> screen', () => {
         await user.press(touchable);
 
         /* Check if navigate is called one time with respective value */
-        expect(useNavigationMock.navigate).toHaveBeenCalledTimes(1);
-        expect(useNavigationMock.navigate).toHaveBeenCalledWith('LessonsScreen');
+        expect(mockUseNavigation.navigate).toHaveBeenCalledTimes(1);
+        expect(mockUseNavigation.navigate).toHaveBeenCalledWith('LessonsScreen');
     });
 
     it('should call setSelectedLesson and navigate when add lesson link is pressed', async () => {
@@ -158,7 +158,7 @@ describe('Test in <CourseDetail /> screen', () => {
         });
 
         /* Check if navigate is called one time with respective value */
-        expect(useNavigationMock.navigate).toHaveBeenCalledTimes(1);
-        expect(useNavigationMock.navigate).toHaveBeenCalledWith('AddOrEditLessonScreen');
+        expect(mockUseNavigation.navigate).toHaveBeenCalledTimes(1);
+        expect(mockUseNavigation.navigate).toHaveBeenCalledWith('AddOrEditLessonScreen');
     });
 });

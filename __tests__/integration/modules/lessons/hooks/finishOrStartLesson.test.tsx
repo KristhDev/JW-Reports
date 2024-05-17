@@ -117,7 +117,7 @@ describe('Test in useLessons hook - finishOrStartLesson', () => {
 
         /* Check if status state is equal to respective status */
         expect(result.current.useStatus.state).toEqual({
-            msg: 'Haz terminado la clase correctamente.',
+            msg: 'Has terminado la clase correctamente.',
             code: 200
         });
 

@@ -1,7 +1,7 @@
 import { act } from '@testing-library/react-native';
 
 /* Setups */
-import { onFinishMock, useNavigationMock } from '../../../../../../jest.setup';
+import { onFinishMock, mockUseNavigation } from '../../../../../../jest.setup';
 import { getMockStoreUseRevisits, renderUseRevisits } from '../../../../../setups';
 
 /* Mocks */
@@ -99,11 +99,11 @@ describe('Test useRevisits hook - updateRevisit', () => {
         /* Check if status state is equal to respective status */
         expect(result.current.useStatus.state).toEqual({
             code: 200,
-            msg: 'Haz actualizado tu revisita correctamente.'
+            msg: 'Has actualizado tu revisita correctamente.'
         });
 
         /* Check if goBack is called one time */
-        expect(useNavigationMock.goBack).toHaveBeenCalledTimes(1);
+        expect(mockUseNavigation.goBack).toHaveBeenCalledTimes(1);
 
         await act(async () => {
             await result.current.useRevisits.deleteRevisit();
@@ -217,7 +217,7 @@ describe('Test useRevisits hook - updateRevisit', () => {
         });
 
         /* Check if goBack inst called */
-        expect(useNavigationMock.goBack).not.toHaveBeenCalled();
+        expect(mockUseNavigation.goBack).not.toHaveBeenCalled();
 
         await act(async () => {
             await result.current.useRevisits.deleteRevisit();

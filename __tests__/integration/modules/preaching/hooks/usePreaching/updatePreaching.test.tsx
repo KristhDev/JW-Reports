@@ -1,7 +1,7 @@
 import { act } from '@testing-library/react-native';
 
 /* Setups */
-import { useNavigationMock } from '../../../../../../jest.setup';
+import { mockUseNavigation } from '../../../../../../jest.setup';
 import { getMockStoreUsePreaching, renderUsePreaching } from '../../../../../setups';
 
 /* Mocks */
@@ -99,11 +99,11 @@ describe('Test in usePreaching hook - updatePreaching', () => {
         /* Check if status state is equal to respective object */
         expect(result.current.useStatus.state).toEqual({
             code: 200,
-            msg: 'Haz actualizado tu día de predicación correctamente.'
+            msg: 'Has actualizado tu día de predicación correctamente.'
         });
 
         /* Check if goBack is called two times */
-        expect(useNavigationMock.goBack).toHaveBeenCalledTimes(2);
+        expect(mockUseNavigation.goBack).toHaveBeenCalledTimes(2);
 
         await act(async () => {
             await result.current.usePreaching.deletePreaching();

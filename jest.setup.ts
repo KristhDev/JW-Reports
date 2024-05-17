@@ -13,6 +13,28 @@ export const onPressMock = jest.fn();
 export const onSearchMock = jest.fn();
 export const onToggleMock = jest.fn();
 
+import * as useAuth from './src/modules/auth/hooks/useAuth';
+import * as useCourses from './src/modules/courses/hooks/useCourses';
+import * as useImage from './src/modules/shared/hooks/useImage';
+import * as useLessons from './src/modules/lessons/hooks/useLessons';
+import * as useNetwork from './src/modules/shared/hooks/useNetwork';
+import * as usePermissions from './src/modules/shared/hooks/usePermissions';
+import * as usePreaching from './src/modules/preaching/hooks/usePreaching';
+import * as useRevisits from './src/modules/revisits/hooks/useRevisits';
+import * as useStatus from './src/modules/shared/hooks/useStatus';
+import * as useTheme from './src/modules/theme/hooks/useTheme';
+
+export const useAuthSpy = jest.spyOn(useAuth, 'default');
+export const useCoursesSpy = jest.spyOn(useCourses, 'default');
+export const useImageSpy = jest.spyOn(useImage, 'default');
+export const useLessonsSpy = jest.spyOn(useLessons, 'default');
+export const useNetworkSpy = jest.spyOn(useNetwork, 'default');
+export const usePermissionsSpy = jest.spyOn(usePermissions, 'default');
+export const usePreachingSpy = jest.spyOn(usePreaching, 'default');
+export const useRevisitsSpy = jest.spyOn(useRevisits, 'default');
+export const useStatusSpy = jest.spyOn(useStatus, 'default');
+export const useThemeSpy = jest.spyOn(useTheme, 'default');
+
 jest.mock('react-native/Libraries/Animated/NativeAnimatedHelper');
 jest.mock('react-native/Libraries/EventEmitter/NativeEventEmitter');
 
@@ -35,7 +57,7 @@ jest.mock('reduxjs-toolkit-persist', () => {
     }
 });
 
-export const useNavigationMock = {
+export const mockUseNavigation = {
     addListener: jest.fn(),
     getState: jest.fn().mockImplementation(() => ({ index: 1, routeNames: ['ListScreen'] })),
     goBack: jest.fn(),
@@ -44,12 +66,12 @@ export const useNavigationMock = {
     removeListener: jest.fn()
 }
 
-jest.doMock('@react-navigation/native', () => {
+jest.mock('@react-navigation/native', () => {
     const actual = jest.requireActual('@react-navigation/native');
 
     return {
         ...actual,
-        useNavigation: () => useNavigationMock,
+        useNavigation: () => mockUseNavigation,
 
         useRoute: () => ({
             name: 'LessonDetailScreen'

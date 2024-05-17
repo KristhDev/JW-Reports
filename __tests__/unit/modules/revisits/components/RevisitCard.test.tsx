@@ -3,7 +3,7 @@ import { render, screen, userEvent } from '@testing-library/react-native';
 import { MenuProvider } from 'react-native-popup-menu';
 
 /* Setup */
-import { useNavigationMock } from '../../../../../jest.setup';
+import { mockUseNavigation } from '../../../../../jest.setup';
 
 /* Mocks */
 import { onDeleteMock, onPassMock, onRevisitMock, selectedRevisitStateMock, setSelectedRevisitMock } from '../../../../mocks';
@@ -77,8 +77,8 @@ describe('Test in <RevisitCard /> component', () => {
          */
         expect(setSelectedRevisitMock).toHaveBeenCalledTimes(1);
         expect(setSelectedRevisitMock).toHaveBeenCalledWith(selectedRevisit);
-        expect(useNavigationMock.navigate).toHaveBeenCalledTimes(1);
-        expect(useNavigationMock.navigate).toHaveBeenCalledWith('RevisitDetailScreen');
+        expect(mockUseNavigation.navigate).toHaveBeenCalledTimes(1);
+        expect(mockUseNavigation.navigate).toHaveBeenCalledWith('RevisitDetailScreen');
     });
 
     it('should render Visita hecha when selectedRevisit.done is true', () => {

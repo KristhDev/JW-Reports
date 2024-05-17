@@ -1,24 +1,23 @@
 import React from 'react';
 import { render, screen, userEvent } from '@testing-library/react-native';
 
+/* Setup */
+import { useThemeSpy } from '../../../../../jest.setup';
+
 /* Mocks */
 import { setThemeMock } from '../../../../mocks';
 
 /* Modules */
 import { ThemeBtn } from '../../../../../src/modules/ui';
-import { useTheme } from '../../../../../src/modules/theme';
-
-jest.mock('../../../../../src/modules/theme/hooks/useTheme.ts');
-const useThemeMock = jest.mocked(useTheme, { shallow: true });
 
 const user = userEvent.setup();
 const renderComponent = () => render(<ThemeBtn />);
 
 describe('Test in <ThemeBtn /> component', () => {
-    useThemeMock.mockReturnValue({
-        setTheme: setThemeMock,
-        state: { theme: 'dark', selectedTheme: 'dark' }
-    });
+    useThemeSpy.mockImplementation(() => ({
+        state: { theme: 'dark', selectedTheme: 'dark' },
+        setTheme: setThemeMock
+    }));
 
     beforeEach(() => {
         jest.clearAllMocks();
@@ -41,18 +40,19 @@ describe('Test in <ThemeBtn /> component', () => {
         expect(setThemeMock).toHaveBeenCalledWith('light');
     });
 
-    it('should change icon when change selectedTheme', () => {
-        /* Mock data of useTheme */
-        (useTheme as jest.Mock).mockReturnValue({
-            state: { theme: 'light' },
+    it('should change icon when change selectedTheme', async () => {
+        useThemeSpy.mockImplementation(() => ({
+            state: { theme: 'light', selectedTheme: 'light' },
             setTheme: setThemeMock
-        });
+        }));
 
+        /* Mock data of useTheme */
         renderComponent();
 
         /* Get touchable and check if is icon sunny-outline */
         const touchable = screen.getByTestId('fab-touchable');
-        const iconName = touchable.props.children[0].props.children[1].props.name;
-        expect(iconName).toBe('sunny-outline');
+        const icon = await touchable.findByProps({ name: 'moon-outline' });
+
+        expect(icon.props).toHaveProperty('name', 'moon-outline');
     });
 });

@@ -142,8 +142,8 @@ describe('Test in <PublisherHome /> screen', () => {
         const emptyMessages = screen.queryAllByTestId('info-text-text');
 
         expect(emptyMessages[0]).toBeOnTheScreen();
-        expect(emptyMessages[0]).toHaveTextContent('No haz agregado ninguna lección para un curso biblíco.');
+        expect(emptyMessages[0]).toHaveTextContent('No has agregado ninguna lección para un curso biblíco.');
         expect(emptyMessages[1]).toBeOnTheScreen();
-        expect(emptyMessages[1]).toHaveTextContent('No haz agregado ninguna revisita.');
+        expect(emptyMessages[1]).toHaveTextContent('No has agregado ninguna revisita.');
     });
 });
