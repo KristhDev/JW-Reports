@@ -1,4 +1,3 @@
-
 /* Theme */
 import { darkColors, lightColors } from '../../../../../src/modules/theme';
 

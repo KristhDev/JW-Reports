@@ -2,6 +2,16 @@ import React from 'react';
 import { MenuProvider } from 'react-native-popup-menu';
 import { render, screen } from '@testing-library/react-native';
 
+/* Setup */
+import {
+    useAuthSpy,
+    useCoursesSpy,
+    useLessonsSpy,
+    usePreachingSpy,
+    useRevisitsSpy,
+    useStatusSpy
+} from '../../../../../jest.setup';
+
 /* Mocks */
 import {
     completeRevisitMock,
@@ -23,20 +33,9 @@ import {
 } from '../../../../mocks';
 
 /* Modules */
-import { useAuth } from '../../../../../src/modules/auth';
-import { PublisherHome, usePreaching } from '../../../../../src/modules/preaching';
-import { useCourses } from '../../../../../src/modules/courses';
-import { INIT_REVISIT, useRevisits } from '../../../../../src/modules/revisits';
-import { useStatus } from '../../../../../src/modules/shared';
-import { INIT_LESSON, useLessons } from '../../../../../src/modules/lessons';
-
-/* Mock hooks */
-jest.mock('../../../../../src/modules/auth/hooks/useAuth.ts');
-jest.mock('../../../../../src/modules/courses/hooks/useCourses.ts');
-jest.mock('../../../../../src/modules/lessons/hooks/useLessons.ts');
-jest.mock('../../../../../src/modules/preaching/hooks/usePreaching.ts');
-jest.mock('../../../../../src/modules/revisits/hooks/useRevisits.ts');
-jest.mock('../../../../../src/modules/shared/hooks/useStatus.ts');
+import { PublisherHome } from '../../../../../src/modules/preaching';
+import { INIT_REVISIT } from '../../../../../src/modules/revisits';
+import { INIT_LESSON } from '../../../../../src/modules/lessons';
 
 const renderScreen = () => render(
     <MenuProvider>
@@ -45,39 +44,39 @@ const renderScreen = () => render(
 );
 
 describe('Test in <PublisherHome /> screen', () => {
-    (useAuth as jest.Mock).mockReturnValue({
+    useAuthSpy.mockImplementation(() => ({
         state: { user: testUser },
-    });
+    }) as any);
 
-    (useCourses as jest.Mock).mockReturnValue({
+    useCoursesSpy.mockImplementation(() => ({
         state: coursesStateMock,
         saveCourse: saveCourseMock,
-        setSelectedCourse: setSelectedCourseMock,
-    });
+        setSelectedCourse: setSelectedCourseMock
+    }) as any);
 
-    (useLessons as jest.Mock).mockReturnValue({
+    useLessonsSpy.mockImplementation(() => ({
         state: lastLessonStateMock,
         deleteLesson: deleteLessonMock,
         finishOrStartLesson: finishOrStartLessonMock,
         loadLastLesson: loadLastLessonMock,
         setSelectedLesson: setSelectedLessonMock
-    });
+    }) as any);
 
-    (usePreaching as jest.Mock).mockReturnValue({
+    usePreachingSpy.mockImplementation(() => ({
         state: preachingsStateMock
-    });
+    }) as any);
 
-    (useRevisits as jest.Mock).mockReturnValue({
+    useRevisitsSpy.mockImplementation(() => ({
         state: lastRevisitStateMock,
         completeRevisit: completeRevisitMock,
         loadLastRevisit: loadLastRevisitMock,
         setSelectedRevisit: setSelectedRevisitMock
-    });
+    }) as any);
 
-    (useStatus as jest.Mock).mockReturnValue({
+    useStatusSpy.mockImplementation(() => ({
         setStatus: setStatusMock,
         setErrorForm: setErrorFormMock
-    });
+    }) as any);
 
     it('should to match snapshot', () => {
         renderScreen();
@@ -85,18 +84,18 @@ describe('Test in <PublisherHome /> screen', () => {
     });
 
     it('should render loadings', () => {
-        (useLessons as jest.Mock).mockReturnValue({
+        useLessonsSpy.mockImplementation(() => ({
             state: {
-                ...lastRevisitStateMock,
-                isLastRevisitLoading: true
+                ...lastLessonStateMock,
+                isLastLessonLoading: true
             },
             deleteLesson: deleteLessonMock,
             finishOrStartLesson: finishOrStartLessonMock,
             loadLastLesson: loadLastLessonMock,
             setSelectedLesson: setSelectedLessonMock,
-        });
+        }) as any);
 
-        (useRevisits as jest.Mock).mockReturnValue({
+        useRevisitsSpy.mockImplementation(() => ({
             state: {
                 ...lastRevisitStateMock,
                 isLastRevisitLoading: true
@@ -104,7 +103,7 @@ describe('Test in <PublisherHome /> screen', () => {
             completeRevisit: completeRevisitMock,
             loadLastRevisit: loadLastRevisitMock,
             setSelectedRevisit: setSelectedRevisitMock
-        });
+        }) as any);
 
         renderScreen();
 
@@ -116,7 +115,7 @@ describe('Test in <PublisherHome /> screen', () => {
     });
 
     it('should render empty messages', () => {
-        (useLessons as jest.Mock).mockReturnValue({
+        useLessonsSpy.mockImplementation(() => ({
             state: {
                 ...lastLessonStateMock,
                 lastLesson: INIT_LESSON
@@ -125,9 +124,9 @@ describe('Test in <PublisherHome /> screen', () => {
             finishOrStartLesson: finishOrStartLessonMock,
             loadLastLesson: loadLastLessonMock,
             setSelectedLesson: setSelectedLessonMock
-        });
+        }) as any);
 
-        (useRevisits as jest.Mock).mockReturnValue({
+        useRevisitsSpy.mockImplementation(() => ({
             state: {
                 ...lastRevisitStateMock,
                 lastRevisit: INIT_REVISIT
@@ -135,7 +134,7 @@ describe('Test in <PublisherHome /> screen', () => {
             completeRevisit: completeRevisitMock,
             loadLastRevisit: loadLastRevisitMock,
             setSelectedRevisit: setSelectedRevisitMock
-        });
+        }) as any);
 
         renderScreen();
 

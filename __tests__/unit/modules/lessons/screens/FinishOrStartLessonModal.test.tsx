@@ -2,16 +2,13 @@ import React from 'react';
 import { render, screen, userEvent } from '@testing-library/react-native';
 
 /* Setup */
-import { onCloseMock } from '../../../../../jest.setup';
+import { onCloseMock, useLessonsSpy } from '../../../../../jest.setup';
 
 /* Mock */
 import { finishOrStartLessonMock, lessonSelectedStateMock } from '../../../../mocks';
 
 /* Modules */
-import { FinishOrStartLessonModal, useLessons } from '../../../../../src/modules/lessons';
-
-/* Mock hooks */
-jest.mock('../../../../../src/modules/lessons/hooks/useLessons.ts');
+import { FinishOrStartLessonModal } from '../../../../../src/modules/lessons';
 
 const user = userEvent.setup();
 const renderScreen = () => render(
@@ -22,10 +19,10 @@ const renderScreen = () => render(
 );
 
 describe('Test in <FinishOrStartLessonModal /> screen', () => {
-    (useLessons as jest.Mock).mockReturnValue({
+    useLessonsSpy.mockImplementation(() => ({
         state: lessonSelectedStateMock,
         finishOrStartLesson: finishOrStartLessonMock
-    });
+    }) as any);
 
     it('should to match snapshot', () => {
         renderScreen();
@@ -40,13 +37,14 @@ describe('Test in <FinishOrStartLessonModal /> screen', () => {
         const pressable = screen.getAllByTestId('button-touchable')[1];
 
         /* Check if msg and touchable are rendered and containt respective values */
-        expect(msg).toBeTruthy();
-        expect(msg.props.children).toBe('¿Está seguro de terminar esta clase?');
-        expect(pressable).toBeTruthy();
-        expect(pressable.props.children[0].props.children[1].props.children[0].props.children).toBe('TERMINAR');
+        expect(msg).toBeOnTheScreen();
+        expect(msg).toHaveTextContent('¿Está seguro de terminar esta clase?');
+        expect(pressable).toBeOnTheScreen();
+        expect(pressable).toHaveTextContent('TERMINAR');
     });
 
     it('should call finishOrStartLesson when confirm button is pressed', async () => {
+        renderScreen();
 
         /* Get touchable */
         const pressable = screen.getAllByTestId('button-touchable')[1];
@@ -58,6 +56,7 @@ describe('Test in <FinishOrStartLessonModal /> screen', () => {
     });
 
     it('should call onClose when cancel button is pressed', async () => {
+        renderScreen();
 
         /* Get touchable */
         const pressable = screen.getAllByTestId('button-touchable')[0];
@@ -68,13 +67,13 @@ describe('Test in <FinishOrStartLessonModal /> screen', () => {
     });
 
     it('should render loader when isLessonLoading is true', () => {
-        (useLessons as jest.Mock).mockReturnValue({
+        useLessonsSpy.mockImplementation(() => ({
             state: {
                 ...lessonSelectedStateMock,
                 isLessonLoading: true
             },
             finishOrStartLesson: finishOrStartLessonMock
-        });
+        }) as any);
 
         renderScreen();
 

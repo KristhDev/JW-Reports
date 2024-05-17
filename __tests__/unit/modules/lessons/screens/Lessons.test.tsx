@@ -2,16 +2,14 @@ import React from 'react';
 import { render, screen, userEvent } from '@testing-library/react-native';
 import { MenuProvider } from 'react-native-popup-menu';
 
+/* Setup */
+import { useCoursesSpy, useLessonsSpy, useNetworkSpy } from '../../../../../jest.setup';
+
 /* Mocks */
-import { lessonsStateMock, setSelectedLessonMock, wifiMock } from '../../../../mocks';
+import { courseSelectedStateMock, lessonsStateMock, setSelectedLessonMock, wifiMock } from '../../../../mocks';
 
 /* Modules */
-import { INIT_LESSON, Lessons, useLessons } from '../../../../../src/modules/lessons';
-import { useNetwork } from '../../../../../src/modules/shared';
-
-/* Mock hooks */
-jest.mock('../../../../../src/modules/lessons/hooks/useLessons.ts');
-jest.mock('../../../../../src/modules/shared/hooks/useNetwork.ts');
+import { INIT_LESSON, Lessons } from '../../../../../src/modules/lessons';
 
 const user = userEvent.setup();
 const renderScreen = () => render(
@@ -21,7 +19,11 @@ const renderScreen = () => render(
 );
 
 describe('Test in <Lessons /> screen', () => {
-    (useLessons as jest.Mock).mockReturnValue({
+    useCoursesSpy.mockImplementation(() => ({
+        state: courseSelectedStateMock
+    }) as any);
+
+    useLessonsSpy.mockImplementation(() => ({
         state: lessonsStateMock,
         deleteLesson: jest.fn(),
         loadLessons: jest.fn(),
@@ -29,11 +31,11 @@ describe('Test in <Lessons /> screen', () => {
         setLessonsPagination: jest.fn(),
         setSelectedLesson: setSelectedLessonMock,
         finishOrStartLesson: jest.fn(),
-    });
+    }) as any);
 
-    (useNetwork as jest.Mock).mockReturnValue({
+    useNetworkSpy.mockImplementation(() => ({
         wifi: wifiMock
-    });
+    }));
 
     beforeEach(() => {
         jest.clearAllMocks();

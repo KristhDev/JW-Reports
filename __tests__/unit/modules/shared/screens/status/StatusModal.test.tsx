@@ -1,23 +1,23 @@
 import React from 'react';
 import { render, screen, userEvent } from '@testing-library/react-native';
 
+/* Setup */
+import { useStatusSpy } from '../../../../../../jest.setup';
+
 /* Mocks */
 import { clearStatusMock, permissionsStatusStateMock, successStateMock } from '../../../../../mocks';
 
 /* Modules */
-import { StatusModal, useStatus } from '../../../../../../src/modules/shared';
-
-/* Mock hooks */
-jest.mock('../../../../../../src/modules/shared/hooks/useStatus.ts');
+import { StatusModal } from '../../../../../../src/modules/shared';
 
 const user = userEvent.setup();
 const renderScreen = () => render(<StatusModal />);
 
 describe('Test in <StatusModal /> screen', () => {
-    (useStatus as jest.Mock).mockReturnValue({
-        state:  successStateMock,
+    useStatusSpy.mockImplementation(() => ({
+        state: successStateMock,
         clearStatus: clearStatusMock
-    });
+    }) as any);
 
     it('should to match snapshot', () => {
         renderScreen();
@@ -37,10 +37,10 @@ describe('Test in <StatusModal /> screen', () => {
 
     it('should render two buttons when espesific message', () => {
         /* Mock data of useStatus */
-        (useStatus as jest.Mock).mockReturnValue({
+        useStatusSpy.mockImplementation(() => ({
             state: permissionsStatusStateMock,
             clearStatus: clearStatusMock
-        });
+        }) as any);
 
         renderScreen();
 

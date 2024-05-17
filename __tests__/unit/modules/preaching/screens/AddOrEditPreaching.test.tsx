@@ -1,21 +1,19 @@
 import React from 'react';
-import { render, screen, waitFor } from '@testing-library/react-native';
+import { act, render, screen } from '@testing-library/react-native';
+
+/* Setup */
+import { usePreachingSpy, useStatusSpy } from '../../../../../jest.setup';
 
 /* Mocks */
 import { preachingsStateMock } from '../../../../mocks';
 
 /* Modules */
-import { AddOrEditPreaching, INIT_PREACHING, usePreaching } from '../../../../../src/modules/preaching';
-import { useStatus } from '../../../../../src/modules/shared';
-
-/* Mock hooks */
-jest.mock('../../../../../src/modules/preaching/hooks/usePreaching.ts');
-jest.mock('../../../../../src/modules/shared/hooks/useStatus.ts');
+import { AddOrEditPreaching, INIT_PREACHING } from '../../../../../src/modules/preaching';
 
 const renderScreen = () => render(<AddOrEditPreaching />);
 
 describe('Test in <AddOrEditPreaching /> screen', () => {
-    (usePreaching as jest.Mock).mockReturnValue({
+    usePreachingSpy.mockImplementation(() => ({
         state: {
             ...preachingsStateMock,
             seletedPreaching: {
@@ -27,26 +25,22 @@ describe('Test in <AddOrEditPreaching /> screen', () => {
         },
         savePreaching: jest.fn(),
         updatePreaching: jest.fn()
-    });
+    }) as any);
 
-    (useStatus as jest.Mock).mockReturnValue({
+    useStatusSpy.mockImplementation(() => ({
         setErrorForm: jest.fn()
-    });
+    }) as any);
 
     it('should to match snapshot', async () => {
-        await waitFor(() => {
-            renderScreen();
-        });
+        renderScreen();
 
-        await waitFor(() => {
+        await act(() => {
             expect(screen.toJSON()).toMatchSnapshot();
         });
     });
 
     it('should render respective title when seletedPreaching is empty', async () => {
-        await waitFor(() => {
-            renderScreen();
-        });
+        renderScreen();
 
         /* Get title */
         const title = await screen.findByTestId('title-text');
@@ -59,7 +53,7 @@ describe('Test in <AddOrEditPreaching /> screen', () => {
     it('should render respective title when seletedPreaching isnt empty', async () => {
 
         /* Mock data in usePreaching */
-        (usePreaching as jest.Mock).mockReturnValue({
+        usePreachingSpy.mockImplementation(() => ({
             state: {
                 ...preachingsStateMock,
                 seletedPreaching: {
@@ -73,11 +67,9 @@ describe('Test in <AddOrEditPreaching /> screen', () => {
             },
             savePreaching: jest.fn(),
             updatePreaching: jest.fn()
-        });
+        }) as any);
 
-        await waitFor(() => {
-            renderScreen();
-        });
+        renderScreen();
 
         /* Get title */
         const title = await screen.findByTestId('title-text');

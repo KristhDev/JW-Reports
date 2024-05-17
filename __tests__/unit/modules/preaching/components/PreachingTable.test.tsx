@@ -1,25 +1,27 @@
 import React from 'react';
-import { fireEvent, render, screen } from '@testing-library/react-native';
+import { render, screen, userEvent } from '@testing-library/react-native';
 
 /* Setup */
-import { mockUseNavigation } from '../../../../../jest.setup';
+import { mockUseNavigation, usePreachingSpy, useThemeSpy } from '../../../../../jest.setup';
 
 /* Mocks */
 import { preachingsStateMock, setSelectedPreachingMock } from '../../../../mocks';
 
 /* Modules */
-import { PreachingTable, usePreaching } from '../../../../../src/modules/preaching';
+import { PreachingTable } from '../../../../../src/modules/preaching';
 
-/* Mock hooks */
-jest.mock('../../../../../src/modules/preaching/hooks/usePreaching.ts');
-
+const user = userEvent.setup();
 const renderComponent = () => render(<PreachingTable />);
 
 describe('Test in <PreachingTable /> component', () => {
-    (usePreaching as jest.Mock).mockReturnValue({
+    usePreachingSpy.mockImplementation(() => ({
         state: preachingsStateMock,
         setSelectedPreaching: setSelectedPreachingMock
-    });
+    }) as any);
+
+    useThemeSpy.mockImplementation(() => ({
+        state: { theme: 'dark', selectedTheme: 'dark' }
+    }) as any);
 
     beforeEach(() => {
         jest.clearAllMocks();
@@ -38,12 +40,12 @@ describe('Test in <PreachingTable /> component', () => {
         expect(rows.length).toBe(preachingsStateMock.preachings.length);
     });
 
-    it('should call setSelectedPreaching and navigate when row is pressed', () => {
+    it('should call setSelectedPreaching and navigate when row is pressed', async () => {
         renderComponent();
 
         /* Get one row of table */
         const row = screen.getAllByTestId('preaching-table-row')[0];
-        fireEvent.press(row);
+        await user.press(row);
 
         /**
          * Check if setSelectedPreaching and navigate is called one

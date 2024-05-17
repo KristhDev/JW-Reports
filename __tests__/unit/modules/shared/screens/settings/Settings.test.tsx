@@ -2,24 +2,26 @@ import React from 'react';
 import { render, screen, userEvent } from '@testing-library/react-native';
 
 /* Setup */
-import { mockUseNavigation } from '../../../../../../jest.setup';
+import { mockUseNavigation, useStatusSpy, useThemeSpy } from '../../../../../../jest.setup';
 
 /* Mocks */
-import { setStatusMock } from '../../../../../mocks';
+import { setStatusMock, setThemeMock } from '../../../../../mocks';
 
 /* Modules */
-import { Settings, useStatus } from '../../../../../../src/modules/shared';
-
-/* Mock hooks */
-jest.mock('../../../../../../src/modules/shared/hooks/useStatus.ts');
+import { Settings } from '../../../../../../src/modules/shared';
 
 const user = userEvent.setup();
 const renderScreen = () => render(<Settings />);
 
 describe('Test in <Settings /> screen', () => {
-    (useStatus as jest.Mock).mockReturnValue({
+    useStatusSpy.mockImplementation(() => ({
         setStatus: setStatusMock
-    });
+    }) as any);
+
+    useThemeSpy.mockImplementation(() => ({
+        state: { theme: 'dark', selectedTheme: 'dark' },
+        setTheme: setThemeMock
+    }) as any);
 
     beforeEach(() => {
         jest.clearAllMocks();

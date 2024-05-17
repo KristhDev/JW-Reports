@@ -1,11 +1,14 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react-native';
 
+/* Setup */
+import { useCoursesSpy, useLessonsSpy } from '../../../../../jest.setup';
+
 /* Mocks */
 import { courseSelectedStateMock, lessonSelectedStateMock, setSelectedLessonMock } from '../../../../mocks';
 
 /* Modules */
-import { LessonDetail, useLessons } from '../../../../../src/modules/lessons';
+import { LessonDetail } from '../../../../../src/modules/lessons';
 
 /* Utils */
 import { date } from '../../../../../src/utils';
@@ -16,11 +19,15 @@ jest.mock('../../../../../src/modules/lessons/hooks/useLessons.ts');
 const renderScreen = () => render(<LessonDetail />);
 
 describe('Test in <LessonDetail /> screen', () => {
-    (useLessons as jest.Mock).mockReturnValue({
+    useCoursesSpy.mockImplementation(() => ({
+        state: courseSelectedStateMock
+    }) as any);
+
+    useLessonsSpy.mockImplementation(() => ({
         state: lessonSelectedStateMock,
         finishOrStartLesson: jest.fn(),
         setSelectedLesson: setSelectedLessonMock
-    });
+    }) as any);
 
     beforeEach(() => {
         jest.clearAllMocks();
@@ -42,8 +49,10 @@ describe('Test in <LessonDetail /> screen', () => {
         /* Get elements to contain data of lesson */
         const title = screen.getByTestId('title-text');
         const publication = screen.getByTestId('info-text-text');
-        const statusSection = screen.getByTestId('lesson-detail-status-section');
-        const descriptionSection = screen.getByTestId('lesson-detail-description-section');
+        const statusText = screen.getByTestId('lesson-detail-status-text');
+        const statusTextTouchable = screen.getByTestId('lesson-detail-status-text-touchable');
+        const descriptionSubtitle = screen.getByTestId('lesson-detail-description-subtitle');
+        const descriptionText = screen.getByTestId('lesson-detail-description-text');
         const nextVisitText = screen.getByTestId('lesson-detail-next-visit-text');
         const createDate = screen.getByTestId('lesson-detail-date-created-text');
 
@@ -54,14 +63,16 @@ describe('Test in <LessonDetail /> screen', () => {
         expect(publication).toHaveTextContent(selectedCourse.publication.toUpperCase());
 
         /* Check if status section exists and contain respective values */
-        expect(statusSection).toBeOnTheScreen();
-        expect(statusSection.props.children[0].props.children.join('')).toBe(`Estado de la clase: ${ statusLessonText }`);
-        expect(statusSection.props.children[1].props.children.props.children).toBe((!selectedLesson.done) ? '¿Terminar clase?' : '¿Reprogramar?');
+        expect(statusText).toBeOnTheScreen();
+        expect(statusText).toHaveTextContent(`Estado de la clase: ${ statusLessonText }`);
+        expect(statusTextTouchable).toBeOnTheScreen();
+        expect(statusTextTouchable).toHaveTextContent((!selectedLesson.done) ? '¿Terminar clase?' : '¿Reprogramar?');
 
         /* Check if description section exists and contain respective values */
-        expect(descriptionSection).toBeOnTheScreen();
-        expect(descriptionSection.props.children[0].props.children).toBe((selectedLesson.done) ? 'Se analizo:' : 'Se analizará:');
-        expect(descriptionSection.props.children[1].props.children).toBe(selectedLesson.description);
+        expect(descriptionSubtitle).toBeOnTheScreen();
+        expect(descriptionSubtitle).toHaveTextContent((selectedLesson.done) ? 'Se analizo:' : 'Se analizará:');
+        expect(descriptionText).toBeOnTheScreen();
+        expect(descriptionText).toHaveTextContent(selectedLesson.description);
 
         /* Check if next visit text exists and contain respective values */
         expect(nextVisitText).toBeOnTheScreen();

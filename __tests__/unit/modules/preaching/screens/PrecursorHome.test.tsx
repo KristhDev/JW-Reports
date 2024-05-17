@@ -2,41 +2,38 @@ import React from 'react';
 import { render, screen, userEvent } from '@testing-library/react-native';
 
 /* Setup */
-import { mockUseNavigation } from '../../../../../jest.setup';
+import { mockUseNavigation, useAuthSpy, useCoursesSpy, usePreachingSpy, useThemeSpy } from '../../../../../jest.setup';
 
 /* Mocks */
 import { coursesStateMock, loadPreachingsMock, preachingsStateMock, setSelectedPreachingMock, testUser } from '../../../../mocks';
 
 /* Modules */
-import { useAuth } from '../../../../../src/modules/auth';
-import { useCourses } from '../../../../../src/modules/courses';
-import { INIT_PREACHING, PrecursorHome, usePreaching } from '../../../../../src/modules/preaching';
+import { INIT_PREACHING, PrecursorHome } from '../../../../../src/modules/preaching';
 
 /* Utils */
 import { date } from '../../../../../src/utils';
-
-/* Mock hooks */
-jest.mock('../../../../../src/modules/auth/hooks/useAuth.ts');
-jest.mock('../../../../../src/modules/courses/hooks/useCourses.ts');
-jest.mock('../../../../../src/modules/preaching/hooks/usePreaching.ts');
 
 const user = userEvent.setup();
 const renderScreen = () => render(<PrecursorHome />);
 
 describe('Test in <PrecursorHome /> screen', () => {
-    (useAuth as jest.Mock).mockReturnValue({
-        state: { user: testUser },
-    });
+    useAuthSpy.mockImplementation(() => ({
+        state: { user: testUser }
+    }) as any);
 
-    (useCourses as jest.Mock).mockReturnValue({
-        state: coursesStateMock,
-    });
+    useCoursesSpy.mockImplementation(() => ({
+        state: coursesStateMock
+    }) as any);
 
-    (usePreaching as jest.Mock).mockReturnValue({
+    usePreachingSpy.mockImplementation(() => ({
         state: preachingsStateMock,
         setSelectedPreaching: setSelectedPreachingMock,
         loadPreachings: loadPreachingsMock
-    });
+    }) as any);
+
+    useThemeSpy.mockImplementation(() => ({
+        state: { theme: 'dark' }
+    }) as any);
 
     it('should to match snapshot', async () => {
         renderScreen();
@@ -68,14 +65,14 @@ describe('Test in <PrecursorHome /> screen', () => {
     it('should render loader when isPreachingsLoading is true', () => {
 
         /* Mock data of usePreaching */
-        (usePreaching as jest.Mock).mockReturnValue({
+        usePreachingSpy.mockImplementation(() => ({
             state: {
                 ...preachingsStateMock,
                 isPreachingsLoading: true
             },
             setSelectedPreaching: setSelectedPreachingMock,
             loadPreachings: loadPreachingsMock
-        });
+        }) as any);
 
         renderScreen();
 
@@ -87,7 +84,7 @@ describe('Test in <PrecursorHome /> screen', () => {
     it('should render empty message when isPreachingsLoading is false and preachings is equal to 0', () => {
 
         /* Mock data of usePreaching */
-        (usePreaching as jest.Mock).mockReturnValue({
+        usePreachingSpy.mockImplementation(() => ({
             state: {
                 ...preachingsStateMock,
                 isPreachingsLoading: false,
@@ -95,7 +92,7 @@ describe('Test in <PrecursorHome /> screen', () => {
             },
             setSelectedPreaching: setSelectedPreachingMock,
             loadPreachings: loadPreachingsMock
-        });
+        }) as any);
 
         renderScreen();
 

@@ -2,19 +2,15 @@ import React from 'react';
 import { render, screen, userEvent } from '@testing-library/react-native';
 
 /* Setup */
-import { onCloseMock } from '../../../../../jest.setup';
+import { onCloseMock, useThemeSpy } from '../../../../../jest.setup';
 
 /* Mocks */
 import { setThemeMock } from '../../../../mocks';
 
 /* Modules */
-import { THEME_OPTIONS, ThemeModal, useTheme } from '../../../../../src/modules/theme';
-
-/* Mock hooks */
-jest.mock('../../../../../src/modules/theme/hooks/useTheme.ts');
+import { THEME_OPTIONS, ThemeModal } from '../../../../../src/modules/theme';
 
 const user = userEvent.setup();
-
 const renderScreen = () => render(
     <ThemeModal
         isOpen
@@ -23,10 +19,10 @@ const renderScreen = () => render(
 )
 
 describe('Test in <ThemeModal /> screen', () => {
-    (useTheme as jest.Mock).mockReturnValue({
+    useThemeSpy.mockImplementation(() => ({
         state: { theme: 'dark' },
         setTheme: setThemeMock
-    });
+    }) as any);
 
     beforeEach(() => {
         jest.clearAllMocks();
