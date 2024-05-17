@@ -1,29 +1,19 @@
 import React from 'react';
-import { render, screen, waitFor } from '@testing-library/react-native';
+import { act, render, screen } from '@testing-library/react-native';
+
+/* Setup */
+import { useImageSpy, useRevisitsSpy, useStatusSpy } from '../../../../../jest.setup';
 
 /* Mocks */
 import { imageMock, revisitsStateMock, selectedRevisitStateMock } from '../../../../mocks';
 
 /* Modules */
-import { AddOrEditRevisit, useRevisits } from '../../../../../src/modules/revisits';
-import { useImage, useStatus } from '../../../../../src/modules/shared';
-
-/* Mock hooks */
-jest.mock('../../../src/hooks/useImage.ts');
-jest.mock('../../../src/hooks/useRevisits.ts');
-jest.mock('../../../src/hooks/useStatus.ts');
-jest.mock('../../../src/hooks/useTheme.ts');
+import { AddOrEditRevisit } from '../../../../../src/modules/revisits';
 
 const renderScreen = () => render(<AddOrEditRevisit />);
 
 describe('Test in <AddOrEditRevisit /> screen', () => {
-    (useImage as jest.Mock).mockReturnValue({
-        image: imageMock,
-        takeImageToGallery: jest.fn(),
-        takePhoto: jest.fn()
-    });
-
-    (useRevisits as jest.Mock).mockReturnValue({
+    useRevisitsSpy.mockImplementation(() => ({
         state: {
             ...revisitsStateMock,
             selectedRevisit: {
@@ -33,24 +23,28 @@ describe('Test in <AddOrEditRevisit /> screen', () => {
         },
         saveRevisit: jest.fn(),
         updateRevisit: jest.fn()
-    });
+    }) as any);
 
-    (useStatus as jest.Mock).mockReturnValue({
+    useStatusSpy.mockImplementation(() => ({
         setErrorForm: jest.fn()
-    });
+    }) as any);
+
+    useImageSpy.mockImplementation(() => ({
+        image: imageMock,
+        takeImageToGallery: jest.fn(),
+        takePhoto: jest.fn()
+    }) as any);
 
     it('should to match snapshot', async () => {
-        await waitFor(() => {
-            renderScreen();
-        });
+        renderScreen();
 
-        expect(screen.toJSON()).toMatchSnapshot();
+        await act(async () => {
+            expect(screen.toJSON()).toMatchSnapshot();
+        });
     });
 
     it('should render respective title when selectedRevisit is empty', async () => {
-        await waitFor(() => {
-            renderScreen();
-        });
+        renderScreen();
 
         /* Get title */
         const title = await screen.findByTestId('title-text');
@@ -63,15 +57,13 @@ describe('Test in <AddOrEditRevisit /> screen', () => {
     it('should render respective title when seletedPreaching isnt empty', async () => {
 
         /* Mock data of useRevisits */
-        (useRevisits as jest.Mock).mockReturnValue({
+        useRevisitsSpy.mockImplementation(() => ({
             state: selectedRevisitStateMock,
             saveRevisit: jest.fn(),
             updateRevisit: jest.fn()
-        });
+        }) as any);
 
-        await waitFor(() => {
-            renderScreen();
-        });
+        renderScreen();
 
         /* Get title */
         const title = await screen.findByTestId('title-text');

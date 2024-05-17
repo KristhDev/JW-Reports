@@ -3,13 +3,13 @@ import { render, screen, userEvent } from '@testing-library/react-native';
 import { MenuProvider } from 'react-native-popup-menu';
 
 /* Setup */
-import { mockUseNavigation } from '../../../../../jest.setup';
+import { mockUseNavigation, useRevisitsSpy } from '../../../../../jest.setup';
 
 /* Mocks */
 import { onDeleteMock, onPassMock, onRevisitMock, selectedRevisitStateMock, setSelectedRevisitMock } from '../../../../mocks';
 
 /* Modules */
-import { Revisit, RevisitCard, useRevisits } from '../../../../../src/modules/revisits';
+import { Revisit, RevisitCard } from '../../../../../src/modules/revisits';
 
 /* Utils */
 import { date } from '../../../../../src/utils';
@@ -29,13 +29,10 @@ const renderComponent = (revisit: Revisit) => render(
     </MenuProvider>
 );
 
-/* Mock hooks */
-jest.mock('../../../../../src/modules/revisits/hooks/useRevisits.ts');
-
 describe('Test in <RevisitCard /> component', () => {
-    (useRevisits as jest.Mock).mockReturnValue({
+    useRevisitsSpy.mockImplementation(() => ({
         setSelectedRevisit: setSelectedRevisitMock
-    });
+    }) as any);
 
     beforeEach(() => {
         jest.clearAllMocks();
@@ -49,7 +46,7 @@ describe('Test in <RevisitCard /> component', () => {
     it('should render data of revisit', () => {
         renderComponent(selectedRevisit);
 
-        const nextVisit = date.format(selectedRevisit.nextVisit, 'DD [de] MMMM [del] YYYY');
+        const nextVisit = date.format(selectedRevisit.nextVisit, '[Visitar] [el] DD [de] MMMM [del] YYYY');
 
         /* Get elements with data of revisit */
         const nextVisitText = screen.queryByTestId('revisit-card-next-visit-text');

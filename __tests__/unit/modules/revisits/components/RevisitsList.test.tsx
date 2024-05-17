@@ -2,6 +2,9 @@ import React from 'react';
 import { render, screen, userEvent } from '@testing-library/react-native';
 import { MenuProvider } from 'react-native-popup-menu';
 
+/* Setup */
+import { useCoursesSpy, useNetworkSpy, useRevisitsSpy, useStatusSpy } from '../../../../../jest.setup';
+
 /* Mocks */
 import {
     completeRevisitMock,
@@ -19,19 +22,11 @@ import {
     wifiMock
 } from '../../../../mocks';
 
-/* Mock hooks */
-import { useCourses } from '../../../../../src/modules/courses';
-import { RevisitsList, useRevisits } from '../../../../../src/modules/revisits';
-import { useNetwork, useStatus } from '../../../../../src/modules/shared';
+/* Modules */
+import { RevisitsList } from '../../../../../src/modules/revisits';
 
 const emptyMessageTest = 'No hay revisitas disponibles';
 const titleTest = 'Mis Revisitas';
-
-/* Mock hooks */
-jest.mock('../../../../../src/modules/courses/hooks/useCourses.ts');
-jest.mock('../../../../../src/modules/revisits/hooks/useRevisits.ts');
-jest.mock('../../../../../src/modules/shared/hooks/useNetwork.ts');
-jest.mock('../../../../../src/modules/shared/hooks/useStatus.ts');
 
 const user = userEvent.setup();
 const renderComponent = () => render(
@@ -45,16 +40,12 @@ const renderComponent = () => render(
 );
 
 describe('Test in <RevisitsList /> component', () => {
-    (useCourses as jest.Mock).mockReturnValue({
+    useCoursesSpy.mockImplementation(() => ({
         state: coursesStateMock,
         saveCourse: jest.fn(),
-    });
+    }) as any);
 
-    (useNetwork as jest.Mock).mockReturnValue({
-        wifi: wifiMock
-    });
-
-    (useRevisits as jest.Mock).mockReturnValue({
+    useRevisitsSpy.mockImplementation(() => ({
         state: revisitsStateMock,
         deleteRevisit: deleteRevisitMock,
         loadRevisits: loadRevisitsMock,
@@ -64,11 +55,15 @@ describe('Test in <RevisitsList /> component', () => {
         setSelectedRevisit: setSelectedRevisitMock,
         completeRevisit: completeRevisitMock,
         saveRevisit: saveRevisitMock,
-    });
+    }) as any);
 
-    (useStatus as jest.Mock).mockReturnValue({
+    useStatusSpy.mockImplementation(() => ({
         setStatus: setStatusMock,
-    });
+    }) as any);
+
+    useNetworkSpy.mockImplementation(() => ({
+        wifi: wifiMock
+    }) as any);
 
     beforeEach(() => {
         jest.clearAllMocks();
@@ -90,7 +85,7 @@ describe('Test in <RevisitsList /> component', () => {
     it('should render message when revisits is empty', () => {
 
         /* Mock data of useRevisits */
-        (useRevisits as jest.Mock).mockReturnValue({
+        useRevisitsSpy.mockImplementation(() => ({
             state: initialRevisitsStateMock,
             deleteRevisit: deleteRevisitMock,
             loadRevisits: loadRevisitsMock,
@@ -100,7 +95,7 @@ describe('Test in <RevisitsList /> component', () => {
             setSelectedRevisit: setSelectedRevisitMock,
             completeRevisit: completeRevisitMock,
             saveRevisit: saveRevisitMock,
-        });
+        }) as any);
 
         renderComponent();
 
@@ -109,10 +104,10 @@ describe('Test in <RevisitsList /> component', () => {
         expect(emptyMsgText).toHaveTextContent(emptyMessageTest);
     });
 
-    it('should render loading when isCoursesLoading is true', () => {
+    it('should render loading when isRevisitsLoading is true', () => {
 
         /* Mock data of useRevisits */
-        (useRevisits as jest.Mock).mockReturnValue({
+        useRevisitsSpy.mockImplementation(() => ({
             state: {
                 ...initialRevisitsStateMock,
                 isRevisitsLoading: true
@@ -125,7 +120,7 @@ describe('Test in <RevisitsList /> component', () => {
             setSelectedRevisit: setSelectedRevisitMock,
             completeRevisit: completeRevisitMock,
             saveRevisit: saveRevisitMock,
-        });
+        }) as any);
 
         renderComponent();
 

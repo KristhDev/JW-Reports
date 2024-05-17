@@ -2,18 +2,14 @@ import React from 'react';
 import { render, screen, userEvent } from '@testing-library/react-native';
 import { MenuProvider } from 'react-native-popup-menu';
 
+/* Setup */
+import { useCoursesSpy, useRevisitsSpy, useStatusSpy } from '../../../../../jest.setup';
+
 /* Mocks */
 import { coursesStateMock, revisitsStateMock, setSelectedRevisitMock } from '../../../../mocks';
 
 /* Modules */
-import { INIT_REVISIT, Revisits, useRevisits } from '../../../../../src/modules/revisits';
-import { useCourses } from '../../../../../src/modules/courses';
-import { useStatus } from '../../../../../src/modules/shared';
-
-/* Mock hooks */
-jest.mock('../../../../../src/modules/courses/hooks/useCourses.ts');
-jest.mock('../../../../../src/modules/revisits/hooks/useRevisits.ts');
-jest.mock('../../../../../src/modules/shared/hooks/useStatus.ts');
+import { INIT_REVISIT, Revisits } from '../../../../../src/modules/revisits';
 
 const user = userEvent.setup();
 const renderScreen = () => render(
@@ -49,12 +45,12 @@ const renderScreen = () => render(
 );
 
 describe('Test in <Revisits /> screen', () => {
-    (useCourses as jest.Mock).mockReturnValue({
+    useCoursesSpy.mockImplementation(() => ({
         state: coursesStateMock,
         saveCourse: jest.fn(),
-    });
+    }) as any);
 
-    (useRevisits as jest.Mock).mockReturnValue({
+    useRevisitsSpy.mockImplementation(() => ({
         state: revisitsStateMock,
         deleteRevisit: jest.fn(),
         loadRevisits: jest.fn(),
@@ -64,11 +60,11 @@ describe('Test in <Revisits /> screen', () => {
         setSelectedRevisit: setSelectedRevisitMock,
         completeRevisit: jest.fn(),
         saveRevisit: jest.fn(),
-    });
+    }) as any);
 
-    (useStatus as jest.Mock).mockReturnValue({
+    useStatusSpy.mockImplementation(() => ({
         setStatus: jest.fn(),
-    });
+    }) as any);
 
     beforeEach(() => {
         jest.clearAllMocks();
@@ -79,17 +75,17 @@ describe('Test in <Revisits /> screen', () => {
         expect(screen.toJSON()).toMatchSnapshot();
     });
 
-    it('should render add button when route name is RevisitsScreen', () => {
+    it('should render add button when route name is RevisitsScreen', async () => {
         renderScreen();
 
         /* Get touchable */
         const fabs = screen.getAllByTestId('fab-touchable');
         const addBtn = fabs[fabs.length - 1];
-        const icon = addBtn.props.children[0].props.children[1];
+        const icon = await addBtn.findByProps({ name: 'add-circle-outline' });
 
         /* Check if fab exists and contain respective icon */
         expect(addBtn).toBeTruthy();
-        expect(icon).toHaveProp('name', 'add-circle-outline');
+        expect(icon.props).toHaveProperty('name', 'add-circle-outline');
     });
 
     it('should call setSelectedRevisit when add button is pressed', async () => {

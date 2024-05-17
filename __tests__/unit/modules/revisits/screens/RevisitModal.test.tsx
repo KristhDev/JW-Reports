@@ -1,22 +1,17 @@
 import React from 'react';
-import { act, render, screen, waitFor, userEvent } from '@testing-library/react-native';
+import { act, render, screen, userEvent } from '@testing-library/react-native';
 
 /* Setup */
-import { onCloseMock } from '../../../../../jest.setup';
+import { onCloseMock, useRevisitsSpy, useStatusSpy } from '../../../../../jest.setup';
 
 /* Mocks */
 import { saveRevisitMock, selectedRevisitStateMock, setErrorFormMock } from '../../../../mocks';
 
 /* Modules */
-import { RevisitModal, useRevisits } from '../../../../../src/modules/revisits';
-import { useStatus } from '../../../../../src/modules/shared';
+import { RevisitModal } from '../../../../../src/modules/revisits';
 
 const completeMsg = 'Test complete msg'
 const completeRevisitMock = jest.fn().mockResolvedValue(completeMsg);
-
-/* Mock hooks */
-jest.mock('../../../../../src/modules/revisits/hooks/useRevisits.ts');
-jest.mock('../../../../../src/modules/shared/hooks/useStatus.ts');
 
 const user = userEvent.setup();
 const renderScreen = () => render(
@@ -27,20 +22,18 @@ const renderScreen = () => render(
 );
 
 describe('Test in <RevisitModal /> screen', () => {
-    (useRevisits as jest.Mock).mockReturnValue({
+    useRevisitsSpy.mockImplementation(() => ({
         state: selectedRevisitStateMock,
         completeRevisit: completeRevisitMock,
         saveRevisit: saveRevisitMock
-    });
+    }) as any);
 
-    (useStatus as jest.Mock).mockReturnValue({
+    useStatusSpy.mockImplementation(() => ({
         setErrorForm: setErrorFormMock
-    });
+    }) as any);
 
     it('should to match snapshot', async () => {
-        await waitFor(() => {
-            renderScreen();
-        });
+        renderScreen();
 
         await act(() => {
             expect(screen.toJSON()).toMatchSnapshot();
@@ -48,9 +41,7 @@ describe('Test in <RevisitModal /> screen', () => {
     });
 
     it('should render respective title', async () => {
-        await waitFor(() => {
-            renderScreen();
-        });
+        renderScreen();
 
         const selectedRevisit = selectedRevisitStateMock.selectedRevisit;
 
@@ -67,9 +58,7 @@ describe('Test in <RevisitModal /> screen', () => {
     });
 
     it('should call completeRevisit when selectedRevisit.done is false', async () => {
-        await waitFor(() => {
-            renderScreen();
-        });
+        renderScreen();
 
         const pressable = (await screen.findAllByTestId('button-touchable'))[1];
         await user.press(pressable);
@@ -89,7 +78,7 @@ describe('Test in <RevisitModal /> screen', () => {
     it('should call saveRevisit when selectedRevisit.done is true', async () => {
 
         /* Mock data of useRevisits */
-        (useRevisits as jest.Mock).mockReturnValue({
+        useRevisitsSpy.mockImplementation(() => ({
             state: {
                 ...selectedRevisitStateMock,
                 selectedRevisit: {
@@ -99,11 +88,9 @@ describe('Test in <RevisitModal /> screen', () => {
             },
             completeRevisit: completeRevisitMock,
             saveRevisit: saveRevisitMock
-        });
+        }) as any);
 
-        await waitFor(() => {
-            renderScreen();
-        });
+        renderScreen();
 
         const selectedRevisit = selectedRevisitStateMock.selectedRevisit;
 
@@ -132,18 +119,16 @@ describe('Test in <RevisitModal /> screen', () => {
     it('should render loader when isRevisitLoading is true', async () => {
 
         /* Mock data of useRevisits */
-        (useRevisits as jest.Mock).mockReturnValue({
+        useRevisitsSpy.mockImplementation(() => ({
             state: {
                 ...selectedRevisitStateMock,
                 isRevisitLoading: true
             },
             completeRevisit: completeRevisitMock,
             saveRevisit: saveRevisitMock
-        });
+        }) as any);
 
-        await waitFor(() => {
-            renderScreen();
-        });
+        renderScreen();
 
         /* Get loader and check if exists */
         const loader = await screen.findByTestId('revisit-modal-loading');
