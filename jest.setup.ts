@@ -1,6 +1,7 @@
 import 'react-native-gesture-handler/jestSetup';
 import 'react-native-url-polyfill/auto';
 
+import { Image } from 'react-native';
 import { breakpoints as mockBreakpoints, darkColors as mockDarkColors, fontSizes as mockFontSizes, margins as mockMargins } from './src/modules/theme';
 
 export const onCancelMock = jest.fn();
@@ -34,6 +35,13 @@ export const usePreachingSpy = jest.spyOn(usePreaching, 'default');
 export const useRevisitsSpy = jest.spyOn(useRevisits, 'default');
 export const useStatusSpy = jest.spyOn(useStatus, 'default');
 export const useThemeSpy = jest.spyOn(useTheme, 'default');
+
+jest.spyOn(Image, 'resolveAssetSource').mockImplementation(() => ({
+    uri: 'https://www.google.com/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png',
+    width: 300,
+    height: 180,
+    scale: 1
+}));
 
 jest.mock('react-native/Libraries/Animated/NativeAnimatedHelper');
 jest.mock('react-native/Libraries/EventEmitter/NativeEventEmitter');
