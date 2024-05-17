@@ -1,6 +1,9 @@
 import React from 'react';
-import { render, screen, userEvent } from '@testing-library/react-native';
 import { MenuProvider } from 'react-native-popup-menu';
+import { render, screen, userEvent } from '@testing-library/react-native';
+
+/* Setup */
+import { useCoursesSpy, useLessonsSpy } from '../../../../../jest.setup';
 
 /* Mocks */
 import {
@@ -13,12 +16,7 @@ import {
 } from '../../../../mocks';
 
 /* Modules */
-import { Courses, INIT_COURSE, useCourses } from '../../../../../src/modules/courses';
-import { useLessons } from '../../../../../src/modules/lessons';
-
-/* Mock hooks */
-jest.mock('../../../../../src/modules/courses/hooks/useCourses.ts');
-jest.mock('../../../../../src/modules/lessons/hooks/useLessons.ts');
+import { Courses, INIT_COURSE } from '../../../../../src/modules/courses';
 
 const user = userEvent.setup();
 const renderScreen = () => render(
@@ -54,27 +52,26 @@ const renderScreen = () => render(
 );
 
 describe('Test in <Courses /> screen', () => {
-    (useCourses as jest.Mock).mockReturnValue({
+    useCoursesSpy.mockImplementation(() => ({
         state: coursesStateMock,
         activeOrSuspendCourse: jest.fn(),
         deleteCourse: jest.fn(),
         finishOrStartCourse: jest.fn(),
         loadCourses: jest.fn(),
         removeCourses: jest.fn(),
-        removeLessons: jest.fn(),
         setCoursesPagination: jest.fn(),
         setCoursesScreenHistory: setCoursesScreenHistoryMock,
-        setLessonsPagination: jest.fn(),
         setRefreshCourses: jest.fn(),
         setSelectedCourse: setSelectedCourseMock,
-        setSelectedLesson: jest.fn(),
-    });
+    }) as any);
 
-    (useLessons as jest.Mock).mockReturnValue({
+    useLessonsSpy.mockImplementation(() => ({
         state: initialLessonsStateMock,
         removeLessons: removeLessonsMock,
-        setLessonsPagination: setLessonsPaginationMock
-    });
+        setLessonsPagination: setLessonsPaginationMock,
+        setSelectedLesson: jest.fn(),
+    }) as any);
+
 
     beforeEach(() => {
         jest.clearAllMocks();
@@ -85,17 +82,17 @@ describe('Test in <Courses /> screen', () => {
         expect(screen.toJSON()).toMatchSnapshot();
     });
 
-    it('should render add button when route name is CoursesScreen', () => {
+    it('should render add button when route name is CoursesScreen', async () => {
         renderScreen();
 
         /* Get touchable */
         const fabs = screen.getAllByTestId('fab-touchable');
         const addBtn = fabs[fabs.length - 1];
-        const icon = addBtn.props.children[0].props.children[1];
+        const icon = await addBtn.findByProps({ name: 'add-circle-outline' });
 
         /* Check if button is rendered */
         expect(addBtn).toBeTruthy();
-        expect(icon).toHaveProp('name', 'add-circle-outline');
+        expect(icon.props).toHaveProperty('name', 'add-circle-outline');
     });
 
     it('should call setSelectedCourse when add button is pressed', async () => {

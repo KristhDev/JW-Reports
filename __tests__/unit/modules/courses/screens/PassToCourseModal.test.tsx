@@ -1,21 +1,14 @@
 import React from 'react';
-import { act, render, screen, waitFor, userEvent } from '@testing-library/react-native';
+import { act, render, screen, userEvent } from '@testing-library/react-native';
 
 /* Setup */
-import { onCloseMock } from '../../../../../jest.setup';
+import { onCloseMock, useCoursesSpy, useRevisitsSpy, useStatusSpy } from '../../../../../jest.setup';
 
 /* Mocks */
 import { saveCourseMock, selectedRevisitStateMock, setStatusMock } from '../../../../mocks';
 
 /* Modules */
-import { PassToCourseModal, useCourses } from '../../../../../src/modules/courses';
-import { useRevisits } from '../../../../../src/modules/revisits';
-import { useStatus } from '../../../../../src/modules/shared';
-
-/* Mock hooks */
-jest.mock('../../../../../src/modules/courses/hooks/useCourses.ts');
-jest.mock('../../../../../src/modules/revisits/hooks/useRevisits.ts');
-jest.mock('../../../../../src/modules/shared/hooks/useStatus.ts');
+import { PassToCourseModal } from '../../../../../src/modules/courses';
 
 const user = userEvent.setup();
 const renderScreen = () => render(
@@ -25,24 +18,22 @@ const renderScreen = () => render(
     />
 );
 
-describe('Test in <PassToCourseModal />', () => {
-    (useCourses as jest.Mock).mockReturnValue({
+describe('Test in <PassToCourseModal /> screen', () => {
+    useCoursesSpy.mockImplementation(() => ({
         state: { isCourseLoading: false },
         saveCourse: saveCourseMock
-    });
+    }) as any);
 
-    (useRevisits as jest.Mock).mockReturnValue({
+    useRevisitsSpy.mockImplementation(() => ({
         state: selectedRevisitStateMock
-    });
+    }) as any);
 
-    (useStatus as jest.Mock).mockReturnValue({
+    useStatusSpy.mockImplementation(() => ({
         setStatus: setStatusMock
-    });
+    }) as any);
 
     it('should to match snapshot', async () => {
-        await waitFor(() => {
-            renderScreen();
-        });
+        renderScreen();
 
         await act(() => {
             expect(screen.toJSON()).toMatchSnapshot();
@@ -50,9 +41,7 @@ describe('Test in <PassToCourseModal />', () => {
     });
 
     it('should render person name of revisit', async () => {
-        await waitFor(() => {
-            renderScreen();
-        });
+        renderScreen();
 
         /* Get modal title */
         const title = await screen.findByTestId('modal-text');
@@ -63,22 +52,22 @@ describe('Test in <PassToCourseModal />', () => {
     });
 
     it('should call setStatus when form is invalid', async () => {
-        await waitFor(() => {
-            renderScreen();
-        });
+        renderScreen();
 
         /* Get touchable */
         const pressable = (await screen.findAllByTestId('button-touchable'))[1];
         await user.press(pressable);
+
+        /* Get confirm touchable */
+        const pressableConfirm = screen.getAllByTestId('button-touchable')[1];
+        await user.press(pressableConfirm);
 
         /* Check if setStatus is called one time */
         expect(setStatusMock).toHaveBeenCalledTimes(1);
     });
 
     it('should call saveCourse when form is valid', async () => {
-        await waitFor(() => {
-            renderScreen();
-        });
+        renderScreen();
 
         const pubName = 'Regional Interactions Assistant';
 

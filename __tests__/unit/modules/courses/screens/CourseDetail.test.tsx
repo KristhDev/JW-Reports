@@ -1,38 +1,33 @@
 import React from 'react';
 import { render, screen, userEvent } from '@testing-library/react-native';
-import dayjs from 'dayjs';
 
 /* Setup */
-import { mockUseNavigation } from '../../../../../jest.setup';
+import { mockUseNavigation, useCoursesSpy, useLessonsSpy } from '../../../../../jest.setup';
 
 /* Mocks */
-import { courseSelectedStateMock, lessonSelectedStateMock, setSelectedCourseMock, setSelectedLessonMock } from '../../../../mocks';
+import { courseSelectedStateMock, setSelectedCourseMock, setSelectedLessonMock } from '../../../../mocks';
 
 /* Modules */
-import { CourseDetail, useCourses } from '../../../../../src/modules/courses';
-import { useLessons } from '../../../../../src/modules/lessons';
+import { CourseDetail } from '../../../../../src/modules/courses';
+import { INIT_LESSON } from '../../../../../src/modules/lessons';
 
+/* Utils */
 import { date as dateUtil } from '../../../../../src/utils';
-
-/* Mock hooks */
-jest.mock('../../../../../src/modules/courses/hooks/useCourses.ts');
-jest.mock('../../../../../src/modules/lessons/hooks/useLessons.ts');
 
 const user = userEvent.setup();
 const renderScreen = () => render(<CourseDetail />);
 
 describe('Test in <CourseDetail /> screen', () => {
-    (useCourses as jest.Mock).mockReturnValue({
+    useCoursesSpy.mockImplementation(() => ({
         state: courseSelectedStateMock,
         activeOrSuspendCourse: jest.fn(),
         finishOrStartCourse: jest.fn(),
         setSelectedCourse: setSelectedCourseMock,
-        setSelectedLesson: setSelectedLessonMock
-    });
+    }) as any);
 
-    (useLessons as jest.Mock).mockReturnValue({
+    useLessonsSpy.mockImplementation(() => ({
         setSelectedLesson: setSelectedLessonMock
-    });
+    }) as any);
 
     beforeEach(() => {
         jest.clearAllMocks();
@@ -55,12 +50,13 @@ describe('Test in <CourseDetail /> screen', () => {
                 : 'En curso';
 
         /* Get elements with data of course */
-        const title = screen.queryByTestId('title-text');
-        const publication = screen.queryByTestId('info-text-text');
-        const status = screen.queryByTestId('course-detail-status');
-        const aboutSection = screen.queryByTestId('course-detail-about-section');
-        const addressSection = screen.queryByTestId('course-detail-address-section');
-        const date = screen.queryByTestId('course-detail-text-date');
+        const title = screen.getByTestId('title-text');
+        const publication = screen.getByTestId('info-text-text');
+        const status = screen.getByTestId('course-detail-status');
+        const aboutSubtitle = screen.getByTestId('course-detail-about-subtitle');
+        const aboutText = screen.getByTestId('course-detail-about-text');
+        const addressText = screen.getByTestId('course-detail-address-text');
+        const date = screen.getByTestId('course-detail-text-date');
 
         /* Check if title, publication and status are exists and contain respective values */
         expect(title).toBeOnTheScreen();
@@ -71,14 +67,14 @@ describe('Test in <CourseDetail /> screen', () => {
         expect(status).toHaveTextContent(`Estado del curso: ${ statusCourseText }`);
 
         /* Check if about section exists and contain respective value */
-        expect(aboutSection).toBeOnTheScreen();
-        expect(aboutSection!.props.children[0]).toHaveTextContent(`Información de ${ selectedCourse.personName }:`);
-        expect(aboutSection!.props.children[1]).toHaveTextContent(selectedCourse.personAbout);
+        expect(aboutSubtitle).toBeOnTheScreen();
+        expect(aboutSubtitle).toHaveTextContent(`Información de ${ selectedCourse.personName }:`);
+        expect(aboutText).toBeOnTheScreen();
+        expect(aboutText).toHaveTextContent(selectedCourse.personAbout);
 
         /* Check if address section exists and contain respective value */
-        expect(addressSection).toBeOnTheScreen();
-        expect(addressSection!.props.children[0]).toHaveTextContent('Dirección:');
-        expect(addressSection!.props.children[1]).toHaveTextContent(selectedCourse.personAddress);
+        expect(addressText).toBeOnTheScreen();
+        expect(addressText).toHaveTextContent(selectedCourse.personAddress);
 
         /* Check if date exists and contain respective value */
         expect(date).toBeOnTheScreen();
@@ -101,7 +97,7 @@ describe('Test in <CourseDetail /> screen', () => {
 
         /* Check if toucable exists and contain respective ask */
         expect(toucable).toBeOnTheScreen();
-        expect(toucable.props.children[0]).toHaveTextContent(statusCourseAsk);
+        expect(toucable).toHaveTextContent(statusCourseAsk);
     });
 
     it('should render last lesson data if exists', () => {
@@ -116,7 +112,7 @@ describe('Test in <CourseDetail /> screen', () => {
 
         const statusText =  (lastLesson.done)
             ? 'Clase impartida'
-            : `Próxima clase ${ dayjs(lastLesson.nextLesson).format('DD/MM/YYYY') }`
+            : `Próxima clase ${ dateUtil.format(lastLesson.nextLesson, 'DD/MM/YYYY') }`
 
         /* Get elements with data of last lesson */
         const status = screen.getByTestId('course-detail-last-lesson-status');
@@ -151,7 +147,7 @@ describe('Test in <CourseDetail /> screen', () => {
         /* Check if selectedLesson is called one time with respective value */
         expect(setSelectedLessonMock).toHaveBeenCalledTimes(1);
         expect(setSelectedLessonMock).toHaveBeenCalledWith({
-            ...lessonSelectedStateMock.selectedLesson,
+            ...INIT_LESSON,
             nextLesson: expect.any(String),
             createdAt: expect.any(String),
             updatedAt: expect.any(String)

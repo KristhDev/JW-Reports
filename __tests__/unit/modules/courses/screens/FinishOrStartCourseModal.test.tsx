@@ -2,16 +2,13 @@ import React from 'react';
 import { render, screen, userEvent } from '@testing-library/react-native';
 
 /* Setup */
-import { onCloseMock } from '../../../../../jest.setup';
+import { onCloseMock, useCoursesSpy } from '../../../../../jest.setup';
 
 /* Mocks */
 import { courseSelectedStateMock, finishOrStartCourseMock } from '../../../../mocks';
 
 /* Modules */
-import { FinishOrStartCourseModal, useCourses } from '../../../../../src/modules/courses';
-
-/* Mock hooks */
-jest.mock('../../../../../src/modules/courses/hooks/useCourses.ts');
+import { FinishOrStartCourseModal } from '../../../../../src/modules/courses';
 
 const user = userEvent.setup();
 const renderScreen = () => render(
@@ -22,10 +19,10 @@ const renderScreen = () => render(
 );
 
 describe('Test in <FinishOrStartCourseModal /> screen', () => {
-    (useCourses as jest.Mock).mockReturnValue({
+    useCoursesSpy.mockImplementation(() => ({
         state: courseSelectedStateMock,
         finishOrStartCourse: finishOrStartCourseMock
-    });
+    }) as any);
 
     it('should to match snapshot', () => {
         renderScreen();
@@ -43,7 +40,7 @@ describe('Test in <FinishOrStartCourseModal /> screen', () => {
         expect(msg).toBeOnTheScreen();
         expect(msg).toHaveTextContent('¿Está seguro de terminar este curso?');
         expect(pressable).toBeOnTheScreen();
-        expect(pressable.props.children[0].props.children[1].props.children[0]).toHaveTextContent('TERMINAR');
+        expect(pressable).toHaveTextContent('TERMINAR');
     });
 
     it('should call activeOrSuspendCourse when confirm button is pressed', async () => {
@@ -70,13 +67,13 @@ describe('Test in <FinishOrStartCourseModal /> screen', () => {
     });
 
     it('should render loader when isCourseLoading is true', () => {
-        (useCourses as jest.Mock).mockReturnValue({
+        useCoursesSpy.mockImplementation(() => ({
             state: {
                 ...courseSelectedStateMock,
                 isCourseLoading: true
             },
             finishOrStartCourse: finishOrStartCourseMock
-        });
+        }) as any);
 
         renderScreen();
 

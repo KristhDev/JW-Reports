@@ -2,16 +2,13 @@ import React from 'react';
 import { render, screen, userEvent } from '@testing-library/react-native';
 
 /* Setup */
-import { onCloseMock } from '../../../../../jest.setup';
+import { onCloseMock, useCoursesSpy } from '../../../../../jest.setup';
 
 /* Mocks */
 import { activeOrSuspendCourseMock, courseSelectedStateMock } from '../../../../mocks';
 
 /* Modules */
-import { ActiveOrSuspendCourseModal, useCourses } from '../../../../../src/modules/courses';
-
-/* Mock hooks */
-jest.mock('../../../../../src/modules/courses/hooks/useCourses.ts');
+import { ActiveOrSuspendCourseModal } from '../../../../../src/modules/courses';
 
 const user = userEvent.setup();
 
@@ -23,10 +20,10 @@ const renderScreen = () => render(
 );
 
 describe('Test in <ActiveOrSuspendCourseModal /> screen', () => {
-    (useCourses as jest.Mock).mockReturnValue({
+    useCoursesSpy.mockImplementation(() => ({
         state: courseSelectedStateMock,
         activeOrSuspendCourse: activeOrSuspendCourseMock
-    });
+    }) as any);
 
     it('should to match snapshot', () => {
         renderScreen();
@@ -42,7 +39,7 @@ describe('Test in <ActiveOrSuspendCourseModal /> screen', () => {
 
         /* Check if msg and touchable exists and contain respective values */
         expect(msg).toBeOnTheScreen();
-        expect(msg!.props.children).toBe('¿Está seguro de suspender este curso?');
+        expect(msg).toHaveTextContent('¿Está seguro de suspender este curso?');
         expect(pressableText).toBeOnTheScreen();
         expect(pressableText).toHaveTextContent('SUSPENDER');
     });
@@ -76,13 +73,13 @@ describe('Test in <ActiveOrSuspendCourseModal /> screen', () => {
     it('should render loader when isCourseLoading is true', () => {
 
         /* Mock data of useCourses */
-        (useCourses as jest.Mock).mockReturnValue({
+        useCoursesSpy.mockImplementation(() => ({
             state: {
                 ...courseSelectedStateMock,
                 isCourseLoading: true
             },
             activeOrSuspendCourse: activeOrSuspendCourseMock
-        });
+        }) as any);
 
         renderScreen();
 

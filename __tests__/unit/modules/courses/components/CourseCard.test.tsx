@@ -1,16 +1,15 @@
 import React from 'react';
-import { render, screen, userEvent } from '@testing-library/react-native';
 import { MenuProvider } from 'react-native-popup-menu';
+import { render, screen, userEvent } from '@testing-library/react-native';
 
 /* Setup */
-import { mockUseNavigation } from '../../../../../jest.setup';
+import { mockUseNavigation, useCoursesSpy, useLessonsSpy } from '../../../../../jest.setup';
 
 /* Mocks */
 import { coursesStateMock, lessonSelectedStateMock, setSelectedCourseMock, setSelectedLessonMock } from '../../../../mocks';
 
 /* Modules */
-import { CourseCard, useCourses } from '../../../../../src/modules/courses';
-import { useLessons } from '../../../../../src/modules/lessons';
+import { CourseCard } from '../../../../../src/modules/courses';
 
 const course = coursesStateMock.courses[0];
 
@@ -27,19 +26,16 @@ const renderComponent = () => render(
     </MenuProvider>
 );
 
-/* Mock hooks */
-jest.mock('../../../../../src/modules/courses/hooks/useCourses.ts');
-jest.mock('../../../../../src/modules/lessons/hooks/useLessons.ts');
-
 describe('Test in <CourseCard /> component', () => {
-    (useCourses as jest.Mock).mockReturnValue({
-        state: coursesStateMock
-    });
+    useCoursesSpy.mockImplementation(() => ({
+        state: coursesStateMock,
+        setSelectedCourse: setSelectedCourseMock
+    }) as any);
 
-    (useLessons as jest.Mock).mockReturnValue({
+    useLessonsSpy.mockImplementation(() => ({
         state: lessonSelectedStateMock,
         setSelectedLesson: setSelectedLessonMock
-    });
+    }) as any);
 
     it('should to match snapshot', () => {
         renderComponent();
@@ -56,14 +52,14 @@ describe('Test in <CourseCard /> component', () => {
         const aboutText = screen.getByTestId('course-card-about-text');
 
         /* Check data in respective elements */
-        expect(statusText).toBeTruthy();
-        expect(statusText.props.children).toBe('En Curso');
-        expect(personNameText).toBeTruthy();
-        expect(personNameText.props.children).toBe(course.personName);
-        expect(publicationText).toBeTruthy();
-        expect(publicationText.props.children).toBe(course.publication);
-        expect(aboutText).toBeTruthy();
-        expect(typeof aboutText.props.children).toBe('string');
+        expect(statusText).toBeOnTheScreen();
+        expect(statusText).toHaveTextContent('En Curso');
+        expect(personNameText).toBeOnTheScreen();
+        expect(personNameText).toHaveTextContent(course.personName);
+        expect(publicationText).toBeOnTheScreen();
+        expect(publicationText).toHaveTextContent(course.publication);
+        expect(aboutText).toBeOnTheScreen();
+        expect(aboutText.type).toBe('Text');
     });
 
     it('should call setSelectedCourse and navigate when card is pressed', async () => {

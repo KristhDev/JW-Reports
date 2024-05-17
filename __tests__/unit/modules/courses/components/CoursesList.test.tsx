@@ -1,6 +1,9 @@
 import React from 'react';
-import { render, screen, userEvent } from '@testing-library/react-native';
 import { MenuProvider } from 'react-native-popup-menu';
+import { render, screen, userEvent } from '@testing-library/react-native';
+
+/* Setup */
+import { useCoursesSpy, useLessonsSpy } from '../../../../../jest.setup';
 
 /* Mocks */
 import {
@@ -21,8 +24,7 @@ import {
 } from '../../../../mocks';
 
 /* Modules */
-import { useLessons } from '../../../../../src/modules/lessons';
-import { CoursesList, useCourses } from '../../../../../src/modules/courses';
+import { CoursesList } from '../../../../../src/modules/courses';
 
 const emptyMessageTest = 'No hay cursos disponibles';
 const titleTest = 'Mis Cursos';
@@ -39,12 +41,8 @@ const renderComponent = () => render(
     </MenuProvider>
 );
 
-/* Mock hooks */
-jest.mock('../../../../../src/modules/courses/hooks/useCourses.ts');
-jest.mock('../../../../../src/modules/lessons/hooks/useLessons.ts');
-
 describe('Test in <CoursesList /> component', () => {
-    (useCourses as jest.Mock).mockReturnValue({
+    useCoursesSpy.mockImplementation(() => ({
         state: coursesStateMock,
         activeOrSuspendCourse: activeOrSuspendCourseMock,
         deleteCourse: deleteCourseMock,
@@ -54,14 +52,14 @@ describe('Test in <CoursesList /> component', () => {
         setCoursesPagination: setCoursesPaginationMock,
         setRefreshCourses: setRefreshCoursesMock,
         setSelectedCourse: setSelectedCourseMock
-    });
+    }) as any);
 
-    (useLessons as jest.Mock).mockReturnValue({
+    useLessonsSpy.mockImplementation(() => ({
         state: initialLessonsStateMock,
         removeLessons: removeLessonsMock,
         setLessonsPagination: setLessonsPaginationMock,
-        setSelectedLesson: setSelectedLessonMock,
-    });
+        setSelectedLesson: setSelectedLessonMock
+    }) as any);
 
     beforeEach(() => {
         jest.clearAllMocks();
@@ -77,13 +75,13 @@ describe('Test in <CoursesList /> component', () => {
 
         /* Get title of list and check if is text pass for props */
         const titleText = screen.getByTestId('title-text');
-        expect(titleText.props.children).toBe(titleTest);
+        expect(titleText).toHaveTextContent(titleTest);
     });
 
     it('should render message when courses is empty', () => {
 
         /* Mock data of useCourses */
-        (useCourses as jest.Mock).mockReturnValue({
+        useCoursesSpy.mockImplementation(() => ({
             state: initialCoursesStateMock,
             activeOrSuspendCourse: activeOrSuspendCourseMock,
             deleteCourse: deleteCourseMock,
@@ -93,26 +91,26 @@ describe('Test in <CoursesList /> component', () => {
             setCoursesPagination: setCoursesPaginationMock,
             setRefreshCourses: setRefreshCoursesMock,
             setSelectedCourse: setSelectedCourseMock,
-        });
+        }) as any);
 
-        (useLessons as jest.Mock).mockReturnValue({
+        useLessonsSpy.mockImplementation(() => ({
             state: initialLessonsStateMock,
             removeLessons: removeLessonsMock,
             setLessonsPagination: setLessonsPaginationMock,
             setSelectedLesson: setSelectedLessonMock,
-        });
+        }) as any);
 
         renderComponent();
 
         /* Get empty message of list and check if is text pass for props */
         const emptyMsgText = screen.getByTestId('info-text-text');
-        expect(emptyMsgText.props.children).toBe(emptyMessageTest);
+        expect(emptyMsgText).toHaveTextContent(emptyMessageTest);
     });
 
     it('should render loading when isCoursesLoading is true', () => {
 
         /* Mock data of useCourses */
-        (useCourses as jest.Mock).mockReturnValue({
+        useCoursesSpy.mockImplementation(() => ({
             state: {
                 ...initialCoursesStateMock,
                 isCoursesLoading: true
@@ -125,14 +123,14 @@ describe('Test in <CoursesList /> component', () => {
             setCoursesPagination: setCoursesPaginationMock,
             setRefreshCourses: setRefreshCoursesMock,
             setSelectedCourse: setSelectedCourseMock
-        });
+        }) as any);
 
-        (useLessons as jest.Mock).mockReturnValue({
+        useLessonsSpy.mockImplementation(() => ({
             state: initialLessonsStateMock,
             removeLessons: removeLessonsMock,
             setLessonsPagination: setLessonsPaginationMock,
             setSelectedLesson: setSelectedLessonMock,
-        });
+        }) as any);
 
         renderComponent();
 

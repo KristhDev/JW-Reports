@@ -1,42 +1,38 @@
 import React from 'react';
-import { render, screen, waitFor } from '@testing-library/react-native';
+import { act, render, screen } from '@testing-library/react-native';
+
+/* Setup */
+import { useCoursesSpy, useStatusSpy } from '../../../../../jest.setup';
 
 /* Mocks */
 import { courseSelectedStateMock, coursesStateMock } from '../../../../mocks';
 
 /* Modules */
-import { AddOrEditCourse, useCourses } from '../../../../../src/modules/courses';
-import { useStatus } from '../../../../../src/modules/shared';
-
-/* Mock hooks */
-jest.mock('../../../../../src/modules/courses/hooks/useCourses.ts');
-jest.mock('../../../../../src/modules/shared/hooks/useStatus.ts');
+import { AddOrEditCourse } from '../../../../../src/modules/courses';
 
 const renderScreen = () => render(<AddOrEditCourse />);
 
 describe('Test in <AddOrEditCourse /> screen', () => {
-    (useCourses as jest.Mock).mockReturnValue({
+    useCoursesSpy.mockImplementation(() => ({
         state: coursesStateMock,
         saveCourse: jest.fn(),
         updateCourse: jest.fn()
-    });
+    }) as any);
 
-    (useStatus as jest.Mock).mockReturnValue({
+    useStatusSpy.mockImplementation(() => ({
         setErrorForm: jest.fn()
-    });
+    }) as any);
 
     it('should to match snapshot', async () => {
-        await waitFor(() => {
-            renderScreen();
-        });
+        renderScreen();
 
-        expect(screen.toJSON()).toMatchSnapshot();
+        await act(() => {
+            expect(screen.toJSON()).toMatchSnapshot();
+        });
     });
 
     it('should render respective title when seletedCourse is empty', async () => {
-        await waitFor(() => {
-            renderScreen();
-        });
+        renderScreen();
 
         /* Get title */
         const title = await screen.findByTestId('title-text');
@@ -49,16 +45,13 @@ describe('Test in <AddOrEditCourse /> screen', () => {
     it('should render respective title when seletedCourse isnt empty', async () => {
 
         /* Mock data of useCourses */
-        (useCourses as jest.Mock).mockReturnValue({
+        useCoursesSpy.mockImplementation(() => ({
             state: courseSelectedStateMock,
             saveCourse: jest.fn(),
             updateCourse: jest.fn()
-        });
+        }) as any);
 
-        await waitFor(() => {
-            renderScreen();
-        });
-
+        renderScreen();
 
         /* Get title */
         const title = await screen.findByTestId('title-text');
