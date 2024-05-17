@@ -208,10 +208,11 @@ const useLessons = () => {
         if (next) return;
 
         dispatch(updateLessonAction({ lesson: lessonAdapter(data!) }));
+        dispatch(updateLastLessonInCourse({ lesson: lessonAdapter(data!) }));
         if ((user.precursor !== 'ninguno')) await loadLastLesson();
 
-        dispatch(setIsLessonLoading({ isLoading: false }));
         onFinish && onFinish();
+        dispatch(setIsLessonLoading({ isLoading: false }));
 
         const msg = (data!.done)
             ? 'Has terminado la clase correctamente.'
