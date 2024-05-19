@@ -1,8 +1,12 @@
 import React from 'react';
-import { act, render, screen, waitFor, userEvent } from '@testing-library/react-native';
+import { act, render, screen, userEvent } from '@testing-library/react-native';
+
+/* Setup */
+import { usePreachingSpy, useStatusSpy } from '../../../../../jest.setup';
 
 /* Mocks */
 import {
+    initialPreachingStateMock,
     preachingSelectedStateMock,
     preachingsStateMock,
     savePreachingMock,
@@ -11,58 +15,49 @@ import {
 } from '../../../../mocks';
 
 /* Modules */
-import { INIT_PREACHING, PreachingForm, usePreaching } from '../../../../../src/modules/preaching';
-import { useStatus } from '../../../../../src/modules/shared';
+import { INIT_PREACHING, PreachingForm } from '../../../../../src/modules/preaching';
 
 const preachingDay = '2022-12-29 00:00:00';
 const initHour = '2022-12-30 09:00:00';
 const finalHour = '2022-12-30 11:30:00';
 
-/* Mock hooks */
-jest.mock('../../../../../src/modules/preaching/hooks/usePreaching.ts');
-jest.mock('../../../../../src/modules/shared/hooks/useStatus.ts');
-
 const user = userEvent.setup();
 const renderComponent = () => render(<PreachingForm />);
 
 describe('Test in <PreachingForm /> component', () => {
-    (usePreaching as jest.Mock).mockReturnValue({
+    usePreachingSpy.mockImplementation(() => ({
         state: {
             ...preachingsStateMock,
             seletedPreaching: {
                 ...INIT_PREACHING,
                 day: preachingDay,
-                init_hour: initHour,
-                final_hour: finalHour
+                initHour: initHour,
+                finalHour: finalHour
             }
         },
         savePreaching: savePreachingMock,
         updatePreaching: updatePreachingMock
-    });
+    }) as any);
 
-    (useStatus as jest.Mock).mockReturnValue({
+    useStatusSpy.mockImplementation(() => ({
         setErrorForm: setErrorFormMock
-    });
+    }) as any);
 
     beforeEach(() => {
         jest.clearAllMocks();
     });
 
     it('should to match snapshot', async () => {
-        await waitFor(() => {
-            renderComponent();
-        });
+        renderComponent();
 
         await act(async () => {
-            await waitFor(() => {
-                expect(screen.toJSON()).toMatchSnapshot();
-            });
+            expect(screen.toJSON()).toMatchSnapshot();
         });
     });
 
     it('should call setErrorForm when form is invalid', async () => {
         /* Mock data of usePreaching */
-        (usePreaching as jest.Mock).mockReturnValue({
+        usePreachingSpy.mockImplementation(() => ({
             state: {
                 ...preachingsStateMock,
                 seletedPreaching: {
@@ -74,11 +69,9 @@ describe('Test in <PreachingForm /> component', () => {
             },
             savePreaching: savePreachingMock,
             updatePreaching: updatePreachingMock
-        });
+        }) as any);
 
-        await waitFor(() => {
-            renderComponent();
-        });
+        renderComponent();
 
         const pressable = (await screen.findAllByTestId('button-touchable'))[3];
         await user.press(pressable);
@@ -90,9 +83,9 @@ describe('Test in <PreachingForm /> component', () => {
     it('should call savePreaching when form is valid and selectedPreaching is empty', async () => {
 
         /* Mock data of usePreaching */
-        (usePreaching as jest.Mock).mockReturnValue({
+        usePreachingSpy.mockImplementation(() => ({
             state: {
-                ...preachingsStateMock,
+                ...initialPreachingStateMock,
                 seletedPreaching: {
                     ...INIT_PREACHING,
                     day: preachingDay,
@@ -102,18 +95,15 @@ describe('Test in <PreachingForm /> component', () => {
             },
             savePreaching: savePreachingMock,
             updatePreaching: updatePreachingMock
-        });
+        }) as any);
 
-        await waitFor(() => {
-            renderComponent();
-        });
+        renderComponent();
 
         const pressable = (await screen.findAllByTestId('button-touchable'))[3];
         await user.press(pressable);
 
-        /* Get text of submit pressable and check if text is equal to Guardar */
-        const btnText = (await screen.findAllByTestId('button-text'))[3];
-        expect(btnText).toHaveTextContent('Guardar');
+        /* Get text of submit pressable and if text is equal to Guardar */
+        expect(pressable).toHaveTextContent('Guardar');
 
         /* Check if savePreaching is called with respective args */
         expect(savePreachingMock).toHaveBeenCalledTimes(1);
@@ -127,22 +117,18 @@ describe('Test in <PreachingForm /> component', () => {
     it('should call updatePreaching when form is valid and selectedPreaching isnt empty', async () => {
 
         /* Mock data of usePreaching */
-        (usePreaching as jest.Mock).mockReturnValue({
+        usePreachingSpy.mockImplementation(() => ({
             state: preachingSelectedStateMock,
             savePreaching: savePreachingMock,
             updatePreaching: updatePreachingMock
-        });
+        }) as any);
 
-        await waitFor(() => {
-            renderComponent();
-        });
+        renderComponent();
 
         const pressable = (await screen.findAllByTestId('button-touchable'))[3];
         await user.press(pressable);
 
-        /* Get text of submit pressable and check if text is equal to Actualizar */
-        const btnText = (await screen.findAllByTestId('button-text'))[3];
-        expect(btnText).toHaveTextContent('Actualizar');
+        expect(pressable).toHaveTextContent('Actualizar');
 
         /* Check if updatePreaching is called with respective args */
         expect(updatePreachingMock).toHaveBeenCalledTimes(1);
