@@ -41,7 +41,7 @@ describe('Test in <Button /> component', () => {
 
         /* Check if elements exists and contain props */
         expect(text).toBeTruthy();
-        expect(text.props.children).toBe(btnText);
+        expect(text).toHaveTextContent(btnText);
         expect(icon).toBeTruthy();
     });
 
