@@ -1,17 +1,14 @@
 import React from 'react';
-import { act, render, screen, waitFor, userEvent } from '@testing-library/react-native';
+import { act, render, screen, userEvent } from '@testing-library/react-native';
+
+/* Setup */
+import { useAuthSpy, useNetworkSpy, useStatusSpy } from '../../../../../jest.setup';
 
 /* Mocks */
 import { setErrorFormMock, testUser, updateProfileMock, wifiMock } from '../../../../mocks';
 
 /* Modules */
-import { ProfileForm, useAuth } from '../../../../../src/modules/auth';
-import { useNetwork, useStatus } from '../../../../../src/modules/shared';
-
-/* Hooks */
-jest.mock('../../../../../src/modules/auth/hooks/useAuth.ts');
-jest.mock('../../../../../src/modules/shared/hooks/useNetwork.ts');
-jest.mock('../../../../../src/modules/shared/hooks/useStatus.ts');
+import { ProfileForm } from '../../../../../src/modules/auth';
 
 const user = userEvent.setup();
 const renderComponent = () => render(<ProfileForm />);
@@ -21,23 +18,21 @@ describe('Test in <ProfileForm /> component', () => {
         jest.clearAllMocks();
     });
 
-    (useAuth as jest.Mock).mockReturnValue({
+    useAuthSpy.mockImplementation(() => ({
         state: { user: testUser, isAuthLoading: false },
         updateProfile: updateProfileMock
-    });
+    }) as any);
 
-    (useNetwork as jest.Mock).mockReturnValue({
-        wifi: wifiMock
-    });
-
-    (useStatus as jest.Mock).mockReturnValue({
+    useStatusSpy.mockImplementation(() => ({
         setErrorForm: setErrorFormMock
-    });
+    }) as any);
+
+    useNetworkSpy.mockImplementation(() => ({
+        wifi: wifiMock
+    }) as any);
 
     it('should to match snapshot', async () => {
-        await waitFor(() => {
-            renderComponent();
-        });
+        renderComponent();
 
         await act(() => {
             expect(screen.toJSON()).toMatchSnapshot();
@@ -45,9 +40,7 @@ describe('Test in <ProfileForm /> component', () => {
     });
 
     it('should call setErrorForm when form is invalid', async () => {
-        await waitFor(() => {
-            renderComponent();
-        });
+        renderComponent();
 
         /* Get text inputs to type empty content */
         const inputsText = await screen.findAllByTestId('form-field-text-input');
@@ -62,9 +55,7 @@ describe('Test in <ProfileForm /> component', () => {
     });
 
     it('should call updateProfile when the form is valid', async () => {
-        await waitFor(() => {
-            renderComponent();
-        });
+        renderComponent();
 
         await act(async () => {
 

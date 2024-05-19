@@ -1,19 +1,14 @@
 import React from 'react';
-import { act, render, screen, waitFor, userEvent } from '@testing-library/react-native';
+import { act, render, screen, userEvent } from '@testing-library/react-native';
 
 /* Setup */
-import { mockUseNavigation } from '../../../../../jest.setup';
+import { mockUseNavigation, useAuthSpy, useStatusSpy } from '../../../../../jest.setup';
 
 /* Mocks */
 import { setErrorFormMock, signInMock } from '../../../../mocks';
 
 /* Modules */
-import { LoginForm, useAuth } from '../../../../../src/modules/auth';
-import { useStatus } from '../../../../../src/modules/shared';
-
-/* Mock hooks */
-jest.mock('../../../../../src/modules/auth/hooks/useAuth.ts');
-jest.mock('../../../../../src/modules/shared/hooks/useStatus.ts');
+import { LoginForm } from '../../../../../src/modules/auth';
 
 const user = userEvent.setup();
 const renderComponent = () => render(<LoginForm />);
@@ -23,19 +18,17 @@ describe('Test in <LoginForm /> component', () => {
         jest.clearAllMocks();
     });
 
-    (useAuth as jest.Mock).mockReturnValue({
+    useAuthSpy.mockImplementation(() => ({
         state: { isAuthLoading: false },
         signIn: signInMock
-    });
+    }) as any);
 
-    (useStatus as jest.Mock).mockReturnValue({
+    useStatusSpy.mockImplementation(() => ({
         setErrorForm: setErrorFormMock
-    });
+    }) as any);
 
     it('should to match snapshot', async () => {
-        await waitFor(() => {
-            renderComponent();
-        });
+        renderComponent();
 
         await act(() => {
             expect(screen.toJSON()).toMatchSnapshot();
@@ -43,9 +36,7 @@ describe('Test in <LoginForm /> component', () => {
     });
 
     it('should call setErrorForm when the form is empty or invalid', async () => {
-        await waitFor(() => {
-            renderComponent();
-        });
+        renderComponent();
 
         /* Get touchable to submit form */
         const pressable = await screen.findByTestId('button-touchable');
@@ -56,9 +47,7 @@ describe('Test in <LoginForm /> component', () => {
     });
 
     it('should call signIn when the form is valid', async () => {
-        await waitFor(() => {
-            renderComponent();
-        });
+        renderComponent();
 
         const email = 'tester@gmail.com';
         const password = 'testerpass1234';
@@ -77,9 +66,7 @@ describe('Test in <LoginForm /> component', () => {
     });
 
     it('should call navigate of useNavigation with respective values', async () => {
-        await waitFor(() => {
-            render(<LoginForm />);
-        });
+        render(<LoginForm />);
 
         /* Get touchable to navigate of RegisterScreen */
         const touchableSignUp = await screen.findByTestId('login-form-sign-up');
@@ -98,14 +85,12 @@ describe('Test in <LoginForm /> component', () => {
 
     it('should disabled button then isAuthLoading is true', async () => {
         /* Mock data of useAuth */
-        (useAuth as jest.Mock).mockReturnValue({
+        useAuthSpy.mockImplementation(() => ({
             state: { isAuthLoading: true },
             signIn: signInMock
-        });
+        }) as any);
 
-        await waitFor(() => {
-            render(<LoginForm />);
-        });
+        render(<LoginForm />);
 
         /* Get submit touchable and check if disabled */
         const pressable = await screen.findByTestId('button-touchable');

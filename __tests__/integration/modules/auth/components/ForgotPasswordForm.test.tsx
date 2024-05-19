@@ -1,19 +1,14 @@
 import React from 'react';
-import { act, render, screen, waitFor, userEvent } from '@testing-library/react-native';
+import { act, render, screen, userEvent } from '@testing-library/react-native';
 
 /* Setup */
-import { mockUseNavigation } from '../../../../../jest.setup';
+import { mockUseNavigation, useAuthSpy, useStatusSpy } from '../../../../../jest.setup';
 
 /* Mocks */
 import { resetPasswordMock, setErrorFormMock } from '../../../../mocks';
 
 /* Modules */
-import { ForgotPasswordForm, useAuth } from '../../../../../src/modules/auth';
-import { useStatus } from '../../../../../src/modules/shared';
-
-/* Mock hooks */
-jest.mock('../../../../../src/modules/auth/hooks/useAuth.ts');
-jest.mock('../../../../../src/modules/shared/hooks/useStatus.ts');
+import { ForgotPasswordForm } from '../../../../../src/modules/auth';
 
 const user = userEvent.setup();
 const renderComponent = () => render(<ForgotPasswordForm />);
@@ -23,19 +18,17 @@ describe('Test in <ForgotPasswordForm /> component', () => {
         jest.clearAllMocks();
     });
 
-    (useAuth as jest.Mock).mockReturnValue({
+    useAuthSpy.mockImplementation(() => ({
         state: { isAuthLoading: false },
         resetPassword: resetPasswordMock
-    });
+    }) as any);
 
-    (useStatus as jest.Mock).mockReturnValue({
+    useStatusSpy.mockImplementation(() => ({
         setErrorForm: setErrorFormMock
-    });
+    }) as any);
 
     it('should to match snapshot', async () => {
-        await waitFor(() => {
-            renderComponent();
-        });
+        renderComponent();
 
         await act(() => {
             expect(screen.toJSON()).toMatchSnapshot();
@@ -43,9 +36,7 @@ describe('Test in <ForgotPasswordForm /> component', () => {
     });
 
     it('should call setErrorForm when the form is empty or invalid', async () => {
-        await waitFor(() => {
-            renderComponent();
-        });
+        renderComponent();
 
         /* Get submit touchable */
         const pressable = await screen.findByTestId('button-touchable');
@@ -56,9 +47,7 @@ describe('Test in <ForgotPasswordForm /> component', () => {
     });
 
     it('should call resetPassword when the form is valid', async () => {
-        await waitFor(() => {
-            renderComponent();
-        });
+        renderComponent();
 
         const email = 'tester@gmail.com';
 
@@ -75,9 +64,7 @@ describe('Test in <ForgotPasswordForm /> component', () => {
     });
 
     it('should call navigate of useNavigation with respective values', async () => {
-        await waitFor(() => {
-            renderComponent();
-        });
+        renderComponent();
 
         /* Get sign in touchable to return of LoginScreen */
         const touchableSignIn = await screen.findByTestId('forgot-pass-form-sign-in');
@@ -90,14 +77,12 @@ describe('Test in <ForgotPasswordForm /> component', () => {
     it('should disabled button then isAuthLoading is true', async () => {
 
         /* Mock data of useAuth */
-        (useAuth as jest.Mock).mockReturnValue({
+        useAuthSpy.mockImplementation(() => ({
             state: { isAuthLoading: true },
             resetPassword: resetPasswordMock
-        });
+        }) as any);
 
-        await waitFor(() => {
-            renderComponent();
-        });
+        renderComponent();
 
         /* Get submit touchable and check if disabled */
         const pressable = await screen.findByTestId('button-touchable');
