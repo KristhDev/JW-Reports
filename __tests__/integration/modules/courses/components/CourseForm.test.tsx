@@ -1,39 +1,35 @@
 import React from 'react';
-import { act, render, screen, userEvent, waitFor } from '@testing-library/react-native';
+import { act, render, screen, userEvent } from '@testing-library/react-native';
+
+/* Setup */
+import { useCoursesSpy, useStatusSpy } from '../../../../../jest.setup';
 
 /* Mocks */
 import { courseSelectedStateMock, coursesStateMock, saveCourseMock, setErrorFormMock, updateCourseMock } from '../../../../mocks';
 
 /* Modules */
-import { CourseForm, useCourses } from '../../../../../src/modules/courses';
-import { useStatus } from '../../../../../src/modules/shared';
-
-/* Mock hooks */
-jest.mock('../../../../../src/modules/courses/hooks/useCourses.ts');
-jest.mock('../../../../../src/modules/shared/hooks/useStatus.ts');
+import { CourseForm } from '../../../../../src/modules/courses';
 
 const user = userEvent.setup();
 const renderComponent = () => render(<CourseForm />);
 
 describe('Test in <CourseForm /> component', () => {
-    (useCourses as jest.Mock).mockReturnValue({
+    useCoursesSpy.mockImplementation(() => ({
         state: coursesStateMock,
         saveCourse: saveCourseMock,
         updateCourse: updateCourseMock
-    });
+    }) as any);
 
-    (useStatus as jest.Mock).mockReturnValue({
+    useStatusSpy.mockImplementation(() => ({
         setErrorForm: setErrorFormMock
-    });
+    }) as any);
 
     beforeEach(() => {
         jest.clearAllMocks();
     });
 
     it('should to match snapshot', async () => {
-        await waitFor(() => {
-            renderComponent();
-        });
+        renderComponent();
 
         await act(() => {
             expect(screen.toJSON()).toMatchSnapshot();
@@ -41,9 +37,7 @@ describe('Test in <CourseForm /> component', () => {
     });
 
     it('should call setErrorForm when the form is empty or invalid', async () => {
-        await waitFor(() => {
-            renderComponent();
-        });
+        renderComponent();
 
         const pressable = await screen.findByTestId('button-touchable');
         await user.press(pressable);
@@ -53,9 +47,7 @@ describe('Test in <CourseForm /> component', () => {
     });
 
     it('should call saveCourse when the form is valid and selectedCourse is empty', async () => {
-        await waitFor(() => {
-            renderComponent();
-        });
+        renderComponent();
 
         const personName = 'Virginie';
         const personAbout = 'Fuga sint rerum voluptatem et quaerat consequatur quas iure.';
@@ -76,9 +68,8 @@ describe('Test in <CourseForm /> component', () => {
         /* Check if setErrorForm is called one time */
         expect(saveCourseMock).toHaveBeenCalledTimes(1);
 
-        /* Get text of submit pressable and check if text is equal to Guardar */
-        const btnText = await screen.findByTestId('button-text');
-        expect(btnText).toHaveTextContent('Guardar');
+        /* Check if text of pressable is equal to Guardar */
+        expect(pressable).toHaveTextContent('Guardar');
 
         /* check if saveCourse is called with respective args */
         expect(saveCourseMock).toHaveBeenCalledTimes(1);
@@ -88,28 +79,26 @@ describe('Test in <CourseForm /> component', () => {
     it('should call updateCourse when the form is valid and selectedCourse isnt empty', async () => {
 
         /* Mock data of useCourses */
-        (useCourses as jest.Mock).mockReturnValue({
+        useCoursesSpy.mockImplementation(() => ({
             state: courseSelectedStateMock,
             saveCourse: saveCourseMock,
             updateCourse: updateCourseMock
-        });
+        }) as any);
 
-        await waitFor(() => {
-            renderComponent();
-        });
+        renderComponent();
 
         const personAbout = 'Aliquid dolore quae et voluptatibus dicta.';
 
         const inputsText = await screen.findAllByTestId('form-field-text-input');
+        await user.clear(inputsText[1]);
         await user.type(inputsText[1], personAbout);
 
         /* Get submit touchable */
         const pressable = await screen.findByTestId('button-touchable');
         await user.press(pressable);
 
-        /* Get text of submit pressable and check if text is equal to Actualizar */
-        const btnText = await screen.findByTestId('button-text');
-        expect(btnText).toHaveTextContent('Actualizar');
+        /* Check if text of pressable is equal to Actualizar */
+        expect(pressable).toHaveTextContent('Actualizar');
 
         /* Check if updateCourse is called with respective args */
         expect(updateCourseMock).toHaveBeenCalledTimes(1);
