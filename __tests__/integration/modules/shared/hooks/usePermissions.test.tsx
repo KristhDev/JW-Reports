@@ -7,9 +7,18 @@ import { getMockStoreUsePermissions, renderUsePermissions } from '../../../../se
 /* Mocks */
 import { grantedStateMock, initialPermissionsStateMock, initialStatusStateMock } from '../../../../mocks';
 
-const mockStore = getMockStoreUsePermissions({ permissions: initialPermissionsStateMock, status: initialStatusStateMock });
-
 describe('Test in usePermissions hook', () => {
+    let mockStore = {} as any;
+
+    beforeEach(() => {
+        jest.clearAllMocks();
+
+        mockStore = getMockStoreUsePermissions({
+            permissions: initialPermissionsStateMock,
+            status: initialStatusStateMock
+        });
+    });
+
     it('should return respective props', () => {
         const { result } = renderUsePermissions(mockStore);
 

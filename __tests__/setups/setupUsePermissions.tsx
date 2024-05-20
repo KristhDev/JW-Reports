@@ -35,7 +35,7 @@ export const getMockStoreUsePermissions = ({ permissions, status }: InitialState
 }
 
 export const renderUsePermissions = (store: any) => {
-    return renderHook(() => ({ useStatus: useStatus(), usePermissions: usePermissions() }) , {
+    return renderHook(() => ({ useStatus: useStatus(), usePermissions: usePermissions() }), {
         wrapper: ({ children }) => <Provider store={ store }>{ children }</Provider>
     });
 }

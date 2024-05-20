@@ -37,6 +37,8 @@ describe('Test in useImage hook', () => {
             await result.current.useImage.takeImageToGallery();
         });
 
+        console.log(mockOpenPicker.mock);
+
         /* Check if openPicker is called one time and image is equal to mock */
         expect(mockOpenPicker).toHaveBeenCalledTimes(1);
         expect(result.current.useImage.image).toEqual(imageMock);
