@@ -1,6 +1,7 @@
 import { act } from '@testing-library/react-native';
 
 /* Setup */
+import { useNetworkSpy } from '../../../../../../jest.setup';
 import { getMockStoreUsePreaching, renderUsePreaching } from '../../../../../setups';
 
 /* Mocks */
@@ -12,21 +13,19 @@ import {
     wifiMock
 } from '../../../../../mocks';
 
-/* Modules */
-import { useNetwork } from '../../../../../../src/modules/shared';
-
-/* Mock hooks */
-jest.mock('../../../../../../src/modules/shared/hooks/useNetwork.ts');
-
-const mockStore = getMockStoreUsePreaching({
-    auth: initialAuthStateMock,
-    preaching: preachingsStateMock,
-    status: initialStatusStateMock
-});
-
 describe('Test usePreaching hook - clearPreaching', () => {
-    (useNetwork as jest.Mock).mockReturnValue({
+    useNetworkSpy.mockImplementation(() => ({
         wifi: wifiMock
+    }) as any);
+
+    let mockStore = {} as any;
+
+    beforeEach(() => {
+        mockStore = getMockStoreUsePreaching({
+            auth: initialAuthStateMock,
+            status: initialStatusStateMock,
+            preaching: preachingsStateMock
+        });
     });
 
     it('should clear state', async () => {

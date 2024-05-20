@@ -1,7 +1,7 @@
 import { act } from '@testing-library/react-native';
 
 /* Setups */
-import { mockUseNavigation } from '../../../../../../jest.setup';
+import { mockUseNavigation, useNetworkSpy } from '../../../../../../jest.setup';
 import { getMockStoreUsePreaching, renderUsePreaching } from '../../../../../setups';
 
 /* Mocks */
@@ -13,38 +13,28 @@ import {
     wifiMock
 } from '../../../../../mocks';
 
-/* Modules */
-import { useNetwork } from '../../../../../../src/modules/shared';
-
-/* Mock hooks */
-jest.mock('../../../../../../src/modules/shared/hooks/useNetwork.ts');
-
-const initialMockStore = getMockStoreUsePreaching({
-    auth: initialAuthStateMock,
-    preaching: initialPreachingStateMock,
-    status: initialStatusStateMock
-});
-
-const mockStoreWithCurrentSelectedDate = getMockStoreUsePreaching({
-    auth: initialAuthStateMock,
-    preaching: {
-        ...initialPreachingStateMock,
-        selectedDate: new Date()
-    },
-    status: initialStatusStateMock
-});
-
 describe('Test in usePreaching hook - updatePreaching', () => {
-    (useNetwork as jest.Mock).mockReturnValue({
-        wifi: wifiMock,
-    });
+    useNetworkSpy.mockImplementation(() => ({
+        wifi: wifiMock
+    }) as any);
+
+    let mockStoreWithCurrentSelectedDate = {} as any;
 
     beforeEach(() => {
         jest.clearAllMocks();
+
+        mockStoreWithCurrentSelectedDate = getMockStoreUsePreaching({
+            auth: initialAuthStateMock,
+            preaching: {
+                ...initialPreachingStateMock,
+                selectedDate: new Date()
+            },
+            status: initialStatusStateMock
+        });
     });
 
     it('should update preaching day successfully', async () => {
-        const { result } = renderUsePreaching(initialMockStore);
+        const { result } = renderUsePreaching(mockStoreWithCurrentSelectedDate);
 
         await act(async () => {
             await result.current.useAuth.signIn(testCredentials);

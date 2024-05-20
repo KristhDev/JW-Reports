@@ -1,7 +1,7 @@
 import { act } from '@testing-library/react-native';
 
 /* Setups */
-import { mockUseNavigation } from '../../../../../../jest.setup';
+import { mockUseNavigation, useNetworkSpy } from '../../../../../../jest.setup';
 import { getMockStoreUsePreaching, renderUsePreaching } from '../../../../../setups';
 
 /* Mocks */
@@ -13,28 +13,24 @@ import {
     wifiMock
 } from '../../../../../mocks';
 
-/* Modules */
-import { useNetwork } from '../../../../../../src/modules/shared';
-
-/* Mock hooks */
-jest.mock('../../../../../../src/modules/shared/hooks/useNetwork.ts');
-
-const mockStore = getMockStoreUsePreaching({
-    auth: initialAuthStateMock,
-    preaching: {
-        ...initialPreachingStateMock,
-        selectedDate: new Date()
-    },
-    status: initialStatusStateMock
-});
-
 describe('Test in usePreaching hook - savePreaching', () => {
-    (useNetwork as jest.Mock).mockReturnValue({
-        wifi: wifiMock,
-    });
+    useNetworkSpy.mockImplementation(() => ({
+        wifi: wifiMock
+    }) as any);
+
+    let mockStore = {} as any;
 
     beforeEach(() => {
         jest.clearAllMocks();
+
+        mockStore = getMockStoreUsePreaching({
+            auth: initialAuthStateMock,
+            preaching: {
+                ...initialPreachingStateMock,
+                selectedDate: new Date()
+            },
+            status: initialStatusStateMock
+        });
     });
 
     it('should save preaching day successfully', async () => {
@@ -118,7 +114,7 @@ describe('Test in usePreaching hook - savePreaching', () => {
         expect(mockUseNavigation.goBack).not.toHaveBeenCalled();
     });
 
-    it('should fail when data is invalid', async () => {
+    it('should faild when data is invalid', async () => {
         const { result } = renderUsePreaching(mockStore);
 
         await act(async () => {

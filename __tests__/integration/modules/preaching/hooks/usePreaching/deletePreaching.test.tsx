@@ -1,7 +1,7 @@
 import { act } from '@testing-library/react-native';
 
 /* Setups */
-import { onFinishMock } from '../../../../../../jest.setup';
+import { onFinishMock, useNetworkSpy } from '../../../../../../jest.setup';
 import { getMockStoreUsePreaching, renderUsePreaching } from '../../../../../setups';
 
 /* Mocks */
@@ -14,11 +14,11 @@ import {
     wifiMock
 } from '../../../../../mocks';
 
-/* Modules */
-import { useNetwork } from '../../../../../../src/modules/shared';
-
-/* Mock hooks */
-jest.mock('../../../../../../src/modules/shared/hooks/useNetwork.ts');
+const initialMockStore = getMockStoreUsePreaching({
+    auth: initialAuthStateMock,
+    preaching: initialPreachingStateMock,
+    status: initialStatusStateMock
+});
 
 const mockStoreWithCurrentSelectedDate = getMockStoreUsePreaching({
     auth: initialAuthStateMock,
@@ -29,19 +29,21 @@ const mockStoreWithCurrentSelectedDate = getMockStoreUsePreaching({
     status: initialStatusStateMock
 });
 
-const initialMockStore = getMockStoreUsePreaching({
-    auth: initialAuthStateMock,
-    preaching: initialPreachingStateMock,
-    status: initialStatusStateMock
-});
-
 describe('Test usePreaching hook - deletePreaching', () => {
-    (useNetwork as jest.Mock).mockReturnValue({
+    useNetworkSpy.mockImplementation(() => ({
         wifi: wifiMock
-    });
+    }) as any);
+
+    let mockStorePreachingSelected = {} as any;
 
     beforeEach(() => {
         jest.clearAllMocks();
+
+        mockStorePreachingSelected = getMockStoreUsePreaching({
+            auth: initialAuthStateMock,
+            preaching: preachingSelectedStateMock,
+            status: initialStatusStateMock
+        });
     });
 
     it('should delete preaching day successfully', async () => {
@@ -133,7 +135,7 @@ describe('Test usePreaching hook - deletePreaching', () => {
     });
 
     it('should faild when user is unauthenticated', async () => {
-        const { result } = renderUsePreaching(initialMockStore);
+        const { result } = renderUsePreaching(mockStorePreachingSelected);
 
         await act(async () => {
             await result.current.usePreaching.deletePreaching(onFinishMock);
@@ -164,7 +166,7 @@ describe('Test usePreaching hook - deletePreaching', () => {
     });
 
     it('should faild when preaching day does not belong to user', async () => {
-        const { result } = renderUsePreaching(initialMockStore);
+        const { result } = renderUsePreaching(mockStorePreachingSelected);
 
         await act(async () => {
             await result.current.useAuth.signIn(testCredentials);

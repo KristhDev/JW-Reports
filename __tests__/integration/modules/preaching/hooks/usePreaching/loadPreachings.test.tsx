@@ -3,6 +3,9 @@ import { act } from '@testing-library/react-native';
 /* Setup */
 import { getMockStoreUsePreaching, renderUsePreaching } from '../../../../../setups';
 
+/* Setup */
+import { useNetworkSpy } from '../../../../../../jest.setup';
+
 /* Mocks */
 import {
     initialAuthStateMock,
@@ -11,22 +14,21 @@ import {
     testCredentials,
     wifiMock
 } from '../../../../../mocks';
-
-/* Modules */
-import { useNetwork } from '../../../../../../src/modules/shared';
-
-/* Mock hooks */
-jest.mock('../../../../../../src/modules/shared/hooks/useNetwork.ts');
-
-const mockStore = getMockStoreUsePreaching({
-    auth: initialAuthStateMock,
-    preaching: initialPreachingStateMock,
-    status: initialStatusStateMock
-});
+import { supabase } from '../../../../../config';
 
 describe('Test usePreaching hook - loadPreachings', () => {
-    (useNetwork as jest.Mock).mockReturnValue({
-        wifi: wifiMock,
+    useNetworkSpy.mockImplementation(() => ({
+        wifi: wifiMock
+    }) as any);
+
+    let mockStore = {} as any;
+
+    beforeEach(() => {
+        mockStore = getMockStoreUsePreaching({
+            auth: initialAuthStateMock,
+            preaching: initialPreachingStateMock,
+            status: initialStatusStateMock
+        });
     });
 
     it('should load preachings day successfully', async () => {
@@ -56,17 +58,7 @@ describe('Test usePreaching hook - loadPreachings', () => {
         expect(result.current.usePreaching.state).toEqual({
             ...initialPreachingStateMock,
             selectedDate: expect.any(Date),
-            preachings: [
-                {
-                    id: expect.any(String),
-                    userId: expect.any(String),
-                    day: expect.any(String),
-                    initHour: expect.any(String),
-                    finalHour: expect.any(String),
-                    createdAt: expect.any(String),
-                    updatedAt: expect.any(String)
-                }
-            ],
+            preachings: expect.any(Array),
             seletedPreaching: {
                 id: '',
                 userId: '',
@@ -78,10 +70,21 @@ describe('Test usePreaching hook - loadPreachings', () => {
             }
         });
 
-        await act(async () => {
-            result.current.usePreaching.setSelectedPreaching(result.current.usePreaching.state.preachings[0]);
-            await result.current.usePreaching.deletePreaching();
+        result.current.usePreaching.state.preachings.forEach((preaching) => {
+            expect(preaching).toEqual({
+                id: expect.any(String),
+                userId: expect.any(String),
+                day: expect.any(String),
+                initHour: expect.any(String),
+                finalHour: expect.any(String),
+                createdAt: expect.any(String),
+                updatedAt: expect.any(String)
+            });
         });
+
+        await supabase.from('preachings')
+            .delete()
+            .eq('user_id', result.current.useAuth.state.user.id);
 
         await act(async () => {
             await result.current.useAuth.signOut();

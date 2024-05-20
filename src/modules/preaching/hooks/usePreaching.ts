@@ -224,7 +224,7 @@ const usePreaching = () => {
             return;
         }
 
-        if (state.seletedPreaching.id === '') {
+        if (state.seletedPreaching === undefined || state.seletedPreaching.id === '') {
             dispatch(setIsPreachingLoading({ isLoading: false }));
 
             setStatus({
