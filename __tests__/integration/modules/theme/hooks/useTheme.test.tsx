@@ -5,10 +5,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { renderUseTheme } from '../../../../setups';
 
 /* Mocks */
-import { darkState } from '../../../../mocks';
-
-/* Theme */
-import { lightTheme } from '../../../../../src/modules/theme';
+import { darkState, lightState } from '../../../../mocks';
 
 /* Utils */
 import { asyncStorageKeys } from '../../../../../src/utils';
@@ -24,13 +21,15 @@ describe('Test in useTheme hook', () => {
         await waitFor(() => {
             /* Check properties returned by hook */
             expect(result.current).toEqual({
-                state: darkState,
+                state: { ...darkState, selectedTheme: 'default' },
                 setTheme: expect.any(Function)
             });
         });
     });
 
     it('should change theme with setTheme', async () => {
+        (AsyncStorage.getItem as jest.Mock).mockResolvedValue('light');
+
         const { result } = renderUseTheme();
 
         await act(async () => {
@@ -38,7 +37,7 @@ describe('Test in useTheme hook', () => {
         });
 
         /* Check if deviceTheme changed */
-        expect(result.current.state).toEqual(lightTheme);
+        expect(result.current.state).toEqual(lightState);
 
         /* Check if AsyncStorage.setItem is called with respective args */
         expect(AsyncStorage.setItem).toHaveBeenCalled();
