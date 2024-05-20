@@ -1,6 +1,7 @@
 import { act } from '@testing-library/react-native';
 
 /* Setup */
+import { useNetworkSpy } from '../../../../../../jest.setup';
 import { getMockStoreUseAuth, renderUseAuth } from '../../../../../setups';
 
 /* Mocks */
@@ -16,24 +17,22 @@ import {
     wifiMock
 } from '../../../../../mocks';
 
-/* Modules */
-import { useNetwork } from '../../../../../../src/modules/shared';
-
-/* Mock hooks */
-jest.mock('../../../../../../src/modules/shared/hooks/useNetwork.ts');
-
-const mockStore = getMockStoreUseAuth({
-    auth: initialAuthStateMock,
-    courses: initialCoursesStateMock,
-    lessons: initialLessonsStateMock,
-    preaching: initialPreachingStateMock,
-    revisits: initialRevisitsStateMock,
-    status: initialStatusStateMock
-});
-
 describe('Test in useAuth hook - updateProfile', () => {
-    (useNetwork as jest.Mock).mockReturnValue({
+    useNetworkSpy.mockImplementation(() => ({
         wifi: wifiMock
+    }) as any);
+
+    let mockStore = {} as any;
+
+    beforeEach(() => {
+        mockStore = getMockStoreUseAuth({
+            auth: initialAuthStateMock,
+            courses: initialCoursesStateMock,
+            lessons: initialLessonsStateMock,
+            preaching: initialPreachingStateMock,
+            revisits: initialRevisitsStateMock,
+            status: initialStatusStateMock
+        });
     });
 
     it('should update user info', async () => {

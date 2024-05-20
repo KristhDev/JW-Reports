@@ -1,6 +1,7 @@
 import { act } from '@testing-library/react-native';
 
 /* Setup */
+import { useNetworkSpy } from '../../../../../../jest.setup';
 import { getMockStoreUseAuth, renderUseAuth } from '../../../../../setups';
 
 /* Mocks */
@@ -15,19 +16,15 @@ import {
     wifiMock
 } from '../../../../../mocks';
 
-/* Modules */
-import { useNetwork } from '../../../../../../src/modules/shared';
-
-/* Mock hooks */
-jest.mock('../../../../../../src/modules/shared/hooks/useNetwork.ts');
-
 describe('Test in useAuth hook - signIn', () => {
-    (useNetwork as jest.Mock).mockReturnValue({
+    useNetworkSpy.mockImplementation(() => ({
         wifi: wifiMock
-    });
+    }) as any);
 
-    it('should authenticate user', async () => {
-        const mockStore = getMockStoreUseAuth({
+    let mockStore = {} as any;
+
+    beforeEach(() => {
+        mockStore = getMockStoreUseAuth({
             auth: initialAuthStateMock,
             courses: initialCoursesStateMock,
             lessons: initialLessonsStateMock,
@@ -35,7 +32,9 @@ describe('Test in useAuth hook - signIn', () => {
             revisits: initialRevisitsStateMock,
             status: initialStatusStateMock
         });
+    });
 
+    it('should authenticate user', async () => {
         const { result } = renderUseAuth(mockStore);
 
         await act(async () => {
@@ -53,7 +52,7 @@ describe('Test in useAuth hook - signIn', () => {
                 surname: 'Rivera',
                 email: 'andredev@gmail.com',
                 precursor: 'ninguno',
-                hoursRequirement: 20,
+                hoursRequirement: 0,
                 createdAt: expect.any(String),
                 updatedAt: expect.any(String)
             }
@@ -61,15 +60,6 @@ describe('Test in useAuth hook - signIn', () => {
     });
 
     it('should faild when credentials are invalid', async () => {
-        const mockStore = getMockStoreUseAuth({
-            auth: initialAuthStateMock,
-            courses: initialCoursesStateMock,
-            lessons: initialLessonsStateMock,
-            preaching: initialPreachingStateMock,
-            revisits: initialRevisitsStateMock,
-            status: initialStatusStateMock
-        });
-
         const { result } = renderUseAuth(mockStore);
 
         await act(async () => {

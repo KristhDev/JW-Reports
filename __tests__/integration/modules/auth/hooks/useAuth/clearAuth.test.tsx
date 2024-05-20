@@ -1,6 +1,7 @@
 import { act } from '@testing-library/react-native';
 
 /* Setup */
+import { useNetworkSpy } from '../../../../../../jest.setup';
 import { getMockStoreUseAuth, renderUseAuth } from '../../../../../setups';
 
 /* Mocks */
@@ -15,16 +16,10 @@ import {
     wifiMock
 } from '../../../../../mocks';
 
-/* Modules */
-import { useNetwork } from '../../../../../../src/modules/shared';
-
-/* Mock hooks */
-jest.mock('../../../../../../src/modules/shared/hooks/useNetwork.ts');
-
 describe('Test in useAuth hook - clearAuth', () => {
-    (useNetwork as jest.Mock).mockReturnValue({
+    useNetworkSpy.mockImplementation(() => ({
         wifi: wifiMock
-    });
+    }) as any);
 
     it('should clean authentication', async () => {
         const mockStore = getMockStoreUseAuth({

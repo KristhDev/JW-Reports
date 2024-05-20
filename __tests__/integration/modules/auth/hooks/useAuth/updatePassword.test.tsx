@@ -1,7 +1,7 @@
 import { act } from '@testing-library/react-native';
 
 /* Setups */
-import { onFinishMock } from '../../../../../../jest.setup';
+import { onFinishMock, useNetworkSpy } from '../../../../../../jest.setup';
 import { getMockStoreUseAuth, renderUseAuth } from '../../../../../setups';
 
 /* Mocks */
@@ -17,28 +17,24 @@ import {
     wifiMock
 } from '../../../../../mocks';
 
-/* Modules */
-import { useNetwork } from '../../../../../../src/modules/shared';
-
-/* Mock hooks */
-jest.mock('../../../../../../src/modules/shared/hooks/useNetwork.ts');
-
-const mockStore = getMockStoreUseAuth({
-    auth: initialAuthStateMock,
-    courses: initialCoursesStateMock,
-    lessons: initialLessonsStateMock,
-    preaching: initialPreachingStateMock,
-    revisits: initialRevisitsStateMock,
-    status: initialStatusStateMock
-});
-
 describe('Test in useAuth hook - updatePassword', () => {
-    (useNetwork as jest.Mock).mockReturnValue({
+    useNetworkSpy.mockImplementation(() => ({
         wifi: wifiMock
-    });
+    }) as any);
+
+    let mockStore = {} as any;
 
     beforeEach(() => {
         jest.clearAllMocks();
+
+        mockStore = getMockStoreUseAuth({
+            auth: initialAuthStateMock,
+            courses: initialCoursesStateMock,
+            lessons: initialLessonsStateMock,
+            preaching: initialPreachingStateMock,
+            revisits: initialRevisitsStateMock,
+            status: initialStatusStateMock
+        });
     });
 
     it('should update password', async () => {
@@ -85,7 +81,7 @@ describe('Test in useAuth hook - updatePassword', () => {
         });
     });
 
-    it('should fail when password is empty', async () => {
+    it('should faild when password is empty', async () => {
         const { result } = renderUseAuth(mockStore);
 
         await act(async () => {
@@ -126,7 +122,7 @@ describe('Test in useAuth hook - updatePassword', () => {
         });
     });
 
-    it('should fail when password is invalid', async () => {
+    it('should faild when password is invalid', async () => {
         const { result } = renderUseAuth(mockStore);
 
         await act(async () => {

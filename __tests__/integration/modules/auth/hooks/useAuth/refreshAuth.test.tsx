@@ -1,6 +1,7 @@
 import { act } from '@testing-library/react-native';
 
 /* Setup */
+import { useNetworkSpy } from '../../../../../../jest.setup';
 import { getMockStoreUseAuth, renderUseAuth } from '../../../../../setups';
 
 /* Mocks */
@@ -15,19 +16,15 @@ import {
     wifiMock
 } from '../../../../../mocks';
 
-/* Modules */
-import { useNetwork } from '../../../../../../src/modules/shared';
-
-/* Mock hooks */
-jest.mock('../../../../../../src/modules/auth/hooks/useAuth.ts');
-
 describe('Test in useAuth hook - refreshAuth', () => {
-    (useNetwork as jest.Mock).mockReturnValue({
+    useNetworkSpy.mockImplementation(() => ({
         wifi: wifiMock
-    });
+    }) as any);
 
-    it('should refresh authentication', async () => {
-        const mockStore = getMockStoreUseAuth({
+    let mockStore = {} as any;
+
+    beforeEach(() => {
+        mockStore = getMockStoreUseAuth({
             auth: initialAuthStateMock,
             courses: initialCoursesStateMock,
             lessons: initialLessonsStateMock,
@@ -35,7 +32,9 @@ describe('Test in useAuth hook - refreshAuth', () => {
             revisits: initialRevisitsStateMock,
             status: initialStatusStateMock
         });
+    });
 
+    it('should refresh authentication', async () => {
         const { result } = renderUseAuth(mockStore);
 
         await act(async () => {
@@ -62,15 +61,6 @@ describe('Test in useAuth hook - refreshAuth', () => {
     });
 
     it('should faild when token is empty', async () => {
-        const mockStore = getMockStoreUseAuth({
-            auth: initialAuthStateMock,
-            courses: initialCoursesStateMock,
-            lessons: initialLessonsStateMock,
-            preaching: initialPreachingStateMock,
-            revisits: initialRevisitsStateMock,
-            status: initialStatusStateMock
-        });
-
         const { result } = renderUseAuth(mockStore);
 
         await act(async () => {

@@ -1,28 +1,32 @@
 import { act } from '@testing-library/react-native';
 
 /* Setup */
+import { useNetworkSpy } from '../../../../../../jest.setup';
 import { getMockStoreUseAuth, renderUseAuth } from '../../../../../setups';
 
 /* Mocks */
-import { initialAuthStateMock, initialCoursesStateMock, initialLessonsStateMock, initialPreachingStateMock, initialRevisitsStateMock, initialStatusStateMock, testCredentials, wifiMock } from '../../../../../mocks';
-
-/* Modules */
-import { useNetwork } from '../../../../../../src/modules/shared';
-
-/* Mock hooks */
-jest.mock('../../../../../../src/modules/shared/hooks/useNetwork.ts');
+import {
+    initialAuthStateMock,
+    initialCoursesStateMock,
+    initialLessonsStateMock,
+    initialPreachingStateMock,
+    initialRevisitsStateMock,
+    initialStatusStateMock,
+    testCredentials,
+    wifiMock
+} from '../../../../../mocks';
 
 describe('Test in useAuth hook - resetPassword', () => {
-    (useNetwork as jest.Mock).mockReturnValue({
+    useNetworkSpy.mockImplementation(() => ({
         wifi: wifiMock
-    });
+    }) as any);
+
+    let mockStore = {} as any;
 
     beforeEach(() => {
         jest.clearAllMocks();
-    });
 
-    it('should send reset request', async () => {
-        const mockStore = getMockStoreUseAuth({
+        mockStore = getMockStoreUseAuth({
             auth: initialAuthStateMock,
             courses: initialCoursesStateMock,
             lessons: initialLessonsStateMock,
@@ -30,7 +34,9 @@ describe('Test in useAuth hook - resetPassword', () => {
             revisits: initialRevisitsStateMock,
             status: initialStatusStateMock
         });
+    });
 
+    it('should send reset request', async () => {
         const { result } = renderUseAuth(mockStore);
 
         await act(async () => {
@@ -54,16 +60,7 @@ describe('Test in useAuth hook - resetPassword', () => {
         expect(result.current.useStatus.state).toEqual({ code: 200, msg });
     });
 
-    it('should fail when email is empty', async () => {
-        const mockStore = getMockStoreUseAuth({
-            auth: initialAuthStateMock,
-            courses: initialCoursesStateMock,
-            lessons: initialLessonsStateMock,
-            preaching: initialPreachingStateMock,
-            revisits: initialRevisitsStateMock,
-            status: initialStatusStateMock
-        });
-
+    it('should faild when email is empty', async () => {
         const { result } = renderUseAuth(mockStore);
 
         await act(async () => {
@@ -87,16 +84,7 @@ describe('Test in useAuth hook - resetPassword', () => {
         });
     });
 
-    it('should fail when email is invalid', async () => {
-        const mockStore = getMockStoreUseAuth({
-            auth: initialAuthStateMock,
-            courses: initialCoursesStateMock,
-            lessons: initialLessonsStateMock,
-            preaching: initialPreachingStateMock,
-            revisits: initialRevisitsStateMock,
-            status: initialStatusStateMock
-        });
-
+    it('should faild when email is invalid', async () => {
         const { result } = renderUseAuth(mockStore);
 
         await act(async () => {
