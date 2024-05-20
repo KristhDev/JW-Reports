@@ -20,7 +20,6 @@ export interface Colors {
     button: string;
     buttonTranslucent: string;
     buttonTransparent: string;
-    buttonDark: string;
     card: string;
     contentHeader: string;
     focus: string;

@@ -170,7 +170,6 @@ jest.mock('react-native-unistyles', () => {
                     background: '#000000',
                     bottom: '#292929',
                     button: '#C0A7E1',
-                    buttonDark: '#9C85B9',
                     buttonTranslucent: 'rgba(192, 167, 225, 0.50)',
                     buttonTransparent: 'rgba(255, 255, 255, 0.15)',
                     card: '#292929',
