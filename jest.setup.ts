@@ -94,15 +94,13 @@ jest.mock('react-native-system-navigation-bar', () => {
     return real;
 });
 
-export const mockOpenPicker = jest.fn();
 export const mockOpenCamera = jest.fn();
+export const mockOpenPicker = jest.fn();
 
-jest.mock('react-native-image-crop-picker', () => {
-    return {
-        openPicker: mockOpenPicker,
-        openCamera: mockOpenCamera
-    }
-});
+jest.mock('react-native-image-crop-picker', () => ({
+    openCamera: mockOpenCamera,
+    openPicker: mockOpenPicker
+}));
 
 jest.mock('react-native-keyboard-aware-scroll-view', () => {
     return {
