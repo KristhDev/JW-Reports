@@ -1,7 +1,7 @@
 import { act } from '@testing-library/react-native';
 
 /* Setups */
-import { onFinishMock } from '../../../../../../jest.setup';
+import { onFinishMock, useNetworkSpy } from '../../../../../../jest.setup';
 import { getMockStoreUseRevisits, renderUseRevisits } from '../../../../../setups';
 
 /* Mocks */
@@ -14,25 +14,21 @@ import {
     wifiMock
 } from '../../../../../mocks';
 
-/* Modules */
-import { useNetwork } from '../../../../../../src/modules/shared';
-
-/* Mock hooks */
-jest.mock('../../../../../../src/modules/shared/hooks/useNetwork.ts');
-
-const mockStore = getMockStoreUseRevisits({
-    auth: initialAuthStateMock,
-    revisits: initialRevisitsStateMock,
-    status: initialStatusStateMock
-});
-
 describe('Test useRevisits hook - loadLastRevisit', () => {
-    (useNetwork as jest.Mock).mockReturnValue({
+    useNetworkSpy.mockImplementation(() => ({
         wifi: wifiMock
-    });
+    }) as any);
+
+    let mockStore = {} as any;
 
     beforeEach(() => {
         jest.clearAllMocks();
+
+        mockStore = getMockStoreUseRevisits({
+            auth: initialAuthStateMock,
+            revisits: initialRevisitsStateMock,
+            status: initialStatusStateMock
+        });
     });
 
     it('should load last revisit successfully', async () => {
@@ -93,7 +89,7 @@ describe('Test useRevisits hook - loadLastRevisit', () => {
         });
     });
 
-    it('should fail when user inst authenticated', async () => {
+    it('should faild when user inst authenticated', async () => {
         const { result } = renderUseRevisits(mockStore);
 
         await act(async () => {

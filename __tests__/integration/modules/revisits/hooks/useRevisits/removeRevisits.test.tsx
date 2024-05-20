@@ -1,26 +1,25 @@
 import { act } from '@testing-library/react-native';
 
 /* Setups */
+import { useNetworkSpy } from '../../../../../../jest.setup';
 import { getMockStoreUseRevisits, renderUseRevisits } from '../../../../../setups';
 
 /* Mocks */
 import { initialAuthStateMock, initialStatusStateMock, revisitsStateMock, wifiMock } from '../../../../../mocks';
 
-/* Modules */
-import { useNetwork } from '../../../../../../src/modules/shared';
-
-/* Mock hooks */
-jest.mock('../../../../../../src/modules/shared/hooks/useNetwork.ts');
-
-const mockStore = getMockStoreUseRevisits({
-    auth: initialAuthStateMock,
-    revisits: revisitsStateMock,
-    status: initialStatusStateMock
-});
-
 describe('Test useRevisits hook - removeRevisits', () => {
-    (useNetwork as jest.Mock).mockReturnValue({
+    useNetworkSpy.mockImplementation(() => ({
         wifi: wifiMock
+    }) as any);
+
+    let mockStore = {} as any;
+
+    beforeEach(() => {
+        mockStore = getMockStoreUseRevisits({
+            auth: initialAuthStateMock,
+            revisits: revisitsStateMock,
+            status: initialStatusStateMock
+        });
     });
 
     it('should remove revisits of state', async () => {
