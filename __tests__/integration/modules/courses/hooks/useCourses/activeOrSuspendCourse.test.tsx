@@ -1,7 +1,10 @@
 import { act } from '@testing-library/react-native';
 
+/* Supabase */
+import { supabase } from '../../../../../config';
+
 /* Setups */
-import { onFinishMock } from '../../../../../../jest.setup';
+import { onFinishMock, useNetworkSpy } from '../../../../../../jest.setup';
 import { getMockStoreUseCourses, renderUseCourses } from '../../../../../setups';
 
 /* Mocks */
@@ -15,26 +18,22 @@ import {
     wifiMock
 } from '../../../../../mocks';
 
-/* Modules */
-import { useNetwork } from '../../../../../../src/modules/shared';
-
-/* Mock hooks */
-jest.mock('../../../../../../src/modules/shared/hooks/useNetwork.ts');
-
-const mockStore = getMockStoreUseCourses({
-    auth: initialAuthStateMock,
-    lessons: initialLessonsStateMock,
-    courses: initialCoursesStateMock,
-    status: initialStatusStateMock
-});
-
 describe('Test in useCourses hook - activeOrSuspendCourse', () => {
-    (useNetwork as jest.Mock).mockReturnValue({
+    useNetworkSpy.mockImplementation(() => ({
         wifi: wifiMock
-    });
+    }));
+
+    let mockStore = {} as any;
 
     beforeEach(() => {
         jest.clearAllMocks();
+
+        mockStore = getMockStoreUseCourses({
+            auth: initialAuthStateMock,
+            lessons: initialLessonsStateMock,
+            courses: initialCoursesStateMock,
+            status: initialStatusStateMock
+        });
     });
 
     it('should active or suspend course successfully', async () => {
@@ -96,9 +95,9 @@ describe('Test in useCourses hook - activeOrSuspendCourse', () => {
         /* Check if onFinish is called one time */
         expect(onFinishMock).toHaveBeenCalledTimes(1);
 
-        await act(async () => {
-            await result.current.useCourses.deleteCourse();
-        });
+        await supabase.from('courses')
+            .delete()
+            .eq('user_id', result.current.useAuth.state.user.id);
 
         await act(async () => {
             await result.current.useAuth.signOut();
@@ -218,9 +217,9 @@ describe('Test in useCourses hook - activeOrSuspendCourse', () => {
             msg: 'No puedes suspender o renovar un curso terminado.'
         });
 
-        await act(async () => {
-            await result.current.useCourses.deleteCourse();
-        });
+        await supabase.from('courses')
+            .delete()
+            .eq('user_id', result.current.useAuth.state.user.id);
 
         await act(async () => {
             await result.current.useAuth.signOut();

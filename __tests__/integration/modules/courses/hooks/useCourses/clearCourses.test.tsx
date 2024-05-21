@@ -1,6 +1,7 @@
 import { act } from '@testing-library/react-native';
 
 /* Setup */
+import { useNetworkSpy } from '../../../../../../jest.setup';
 import { getMockStoreUseCourses, renderUseCourses } from '../../../../../setups';
 
 /* Mocks */
@@ -13,12 +14,6 @@ import {
     wifiMock
 } from '../../../../../mocks';
 
-/* Modules */
-import { useNetwork } from '../../../../../../src/modules/shared';
-
-/* Mock hooks */
-jest.mock('../../../../../../src/modules/shared/hooks/useNetwork.ts');
-
 const mockStore = getMockStoreUseCourses({
     auth: initialAuthStateMock,
     courses: coursesStateMock,
@@ -27,9 +22,9 @@ const mockStore = getMockStoreUseCourses({
 });
 
 describe('Test in useCourses hook - clearCourses', () => {
-    (useNetwork as jest.Mock).mockReturnValue({
-        wifi: wifiMock,
-    });
+    useNetworkSpy.mockImplementation(() => ({
+        wifi: wifiMock
+    }));
 
     it('should clear state', async () => {
         const { result } = renderUseCourses(mockStore);

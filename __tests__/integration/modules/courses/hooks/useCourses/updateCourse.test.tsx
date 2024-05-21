@@ -1,7 +1,10 @@
 import { act } from '@testing-library/react-native';
 
+/* Supabase */
+import { supabase } from '../../../../../config';
+
 /* Setups */
-import { mockUseNavigation } from '../../../../../../jest.setup';
+import { mockUseNavigation, useNetworkSpy } from '../../../../../../jest.setup';
 import { getMockStoreUseCourses, renderUseCourses } from '../../../../../setups';
 
 /* Mocks */
@@ -15,26 +18,22 @@ import {
     wifiMock
 } from '../../../../../mocks';
 
-/* Modules */
-import { useNetwork } from '../../../../../../src/modules/shared';
-
-/* Mock hooks */
-jest.mock('../../../../../../src/modules/shared/hooks/useNetwork.ts');
-
-const mockStore = getMockStoreUseCourses({
-    auth: initialAuthStateMock,
-    courses: initialCoursesStateMock,
-    lessons: initialLessonsStateMock,
-    status: initialStatusStateMock
-});
-
 describe('Test in useCourses hook - updateCourse', () => {
-    (useNetwork as jest.Mock).mockReturnValue({
+    useNetworkSpy.mockImplementation(() => ({
         wifi: wifiMock
-    });
+    }));
+
+    let mockStore = {} as any;
 
     beforeEach(() => {
         jest.clearAllMocks();
+
+        mockStore = getMockStoreUseCourses({
+            auth: initialAuthStateMock,
+            courses: initialCoursesStateMock,
+            lessons: initialLessonsStateMock,
+            status: initialStatusStateMock
+        });
     });
 
     it('should update course successfully', async () => {
@@ -93,16 +92,16 @@ describe('Test in useCourses hook - updateCourse', () => {
         /* Check if goBack is called one time */
         expect(mockUseNavigation.goBack).toHaveBeenCalledTimes(1);
 
-        await act(async () => {
-            await result.current.useCourses.deleteCourse();
-        });
+        await supabase.from('courses')
+            .delete()
+            .eq('user_id', result.current.useAuth.state.user.id);
 
         await act(async () => {
             await result.current.useAuth.signOut();
         });
     });
 
-    it('should faild when user inst authenticate', async () => {
+    it('should faild when user inst authenticated', async () => {
         const { result } = renderUseCourses(mockStore);
 
         await act(async () => {
@@ -160,13 +159,9 @@ describe('Test in useCourses hook - updateCourse', () => {
             msg: 'No hay un curso seleccionado para actualizar.'
         });
 
-        await act(async () => {
-            result.current.useCourses.setSelectedCourse(result.current.useCourses.state.courses[0]);
-        });
-
-        await act(async () => {
-            await result.current.useCourses.deleteCourse();
-        });
+        await supabase.from('courses')
+            .delete()
+            .eq('user_id', result.current.useAuth.state.user.id);
 
         await act(async () => {
             await result.current.useAuth.signOut();
@@ -224,9 +219,9 @@ describe('Test in useCourses hook - updateCourse', () => {
             msg: expect.any(String)
         });
 
-        await act(async () => {
-            await result.current.useCourses.deleteCourse();
-        });
+        await supabase.from('courses')
+            .delete()
+            .eq('user_id', result.current.useAuth.state.user.id);
 
         await act(async () => {
             await result.current.useAuth.signOut();
