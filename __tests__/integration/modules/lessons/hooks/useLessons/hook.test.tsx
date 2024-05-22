@@ -1,5 +1,6 @@
 /* Setup */
-import { getMockStoreUseLessons, renderUseLessons } from '../../../../setups';
+import { useNetworkSpy } from '../../../../../../jest.setup';
+import { getMockStoreUseLessons, renderUseLessons } from '../../../../../setups';
 
 /* Mocks */
 import {
@@ -8,17 +9,12 @@ import {
     initialLessonsStateMock,
     initialStatusStateMock,
     wifiMock
-} from '../../../../mocks';
-
-/* Modules */
-import { useNetwork } from '../../../../../src/modules/shared';
-
-jest.mock('../../../../../src/modules/shared/hooks/useNetwork.ts');
+} from '../../../../../mocks';
 
 describe('Test in useLessons hook', () => {
-    (useNetwork as jest.Mock).mockReturnValue({
+    useNetworkSpy.mockImplementation(() => ({
         wifi: wifiMock
-    });
+    }));
 
     it('should return respective props', () => {
         const mockStore = getMockStoreUseLessons({

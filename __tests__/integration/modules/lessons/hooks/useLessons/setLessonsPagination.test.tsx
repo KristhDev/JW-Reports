@@ -1,7 +1,8 @@
 import { act } from '@testing-library/react-native';
 
 /* Setup */
-import { getMockStoreUseLessons, renderUseLessons } from '../../../../setups';
+import { useNetworkSpy } from '../../../../../../jest.setup';
+import { getMockStoreUseLessons, renderUseLessons } from '../../../../../setups';
 
 /* Mocks */
 import {
@@ -10,24 +11,22 @@ import {
     initialLessonsStateMock,
     initialStatusStateMock,
     wifiMock
-} from '../../../../mocks';
-
-/* Modules */
-import { useNetwork } from '../../../../../src/modules/shared';
-
-/* Mock hooks */
-jest.mock('../../../../../src/modules/shared/hooks/useNetwork.ts');
-
-const mockStore = getMockStoreUseLessons({
-    auth: initialAuthStateMock,
-    courses: initialCoursesStateMock,
-    lessons: initialLessonsStateMock,
-    status: initialStatusStateMock
-});
+} from '../../../../../mocks';
 
 describe('Test in useLessons hook - setLessonsPagination', () => {
-    (useNetwork as jest.Mock).mockReturnValue({
+    useNetworkSpy.mockImplementation(() => ({
         wifi: wifiMock
+    }));
+
+    let mockStore = {} as any;
+
+    beforeEach(() => {
+        mockStore = getMockStoreUseLessons({
+            auth: initialAuthStateMock,
+            courses: initialCoursesStateMock,
+            lessons: initialLessonsStateMock,
+            status: initialStatusStateMock
+        });
     });
 
     it('should change lessons pagination', async () => {

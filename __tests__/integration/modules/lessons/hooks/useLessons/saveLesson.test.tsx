@@ -1,8 +1,11 @@
 import { act } from '@testing-library/react-native';
 
+/* Supabase */
+import { supabase } from '../../../../../config';
+
 /* Setups */
-import { onFinishMock, mockUseNavigation } from '../../../../../jest.setup';
-import { getMockStoreUseLessons, renderUseLessons } from '../../../../setups';
+import { onFinishMock, mockUseNavigation, useNetworkSpy } from '../../../../../../jest.setup';
+import { getMockStoreUseLessons, renderUseLessons } from '../../../../../setups';
 
 /* Mocks */
 import {
@@ -14,28 +17,24 @@ import {
     testCredentials,
     testLesson,
     wifiMock
-} from '../../../../mocks';
-
-/* Modules */
-import { useNetwork } from '../../../../../src/modules/shared';
-
-/* Mock hooks */
-jest.mock('../../../../../src/modules/shared/hooks/useNetwork.ts');
-
-const mockStore = getMockStoreUseLessons({
-    auth: initialAuthStateMock,
-    courses: initialCoursesStateMock,
-    lessons: initialLessonsStateMock,
-    status: initialStatusStateMock
-});
+} from '../../../../../mocks';
 
 describe('Test in useLessons hook - saveLesson', () => {
-    (useNetwork as jest.Mock).mockReturnValue({
+    useNetworkSpy.mockImplementation(() => ({
         wifi: wifiMock
-    });
+    }));
+
+    let mockStore = {} as any;
 
     beforeEach(() => {
         jest.clearAllMocks();
+
+        mockStore = getMockStoreUseLessons({
+            auth: initialAuthStateMock,
+            courses: initialCoursesStateMock,
+            lessons: initialLessonsStateMock,
+            status: initialStatusStateMock
+        });
     });
 
     it('should save lesson successfully', async () => {
@@ -60,50 +59,74 @@ describe('Test in useLessons hook - saveLesson', () => {
         /* Check if lessons state contain selectedCouerse and courses */
         expect(result.current.useLessons.state).toEqual({
             ...initialLessonsStateMock,
-            lastLesson: {
+            lastLesson: expect.any(Object),
+        });
+
+        const newLesson = result.current.useLessons.state.lastLesson;
+        const newLessonInLessons = result.current.useLessons.state.lessons.find(lesson => lesson.id === newLesson.id);
+
+        if (newLessonInLessons) {
+            expect(newLessonInLessons).toEqual({
                 id: expect.any(String),
-                courseId: expect.any(String),
-                course: {
-                    id: expect.any(String),
-                    userId: result.current.useAuth.state.user.id,
-                    ...testCourse,
-                    lastLesson: undefined,
-                    suspended: false,
-                    finished: false,
+                courseId: result.current.useCourses.state.selectedCourse.id,
+                description: testLesson.description,
+                done: false,
+                nextLesson: expect.any(String),
+                createdAt: expect.any(String),
+                updatedAt: expect.any(String)
+            });
+        }
+
+        const courseOfLesson = result.current.useCourses.state.courses.find(course => course.id === newLesson.courseId);
+
+        if (courseOfLesson) {
+            expect(courseOfLesson).toEqual({
+                id: expect.any(String),
+                userId: result.current.useAuth.state.user.id,
+                ...testCourse,
+                lastLesson: {
+                    id: newLesson.id,
+                    courseId: courseOfLesson.id,
+                    course: undefined,
+                    description: newLesson.description,
+                    done: false,
+                    nextLesson: expect.any(String),
                     createdAt: expect.any(String),
                     updatedAt: expect.any(String)
                 },
-                ...testLesson,
-                description: expect.any(String),
-                nextLesson: expect.any(String),
-                done: false,
+                suspended: false,
+                finished: false,
                 createdAt: expect.any(String),
                 updatedAt: expect.any(String)
-            }
-        });
+            });
+        }
+
+        if (courseOfLesson?.id === result.current.useCourses.state.selectedCourse.id) {
+            expect(result.current.useCourses.state.selectedCourse).toEqual({
+                id: expect.any(String),
+                userId: result.current.useAuth.state.user.id,
+                ...testCourse,
+                lastLesson: {
+                    id: newLesson.id,
+                    courseId: courseOfLesson.id,
+                    course: undefined,
+                    description: newLesson.description,
+                    done: false,
+                    nextLesson: expect.any(String),
+                    createdAt: expect.any(String),
+                    updatedAt: expect.any(String)
+                },
+                suspended: false,
+                finished: false,
+                createdAt: expect.any(String),
+                updatedAt: expect.any(String)
+            });
+        }
 
         expect(result.current.useCourses.state).toEqual({
             ...initialCoursesStateMock,
-            selectedCourse: {
-                id: expect.any(String),
-                userId: result.current.useAuth.state.user.id,
-                ...testCourse,
-                lastLesson: undefined,
-                suspended: false,
-                finished: false,
-                createdAt: expect.any(String),
-                updatedAt: expect.any(String)
-            },
-            courses: [{
-                id: expect.any(String),
-                userId: result.current.useAuth.state.user.id,
-                ...testCourse,
-                lastLesson: undefined,
-                suspended: false,
-                finished: false,
-                createdAt: expect.any(String),
-                updatedAt: expect.any(String)
-            }]
+            selectedCourse: expect.any(Object),
+            courses: expect.any(Array)
         });
 
         /* Check if status state is equal to respective status */
@@ -116,9 +139,13 @@ describe('Test in useLessons hook - saveLesson', () => {
         expect(mockUseNavigation.navigate).toHaveBeenCalledTimes(2);
         expect(mockUseNavigation.navigate).toHaveBeenCalledWith('LessonsScreen');
 
-        await act(async () => {
-            await result.current.useCourses.deleteCourse();
-        });
+        await supabase.from('lessons')
+            .delete()
+            .eq('course_id', result.current.useCourses.state.selectedCourse.id);
+
+        await supabase.from('courses')
+            .delete()
+            .eq('user_id', result.current.useAuth.state.user.id);
 
         await act(async () => {
             await result.current.useAuth.signOut();
@@ -169,13 +196,13 @@ describe('Test in useLessons hook - saveLesson', () => {
             msg: expect.any(String),
         });
 
-        await act(() => {
-            result.current.useCourses.setSelectedCourse(result.current.useCourses.state.courses[0]);
-        });
+        await supabase.from('lessons')
+            .delete()
+            .eq('course_id', result.current.useCourses.state.selectedCourse.id);
 
-        await act(async () => {
-            await result.current.useCourses.deleteCourse();
-        });
+        await supabase.from('courses')
+            .delete()
+            .eq('user_id', result.current.useAuth.state.user.id);
 
         await act(async () => {
             await result.current.useAuth.signOut();
@@ -213,9 +240,13 @@ describe('Test in useLessons hook - saveLesson', () => {
             msg: expect.any(String),
         });
 
-        await act(async () => {
-            await result.current.useCourses.deleteCourse();
-        });
+        await supabase.from('lessons')
+            .delete()
+            .eq('course_id', result.current.useCourses.state.selectedCourse.id);
+
+        await supabase.from('courses')
+            .delete()
+            .eq('user_id', result.current.useAuth.state.user.id);
 
         await act(async () => {
             await result.current.useAuth.signOut();

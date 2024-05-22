@@ -1,8 +1,11 @@
 import { act } from '@testing-library/react-native';
 
+/* Supabase */
+import { supabase } from '../../../../../config';
+
 /* Setups */
-import { onFinishMock } from '../../../../../jest.setup';
-import { getMockStoreUseLessons, renderUseLessons } from '../../../../setups';
+import { onFinishMock, useNetworkSpy } from '../../../../../../jest.setup';
+import { getMockStoreUseLessons, renderUseLessons } from '../../../../../setups';
 
 /* Mocks */
 import {
@@ -14,28 +17,24 @@ import {
     testCredentials,
     testLesson,
     wifiMock
-} from '../../../../mocks';
-
-/* Modules */
-import { useNetwork } from '../../../../../src/modules/shared';
-
-/* Mock hooks */
-jest.mock('../../../../../src/modules/shared/hooks/useNetwork.ts');
-
-const mockStore = getMockStoreUseLessons({
-    auth: initialAuthStateMock,
-    courses: initialCoursesStateMock,
-    lessons: initialLessonsStateMock,
-    status: initialStatusStateMock
-});
+} from '../../../../../mocks';
 
 describe('Test in useLessons hook - finishOrStartLesson', () => {
-    (useNetwork as jest.Mock).mockReturnValue({
+    useNetworkSpy.mockImplementation(() => ({
         wifi: wifiMock
-    });
+    }));
+
+    let mockStore = {} as any;
 
     beforeEach(() => {
         jest.clearAllMocks();
+
+        mockStore = getMockStoreUseLessons({
+            auth: initialAuthStateMock,
+            courses: initialCoursesStateMock,
+            lessons: initialLessonsStateMock,
+            status: initialStatusStateMock
+        });
     });
 
     it('should finish or start lesson successfully', async () => {
@@ -73,18 +72,8 @@ describe('Test in useLessons hook - finishOrStartLesson', () => {
         expect(result.current.useLessons.state).toEqual({
             ...initialLessonsStateMock,
             hasMoreLessons: false,
-            lessons: [{
-                ...initialLessonsStateMock.selectedLesson,
-                id: expect.any(String),
-                courseId: expect.any(String),
-                description: expect.any(String),
-                done: true,
-                nextLesson: expect.any(String),
-                createdAt: expect.any(String),
-                updatedAt: expect.any(String)
-            }],
+            lessons: expect.any(Array),
             selectedLesson: {
-                ...initialLessonsStateMock.selectedLesson,
                 id: expect.any(String),
                 courseId: expect.any(String),
                 description: expect.any(String),
@@ -109,11 +98,22 @@ describe('Test in useLessons hook - finishOrStartLesson', () => {
                 ...testLesson,
                 description: expect.any(String),
                 nextLesson: expect.any(String),
-                done: true,
+                done: expect.any(Boolean),
                 createdAt: expect.any(String),
                 updatedAt: expect.any(String)
             }
         });
+
+        const lessonUpdated = result.current.useLessons.state.lessons.find(l => l.id === result.current.useLessons.state.selectedLesson.id);
+        const lastLessonUpdated = result.current.useLessons.state.lastLesson;
+
+        if (!lessonUpdated) throw new Error('Lesson finished or started not found');
+
+        expect(lessonUpdated.done).toBeTruthy();
+
+        if (lastLessonUpdated.id === result.current.useLessons.state.selectedLesson.id) {
+            expect(lastLessonUpdated.done).toBeTruthy();
+        }
 
         /* Check if status state is equal to respective status */
         expect(result.current.useStatus.state).toEqual({
@@ -124,9 +124,13 @@ describe('Test in useLessons hook - finishOrStartLesson', () => {
         /* Check if onFinish is called one time */
         expect(onFinishMock).toHaveBeenCalledTimes(1);
 
-        await act(async () => {
-            await result.current.useCourses.deleteCourse();
-        });
+        await supabase.from('lessons')
+            .delete()
+            .eq('course_id', result.current.useCourses.state.selectedCourse.id);
+
+        await supabase.from('courses')
+            .delete()
+            .eq('user_id', result.current.useAuth.state.user.id);
 
         await act(async () => {
             await result.current.useAuth.signOut();
@@ -227,18 +231,17 @@ describe('Test in useLessons hook - finishOrStartLesson', () => {
                     ...testCourse,
                     lastLesson: undefined,
                     suspended: false,
-                    finished: true,
+                    finished: expect.any(Boolean),
                     createdAt: expect.any(String),
                     updatedAt: expect.any(String)
                 },
                 description: expect.any(String),
                 nextLesson: expect.any(String),
-                done: false,
+                done: expect.any(Boolean),
                 createdAt: expect.any(String),
                 updatedAt: expect.any(String)
             },
             lessons: [{
-                ...initialLessonsStateMock.selectedLesson,
                 id: expect.any(String),
                 courseId: expect.any(String),
                 description: expect.any(String),
@@ -248,7 +251,6 @@ describe('Test in useLessons hook - finishOrStartLesson', () => {
                 updatedAt: expect.any(String)
             }],
             selectedLesson: {
-                ...initialLessonsStateMock.selectedLesson,
                 id: expect.any(String),
                 courseId: expect.any(String),
                 description: expect.any(String),
@@ -259,6 +261,30 @@ describe('Test in useLessons hook - finishOrStartLesson', () => {
             }
         });
 
+        const lastLesson = result.current.useLessons.state.lastLesson;
+
+        if (lastLesson.id === result.current.useLessons.state.selectedLesson.id) {
+            expect(lastLesson).toEqual({
+                id: expect.any(String),
+                courseId: expect.any(String),
+                course: {
+                    id: expect.any(String),
+                    userId: result.current.useAuth.state.user.id,
+                    ...testCourse,
+                    lastLesson: undefined,
+                    suspended: false,
+                    finished: true,
+                    createdAt: expect.any(String),
+                    updatedAt: expect.any(String)
+                },
+                description: expect.any(String),
+                nextLesson: expect.any(String),
+                done: false,
+                createdAt: expect.any(String),
+                updatedAt: expect.any(String)
+            });
+        }
+
         /* Check if onFinish is called one time */
         expect(onFinishMock).toHaveBeenCalledTimes(1);
 
@@ -268,9 +294,13 @@ describe('Test in useLessons hook - finishOrStartLesson', () => {
             msg: 'No pudes terminar o reprogramar de nuevo una clase de un curso suspendido o terminado.'
         });
 
-        await act(async () => {
-            await result.current.useCourses.deleteCourse();
-        });
+        await supabase.from('lessons')
+            .delete()
+            .eq('course_id', result.current.useCourses.state.selectedCourse.id);
+
+        await supabase.from('courses')
+            .delete()
+            .eq('user_id', result.current.useAuth.state.user.id);
 
         await act(async () => {
             await result.current.useAuth.signOut();

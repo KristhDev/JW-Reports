@@ -1,8 +1,11 @@
 import { act } from '@testing-library/react-native';
 
+/* Supabase */
+import { supabase } from '../../../../../config';
+
 /* Setups */
-import { onFinishMock, mockUseNavigation } from '../../../../../jest.setup';
-import { getMockStoreUseLessons, renderUseLessons } from '../../../../setups';
+import { onFinishMock, mockUseNavigation, useNetworkSpy } from '../../../../../../jest.setup';
+import { getMockStoreUseLessons, renderUseLessons } from '../../../../../setups';
 
 /* Mocks */
 import {
@@ -14,28 +17,24 @@ import {
     testCredentials,
     testLesson,
     wifiMock
-} from '../../../../mocks';
-
-/* Modules */
-import { useNetwork } from '../../../../../src/modules/shared';
-
-/* Mock hooks */
-jest.mock('../../../../../src/modules/shared/hooks/useNetwork.ts');
-
-const mockStore = getMockStoreUseLessons({
-    auth: initialAuthStateMock,
-    courses: initialCoursesStateMock,
-    lessons: initialLessonsStateMock,
-    status: initialStatusStateMock
-});
+} from '../../../../../mocks';
 
 describe('Test in useLessons hook - deleteLesson', () => {
-    (useNetwork as jest.Mock).mockReturnValue({
+    useNetworkSpy.mockImplementation(() => ({
         wifi: wifiMock
-    });
+    }));
+
+    let mockStore = {} as any;
 
     beforeEach(() => {
         jest.clearAllMocks();
+
+        mockStore = getMockStoreUseLessons({
+            auth: initialAuthStateMock,
+            courses: initialCoursesStateMock,
+            lessons: initialLessonsStateMock,
+            status: initialStatusStateMock
+        });
     });
 
     it('should delete lesson successfully', async () => {
@@ -80,9 +79,20 @@ describe('Test in useLessons hook - deleteLesson', () => {
                 updatedAt: expect.any(String)
             },
             lastLesson: {
-                ...initialLessonsStateMock.lastLesson,
+                id: expect.any(String),
+                courseId: expect.any(String),
+                description: expect.any(String),
+                done: expect.any(Boolean),
                 course: {
-                    ...initialLessonsStateMock.lastLesson.course,
+                    id: expect.any(String),
+                    userId: expect.any(String),
+                    personName: expect.any(String),
+                    personAbout: expect.any(String),
+                    personAddress: expect.any(String),
+                    publication: expect.any(String),
+                    finished: expect.any(Boolean),
+                    lastLesson: undefined,
+                    suspended: expect.any(Boolean),
                     createdAt: expect.any(String),
                     updatedAt: expect.any(String)
                 },
@@ -103,9 +113,13 @@ describe('Test in useLessons hook - deleteLesson', () => {
         expect(mockUseNavigation.navigate).toHaveBeenCalledTimes(2);
         expect(mockUseNavigation.navigate).toHaveBeenCalledWith('LessonsScreen');
 
-        await act(async () => {
-            await result.current.useCourses.deleteCourse();
-        });
+        await supabase.from('lessons')
+            .delete()
+            .eq('course_id', result.current.useCourses.state.selectedCourse.id)
+
+        await supabase.from('courses')
+            .delete()
+            .eq('user_id', result.current.useAuth.state.user.id);
 
         await act(async () => {
             await result.current.useAuth.signOut();

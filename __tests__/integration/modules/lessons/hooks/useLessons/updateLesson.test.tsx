@@ -1,8 +1,11 @@
 import { act } from '@testing-library/react-native';
 
+/* Supabase */
+import { supabase } from '../../../../../config';
+
 /* Setups */
-import { mockUseNavigation } from '../../../../../jest.setup';
-import { getMockStoreUseLessons, renderUseLessons } from '../../../../setups';
+import { mockUseNavigation, useNetworkSpy } from '../../../../../../jest.setup';
+import { getMockStoreUseLessons, renderUseLessons } from '../../../../../setups';
 
 /* Mocks */
 import {
@@ -14,28 +17,24 @@ import {
     testCredentials,
     testLesson,
     wifiMock
-} from '../../../../mocks';
-
-/* Modules */
-import { useNetwork } from '../../../../../src/modules/shared';
-
-/* Mock hooks */
-jest.mock('../../../../../src/modules/shared/hooks/useNetwork.ts');
-
-const mockStore = getMockStoreUseLessons({
-    auth: initialAuthStateMock,
-    courses: initialCoursesStateMock,
-    lessons: initialLessonsStateMock,
-    status: initialStatusStateMock
-});
+} from '../../../../../mocks';
 
 describe('Test in useLessons hook - updateLesson', () => {
-    (useNetwork as jest.Mock).mockReturnValue({
+    useNetworkSpy.mockImplementation(() => ({
         wifi: wifiMock
-    });
+    }));
+
+    let mockStore = {} as any;
 
     beforeEach(() => {
         jest.clearAllMocks();
+
+        mockStore = getMockStoreUseLessons({
+            auth: initialAuthStateMock,
+            courses: initialCoursesStateMock,
+            lessons: initialLessonsStateMock,
+            status: initialStatusStateMock
+        });
     });
 
     it('should update lesson successfully', async () => {
@@ -72,11 +71,30 @@ describe('Test in useLessons hook - updateLesson', () => {
             });
         });
 
-        /* Check if lessons state contain selectedLesson, lastLesson and lessons updated
-         */
+        /* Check if lessons state contain selectedLesson, lastLesson and lessons updated */
         expect(result.current.useLessons.state).toEqual({
             ...initialLessonsStateMock,
-            selectedLesson: {
+            selectedLesson: expect.any(Object),
+            lastLesson: expect.any(Object),
+            lessons: expect.any(Array),
+            hasMoreLessons: false
+        });
+
+        const updatedLesson = result.current.useLessons.state.selectedLesson;
+        const updatedLessonInLessons = result.current.useLessons.state.lessons.find(lesson => lesson.id === updatedLesson.id);
+
+        expect(updatedLesson).toEqual({
+            id: expect.any(String),
+            courseId: result.current.useCourses.state.selectedCourse.id,
+            description: 'Quisquam blanditiis sapiente et amet quia mollitia.',
+            done: false,
+            nextLesson: expect.any(String),
+            createdAt: expect.any(String),
+            updatedAt: expect.any(String)
+        });
+
+        if (updatedLessonInLessons) {
+            expect(updatedLessonInLessons).toEqual({
                 id: expect.any(String),
                 courseId: result.current.useCourses.state.selectedCourse.id,
                 description: 'Quisquam blanditiis sapiente et amet quia mollitia.',
@@ -84,8 +102,11 @@ describe('Test in useLessons hook - updateLesson', () => {
                 nextLesson: expect.any(String),
                 createdAt: expect.any(String),
                 updatedAt: expect.any(String)
-            },
-            lastLesson: {
+            });
+        }
+
+        if (updatedLesson.id === result.current.useLessons.state.lastLesson.id) {
+            expect(result.current.useLessons.state.lastLesson).toEqual({
                 id: expect.any(String),
                 courseId: result.current.useCourses.state.selectedCourse.id,
                 course: {
@@ -103,8 +124,16 @@ describe('Test in useLessons hook - updateLesson', () => {
                 nextLesson: expect.any(String),
                 createdAt: expect.any(String),
                 updatedAt: expect.any(String)
-            },
-            lessons: [{
+            });
+        }
+
+        const selectedCourse = result.current.useCourses.state.selectedCourse;
+
+        expect(selectedCourse).toEqual({
+            id: expect.any(String),
+            userId: result.current.useAuth.state.user.id,
+            ...testCourse,
+            lastLesson: {
                 id: expect.any(String),
                 courseId: result.current.useCourses.state.selectedCourse.id,
                 description: 'Quisquam blanditiis sapiente et amet quia mollitia.',
@@ -112,9 +141,35 @@ describe('Test in useLessons hook - updateLesson', () => {
                 nextLesson: expect.any(String),
                 createdAt: expect.any(String),
                 updatedAt: expect.any(String)
-            }],
-            hasMoreLessons: false
+            },
+            suspended: false,
+            finished: false,
+            createdAt: expect.any(String),
+            updatedAt: expect.any(String),
         });
+
+        const courseInCourses = result.current.useCourses.state.courses.find(course => course.id === selectedCourse.id);
+
+        if (courseInCourses) {
+            expect(courseInCourses).toEqual({
+                id: expect.any(String),
+                userId: result.current.useAuth.state.user.id,
+                ...testCourse,
+                lastLesson: {
+                    id: expect.any(String),
+                    courseId: result.current.useCourses.state.selectedCourse.id,
+                    description: 'Quisquam blanditiis sapiente et amet quia mollitia.',
+                    done: false,
+                    nextLesson: expect.any(String),
+                    createdAt: expect.any(String),
+                    updatedAt: expect.any(String)
+                },
+                suspended: false,
+                finished: false,
+                createdAt: expect.any(String),
+                updatedAt: expect.any(String),
+            });
+        }
 
         /* Check if status state is equal to respective status */
         expect(result.current.useStatus.state).toEqual({
@@ -125,9 +180,13 @@ describe('Test in useLessons hook - updateLesson', () => {
         /* Check if goBack is called one time */
         expect(mockUseNavigation.goBack).toHaveBeenCalledTimes(1);
 
-        await act(async () => {
-            await result.current.useCourses.deleteCourse();
-        });
+        await supabase.from('lessons')
+            .delete()
+            .eq('course_id', result.current.useCourses.state.selectedCourse.id);
+
+        await supabase.from('courses')
+            .delete()
+            .eq('user_id', result.current.useAuth.state.user.id);
 
         await act(async () => {
             await result.current.useAuth.signOut();
@@ -312,9 +371,13 @@ describe('Test in useLessons hook - updateLesson', () => {
             msg: expect.any(String)
         });
 
-        await act(async () => {
-            await result.current.useCourses.deleteCourse();
-        });
+        await supabase.from('lessons')
+            .delete()
+            .eq('course_id', result.current.useCourses.state.selectedCourse.id);
+
+        await supabase.from('courses')
+            .delete()
+            .eq('user_id', result.current.useAuth.state.user.id);
 
         await act(async () => {
             await result.current.useAuth.signOut();

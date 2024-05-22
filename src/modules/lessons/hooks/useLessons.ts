@@ -28,7 +28,7 @@ import {
 } from '../features';
 
 /* Hooks */
-import { addLastLessonInCourse, courseAdapter, INIT_COURSE, replaceLastLessonInCourse, setLastLessonInCourses, updateLastLessonInCourse } from '../../courses';
+import { addLastLessonInCourse, courseAdapter, INIT_COURSE, replaceLastLessonInCourse, updateLastLessonInCourse } from '../../courses';
 import { useNetwork, useStatus } from '../../shared';
 
 /* Interfaces */
@@ -326,10 +326,7 @@ const useLessons = () => {
         dispatch(setHasMoreLessons({ hasMore: (data!.length >= 10) }));
 
         if (loadMore) addLessons(lessons);
-        else {
-            setLessons(lessons);
-            dispatch(setLastLessonInCourses({ lessons }));
-        }
+        else setLessons(lessons);
     }
 
     /**
@@ -366,12 +363,10 @@ const useLessons = () => {
         const next = setSupabaseError(error, status, () => dispatch(setIsLessonLoading({ isLoading: false })));
         if (next) return;
 
-        if (state.lessons.length > 0) {
-            const lesson = lessonAdapter(data!);
+        const lesson = lessonAdapter(data!);
+        dispatch(addLastLessonInCourse({ courseId: selectedCourse.id, lastLesson: lesson }));
 
-            dispatch(addLesson({ lesson }));
-            dispatch(addLastLessonInCourse({ courseId: selectedCourse.id, lastLesson: lesson }));
-        }
+        if (state.lessons.length > 0) dispatch(addLesson({ lesson }));
         else dispatch(setIsLessonLoading({ isLoading: false }));
 
         if (user.precursor === 'ninguno') await loadLastLesson();
@@ -433,15 +428,10 @@ const useLessons = () => {
 
         const lesson = lessonAdapter(data!);
 
-        dispatch(updateLessonAction({ lesson }));
         dispatch(updateLastLessonInCourse({ lesson }));
+        dispatch(updateLessonAction({ lesson }));
 
-        if ((user.precursor !== 'ninguno') && data!.id === state.lastLesson.id) {
-            dispatch(addLastLesson({ lesson: {
-                ...lesson,
-                course: state.lastLesson.course
-            } }));
-        }
+        dispatch(setIsLessonLoading({ isLoading: false }));
 
         setStatus({
             code: 200,

@@ -1,7 +1,11 @@
 import { act } from '@testing-library/react-native';
 
+/* Supabase admin client */
+import { supabase } from '../../../../../config';
+
 /* Setup */
-import { getMockStoreUseLessons, renderUseLessons } from '../../../../setups';
+import { useNetworkSpy } from '../../../../../../jest.setup';
+import { getMockStoreUseLessons, renderUseLessons } from '../../../../../setups';
 
 /* Mocks */
 import {
@@ -12,28 +16,24 @@ import {
     testCourse,
     testCredentials,
     wifiMock
-} from '../../../../mocks';
-
-/* Modules */
-import { useNetwork } from '../../../../../src/modules/shared';
-
-/* Mock hooks */
-jest.mock('../../../../../src/modules/shared/hooks/useNetwork.ts');
-
-const mockStore = getMockStoreUseLessons({
-    auth: initialAuthStateMock,
-    courses: initialCoursesStateMock,
-    lessons: initialLessonsStateMock,
-    status: initialStatusStateMock
-});
+} from '../../../../../mocks';
 
 describe('Test in useLessons hook - loadLessons', () => {
-    (useNetwork as jest.Mock).mockReturnValue({
+    useNetworkSpy.mockImplementation(() => ({
         wifi: wifiMock
-    });
+    }));
+
+    let mockStore = {} as any;
 
     beforeEach(() => {
         jest.clearAllMocks();
+
+        mockStore = getMockStoreUseLessons({
+            auth: initialAuthStateMock,
+            courses: initialCoursesStateMock,
+            lessons: initialLessonsStateMock,
+            status: initialStatusStateMock
+        });
     });
 
     it('should load lessons successfully', async () => {
@@ -58,12 +58,25 @@ describe('Test in useLessons hook - loadLessons', () => {
         /* Check lessons state */
         expect(result.current.useLessons.state).toEqual({
             ...initialLessonsStateMock,
+            lessons: expect.any(Array),
             hasMoreLessons: false
         });
 
-        await act(async () => {
-            await result.current.useCourses.deleteCourse();
+        result.current.useLessons.state.lessons.map((lesson) => {
+            expect(lesson).toEqual({
+                id: expect.any(String),
+                courseId: result.current.useCourses.state.selectedCourse.id,
+                description: expect.any(String),
+                done: expect.any(Boolean),
+                nextLesson: expect.any(String),
+                createdAt: expect.any(String),
+                updatedAt: expect.any(String)
+            })
         });
+
+        await supabase.from('courses')
+            .delete()
+            .eq('user_id', result.current.useAuth.state.user.id);
 
         await act(async () => {
             await result.current.useAuth.signOut();
