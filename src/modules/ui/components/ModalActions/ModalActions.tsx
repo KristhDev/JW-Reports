@@ -19,7 +19,7 @@ export const ModalActions: FC<ModalActionsProps> = ({ confirmTextButton, onConfi
                     onPress={ onCancel! }
                     text={ cancelButtonText! }
                     textStyle={ styles.modalButtonText }
-                    touchableStyle={{ backgroundColor: 'transparent' }}
+                    pressableStyle={{ backgroundColor: 'transparent' }}
                     underlayColor={ colors.buttonTranslucent }
                 />
             ) }
@@ -30,7 +30,7 @@ export const ModalActions: FC<ModalActionsProps> = ({ confirmTextButton, onConfi
                     onPress={ onConfirm! }
                     text={ confirmTextButton! }
                     textStyle={ styles.modalButtonText }
-                    touchableStyle={{ backgroundColor: 'transparent' }}
+                    pressableStyle={{ backgroundColor: 'transparent' }}
                     underlayColor={ colors.buttonTranslucent }
                 />
             ) }

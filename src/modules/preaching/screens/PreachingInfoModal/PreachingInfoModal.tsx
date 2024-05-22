@@ -100,9 +100,9 @@ const PreachingInfoModal: FC<ModalProps> = ({ isOpen, onClose }): JSX.Element =>
                     <Button
                         containerStyle={{ paddingHorizontal: (margins.xs + 4), minWidth: 0 }}
                         onPress={ onClose }
+                        pressableStyle={{ backgroundColor: 'transparent' }}
                         text="ESTA BIEN"
                         textStyle={{ color: colors.button, fontSize: fontSizes.sm }}
-                        touchableStyle={{ backgroundColor: 'transparent' }}
                         underlayColor={ colors.buttonTranslucent }
                     />
                 </View>

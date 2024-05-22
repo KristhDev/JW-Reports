@@ -136,8 +136,8 @@ export const RegisterForm = (): JSX.Element => {
                             />
                         ) }
                         onPress={ (isValid) ? handleSubmit : () => setErrorForm(errors) }
+                        pressableStyle={{ marginTop: (margins.lg - 2) }}
                         text="Crear cuenta"
-                        touchableStyle={{ marginTop: (margins.lg - 2) }}
                     />
 
                     {/* Sign in link */}

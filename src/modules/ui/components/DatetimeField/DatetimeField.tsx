@@ -117,7 +117,7 @@ export const DatetimeField: FC<DatetimeFieldProps> = ({
                     icon={ icon }
                     onPress={ () => setOpen(true) }
                     text=""
-                    touchableStyle={{ marginLeft: margins.sm }}
+                    pressableStyle={{ marginLeft: margins.sm }}
                 />
             </View>
 

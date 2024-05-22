@@ -9,6 +9,6 @@ export interface ButtonProps {
     onPress: () => void;
     text: string;
     textStyle?: StyleProp<TextStyle>;
-    touchableStyle?: StyleProp<ViewStyle>;
+    pressableStyle?: StyleProp<ViewStyle>;
     underlayColor?: string;
 }

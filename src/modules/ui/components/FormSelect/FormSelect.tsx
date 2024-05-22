@@ -141,7 +141,7 @@ export const FormSelect: FC<FormSelectProps> = ({
                                 underlayColor="transparent"
                                 testID="form-select-touchable"
                             >
-                                <View style={[ themeStyles.formSelectTouchableContainer, inputContainerStyle ]}>
+                                <View style={[ themeStyles.formSelectPressableContainer, inputContainerStyle ]}>
                                     <Text
                                         style={[ themeStyles.formInputText, inputTextStyle ]}
                                         testID="form-select-text-value"

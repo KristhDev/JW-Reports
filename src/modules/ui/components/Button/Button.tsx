@@ -18,7 +18,7 @@ import stylesheet from './styles';
  *      onPress: () => void,
  *      text: string,
  *      textStyle: StyleProp<TextStyle>,
- *      touchableStyle: StyleProp<ViewStyle>,
+ *      pressableStyle: StyleProp<ViewStyle>,
  *      underlayColor: string
  *  } - This is a props to functionality of the component
  * - containerStyle: This is a style of the container, default is `undefined`
@@ -27,7 +27,7 @@ import stylesheet from './styles';
  * - onPress: This is a function that is called when the button is pressed
  * - text: This is a string
  * - textStyle: This is a style of the text, default is `undefined`
- * - touchableStyle: This is a style of the touchable, default is `undefined`
+ * - pressableStyle: This is a style of the pressable, default is `undefined`
  * - underlayColor: This is a color of the underlay, default is `undefined`
  * @return {JSX.Element} Return jsx element to render button
  */
@@ -38,7 +38,7 @@ export const Button: FC<ButtonProps> = ({
     onPress,
     text,
     textStyle,
-    touchableStyle,
+    pressableStyle,
     underlayColor
 }): JSX.Element => {
     const { styles } = useStyles(stylesheet);
@@ -49,7 +49,7 @@ export const Button: FC<ButtonProps> = ({
                 android_ripple={{ color: underlayColor || 'rgba(0, 0, 0, 0.30)' }}
                 disabled={ disabled }
                 onPress={ onPress }
-                style={[ styles.buttonPressable, touchableStyle ]}
+                style={[ styles.buttonPressable, pressableStyle ]}
                 testID="button-touchable"
             >
                 <View style={[ styles.buttonContainer, containerStyle ]}>

@@ -93,8 +93,8 @@ export const CredentialsForm = (): JSX.Element => {
                                 />
                             ) }
                             onPress={ (isValid) ? handleSubmit : () => setErrorForm(errors)  }
+                            pressableStyle={{ marginBottom: margins.xl }}
                             text="Cambiar correo"
-                            touchableStyle={{ marginBottom: margins.xl }}
                         />
                     </View>
                 ) }
@@ -153,8 +153,8 @@ export const CredentialsForm = (): JSX.Element => {
                                 />
                             ) }
                             onPress={ (isValid) ? handleSubmit : () => setErrorForm(errors)  }
+                            pressableStyle={{ marginBottom: margins.xl }}
                             text="Cambiar contraseña"
-                            touchableStyle={{ marginBottom: margins.xl }}
                         />
                     </View>
                 ) }
