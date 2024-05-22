@@ -50,8 +50,8 @@ describe('Test in <CredentialsForm /> component', () => {
     it('should call setErrorForm then email isnt change', async () => {
         renderComponent();
 
-        /* Find touchable to submit form */
-        const pressables = await screen.findAllByTestId('button-touchable');
+        /* Find pressable to submit form */
+        const pressables = await screen.findAllByTestId('button-pressable');
         await user.press(pressables[0]);
 
         /* Check if setErrorForm is called one time */
@@ -68,8 +68,8 @@ describe('Test in <CredentialsForm /> component', () => {
         await user.clear(inputsText[0]);
         await user.type(inputsText[0], newEmail);
 
-        /* Get touchable submit to send request of change email */
-        const pressable = (await screen.findAllByTestId('button-touchable'))[0];
+        /* Get pressable submit to send request of change email */
+        const pressable = (await screen.findAllByTestId('button-pressable'))[0];
 
         await act(async () => {
             await user.press(pressable);
@@ -98,11 +98,11 @@ describe('Test in <CredentialsForm /> component', () => {
         await user.clear(inputsText[0]);
         await user.type(inputsText[0], newEmail);
 
-        /* Get touchable submit to send request of change email */
-        const pressables = screen.getAllByTestId('button-touchable');
+        /* Get pressable submit to send request of change email */
+        const pressables = screen.getAllByTestId('button-pressable');
         await user.press(pressables[0]);
 
-        /* Check if touchable is disabled */
+        /* Check if pressable is disabled */
         expect(pressables[0]).toBeDisabled();
     });
 
@@ -117,8 +117,8 @@ describe('Test in <CredentialsForm /> component', () => {
 
         renderComponent();
 
-        /* Get touchable submit to send request of change password */
-        const pressables = await screen.findAllByTestId('button-touchable');
+        /* Get pressable submit to send request of change password */
+        const pressables = await screen.findAllByTestId('button-pressable');
         await user.press(pressables[1]);
 
         /* Check if setErrorForm is called one time */
@@ -143,8 +143,8 @@ describe('Test in <CredentialsForm /> component', () => {
         await user.type(inputsText[1], newPass);
         await user.type(inputsText[2], newPass);
 
-        /* Get touchable submit to send request of change password */
-        const pressable = (await screen.findAllByTestId('button-touchable'))[1];
+        /* Get pressable submit to send request of change password */
+        const pressable = (await screen.findAllByTestId('button-pressable'))[1];
 
         await act(async () => {
             await user.press(pressable);
@@ -173,11 +173,11 @@ describe('Test in <CredentialsForm /> component', () => {
         await user.type(inputsText[1], newPass);
         await user.type(inputsText[2], newPass);
 
-        /* Get touchable submit to send request of change password */
-        const pressables = await screen.findAllByTestId('button-touchable');
+        /* Get pressable submit to send request of change password */
+        const pressables = await screen.findAllByTestId('button-pressable');
         await user.press(pressables[1]);
 
-        /* Check if submit touchable is disabled */
+        /* Check if submit pressable is disabled */
         expect(pressables[1]).toBeDisabled();
     });
 });

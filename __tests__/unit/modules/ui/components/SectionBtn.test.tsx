@@ -48,7 +48,7 @@ describe('Test in <SectionBtn /> component', () => {
     it('should call onPress when pressed', async () => {
         renderComponent();
 
-        /* Get touchable */
+        /* Get pressable */
         const pressable = screen.getByTestId('section-btn-pressable');
         await user.press(pressable);
 

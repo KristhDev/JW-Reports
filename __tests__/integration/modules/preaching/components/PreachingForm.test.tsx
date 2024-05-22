@@ -73,7 +73,7 @@ describe('Test in <PreachingForm /> component', () => {
 
         renderComponent();
 
-        const pressable = (await screen.findAllByTestId('button-touchable'))[3];
+        const pressable = (await screen.findAllByTestId('button-pressable'))[3];
         await user.press(pressable);
 
         /* Check if setErrorForm is called one time */
@@ -99,7 +99,7 @@ describe('Test in <PreachingForm /> component', () => {
 
         renderComponent();
 
-        const pressable = (await screen.findAllByTestId('button-touchable'))[3];
+        const pressable = (await screen.findAllByTestId('button-pressable'))[3];
         await user.press(pressable);
 
         /* Get text of submit pressable and if text is equal to Guardar */
@@ -125,7 +125,7 @@ describe('Test in <PreachingForm /> component', () => {
 
         renderComponent();
 
-        const pressable = (await screen.findAllByTestId('button-touchable'))[3];
+        const pressable = (await screen.findAllByTestId('button-pressable'))[3];
         await user.press(pressable);
 
         expect(pressable).toHaveTextContent('Actualizar');

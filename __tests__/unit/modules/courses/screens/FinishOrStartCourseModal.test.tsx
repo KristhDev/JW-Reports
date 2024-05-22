@@ -34,7 +34,7 @@ describe('Test in <FinishOrStartCourseModal /> screen', () => {
 
         /* Get msg and pressable */
         const msg = screen.getByTestId('modal-text');
-        const pressable = screen.getAllByTestId('button-touchable')[1];
+        const pressable = screen.getAllByTestId('button-pressable')[1];
 
         /* Check if msg and pressable are rendered and containt respective values */
         expect(msg).toBeOnTheScreen();
@@ -47,7 +47,7 @@ describe('Test in <FinishOrStartCourseModal /> screen', () => {
         renderScreen();
 
         /* Get pressable */
-        const pressable = screen.getAllByTestId('button-touchable')[1];
+        const pressable = screen.getAllByTestId('button-pressable')[1];
         await user.press(pressable);
 
         /* Check if finishOrStartCourse is called one time with onClose */
@@ -59,7 +59,7 @@ describe('Test in <FinishOrStartCourseModal /> screen', () => {
         renderScreen();
 
         /* Get pressable */
-        const pressable = screen.getAllByTestId('button-touchable')[0];
+        const pressable = screen.getAllByTestId('button-pressable')[0];
         await user.press(pressable);
 
         /* Check if onClose is called one time */

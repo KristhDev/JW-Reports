@@ -111,7 +111,7 @@ export const CourseCard: FC<CourseCardProps> = ({ course, onActiveOrSuspend, onD
             }}
             onPress={ handleCourseDetail }
             style={{ ...styles.pressable, width: width - margins.sm }}
-            testID="course-card-touchable"
+            testID="course-card-pressable"
         >
             <View style={ styles.cardContainer }>
 

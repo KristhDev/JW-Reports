@@ -39,21 +39,21 @@ describe('Test in <Fab /> component', () => {
     it('should render respective props', () => {
         renderComponent();
 
-        /* Get tochable and icon */
-        const touchable = screen.getByTestId('fab-touchable');
+        /* Get pressable and icon */
+        const pressable = screen.getByTestId('fab-pressable');
         const icon = screen.getByTestId('fab-icon');
 
         /* Check values of elements */
-        expect(touchable.props.style[0].backgroundColor).toBe(darkColors.button);
+        expect(pressable.props.style[0].backgroundColor).toBe(darkColors.button);
         expect(icon).toBeTruthy();
     });
 
     it('should call onPress when pressed', async () => {
         renderComponent();
 
-        /* Get touchable */
-        const touchable = screen.getByTestId('fab-touchable');
-        await user.press(touchable);
+        /* Get pressable */
+        const pressable = screen.getByTestId('fab-pressable');
+        await user.press(pressable);
 
         /* Check if onPress is called one time */
         expect(onPressMock).toHaveBeenCalledTimes(1);

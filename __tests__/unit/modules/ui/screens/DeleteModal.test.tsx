@@ -1,11 +1,11 @@
 import React from 'react';
 import { render, screen, userEvent } from '@testing-library/react-native';
 
-/* Screens */
-import { DeleteModal } from '../../../../../src/modules/ui';
-
 /* Setup */
 import { onCloseMock, onCofirmMock } from '../../../../../jest.setup';
+
+/* Screens */
+import { DeleteModal } from '../../../../../src/modules/ui';
 
 const user = userEvent.setup();
 
@@ -38,15 +38,15 @@ describe('Test in <DeleteModal /> screen', () => {
         const title = screen.queryByTestId('delete-modal-title');
 
         /* Check if title exists and containt value pass by props */
-        expect(title).toBeTruthy();
-        expect(title!.props.children).toBe(modalTitle)
+        expect(title).toBeOnTheScreen();
+        expect(title).toHaveTextContent(modalTitle)
     });
 
     it('should call onConfirm when the confirm button is pressed', async () => {
         renderScreen();
 
-        /* Get confirm touchable */
-        const pressable = screen.getAllByTestId('button-touchable')[1];
+        /* Get confirm pressable */
+        const pressable = screen.getAllByTestId('button-pressable')[1];
         await user.press(pressable);
 
         /* Check if onCofirm is called one time */
@@ -56,9 +56,9 @@ describe('Test in <DeleteModal /> screen', () => {
     it('should call onClose when the cancel button is pressed', async () => {
         renderScreen();
 
-        /* Get cancel touchable */
-        const touchable = screen.getAllByTestId('button-touchable')[0];
-        await user.press(touchable);
+        /* Get cancel pressable */
+        const pressable = screen.getAllByTestId('button-pressable')[0];
+        await user.press(pressable);
 
         /* Check if onClose is called one time */
         expect(onCloseMock).toHaveBeenCalledTimes(1);
@@ -69,6 +69,6 @@ describe('Test in <DeleteModal /> screen', () => {
 
         /* Get loader and check if exists */
         const loader = screen.queryByTestId('delete-modal-loading');
-        expect(loader).toBeTruthy();
+        expect(loader).toBeOnTheScreen();
     });
 });

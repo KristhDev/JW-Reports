@@ -47,7 +47,7 @@ describe('Test in <OptionsModal /> screen', () => {
 
         /* Check if title exists and contain value pass by props */
         expect(title).toBeTruthy();
-        expect(title.props.children).toBe(modalTitle);
+        expect(title).toHaveTextContent(modalTitle);
     });
 
     it('should render all options of items', () => {
@@ -73,9 +73,9 @@ describe('Test in <OptionsModal /> screen', () => {
     it('should call onCancel when cancel button is pressed', async () => {
         renderComponent();
 
-        /* Get cancel touchable */
-        const touchable = screen.getByTestId('button-touchable');
-        await user.press(touchable);
+        /* Get cancel pressable */
+        const pressable = screen.getByTestId('button-pressable');
+        await user.press(pressable);
 
         /* Check if onCancel was called one time */
         expect(onCancelMock).toHaveBeenCalledTimes(1);

@@ -38,7 +38,7 @@ describe('Test in <EyeBtn /> component', () => {
         expect(onToggleMock).toHaveBeenCalledWith(false);
     });
 
-    it('should change icon when value is false', () => {
+    it('should change icon when value is false', async () => {
         render(
             <EyeBtn
                 onToggle={ onToggleMock }
@@ -48,6 +48,7 @@ describe('Test in <EyeBtn /> component', () => {
 
         /* Get touchable and check respective icon */
         const touchable = screen.getByTestId('eye-btn-touchable');
-        expect(touchable.props.children[0].props.name).toBe('eye-outline');
+        const icon = await touchable.findByProps({ name: 'eye-outline' });
+        expect(icon.props).toHaveProperty('name', 'eye-outline');
     });
 });

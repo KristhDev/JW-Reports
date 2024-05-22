@@ -50,7 +50,7 @@ describe('Test in <Lessons /> screen', () => {
         renderScreen();
 
         /* Get fabs and add button */
-        const fabs = screen.getAllByTestId('fab-touchable');
+        const fabs = screen.getAllByTestId('fab-pressable');
         const addBtn = fabs[fabs.length - 1];
 
         await user.press(addBtn);

@@ -35,9 +35,8 @@ describe('Test in <Settings /> screen', () => {
     it('should call navigate of useNavigation when press buttons sections in MI CUENTA section', async () => {
         renderScreen();
 
-        /* Get touchables */
+        /* Get pressables */
         const pressables = screen.getAllByTestId('section-btn-pressable');
-
         await user.press(pressables[0]);
 
         /* Check is navigate is called one times with respective value */
@@ -54,7 +53,7 @@ describe('Test in <Settings /> screen', () => {
     it('should call setStatus with respective values', async () => {
         renderScreen();
 
-        /* Get touchables */
+        /* Get pressables */
         const pressables = screen.getAllByTestId('section-btn-pressable');
         await user.press(pressables[6]);
 

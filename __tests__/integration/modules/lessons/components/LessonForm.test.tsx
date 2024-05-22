@@ -51,7 +51,7 @@ describe('Test in <LessonForm /> component', () => {
     it('should call setErrorForm when form is invalid', async () => {
         renderComponent();
 
-        const pressable = (await screen.findAllByTestId('button-touchable'))[1];
+        const pressable = (await screen.findAllByTestId('button-pressable'))[1];
         await user.press(pressable);
 
         /* Check if setErrorForm is called one time */
@@ -66,8 +66,8 @@ describe('Test in <LessonForm /> component', () => {
         const input = await screen.findByTestId('form-field-text-input');
         await user.type(input, textValue);
 
-        /* Get submit touchable */
-        const pressable = (await screen.findAllByTestId('button-touchable'))[1];
+        /* Get submit pressable */
+        const pressable = (await screen.findAllByTestId('button-pressable'))[1];
         await user.press(pressable);
 
         /* Check if text content it is equal to Guardar */
@@ -98,7 +98,7 @@ describe('Test in <LessonForm /> component', () => {
         await user.clear(input);
         await user.type(input, textValue);
 
-        const pressable = (await screen.findAllByTestId('button-touchable'))[1];
+        const pressable = (await screen.findAllByTestId('button-pressable'))[1];
         await user.press(pressable);
 
         /* Check if pressable text it is equal to Actualizar */

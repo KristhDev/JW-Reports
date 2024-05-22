@@ -31,8 +31,8 @@ describe('Test in <ThemeBtn /> component', () => {
     it('should call setTheme with light argument when pressed', async () => {
         renderComponent();
 
-        /* Get touchable */
-        const touchable = screen.getByTestId('fab-touchable');
+        /* Get pressable */
+        const touchable = screen.getByTestId('fab-pressable');
         await user.press(touchable);
 
         /* Check if setTheme is called one time with respective value */
@@ -50,7 +50,7 @@ describe('Test in <ThemeBtn /> component', () => {
         renderComponent();
 
         /* Get touchable and check if is icon sunny-outline */
-        const touchable = screen.getByTestId('fab-touchable');
+        const touchable = screen.getByTestId('fab-pressable');
         const icon = await touchable.findByProps({ name: 'moon-outline' });
 
         expect(icon.props).toHaveProperty('name', 'moon-outline');

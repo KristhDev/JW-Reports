@@ -37,14 +37,14 @@ describe('Test in <RadioBtn /> component', () => {
 
         /* Check if label exists and contain text pass by props */
         expect(label).toBeTruthy();
-        expect(label.props.children).toBe(checkboxLabel);
+        expect(label).toHaveTextContent(checkboxLabel);
     });
 
     it('should call onPress when pressed', async () => {
         renderComponent();
 
         /* Get checkbox element */
-        const checkbox = screen.getByTestId('checkbox-touchable');
+        const checkbox = screen.getByTestId('checkbox-pressable');
         await user.press(checkbox);
 
         /* Check if onPress is called one time */

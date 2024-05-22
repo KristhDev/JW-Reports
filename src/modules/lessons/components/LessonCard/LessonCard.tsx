@@ -84,7 +84,7 @@ export const LessonCard: FC<LessonCardProps> = ({ lesson, screenToNavigate, onCl
             }}
             onPress={ handleLessonDetail }
             style={{ ...styles.pressable, width: width - margins.sm }}
-            testID="lesson-card-touchable"
+            testID="lesson-card-pressable"
         >
             <View style={ styles.cardContainer }>
 

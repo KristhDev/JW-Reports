@@ -78,8 +78,8 @@ describe('Test in <Revisits /> screen', () => {
     it('should render add button when route name is RevisitsScreen', async () => {
         renderScreen();
 
-        /* Get touchable */
-        const fabs = screen.getAllByTestId('fab-touchable');
+        /* Get pressable */
+        const fabs = screen.getAllByTestId('fab-pressable');
         const addBtn = fabs[fabs.length - 1];
         const icon = await addBtn.findByProps({ name: 'add-circle-outline' });
 
@@ -91,8 +91,8 @@ describe('Test in <Revisits /> screen', () => {
     it('should call setSelectedRevisit when add button is pressed', async () => {
         renderScreen();
 
-        /* Get touchable */
-        const fabs = screen.getAllByTestId('fab-touchable');
+        /* Get pressable */
+        const fabs = screen.getAllByTestId('fab-pressable');
         const addBtn = fabs[fabs.length - 1];
 
         await user.press(addBtn);

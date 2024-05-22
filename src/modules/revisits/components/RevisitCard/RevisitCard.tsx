@@ -85,7 +85,7 @@ export const RevisitCard: FC<RevisitCardProps> = ({ onDelete, onPass, onRevisit,
             }}
             onPress={ handleRevisitDetail }
             style={{ ...styles.pressable, width: width - margins.sm }}
-            testID="revisit-card-touchable"
+            testID="revisit-card-pressable"
         >
             <View style={ styles.cardContainer }>
 

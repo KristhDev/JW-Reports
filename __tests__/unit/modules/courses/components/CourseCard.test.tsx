@@ -65,9 +65,9 @@ describe('Test in <CourseCard /> component', () => {
     it('should call setSelectedCourse and navigate when card is pressed', async () => {
         renderComponent();
 
-        /* Get touchable of navigate */
-        const touchable = screen.getByTestId('course-card-touchable');
-        await user.press(touchable);
+        /* Get pressable of navigate */
+        const pressable = screen.getByTestId('course-card-pressable');
+        await user.press(pressable);
 
         /* Check if setSelectedCourse and Navigate is called with respective args */
         expect(setSelectedCourseMock).toHaveBeenCalledTimes(1);

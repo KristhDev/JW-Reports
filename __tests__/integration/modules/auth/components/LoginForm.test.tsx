@@ -38,8 +38,8 @@ describe('Test in <LoginForm /> component', () => {
     it('should call setErrorForm when the form is empty or invalid', async () => {
         renderComponent();
 
-        /* Get touchable to submit form */
-        const pressable = await screen.findByTestId('button-touchable');
+        /* Get pressable to submit form */
+        const pressable = await screen.findByTestId('button-pressable');
         await user.press(pressable);
 
         /* Check if setErrorForm is called one time */
@@ -57,8 +57,8 @@ describe('Test in <LoginForm /> component', () => {
         await user.type(inputsText[0], email);
         await user.type(inputsText[1], password);
 
-        /* Get touchable to submit form */
-        const pressable = await screen.findByTestId('button-touchable');
+        /* Get pressable to submit form */
+        const pressable = await screen.findByTestId('button-pressable');
         await user.press(pressable);
 
         /* Check if signIn is called one time */
@@ -92,8 +92,8 @@ describe('Test in <LoginForm /> component', () => {
 
         render(<LoginForm />);
 
-        /* Get submit touchable and check if disabled */
-        const pressable = await screen.findByTestId('button-touchable');
+        /* Get submit pressable and check if disabled */
+        const pressable = await screen.findByTestId('button-pressable');
         expect(pressable.props.accessibilityState.disabled).toBeTruthy();
     });
 });

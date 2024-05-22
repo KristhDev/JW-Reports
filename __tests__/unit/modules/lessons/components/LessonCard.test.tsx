@@ -61,8 +61,8 @@ describe('Test in <LessonCard /> component', () => {
     it('should call setSelectedLesson and navigate when card is pressed', async () => {
         renderScreen();
 
-        /* Get touchable card */
-        const pressable = screen.getByTestId('lesson-card-touchable');
+        /* Get pressable card */
+        const pressable = screen.getByTestId('lesson-card-pressable');
         await user.press(pressable);
 
         /**

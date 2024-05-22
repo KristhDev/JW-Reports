@@ -32,7 +32,7 @@ export const Checkbox: FC<CheckboxProps> = ({ label, onPress, status, style, tex
                     borderless: true,
                     radius: styles.checkbox.width - 2
                 }}
-                testID="checkbox-touchable"
+                testID="checkbox-pressable"
             >
                 <View
                     style={{

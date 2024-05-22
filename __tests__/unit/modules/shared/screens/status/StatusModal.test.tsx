@@ -27,9 +27,9 @@ describe('Test in <StatusModal /> screen', () => {
     it('should call clearStatus when confirm button is pressed', async () => {
         renderScreen();
 
-        /* Get confirm touchable */
-        const touchable = screen.getAllByTestId('button-touchable')[0];
-        await user.press(touchable);
+        /* Get confirm pressable */
+        const pressable = screen.getAllByTestId('button-pressable')[0];
+        await user.press(pressable);
 
         /* Check if clearStatus is called */
         expect(clearStatusMock).toHaveBeenCalled();
@@ -44,8 +44,8 @@ describe('Test in <StatusModal /> screen', () => {
 
         renderScreen();
 
-        /* Get two touchables */
-        const buttons = screen.getAllByTestId('button-touchable');
+        /* Get two pressables */
+        const buttons = screen.getAllByTestId('button-pressable');
         expect(buttons).toHaveLength(2);
     });
 });

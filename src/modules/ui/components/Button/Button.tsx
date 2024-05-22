@@ -50,7 +50,7 @@ export const Button: FC<ButtonProps> = ({
                 disabled={ disabled }
                 onPress={ onPress }
                 style={[ styles.buttonPressable, pressableStyle ]}
-                testID="button-touchable"
+                testID="button-pressable"
             >
                 <View style={[ styles.buttonContainer, containerStyle ]}>
                     { (text) && (

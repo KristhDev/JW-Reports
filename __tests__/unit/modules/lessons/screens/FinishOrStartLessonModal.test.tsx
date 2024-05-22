@@ -32,11 +32,11 @@ describe('Test in <FinishOrStartLessonModal /> screen', () => {
     it('should render respective texts when selectedLesson isnt done', () => {
         renderScreen();
 
-        /* Get msg and touchable */
+        /* Get msg and pressable */
         const msg = screen.getByTestId('modal-text');
-        const pressable = screen.getAllByTestId('button-touchable')[1];
+        const pressable = screen.getAllByTestId('button-pressable')[1];
 
-        /* Check if msg and touchable are rendered and containt respective values */
+        /* Check if msg and pressable are rendered and containt respective values */
         expect(msg).toBeOnTheScreen();
         expect(msg).toHaveTextContent('¿Está seguro de terminar esta clase?');
         expect(pressable).toBeOnTheScreen();
@@ -46,8 +46,8 @@ describe('Test in <FinishOrStartLessonModal /> screen', () => {
     it('should call finishOrStartLesson when confirm button is pressed', async () => {
         renderScreen();
 
-        /* Get touchable */
-        const pressable = screen.getAllByTestId('button-touchable')[1];
+        /* Get pressable */
+        const pressable = screen.getAllByTestId('button-pressable')[1];
         await user.press(pressable);
 
         /* Check if finishOrStartLesson was called one time with respective arg */
@@ -58,8 +58,8 @@ describe('Test in <FinishOrStartLessonModal /> screen', () => {
     it('should call onClose when cancel button is pressed', async () => {
         renderScreen();
 
-        /* Get touchable */
-        const pressable = screen.getAllByTestId('button-touchable')[0];
+        /* Get pressable */
+        const pressable = screen.getAllByTestId('button-pressable')[0];
         await user.press(pressable);
 
         /* Check if onClose is called one time */

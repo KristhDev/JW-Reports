@@ -46,8 +46,8 @@ describe('Test in <ProfileForm /> component', () => {
         const inputsText = await screen.findAllByTestId('form-field-text-input');
         await user.clear(inputsText[0]);
 
-        /* Get touchable to submit form */
-        const pressable = screen.getByTestId('button-touchable');
+        /* Get pressable to submit form */
+        const pressable = screen.getByTestId('button-pressable');
         await user.press(pressable);
 
         /* Check if setErrorForm is called one time */
@@ -59,8 +59,8 @@ describe('Test in <ProfileForm /> component', () => {
 
         await act(async () => {
 
-            /* Get touchable to submit form */
-            const pressable = await screen.findByTestId('button-touchable');
+            /* Get pressable to submit form */
+            const pressable = await screen.findByTestId('button-pressable');
             await user.press(pressable);
 
             /* Check if updateProfile is called one time */

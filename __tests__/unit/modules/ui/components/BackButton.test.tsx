@@ -21,30 +21,30 @@ describe('Test in <BackButton /> component', () => {
         expect(screen.toJSON()).toMatchSnapshot();
     });
 
-    it('should render respective props', () => {
+    it('should render respective props', async () => {
         renderComponent(darkColors.icon)
 
-        /* Get touchable of button and check color */
-        const touchable = screen.getByTestId('fab-touchable');
-        const iconColor = touchable.props.children[0].props.color;
-        expect(iconColor).toBe(darkColors.icon);
+        /* Get pressable of button and check color */
+        const pressable = screen.getByTestId('fab-pressable');
+        const icon = await pressable.findByProps({ name: 'arrow-back-outline' });
+        expect(icon.props).toHaveProperty('color', darkColors.icon);
     });
 
-    it('should render default icon color', () => {
+    it('should render default icon color', async () => {
         renderComponent();
 
-        /* Get touchable of button and check icon */
-        const touchable = screen.getByTestId('fab-touchable');
-        const iconColor = touchable.props.children[0].props.color;
-        expect(iconColor).toBe(darkColors.button);
+        /* Get pressable of button and check icon */
+        const pressable = screen.getByTestId('fab-pressable');
+        const icon = await pressable.findByProps({ name: 'arrow-back-outline' });
+        expect(icon.props).toHaveProperty('color', darkColors.button);
     });
 
     it('should call onPress when pressed', async () => {
         renderComponent();
 
-        /* Get touchable */
-        const touchable = screen.getByTestId('fab-touchable');
-        await user.press(touchable);
+        /* Get pressable */
+        const pressable = screen.getByTestId('fab-pressable');
+        await user.press(pressable);
 
         /* Check if onPress is called one time */
         expect(onPressMock).toHaveBeenCalledTimes(1);

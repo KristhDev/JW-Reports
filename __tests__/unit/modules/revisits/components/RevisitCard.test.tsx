@@ -64,8 +64,8 @@ describe('Test in <RevisitCard /> component', () => {
     it('should call setSelectedRevisit and navigate when card is pressed', async () => {
         renderComponent(selectedRevisit);
 
-        /* Get touchable of card */
-        const pressable = screen.getByTestId('revisit-card-touchable');
+        /* Get pressable of card */
+        const pressable = screen.getByTestId('revisit-card-pressable');
         await user.press(pressable);
 
         /**

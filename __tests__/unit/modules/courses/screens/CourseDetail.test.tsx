@@ -93,11 +93,11 @@ describe('Test in <CourseDetail /> screen', () => {
                 : '¿Suspender?';
 
         /* Get touchable */
-        const toucable = screen.getByTestId('course-detail-status-touchable');
+        const touchable = screen.getByTestId('course-detail-status-touchable');
 
         /* Check if toucable exists and contain respective ask */
-        expect(toucable).toBeOnTheScreen();
-        expect(toucable).toHaveTextContent(statusCourseAsk);
+        expect(touchable).toBeOnTheScreen();
+        expect(touchable).toHaveTextContent(statusCourseAsk);
     });
 
     it('should render last lesson data if exists', () => {

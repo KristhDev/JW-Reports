@@ -33,11 +33,11 @@ describe('Test in <ActiveOrSuspendCourseModal /> screen', () => {
     it('should render respective texts when selectedCourse isnt suspended', async () => {
         renderScreen();
 
-        /* Get motal text and touchable */
+        /* Get motal text and pressable */
         const msg = screen.queryByTestId('modal-text');
         const pressableText = screen.queryByText('SUSPENDER')
 
-        /* Check if msg and touchable exists and contain respective values */
+        /* Check if msg and pressable exists and contain respective values */
         expect(msg).toBeOnTheScreen();
         expect(msg).toHaveTextContent('¿Está seguro de suspender este curso?');
         expect(pressableText).toBeOnTheScreen();
@@ -47,8 +47,8 @@ describe('Test in <ActiveOrSuspendCourseModal /> screen', () => {
     it('should call activeOrSuspendCourse when confirm button is pressed', async () => {
         renderScreen();
 
-        /* Get confirm touchable */
-        const pressable = screen.getAllByTestId('button-touchable')[1];
+        /* Get confirm pressable */
+        const pressable = screen.getAllByTestId('button-pressable')[1];
         await user.press(pressable);
 
         /**
@@ -62,8 +62,8 @@ describe('Test in <ActiveOrSuspendCourseModal /> screen', () => {
     it('should call onClose when cancel button is pressed', async () => {
         renderScreen();
 
-        /* Get cancel touchable */
-        const pressable = screen.getAllByTestId('button-touchable')[0];
+        /* Get cancel pressable */
+        const pressable = screen.getAllByTestId('button-pressable')[0];
         await user.press(pressable);
 
         /* Check if onClose is called one times */

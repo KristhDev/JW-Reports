@@ -107,8 +107,8 @@ describe('Test in <PrecursorHome /> screen', () => {
     it('should call setSelectedPreaching and navigate when add button is pressed', async () => {
         renderScreen();
 
-        /* Get touchable */
-        const pressable = screen.getAllByTestId('fab-touchable')[1];
+        /* Get pressable */
+        const pressable = screen.getAllByTestId('fab-pressable')[1];
         await user.press(pressable);
 
         /* Check if setSelectedPreaching is called one time with respective value */

@@ -64,8 +64,8 @@ describe('Test in <RevisitForm /> component', () => {
     it('should call setErrorForm when form is invalid', async () => {
         renderComponent();
 
-        /* Get submit touchable */
-        const pressable = (await screen.findAllByTestId('button-touchable'))[3];
+        /* Get submit pressable */
+        const pressable = (await screen.findAllByTestId('button-pressable'))[3];
         await user.press(pressable);
 
         /* Check if setErrorForm is called one time */
@@ -80,8 +80,8 @@ describe('Test in <RevisitForm /> component', () => {
         await user.type(inputs[1], about);
         await user.type(inputs[2], direction);
 
-        /* Get submit touchable */
-        const pressable = (await screen.findAllByTestId('button-touchable'))[3];
+        /* Get submit pressable */
+        const pressable = (await screen.findAllByTestId('button-pressable'))[3];
         await user.press(pressable);
 
         /* Check if text of submit pressable is equal to Guardar */
@@ -115,8 +115,8 @@ describe('Test in <RevisitForm /> component', () => {
         await user.clear(inputs[1]);
         await user.type(inputs[1], about);
 
-        /* Get submit touchable */
-        const pressable = (await screen.findAllByTestId('button-touchable'))[3];
+        /* Get submit pressable */
+        const pressable = (await screen.findAllByTestId('button-pressable'))[3];
         await user.press(pressable);
 
         /* Check if text of submit pressable is equal to Actualizar */
@@ -138,8 +138,8 @@ describe('Test in <RevisitForm /> component', () => {
     it('should call takeImageToGallery when gallery button is pressed', async () => {
         renderComponent();
 
-        /* Get gallery touchable */
-        const pressable = (await screen.findAllByTestId('button-touchable'))[0];
+        /* Get gallery pressable */
+        const pressable = (await screen.findAllByTestId('button-pressable'))[0];
         await user.press(pressable);
 
         /* Check if takeImageToGallery is called one time */
@@ -149,8 +149,8 @@ describe('Test in <RevisitForm /> component', () => {
     it('should call takePhoto when photo button is pressed', async () => {
         renderComponent();
 
-        /* Get camera touchable */
-        const pressable = (await screen.findAllByTestId('button-touchable'))[1];
+        /* Get camera pressable */
+        const pressable = (await screen.findAllByTestId('button-pressable'))[1];
         await user.press(pressable);
 
         /* Check if takePhoto is called one time */

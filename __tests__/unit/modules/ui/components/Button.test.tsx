@@ -6,7 +6,7 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import { onPressMock } from '../../../../../jest.setup';
 
 /* Components */
-import { Button } from '../../../../../src/modules/ui/components/Button';
+import { Button } from '../../../../../src/modules/ui';
 
 const user = userEvent.setup();
 
@@ -48,9 +48,9 @@ describe('Test in <Button /> component', () => {
     it('should call onPress then press button', async () => {
         renderComponent();
 
-        /* Get touchable */
-        const touchable = screen.getByTestId('button-touchable');
-        await user.press(touchable);
+        /* Get pressable */
+        const pressable = screen.getByTestId('button-pressable');
+        await user.press(pressable);
 
         /* Check if onPress is called one time */
         expect(onPressMock).toHaveBeenCalledTimes(1);

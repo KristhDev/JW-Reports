@@ -2,7 +2,7 @@ import React from 'react';
 import { Formik } from 'formik';
 import { render, screen, userEvent } from '@testing-library/react-native';
 
-
+/* Modules */
 import { FormSelect, ItemOption } from '../../../../../src/modules/ui';
 
 const itemsOptions: ItemOption[] = [
@@ -37,7 +37,6 @@ const renderComponent = () => render(
 );
 
 describe('Test in <FormSelect /> component', () => {
-
     it('should to match snapshot', () => {
         renderComponent();
         expect(screen.toJSON()).toMatchSnapshot();
@@ -50,16 +49,16 @@ describe('Test in <FormSelect /> component', () => {
         const label = await screen.findByTestId('form-select-label');
 
         /* Check if label exists and contain text pass by props */
-        expect(label).toBeTruthy();
-        expect(label.props.children).toBe(labelOption);
+        expect(label).toBeOnTheScreen();
+        expect(label).toHaveTextContent(labelOption);
     });
 
     it('should change value of select option', async () => {
         renderComponent();
 
         /* Get touchable */
-        const pressable = await screen.findByTestId('form-select-touchable');
-        await user.press(pressable);
+        const touchable = await screen.findByTestId('form-select-touchable');
+        await user.press(touchable);
 
         /* Get radio touchable */
         const options = await screen.findAllByTestId('radio-btn-pressable');
@@ -69,6 +68,6 @@ describe('Test in <FormSelect /> component', () => {
         const textValue = await screen.findByTestId('form-select-text-value');
 
         /* Check if text contain option selected */
-        expect(textValue.props.children).toBe(itemsOptions[1].label);
+        expect(textValue).toHaveTextContent(itemsOptions[1].label);
     });
 });

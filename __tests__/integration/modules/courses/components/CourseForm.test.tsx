@@ -39,7 +39,7 @@ describe('Test in <CourseForm /> component', () => {
     it('should call setErrorForm when the form is empty or invalid', async () => {
         renderComponent();
 
-        const pressable = await screen.findByTestId('button-touchable');
+        const pressable = await screen.findByTestId('button-pressable');
         await user.press(pressable);
 
         /* Check if setErrorForm is called one time */
@@ -62,7 +62,7 @@ describe('Test in <CourseForm /> component', () => {
         await user.type(inputsText[3], publication);
 
         /* Get submit pressable */
-        const pressable = await screen.findByTestId('button-touchable');
+        const pressable = await screen.findByTestId('button-pressable');
         await user.press(pressable);
 
         /* Check if setErrorForm is called one time */
@@ -93,8 +93,8 @@ describe('Test in <CourseForm /> component', () => {
         await user.clear(inputsText[1]);
         await user.type(inputsText[1], personAbout);
 
-        /* Get submit touchable */
-        const pressable = await screen.findByTestId('button-touchable');
+        /* Get submit pressable */
+        const pressable = await screen.findByTestId('button-pressable');
         await user.press(pressable);
 
         /* Check if text of pressable is equal to Actualizar */

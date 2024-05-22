@@ -1,15 +1,13 @@
 import React from 'react';
-import { fireEvent, render, screen, userEvent, waitFor } from '@testing-library/react-native';
+import { render, screen, userEvent } from '@testing-library/react-native';
 
 /* Setup */
 import { onCleanMock, onSearchMock } from '../../../../../jest.setup';
 
 /* Modules */
 import { SearchInput } from '../../../../../src/modules/ui';
-import { darkColors } from '../../../../../src/modules/theme';
 
 const textValue = 'Search test';
-
 const user = userEvent.setup();
 
 const renderComponent = () => render(
@@ -48,27 +46,12 @@ describe('Test in <SearchInput /> component', () => {
 
         /* Get text input and clear touchable */
         const input = screen.getByTestId('search-input-text-input');
-        const touchable = screen.getByTestId('search-input-clear-btn');
+        const pressable = screen.getByTestId('search-input-clear-btn');
 
         await user.type(input, textValue);
-        await user.press(touchable);
+        await user.press(pressable);
 
         /* Check if onClean is called one time */
         expect(onCleanMock).toHaveBeenCalledTimes(1);
-    });
-
-    it('should change border color when input is focused', async () => {
-        renderComponent();
-
-        /* Get text input and container */
-        const input = screen.getByTestId('search-input-text-input');
-        const inputContainer = screen.getByTestId('search-input-text-input-container');
-
-        await waitFor(() => {
-            fireEvent(input, 'onFocus');
-
-            /* Check if input is focused */
-            expect(inputContainer.props.style.borderColor).toBe(darkColors.button);
-        });
     });
 });

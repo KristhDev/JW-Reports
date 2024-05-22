@@ -38,8 +38,8 @@ describe('Test in <ForgotPasswordForm /> component', () => {
     it('should call setErrorForm when the form is empty or invalid', async () => {
         renderComponent();
 
-        /* Get submit touchable */
-        const pressable = await screen.findByTestId('button-touchable');
+        /* Get submit pressable */
+        const pressable = await screen.findByTestId('button-pressable');
         await user.press(pressable);
 
         /* Check if setErrorForm is called one time */
@@ -55,8 +55,8 @@ describe('Test in <ForgotPasswordForm /> component', () => {
         const inputText = await screen.findByTestId('form-field-text-input');
         await user.type(inputText, email);
 
-        /* Get submit touchable */
-        const pressable = await screen.findByTestId('button-touchable');
+        /* Get submit pressable */
+        const pressable = await screen.findByTestId('button-pressable');
         await user.press(pressable);
 
         /* Check if resetPassword is called one time */
@@ -84,8 +84,8 @@ describe('Test in <ForgotPasswordForm /> component', () => {
 
         renderComponent();
 
-        /* Get submit touchable and check if disabled */
-        const pressable = await screen.findByTestId('button-touchable');
+        /* Get submit pressable and check if disabled */
+        const pressable = await screen.findByTestId('button-pressable');
         expect(pressable.props.accessibilityState.disabled).toBeTruthy();
     });
 });

@@ -60,7 +60,7 @@ describe('Test in <RevisitModal /> screen', () => {
     it('should call completeRevisit when selectedRevisit.done is false', async () => {
         renderScreen();
 
-        const pressable = (await screen.findAllByTestId('button-touchable'))[1];
+        const pressable = (await screen.findAllByTestId('button-pressable'))[1];
         await user.press(pressable);
 
         /* CheckCheck if completeRevist is called with respective arg */
@@ -94,12 +94,12 @@ describe('Test in <RevisitModal /> screen', () => {
 
         const selectedRevisit = selectedRevisitStateMock.selectedRevisit;
 
-        /* Get next step touchable */
-        const pressable = (await screen.findAllByTestId('button-touchable'))[1];
+        /* Get next step pressable */
+        const pressable = (await screen.findAllByTestId('button-pressable'))[1];
         await user.press(pressable);
 
-        /* Get confirm touchable */
-        const pressableConfirm = (await screen.findAllByTestId('button-touchable'))[2];
+        /* Get confirm pressable */
+        const pressableConfirm = (await screen.findAllByTestId('button-pressable'))[2];
         await user.press(pressableConfirm);
 
         /* Check if saveRevisit with respective value */

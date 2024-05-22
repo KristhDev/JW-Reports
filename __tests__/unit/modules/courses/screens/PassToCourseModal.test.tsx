@@ -54,12 +54,12 @@ describe('Test in <PassToCourseModal /> screen', () => {
     it('should call setStatus when form is invalid', async () => {
         renderScreen();
 
-        /* Get touchable */
-        const pressable = (await screen.findAllByTestId('button-touchable'))[1];
+        /* Get pressable */
+        const pressable = (await screen.findAllByTestId('button-pressable'))[1];
         await user.press(pressable);
 
-        /* Get confirm touchable */
-        const pressableConfirm = screen.getAllByTestId('button-touchable')[1];
+        /* Get confirm pressable */
+        const pressableConfirm = screen.getAllByTestId('button-pressable')[1];
         await user.press(pressableConfirm);
 
         /* Check if setStatus is called one time */
@@ -71,16 +71,16 @@ describe('Test in <PassToCourseModal /> screen', () => {
 
         const pubName = 'Regional Interactions Assistant';
 
-        /* Get touchable */
-        const pressable = screen.getAllByTestId('button-touchable')[1];
+        /* Get pressable */
+        const pressable = screen.getAllByTestId('button-pressable')[1];
         await user.press(pressable);
 
         /* Get text input and type new value */
         const input = screen.getByTestId('form-field-text-input');
         await user.type(input, pubName);
 
-        /* Get confirm touchable */
-        const pressableConfirm = screen.getAllByTestId('button-touchable')[1];
+        /* Get confirm pressable */
+        const pressableConfirm = screen.getAllByTestId('button-pressable')[1];
         await user.press(pressableConfirm);
 
         /* Check if saveCourse is called */
