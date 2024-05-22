@@ -1,5 +1,6 @@
 import { createContext } from 'react';
 
+/* Interfaces */
 import { NetworkContextProps } from '../../interfaces';
 
 /**

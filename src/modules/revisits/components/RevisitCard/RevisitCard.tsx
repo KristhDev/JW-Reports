@@ -84,10 +84,10 @@ export const RevisitCard: FC<RevisitCardProps> = ({ onDelete, onPass, onRevisit,
                 foreground: true
             }}
             onPress={ handleRevisitDetail }
-            style={{ ...styles.touchable, width: width - margins.sm }}
+            style={{ ...styles.pressable, width: width - margins.sm }}
             testID="revisit-card-touchable"
         >
-            <View style={ styles.container }>
+            <View style={ styles.cardContainer }>
 
                 {/* Revisit status or date for next visit */}
                 <Text

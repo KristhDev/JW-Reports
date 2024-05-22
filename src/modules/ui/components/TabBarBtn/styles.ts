@@ -1,7 +1,7 @@
 import { createStyleSheet } from 'react-native-unistyles';
 
 const styles = createStyleSheet({
-    touchable: {
+    pressable: {
         alignItems: 'center',
         borderRadius: 50,
         flex: 1,

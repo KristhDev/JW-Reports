@@ -1,12 +1,12 @@
 import { createStyleSheet } from 'react-native-unistyles';
 
 const styles = createStyleSheet(({ colors, fontSizes, margins }) => ({
-    touchable: {
+    pressable: {
         marginVertical: margins.xs,
         width: '100%'
     },
 
-    container: {
+    cardContainer: {
         backgroundColor: colors.card,
         padding: margins.sm
     },

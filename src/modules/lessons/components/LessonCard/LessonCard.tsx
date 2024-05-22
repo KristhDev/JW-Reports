@@ -83,10 +83,10 @@ export const LessonCard: FC<LessonCardProps> = ({ lesson, screenToNavigate, onCl
                 foreground: true
             }}
             onPress={ handleLessonDetail }
-            style={{ ...styles.touchable, width: width - margins.sm }}
+            style={{ ...styles.pressable, width: width - margins.sm }}
             testID="lesson-card-touchable"
         >
-            <View style={ styles.container }>
+            <View style={ styles.cardContainer }>
 
                 {/* Lesson status  */}
                 <Text

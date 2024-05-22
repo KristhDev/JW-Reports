@@ -44,12 +44,12 @@ export const Button: FC<ButtonProps> = ({
     const { styles } = useStyles(stylesheet);
 
     return (
-        <View style={{ borderRadius: styles.buttonTouchable.borderRadius, overflow: 'hidden' }}>
+        <View style={{ borderRadius: styles.buttonPressable.borderRadius, overflow: 'hidden' }}>
             <Pressable
                 android_ripple={{ color: underlayColor || 'rgba(0, 0, 0, 0.30)' }}
                 disabled={ disabled }
                 onPress={ onPress }
-                style={[ styles.buttonTouchable, touchableStyle ]}
+                style={[ styles.buttonPressable, touchableStyle ]}
                 testID="button-touchable"
             >
                 <View style={[ styles.buttonContainer, containerStyle ]}>

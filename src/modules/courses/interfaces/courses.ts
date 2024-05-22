@@ -174,11 +174,25 @@ export type SetCoursesPayload = {
     courses: Course[];
 }
 
+/**
+ * AddLastLessonInCoursePayload is a type that has a property called courseId that is of type string
+ * and a property called lastLesson that is of type Lesson.
+ *
+ * @property {string} courseId - The id of the course
+ * @property {Lesson} lastLesson - The last lesson of the course
+ */
 export type AddLastLessonInCoursePayload = {
     courseId: string;
     lastLesson: Lesson;
 }
 
+/**
+ * ReplaceLastLessonInCoursePayload is a type that has a property called lessonId that is of type string
+ * and a property called lastLesson that is of type Lesson.
+ *
+ * @property {string} lessonId - The id of the lesson
+ * @property {Lesson} lastLesson - The last lesson of the course
+ */
 export type ReplaceLastLessonInCoursePayload = {
     lessonId: string;
     lastLesson: Lesson;

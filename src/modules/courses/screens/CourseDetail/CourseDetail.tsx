@@ -110,7 +110,7 @@ const CourseDetail = (): JSX.Element => {
                 />
 
                 {/* Course status */}
-                <View style={ styles.sectionStyle }>
+                <View style={ styles.sectionContainer }>
                     <Text
                         style={{ ...styles.sectionSubTitle, marginBottom: 0 }}
                         testID="course-detail-status"
@@ -142,7 +142,7 @@ const CourseDetail = (): JSX.Element => {
                 </View>
 
                 {/* Text person about */}
-                <View style={ styles.sectionStyle }>
+                <View style={ styles.sectionContainer }>
                     <Text
                         style={ styles.sectionSubTitle }
                         testID="course-detail-about-subtitle"
@@ -159,7 +159,7 @@ const CourseDetail = (): JSX.Element => {
                 </View>
 
                 {/* Text person address */}
-                <View style={ styles.sectionStyle }>
+                <View style={ styles.sectionContainer }>
                     <Text style={ styles.sectionSubTitle }>
                         Dirección:
                     </Text>
@@ -173,7 +173,7 @@ const CourseDetail = (): JSX.Element => {
                 </View>
 
                 {/* Course last lesson */}
-                <View style={ styles.sectionStyle }>
+                <View style={ styles.sectionContainer }>
                     <Text style={ styles.sectionSubTitle }>
                         Última clase:
                     </Text>

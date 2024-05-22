@@ -51,9 +51,15 @@ export type SetThemePayload = {
     theme: Theme
 }
 
+/**
+ * AppThemes is an object with two properties called light and dark that are of type Theme.
+ */
 export type AppThemes = {
     light: typeof lightTheme,
     dark: typeof darkTheme
 }
 
+/**
+ * AppBreakpoints is an object with a property called breakpoints that is of type Breakpoints.
+ */
 export type AppBreakpoints = typeof breakpoints;

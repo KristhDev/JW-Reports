@@ -38,6 +38,9 @@ import { LoadResourcesOptions, Pagination } from '../../ui';
 /* Utils */
 import { date } from '../../../utils';
 
+/**
+ * Hook to management lessons of store with state and actions
+ */
 const useLessons = () => {
     const dispatch = useAppDispatch();
     const { goBack, navigate } = useNavigation();

@@ -87,7 +87,7 @@ const LessonDetail = (): JSX.Element => {
                 />
 
                 {/* Lesson status */}
-                <View style={ styles.sectionStyle }>
+                <View style={ styles.sectionContainer }>
                     <Text
                         style={{ ...styles.sectionSubTitle, marginBottom: 0 }}
                         testID="lesson-detail-status-text"
@@ -109,7 +109,7 @@ const LessonDetail = (): JSX.Element => {
                 </View>
 
                 {/* Lesson description */}
-                <View style={ styles.sectionStyle }>
+                <View style={ styles.sectionContainer }>
                     <Text
                         style={ styles.sectionSubTitle }
                         testID="lesson-detail-description-subtitle"
@@ -126,7 +126,7 @@ const LessonDetail = (): JSX.Element => {
                 </View>
 
                 {/* Lesson create date */}
-                <View style={ styles.sectionStyle }>
+                <View style={ styles.sectionContainer }>
                     <Text style={ styles.sectionSubTitle }>
                         Fecha:
                     </Text>
