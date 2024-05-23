@@ -8,6 +8,8 @@
     "ios": "react-native run-ios",
     "lint": "eslint .",
     "start": "react-native start",
+    "test:clean": "jest --clearCache",
+    "test:coverage": "jest --runInBand --coverage",
     "test:integration": "jest --testMatch **/__tests__/integration/**/*.test.{ts,tsx}",
     "test:unit": "jest --runInBand --testMatch **/__tests__/unit/**/*.test.{ts,tsx}",
     "test:watch": "jest --runInBand --watch",

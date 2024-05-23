@@ -27,9 +27,9 @@ Te dejo el link para que puedas descargarla y probarla, has click [aquí](https:
 
 <br>
 
-## 1) Tecnologías
+## 1. Tecnologías
 
-### 1.1) React Native
+### 1.1. React Native
 Es un **marco de desarrollo de aplicaciones móviles** que permite a los desarrolladores crear aplicaciones para iOS y Android 
 utilizando la misma **base de código en JavaScript y React.**
 
@@ -42,7 +42,7 @@ múltiples plataformas.** Además, utiliza un **enfoque de renderizado nativo,**
 de manera más eficiente y tienen un mejor rendimiento que las aplicaciones web empaquetadas en una vista web dentro de 
 una aplicación nativa.
 
-### 1.2) Typescript
+### 1.2. Typescript
 Lenguaje de programación de **código abierto** desarrollado por Microsoft que **amplía la sintaxis de JavaScript** con la adición de 
 tipos estáticos opcionales. Se puede considerar como una **capa de abstracción sobre JavaScript** que proporciona una mayor 
 seguridad y escalabilidad al código.
@@ -52,7 +52,7 @@ Los desarrolladores pueden **especificar tipos de datos para variables, funcione
 **aprovechar las características avanzadas de ECMAScript, como clases, interfaces y decoradores,** mientras proporciona una 
 compatibilidad con versiones anteriores de JavaScript.
 
-### 1.3) Supabase
+### 1.3. Supabase
 Es una **alternativa de Firebase de código abierto.** Una **plataforma de bases de datos en la nube** que combina la
 simplicidad y la accesibilidad de una **herramienta de gestión de bases de datos** no relacionales con la potencia y
 la escalabilidad de una base de datos relacional.
@@ -60,22 +60,22 @@ la escalabilidad de una base de datos relacional.
 Supabase es una opción popular para desarrolladores y empresas que buscan una solución de bases de datos en la nube para
 sus aplicaciones y proyectos.
 
-### 1.4) OneSignal
+### 1.4. OneSignal
 Es una **plataforma de mensajería y automatización de notificaciones push** para sitios web y aplicaciones móviles. Permite a
 los desarrolladores y propietarios de sitios web **enviar notificaciones push personalizadas y automatizadas** a los usuarios en
 tiempo real.
 
-### 1.5) Jest
+### 1.5. Jest
 Es la **herramienta de Test más popular** y recomendada para React. Es creado por Facebook. Jest no es solo una biblioteca, es
 un marco de prueba. Significa que **viene con una biblioteca de afirmaciones, un corredor de pruebas y soporte** para cosas.
 Como ha sido diseñado específicamente para probar las aplicaciones React, también se puede utilizar en otros marcos de JavaScript.
 
-### 1.6) React Native Testing Library
+### 1.6. React Native Testing Library
 Nos ofrece un nuevo enfoque a más alto nivel sobre los tests, válido tanto para **unitarios como para integración** y al combinarlos
 podemos conseguir una cobertura de tests con la que podemos confirmar que estamos desarrollando sobre seguro en proyectos de
 cualquier tamaño.
 
-### 1.7) Enlaces
+### 1.7. Enlaces
  * [React Native](https://reactnative.dev)  
  * [TypeScript](https://www.typescriptlang.org)  
  * [Supabase](https://supabase.com)  
@@ -85,10 +85,10 @@ cualquier tamaño.
 
 <br>
 
-## 2) Entorno de desarrollo
+## 2. Entorno de desarrollo
 Para montar el entorno de desarrollo y correr la aplicación se necesitan los siguientes programas:
 
-### 2.1) Node.js
+### 2.1. Node.js
 Es un **entorno en tiempo de ejecución multiplataforma para la capa del servidor** (en el lado del servidor) basado en 
 JavaScript. Controlado por eventos, diseñado para crear aplicaciones escalables, permitiéndote establecer y gestionar 
 múltiples conexiones al mismo tiempo. Gracias a esta característica, no tienes que preocuparte con el bloqueo de procesos, 
@@ -98,14 +98,14 @@ Node.js está **basado en el motor V8 de Google**, uno de los intérpretes de le
 motor se encarga de compilar el código JavaScript en código de máquina, un código de nivel más bajo que no hace falta 
 que sea interpretado por el navegador.
 
-### 2.2) Yarn (opcional)
+### 2.2. Yarn (opcional)
 Es un **gestor dependencias de JavaScript**, que está enfocado en la velocidad y la seguridad, y a diferencia de otros gestores
 como NPM, YARN es muy rápido y muy fácil de usar.
 
 Además, **devuelve un feedback al usuario bastante amigable**, lo que hace que este sienta que realmente la propia herramienta
 vela porque aprendamos a usarla y porque tengamos siempre la mejor y más clara ayuda posible.
 
-### 2.3) Android Studio
+### 2.3. Android Studio
 Cuando hablamos de Android Studio, nos referimos a un **entorno de desarrollo especializado**. Evidentemente, hablamos de todo
 lo que tenga que ver con el desarrollo de herramientas y aplicaciones para sistemas operativos Android.
 
@@ -115,52 +115,54 @@ dicho sistema.
 Este entorno sirve para que las **aplicaciones que se estén desarrollando sean mucho más eficientes y autosuficientes**. Esto
 permite, incluso, tener compatibilidades con otros sistemas o plataformas.
 
-### 2.4) Flipper
-Flipper es una **plataforma para depurar aplicaciones iOS, Android y React Native**. Puede visualizar, inspeccionar y controlar
-sus aplicaciones desde una sencilla interfaz de escritorio. Puede usar Flipper tal cual o extiéndalo usando plugin API.
+### 2.4. Reactotron
+Un potente depurador para aplicaciones React y React Native. **Proporciona una interfaz fácil** de usar para que los
+desarrolladores supervisen el **estado de sus aplicaciones**, las solicitudes de red y las **métricas de rendimiento** y se 
+puede utilizar para proyectos de cualquier tamaño, desde pequeñas aplicaciones personales hasta aplicaciones empresariales 
+de gran escala.
 
-### 2.5) Enlaces
+### 2.5. Enlaces
  * [Node.js](https://nodejs.org)
  * [Yarn](https://yarnpkg.com)
  * [Android Studio](https://developer.android.com/studio)
- * [Flipper](https://fbflipper.com)
+ * [Reactotron](https://docs.infinite.red/reactotron)
 
 <br>
 
-## 3) Arquitectura
-Con **arquitectura** me refiero a las **aplicaciones que en conjunto permiten el correcto funcionamiento de JW Reports.** 
+## 3. Arquitectura
+Con **arquitectura** nos referimos a las **aplicaciones que en conjunto permiten el correcto funcionamiento de JW Reports.** 
 En total podemos **identificar 4 aplicaciones** para este proyecto: Aplicación Móvil, Proyecto de Supabase, Sitio Web de
 verificación de correos y Servidor de Notificaciones. Cada una con un propósito. 
 
 Al final de esta sección encontrará unos enlaces para ver el código del server y sitio web. Aquí una pequeña explicación
 del propósito de cada uno de ellos:
 
-### 3.1) Aplicación Movil
+### 3.1. Aplicación Móvil
 Es la aplicación con la que al final los usuarios **van a interactuar más y es la que tiene el foco principal de desarrollo.** 
-Las otras aplicaciones y servicios son para **complementar funcionalidades de la aplicación móvil,** como la verificación de
+Las otras aplicacione y servicios son para **complementar funcionalidades de la aplicación móvil,** como la verificación de
 correos y envió de notificaciones.
 
-### 3.2) Proyecto de Supabase
+### 3.2. Proyecto de Supabase
 Es una de las partes más importantes del proyecto. Supabase es una **alternativa directa a Firebase,** solo que Supabase usa
 Postgres como base de datos. Nos **ofrece muchas herramientas** como autenticación, almacenamiento de archivos, gestión de bases
 de datos, etc.
 
-### 3.3) Sitio Web de verificación de correos
+### 3.3. Sitio Web de verificación de correos
 Es el sitio web de **verificación de correos y procesos relacionados con la autenticación** de usuarios, como el cambio de
 contraseñas solicitadas por correo.
 
-### 3.4) Servidor de Notificaciones 
+### 3.4. Servidor de Notificaciones 
 Es el **servidor de notificaciones** que permite **enviar recordatorios a los usuarios de la aplicación.** Hace una verificación
 de los datos y envía la notificación al usuario. Para esto se realiza una **petición HTTP que debe ser validada.** Mediante un 
 cron que ofrecen algunos servicios en la nube se realiza la petición para enviar las notificaciones.
 
-### 3.5) Enlaces
+### 3.5. Enlaces
  * [Sitio Web](https://github.com/KristhDev/JW-Reports-auth-web-site)
  * [Server](https://github.com/KristhDev/JW-Reports-notifications-rest-server)
 
 <br>
 
-## 4) Base de datos
+## 4. Base de datos
 Como se mencionó anteriormente, Supabase usa **Postgres** como base de datos. Al analizar los requerimientos de este proyecto
 se obtiene el siguiente esquema de base de datos:
 
@@ -183,23 +185,31 @@ un usuario**, se usa la tabla de ```users``` de la autenticación de Supabase, p
 
 <br>
 
-## 5) Implementación propia
+## 5. Implementación propia
 En esta sección se explicará cómo crear su **propia implementación de la aplicación**. Esto para los usuarios que deseen tener
 sus **datos en su proyecto de Supabase** o para aprender más de este servicio.
 
-### 5.1) Proyecto de Supabase
-Lo primero es crear un proyecto de Supabase, para ello debes tener una **cuenta en su sitio oficial**, puedes acceder 
-[aquí](https://supabase.com). Cuando ya tengas la cuenta vas a **crear un nuevo proyecto** y llenas los campos que se te pidan. 
-Ahora aparecerás en el Dashboard de administración de tu proyecto.
+### 5.1. Proyecto de Supabase
+Lo primero es crear un proyecto de Supabase, para ello debe tener una **cuenta en su sitio oficial**, puede acceder 
+[aquí](https://supabase.com). Cuando ya tenga la cuenta va a **crear un nuevo proyecto** y llene los campos que se le pidan. 
+Ahora aparecerá en el Dashboard de administración de su proyecto.
 
-### 5.2) Proveedor de autenticación
-Estando en tu proyecto de Supabase ve a la pestaña de **Authentication** y luego en configuración selecciona **providers**. Te
-saldrá una **lista de proveedores de authenticación** (Email, Google, Facebook, Twitter, Slack, Github, etc). Para este caso
-habilita el **proveedor de Email** e inhabilita el resto de funciones de este proveedor (más adelante habilitaremos algunas).
+### 5.2. Proveedor de autenticación
+Estando en su proyecto de Supabase dirijase a la pestaña de **Authentication** y luego en configuración seleccione **providers**. 
+Le saldrá una **lista de proveedores de authenticación** (Email, Google, Facebook, Twitter, Slack, Github, etc). Para este caso
+habilite el **proveedor de Email** e inhabilite el resto de funciones de este proveedor (más adelante habilitaremos algunas).
 
-### 5.3) Base de datos
-Lo siguiente será crear las tablas que conforman la base de datos, para eso ve a la pestaña de **Database** de tu proyecto y
-selecciona Tables, asegúrate de que el **Schema** seleccionado sea **public**. Te dejo unas tablas con los tipos de datos y 
+La aplicación hace uso del **envio de correos** a los usuarios para ciertas funcionalidades. Pero la **configuración por defecto** 
+que nos ofrece Supabase en su plan gratuito es **limitada**. Por lo que puede optar por usar su **propio servicio SMTP** para 
+enviar correos.
+
+Para eso, vaya a la configuración del proyecto, a la izquierda busque **Authentication** y precionelo, ahora se encontrará 
+la pestaña de configuración de autenticación. Busque la sección **SMTP Settings** y luego habilite la opción **Enable Custom SMTP**, 
+después de eso llene los campos que se le solicitan y guarde los cambios.
+
+### 5.3. Base de datos
+Lo siguiente será crear las tablas que conforman la base de datos, para eso vaya a la pestaña de **Database** de su proyecto y
+seleccione Tables, asegúrese de que el **Schema** seleccionado sea **public**. Le dejo unas tablas con los tipos de datos y 
 configuraciones de cada tabla:
 
 <table>
@@ -506,41 +516,41 @@ configuraciones de cada tabla:
     </tbody>
 </table>
 
-### 5.4) Row Level Security
+### 5.4. Row Level Security
 Supabase por defecto tiene habilitado el uso de **row level security** para proteger las tablas de tu base de datos. Por lo que
 hay que configurar algunas **policies** para dar acceso a las acciones de las tablas (SELECT, INSERT, UPDATE, DELETE).
 
-Para crearlas ve a la pestaña de **Authentication** y luego a **Policies**, verás las tablas de tu base de datos y puedes 
-configurarlas de forma individual para cada tabla.
+Para crearlas vaya a la pestaña de **Authentication** y luego a **Policies**, verá las tablas de su base de datos y puede 
+configurarla de forma individual para cada tabla..
 
-Esas **policies** quedan a tu criterio personal siguiendo la documentación oficial, te dejo el enlace [aquí](https://supabase.com/docs/guides/auth/row-level-security).
+Esas **policies** quedan a su criterio personal siguiendo la documentación oficial, le dejo el enlace [aquí](https://supabase.com/docs/guides/auth/row-level-security).
 
-### 5.5) Bucket
+### 5.5. Bucket
 Supabase tiene una nueva opción para crear **buckets**, que permiten almacenar archivos en distintos directorios. Para crear uno
-ve a la pestaña de **Storage** y presiona el botón "New bucket" y ponle el nombre de **jw-reports**, lo dejas como public y lo
-creas, después de esto, crea una carpeta dentro del **bucket** que se llame **revisits**.
+vaya a la pestaña de **Storage** y presione el botón "New bucket" y pongale el nombre de **jw-reports**, lo deja como public y lo
+crea, después de esto, cree una carpeta dentro del **bucket** que se llame **revisits**.
 
-Para más información ve a la documentación oficial [aquí](https://supabase.com/docs/guides/storage). 
+Para más información vaya a la documentación oficial [aquí](https://supabase.com/docs/guides/storage). 
 
-### 5.6) Clonar repositorio
-Ahora el siguiente paso es clonar el repositorio de la aplicación móvil, copia el siguiente comando en una terminal:
+### 5.6. Clonar repositorio
+Ahora el siguiente paso es clonar el repositorio de la aplicación móvil, copie el siguiente comando en una terminal:
 
 ```bash
 git clone https://github.com/KristhDev/JW-Reports.git
 ```
 
 ### 5.7) Instalar dependencias
-Lo siguiente para que la aplicación funcione de la forma correcta es **instalar sus dependencias**, lo puedes hacer con el
+Lo siguiente para que la aplicación funcione de la forma correcta es **instalar sus dependencias**, lo puedee hacer con el
 siguiente comando:
 
 ```bash
 yarn install
 ```
 
-Como se mencionó en la parte de entorno de desarrollo, yarn es opcional. Puedes usar cualquier **gestor de dependencias** para
+Como se mencionó en la parte de entorno de desarrollo, yarn es opcional. Puede usar cualquier **gestor de dependencias** para
 Node.js que este disponible y se pueda usar con React Native.
 
-### 5.8) Sitio web y Servidor de notificaciones
+### 5.8. Sitio web y Servidor de notificaciones
 Ahora el siguiente paso es poner en funcionamiento el **sitio web y el servidor de notificaciones**. En el caso del servidor es
 opcional, el sitio web es parte de las funcionalidades de autenticación, por lo que es necesario, así que debe ser desplegado
 en algún servicio.
@@ -549,40 +559,41 @@ Aunque si despliega ambas partes tendrá una mejor experiencia de usuario. Solo 
 servidor de notificaciones debe tener la opción de **crons o tareas programadas** mediante peticiones HTTP y llamar al endpoint
 respectivo. 
 
-Una vez desplegado el sitio ve al dashboard de administración de tu proyecto de Supabase, dirígete a la pestaña de **Authentication**
-y luego **Providers**, ahí está el provider de **Email** y activa las opciones de **Confirm email** y **Secure email change**.
+Una vez desplegado el sitio vaya al dashboard de administración de su proyecto de Supabase, dirijase a la pestaña de 
+**Authentication** y luego **Providers**, ahí está el provider de **Email** y active las opciones de **Confirm email** y 
+**Secure email change**.
 
-Luego ve a la pestaña **URL Configuration** de **Authentication** y pon la url del sitio que desplegaste, esto servirá para
+Luego vaya a la pestaña **URL Configuration** de **Authentication** y digite la url del sitio que desplego, esto servirá para
 realizar las redirecciones para confirmación de correo y cambio de contraseña.
 
-Finalmente, tienes otra pestaña llamada **Email templates** donde puedes **cambiar las plantillas** de los correos que se envíen
+Finalmente, tiene otra pestaña llamada **Email templates** donde puede **cambiar las plantillas** de los correos que se envíen
 para confirmar correos y cambiar contraseñas.
 
 Igualmente, le dejo ambos links de los repositorios de estas partes para más información:
  * [Sitio web](https://github.com/KristhDev/JW-Reports-auth-web-site)
  * [Servidor de notificaciones](https://github.com/KristhDev/JW-Reports-notifications-rest-server)
 
-### 5.9) One Signal
+### 5.9. One Signal
 Para el envío de notificaciones se usa el **servicio OneSignal**, que es el más utilizado para este tipo de funcionalidad. Para
-usarlo **crea una cuenta** y luego presiona el botón que dice "New App/Website". Luego llena los campos que te diga y selecciona
+usarlo **cree una cuenta** y luego presione el botón que dice "New App/Website". Luego llene los campos que le diga y seleccione
 la opción de **Google Android (FCM)**.
 
-Lo siguiente que te pedirá son unas **credenciales de Firebase**, el **Server Key y Sender ID**. Creas una cuenta en Firebase y
-luego un **nuevo proyecto**, llenas los campos que te pidan y entrarás al Dashboard de administración de tu proyecto. Te dejo el 
-link de Firebase [aquí](https://console.firebase.google.com).
+Lo siguiente que le pedirá es un archivo **Service Account JSON** de Firebase, ese archivo tiene unas credenciales de acceso. 
+Cree una cuenta en Firebase y luego un **nuevo proyecto**, llene los campos que le pidan y entrará al Dashboard de administración 
+de su proyecto. Le dejo el link de Firebase [aquí](https://console.firebase.google.com).
 
-Ahora dirígete a la **configuración de tu proyecto de Firebase** y selecciona la pestaña de **Cloud Messaging**. Ahí encontrarás
-el valor que dice **ID de remitente**, ese será nuestro Sender ID que pide OneSignal. En el caso del Server Key presiona el botón
-"Agregar clave de servidor", copia el valor y ponlo en el campo que te diga OneSignal.
+Ahora dirijase a la **configuración de su proyecto de Firebase** y seleccione la pestaña de **Cloud Messaging**. Asegurese de que 
+este activado y luego vaya a la pestaña **Service Accounts** y precione el botón que dice "Generate new private key". Luego de 
+aceptar se descargará el archivo JSON que se necesita.
 
-Sigue los pasos que te diga y **crea la aplicación de OneSignal**. Una vez creada y estando el Dashboard ve a la pestaña de **Keys & 
-IDs** y copia el valor OneSignal App ID, este nos servirá para recibir las notificaciones.
+Ahora solo importe ese archivo, siga los pasos que le diga y **cree la aplicación de OneSignal**. Una vez creada y estando el 
+Dashboard vaya a la pestaña de **Keys & IDs** y copie el valor OneSignal App ID, este nos servirá para recibir las notificaciones.
 
-### 5.10) Variables de entorno
-En la raíz del proyecto encontrarás un archivo ```.env.example``` que contiene todas las variables de entorno necesarias para el 
-proyecto, la única que tiene un valor es **REPOSITORY_URL** que es este mismo repositorio, renombra el archivo a ```.env.``` Si 
-has seguido todos los pasos ya tienes todos los valores, simplemente **ponlos en el archivo .env**. A continuación una tabla con la
-explicación de cada una de las variables:
+### 5.10. Variables de entorno
+En la raíz del proyecto encontrará un archivo ```.env.example``` que contiene todas las variables de entorno necesarias para el 
+proyecto, la única que tiene un valor es **REPOSITORY_URL** que es este mismo repositorio, renombre el archivo a ```.env.``` Si 
+ha seguido todos los pasos ya tiene todos los valores, simplemente **escribalos en el archivo .env**. A continuación le dejo una 
+tabla con la explicación de cada una de las variables:
 
 | Variable                  | Explicación                                                   |
 |---------------------------|---------------------------------------------------------------|
@@ -595,31 +606,31 @@ explicación de cada una de las variables:
 | SUPABASE_SERVICE_ROLE_KEY | Clave de rol para el servicio de Supabase (solo para testing) |
 | ONESIGNAL_APP_ID          | ID de la aplicación de OneSignal                              |
 
-### 5.11) Correr aplicación
-Para esto necesitas tener una **máquina virtual de Android Studio** ejecutándose, usa la versión del **SDK de Android** más
-reciente y estable disponible, en la documentación oficial de Reacts Native te dice los pasos para este entorno, 
-clic [aquí](https://reactnative.dev/docs/environment-setup?guide=native).
+### 5.11. Correr aplicación
+Para esto necesita tener una **máquina virtual de Android Studio** ejecutándose, use la versión del **SDK de Android** más
+reciente y estable disponible, en la documentación oficial de Reacts Native le dice los pasos para este entorno, 
+clic [aquí](https://reactnative.dev/docs/set-up-your-environment).
 
-Luego de tener tu **máquina virtual** ejecutándose, escribe el siguiente comando en la raiz del proyecto:
+Luego de tener su **máquina virtual** ejecutándose, escriba el siguiente comando en la raíz del proyecto:
 
 ```bash
 yarn android
 ```
 
 Después de eso empezará a **compilar la aplicación** y todos los paquetes para poder ejecutarla. Cuando termine se abrirá
-automáticamente y ya podrás comenzar a usarla.
+automáticamente y ya podrá comenzar a usarla.
 
-Si tu equipo **no soporta tener ejecutándose máquinas virtuales**, puedes usar tu dispositivo android físico, mediante la 
-**depuración USB**. Solo encárgate de activar el **modo desarrollador** en tu dispositivo, conecta el cable y ejecuta el comando 
-anterior. Para más información te dejo la documentación [aquí](https://reactnative.dev/docs/running-on-device).
+Si su equipo **no soporta tener ejecutándose máquinas virtuales**, puede usar tu dispositivo android físico, mediante la 
+**depuración USB**. Solo encárgase de activar el **modo desarrollador** en su dispositivo, conecte el cable y ejecute el comando 
+anterior. Para más información le dejo la documentación [aquí](https://reactnative.dev/docs/running-on-device).
 
 <br>
 
-## 6) Generar APK
+## 6. Generar APK
 Ya habiendo seguido todos los pasos para correr la aplicación en su dispositivo, continúa esta sección para generar el APK.
 Cabe mencionar que esto solo está configurado para la rama ```main```.
 
-### 6.1) Keystore
+### 6.1. Keystore
 La keystore es un **archivo de almacén de claves** utilizado para **firmar digitalmente aplicaciones móviles de Android**. Cuando
 un desarrollador crea una aplicación móvil de Android, debe **firmarla digitalmente** para garantizar que la aplicación no ha sido
 manipulada y que proviene del desarrollador legítimo. 
@@ -628,21 +639,21 @@ El certificado es un archivo que contiene información sobre el desarrollador de
 importante guardar el archivo .keystore de manera segura, ya que si se pierde o se daña, no será posible actualizar o publicar
 la aplicación en Google Play Store. 
 
-En la documentación oficial de React Native da el siguiente comando para generar la keystore, ejecútalo en la raíz del proyecto:
+En la documentación oficial de React Native da el siguiente comando para generar la keystore, ejecútelo en la raíz del proyecto:
 
 ```bash
 keytool -genkeypair -v -storetype PKCS12 -keystore my-upload-key.keystore -alias my-key-alias -keyalg RSA -keysize 2048 -validity 10000
 ```
 
-Solo reemplaza ```my-upload-key``` por el nombre que le vas a poner y ```my-key-alias``` por el alias que tendrá la keystore.
-Cuando le des a enter te pedirá una serie de datos, los llenas y al final generará la keystore en la raíz del proyecto.
+Solo reemplacé ```my-upload-key``` por el nombre que le vas a dar y ```my-key-alias``` por el alias que tendrá la keystore.
+Cuando le de a enter le pedirá una serie de datos, los provee y al final generará la keystore en la raíz del proyecto.
 
-### 6.2) Configuración
-Ahora hay que decirle a nuestra aplicación que **vamos a usar la keystore que se generó** anteriormente. Primero mueve el archivo
-.keystore a la carpeta android/app.
+### 6.2. Configuración
+Ahora hay que decirle a nuestra aplicación que **vamos a usar la keystore que se generó** anteriormente. Primero mueva el archivo
+.keystore a la carpeta ```android/app```.
 
 Luego de eso hay que agregar los valores respectivos en el archivo **gradle.properties**, se encontrará en la carpeta android.
-Te dejo una tabla con la explicación de cada una de las variables:
+Le dejo una tabla con la explicación de cada una de las variables:
 
 | Variable                    | Explicación                                        |
 |-----------------------------|----------------------------------------------------|
@@ -651,7 +662,7 @@ Te dejo una tabla con la explicación de cada una de las variables:
 | MYAPP_UPLOAD_STORE_PASSWORD | Contraseña que se escribió cuando se generó la key |
 | MYAPP_UPLOAD_KEY_PASSWORD   | Contraseña que se escribió cuando se generó la key |
 
-### 6.3) Generar archivo .apk
+### 6.3. Generar archivo .apk
 Por defecto, React Native **viene configurado para generar el archivo .abb** pero para este caso se cambió para archivos .apk. Por
 lo que si ha seguido los pasos correctamente ya está listo para generar el apk, solo abra una terminal y haga un cd a la carpeta
 android y ejecuté el siguiente comando:
@@ -662,25 +673,25 @@ android y ejecuté el siguiente comando:
 
 Cuando el proceso termine y se realice con éxito **habrá generado su apk**, se encotrara en ```android/app/build/outputs/apk/release/app-release.apk```. Solo instálela en su dispositivo y podrá usarla.
 
-Para más información te dejo la documentación oficial acerca de este punto [aquí](https://reactnative.dev/docs/signed-apk-android).
+Para más información le dejo la documentación oficial acerca de este punto [aquí](https://reactnative.dev/docs/signed-apk-android).
 
 <br>
 
-## 7) Testing
+## 7. Testing
 Es la práctica de **probar el software** para detectar posibles errores o problemas antes de que se lance al mercado o se entregue
 al cliente. El objetivo del testing es **asegurar que el software funcione correctamente**, cumpla con los requisitos del usuario
 y esté **libre de errores y fallos** que puedan afectar su funcionalidad y usabilidad. 
 
 Pensando en esto, se dará una explicación de cómo ejecutarlo.
 
-### 7.1) Rama testing
+### 7.1. Rama testing
 Como habrá notado hay una **rama** que está dedicada a esto, por lo que solo cambie de rama con el siguiente comando:
 
 ```bash
-git checkout testing
+git switch testing
 ```
 
-### 7.2) Instalar dependecias
+### 7.2. Instalar dependecias
 En esta rama existen dependencias que no se usan en las otras ramas del proyecto, por lo que hay que instalarlas, solo ejecute el
 siguiente comando:
 
@@ -688,26 +699,47 @@ siguiente comando:
 yarn install
 ```
 
-### 7.3) Variables de entorno
+### 7.3. Variables de entorno
 Recuerde nuevamente que debe renombrar el archivo ```.env.example a .env``` y poner los valores respectivos. En esta rama hay una
 variable más, esa es ```SUPABASE_SERVICE_ROLE_KEY```. Es una key que permite hacer **cualquier interacción con la base de datos**,
 vaya a su proyecto de Supabase, busque ese valor, cópielo y pégelo en sus variables de entorno.
 
-### 7.4) Correr test
-Dispone de **tres comandos** para ejecutar los tests, uno para **correr las pruebas una única vez**, otro para **escuchar los 
-cambios** de los archivos y un último para **limpiar la cache** de los tests, se ejecutan en una terminal:
+### 7.4. Correr test
+Dispone de **seis comandos** para ejecutar los tests, cada uno con propositos diferentes, tome en cuenta que están configurados 
+para detenerse en caso de que uno falle, todos se ejecutan en la terminal:
 
-Ejecutar test una única vez:
+#### 7.4.1. Test unitario
+Este comando ejecutará los test unitarios del proyecto.
+```bash
+yarn test:unit
+```
+
+#### 7.4.2. Test de integración
+Este comando ejecutará los test de integración del proyecto.
+```bash
+yarn test:integration
+```
+
+#### 7.4.3. Correr todos los test
+Este comando ejecutará todos los test del proyecto.
 ```bash
 yarn test
 ```
 
-Ejecutar test pendientes de los cambios:
+#### 7.4.4. Escuchar cambios en los test
+Este comando ejecutará los test del proyecto cada vez que haga un cambio en los archivos de test.
 ```bash
 yarn test:watch
 ```
 
-Limpiar cache de los test:
+#### 7.4.5. Generar coverage de los test
+Si quiere generar coverage de los test para ver los resultados, ejecute lo siguiente:
+```bash
+yarn test:coverage
+```
+
+#### 7.4.6. Limpiar cache de los test
+Para limpiar archivos basura, cache, etc puede ejecutar este comando:
 ```bash
 yarn test:clean
 ```
@@ -716,46 +748,52 @@ Luego al finalizar la ejecución de los tests verá los resultados en su termina
 
 <br>
 
-## 8) Debugging
-Para depurar la aplicación se usa el programa de **Flipper** que nos da una **serie de herramientas** para hacerlo, al depurar
-un programa vemos el **flujo de los datos y párala  en el tiempo**, lo que nos permite encontrar errores con facilidad. En esta
-sección se explicará cómo hacerlo.
+## 8. Debugging
+Para depurar la aplicación se usa el programa de **Reactotron** que nos da una **serie de herramientas** para hacerlo, al depurar
+un programa vemos el **flujo de los datos y páralela en el tiempo**, lo que nos permite encontrar errores con facilidad. En la raíz 
+del proyecto se encuentra en archivo ```ReactotronConfig.js``` que contiene la configuración de Reactotron, se conforma de la 
+configuración que trae por defecto para React Native, aparte de la integración con Async Storage, Open Editor y Redux DevTools.
 
-### 8.1) Rama development o testing
+### 8.1. Rama development o testing
 La parte del debug de la aplicación está configurada en las ramas de **development y testing**. Por lo que puedes acceder a
 cualquiera de ellas, para realizar la depuración, solo cambia a cualquiera de estas dos ramas:
 
 Rama development
 ```bash
-git checkout development
+git switch development
 ```
 
 Rama testing
 ```bash
-git checkout testing
+git switch testing
 ```
 
-### 8.2) Instalar dependencias
-Ahora solo instala las **dependencias** necesarias para poder depurar la aplicación, ejecuta este comando:
+### 8.2. Instalar dependencias
+Ahora solo instale las **dependencias** necesarías para poder depurar la aplicación, ejecute el siguiente comando:
 
 ```bash
 yarn install
 ```
 
-### 8.3) Máquina virtual o dispositivo físico
-Como recordatorio debes tener un **emulador o máquina virtual de Android Studio** corriendo para realizar la depuración o también
-puedes usar tu **dispositivo físico** en caso de que tu computadora no soporte las **máquinas virtuales**.
+### 8.3. Máquina virtual o dispositivo físico
+Como recordatorio debe tener un **emulador o máquina virtual de Android Studio** corriendo para realizar la depuración o también
+puede usa su **dispositivo físico** en caso de que su computadora no soporte las **máquinas virtuales**.
 
-### 8.4) Correr aplicación
-Ahora simplemente hay que correr la aplicación, ejecuta este comando:
+### 8.4. Correr aplicación
+Ahora simplemente hay que correr la aplicación, ejecute este comando:
 
 ```bash
 yarn android
 ```
 
-### 8.5) Flipper
-Ya habiendo seguido todos los pasos con éxito solo nos queda **abrir el programa de Flipper**, cuando lo abras verás que sale
-el **dispositivo sea físico o virtual**, das un clic para seleccionarlo y listo. Ya puedes comenzar a depurar la aplicación.
+### 8.5. Reactotron
+Ya habiendo seguido todos los pasos con éxito solo nos queda **abrir el programa de Reactotron**, cuando lo abra espere que 
+detecte la aplicación que ya está corriendo. En caso de que no funcione se puede asegurar la conexión, ejecute el siguiente 
+comando en la raíz del proyecto:
+
+```bash
+adb reverse tcp:9090 tcp:9090
+```
 
 <br>
 
