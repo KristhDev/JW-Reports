@@ -110,10 +110,10 @@ export const CourseCard: FC<CourseCardProps> = ({ course, onActiveOrSuspend, onD
                 foreground: true
             }}
             onPress={ handleCourseDetail }
-            style={{ ...styles.touchable, width: width - margins.sm }}
-            testID="course-card-touchable"
+            style={{ ...styles.pressable, width: width - margins.sm }}
+            testID="course-card-pressable"
         >
-            <View style={ styles.container }>
+            <View style={ styles.cardContainer }>
 
                 {/* Course status */}
                 <Text

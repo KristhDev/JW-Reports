@@ -87,11 +87,11 @@ const LessonDetail = (): JSX.Element => {
                 />
 
                 {/* Lesson status */}
-                <View
-                    style={ styles.sectionStyle }
-                    testID="lesson-detail-status-section"
-                >
-                    <Text style={{ ...styles.sectionSubTitle, marginBottom: 0 }}>
+                <View style={ styles.sectionContainer }>
+                    <Text
+                        style={{ ...styles.sectionSubTitle, marginBottom: 0 }}
+                        testID="lesson-detail-status-text"
+                    >
                         Estado de la clase: { statusLessonText }
                     </Text>
 
@@ -99,32 +99,34 @@ const LessonDetail = (): JSX.Element => {
                         activeOpacity={ 0.75 }
                         onPress={ () => setShowFSModal(true) }
                     >
-                        <Text style={ styles.sectionTextLink }>
+                        <Text
+                            style={ styles.sectionTextLink }
+                            testID="lesson-detail-status-text-touchable"
+                        >
                             { (!selectedLesson.done) ? '¿Terminar clase?' : '¿Reprogramar?' }
                         </Text>
                     </TouchableOpacity>
                 </View>
 
                 {/* Lesson description */}
-                <View
-                    style={ styles.sectionStyle }
-                    testID="lesson-detail-description-section"
-                >
-                    <Text style={ styles.sectionSubTitle }>
-                        {
-                            (selectedLesson.done)
-                                ? 'Se analizo:'
-                                : 'Se analizará:'
-                        }
+                <View style={ styles.sectionContainer }>
+                    <Text
+                        style={ styles.sectionSubTitle }
+                        testID="lesson-detail-description-subtitle"
+                    >
+                        { (selectedLesson.done) ? 'Se analizo:' : 'Se analizará:' }
                     </Text>
 
-                    <Text style={ styles.sectionText }>
+                    <Text
+                        style={ styles.sectionText }
+                        testID="lesson-detail-description-text"
+                    >
                         { selectedLesson.description }
                     </Text>
                 </View>
 
                 {/* Lesson create date */}
-                <View style={ styles.sectionStyle }>
+                <View style={ styles.sectionContainer }>
                     <Text style={ styles.sectionSubTitle }>
                         Fecha:
                     </Text>

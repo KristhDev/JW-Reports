@@ -20,7 +20,7 @@ import {
     ReplaceLastLessonInCoursePayload,
     SetCoursesPayload,
 } from '../interfaces';
-import { LessonPayload, SetLessonsPayload } from '../../lessons';
+import { LessonPayload } from '../../lessons';
 
 /* Initial course */
 export const INIT_COURSE: Course = {
@@ -175,21 +175,6 @@ const courseSlice = createSlice({
             state.isCourseLoading = false;
         },
 
-        setLastLessonInCourses: (state, action: PayloadAction<SetLessonsPayload>) => {
-            state.courses = state.courses.map(c =>
-                (action.payload.lessons.length > 0 && c.id === action.payload.lessons[0].courseId && (!c.lastLesson || c.lastLesson.id !== action.payload.lessons[0].id))
-                    ? { ...c, lastLesson: action.payload.lessons[0] }
-                    : c
-            );
-
-            state.selectedCourse =
-                (action.payload.lessons.length > 0 && state.selectedCourse.id === action.payload.lessons[0].courseId
-                    && (!state.selectedCourse.lastLesson || state.selectedCourse.lastLesson.id !== action.payload.lessons[0].id)
-                )
-                    ? { ...state.selectedCourse, lastLesson: action.payload.lessons[0] }
-                    : state.selectedCourse;
-        },
-
         updateCourse: (state, action: PayloadAction<CoursePayload>) => {
             state.courses = filterCoursesBy(state.courses.map(course =>
                 (course.id === action.payload.course.id)
@@ -236,7 +221,6 @@ export const {
     setIsCourseDeleting,
     setIsCourseLoading,
     setIsCoursesLoading,
-    setLastLessonInCourses,
     setRefreshCourses,
     setSelectedCourse,
     updateCourse,

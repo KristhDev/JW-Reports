@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
 import { Pressable, Text, View } from 'react-native';
-import Icon from 'react-native-vector-icons/Ionicons';
 import { useStyles } from 'react-native-unistyles';
+import Icon from 'react-native-vector-icons/Ionicons';
 
 /* Interfaces */
 import { CheckboxProps } from './interfaces';
@@ -32,7 +32,7 @@ export const Checkbox: FC<CheckboxProps> = ({ label, onPress, status, style, tex
                     borderless: true,
                     radius: styles.checkbox.width - 2
                 }}
-                testID="checkbox-touchable"
+                testID="checkbox-pressable"
             >
                 <View
                     style={{

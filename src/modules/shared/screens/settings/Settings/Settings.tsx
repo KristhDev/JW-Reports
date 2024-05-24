@@ -4,7 +4,7 @@ import { useStyles } from 'react-native-unistyles';
 import { useNavigation } from '@react-navigation/native';
 
 /* Env */
-import { APP_VERSION, REPOSITORY_URL } from '@env';
+import { REPOSITORY_URL } from '@env';
 
 /* Modules */
 import { SectionBtn, SectionContent } from '../../../../ui';
@@ -13,6 +13,9 @@ import { ThemeModal, useTheme } from '../../../../theme';
 
 /* Utils */
 import { THEME_OPTIONS } from '../../../../theme';
+
+/* Package */
+import { version as appVersion } from '../../../../../../package.json';
 
 /**
  * This screen is responsible for displaying all the app's settings through
@@ -86,7 +89,7 @@ const Settings = (): JSX.Element => {
                 >
                     <SectionBtn
                         onPress={ () => {} }
-                        subText={ APP_VERSION }
+                        subText={ appVersion }
                         text="Versión"
                     />
 

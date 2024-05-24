@@ -1,5 +1,3 @@
-import hexToRgba from 'hex-to-rgba';
-
 import { Colors } from '../interfaces';
 
 /* Exporting the object `lightColors` as a constant. */
@@ -7,9 +5,8 @@ export const lightColors: Colors = {
     background: '#F1F1F1',
     bottom: '#D8D8D8',
     button: '#5A3D86',
-    buttonTranslucent: hexToRgba('#5A3D86', 0.25),
+    buttonTranslucent: 'rgba(90, 61, 134, 0.25)',
     buttonTransparent: 'rgba(0, 0, 0, 0.15)',
-    buttonDark: '#3B2758',
     card: '#F1F1F1',
     contentHeader: '#FFFFFF',
     focus: '#D8981A',
@@ -23,7 +20,7 @@ export const lightColors: Colors = {
     navbar: '#FFFFFF',
     text: '#000000',
     titleSecondary: '#5A7475',
-    titleText: '#292929',
+    titleText: '#292929'
 }
 
 /* Exporting the object `darkColors` as a constant. */
@@ -31,8 +28,7 @@ export const darkColors: Colors = {
     background: '#000000',
     bottom: '#292929',
     button: '#C0A7E1',
-    buttonDark: '#9C85B9',
-    buttonTranslucent: hexToRgba('#C0A7E1', 0.50),
+    buttonTranslucent: 'rgba(192, 167, 225, 0.50)',
     buttonTransparent: 'rgba(255, 255, 255, 0.15)',
     card: '#292929',
     contentHeader: '#121212',

@@ -4,8 +4,8 @@ import { useStyles } from 'react-native-unistyles';
 import Icon from 'react-native-vector-icons/Ionicons';
 
 /* Modules */
-import { LessonCard, useCourses, PassToCourseModal } from '../../../courses';
-import { FinishOrStartLessonModal, INIT_LESSON, LessonWithCourse, useLessons } from '../../../lessons';
+import { useCourses, PassToCourseModal } from '../../../courses';
+import { FinishOrStartLessonModal, INIT_LESSON, LessonCard, LessonWithCourse, useLessons } from '../../../lessons';
 import { INIT_REVISIT, RevisitCard, Revisit, RevisitModal, useRevisits } from '../../../revisits';
 
 /* Components */

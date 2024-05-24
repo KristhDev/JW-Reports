@@ -8,7 +8,6 @@ export const emailFormSchema = (email: string) => object().shape({
         .required('El correo electrónico es requerido.')
 });
 
-
 /* Validation schema for new password */
 export const passwordFormSchema = object().shape({
     password: string()

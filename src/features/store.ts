@@ -4,12 +4,12 @@ import { persistReducer, persistStore } from 'reduxjs-toolkit-persist';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 /* Reducers */
-import { authReducer } from '../modules/auth';
-import { coursesReducer } from '../modules/courses';
-import { lessonsReducer } from '../modules/lessons';
-import { permissionsReducer, statusReducer } from '../modules/shared';
-import { preachingReducer } from '../modules/preaching';
-import { revisitsReducer } from '../modules/revisits';
+import { authReducer } from '../modules/auth/features';
+import { coursesReducer } from '../modules/courses/features';
+import { lessonsReducer } from '../modules/lessons/features';
+import { permissionsReducer, statusReducer } from '../modules/shared/features';
+import { preachingReducer } from '../modules/preaching/features';
+import { revisitsReducer } from '../modules/revisits/features';
 
 /* Utils */
 import { asyncStorageKeys } from '../utils';
@@ -43,7 +43,7 @@ export const store = configureStore({
     enhancers: (getDefaultEnhancers) => {
         const enhancers = getDefaultEnhancers();
 
-        if (__DEV__) enhancers.push(reactotron.createEnhancer!());
+        if (__DEV__ && !process.env.JEST_WORKER_ID) enhancers.push(reactotron.createEnhancer!());
         return enhancers;
     },
     middleware: (getDefaultMiddleware) => getDefaultMiddleware({ serializableCheck: false })

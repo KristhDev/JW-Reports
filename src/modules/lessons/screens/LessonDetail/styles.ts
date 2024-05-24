@@ -1,7 +1,7 @@
 import { createStyleSheet } from 'react-native-unistyles';
 
 const styles = createStyleSheet(({ colors, fontSizes, margins }) => ({
-    sectionStyle: {
+    sectionContainer: {
         paddingBottom: margins.md,
         width: '100%'
     },

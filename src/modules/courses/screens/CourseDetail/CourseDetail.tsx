@@ -110,7 +110,7 @@ const CourseDetail = (): JSX.Element => {
                 />
 
                 {/* Course status */}
-                <View style={ styles.sectionStyle }>
+                <View style={ styles.sectionContainer }>
                     <Text
                         style={{ ...styles.sectionSubTitle, marginBottom: 0 }}
                         testID="course-detail-status"
@@ -142,35 +142,38 @@ const CourseDetail = (): JSX.Element => {
                 </View>
 
                 {/* Text person about */}
-                <View
-                    style={ styles.sectionStyle }
-                    testID="course-detail-about-section"
-                >
-                    <Text style={ styles.sectionSubTitle }>
+                <View style={ styles.sectionContainer }>
+                    <Text
+                        style={ styles.sectionSubTitle }
+                        testID="course-detail-about-subtitle"
+                    >
                         Información de { selectedCourse.personName }:
                     </Text>
 
-                    <Text style={ styles.sectionText }>
+                    <Text
+                        style={ styles.sectionText }
+                        testID="course-detail-about-text"
+                    >
                         { selectedCourse.personAbout }
                     </Text>
                 </View>
 
                 {/* Text person address */}
-                <View
-                    style={ styles.sectionStyle }
-                    testID="course-detail-address-section"
-                >
+                <View style={ styles.sectionContainer }>
                     <Text style={ styles.sectionSubTitle }>
                         Dirección:
                     </Text>
 
-                    <Text style={ styles.sectionText }>
+                    <Text
+                        style={ styles.sectionText }
+                        testID="course-detail-address-text"
+                    >
                         { selectedCourse.personAddress }
                     </Text>
                 </View>
 
                 {/* Course last lesson */}
-                <View style={ styles.sectionStyle }>
+                <View style={ styles.sectionContainer }>
                     <Text style={ styles.sectionSubTitle }>
                         Última clase:
                     </Text>

@@ -17,7 +17,6 @@ export {
     setIsCourseDeleting,
     setIsCourseLoading,
     setIsCoursesLoading,
-    setLastLessonInCourses,
     setRefreshCourses,
     setSelectedCourse,
     updateCourse,

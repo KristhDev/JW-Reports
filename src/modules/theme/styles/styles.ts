@@ -74,7 +74,7 @@ const styles = createStyleSheet(({ colors, fontSizes, margins }) => ({
         fontSize: margins.sm
     },
 
-    formSelectTouchableContainer: {
+    formSelectPressableContainer: {
         alignItems: 'center',
         flexDirection: 'row',
         padding: (margins.xs + 2)

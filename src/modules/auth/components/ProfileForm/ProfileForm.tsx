@@ -134,8 +134,8 @@ export const ProfileForm = (): JSX.Element => {
                             />
                         ) }
                         onPress={ (isValid) ? handleSubmit : () => setErrorForm(errors)  }
+                        pressableStyle={{ marginBottom: top }}
                         text="Guardar"
-                        touchableStyle={{ marginBottom: top }}
                     />
                 </View>
             ) }

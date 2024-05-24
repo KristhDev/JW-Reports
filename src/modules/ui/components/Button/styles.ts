@@ -1,7 +1,7 @@
 import { createStyleSheet } from 'react-native-unistyles';
 
 const styles = createStyleSheet(({ colors, fontSizes, margins }) =>({
-    buttonTouchable: {
+    buttonPressable: {
         borderRadius: 10,
         backgroundColor: colors.button,
     },

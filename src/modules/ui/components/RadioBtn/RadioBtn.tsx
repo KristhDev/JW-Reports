@@ -34,6 +34,7 @@ export const RadioBtn: FC<RadioBtnProps> = ({ isSelected, label, onPress, style 
                     radius: 15
                 }}
                 onPress={ onPress }
+                testID="radio-btn-pressable"
             >
                 <View
                     style={{

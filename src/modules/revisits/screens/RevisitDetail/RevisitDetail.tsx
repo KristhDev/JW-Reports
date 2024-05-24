@@ -127,29 +127,32 @@ const RevisitDetail = (): JSX.Element => {
                 ) }
 
                 {/* About section of revisit */}
-                <View
-                    style={ styles.sectionStyle }
-                    testID="revisit-detail-about-section"
-                >
-                    <Text style={ styles.sectionSubTitle }>
+                <View style={ styles.sectionStyle }>
+                    <Text
+                        style={ styles.sectionSubTitle }
+                        testID="revisit-detail-about-subtitle"
+                    >
                         Información de { selectedRevisit.personName }:
                     </Text>
 
-                    <Text style={ styles.sectionText }>
+                    <Text
+                        style={ styles.sectionText }
+                        testID="revisit-detail-about-text"
+                    >
                         { selectedRevisit.about }
                     </Text>
                 </View>
 
                 {/* Address section of revisit */}
-                <View
-                    style={ styles.sectionStyle }
-                    testID="revisit-detail-address-section"
-                >
+                <View style={ styles.sectionStyle }>
                     <Text style={ styles.sectionSubTitle }>
                         Dirección:
                     </Text>
 
-                    <Text style={ styles.sectionText }>
+                    <Text
+                        style={ styles.sectionText }
+                        testID="revisit-detail-address-text"
+                    >
                         { selectedRevisit.address }
                     </Text>
                 </View>

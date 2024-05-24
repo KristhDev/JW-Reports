@@ -1,9 +1,3 @@
-/**
- *  The `export const authErrorMessages` is an object that contains error messages in English as keys
- * and their corresponding translations in Spanish as values. These error messages are related to
- * authentication and are used in the `translateErrorMsg` function to translate error messages from
- * English to Spanish.
- */
 export const authErrorMessages = {
     'Invalid login credentials': 'Las credenciales no son válidas.',
     'Unable to validate email address: invalid format': 'El formato del correo electrónico no es válido.',
@@ -22,12 +16,11 @@ export const commonErrorMessages = {
 }
 
 /**
- * The function translates error messages in TypeScript.
- * @param {string} message - The message parameter is a string that represents an error message that
- * needs to be translated.
+ * Translates an error message to its corresponding value in the authErrorMessages or commonErrorMessages objects.
+ * If the message is not found in either object, it returns a default error message.
  *
- * @return {string} The function `translateErrorMsg` takes in a string parameter `message` and returns a
- * string.
+ * @param {string} message - The error message to be translated.
+ * @return {string} The translated error message or the default error message.
  */
 export const translateErrorMsg = (message: string) => {
     return (authErrorMessages as any)[message]

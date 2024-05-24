@@ -24,7 +24,7 @@ export const SectionBtn: FC<SectionBtnProps> = ({ onPress, subText, text }): JSX
             android_ripple={{ color: colors.buttonTransparent }}
             onPress={ onPress }
             style={{ padding: margins.sm }}
-            testID="section-btn-touchable"
+            testID="section-btn-pressable"
         >
             <View>
                 <Text

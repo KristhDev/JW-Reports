@@ -32,7 +32,7 @@ const ThemeProvider: FC<PropsWithChildren> = ({ children }) => {
      * @param {Theme | 'default'} theme - The theme to set. If 'default', the theme will be set based on the color scheme.
      * @return {Promise<void>} - A promise that resolves when the theme is set.
      */
-    const setTheme = async (theme: Theme | 'default') => {
+    const setTheme = async (theme: Theme | 'default'): Promise<void> => {
         let userTheme = theme;
         if (userTheme === 'default') userTheme = UnistylesRuntime.colorScheme as any;
 

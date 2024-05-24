@@ -1,6 +1,6 @@
 {
   "name": "jwreports",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "private": true,
   "license": "CC-BY 4.0",
   "scripts": {
@@ -15,9 +15,7 @@
     "@react-native-community/datetimepicker": "^8.0.0",
     "@react-native-community/netinfo": "^11.3.1",
     "@react-native-masked-view/masked-view": "^0.3.1",
-    "@react-native-picker/picker": "^2.7.5",
     "@react-navigation/bottom-tabs": "^6.5.20",
-    "@react-navigation/devtools": "^6.0.26",
     "@react-navigation/material-top-tabs": "^6.6.13",
     "@react-navigation/native": "^6.1.17",
     "@react-navigation/stack": "^6.3.29",
@@ -26,7 +24,6 @@
     "base64-arraybuffer": "^1.0.2",
     "dayjs": "^1.11.11",
     "formik": "^2.4.6",
-    "hex-to-rgba": "^2.0.1",
     "react": "18.2.0",
     "react-native": "0.74.1",
     "react-native-dotenv": "^3.4.11",

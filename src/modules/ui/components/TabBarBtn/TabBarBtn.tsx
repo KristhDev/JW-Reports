@@ -55,7 +55,7 @@ export const TabBarBtn: FC<TabBarBtnProps> = ({ active, color, iconName, onPress
                 radius: width / (totalTabs * 2)
             }}
             onPress={ onPress }
-            style={ styles.touchable }
+            style={ styles.pressable }
         >
             <>
                 <Icon
