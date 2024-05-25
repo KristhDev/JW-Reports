@@ -157,8 +157,8 @@ de los datos y envía la notificación al usuario. Para esto se realiza una **pe
 cron que ofrecen algunos servicios en la nube se realiza la petición para enviar las notificaciones.
 
 ### 3.5. Enlaces
- * [Sitio Web](https://github.com/KristhDev/JW-Reports-auth-web-site)
- * [Server](https://github.com/KristhDev/JW-Reports-notifications-rest-server)
+ * [Sitio Web](https://github.com/KristhDev/JW-Reports-auth-web)
+ * [Server](https://github.com/KristhDev/JW-Reports-notifications-server)
 
 <br>
 
@@ -570,8 +570,8 @@ Finalmente, tiene otra pestaña llamada **Email templates** donde puede **cambia
 para confirmar correos y cambiar contraseñas.
 
 Igualmente, le dejo ambos links de los repositorios de estas partes para más información:
- * [Sitio web](https://github.com/KristhDev/JW-Reports-auth-web-site)
- * [Servidor de notificaciones](https://github.com/KristhDev/JW-Reports-notifications-rest-server)
+ * [Sitio web](https://github.com/KristhDev/JW-Reports-auth-web)
+ * [Servidor de notificaciones](https://github.com/KristhDev/JW-Reports-notifications-server)
 
 ### 5.9. One Signal
 Para el envío de notificaciones se usa el **servicio OneSignal**, que es el más utilizado para este tipo de funcionalidad. Para
