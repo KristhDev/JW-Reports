@@ -1,31 +1,26 @@
 import React, { useEffect } from 'react';
-import { Provider } from 'react-redux';
-import { PersistGate } from 'reduxjs-toolkit-persist/lib/integration/react';
 import { NavigationContainer } from '@react-navigation/native';
-import { MenuProvider } from 'react-native-popup-menu';
-import { Provider as PaperProvider } from 'react-native-paper';
 import SplashScreen from 'react-native-splash-screen';
-import { LogLevel, OneSignal } from 'react-native-onesignal';
-import dayjs from 'dayjs';
 import weekday from 'dayjs/plugin/weekday';
 import 'dayjs/locale/es';
 
-/* Env */
-import { ONESIGNAL_APP_ID } from '@env';
+import './src/config/unistyles';
 
-/* Features */
-import { store, persistor } from './src/features';
-
-/* Context */
-import { ThemeProvider } from './src/theme';
-import { NetworkProvider } from './src/context';
+/* Providers */
+import { Provider } from './src/providers';
 
 /* Navigation */
 import { Navigation } from './src/navigation';
 
-/* Global config of dayjs */
-dayjs.extend(weekday);
-dayjs.locale('es');
+/* Services */
+import { notifications } from './src/services';
+
+/* Utils */
+import { date } from './src/utils';
+
+/* Global config of date util */
+date.extend(weekday);
+date.setLocale('es');
 
 /**
  * This is the entry point of the app that renders all the necessary
@@ -33,36 +28,25 @@ dayjs.locale('es');
  */
 const App = () => {
   /**
-   * Effect to initialize the OneSignal SDK and
-   * listen for push notifications.
+   * Effect to mount service for notifications.
    */
   useEffect(() => {
-    OneSignal.Debug.setLogLevel(LogLevel.Verbose);
-    OneSignal.initialize(ONESIGNAL_APP_ID);
-
-    OneSignal.Notifications.requestPermission(true);
+    notifications.mount();
   }, []);
 
+  /**
+   * Effect to hide splash screen
+   */
   useEffect(() => {
     SplashScreen.hide();
   }, []);
 
   return (
-    <NetworkProvider>
-      <MenuProvider>
-        <ThemeProvider>
-          <Provider store={ store }>
-            <PersistGate loading={ null } persistor={ persistor }>
-              <PaperProvider>
-                <NavigationContainer>
-                  <Navigation />
-                </NavigationContainer>
-              </PaperProvider>
-            </PersistGate>
-          </Provider>
-        </ThemeProvider>
-      </MenuProvider>
-    </NetworkProvider>
+    <Provider>
+      <NavigationContainer>
+        <Navigation />
+      </NavigationContainer>
+    </Provider>
   );
 }
 

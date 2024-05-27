@@ -1,5 +1,5 @@
 module.exports = {
-  presets: ['module:metro-react-native-babel-preset'],
+  presets: ['module:@react-native/babel-preset'],
   plugins: [
     [ 'module:react-native-dotenv', {
       'envName': 'APP_ENV',
@@ -14,10 +14,5 @@ module.exports = {
       'verbose': false
     } ],
     'react-native-reanimated/plugin'
-  ],
-  env: {
-    production: {
-      plugins: ['react-native-paper/babel'],
-    },
-  }
+  ]
 };

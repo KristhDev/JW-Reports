@@ -2,17 +2,18 @@ import React, { useEffect } from 'react';
 import { AppState, StatusBar } from 'react-native';
 import { CardStyleInterpolators, createStackNavigator } from '@react-navigation/stack';
 
+/* Modules */
+import { NavigationParamsList } from '../modules/ui';
+import { AuthStackNavigation, useAuth } from '../modules/auth';
+import { SettingsStackNavigation, StatusModal, useNetwork, usePermissions, useStatus } from '../modules/shared';
+import { useCourses } from '../modules/courses';
+import { useLessons } from '../modules/lessons';
+import { usePreaching } from '../modules/preaching';
+import { useRevisits } from '../modules/revisits';
+import { useTheme } from '../modules/theme';
+
 /* Navigation */
-import { AuthStackNavigation, MainTabsBottomNavigation, SettingsStackNavigation } from './';
-
-/* Screens */
-import { StatusModal } from '../screens/status';
-
-/* Hooks */
-import { useAuth, useCourses, useNetwork, usePermissions, usePreaching, useRevisits, useStatus, useTheme } from '../hooks';
-
-/* Interfaces */
-import { NavigationParamsList } from '../interfaces';
+import MainTabsBottomNavigation from './MainTabsBottomNavigation';
 
 const Stack = createStackNavigator<NavigationParamsList>();
 
@@ -22,13 +23,14 @@ const Stack = createStackNavigator<NavigationParamsList>();
  * @return {JSX.Element} rendered component to show navigation
  */
 const Navigation = (): JSX.Element => {
-    const { state: { isAuthenticated }, renew } = useAuth();
     const { checkPermissions } = usePermissions();
     const { clearCourses } = useCourses();
+    const { clearLessons } = useLessons();
     const { clearPreaching } = usePreaching();
     const { clearRevisits } = useRevisits();
     const { clearStatus } = useStatus();
-    const { state: { selectedTheme, } } = useTheme();
+    const { state: { isAuthenticated }, refreshAuth } = useAuth();
+    const { state: { theme } } = useTheme();
     const { wifi } = useNetwork();
 
     /**
@@ -40,10 +42,11 @@ const Navigation = (): JSX.Element => {
 
         if (wifi.isConnected) {
             clearCourses();
+            clearLessons();
             clearPreaching();
             clearRevisits();
 
-            renew();
+            refreshAuth();
         }
     }, []);
 
@@ -66,17 +69,13 @@ const Navigation = (): JSX.Element => {
             <StatusBar
                 animated
                 backgroundColor="transparent"
-                barStyle={ (selectedTheme === 'dark') ? 'light-content' : 'dark-content' }
+                barStyle={ (theme === 'dark') ? 'light-content' : 'dark-content' }
                 translucent
             />
 
             <StatusModal />
 
-            <Stack.Navigator
-                screenOptions={{
-                    headerShown: false
-                }}
-            >
+            <Stack.Navigator screenOptions={{ headerShown: false }}>
                 { (isAuthenticated) ? (
                     <>
                         <Stack.Screen
