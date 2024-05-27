@@ -539,7 +539,7 @@ Ahora el siguiente paso es clonar el repositorio de la aplicación móvil, copi
 git clone https://github.com/KristhDev/JW-Reports.git
 ```
 
-### 5.7) Instalar dependencias
+### 5.7. Instalar dependencias
 Lo siguiente para que la aplicación funcione de la forma correcta es **instalar sus dependencias**, lo puedee hacer con el
 siguiente comando:
 
