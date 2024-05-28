@@ -254,14 +254,13 @@ const useLessons = () => {
             .in('course_id', [ dataCourses!.map(({ id }) => id) ])
             .order('next_lesson', { ascending: false })
             .limit(1)
-            .single();
 
         const nextLesson = setSupabaseError(error, status, () => setIsLastLessonLoading(false));
         if (nextLesson) return;
 
         dispatch(addLastLesson({
-            lesson: (data)
-                ? { ...lessonAdapter(data!), course: courseAdapter(data!.courses) }
+            lesson: (data && data.length > 0)
+                ? { ...lessonAdapter(data[0]), course: courseAdapter(data[0].courses) }
                 : { ...INIT_LESSON, course: INIT_COURSE }
         }));
     }

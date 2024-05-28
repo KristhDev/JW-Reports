@@ -43,7 +43,7 @@ export const RegisterForm = (): JSX.Element => {
                 password: '',
                 confirmPassword: ''
             }}
-            onSubmit={ signUp }
+            onSubmit={ (values, { resetForm }) => signUp(values, resetForm) }
             validateOnMount
             validationSchema={ registerFormSchema }
         >
