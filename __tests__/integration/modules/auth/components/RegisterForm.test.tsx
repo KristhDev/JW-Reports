@@ -68,7 +68,7 @@ describe('Test in <RegisterForm /> component', () => {
             email,
             password,
             confirmPassword: password
-        }, expect.any(Object));
+        }, expect.any(Function));
     });
 
     it('should call navigate of useNavigation with respective values', async () => {
