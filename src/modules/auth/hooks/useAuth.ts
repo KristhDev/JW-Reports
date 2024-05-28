@@ -195,13 +195,20 @@ const useAuth = () => {
             return;
         }
 
-        const { error } = await supabase.auth.signOut();
-
-        const next = setSupabaseError(error, 400, () => {
-            dispatch(setIsAuthLoading({ isLoading: false }));
+        const next = setSupabaseError(result.error, 400, () => {
+            dispatch(clearAuthAction());
+            notifications.close();
         });
 
         if (next) return;
+
+        const { error: errorSignOut } = await supabase.auth.signOut();
+
+        const nextSignOut = setSupabaseError(errorSignOut, 400, () => {
+            dispatch(setIsAuthLoading({ isLoading: false }));
+        });
+
+        if (nextSignOut) return;
         onSuccess && onSuccess();
 
         let msg = `Hemos enviado un correo de confirmación a ${email }. `
