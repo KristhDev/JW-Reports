@@ -43,11 +43,10 @@ const useAuth = () => {
      * If the response is an error, set the error and return, otherwise
      * set the user.
      * @param {AuthResponse} AuthResponse - this is the response from the API call.
-     * @param {boolean} isNew - this is a flag indicating whether the user is a new user or not.
      *
      * @return {void} This function does not return any value.
      */
-    const setUser = ({ data: { user, session }, error }: AuthResponse, isNew: boolean = false): void => {
+    const setUser = ({ data: { user, session }, error }: AuthResponse): void => {
         const next = setSupabaseError(error, 400, () => {
             dispatch(clearAuthAction());
             notifications.close();
@@ -65,13 +64,6 @@ const useAuth = () => {
                 email: user?.email,
             } as UserEndpoint)
         }));
-
-        if (isNew) {
-            let msg = `Hemos enviado un correo de confirmación a ${ user!.email }. `
-            msg += 'Por favor, revíselo y siga los pasos que se le indiquen.';
-
-            setStatus({ code: 200, msg });
-        }
     }
 
     /**
@@ -168,9 +160,10 @@ const useAuth = () => {
      * @param {SignUpData} surname - The surname of the user.
      * @param {SignUpData} email - The email of the user.
      * @param {SignUpData} password - The password of the user.
+     * @param {() => void} onSuccess - A function to be called when the sign-up process is successful.
      * @return {Promise<void>} A promise that resolves when the sign-up process is complete.
      */
-    const signUp = async ({ name, surname, email, password }: SignUpData): Promise<void> => {
+    const signUp = async ({ name, surname, email, password }: SignUpData, onSuccess?: () => void): Promise<void> => {
         if (!wifi.isConnected) {
             setNetworkError('Lo sentimos pero no dispones de conexión a Internet.');
             return;
@@ -202,9 +195,28 @@ const useAuth = () => {
             return;
         }
 
-        setUser(result, true);
-    }
+        const next = setSupabaseError(result.error, 400, () => {
+            dispatch(clearAuthAction());
+            notifications.close();
+        });
 
+        if (next) return;
+
+        const { error: errorSignOut } = await supabase.auth.signOut();
+
+        const nextSignOut = setSupabaseError(errorSignOut, 400, () => {
+            dispatch(setIsAuthLoading({ isLoading: false }));
+        });
+
+        if (nextSignOut) return;
+        onSuccess && onSuccess();
+
+        let msg = `Hemos enviado un correo de confirmación a ${email }. `
+            msg += 'Por favor, revíselo y siga los pasos que se le indiquen.';
+
+        dispatch(setIsAuthLoading({ isLoading: false }));
+        setStatus({ code: 200, msg });
+    }
 
     /**
      * Updates the user's email and handles the necessary validations and status updates.

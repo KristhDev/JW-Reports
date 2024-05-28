@@ -237,14 +237,13 @@ const useRevisits = () => {
             .select<'*', RevisitEndpoint>('*')
             .eq('user_id', user.id)
             .order('next_visit', { ascending: false })
-            .limit(1)
-            .single();
+            .limit(1);
 
         const next = setSupabaseError(error, status, () => dispatch(setIsLastRevisitLoading({ isLoading: false })));
         if (next) return;
 
         dispatch(setLastRevisit({
-            revisit: (data) ? revisitAdapter(data) : INIT_REVISIT
+            revisit: (data && data?.length > 0) ? revisitAdapter(data[0]) : INIT_REVISIT
         }));
     }
 
