@@ -44,6 +44,9 @@ import {
     SaveRevisitOptions
 } from '../interfaces';
 
+/* Services */
+import { logger } from '../../../services';
+
 /* Utils */
 import { date } from '../../../utils';
 
@@ -118,7 +121,7 @@ const useRevisits = () => {
             .single();
 
         if (error) {
-            console.log(error);
+            logger.error({ ...error, message: error.message });
             onFailFinish && onFailFinish();
             dispatch(setIsRevisitLoading({ isLoading: false }));
             setStatus({ code: 400, msg: error.message });
