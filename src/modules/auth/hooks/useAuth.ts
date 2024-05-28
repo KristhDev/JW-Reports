@@ -48,6 +48,10 @@ const useAuth = () => {
      */
     const setUser = ({ data: { user, session }, error }: AuthResponse): void => {
         const next = setSupabaseError(error, 400, () => {
+            dispatch(clearCourses());
+            dispatch(clearLessons());
+            dispatch(clearPreaching());
+            dispatch(clearRevisits());
             dispatch(clearAuthAction());
             notifications.close();
         });
@@ -142,8 +146,7 @@ const useAuth = () => {
         if (wifi.isConnected) {
             const { error } = await supabase.auth.signOut();
             notifications.close();
-            const next = setSupabaseError(error, 500);
-            if (next) return;
+            setSupabaseError(error, 500);
         }
 
         dispatch(clearCourses());
@@ -191,6 +194,8 @@ const useAuth = () => {
                 code: 400,
                 msg: 'Lo sentimos, pero este correo ya está registrado.'
             });
+
+            await supabase.auth.signOut();
 
             return;
         }
