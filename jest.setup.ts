@@ -43,6 +43,16 @@ jest.spyOn(Image, 'resolveAssetSource').mockImplementation(() => ({
     scale: 1
 }));
 
+jest.mock('@bugfender/rn-bugfender', () => {
+    const real = jest.requireActual('@bugfender/rn-bugfender');
+
+    return {
+        ...real,
+        init: jest.fn(),
+        sendLog: jest.fn()
+    }
+});
+
 jest.mock('react-native/Libraries/Animated/NativeAnimatedHelper');
 jest.mock('react-native/Libraries/EventEmitter/NativeEventEmitter');
 
