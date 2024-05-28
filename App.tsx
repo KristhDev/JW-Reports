@@ -13,7 +13,7 @@ import { Provider } from './src/providers';
 import { Navigation } from './src/navigation';
 
 /* Services */
-import { notifications } from './src/services';
+import { logger, notifications } from './src/services';
 
 /* Utils */
 import { date } from './src/utils';
@@ -32,6 +32,13 @@ const App = () => {
    */
   useEffect(() => {
     notifications.mount();
+  }, []);
+
+  /**
+   * Effect to initialize logger
+   */
+  useEffect(() => {
+    logger.init();
   }, []);
 
   /**

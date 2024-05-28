@@ -1,4 +1,5 @@
 declare module '@env' {
+    export const BUGFENDER_API_KEY: string;
     export const REPOSITORY_URL: string;
     export const SITIE_URL: string;
     export const SUPABASE_APY_KEY: string;
