@@ -12,8 +12,6 @@ export const notifications = {
     mount: (): void => {
         OneSignal.Debug.setLogLevel(LogLevel.Verbose);
         OneSignal.initialize(ONESIGNAL_APP_ID);
-
-        OneSignal.Notifications.requestPermission(true);
     },
 
     /**
@@ -33,5 +31,14 @@ export const notifications = {
      */
     close: (): void => {
         OneSignal.logout();
+    },
+
+    /**
+     * Requests permission for notifications from the OneSignal SDK.
+     *
+     * @return {void} This function does not return anything.
+     */
+    requestPermission: (): void => {
+        OneSignal.Notifications.requestPermission(true);
     }
 }

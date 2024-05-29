@@ -15,6 +15,9 @@ import { useTheme } from '../modules/theme';
 /* Navigation */
 import MainTabsBottomNavigation from './MainTabsBottomNavigation';
 
+/* Services */
+import { notifications } from '../services';
+
 const Stack = createStackNavigator<NavigationParamsList>();
 
 /**
@@ -23,7 +26,7 @@ const Stack = createStackNavigator<NavigationParamsList>();
  * @return {JSX.Element} rendered component to show navigation
  */
 const Navigation = (): JSX.Element => {
-    const { checkPermissions } = usePermissions();
+    const { state: { permissions }, checkPermissions } = usePermissions();
     const { clearCourses } = useCourses();
     const { clearLessons } = useLessons();
     const { clearPreaching } = usePreaching();
@@ -48,6 +51,14 @@ const Navigation = (): JSX.Element => {
 
             refreshAuth();
         }
+    }, []);
+
+    /**
+     * Effect to request permission for notifications.
+     */
+    useEffect(() => {
+        if (permissions.notifications === 'denied') return;
+        notifications.requestPermission();
     }, []);
 
     /**
