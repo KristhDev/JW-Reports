@@ -15,6 +15,9 @@ import { usePermissions, useStatus } from './';
 /* Interfaces */
 import { StorageError } from '../../ui';
 
+/* Utils */
+import { deviceInfo } from '../../../utils';
+
 /**
  * This hook allows to group the functions and states in relation to the images.
  */
@@ -24,6 +27,8 @@ const useImage = () => {
     const { theme: { colors } } = useStyles();
 
     const [ image, setImage ] = useState<Image>({} as Image);
+
+    const androidVersion = deviceInfo.getDeviceSystemVersion();
 
     /**
      * It takes a URI, splits it into an array, and then removes the last item in the array
@@ -46,19 +51,20 @@ const useImage = () => {
      * @return {Promise<void>} This function does not return anything.
      */
     const takeImageToGallery = async (): Promise<void> => {
-        /* Asking for the mediaLibrary permission. */
-        if (permissions.mediaLibrary === 'unavailable') await askPermission('mediaLibrary');
+        /* Asking for the readExternalStorage or readMediaImages permission. */
+        if (permissions.readExternalStorage === 'unavailable' && androidVersion < '13') await askPermission('readExternalStorage');
+        if (permissions.readExternalStorage === 'unavailable' && androidVersion >= '13') await askPermission('readMediaImages');
 
-        /* This is a message that is shown to the user when the camera permission is denied. */
-        if (permissions.mediaLibrary === 'denied') {
+        /* This is a message that is shown to the user when the readExternalStorage or readMediaImages permission is denied. */
+        if ((permissions.readExternalStorage === 'denied' && androidVersion < '13') || (permissions.readMediaImages === 'denied' && androidVersion >= '13')) {
             setStatus({
                 msg: 'Para realizar está acción necesitas permisos del dispositivo, por favor abra la configuración de su dispositivo y active los permisos de la aplicación',
                 code: 400
             });
         }
 
-        /* This is the code that is executed when the camera permission is granted. */
-        if (permissions.mediaLibrary === 'granted') {
+        /* This is the code that is executed when the readExternalStorage or readMediaImages permission is granted. */
+        if ((permissions.readExternalStorage === 'granted' && androidVersion < '13') || (permissions.readMediaImages === 'granted' && androidVersion >= '13')) {
             try {
                 const result = await openPicker({
                     cropperActiveWidgetColor: colors.button,
