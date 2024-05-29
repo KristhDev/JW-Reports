@@ -121,11 +121,17 @@ desarrolladores supervisen el **estado de sus aplicaciones**, las solicitudes de
 puede utilizar para proyectos de cualquier tamaño, desde pequeñas aplicaciones personales hasta aplicaciones empresariales 
 de gran escala.
 
-### 2.5. Enlaces
+### 2.5. Bugfender
+Es un servicio de **almacenamiento de registros para desarrolladores de aplicaciones**. Bugfender recopila todo lo que sucede 
+en la aplicación, incluso si no falla, para **reproducir y resolver errores** de manera más efectiva y brindar una mejor 
+atención al cliente.
+
+### 2.6. Enlaces
  * [Node.js](https://nodejs.org)
  * [Yarn](https://yarnpkg.com)
  * [Android Studio](https://developer.android.com/studio)
  * [Reactotron](https://docs.infinite.red/reactotron)
+ * [Bugdefender](https://bugfender.com)
 
 <br>
 
@@ -589,7 +595,14 @@ aceptar se descargará el archivo JSON que se necesita.
 Ahora solo importe ese archivo, siga los pasos que le diga y **cree la aplicación de OneSignal**. Una vez creada y estando el 
 Dashboard vaya a la pestaña de **Keys & IDs** y copie el valor OneSignal App ID, este nos servirá para recibir las notificaciones.
 
-### 5.10. Variables de entorno
+### 5.10. Bugfender
+Como se vio, se usa bugfender para el registro de logs de la aplicación. Para usarlo hay que **crear una cuenta** en Bugfender y 
+luego un aplicación, solamente llene los campos que se le soliciten, cuando ya se haya creado la aplicación dirijase a la pestaña 
+de **configuración** y copie el valor de su API Key. Le dejo el link de Bugfender [aquí](https://bugfender.com).
+
+Cuando este corriendo la aplicación y surja algún error interno puede ver los logs en el **dashboard de Bugfender**.
+
+### 5.11. Variables de entorno
 En la raíz del proyecto encontrará un archivo ```.env.example``` que contiene todas las variables de entorno necesarias para el 
 proyecto, la única que tiene un valor es **REPOSITORY_URL** que es este mismo repositorio, renombre el archivo a ```.env.``` Si 
 ha seguido todos los pasos ya tiene todos los valores, simplemente **escribalos en el archivo .env**. A continuación le dejo una 
@@ -597,6 +610,7 @@ tabla con la explicación de cada una de las variables:
 
 | Variable                  | Explicación                                                   |
 |---------------------------|---------------------------------------------------------------|
+| BUGFENDER_API_KEY         | Clave de API de Bugfender                                    |
 | REPOSITORY_URL            | https://github.com/KristhDev/JW-Reports                       |
 | SITIE_URL                 | Sitio de Internet para la autenticación de los usuarios       |
 | SUPABASE_APY_KEY          | Clave de aplicación de Supabase                               |
@@ -606,7 +620,7 @@ tabla con la explicación de cada una de las variables:
 | SUPABASE_SERVICE_ROLE_KEY | Clave de rol para el servicio de Supabase (solo para testing) |
 | ONESIGNAL_APP_ID          | ID de la aplicación de OneSignal                              |
 
-### 5.11. Correr aplicación
+### 5.12. Correr aplicación
 Para esto necesita tener una **máquina virtual de Android Studio** ejecutándose, use la versión del **SDK de Android** más
 reciente y estable disponible, en la documentación oficial de Reacts Native le dice los pasos para este entorno, 
 clic [aquí](https://reactnative.dev/docs/set-up-your-environment).
