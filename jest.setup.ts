@@ -44,12 +44,14 @@ jest.spyOn(Image, 'resolveAssetSource').mockImplementation(() => ({
 }));
 
 jest.mock('@bugfender/rn-bugfender', () => {
-    const real = jest.requireActual('@bugfender/rn-bugfender');
+    const real = jest.requireActual<typeof import('@bugfender/rn-bugfender')>('@bugfender/rn-bugfender');
 
     return {
         ...real,
-        init: jest.fn(),
-        sendLog: jest.fn()
+        Bugfender: {
+            init: jest.fn(),
+            sendLog: jest.fn()
+        }
     }
 });
 
