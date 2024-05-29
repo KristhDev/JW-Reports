@@ -45,7 +45,14 @@ describe('Test in useAuth hook - signUp', () => {
         });
 
         /* Check if state is equal to initial state */
-        expect(result.current.useAuth.state).toEqual(initialAuthStateMock);
+        expect(result.current.useAuth.state).toEqual({
+            ...initialAuthStateMock,
+            user: {
+                ...initialAuthStateMock.user,
+                createdAt: expect.any(String),
+                updatedAt: expect.any(String)
+            }
+        });
 
         /* Check if status state is equal to respective object */
         expect(result.current.useStatus.state).toEqual({
