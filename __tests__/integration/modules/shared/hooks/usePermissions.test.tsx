@@ -47,14 +47,14 @@ describe('Test in usePermissions hook', () => {
         const { result } = renderUsePermissions(mockStore);
 
         await act(async () => {
-            await result.current.usePermissions.askPermission('mediaLibrary');
+            await result.current.usePermissions.askPermission('readExternalStorage');
         });
 
         /* Check if permissions are updated in property mediaLibrary */
         expect(result.current.usePermissions.state).toEqual({
             permissions: {
                 ...initialPermissionsStateMock.permissions,
-                mediaLibrary: 'denied'
+                readExternalStorage: 'denied'
             }
         });
     });

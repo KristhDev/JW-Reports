@@ -1,11 +1,13 @@
 import { act } from '@testing-library/react-native';
 
 /* Setups */
-import { mockOpenCamera, mockOpenPicker } from '../../../../../jest.setup';
+import { mockDeviceInfo, mockImageCropPicker } from '../../../../../jest.setup';
 import { getMockStoreUseImage, renderUseImage } from '../../../../setups';
 
 /* Mocks */
 import { deniedStateMock, grantedStateMock, imageMock, initialStatusStateMock, unavailableStateMock } from '../../../../mocks';
+
+mockDeviceInfo.getSystemVersion.mockImplementation(() => '12');
 
 describe('Test in useImage hook', () => {
     beforeEach(() => {
@@ -28,7 +30,8 @@ describe('Test in useImage hook', () => {
     });
 
     it('should get image with takeImageToGallery', async () => {
-        mockOpenPicker.mockResolvedValue(imageMock);
+        mockImageCropPicker.openPicker.mockResolvedValue(imageMock);
+        mockDeviceInfo.getSystemVersion.mockImplementation(() => '12');
 
         const mockStore = getMockStoreUseImage({ permissions: grantedStateMock, status: initialStatusStateMock });
         const { result } = renderUseImage(mockStore);
@@ -37,15 +40,22 @@ describe('Test in useImage hook', () => {
             await result.current.useImage.takeImageToGallery();
         });
 
-        console.log(mockOpenPicker.mock);
-
         /* Check if openPicker is called one time and image is equal to mock */
-        expect(mockOpenPicker).toHaveBeenCalledTimes(1);
+        expect(mockImageCropPicker.openPicker).toHaveBeenCalledTimes(1);
         expect(result.current.useImage.image).toEqual(imageMock);
     });
 
-    it('should not access to gallery when permission is denied', async () => {
-        const mockStore = getMockStoreUseImage({ permissions: deniedStateMock, status: initialStatusStateMock });
+    it('should not access to gallery when permission is denied in android below 13', async () => {
+        mockDeviceInfo.getSystemVersion.mockImplementation(() => '12');
+
+        const mockStore = getMockStoreUseImage({
+            permissions: {
+                ...deniedStateMock,
+                permissions: { ...deniedStateMock.permissions, readMediaImages: 'unavailable' }
+            },
+            status: initialStatusStateMock
+        });
+
         const { result } = renderUseImage(mockStore);
 
         await act(async () => {
@@ -53,11 +63,13 @@ describe('Test in useImage hook', () => {
         });
 
         /* Check if openPicker isnt called and image is empty */
-        expect(mockOpenPicker).not.toHaveBeenCalled();
+        expect(mockImageCropPicker.openPicker).not.toHaveBeenCalled();
         expect(result.current.useImage.image).toEqual({});
     });
 
-    it('should not access to gallery when permission is unavailable', async () => {
+    it('should not access to gallery when permission is unavailable in android below 13', async () => {
+        mockDeviceInfo.getSystemVersion.mockImplementation(() => '12');
+
         const mockStore = getMockStoreUseImage({ permissions: unavailableStateMock, status: initialStatusStateMock });
         const { result } = renderUseImage(mockStore);
 
@@ -66,12 +78,56 @@ describe('Test in useImage hook', () => {
         });
 
         /* Check if openPicker isnt called and image is empty */
-        expect(mockOpenPicker).not.toHaveBeenCalled();
+        expect(mockImageCropPicker.openPicker).not.toHaveBeenCalled();
+        expect(result.current.useImage.image).toEqual({});
+    });
+
+    it('should not access to gallery when permission is denied in android above 12', async () => {
+        mockDeviceInfo.getSystemVersion.mockImplementation(() => '13');
+
+        const mockStore = getMockStoreUseImage({
+            permissions: {
+                ...deniedStateMock,
+                permissions: { ...deniedStateMock.permissions, readExternalStorage: 'unavailable' }
+            },
+            status: initialStatusStateMock
+        });
+
+        const { result } = renderUseImage(mockStore);
+
+        await act(async () => {
+            await result.current.useImage.takeImageToGallery();
+        });
+
+        /* Check if openPicker isnt called and image is empty */
+        expect(mockImageCropPicker.openPicker).not.toHaveBeenCalled();
+        expect(result.current.useImage.image).toEqual({});
+    });
+
+    it('should not access to gallery when permission is unavailable in android above 12', async () => {
+        mockDeviceInfo.getSystemVersion.mockImplementation(() => '13');
+
+        const mockStore = getMockStoreUseImage({
+            permissions: {
+                ...unavailableStateMock,
+                permissions: { ...unavailableStateMock.permissions, readExternalStorage: 'denied' }
+            },
+            status: initialStatusStateMock
+        });
+
+        const { result } = renderUseImage(mockStore);
+
+        await act(async () => {
+            await result.current.useImage.takeImageToGallery();
+        });
+
+        /* Check if openPicker isnt called and image is empty */
+        expect(mockImageCropPicker.openPicker).not.toHaveBeenCalled();
         expect(result.current.useImage.image).toEqual({});
     });
 
     it('should get image with takePhoto', async () => {
-        mockOpenCamera.mockResolvedValue(imageMock);
+        mockImageCropPicker.openCamera.mockResolvedValue(imageMock);
 
         const mockStore = getMockStoreUseImage({ permissions: grantedStateMock, status: initialStatusStateMock });
         const { result } = renderUseImage(mockStore);
@@ -81,7 +137,7 @@ describe('Test in useImage hook', () => {
         });
 
         /* Check if openCamera is called one time and image is equal to mock */
-        expect(mockOpenCamera).toHaveBeenCalledTimes(1);
+        expect(mockImageCropPicker.openCamera).toHaveBeenCalledTimes(1);
         expect(result.current.useImage.image).toEqual(imageMock);
     });
 
@@ -94,7 +150,7 @@ describe('Test in useImage hook', () => {
         });
 
         /* Check if openCamera isnt called and image is empty */
-        expect(mockOpenCamera).not.toHaveBeenCalled();
+        expect(mockImageCropPicker.openCamera).not.toHaveBeenCalled();
         expect(result.current.useImage.image).toEqual({});
     });
 
@@ -107,7 +163,7 @@ describe('Test in useImage hook', () => {
         });
 
         /* Check if openCamera isnt called and image is empty */
-        expect(mockOpenCamera).not.toHaveBeenCalled();
+        expect(mockImageCropPicker.openCamera).not.toHaveBeenCalled();
         expect(result.current.useImage.image).toEqual({});
     });
 });

@@ -99,6 +99,14 @@ jest.mock('@react-navigation/native', () => {
     }
 });
 
+export const mockDeviceInfo = {
+    getSystemVersion: jest.fn().mockImplementation(() => '12')
+}
+
+jest.mock('react-native-device-info', () => ({
+    getSystemVersion: () => mockDeviceInfo.getSystemVersion()
+}));
+
 jest.mock('react-native-system-navigation-bar', () => {
     const real = jest.requireActual<typeof import('react-native-system-navigation-bar')>('react-native-system-navigation-bar');
     real.default.setNavigationColor = jest.fn();
@@ -106,12 +114,14 @@ jest.mock('react-native-system-navigation-bar', () => {
     return real;
 });
 
-export const mockOpenCamera = jest.fn();
-export const mockOpenPicker = jest.fn();
+export const mockImageCropPicker = {
+    openCamera: jest.fn(),
+    openPicker: jest.fn()
+}
 
 jest.mock('react-native-image-crop-picker', () => ({
-    openCamera: mockOpenCamera,
-    openPicker: mockOpenPicker
+    openCamera: () => mockImageCropPicker.openCamera(),
+    openPicker: () => mockImageCropPicker.openPicker()
 }));
 
 jest.mock('react-native-keyboard-aware-scroll-view', () => {

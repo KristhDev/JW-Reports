@@ -28,7 +28,7 @@ const useImage = () => {
 
     const [ image, setImage ] = useState<Image>({} as Image);
 
-    const androidVersion = deviceInfo.getDeviceSystemVersion();
+    const androidVersion = deviceInfo.getSystemVersion();
 
     /**
      * It takes a URI, splits it into an array, and then removes the last item in the array
