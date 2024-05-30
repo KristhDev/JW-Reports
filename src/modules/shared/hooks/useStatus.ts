@@ -8,6 +8,9 @@ import { clearStatus as clearStatusAction, setStatus as setStatusAction,  } from
 import { SetStatusPayload } from '../interfaces';
 import { StorageError } from '../../ui';
 
+/* Services */
+import { logger } from '../../../services';
+
 /* Utils */
 import { translateErrorMsg } from '../../../utils';
 
@@ -68,7 +71,7 @@ const useStatus = () => {
 
             onDispatch && onDispatch();
             setStatus({ code: status, msg });
-            console.log(error);
+            logger.error({ ...error, message: error.message });
 
             return true;
         }

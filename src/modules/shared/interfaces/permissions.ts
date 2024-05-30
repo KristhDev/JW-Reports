@@ -13,11 +13,15 @@ export interface PermissionsState {
  * Defining the shape of the state object.
  *
  * @property {PermissionStatus} camera - This is the camera permission status.
- * @property {PermissionStatus} mediaLibrary - This is the media library permission status.
+ * @property {PermissionStatus} notifications - This is the notifications permission status.
+ * @property {PermissionStatus} readExternalStorage - This is the media library permission status.
+ * @property {PermissionStatus} readMediaImages - This is the media library permission status.
  */
 export interface Permissions {
     camera: PermissionStatus;
-    mediaLibrary: PermissionStatus;
+    notifications: PermissionStatus;
+    readExternalStorage: PermissionStatus;
+    readMediaImages: PermissionStatus;
 }
 
 /**
