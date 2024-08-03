@@ -1,7 +1,6 @@
 import { configureStore } from '@reduxjs/toolkit';
 import { combineReducers } from 'redux';
 import { persistReducer, persistStore } from 'reduxjs-toolkit-persist';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 
 /* Reducers */
 import { authReducer } from '../modules/auth/features';
@@ -12,7 +11,7 @@ import { preachingReducer } from '../modules/preaching/features';
 import { revisitsReducer } from '../modules/revisits/features';
 
 /* Utils */
-import { asyncStorageKeys } from '../utils';
+import { storageKeys, storePersistor } from '../utils';
 
 /* Debugger */
 import reactotron from '../../ReactotronConfig';
@@ -30,8 +29,8 @@ const reducers = combineReducers({
 
 /* Persisting the store. */
 const persistConfig = {
-    key: asyncStorageKeys.STORE,
-    storage: AsyncStorage
+    key: storageKeys.STORE,
+    storage: storePersistor
 };
 
 const reducer = persistReducer(persistConfig, reducers);

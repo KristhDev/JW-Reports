@@ -2,7 +2,6 @@ import React, { FC, PropsWithChildren, useEffect, useMemo, useState } from 'reac
 import { Appearance } from 'react-native';
 import { UnistylesRuntime, useStyles } from 'react-native-unistyles';
 import SystemNavigationBar from 'react-native-system-navigation-bar';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 
 /* Context */
 import { ThemeContext } from './';
@@ -11,7 +10,7 @@ import { ThemeContext } from './';
 import { Theme } from '../interfaces';
 
 /* Utils */
-import { asyncStorageKeys } from '../../../utils';
+import { storage, storageKeys } from '../../../utils';
 
 /**
  * A function that sets the theme, and then sets the selected theme, and then sets the colors, and
@@ -40,7 +39,7 @@ const ThemeProvider: FC<PropsWithChildren> = ({ children }) => {
         setThemeState(userTheme as Theme);
         setSelectedTheme(theme);
 
-        await AsyncStorage.setItem(asyncStorageKeys.THEME, theme);
+        storage.setItem(storageKeys.THEME, theme);
     }
 
     const store = useMemo(() => ({
@@ -60,9 +59,8 @@ const ThemeProvider: FC<PropsWithChildren> = ({ children }) => {
     }, []);
 
     useEffect(() => {
-        AsyncStorage.getItem(asyncStorageKeys.THEME).then(theme => {
-            setTheme(theme as Theme || 'default');
-        });
+        const theme = storage.getItem(storageKeys.THEME);
+        setTheme(theme as Theme || 'default');
     }, []);
 
     useEffect(() => {
