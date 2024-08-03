@@ -3193,6 +3193,11 @@ data-view-byte-offset@^1.0.0:
     es-errors "^1.3.0"
     is-data-view "^1.0.1"
 
+dayjs@^1.11.10:
+  version "1.11.12"
+  resolved "https://registry.yarnpkg.com/dayjs/-/dayjs-1.11.12.tgz#5245226cc7f40a15bf52e0b99fd2a04669ccac1d"
+  integrity sha512-Rt2g+nTbLlDWZTwwrIXjy9MeiZmSDI375FvZs72ngxx8PDC6YXOeR3q5LAuPzjZQxhiWdRKac7RKV+YyQYfYIg==
+
 dayjs@^1.11.11, dayjs@^1.8.15:
   version "1.11.11"
   resolved "https://registry.yarnpkg.com/dayjs/-/dayjs-1.11.11.tgz#dfe0e9d54c5f8b68ccf8ca5f72ac603e7e5ed59e"
@@ -6174,6 +6179,16 @@ react-native-tab-view@^3.5.2:
   dependencies:
     use-latest-callback "^0.1.5"
 
+react-native-ui-datepicker@^2.0.3:
+  version "2.0.3"
+  resolved "https://registry.yarnpkg.com/react-native-ui-datepicker/-/react-native-ui-datepicker-2.0.3.tgz#a6240f6b8be703dac719f82b155d92b6ab7d51f5"
+  integrity sha512-I7W24zoB5DQEZxAEx5grSbgWWKVCZWxWAiwSl2e7sn8d/tE2psFF6ki8qnUZQGfBfa+DNyLvFiblUl2kbHlfEA==
+  dependencies:
+    dayjs "^1.11.10"
+    lodash "^4.17.21"
+    react-native-wheely "^0.6.0"
+    uninstall "^0.0.0"
+
 react-native-unistyles@^2.7.2:
   version "2.7.2"
   resolved "https://registry.yarnpkg.com/react-native-unistyles/-/react-native-unistyles-2.7.2.tgz#cf4ece0444a26fae6a8ff033e3a1f6b63d80baf8"
@@ -6193,6 +6208,11 @@ react-native-vector-icons@^10.1.0:
   dependencies:
     prop-types "^15.7.2"
     yargs "^16.1.1"
+
+react-native-wheely@^0.6.0:
+  version "0.6.0"
+  resolved "https://registry.yarnpkg.com/react-native-wheely/-/react-native-wheely-0.6.0.tgz#c977dfc98b5111818a37e6fd4ad9541e9afb50b8"
+  integrity sha512-WDnynKOdHZ3m0VnXF5pC11dXSJZDC/6/e9LuZ6UKs4IjIRI1NTTd14pRwKYEnTgWmJdlDjqJvNSIVbd7EuMxHQ==
 
 react-native@0.74.1:
   version "0.74.1"
@@ -7177,6 +7197,11 @@ unicode-property-aliases-ecmascript@^2.0.0:
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/unicode-property-aliases-ecmascript/-/unicode-property-aliases-ecmascript-2.1.0.tgz#43d41e3be698bd493ef911077c9b131f827e8ccd"
   integrity sha512-6t3foTQI9qne+OZoVQB/8x8rk2k1eVy1gRXhV3oFQ5T6R1dqQ1xtin3XqSlx3+ATBkliTaR/hHyJBm+LVPNM8w==
+
+uninstall@^0.0.0:
+  version "0.0.0"
+  resolved "https://registry.yarnpkg.com/uninstall/-/uninstall-0.0.0.tgz#103e6e37e9c52ec857542cd259023d71c7a3fb2b"
+  integrity sha512-pjP/0+A4gsbDVa8XH/S2GZdT9NPJW8NFMy3GI7HnsWG+NAmFSSj3QidNosXBI9cPtxxNExEDdhKFO6sli8K3mA==
 
 universalify@^0.1.0:
   version "0.1.2"
