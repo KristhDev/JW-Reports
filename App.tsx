@@ -1,8 +1,6 @@
 import React, { useEffect } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import SplashScreen from 'react-native-splash-screen';
-import weekday from 'dayjs/plugin/weekday';
-import 'dayjs/locale/es';
 
 import './src/config/unistyles';
 
@@ -19,8 +17,8 @@ import { logger, notifications } from './src/services';
 import { date } from './src/utils';
 
 /* Global config of date util */
-date.extend(weekday);
-date.setLocale('es');
+date.extend(date.plugins.weekday);
+date.setLocale(date.locale.es);
 
 /**
  * This is the entry point of the app that renders all the necessary
