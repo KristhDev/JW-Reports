@@ -1,6 +1,16 @@
-import dayjs from 'dayjs';
+import dayjs, { Dayjs } from 'dayjs';
+import localeEs from 'dayjs/locale/es';
+import weekday from 'dayjs/plugin/weekday';
 
 export const date = {
+    locale: {
+        es: localeEs
+    },
+
+    plugins: {
+        weekday
+    },
+
     /**
      * Formats the given data using the specified format.
      *
@@ -10,16 +20,6 @@ export const date = {
      */
     format: (date: string | number | Date, format: string): string => {
         return dayjs(date).format(format);
-    },
-
-    /**
-     * Sets the locale for dayjs library.
-     *
-     * @param {string} locale - The locale to set for dayjs.
-     * @return {void} This function does not return anything.
-     */
-    setLocale: (locale: string): void => {
-        dayjs.locale(locale);
     },
 
     /**
@@ -123,6 +123,38 @@ export const date = {
     },
 
     /**
+     * Sets the hour of a given date to the specified number of hours.
+     *
+     * @param {string | number | Date} date - The date to modify. Can be a string in ISO 8601 format, a number representing milliseconds since the Unix Epoch, or a Date object.
+     * @param {number} hours - The number of hours to set the date to.
+     * @return {string} The modified date in ISO 8601 format.
+     */
+    setHoursToDate: (date: string | number | Date, hours: number): string => {
+        return dayjs(date).set('hour', hours).toISOString();
+    },
+
+    /**
+     * Sets the locale for dayjs library.
+     *
+     * @param {string} locale - The locale to set for dayjs.
+     * @return {void} This function does not return anything.
+     */
+    setLocale: (locale: string | ILocale): void => {
+        dayjs.locale(locale);
+    },
+
+    /**
+     * Sets the minutes of a given date to the specified number of minutes.
+     *
+     * @param {string | number | Date} date - The date to modify. Can be a string in ISO 8601 format, a number representing milliseconds since the Unix Epoch, or a Date object.
+     * @param {number} minutes - The number of minutes to set the date to.
+     * @return {string} The modified date in ISO 8601 format.
+     */
+    setMinutesToDate: (date: string | number | Date, minutes: number): string => {
+        return dayjs(date).set('minute', minutes).toISOString();
+    },
+
+    /**
      * Calculates the total hours from an array of date ranges and adjusts it based on the sum of minutes.
      *
      * @param {{ init: string, finish: string }[]} dates - Array of date ranges with start and end times.
@@ -181,5 +213,9 @@ export const date = {
      */
     sumNumbers: (numbers: number[]): number => {
         return numbers.reduce((total, number) => total + number, 0);
+    },
+
+    toISOString: (date: string | number | Date | Dayjs | null | undefined): string => {
+        return dayjs(date).toISOString();
     }
 }
