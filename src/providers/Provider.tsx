@@ -1,6 +1,7 @@
 import React, { FC, PropsWithChildren } from 'react';
 import { Provider as ReduxProvider } from 'react-redux';
 import { PersistGate } from 'reduxjs-toolkit-persist/lib/integration/react';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { MenuProvider } from 'react-native-popup-menu';
 
 /* Features */
@@ -19,17 +20,19 @@ import { ThemeProvider } from '../modules/theme';
  */
 const Provider: FC<PropsWithChildren> = ({ children }): JSX.Element => {
     return (
-        <NetworkProvider>
-            <MenuProvider>
-                <ThemeProvider>
-                    <ReduxProvider store={ store }>
-                        <PersistGate loading={ null } persistor={ persistor }>
-                            { children }
-                        </PersistGate>
-                    </ReduxProvider>
-                </ThemeProvider>
-            </MenuProvider>
-        </NetworkProvider>
+        <SafeAreaProvider>
+            <NetworkProvider>
+                <MenuProvider>
+                    <ThemeProvider>
+                        <ReduxProvider store={ store }>
+                            <PersistGate loading={ null } persistor={ persistor }>
+                                { children }
+                            </PersistGate>
+                        </ReduxProvider>
+                    </ThemeProvider>
+                </MenuProvider>
+            </NetworkProvider>
+        </SafeAreaProvider>
     );
 }
 
