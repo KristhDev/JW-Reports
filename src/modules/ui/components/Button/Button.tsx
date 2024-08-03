@@ -6,7 +6,7 @@ import { useStyles } from 'react-native-unistyles';
 import { ButtonProps } from './interfaces';
 
 /* Styles */
-import stylesheet from './styles';
+import { stylesheet } from './styles';
 
 /**
  * This component shows a custom button for the different actions of the app.

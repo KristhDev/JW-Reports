@@ -5,7 +5,7 @@ import { Formik } from 'formik';
 import Icon from 'react-native-vector-icons/Ionicons';
 
 /* Components */
-import { Button, DatetimeField, FormField } from '../../../ui';
+import { Button, FormCalendar, FormField } from '../../../ui';
 
 /* Hooks */
 import { useRevisits } from '../../hooks';
@@ -189,7 +189,7 @@ export const RevisitForm = (): JSX.Element => {
                     </View>
 
                     {/* Next visit field */}
-                    <DatetimeField
+                    <FormCalendar
                         icon={
                             <Icon
                                 color={ colors.contentHeader }
@@ -199,10 +199,7 @@ export const RevisitForm = (): JSX.Element => {
                         }
                         inputDateFormat="DD/MM/YYYY"
                         label="Próxima visita:"
-                        modalTitle="Próxima visita"
-                        mode="date"
                         name="nextVisit"
-                        placeholder="Seleccione el día"
                         style={{ marginBottom: margins.xl }}
                     />
 

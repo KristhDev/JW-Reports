@@ -12,7 +12,7 @@ import { Title } from '../../../ui';
 import { date } from '../../../../utils';
 
 /* Styles */
-import stylesheet from './styles';
+import { stylesheet } from './styles';
 
 /**
  * This screen is responsible for grouping the components to show
@@ -23,12 +23,13 @@ import stylesheet from './styles';
 const RevisitDetail = (): JSX.Element => {
     const [ imageHeight, setImageHeight ] = useState<number>(0);
     const [ showModal, setShowModal ] = useState<boolean>(false);
-    const { addListener, removeListener, getState } = useNavigation();
     const { width: windowWidth } = useWindowDimensions();
 
-    const { state: { selectedRevisit }, setSelectedRevisit } = useRevisits();
+    const { addListener, removeListener, getState } = useNavigation();
     const { styles: themeStyles, theme: { fontSizes, margins } } = useStyles(themeStylesheet);
     const { styles } = useStyles(stylesheet);
+
+    const { state: { selectedRevisit }, setSelectedRevisit } = useRevisits();
 
     const nextVisit = date.format(selectedRevisit.nextVisit, 'DD [de] MMMM [del] YYYY');
 

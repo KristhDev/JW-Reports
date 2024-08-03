@@ -1,7 +1,6 @@
 import React, { useState, FC } from 'react';
-import { KeyboardAvoidingView, View, Text, ActivityIndicator, ScrollView } from 'react-native';
+import { ActivityIndicator, Text, View } from 'react-native';
 import { useStyles } from 'react-native-unistyles';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Formik } from 'formik';
 import Icon from 'react-native-vector-icons/Ionicons';
 
@@ -24,8 +23,6 @@ import { revisitFormSchema } from './schemas';
 const RevisitModal: FC<ModalProps> = ({ isOpen, onClose }) => {
     const [ completeMsg, setCompleteMsg ] = useState<string>('');
     const [ revisitPerson, setRevisitPerson ] = useState<boolean>(false);
-
-    const { top } = useSafeAreaInsets();
 
     const { state: { selectedRevisit, isRevisitLoading }, completeRevisit, saveRevisit } = useRevisits();
     const { setErrorForm } = useStatus();
@@ -80,126 +77,110 @@ const RevisitModal: FC<ModalProps> = ({ isOpen, onClose }) => {
 
     return (
         <Modal isOpen={ isOpen }>
-            <KeyboardAvoidingView
-                behavior="padding"
-                style={{ flex: 1 }}
-            >
-                <ScrollView
-                    contentContainerStyle={{
-                        alignItems: 'center',
-                        flexGrow: 1,
-                        justifyContent: 'center',
-                        paddingVertical: top,
-                    }}
-                    overScrollMode="never"
-                    showsVerticalScrollIndicator={ false }
-                >
-                    { (!isRevisitLoading) ? (
-                        <View style={ themeStyles.modalContainer }>
+            { (!isRevisitLoading) ? (
+                <View style={ themeStyles.modalContainer }>
 
-                            {/* Complete message */}
-                            { (completeMsg !== '') && (
-                                <Text
-                                    style={{ ...themeStyles.modalText, marginBottom: margins.xl }}
-                                    testID="revisit-modal-complete-msg"
-                                >
-                                    { completeMsg }
-                                </Text>
-                            ) }
-
-                            {/* Modal title and actions */}
-                            { (!revisitPerson) ? (
-                                <>
-                                    <Text
-                                        style={{ ...themeStyles.modalText, marginBottom: 0 }}
-                                        testID="revisit-modal-title"
-                                    >
-                                        { modalTitle }
-                                    </Text>
-
-                                    <ModalActions
-                                        cancelButtonText="CANCELAR"
-                                        confirmTextButton={ confirmTextButton }
-                                        onCancel={ handleClose }
-                                        onConfirm={ handleConfirm }
-                                        showCancelButton
-                                        showConfirmButton
-                                    />
-                                </>
-                            ) : (
-                                <>
-
-                                    {/* Modal title in form */}
-                                    <Text
-                                        style={{ ...themeStyles.modalText, marginBottom: margins.xl }}
-                                        testID="revisit-modal-title"
-                                    >
-                                        Por favor verifica los siguientes datos.
-                                    </Text>
-
-                                    <Formik
-                                        initialValues={{
-                                            about: selectedRevisit.about,
-                                            nextVisit: new Date()
-                                        }}
-                                        onSubmit={ handleConfirm }
-                                        validateOnMount
-                                        validationSchema={ revisitFormSchema }
-                                    >
-                                        { ({ handleSubmit, isValid, errors }) => (
-                                            <View style={{ alignItems: 'center' }}>
-
-                                                {/* About field */}
-                                                <FormField
-                                                    label="Información actual:"
-                                                    multiline
-                                                    name="about"
-                                                    numberOfLines={ 10 }
-                                                    placeholder="Ingrese datos sobre la persona, tema de conversación, aspectos importantes, etc..."
-                                                />
-
-                                                {/* Next visit field */}
-                                                <DatetimeField
-                                                    icon={
-                                                        <Icon
-                                                            color={ colors.contentHeader }
-                                                            name="calendar-outline"
-                                                            size={ fontSizes.icon }
-                                                        />
-                                                    }
-                                                    inputDateFormat="DD/MM/YYYY"
-                                                    label="Próxima visita:"
-                                                    modalTitle="Próxima visita"
-                                                    mode="date"
-                                                    name="nextVisit"
-                                                    placeholder="Seleccione el día"
-                                                    style={{ marginBottom: 0 }}
-                                                />
-
-                                                {/* Modal actions */}
-                                                <ModalActions
-                                                    cancelButtonText="CANCELAR"
-                                                    confirmTextButton={ confirmTextButton }
-                                                    onCancel={ handleClose }
-                                                    onConfirm={ (isValid) ? handleSubmit : () => setErrorForm(errors) }
-                                                    showCancelButton
-                                                    showConfirmButton
-                                                />
-                                            </View>
-                                        ) }
-                                    </Formik>
-                                </>
-                            ) }
-                        </View>
-                    ) : (
-                        <ActivityIndicator
-                            color={ colors.button }
-                            size={ (fontSizes.xxl + 2) }
-                            testID="revisit-modal-loading"
-                        />
+                    {/* Complete message */}
+                    { (completeMsg !== '') && (
+                        <Text
+                            style={{ ...themeStyles.modalText, marginBottom: margins.xl }}
+                            testID="revisit-modal-complete-msg"
+                        >
+                            { completeMsg }
+                        </Text>
                     ) }
-                </ScrollView>
-            </KeyboardAvoidingView>
+
+                    {/* Modal title and actions */}
+                    { (!revisitPerson) ? (
+                        <>
+                            <Text
+                                style={{ ...themeStyles.modalText, marginBottom: 0 }}
+                                testID="revisit-modal-title"
+                            >
+                                { modalTitle }
+                            </Text>
+
+                            <ModalActions
+                                cancelButtonText="CANCELAR"
+                                confirmTextButton={ confirmTextButton }
+                                onCancel={ handleClose }
+                                onConfirm={ handleConfirm }
+                                showCancelButton
+                                showConfirmButton
+                            />
+                        </>
+                    ) : (
+                        <>
+
+                            {/* Modal title in form */}
+                            <Text
+                                style={{ ...themeStyles.modalText, marginBottom: margins.xl }}
+                                testID="revisit-modal-title"
+                            >
+                                Por favor verifica los siguientes datos.
+                            </Text>
+
+                            <Formik
+                                initialValues={{
+                                    about: selectedRevisit.about,
+                                    nextVisit: new Date()
+                                }}
+                                onSubmit={ handleConfirm }
+                                validateOnMount
+                                validationSchema={ revisitFormSchema }
+                            >
+                                { ({ handleSubmit, isValid, errors }) => (
+                                    <View style={{ alignItems: 'center' }}>
+
+                                        {/* About field */}
+                                        <FormField
+                                            label="Información actual:"
+                                            multiline
+                                            name="about"
+                                            numberOfLines={ 10 }
+                                            placeholder="Ingrese datos sobre la persona, tema de conversación, aspectos importantes, etc..."
+                                        />
+
+                                        {/* Next visit field */}
+                                        <DatetimeField
+                                            icon={
+                                                <Icon
+                                                    color={ colors.contentHeader }
+                                                    name="calendar-outline"
+                                                    size={ fontSizes.icon }
+                                                />
+                                            }
+                                            inputDateFormat="DD/MM/YYYY"
+                                            label="Próxima visita:"
+                                            modalTitle="Próxima visita"
+                                            mode="date"
+                                            name="nextVisit"
+                                            placeholder="Seleccione el día"
+                                            style={{ marginBottom: 0 }}
+                                        />
+
+                                        {/* Modal actions */}
+                                        <ModalActions
+                                            cancelButtonText="CANCELAR"
+                                            confirmTextButton={ confirmTextButton }
+                                            onCancel={ handleClose }
+                                            onConfirm={ (isValid) ? handleSubmit : () => setErrorForm(errors) }
+                                            showCancelButton
+                                            showConfirmButton
+                                        />
+                                    </View>
+                                ) }
+                            </Formik>
+                        </>
+                    ) }
+                </View>
+            ) : (
+                <ActivityIndicator
+                    color={ colors.button }
+                    size={ (fontSizes.xxl + 2) }
+                    testID="revisit-modal-loading"
+                />
+            ) }
         </Modal>
     );
 }

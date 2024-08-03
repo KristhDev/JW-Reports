@@ -1,6 +1,6 @@
 import { createStyleSheet } from 'react-native-unistyles';
 
-const styles = createStyleSheet(({ colors }) => ({
+export const stylesheet = createStyleSheet(({ colors }) => ({
     container: {
         alignItems: 'center',
         backgroundColor: colors.bottom,
@@ -10,5 +10,3 @@ const styles = createStyleSheet(({ colors }) => ({
         width: '100%'
     }
 }));
-
-export default styles;

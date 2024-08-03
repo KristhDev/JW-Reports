@@ -1,6 +1,6 @@
 import { createStyleSheet } from 'react-native-unistyles';
 
-const styles = createStyleSheet(({ colors, fontSizes, margins }) => ({
+export const stylesheet = createStyleSheet(({ colors, fontSizes, margins }) => ({
     modalTitle: {
         color: colors.text,
         fontSize: (fontSizes.sm + 2),
@@ -16,5 +16,3 @@ const styles = createStyleSheet(({ colors, fontSizes, margins }) => ({
         fontSize: (fontSizes.sm + 1),
     }
 }));
-
-export default styles;

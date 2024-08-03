@@ -17,7 +17,7 @@ import { date } from '../../../../utils';
 import { report } from '../../utils';
 
 /* Styles */
-import stylesheet from './styles';
+import { stylesheet } from './styles';
 import { styles as themeStylesheet } from '../../../theme';
 
 /**
@@ -28,11 +28,11 @@ import { styles as themeStylesheet } from '../../../theme';
  * @return {JSX.Element} - The preaching information modal component.
  */
 const PreachingInfoModal: FC<ModalProps> = ({ isOpen, onClose }): JSX.Element => {
+    const { styles: themeStyles, theme: { colors, fontSizes, margins } } = useStyles(themeStylesheet);
+    const { styles } = useStyles(stylesheet);
+
     const { state: { user } } = useAuth();
     const { state: { preachings } } = usePreaching();
-
-    const { styles: themeStyles } = useStyles(themeStylesheet);
-    const { styles, theme: { colors, fontSizes, margins } } = useStyles(stylesheet);
 
     const preachingsOfWeek = date.getArrayValuesOfWeek(preachings);
 

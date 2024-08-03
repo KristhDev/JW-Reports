@@ -8,7 +8,7 @@ import { BottomTabBarProps } from '@react-navigation/bottom-tabs';
 import { TabBarBtn } from '../TabBarBtn';
 
 /* Styles */
-import stylesheet from './styles';
+import { stylesheet } from './styles';
 
 /**
  * This component is responsible for displaying a custom navigation bar

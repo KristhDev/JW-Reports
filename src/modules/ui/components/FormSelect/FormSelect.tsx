@@ -59,7 +59,7 @@ export const FormSelect: FC<FormSelectProps> = ({
     const [ isFocused, setIsFocused ] = useState<boolean>(false);
     const [ showModal, setShowModal ] = useState<boolean>(false);
 
-    const { styles: themeStyles, theme: { colors, fontSizes } } = useStyles(themeStylesheet);
+    const { styles: themeStyles, theme: { borderRadius, colors, fontSizes } } = useStyles(themeStylesheet);
 
     /**
      * When the user clicks on the button, the modal will show and the input will be focused.
@@ -137,7 +137,7 @@ export const FormSelect: FC<FormSelectProps> = ({
                             <TouchableHighlight
                                 activeOpacity={ 1 }
                                 onPress={ handleShowModal }
-                                style={{ borderRadius: 5, flex: 1 }}
+                                style={{ borderRadius: (borderRadius.xs - 3), flex: 1 }}
                                 underlayColor="transparent"
                                 testID="form-select-touchable"
                             >

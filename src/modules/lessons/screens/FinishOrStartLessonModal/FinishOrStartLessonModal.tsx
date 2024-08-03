@@ -5,7 +5,7 @@ import { Formik } from 'formik';
 import Icon from 'react-native-vector-icons/Ionicons';
 
 /* Modules */
-import { Modal, ModalActions, DatetimeField, ModalProps } from '../../../ui';
+import { Modal, ModalActions, ModalProps, FormCalendar } from '../../../ui';
 import { useLessons } from '../../hooks';
 import { styles as themeStylesheet } from '../../../theme';
 
@@ -103,7 +103,7 @@ const FinishOrStartLessonModal: FC<ModalProps> = ({ isOpen, onClose }) => {
                                     </Text>
 
                                     {/* Next lesson field */}
-                                    <DatetimeField
+                                    <FormCalendar
                                         icon={
                                             <Icon
                                                 color={ colors.contentHeader }
@@ -113,10 +113,7 @@ const FinishOrStartLessonModal: FC<ModalProps> = ({ isOpen, onClose }) => {
                                         }
                                         inputDateFormat="DD/MM/YYYY"
                                         label="Reprogramar clase:"
-                                        modalTitle="Reprogramar clase"
-                                        mode="date"
                                         name="nextLesson"
-                                        placeholder="Seleccione el día"
                                         style={{ marginBottom: 0 }}
                                     />
 

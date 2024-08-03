@@ -5,7 +5,7 @@ import { Formik } from 'formik';
 import Icon from 'react-native-vector-icons/Ionicons';
 
 /* Components */
-import { Button, DatetimeField, FormField } from '../../../ui';
+import { Button, FormCalendar, FormField } from '../../../ui';
 
 /* Hooks */
 import { useLessons } from '../../../lessons';
@@ -69,7 +69,7 @@ export const LessonForm = (): JSX.Element => {
                     />
 
                     {/* Next lesson field */}
-                    <DatetimeField
+                    <FormCalendar
                         icon={
                             <Icon
                                 color={ colors.contentHeader }
@@ -79,10 +79,7 @@ export const LessonForm = (): JSX.Element => {
                         }
                         inputDateFormat="DD/MM/YYYY"
                         label="Próxima clase:"
-                        modalTitle="Próxima clase"
-                        mode="date"
                         name="nextLesson"
-                        placeholder="Seleccione el día"
                         style={{ marginBottom: margins.xl }}
                     />
 

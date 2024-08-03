@@ -1,6 +1,6 @@
 import { createStyleSheet } from 'react-native-unistyles';
 
-const styles = createStyleSheet(({ colors, fontSizes, margins }) => ({
+export const stylesheet = createStyleSheet(({ colors, fontSizes, margins }) => ({
     container: {
         alignItems: 'center',
         flexDirection: 'row',
@@ -24,5 +24,3 @@ const styles = createStyleSheet(({ colors, fontSizes, margins }) => ({
         textAlign: 'left',
     }
 }));
-
-export default styles;

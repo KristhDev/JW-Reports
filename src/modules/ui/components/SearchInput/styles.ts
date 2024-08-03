@@ -1,6 +1,6 @@
 import { createStyleSheet } from 'react-native-unistyles';
 
-const styles = createStyleSheet(({ margins }) => ({
+export const stylesheet = createStyleSheet(({ borderRadius, margins }) => ({
     searchInputContainer: {
         alignItems: 'center',
         flexDirection: 'row',
@@ -18,11 +18,9 @@ const styles = createStyleSheet(({ margins }) => ({
 
     cleanBtn: {
         alignItems: 'center',
-        borderRadius: 999,
+        borderRadius: borderRadius.rounded,
         height: margins.xl,
         justifyContent: 'center',
         width: margins.xl
     }
 }));
-
-export default styles;

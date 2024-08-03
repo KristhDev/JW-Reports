@@ -1,6 +1,6 @@
 import { createStyleSheet } from 'react-native-unistyles';
 
-const styles = createStyleSheet(({ colors, margins, fontSizes }) => ({
+export const stylesheet = createStyleSheet(({ borderRadius, colors, margins, fontSizes }) => ({
     radioContainer: {
         alignItems: 'center',
         flexDirection: 'row',
@@ -9,7 +9,7 @@ const styles = createStyleSheet(({ colors, margins, fontSizes }) => ({
 
     radioPressable: {
         alignItems: 'center',
-        borderRadius: 999,
+        borderRadius: borderRadius.rounded,
         borderWidth: 2,
         height: 20,
         justifyContent: 'center',
@@ -18,7 +18,7 @@ const styles = createStyleSheet(({ colors, margins, fontSizes }) => ({
     },
 
     radioCircle: {
-        borderRadius: 999,
+        borderRadius: borderRadius.rounded,
         height: '100%',
         width: '100%'
     },
@@ -29,5 +29,3 @@ const styles = createStyleSheet(({ colors, margins, fontSizes }) => ({
         marginLeft: margins.xs
     }
 }));
-
-export default styles;

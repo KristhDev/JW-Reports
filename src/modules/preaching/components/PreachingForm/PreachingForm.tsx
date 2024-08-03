@@ -5,7 +5,7 @@ import { Formik } from 'formik';
 import Icon from 'react-native-vector-icons/Ionicons';
 
 /* Components */
-import { Button, DatetimeField } from '../../../ui/components';
+import { Button, DatetimeField, FormCalendar, FormTime } from '../../../ui';
 
 /* Hooks */
 import { usePreaching } from '../../hooks';
@@ -58,7 +58,8 @@ export const PreachingForm = (): JSX.Element => {
                 <View style={{ ...themeStyles.formContainer, justifyContent: 'flex-start', paddingBottom: margins.xl }}>
 
                     {/* Day field */}
-                    <DatetimeField
+                    <FormCalendar
+                        editable={ !isPreachingLoading }
                         icon={
                             <Icon
                                 color={ colors.contentHeader }
@@ -68,14 +69,12 @@ export const PreachingForm = (): JSX.Element => {
                         }
                         inputDateFormat="DD"
                         label="Día de predicación:"
-                        modalTitle="Día de predicación"
-                        mode="date"
                         name="day"
-                        placeholder="Seleccione el día"
                     />
 
                     {/* Init hour field */}
-                    <DatetimeField
+                    <FormTime
+                        editable={ !isPreachingLoading }
                         icon={
                             <Icon
                                 color={ colors.contentHeader }
@@ -85,10 +84,7 @@ export const PreachingForm = (): JSX.Element => {
                         }
                         inputDateFormat="HH:mm"
                         label="Hora de inicio:"
-                        modalTitle="Hora de inicio"
-                        mode="time"
                         name="initHour"
-                        placeholder="Seleccione la hora"
                     />
 
                     {/* Final hour field */}

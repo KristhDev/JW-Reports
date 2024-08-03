@@ -1,6 +1,6 @@
 import { createStyleSheet } from 'react-native-unistyles';
 
-const styles = createStyleSheet(({ margins }) => ({
+export const stylesheet = createStyleSheet(({ margins }) => ({
     container: {
         alignItems: 'center',
         backgroundColor: 'rgba(0, 0, 0, 0.5)',
@@ -10,5 +10,3 @@ const styles = createStyleSheet(({ margins }) => ({
         zIndex: 999
     }
 }));
-
-export default styles;

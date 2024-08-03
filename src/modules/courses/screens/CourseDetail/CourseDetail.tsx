@@ -22,7 +22,7 @@ import { date } from '../../../../utils';
 
 /* Styles */
 import { styles as themeStylesheet } from '../../../theme';
-import stylesheet from './styles';
+import { stylesheet } from './styles';
 
 /**
  * This screen is responsible for grouping the components to

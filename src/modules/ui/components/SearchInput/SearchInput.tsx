@@ -8,7 +8,7 @@ import { SearchInputProps } from './interfaces';
 
 /* Styles */
 import { styles as themeStylesheet } from '../../../theme';
-import stylesheet from './styles';
+import { stylesheet } from './styles';
 
 /**
  * This component is responsible for displaying a text box to perform searches

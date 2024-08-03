@@ -18,7 +18,8 @@ import { RevisitCardProps } from './interfaces';
 import { date } from '../../../../utils';
 
 /* Styles */
-import stylesheet from './styles';
+import { stylesheet } from './styles';
+import { styles as themeStylesheet } from '../../../theme';
 
 /**
  * This component is responsible for rendering part of the information of a
@@ -34,11 +35,13 @@ import stylesheet from './styles';
  */
 export const RevisitCard: FC<RevisitCardProps> = ({ onDelete, onPass, onRevisit, revisit, screenToNavigate }): JSX.Element => {
     const [ isOpen, setIsOpen ] = useState<boolean>(false);
-    const { navigate } = useNavigation();
     const { width } = useWindowDimensions();
 
-    const { setSelectedRevisit } = useRevisits();
+    const { navigate } = useNavigation();
+    const { styles: themeStyles } = useStyles(themeStylesheet);
     const { styles, theme: { colors, fontSizes, margins } } = useStyles(stylesheet);
+
+    const { setSelectedRevisit } = useRevisits();
 
     const nextVisit = date.format(revisit.nextVisit, 'DD [de] MMMM [del] YYYY');
 
@@ -123,7 +126,7 @@ export const RevisitCard: FC<RevisitCardProps> = ({ onDelete, onPass, onRevisit,
                         />
                     }
                     onPress={ () => setIsOpen(true) }
-                    style={ styles.fab }
+                    style={ themeStyles.menuButton }
                     touchColor={ colors.buttonTransparent }
                 />
 
@@ -131,33 +134,33 @@ export const RevisitCard: FC<RevisitCardProps> = ({ onDelete, onPass, onRevisit,
                 <Menu
                     onBackdropPress={ () => setIsOpen(false) }
                     opened={ isOpen }
-                    style={ styles.menuPosition }
+                    style={ themeStyles.menuPosition }
                 >
                     <MenuTrigger text="" />
 
                     <MenuOptions
-                        optionsContainerStyle={{ backgroundColor: colors.card, borderRadius: 5, width: 220 }}
+                        optionsContainerStyle={ themeStyles.menuContainer(220) }
                     >
                         <MenuOption onSelect={ handleEdit }>
-                            <Text style={ styles.textMenuOpt }>
+                            <Text style={ themeStyles.menuItemText }>
                                 Editar
                             </Text>
                         </MenuOption>
 
                         <MenuOption onSelect={ () => handleAction(onRevisit) }>
-                            <Text style={ styles.textMenuOpt }>
+                            <Text style={ themeStyles.menuItemText }>
                                 { (revisit.done) ? 'Volver a visitar' : 'Marcar como visitada' }
                             </Text>
                         </MenuOption>
 
                         <MenuOption onSelect={ () => handleAction(onPass) }>
-                            <Text style={ styles.textMenuOpt }>
+                            <Text style={ themeStyles.menuItemText }>
                                 Pasar a curso bíblico
                             </Text>
                         </MenuOption>
 
                         <MenuOption onSelect={ () => handleAction(onDelete) }>
-                            <Text style={ styles.textMenuOpt }>
+                            <Text style={ themeStyles.menuItemText }>
                                 Eliminar
                             </Text>
                         </MenuOption>

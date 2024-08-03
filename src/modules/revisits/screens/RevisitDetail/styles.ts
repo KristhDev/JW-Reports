@@ -1,6 +1,6 @@
 import { createStyleSheet } from 'react-native-unistyles';
 
-const styles = createStyleSheet(({ colors, fontSizes, margins }) => ({
+export const stylesheet = createStyleSheet(({ colors, fontSizes, margins }) => ({
     scrollView: {
         alignItems: 'center',
         flexGrow: 1,
@@ -44,5 +44,3 @@ const styles = createStyleSheet(({ colors, fontSizes, margins }) => ({
         right: margins.md,
     }
 }));
-
-export default styles;
