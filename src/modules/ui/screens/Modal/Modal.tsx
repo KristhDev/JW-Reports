@@ -1,12 +1,13 @@
 import React, { FC } from 'react';
-import { Modal as ModalRN, View } from 'react-native';
+import { KeyboardAvoidingView, Modal as ModalRN, ScrollView, View } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useStyles } from 'react-native-unistyles';
 
 /* Interfaces */
 import { ModalProps } from './interfaces';
 
 /* Styles */
-import stylesheet from './styles';
+import {stylesheet  } from './styles';
 
 /**
  * This modal is a layout for the other modals of the app.
@@ -15,6 +16,7 @@ import stylesheet from './styles';
  * @return {JSX.Element} Return jsx element to render the modal
  */
 const Modal: FC<ModalProps> = ({ children, isOpen }): JSX.Element => {
+    const { top } = useSafeAreaInsets();
     const { styles } = useStyles(stylesheet);
 
     return (
@@ -25,7 +27,24 @@ const Modal: FC<ModalProps> = ({ children, isOpen }): JSX.Element => {
             visible={ isOpen }
         >
             <View style={ styles.container }>
-                { children }
+                <KeyboardAvoidingView
+                    behavior="padding"
+                    style={{ flex: 1, width: '100%' }}
+                >
+                    <ScrollView
+                        contentContainerStyle={{
+                            alignItems: 'center',
+                            flexGrow: 1,
+                            justifyContent: 'center',
+                            paddingVertical: top,
+                            width: '100%'
+                        }}
+                        overScrollMode="never"
+                        showsVerticalScrollIndicator={ false }
+                    >
+                        { children }
+                    </ScrollView>
+                </KeyboardAvoidingView>
             </View>
         </ModalRN>
     );
