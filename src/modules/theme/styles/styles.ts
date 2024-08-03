@@ -1,6 +1,6 @@
 import { createStyleSheet } from 'react-native-unistyles';
 
-const styles = createStyleSheet(({ colors, fontSizes, margins }) => ({
+const styles = createStyleSheet(({ borderRadius, colors, fontSizes, margins }) => ({
     btnLink: {
         flexDirection: 'row',
         justifyContent: 'center',
@@ -8,7 +8,7 @@ const styles = createStyleSheet(({ colors, fontSizes, margins }) => ({
     },
 
     defaultBorder: {
-        borderRadius: 5,
+        borderRadius: (borderRadius.xs - 3),
         borderWidth: 0.5
     },
 
@@ -21,7 +21,7 @@ const styles = createStyleSheet(({ colors, fontSizes, margins }) => ({
     },
 
     focusExternalBorder: {
-        borderRadius: 7,
+        borderRadius: (borderRadius.xs - 1),
         borderWidth: 1
     },
 
@@ -40,7 +40,7 @@ const styles = createStyleSheet(({ colors, fontSizes, margins }) => ({
     formControl: {
         borderColor: colors.text,
         alignItems: 'center',
-        borderRadius: 5,
+        borderRadius: (borderRadius.xs - 3),
         borderWidth: 0.5,
         flexDirection: 'row'
     },
@@ -86,9 +86,39 @@ const styles = createStyleSheet(({ colors, fontSizes, margins }) => ({
         marginRight: (margins.xs + 2)
     },
 
+    menuButton: {
+        position: 'absolute',
+        right: margins.xs,
+        top: margins.xs,
+        height: fontSizes.lg + 3,
+        width: fontSizes.lg + 3,
+    },
+
+    menuContainer: (width: number) => ({
+        backgroundColor: colors.contentHeader,
+        borderRadius: borderRadius.xs,
+        elevation: 0,
+        overflow: 'hidden',
+        shadowOpacity: 0,
+        width: width,
+    }),
+
+    menuItemText: {
+        color: colors.text,
+        fontSize: (fontSizes.sm + 2),
+        paddingHorizontal: margins.xs,
+        paddingVertical: (margins.xs / 2)
+    },
+
+    menuPosition: {
+        position: 'absolute',
+        right: 20,
+        top: 30,
+    },
+
     modalContainer: {
         backgroundColor: colors.modal,
-        borderRadius: 10,
+        borderRadius: borderRadius.sm,
         justifyContent: 'space-between',
         padding: margins.md,
         width: '100%'
