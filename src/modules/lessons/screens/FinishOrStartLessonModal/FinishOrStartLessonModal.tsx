@@ -7,7 +7,7 @@ import Icon from 'react-native-vector-icons/Ionicons';
 /* Modules */
 import { Modal, ModalActions, ModalProps, FormCalendar } from '../../../ui';
 import { useLessons } from '../../hooks';
-import { styles as themeStylesheet } from '../../../theme';
+import { themeStylesheet } from '../../../theme';
 
 /**
  * This modal is responsible for grouping the components to finish

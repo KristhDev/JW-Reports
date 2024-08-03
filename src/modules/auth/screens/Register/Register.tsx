@@ -8,7 +8,7 @@ import { RegisterForm } from '../../components';
 import { Title } from '../../../ui';
 
 /* Theme */
-import { styles as themeStylesheet } from '../../../theme';
+import { themeStylesheet } from '../../../theme';
 
 /**
  * This screen is to show the form that will allow users

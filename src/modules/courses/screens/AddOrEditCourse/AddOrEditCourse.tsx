@@ -11,7 +11,7 @@ import { Title } from '../../../ui';
 import { useCourses } from '../../hooks';
 
 /* Theme */
-import { styles as themeStylesheet } from '../../../theme';
+import { themeStylesheet } from '../../../theme';
 
 /**
  * This screen is responsible for grouping the components

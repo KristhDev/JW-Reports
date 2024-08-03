@@ -20,7 +20,7 @@ import { useLessons } from '../../hooks';
 import { date } from '../../../../utils';
 
 /* Styles */
-import { styles as themeStylesheet } from '../../../theme';
+import { themeStylesheet } from '../../../theme';
 import { stylesheet } from './styles';
 
 /**

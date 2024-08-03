@@ -17,7 +17,7 @@ import { ReportModalProps } from './interfaces';
 import { date } from '../../../../utils';
 
 /* Styles */
-import { styles as themeStylesheet } from '../../../theme';
+import { themeStylesheet } from '../../../theme';
 import { stylesheet } from './styles';
 
 const particitions = [

@@ -17,7 +17,7 @@ import { CourseCardProps } from './interfaces';
 
 /* Styles */
 import { stylesheet } from './styles';
-import { styles as themeStylesheet } from '../../../theme';
+import { themeStylesheet } from '../../../theme';
 
 /**
  * This component is responsible for rendering part of the information of a

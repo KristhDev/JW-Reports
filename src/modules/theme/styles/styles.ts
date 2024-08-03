@@ -1,6 +1,6 @@
 import { createStyleSheet } from 'react-native-unistyles';
 
-const styles = createStyleSheet(({ borderRadius, colors, fontSizes, margins }) => ({
+export const themeStylesheet = createStyleSheet(({ borderRadius, colors, fontSizes, margins }) => ({
     btnLink: {
         flexDirection: 'row',
         justifyContent: 'center',
@@ -146,5 +146,3 @@ const styles = createStyleSheet(({ borderRadius, colors, fontSizes, margins }) =
         paddingTop: (margins.lg - 2)
     }
 }));
-
-export default styles;

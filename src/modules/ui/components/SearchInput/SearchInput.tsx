@@ -7,7 +7,7 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import { SearchInputProps } from './interfaces';
 
 /* Styles */
-import { styles as themeStylesheet } from '../../../theme';
+import { themeStylesheet } from '../../../theme';
 import { stylesheet } from './styles';
 
 /**

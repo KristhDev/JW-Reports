@@ -18,7 +18,7 @@ import { report } from '../../utils';
 
 /* Styles */
 import { stylesheet } from './styles';
-import { styles as themeStylesheet } from '../../../theme';
+import { themeStylesheet } from '../../../theme';
 
 /**
  * Generates a preaching information modal component.

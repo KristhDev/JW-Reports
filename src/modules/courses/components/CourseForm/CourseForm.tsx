@@ -18,7 +18,7 @@ import { courseFormSchema } from './schemas';
 import { CourseFormValues } from '../../interfaces';
 
 /* Theme */
-import { styles as themeStylesheet } from '../../../theme';
+import { themeStylesheet } from '../../../theme';
 
 /**
  * This component is responsible for rendering the fields to create

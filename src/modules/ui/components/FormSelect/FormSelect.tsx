@@ -11,7 +11,7 @@ import { OptionsModal } from '../../screens';
 import { FormSelectProps } from './interfaces';
 
 /* Theme */
-import { styles as themeStylesheet } from '../../../theme';
+import { themeStylesheet } from '../../../theme';
 
 /**
  * This component is responsible for displaying a field to select a value among

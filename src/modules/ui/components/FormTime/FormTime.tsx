@@ -2,6 +2,7 @@ import React, { useState, FC } from 'react';
 import { View, Text, TextInput } from 'react-native';
 import { useStyles } from 'react-native-unistyles';
 import { useField } from 'formik';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
 /* Components */
 import { Button } from '../Button';
@@ -15,9 +16,8 @@ import { FormTimeProps } from './interfaces';
 import { date } from '../../../../utils';
 
 /* Theme */
-import { styles as themeStylesheet } from '../../../theme';
+import { themeStylesheet } from '../../../theme';
 import { stylesheet } from './styles';
-import Ionicons from 'react-native-vector-icons/Ionicons';
 
 export const FormTime: FC<FormTimeProps> = ({
     editable,

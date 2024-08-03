@@ -6,7 +6,7 @@ import Icon from 'react-native-vector-icons/Ionicons';
 
 /* Modules */
 import { DatetimeField, FormField, Modal, ModalActions, ModalProps } from '../../../ui';
-import { styles as themeStylesheet } from '../../../theme';
+import { themeStylesheet } from '../../../theme';
 
 /* Hooks */
 import { useRevisits } from '../../hooks';

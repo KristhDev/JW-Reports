@@ -16,7 +16,7 @@ import { useStatus } from '../../../shared';
 import { loginFormSchema } from './schemas';
 
 /* Theme */
-import { styles as themeStylesheet } from '../../../theme';
+import { themeStylesheet } from '../../../theme';
 
 /**
  * Renders a login form component.

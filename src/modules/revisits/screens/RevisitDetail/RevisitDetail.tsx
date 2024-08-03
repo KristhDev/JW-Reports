@@ -5,7 +5,7 @@ import { useNavigation } from '@react-navigation/native';
 
 /* Modules */
 import { INIT_REVISIT, RevisitModal, useRevisits } from '../../';
-import { styles as themeStylesheet } from '../../../theme';
+import { themeStylesheet } from '../../../theme';
 import { Title } from '../../../ui';
 
 /* Utils */

@@ -18,7 +18,7 @@ import { revisitFormSchema } from './schemas';
 import { RevisitFormValues } from '../../interfaces';
 
 /* Theme */
-import { styles as themeStylesheet } from '../../../theme';
+import { themeStylesheet } from '../../../theme';
 
 const defaultRevisit = require('../../../../assets/revisit-default.jpg');
 

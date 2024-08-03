@@ -12,7 +12,7 @@ import { InfoText, ModalActions, RadioBtn } from '../../components';
 import { OptionsModalProps } from './interfaces';
 
 /* Styles */
-import { styles as themeStylesheet } from '../../../theme';
+import { themeStylesheet } from '../../../theme';
 import { stylesheet } from './styles';
 
 /**

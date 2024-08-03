@@ -16,7 +16,7 @@ import { useStatus } from '../../../shared';
 import { registerFormSchema } from './schemas';
 
 /* Theme */
-import { styles as themeStylesheet } from '../../../theme';
+import { themeStylesheet } from '../../../theme';
 
 /**
  * This component is responsible for rendering the fields so that a user

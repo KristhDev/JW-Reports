@@ -16,7 +16,7 @@ import { useRevisits } from '../../../revisits';
 import { useStatus } from '../../../shared';
 
 /* Theme */
-import { styles as themeStylesheet } from '../../../theme';
+import { themeStylesheet } from '../../../theme';
 
 /**
  * This modal is responsible for grouping the components to

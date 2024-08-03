@@ -14,7 +14,7 @@ import { DatetimeFieldProps } from './interfaces';
 import { date } from '../../../../utils';
 
 /* Theme */
-import { styles as themeStylesheet } from '../../../theme';
+import { themeStylesheet } from '../../../theme';
 
 /**
  * This component is responsible for displaying a field to select a

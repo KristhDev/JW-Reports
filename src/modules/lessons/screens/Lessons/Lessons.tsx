@@ -14,7 +14,7 @@ import { Fab } from '../../../ui';
 import { useLessons } from '../../hooks';
 
 /* Theme */
-import { styles as themeStylesheet } from '../../../theme';
+import { themeStylesheet } from '../../../theme';
 
 /**
  * This screen is responsible for grouping the components to show

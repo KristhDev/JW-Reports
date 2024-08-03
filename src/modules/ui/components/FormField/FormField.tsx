@@ -7,7 +7,7 @@ import { useField } from 'formik';
 import { FormFieldProps } from './interfaces';
 
 /* Theme */
-import { styles as themeStylesheet } from '../../../theme';
+import { themeStylesheet } from '../../../theme';
 
 /**
  * This component is responsible for displaying fields for forms of

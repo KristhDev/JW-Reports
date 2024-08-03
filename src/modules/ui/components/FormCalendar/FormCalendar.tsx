@@ -17,7 +17,7 @@ import { FormCalendarProps } from './interfaces';
 import { date, localeEs } from '../../../../utils';
 
 /* Theme */
-import { styles as themeStylesheet } from '../../../theme';
+import { themeStylesheet } from '../../../theme';
 
 /**
  * Renders a form calendar component.
@@ -48,7 +48,6 @@ export const FormCalendar: FC<FormCalendarProps> = ({
     const [ showCalendarModal, setShowCalendarModal ] = useState<boolean>(false);
     const [ field, meta, helpers ] = useField({ name });
     const { styles: themeStyles, theme: { borderRadius, colors, fontSizes, margins } } = useStyles(themeStylesheet);
-
 
     /**
      * Handles the cancel action for the form calendar.

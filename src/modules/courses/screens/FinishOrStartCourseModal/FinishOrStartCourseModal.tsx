@@ -5,7 +5,7 @@ import { useStyles } from 'react-native-unistyles';
 /* Modules */
 import { Modal, ModalProps, ModalActions } from '../../../ui';
 import { useCourses } from '../../hooks';
-import { styles as themeStylesheet } from '../../../theme';
+import { themeStylesheet } from '../../../theme';
 
 /**
  * This modal is responsible for grouping the components to finish

@@ -15,7 +15,7 @@ import { useCourses } from '../../hooks';
 import { ModalProps } from '../../../ui';
 
 /* Theme */
-import { styles as themeStylesheet } from '../../../theme';
+import { themeStylesheet } from '../../../theme';
 
 /**
  * This is a modal that groups the components to activate

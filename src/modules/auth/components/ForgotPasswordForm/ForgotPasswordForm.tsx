@@ -19,7 +19,7 @@ import { forgotPasswordFormSchema } from './schemas';
 import { EmailData } from '../../interfaces';
 
 /* Theme */
-import { styles as themeStylesheet } from '../../../theme';
+import { themeStylesheet } from '../../../theme';
 
 /**
  * This component is responsible for rendering the fields to request a user's
