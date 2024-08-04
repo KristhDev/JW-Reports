@@ -9,6 +9,7 @@ import { lessonsReducer } from '../modules/lessons/features';
 import { permissionsReducer, statusReducer } from '../modules/shared/features';
 import { preachingReducer } from '../modules/preaching/features';
 import { revisitsReducer } from '../modules/revisits/features';
+import { uiReducer } from '../modules/ui/features';
 
 /* Utils */
 import { storageKeys, storePersistor } from '../utils';
@@ -24,7 +25,8 @@ const reducers = combineReducers({
     permissions: permissionsReducer,
     preaching: preachingReducer,
     revisits: revisitsReducer,
-    status: statusReducer
+    status: statusReducer,
+    ui: uiReducer
 });
 
 /* Persisting the store. */
