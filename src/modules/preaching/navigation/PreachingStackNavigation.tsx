@@ -20,6 +20,9 @@ import { usePreaching } from '../hooks';
 /* Interfaces */
 import { PreachingStackParamsList } from '../interfaces';
 
+/* Utils */
+import { characters } from '../../../utils';
+
 const Stack = createStackNavigator<PreachingStackParamsList>();
 
 /**
@@ -246,7 +249,7 @@ const PreachingStackNavigation = (): JSX.Element => {
                                     onPressEditButton={ () => navigate({ name: 'PreachingStackNavigation', params: { screen: 'AddOrEditRevisitScreen' } } as never) }
                                 />
                             ),
-                            title: (revisitDetailTitle.length >= 22) ? revisitDetailTitle.slice(0, 22) + '...' : revisitDetailTitle
+                            title: characters.truncate(revisitDetailTitle, 22)
                         }}
                     />
                 </>

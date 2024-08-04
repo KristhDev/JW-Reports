@@ -15,6 +15,9 @@ import { useLessons } from '../../../lessons';
 /* Interfaces */
 import { CourseCardProps } from './interfaces';
 
+/* Utils */
+import { characters } from '../../../../utils';
+
 /* Styles */
 import { stylesheet } from './styles';
 import { themeStylesheet } from '../../../theme';
@@ -151,7 +154,7 @@ export const CourseCard: FC<CourseCardProps> = ({ course, onActiveOrSuspend, onD
                     style={ styles.textDescription }
                     testID="course-card-about-text"
                 >
-                    { (course.personAbout.length > 200) ? course.personAbout.substring(0, 200) + '...' : course.personAbout }
+                    { characters.truncate(course.personAbout, 200) }
                 </Text>
 
                 <Fab

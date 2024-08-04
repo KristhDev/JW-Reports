@@ -19,6 +19,9 @@ import { useCourses } from '../hooks';
 /* Interfaces */
 import { CoursesStackParamsList } from '../interfaces';
 
+/* Utils */
+import { characters } from '../../../utils';
+
 const Stack = createStackNavigator<CoursesStackParamsList>();
 
 /**
@@ -98,7 +101,7 @@ const CoursesStackNavigation = (): JSX.Element => {
                             onPressEditButton={ () => navigate('AddOrEditCourseScreen' as never) }
                         />
                     ),
-                    title: (courseDetailTitle.length >= 22) ? courseDetailTitle.slice(0, 22) + '...' : courseDetailTitle,
+                    title: characters.truncate(courseDetailTitle, 22)
                 }}
             />
 

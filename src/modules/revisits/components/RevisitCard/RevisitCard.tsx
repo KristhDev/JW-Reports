@@ -15,7 +15,7 @@ import { useRevisits } from '../../hooks';
 import { RevisitCardProps } from './interfaces';
 
 /* Utils */
-import { date } from '../../../../utils';
+import { characters, date } from '../../../../utils';
 
 /* Styles */
 import { stylesheet } from './styles';
@@ -113,7 +113,7 @@ export const RevisitCard: FC<RevisitCardProps> = ({ onDelete, onPass, onRevisit,
                     style={ styles.textDescription }
                     testID="revisit-card-about-text"
                 >
-                    { (revisit.about.length > 200) ? revisit.about.substring(0, 200) + '...' : revisit.about }
+                    { characters.truncate(revisit.about, 200) }
                 </Text>
 
                 <Fab

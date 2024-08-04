@@ -15,7 +15,7 @@ import { useLessons } from '../../hooks';
 import { LessonCardProps } from './interfaces';
 
 /* Utils */
-import { date } from '../../../../utils';
+import { characters, date } from '../../../../utils';
 
 /* Styles */
 import { themeStylesheet } from '../../../theme';
@@ -107,7 +107,7 @@ export const LessonCard: FC<LessonCardProps> = ({ lesson, screenToNavigate, onCl
                     style={ styles.textDescription }
                     testID="lesson-card-description-text"
                 >
-                    { (lesson.description.length > 200) ? lesson.description.substring(0, 200) + '...' : lesson.description }
+                    { characters.truncate(lesson.description, 200) }
                 </Text>
 
                 <Fab
