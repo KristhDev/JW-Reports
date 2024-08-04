@@ -3,14 +3,12 @@ import { EmitterSubscription, Keyboard } from 'react-native';
 /* Features */
 import { useAppSelector } from '../../../features';
 import {
-    clearUI as clearUIAction,
     setIsKeyboardVisible as setIsKeyboardVisibleAction
 } from '../features';
 
 const useUI = () => {
     const state = useAppSelector(store => store.ui);
 
-    const clearUI = () => clearUIAction();
     const setIsKeyboardVisible = (isVisible: boolean) => setIsKeyboardVisibleAction({ isVisible });
 
     /**
@@ -38,7 +36,6 @@ const useUI = () => {
     return {
         state,
 
-        clearUI,
         listenShowKeyboard,
         listenHideKeyboard
     }
