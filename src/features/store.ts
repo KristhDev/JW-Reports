@@ -1,6 +1,7 @@
 import { configureStore } from '@reduxjs/toolkit';
 import { combineReducers } from 'redux';
 import { persistReducer, persistStore } from 'reduxjs-toolkit-persist';
+import { PersistConfig } from 'reduxjs-toolkit-persist/lib/types';
 
 /* Reducers */
 import { authReducer } from '../modules/auth/features';
@@ -30,9 +31,14 @@ const reducers = combineReducers({
 });
 
 /* Persisting the store. */
-const persistConfig = {
+const persistConfig: PersistConfig<RootState> = {
     key: storageKeys.STORE,
-    storage: storePersistor
+    storage: storePersistor,
+    blacklist: [
+        'status',
+        'permissions',
+        'ui'
+    ],
 };
 
 const reducer = persistReducer(persistConfig, reducers);
