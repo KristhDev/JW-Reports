@@ -1,3 +1,11 @@
+export interface UIState {
+    isKeyboardVisible: boolean;
+}
+
+export type SetIsVisiblePayload = {
+    isVisible: boolean;
+}
+
 /**
  * NavigationParamsList is a type that is an object with a bunch of properties, each of which is a type
  * that is an object with a single property called undefined.
