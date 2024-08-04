@@ -90,14 +90,14 @@ const PreachingStackNavigation = (): JSX.Element => {
      */
     useEffect(() => {
         if (user.precursor !== 'ninguno') setSelectedDate(new Date());
-        if (wifi.isConnected) loadCourses({ filter: 'all' });
+        if (wifi.hasConnection) loadCourses({ filter: 'all' });
     }, []);
 
     /**
      * Effect to load preachings of the selected date.
      */
     useEffect(() => {
-        if (!wifi.isConnected) {
+        if (!wifi.hasConnection) {
             setNetworkError();
             return;
         }

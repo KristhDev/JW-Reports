@@ -76,7 +76,7 @@ export const CoursesList: FC<CoursesListProps> = ({ emptyMessage, filter, title 
     const handleRefreshing = (): void => {
         setSearchTerm('');
 
-        if (wifi.isConnected) {
+        if (wifi.hasConnection) {
             setCoursesPagination({ from: 0, to: 9 });
             removeCourses();
         }
@@ -93,7 +93,7 @@ export const CoursesList: FC<CoursesListProps> = ({ emptyMessage, filter, title 
      */
     const handleResetCourses = (search: string): void => {
         if (search.trim().length === 0 && courses.length === 0) {
-            if (wifi.isConnected) {
+            if (wifi.hasConnection) {
                 setCoursesPagination({ from: 0, to: 9 });
                 removeCourses();
             }
@@ -110,7 +110,7 @@ export const CoursesList: FC<CoursesListProps> = ({ emptyMessage, filter, title 
      * @return {void} This function does not return any value.
      */
     const handleEndReach = (): void => {
-        if (!hasMoreCourses || isCoursesLoading || !wifi.isConnected) return;
+        if (!hasMoreCourses || isCoursesLoading || !wifi.hasConnection) return;
         loadCourses({ filter, search: searchTerm, loadMore: true });
     }
 
@@ -191,7 +191,7 @@ export const CoursesList: FC<CoursesListProps> = ({ emptyMessage, filter, title 
      * refreshCourses is true
      */
     useEffect(() => {
-        if (isFocused() && refreshCourses && wifi.isConnected) {
+        if (isFocused() && refreshCourses && wifi.hasConnection) {
             removeCourses();
             loadCourses({ filter, search: searchTerm, refresh: true });
         }

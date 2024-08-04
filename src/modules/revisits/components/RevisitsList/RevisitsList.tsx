@@ -67,7 +67,7 @@ export const RevisitsList: FC<RevisitsListProps> = ({ emptyMessage, filter, titl
     const handleRefreshing = (): void => {
         setSearchTerm('');
 
-        if (wifi.isConnected) {
+        if (wifi.hasConnection) {
             setRevisitsPagination({ from: 0, to: 9 });
             removeRevisits();
         }
@@ -84,7 +84,7 @@ export const RevisitsList: FC<RevisitsListProps> = ({ emptyMessage, filter, titl
      */
     const handleResetRevisits = (search: string): void => {
         if (search.trim().length === 0 && revisits.length === 0) {
-            if (wifi.isConnected) {
+            if (wifi.hasConnection) {
                 setRevisitsPagination({ from: 0, to: 9 });
                 removeRevisits();
             }
@@ -101,7 +101,7 @@ export const RevisitsList: FC<RevisitsListProps> = ({ emptyMessage, filter, titl
      * @return {void} This function does not return any value
      */
     const handleEndReach = (): void => {
-        if (!hasMoreRevisits || isRevisitsLoading || !wifi.isConnected) return;
+        if (!hasMoreRevisits || isRevisitsLoading || !wifi.hasConnection) return;
         loadRevisits({ filter, search: searchTerm, loadMore: true });
     }
 
@@ -158,7 +158,7 @@ export const RevisitsList: FC<RevisitsListProps> = ({ emptyMessage, filter, titl
     useEffect(() => {
         if (searchTerm.trim().length > 0) {
 
-            if (wifi.isConnected) {
+            if (wifi.hasConnection) {
                 setRevisitsPagination({ from: 0, to: 9 });
                 removeRevisits();
             }
@@ -190,7 +190,7 @@ export const RevisitsList: FC<RevisitsListProps> = ({ emptyMessage, filter, titl
      * refreshRevisits is true
      */
     useEffect(() => {
-        if (isFocused() && refreshRevisits && wifi.isConnected) {
+        if (isFocused() && refreshRevisits && wifi.hasConnection) {
             removeRevisits();
             loadRevisits({ filter, search: searchTerm, refresh: true });
         }

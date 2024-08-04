@@ -8,7 +8,7 @@ import NetworkContext from './NetworkContext';
 import { Wifi } from '../../interfaces';
 
 export const INIT_WIFI_STATE: Wifi = {
-    isConnected: true,
+    hasConnection: true,
     type: NetInfoStateType.unknown
 }
 
@@ -28,7 +28,7 @@ const NetworkProvider: FC<PropsWithChildren> = ({ children }): JSX.Element => {
      */
     useEffect(() => {
         const unSubscribreNetInfo = NetInfo.addEventListener((state) => {
-            setWifi({ isConnected: state?.isInternetReachable || false, type: state.type });
+            setWifi({ hasConnection: state?.isInternetReachable || false, type: state.type });
         });
 
         return () => {
