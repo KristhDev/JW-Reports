@@ -3,7 +3,7 @@ import { AppState, StatusBar } from 'react-native';
 import { CardStyleInterpolators, createStackNavigator } from '@react-navigation/stack';
 
 /* Modules */
-import { NavigationParamsList } from '../modules/ui';
+import { NavigationParamsList, useUI } from '../modules/ui';
 import { AuthStackNavigation, useAuth } from '../modules/auth';
 import { SettingsStackNavigation, StatusModal, useNetwork, usePermissions, useStatus } from '../modules/shared';
 import { useCourses } from '../modules/courses';
@@ -35,6 +35,7 @@ const Navigation = (): JSX.Element => {
     const { state: { isAuthenticated }, refreshAuth } = useAuth();
     const { state: { theme } } = useTheme();
     const { wifi } = useNetwork();
+    const { clearUI, listenHideKeyboard, listenShowKeyboard } = useUI();
 
     /**
      * Effect to clear store when mount component.
@@ -42,6 +43,7 @@ const Navigation = (): JSX.Element => {
     useEffect(() => {
         checkPermissions();
         clearStatus();
+        clearUI();
 
         if (wifi.isConnected) {
             clearCourses();
@@ -50,6 +52,19 @@ const Navigation = (): JSX.Element => {
             clearRevisits();
 
             refreshAuth();
+        }
+    }, []);
+
+    /**
+     * Effect to listen keyboard.
+     */
+    useEffect(() => {
+        const showListener = listenShowKeyboard();
+        const hideListener = listenHideKeyboard();
+
+        return () => {
+            showListener.remove();
+            hideListener.remove();
         }
     }, []);
 
