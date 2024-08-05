@@ -29,14 +29,16 @@ export const FormTime: FC<FormTimeProps> = ({
     style
 }): JSX.Element => {
     const [ showHourPicker, setShowHourPicker ] = useState<boolean>(false);
-    const [ time, setTime ] = useState<string>(new Date().toISOString());
-
-    const [ hour, setHour ] = useState<string>(date.format(time, 'HH'));
-    const [ minutes, setMinutes ] = useState<string>(date.format(time, 'mm'));
 
     const { styles: themeStyles, theme: { colors, fontSizes, margins } } = useStyles(themeStylesheet);
     const { styles } = useStyles(stylesheet);
+
     const [ field, meta, helpers ] = useField({ name });
+
+    const [ time, setTime ] = useState<string>(field.value);
+
+    const [ hour, setHour ] = useState<string>(date.format(time, 'HH'));
+    const [ minutes, setMinutes ] = useState<string>(date.format(time, 'mm'));
 
     const handleShowHourPicker = (): void => {
         setShowHourPicker(true);
@@ -72,12 +74,13 @@ export const FormTime: FC<FormTimeProps> = ({
     const handleConfirm = (): void => {
         const timeWithHour = date.setHoursToDate(time, Number(hour));
         const timeWithMinutes = date.setMinutesToDate(timeWithHour, Number(minutes));
+        const timeWithSeconds = date.setSecondsToDate(timeWithMinutes, 0);
 
         setTime(timeWithMinutes);
-        setHour(date.format(timeWithMinutes, 'HH'));
-        setMinutes(date.format(timeWithMinutes, 'mm'));
+        setHour(date.format(timeWithSeconds, 'HH'));
+        setMinutes(date.format(timeWithSeconds, 'mm'));
 
-        helpers.setValue(timeWithMinutes);
+        helpers.setValue(timeWithSeconds);
         setShowHourPicker(false);
     }
 
@@ -112,12 +115,7 @@ export const FormTime: FC<FormTimeProps> = ({
 
             {/* Field control container */}
             <View style={{ flexDirection: 'row', width: '100%', alignItems: 'center' }}>
-                <View
-                    style={[
-                        { ...themeStyles.formControl, flex: 1 },
-                        style
-                    ]}
-                >
+                <View style={{ ...themeStyles.formControl, flex: 1 }}>
 
                     {/* Field input */}
                     <TextInput
