@@ -153,7 +153,7 @@ export interface RevisitFormValues {
  */
 export interface SaveRevisitOptions {
     back?: boolean;
-    image?: Image;
+    image: Image | null;
     onFinish?: () => void;
     revisitValues: RevisitFormValues;
 }

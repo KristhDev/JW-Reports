@@ -394,10 +394,10 @@ const useRevisits = () => {
      * This function is responsible for updating a revisit and returns to the previous screen.
      *
      * @param {RevisitFormValues} revisitValues - Revisit values to update
-     * @param {Image} image - Image to upload, default is `undefined`
+     * @param {Image | null} image - Image to upload, default is `undefined`
      * @return {Promise<void>} This function does not return anything
      */
-    const updateRevisit = async (revisitValues: RevisitFormValues, image?: Image): Promise<void> => {
+    const updateRevisit = async (revisitValues: RevisitFormValues, image: Image | null): Promise<void> => {
         if (!wifi.hasConnection) {
             setNetworkError();
             return;
