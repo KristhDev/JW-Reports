@@ -5,7 +5,7 @@ export interface OptionsModalProps {
     isOpen: boolean;
     items: ItemOption[];
     onCancel: () => void;
-    onChangeValue: (value: string) => void;
+    onChangeValue: (value: any) => void;
     title: string;
-    value: string;
+    value: any;
 }
