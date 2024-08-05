@@ -46,8 +46,10 @@ export const FormCalendar: FC<FormCalendarProps> = ({
     style
 }): JSX.Element => {
     const [ showCalendarModal, setShowCalendarModal ] = useState<boolean>(false);
-    const [ field, meta, helpers ] = useField({ name });
+
     const { styles: themeStyles, theme: { borderRadius, colors, fontSizes, margins } } = useStyles(themeStylesheet);
+    const [ field, meta, helpers ] = useField({ name });
+    const [ dateValue, setDateValue ] = useState<string>(field.value);
 
     /**
      * Handles the cancel action for the form calendar.
@@ -64,15 +66,23 @@ export const FormCalendar: FC<FormCalendarProps> = ({
     }
 
     /**
-     * Updates the value of the form field with the given date value, hides the calendar modal,
-     * and unfocuses the input field.
+     * Updates the date value state with the given date value in ISO string format.
      *
-     * @param {DateType} dateValue - The date value to update the form field with.
+     * @param {DateType} dateValue - The date value to update the state with.
      * @return {void} This function does not return anything.
      */
     const handleChange = (dateValue: DateType): void => {
-        helpers.setValue(date.toISOString(dateValue as Date));
-        onChangeDate && onChangeDate(date.toISOString(dateValue as Date));
+        setDateValue(date.toISOString(dateValue as Date));
+    }
+
+    /**
+     * Handles confirming the selected date in the calendar.
+     *
+     * @return {void} This function does not return anything.
+     */
+    const handleConfirm = (): void => {
+        helpers.setValue(date.toISOString(dateValue));
+        onChangeDate && onChangeDate(date.toISOString(dateValue));
         setShowCalendarModal(false);
     }
 
@@ -104,7 +114,7 @@ export const FormCalendar: FC<FormCalendarProps> = ({
                         selectionColor={ colors.linkText }
                         style={[ themeStyles.formInput ]}
                         testID="form-calendar-text-input"
-                        value={ date.format(field.value, inputDateFormat) }
+                        value={ date.format(dateValue, inputDateFormat) }
                     />
                 </View>
 
@@ -139,7 +149,7 @@ export const FormCalendar: FC<FormCalendarProps> = ({
                             />
                         }
                         calendarTextStyle={{ color: colors.text }}
-                        date={ field.value }
+                        date={ dateValue }
                         dayContainerStyle={{ borderRadius: borderRadius.xs }}
                         displayFullDays
                         headerTextStyle={{ color: colors.text, fontSize: (fontSizes.sm + 4) }}
@@ -156,8 +166,11 @@ export const FormCalendar: FC<FormCalendarProps> = ({
 
                     <ModalActions
                         cancelButtonText="Cancelar"
+                        confirmTextButton="Seleccionar"
                         onCancel={ handleCancel }
+                        onConfirm={ handleConfirm }
                         showCancelButton
+                        showConfirmButton
                     />
                 </View>
             </Modal>
