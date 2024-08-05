@@ -2,6 +2,7 @@ import { MMKV } from 'react-native-mmkv';
 import { Storage } from 'reduxjs-toolkit-persist/lib/types';
 
 export const storageKeys = {
+    AUTH: 'jwreports-auth',
     STORE: 'jwreports-store',
     THEME: 'jwreports-theme',
 }
