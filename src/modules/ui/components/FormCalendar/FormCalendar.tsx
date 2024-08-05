@@ -99,12 +99,7 @@ export const FormCalendar: FC<FormCalendarProps> = ({
 
             {/* Field control container */}
             <View style={{ flexDirection: 'row', width: '100%', alignItems: 'center' }}>
-                <View
-                    style={[
-                        { ...themeStyles.formControl, flex: 1 },
-                        style
-                    ]}
-                >
+                <View style={[ { ...themeStyles.formControl, flex: 1 } ]}>
 
                     {/* Field input */}
                     <TextInput
