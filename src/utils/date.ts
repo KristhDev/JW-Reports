@@ -154,6 +154,18 @@ export const date = {
         return dayjs(date).set('minute', minutes).toISOString();
     },
 
+
+    /**
+     * Sets the seconds of a given date to the specified number of seconds.
+     *
+     * @param {string | number | Date} date - The date to modify. Can be a string in ISO 8601 format, a number representing milliseconds since the Unix Epoch, or a Date object.
+     * @param {number} seconds - The number of seconds to set the date to.
+     * @return {string} The modified date in ISO 8601 format.
+     */
+    setSecondsToDate: (date: string | number | Date, seconds: number): string => {
+        return dayjs(date).set('second', seconds).toISOString();
+    },
+
     /**
      * Calculates the total hours from an array of date ranges and adjusts it based on the sum of minutes.
      *
