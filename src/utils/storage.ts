@@ -5,6 +5,7 @@ export const storageKeys = {
     AUTH: 'jwreports-auth',
     STORE: 'jwreports-store',
     THEME: 'jwreports-theme',
+    USER_INTERFACE: 'jwreports-ui',
 }
 
 const mmkvStorage = new MMKV();
