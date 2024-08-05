@@ -4,10 +4,8 @@ import { useStyles } from 'react-native-unistyles';
 import { Formik } from 'formik';
 import Icon from 'react-native-vector-icons/Ionicons';
 
-/* Components */
-import { Button, FormCalendar, FormField } from '../../../ui';
-
-/* Hooks */
+/* Modules */
+import { Button, DatetimeField, FormCalendar, FormField, useUI } from '../../../ui';
 import { useRevisits } from '../../hooks';
 import { useImage, useStatus } from '../../../shared';
 
@@ -33,10 +31,12 @@ export const RevisitForm = (): JSX.Element => {
     const [ imageUri, setImageUri ] = useState<string>('https://local-image.com/images.jpg');
     const { width: windowWidth } = useWindowDimensions();
 
-    const { image, takeImageToGallery, takePhoto } = useImage();
-    const { state: { selectedRevisit, isRevisitLoading }, saveRevisit, updateRevisit } = useRevisits();
-    const { setErrorForm } = useStatus();
     const { styles: themeStyles, theme: { colors, fontSizes, margins } } = useStyles(themeStylesheet);
+
+    const { state: { selectedRevisit, isRevisitLoading }, saveRevisit, updateRevisit } = useRevisits();
+    const { image, takeImageToGallery, takePhoto } = useImage();
+    const { setErrorForm } = useStatus();
+    const { state: { userInterface } } = useUI();
 
     /**
      * If the selectedRevisit.id is an empty string, then saveRevisit is called with the revisitValues
@@ -114,6 +114,7 @@ export const RevisitForm = (): JSX.Element => {
 
                     {/* Person name field */}
                     <FormField
+                        editable={ !isRevisitLoading }
                         icon={
                             <Icon
                                 color={ colors.icon }
@@ -128,6 +129,7 @@ export const RevisitForm = (): JSX.Element => {
 
                     {/* About field */}
                     <FormField
+                        editable={ !isRevisitLoading }
                         label="Información de la persona:"
                         multiline
                         name="about"
@@ -137,6 +139,7 @@ export const RevisitForm = (): JSX.Element => {
 
                     {/* Address field */}
                     <FormField
+                        editable={ !isRevisitLoading }
                         label="Dirección:"
                         multiline
                         name="address"
@@ -189,19 +192,40 @@ export const RevisitForm = (): JSX.Element => {
                     </View>
 
                     {/* Next visit field */}
-                    <FormCalendar
-                        icon={
-                            <Icon
-                                color={ colors.contentHeader }
-                                name="calendar-outline"
-                                size={ fontSizes.icon }
-                            />
-                        }
-                        inputDateFormat="DD/MM/YYYY"
-                        label="Próxima visita:"
-                        name="nextVisit"
-                        style={{ marginBottom: margins.xl }}
-                    />
+                    { (userInterface.oldDatetimePicker) ? (
+                        <DatetimeField
+                            disabled={ isRevisitLoading }
+                            icon={
+                                <Icon
+                                    color={ colors.contentHeader }
+                                    name="calendar-outline"
+                                    size={ fontSizes.icon }
+                                />
+                            }
+                            inputDateFormat="DD/MM/YYYY"
+                            label="Próxima visita:"
+                            modalTitle="Próxima visita"
+                            mode="date"
+                            name="nextVisit"
+                            placeholder="Seleccione el día"
+                            style={{ marginBottom: margins.xl }}
+                        />
+                    ) : (
+                        <FormCalendar
+                            editable={ !isRevisitLoading }
+                            icon={
+                                <Icon
+                                    color={ colors.contentHeader }
+                                    name="calendar-outline"
+                                    size={ fontSizes.icon }
+                                />
+                            }
+                            inputDateFormat="DD/MM/YYYY"
+                            label="Próxima visita:"
+                            name="nextVisit"
+                            style={{ marginBottom: margins.xl }}
+                        />
+                    ) }
 
                     {/* Submit button */}
                     <Button

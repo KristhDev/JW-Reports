@@ -62,6 +62,7 @@ export const PreachingForm = (): JSX.Element => {
                     {/* Day field */}
                     { userInterface.oldDatetimePicker ? (
                         <DatetimeField
+                            disabled={ isPreachingLoading }
                             icon={
                                 <Icon
                                     color={ colors.contentHeader }
@@ -93,8 +94,9 @@ export const PreachingForm = (): JSX.Element => {
                     ) }
 
                     {/* Init hour field */}
-                    { userInterface.oldDatetimePicker ? (
+                    { (userInterface.oldDatetimePicker) ? (
                         <DatetimeField
+                            disabled={ isPreachingLoading }
                             icon={
                                 <Icon
                                     color={ colors.contentHeader }
@@ -128,6 +130,7 @@ export const PreachingForm = (): JSX.Element => {
                     {/* Final hour field */}
                     { userInterface.oldDatetimePicker ? (
                         <DatetimeField
+                            disabled={ isPreachingLoading }
                             icon={
                                 <Icon
                                     color={ colors.contentHeader }

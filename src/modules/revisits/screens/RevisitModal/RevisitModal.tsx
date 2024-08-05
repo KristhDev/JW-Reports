@@ -5,7 +5,7 @@ import { Formik } from 'formik';
 import Icon from 'react-native-vector-icons/Ionicons';
 
 /* Modules */
-import { DatetimeField, FormField, Modal, ModalActions, ModalProps } from '../../../ui';
+import { DatetimeField, FormCalendar, FormField, Modal, ModalActions, ModalProps, useUI } from '../../../ui';
 import { themeStylesheet } from '../../../theme';
 
 /* Hooks */
@@ -24,9 +24,11 @@ const RevisitModal: FC<ModalProps> = ({ isOpen, onClose }) => {
     const [ completeMsg, setCompleteMsg ] = useState<string>('');
     const [ revisitPerson, setRevisitPerson ] = useState<boolean>(false);
 
+    const { styles: themeStyles, theme: { colors, fontSizes, margins } } = useStyles(themeStylesheet);
+
     const { state: { selectedRevisit, isRevisitLoading }, completeRevisit, saveRevisit } = useRevisits();
     const { setErrorForm } = useStatus();
-    const { styles: themeStyles, theme: { colors, fontSizes, margins } } = useStyles(themeStylesheet);
+    const { state: { userInterface } } = useUI();
 
     const modalTitle = (selectedRevisit.done)
         ? `¿Quieres volver a visitar a ${ selectedRevisit.personName }?`
@@ -142,22 +144,38 @@ const RevisitModal: FC<ModalProps> = ({ isOpen, onClose }) => {
                                         />
 
                                         {/* Next visit field */}
-                                        <DatetimeField
-                                            icon={
-                                                <Icon
-                                                    color={ colors.contentHeader }
-                                                    name="calendar-outline"
-                                                    size={ fontSizes.icon }
-                                                />
-                                            }
-                                            inputDateFormat="DD/MM/YYYY"
-                                            label="Próxima visita:"
-                                            modalTitle="Próxima visita"
-                                            mode="date"
-                                            name="nextVisit"
-                                            placeholder="Seleccione el día"
-                                            style={{ marginBottom: 0 }}
-                                        />
+                                        { (userInterface.oldDatetimePicker) ? (
+                                            <DatetimeField
+                                                icon={
+                                                    <Icon
+                                                        color={ colors.contentHeader }
+                                                        name="calendar-outline"
+                                                        size={ fontSizes.icon }
+                                                    />
+                                                }
+                                                inputDateFormat="DD/MM/YYYY"
+                                                label="Próxima visita:"
+                                                modalTitle="Próxima visita"
+                                                mode="date"
+                                                name="nextVisit"
+                                                placeholder="Seleccione el día"
+                                                style={{ marginBottom: 0 }}
+                                            />
+                                        ) : (
+                                            <FormCalendar
+                                                icon={
+                                                    <Icon
+                                                        color={ colors.contentHeader }
+                                                        name="calendar-outline"
+                                                        size={ fontSizes.icon }
+                                                    />
+                                                }
+                                                inputDateFormat="DD/MM/YYYY"
+                                                label="Próxima visita:"
+                                                name="nextVisit"
+                                                style={{ marginBottom: 0 }}
+                                            />
+                                        ) }
 
                                         {/* Modal actions */}
                                         <ModalActions
