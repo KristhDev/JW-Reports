@@ -6,6 +6,7 @@ export { EyeBtn } from './EyeBtn';
 export { Fab } from './Fab';
 export { FormCalendar } from './FormCalendar';
 export { FormField } from './FormField';
+export { FormImage } from './FormImage';
 export { FormSelect } from './FormSelect';
 export { FormTime } from './FormTime';
 export { HeaderButtons } from './HeaderButtons';
