@@ -1,7 +1,7 @@
 import { createClient } from '@supabase/supabase-js';
 
 /* Utils */
-import { storage } from '../utils';
+import { storage, storageKeys } from '../utils';
 
 /* Env */
 import { SUPABASE_APY_KEY, SUPABASE_URL } from '@env';
@@ -15,6 +15,7 @@ export const supabase = createClient(
     {
         auth: {
             storage,
+            storageKey: storageKeys.AUTH,
             persistSession: true
         }
     }
