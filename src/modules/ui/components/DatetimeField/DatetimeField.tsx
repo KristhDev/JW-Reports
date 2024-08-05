@@ -22,6 +22,7 @@ import { themeStylesheet } from '../../../theme';
  *
  * @param {DatetimeFieldProps} props {
  *      controlStyle: StyleProp<ViewStyle>,
+ *      disabled: boolean,
  *      icon: ReactNode,
  *      inputDateFormat: string,
  *      inputStyle: StyleProp<TextStyle>,
@@ -45,6 +46,7 @@ import { themeStylesheet } from '../../../theme';
  */
 export const DatetimeField: FC<DatetimeFieldProps> = ({
     controlStyle,
+    disabled,
     icon,
     inputDateFormat,
     inputStyle,
@@ -113,6 +115,7 @@ export const DatetimeField: FC<DatetimeFieldProps> = ({
 
                 {/* Field button */}
                 <Button
+                    disabled={ disabled }
                     containerStyle={{ minWidth: 0, paddingHorizontal: (margins.xs + 1) }}
                     icon={ icon }
                     onPress={ () => setOpen(true) }
