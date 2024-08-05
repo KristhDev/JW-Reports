@@ -1,25 +1,28 @@
 import { EmitterSubscription, Keyboard } from 'react-native';
 
 /* Features */
-import { useAppSelector } from '../../../features';
+import { useAppDispatch, useAppSelector } from '../../../features';
 import {
-    setIsKeyboardVisible as setIsKeyboardVisibleAction
+    setIsKeyboardVisible as setIsKeyboardVisibleAction,
+    setOldDatetimePicker as setOldDatetimePickerAction
 } from '../features';
 
+/* Utils */
+import { storage, storageKeys } from '../../../utils';
+
 const useUI = () => {
+    const dispatch = useAppDispatch();
     const state = useAppSelector(store => store.ui);
 
-    const setIsKeyboardVisible = (isVisible: boolean) => setIsKeyboardVisibleAction({ isVisible });
+    const setIsKeyboardVisible = (isVisible: boolean) => dispatch(setIsKeyboardVisibleAction({ isVisible }));
 
-    /**
-     * Listens for the 'keyboardDidShow' event and sets the 'isKeyboardVisible' state to true.
-     *
-     * @return {EmitterSubscription} The subscription object for the event listener.
-     */
-    const listenShowKeyboard = (): EmitterSubscription => {
-        return Keyboard.addListener('keyboardDidShow', () => {
-            setIsKeyboardVisible(true);
-        });
+    const setOldDatetimePicker = (show: boolean): void => {
+        dispatch(setOldDatetimePickerAction({ isVisible: show }));
+
+        storage.setItem(
+            storageKeys.USER_INTERFACE,
+            JSON.stringify({ ...state.userInterface, oldDatetimePicker: show }
+        ));
     }
 
     /**
@@ -33,11 +36,23 @@ const useUI = () => {
         });
     }
 
+    /**
+     * Listens for the 'keyboardDidShow' event and sets the 'isKeyboardVisible' state to true.
+     *
+     * @return {EmitterSubscription} The subscription object for the event listener.
+     */
+    const listenShowKeyboard = (): EmitterSubscription => {
+        return Keyboard.addListener('keyboardDidShow', () => {
+            setIsKeyboardVisible(true);
+        });
+    }
+
     return {
         state,
 
+        listenHideKeyboard,
         listenShowKeyboard,
-        listenHideKeyboard
+        setOldDatetimePicker
     }
 }
 
