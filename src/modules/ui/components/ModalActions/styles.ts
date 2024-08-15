@@ -5,7 +5,8 @@ export const stylesheet = createStyleSheet(({ colors, fontSizes, margins }) => (
         flexDirection: 'row',
         justifyContent: 'flex-end',
         marginTop: margins.xl,
-        gap: margins.xs
+        gap: margins.xs,
+        width: '100%'
     },
 
     modalButton: {

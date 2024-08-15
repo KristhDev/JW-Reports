@@ -117,7 +117,7 @@ const PassToCourseModal: FC<ModalProps> = ({ isOpen, onClose }): JSX.Element => 
 
                                     {/* Publication field */}
                                     <FormField
-                                        icon={
+                                        leftIcon={
                                             <Icon
                                                 color={ colors.icon }
                                                 name="book-outline"

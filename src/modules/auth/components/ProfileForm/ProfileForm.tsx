@@ -55,7 +55,7 @@ export const ProfileForm = (): JSX.Element => {
                     {/* Name field */}
                     <FormField
                         autoCapitalize="none"
-                        icon={
+                        leftIcon={
                             <Icon
                                 color={ colors.icon }
                                 name="person-outline"
@@ -70,7 +70,7 @@ export const ProfileForm = (): JSX.Element => {
                     {/* Surname field */}
                     <FormField
                         autoCapitalize="none"
-                        icon={
+                        leftIcon={
                             <Icon
                                 color={ colors.icon }
                                 name="people-outline"
@@ -84,6 +84,13 @@ export const ProfileForm = (): JSX.Element => {
 
                     {/* Precursor field */}
                     <FormSelect
+                        icon={
+                            <Icon
+                                color={ colors.icon }
+                                name="briefcase-outline"
+                                size={ fontSizes.icon }
+                            />
+                        }
                         items={ PRECURSORS_OPTIONS }
                         label="Precursor:"
                         name="precursor"
@@ -102,7 +109,7 @@ export const ProfileForm = (): JSX.Element => {
                             <FormField
                                 autoCapitalize="none"
                                 editable={ editHoursRequirement }
-                                icon={
+                                leftIcon={
                                     <Icon
                                         color={ colors.icon }
                                         name="time-outline"

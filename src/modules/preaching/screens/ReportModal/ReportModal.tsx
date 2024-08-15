@@ -136,26 +136,9 @@ const ReportModal: FC<ReportModalProps> = ({ isOpen, month, onClose }): JSX.Elem
                     <View style={{ flexDirection: 'column' }}>
                         <Text style={{ ...styles.reportText, color: colors.text, marginBottom: 5 }}>Comentarios: </Text>
 
-                        <View
-                            style={{
-                                ...themeStyles.focusExternalBorder,
-                                borderColor: (isFocused) ? '#FFFFFF' : 'transparent',
-                                marginTop: margins.sm
-                            }}
-                        >
-                            <View
-                                style={{
-                                    ...themeStyles.defaultBorder,
-                                    borderColor: (!isFocused) ? colors.text : colors.focus
-                                }}
-                            >
-                                <View
-                                    style={{
-                                        ...themeStyles.formControl,
-                                        ...themeStyles.focusInternalBorder,
-                                        borderColor: (isFocused) ? colors.focus : 'transparent',
-                                    }}
-                                >
+                        <View style={[ themeStyles.focusExternalBorder(isFocused), { marginTop: margins.sm } ]}>
+                            <View style={ themeStyles.defaultBorder(isFocused) }>
+                                <View style={[ themeStyles.formControl, themeStyles.focusInternalBorder(isFocused) ]}>
                                     <TextInput
                                         autoCorrect={ false }
                                         cursorColor={ colors.button }

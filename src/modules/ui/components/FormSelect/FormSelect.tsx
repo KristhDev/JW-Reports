@@ -1,5 +1,5 @@
 import React, { useState, FC  } from 'react';
-import { View, Text, TouchableHighlight } from 'react-native';
+import { View, Text, Pressable, TextInput } from 'react-native';
 import { useStyles } from 'react-native-unistyles';
 import { useField } from 'formik';
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -43,6 +43,7 @@ import { themeStylesheet } from '../../../theme';
  */
 export const FormSelect: FC<FormSelectProps> = ({
     controlStyle,
+    icon,
     inputContainerStyle,
     inputTextStyle,
     items,
@@ -59,7 +60,7 @@ export const FormSelect: FC<FormSelectProps> = ({
     const [ isFocused, setIsFocused ] = useState<boolean>(false);
     const [ showModal, setShowModal ] = useState<boolean>(false);
 
-    const { styles: themeStyles, theme: { borderRadius, colors, fontSizes } } = useStyles(themeStylesheet);
+    const { styles: themeStyles, theme: { colors, fontSizes } } = useStyles(themeStylesheet);
 
     /**
      * When the user clicks on the button, the modal will show and the input will be focused.
@@ -107,47 +108,33 @@ export const FormSelect: FC<FormSelectProps> = ({
                     { label }
                 </Text>
 
-                <View
-                    style={{
-                        ...themeStyles.focusExternalBorder,
-                        borderColor: (isFocused) ? '#FFFFFF' : 'transparent'
-                    }}
-                >
-                    <View
-                        style={{
-                            ...themeStyles.defaultBorder,
-                            borderColor: (!isFocused) ? colors.text : colors.focus
-                        }}
-                    >
-
+                <View style={ themeStyles.focusExternalBorder(isFocused) }>
+                    <View style={ themeStyles.defaultBorder(isFocused) }>
                         {/* Field control */}
                         <View
                             style={[
-                                {
-                                    ...themeStyles.formControl,
-                                    ...themeStyles.focusInternalBorder,
-                                    paddingRight: 0,
-                                    borderColor: (isFocused) ? colors.focus : 'transparent',
-                                },
+                                themeStyles.formControl,
+                                themeStyles.focusInternalBorder(isFocused),
                                 controlStyle
                             ]}
                         >
 
-                            {/* Field input (touchable with appareance text input) */}
-                            <TouchableHighlight
-                                activeOpacity={ 1 }
+                            {/* Field input */}
+                            <Pressable
                                 onPress={ handleShowModal }
-                                style={{ borderRadius: (borderRadius.xs - 3), flex: 1 }}
-                                underlayColor="transparent"
-                                testID="form-select-touchable"
+                                style={{ flex: 1 }}
+                                testID="form-select-pressable"
                             >
                                 <View style={[ themeStyles.formSelectPressableContainer, inputContainerStyle ]}>
-                                    <Text
-                                        style={[ themeStyles.formInputText, inputTextStyle ]}
-                                        testID="form-select-text-value"
-                                    >
-                                        { String(items.find(i => i.value === field?.value)?.label || placeholder) }
-                                    </Text>
+                                    { icon }
+                                    <TextInput
+                                        autoCorrect={ false }
+                                        editable={ false }
+                                        placeholder={ placeholder }
+                                        placeholderTextColor={ colors.icon }
+                                        style={[ themeStyles.formInput, inputTextStyle ]}
+                                        value={ String(items.find(i => i.value === field?.value)?.label || '') }
+                                    />
 
                                     <Icon
                                         name="chevron-down-outline"
@@ -155,7 +142,7 @@ export const FormSelect: FC<FormSelectProps> = ({
                                         size={ fontSizes.icon }
                                     />
                                 </View>
-                            </TouchableHighlight>
+                            </Pressable>
                         </View>
                     </View>
                 </View>

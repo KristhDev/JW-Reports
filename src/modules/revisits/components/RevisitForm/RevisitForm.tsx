@@ -66,7 +66,7 @@ export const RevisitForm = (): JSX.Element => {
                     {/* Person name field */}
                     <FormField
                         editable={ !isRevisitLoading }
-                        icon={
+                        leftIcon={
                             <Icon
                                 color={ colors.icon }
                                 name="person-outline"

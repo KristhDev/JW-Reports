@@ -53,7 +53,7 @@ export const RegisterForm = (): JSX.Element => {
                     {/* Name field */}
                     <FormField
                         autoCapitalize="none"
-                        icon={
+                        leftIcon={
                             <Icon
                                 color={ colors.icon }
                                 name="person-outline"
@@ -68,7 +68,7 @@ export const RegisterForm = (): JSX.Element => {
                     {/* Surname field */}
                     <FormField
                         autoCapitalize="none"
-                        icon={
+                        leftIcon={
                             <Icon
                                 color={ colors.icon }
                                 name="people-outline"
@@ -83,7 +83,7 @@ export const RegisterForm = (): JSX.Element => {
                     {/* Email field */}
                     <FormField
                         autoCapitalize="none"
-                        icon={
+                        leftIcon={
                             <Icon
                                 color={ colors.icon }
                                 name="mail-outline"
@@ -99,7 +99,14 @@ export const RegisterForm = (): JSX.Element => {
                     {/* Password field */}
                     <FormField
                         autoCapitalize="none"
-                        icon={
+                        leftIcon={
+                            <Icon
+                                color={ colors.icon }
+                                name="key-outline"
+                                size={ fontSizes.icon }
+                            />
+                        }
+                        rightIcon={
                             <EyeBtn
                                 onToggle={ setShowPassword }
                                 value={ showPassword }
@@ -114,7 +121,14 @@ export const RegisterForm = (): JSX.Element => {
                     {/* Confirm password field */}
                     <FormField
                         autoCapitalize="none"
-                        icon={
+                        leftIcon={
+                            <Icon
+                                color={ colors.icon }
+                                name="key-outline"
+                                size={ fontSizes.icon }
+                            />
+                        }
+                        rightIcon={
                             <EyeBtn
                                 onToggle={ setShowConfirmPassword }
                                 value={ showConfirmPassword }
