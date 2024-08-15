@@ -427,7 +427,7 @@ const useRevisits = () => {
         if (image) {
 
             /* If revisit has an image you have to delete it to update it with the new one */
-            if (photo) {
+            if (photo && photo.trim().length > 0) {
                 const { error: errorDelete } = await deleteImage(photo);
 
                 const next = setSupabaseError(errorDelete, 400, () => dispatch(setIsRevisitLoading({ isLoading: false })));
