@@ -7,10 +7,11 @@ export const themeStylesheet = createStyleSheet(({ borderRadius, colors, fontSiz
         marginTop: margins.xl,
     },
 
-    defaultBorder: {
+    defaultBorder: (isFocused: boolean) => ({
+        borderColor: (!isFocused) ? colors.text : colors.focus,
         borderRadius: (borderRadius.xs - 3),
-        borderWidth: 0.5
-    },
+        borderWidth: 0.5,
+    }),
 
     fabBottomRight: {
         bottom: margins.sm,
@@ -20,15 +21,16 @@ export const themeStylesheet = createStyleSheet(({ borderRadius, colors, fontSiz
         width: 60
     },
 
-    focusExternalBorder: {
+    focusExternalBorder: (isFocused: boolean) => ({
+        borderColor: (isFocused) ? '#FFFFFF' : 'transparent',
         borderRadius: (borderRadius.xs - 1),
-        borderWidth: 1
-    },
+        borderWidth: 1,
+    }),
 
-    focusInternalBorder: {
-        borderWidth: 1.5,
-        paddingRight: (margins.xs + 2)
-    },
+    focusInternalBorder: (isFocused: boolean) => ({
+        borderColor: (isFocused) ? colors.focus : 'transparent',
+        borderWidth: 1.5
+    }),
 
     formContainer: {
         alignItems: 'center',
@@ -38,11 +40,13 @@ export const themeStylesheet = createStyleSheet(({ borderRadius, colors, fontSiz
     },
 
     formControl: {
-        borderColor: colors.text,
         alignItems: 'center',
+        borderColor: colors.text,
         borderRadius: (borderRadius.xs - 3),
         borderWidth: 0.5,
-        flexDirection: 'row'
+        flexDirection: 'row',
+        gap: (margins.xs - 2),
+        paddingHorizontal: (margins.xs + 2),
     },
 
     formField: {
@@ -53,8 +57,8 @@ export const themeStylesheet = createStyleSheet(({ borderRadius, colors, fontSiz
 
     formInput: {
         color: colors.inputText,
+        flex: 1,
         fontSize: (fontSizes.sm + 1),
-        paddingLeft: (margins.xs + 2),
     },
 
     formInputText: {
@@ -76,8 +80,9 @@ export const themeStylesheet = createStyleSheet(({ borderRadius, colors, fontSiz
 
     formSelectPressableContainer: {
         alignItems: 'center',
+        flex: 1,
         flexDirection: 'row',
-        padding: (margins.xs + 2)
+        gap: margins.xs - 2,
     },
 
     formText: {
