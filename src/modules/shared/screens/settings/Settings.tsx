@@ -12,6 +12,7 @@ import { useStatus } from '../../hooks';
 import { ThemeModal, useTheme } from '../../../theme';
 
 /* Utils */
+import { deviceInfo } from '../../../../utils';
 import { THEME_OPTIONS } from '../../../theme';
 
 /* Package */
@@ -33,6 +34,8 @@ const Settings = (): JSX.Element => {
     const { setStatus } = useStatus();
     const { state: { theme } } = useTheme();
     const { state: { userInterface }, setOldDatetimePicker } = useUI();
+
+    const buildVersion = deviceInfo.getBuildVersion();
 
     const handleChangeDatetimePicker = (value: boolean): void => {
         setOldDatetimePicker(value);
@@ -103,7 +106,7 @@ const Settings = (): JSX.Element => {
                 >
                     <SectionBtn
                         onPress={ () => {} }
-                        subText={ appVersion }
+                        subText={ `${ appVersion } (${ buildVersion })` }
                         text="Versión"
                     />
 
