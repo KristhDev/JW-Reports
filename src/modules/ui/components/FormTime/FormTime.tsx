@@ -200,7 +200,7 @@ export const FormTime: FC<FormTimeProps> = ({
                             :
                         </Text>
 
-                        <View style={{ alignItems: 'center', gap: margins.xs }}>
+                        <View style={{ alignItems: 'center', gap: (margins.xs + 4) }}>
                             <Button
                                 disabled={ !editable }
                                 containerStyle={ styles.modalButtonContainer }

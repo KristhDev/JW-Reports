@@ -10,13 +10,14 @@ export const stylesheet = createStyleSheet(({ colors, fontSizes, margins }) => (
 
     modalInputContainer: {
         paddingHorizontal: margins.sm,
-        paddingVertical: margins.xs
+        paddingVertical: margins.xs,
     },
 
     modalInput: {
+        flex: 0,
+        fontSize: fontSizes.xl,
         padding: 0,
         paddingLeft: 0,
-        fontSize: fontSizes.xl,
         textAlign: 'center'
     },
 
@@ -31,6 +32,6 @@ export const stylesheet = createStyleSheet(({ colors, fontSizes, margins }) => (
     hourSeparator: {
         color: colors.inputText,
         fontSize: fontSizes.lg,
-        fontWeight: 'bold',
+        fontWeight: 'bold'
     }
 }));
