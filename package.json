@@ -72,6 +72,7 @@
     "prettier": "2.8.8",
     "react-test-renderer": "18.2.0",
     "reactotron-react-native": "^5.1.7",
+    "reactotron-react-native-mmkv": "^0.2.6",
     "reactotron-redux": "^3.1.9",
     "typescript": "5.0.4"
   },
