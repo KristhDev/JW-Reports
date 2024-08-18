@@ -1,7 +1,7 @@
 import React, { FC, PropsWithChildren } from 'react';
 import { Provider as ReduxProvider } from 'react-redux';
+import { KeyboardProvider } from 'react-native-keyboard-controller';
 import { PersistGate } from 'reduxjs-toolkit-persist/lib/integration/react';
-import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { MenuProvider } from 'react-native-popup-menu';
 
 /* Features */
@@ -20,7 +20,7 @@ import { ThemeProvider } from '../modules/theme';
  */
 const Provider: FC<PropsWithChildren> = ({ children }): JSX.Element => {
     return (
-        <SafeAreaProvider>
+        <KeyboardProvider>
             <NetworkProvider>
                 <MenuProvider>
                     <ThemeProvider>
@@ -32,7 +32,7 @@ const Provider: FC<PropsWithChildren> = ({ children }): JSX.Element => {
                     </ThemeProvider>
                 </MenuProvider>
             </NetworkProvider>
-        </SafeAreaProvider>
+        </KeyboardProvider>
     );
 }
 
