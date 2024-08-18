@@ -23,7 +23,7 @@ los conocimientos debidos puedan, si ellos lo quieren, **hacer su propia impleme
 Este documento explica las tecnologías utilizadas, el entorno de desarrollo, arquitectura, la base de datos, cómo crear su 
 implementación propia, el testing, etc.
 
-Te dejo el link para que puedas descargarla y probarla, has click [aquí](https://www.mediafire.com/file/tpbk4vipz2k49vb/JW_Reports_2.2.0.apk/file).
+Le dejo el link para que puedas descargarla y probarla, has click [aquí](https://www.mediafire.com/file/tpbk4vipz2k49vb/JW_Reports_2.2.0.apk/file).
 
 <br>
 
@@ -677,12 +677,10 @@ Le dejo una tabla con la explicación de cada una de las variables:
 | MYAPP_UPLOAD_KEY_PASSWORD   | Contraseña que se escribió cuando se generó la key |
 
 ### 6.3. Generar archivo .apk
-Por defecto, React Native **viene configurado para generar el archivo .abb** pero para este caso se cambió para archivos .apk. Por
-lo que si ha seguido los pasos correctamente ya está listo para generar el apk, solo abra una terminal y haga un cd a la carpeta
-android y ejecuté el siguiente comando:
+Si ha seguido los pasos correctamente ya está listo para generar el apk, solo abra una terminal y ejecuté el siguiente comando:
 
 ```bash
-./gradlew assembleRelease
+yarn build:android:apk
 ```
 
 Cuando el proceso termine y se realice con éxito **habrá generado su apk**, se encotrara en ```android/app/build/outputs/apk/release/app-release.apk```. Solo instálela en su dispositivo y podrá usarla.
