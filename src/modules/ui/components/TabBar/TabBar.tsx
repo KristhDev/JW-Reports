@@ -37,7 +37,7 @@ export const TabBar: FC<BottomTabBarProps> = ({ state, descriptors }): JSX.Eleme
     if (isKeyboardVisible) return (<></>);
 
     return (
-        <View style={styles.container }>
+        <View style={ styles.container }>
             { state.routes.map((route, index) => (
                 <TabBarBtn
                     active={ state.index === index }

@@ -1,7 +1,7 @@
 import React from 'react';
 import { View } from 'react-native';
 import { useStyles } from 'react-native-unistyles';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-controller';
 
 /* Components */
 import { ForgotPasswordForm } from '../../components';

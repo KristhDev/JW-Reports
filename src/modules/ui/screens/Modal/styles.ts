@@ -8,5 +8,11 @@ export const stylesheet = createStyleSheet(({ margins }) => ({
         paddingHorizontal: margins.md,
         justifyContent: 'center',
         zIndex: 999
+    },
+
+    keyboardContent: {
+        alignItems: 'center',
+        flexGrow: 1,
+        justifyContent: 'center',
     }
 }));

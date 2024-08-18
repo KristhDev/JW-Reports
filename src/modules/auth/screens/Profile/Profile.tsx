@@ -1,6 +1,6 @@
 import React from 'react';
 import { View } from 'react-native';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-controller';
 import { useStyles } from 'react-native-unistyles';
 
 /* Components */

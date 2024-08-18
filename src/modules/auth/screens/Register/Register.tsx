@@ -1,7 +1,7 @@
 import React from 'react';
 import { View } from 'react-native';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-controller';
 import { useStyles } from 'react-native-unistyles';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 /* Components */
 import { RegisterForm } from '../../components';
@@ -21,8 +21,8 @@ const Register = (): JSX.Element => {
 
     return (
         <KeyboardAwareScrollView
-            contentContainerStyle={{ flexGrow: 1, paddingBottom: margins.md }}
-            extraHeight={ 50 }
+            bottomOffset={ margins.xl }
+            contentContainerStyle={{ flexGrow: 1, paddingBottom: margins.sm }}
             overScrollMode="never"
         >
             <View style={ themeStyles.screenContainer }>
