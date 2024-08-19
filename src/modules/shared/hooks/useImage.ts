@@ -26,7 +26,7 @@ const useImage = () => {
     const { setStatus } = useStatus();
     const { theme: { colors } } = useStyles();
 
-    const [ image, setImage ] = useState<Image>({} as Image);
+    const [ image, setImage ] = useState<Image | null>(null);
 
     const androidVersion = deviceInfo.getSystemVersion();
 

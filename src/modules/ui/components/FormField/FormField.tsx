@@ -7,7 +7,7 @@ import { useField } from 'formik';
 import { FormFieldProps } from './interfaces';
 
 /* Theme */
-import { styles as themeStylesheet } from '../../../theme';
+import { themeStylesheet } from '../../../theme';
 
 /**
  * This component is responsible for displaying fields for forms of
@@ -34,11 +34,12 @@ import { styles as themeStylesheet } from '../../../theme';
  */
 export const FormField: FC<FormFieldProps> = ({
     controlStyle,
-    icon,
     inputStyle,
     label,
     labelStyle,
+    leftIcon,
     name,
+    rightIcon,
     style,
     ...rest
 }): JSX.Element => {
@@ -52,7 +53,7 @@ export const FormField: FC<FormFieldProps> = ({
 
     const textInputRef = useRef<TextInput>(null);
 
-    const { styles: themeStyles, theme: { colors, margins } } = useStyles(themeStylesheet);
+    const { styles: themeStyles, theme: { colors } } = useStyles(themeStylesheet);
 
     /**
      * Handles the blur event for the input field.
@@ -87,30 +88,18 @@ export const FormField: FC<FormFieldProps> = ({
                 { label }
             </Text>
 
-            <View
-                style={{
-                    ...themeStyles.focusExternalBorder,
-                    borderColor: (isFocused) ? '#FFFFFF' : 'transparent'
-                }}
-            >
-                <View
-                    style={{
-                        ...themeStyles.defaultBorder,
-                        borderColor: (!isFocused) ? colors.text : colors.focus
-                    }}
-                >
+            <View style={ themeStyles.focusExternalBorder(isFocused) }>
+                <View style={ themeStyles.defaultBorder(isFocused) }>
 
                     {/* Input container */}
                     <View
                         style={[
-                            {
-                                ...themeStyles.formControl,
-                                ...themeStyles.focusInternalBorder,
-                                borderColor: (isFocused) ? colors.focus : 'transparent',
-                            },
+                            themeStyles.formControl,
+                            themeStyles.focusInternalBorder(isFocused),
                             controlStyle
                         ]}
                     >
+                        { leftIcon }
 
                         {/* Text input */}
                         <TextInput
@@ -122,12 +111,8 @@ export const FormField: FC<FormFieldProps> = ({
                             selection={ selection }
                             selectionColor={ colors.linkText }
                             style={[
-                                {
-                                    ...themeStyles.formInput,
-                                    flex: 1,
-                                    paddingRight: (margins.xs - 3),
-                                    textAlignVertical: (rest.multiline) ? 'top' : 'center',
-                                },
+                                themeStyles.formInput,
+                                { textAlignVertical: (rest.multiline) ? 'top' : 'center' },
                                 inputStyle
                             ]}
                             value={ String(field.value) }
@@ -141,7 +126,7 @@ export const FormField: FC<FormFieldProps> = ({
                             } }
                         />
 
-                        { icon }
+                        { rightIcon }
                     </View>
                 </View>
             </View>

@@ -1,11 +1,12 @@
 import React, { FC } from 'react';
 import { Pressable, View } from 'react-native';
+import { useStyles } from 'react-native-unistyles';
 
 /* Interfaces */
 import { FabProps } from './interfaces';
 
 /* Styles */
-import styles from './styles';
+import { stylesheet } from './styles';
 
 /**
  * This component is responsible for displaying a floating action
@@ -28,6 +29,8 @@ import styles from './styles';
  * @return {JSX.Element} Return jsx element to render button
  */
 export const Fab: FC<FabProps> = ({ color, icon, onPress, touchColor, style, pressableStyle }): JSX.Element => {
+    const { styles } = useStyles(stylesheet);
+
     return (
         <View style={[ styles.fabView, style ]}>
             <Pressable

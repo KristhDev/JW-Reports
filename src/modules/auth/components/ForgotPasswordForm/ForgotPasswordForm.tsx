@@ -19,7 +19,7 @@ import { forgotPasswordFormSchema } from './schemas';
 import { EmailData } from '../../interfaces';
 
 /* Theme */
-import { styles as themeStylesheet } from '../../../theme';
+import { themeStylesheet } from '../../../theme';
 
 /**
  * This component is responsible for rendering the fields to request a user's
@@ -64,7 +64,7 @@ export const ForgotPasswordForm = (): JSX.Element => {
                     {/* Email field */}
                     <FormField
                         autoCapitalize="none"
-                        icon={
+                        leftIcon={
                             <Icon
                                 color={ colors.icon }
                                 name="mail-outline"

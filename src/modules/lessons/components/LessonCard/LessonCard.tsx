@@ -15,10 +15,11 @@ import { useLessons } from '../../hooks';
 import { LessonCardProps } from './interfaces';
 
 /* Utils */
-import { date } from '../../../../utils';
+import { characters, date } from '../../../../utils';
 
 /* Styles */
-import stylesheet from './styles';
+import { themeStylesheet } from '../../../theme';
+import { stylesheet } from './styles';
 
 /**
  * This component is responsible for rendering part of the information of a
@@ -36,8 +37,10 @@ export const LessonCard: FC<LessonCardProps> = ({ lesson, screenToNavigate, onCl
     const { navigate } = useNavigation();
     const { width } = useWindowDimensions();
 
-    const { setSelectedLesson } = useLessons();
     const { styles, theme: { colors, fontSizes, margins } } = useStyles(stylesheet);
+    const { styles: themeStyles, } = useStyles(themeStylesheet);
+
+    const { setSelectedLesson } = useLessons();
 
     const nextVisit = date.format(lesson.nextLesson, 'DD [de] MMMM [del] YYYY');
 
@@ -104,7 +107,7 @@ export const LessonCard: FC<LessonCardProps> = ({ lesson, screenToNavigate, onCl
                     style={ styles.textDescription }
                     testID="lesson-card-description-text"
                 >
-                    { (lesson.description.length > 200) ? lesson.description.substring(0, 200) + '...' : lesson.description }
+                    { characters.truncate(lesson.description, 200) }
                 </Text>
 
                 <Fab
@@ -117,7 +120,7 @@ export const LessonCard: FC<LessonCardProps> = ({ lesson, screenToNavigate, onCl
                         />
                     }
                     onPress={ () => setIsOpen(true) }
-                    style={ styles.fab }
+                    style={ themeStyles.menuButton }
                     touchColor={ colors.buttonTransparent }
                 />
 
@@ -125,18 +128,18 @@ export const LessonCard: FC<LessonCardProps> = ({ lesson, screenToNavigate, onCl
                 <Menu
                     onBackdropPress={ () => setIsOpen(false) }
                     opened={ isOpen }
-                    style={ styles.menuPosition }
+                    style={ themeStyles.menuPosition }
                 >
                     <MenuTrigger text="" />
 
-                    <MenuOptions optionsContainerStyle={{ backgroundColor: colors.card, borderRadius: 5, width: 220 }}>
+                    <MenuOptions optionsContainerStyle={ themeStyles.menuContainer(220) }>
 
                         {/* Then lesson.done is false show this option */}
                         {/* The lesson can only be edited if lesson.done is false */}
                         { (!lesson.done) && (
                             <>
                                 <MenuOption onSelect={ handleEdit }>
-                                    <Text style={ styles.textMenuOpt }>
+                                    <Text style={ themeStyles.menuItemText }>
                                         Editar
                                     </Text>
                                 </MenuOption>
@@ -144,13 +147,13 @@ export const LessonCard: FC<LessonCardProps> = ({ lesson, screenToNavigate, onCl
                         ) }
 
                         <MenuOption onSelect={ () => handleSelect(onFinish) }>
-                            <Text style={ styles.textMenuOpt }>
+                            <Text style={ themeStyles.menuItemText }>
                                 { (lesson.done) ? 'Reprogramar' : 'Terminar clase' }
                             </Text>
                         </MenuOption>
 
                         <MenuOption onSelect={  () => handleSelect(onDelete) }>
-                            <Text style={ styles.textMenuOpt }>
+                            <Text style={ themeStyles.menuItemText }>
                                 Eliminar
                             </Text>
                         </MenuOption>

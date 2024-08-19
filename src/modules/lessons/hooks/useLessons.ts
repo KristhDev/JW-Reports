@@ -69,7 +69,7 @@ const useLessons = () => {
      * @return {Promise<void>} This function does not return anything.
      */
     const deleteLesson = async (back: boolean = false, onFinish?: () => void): Promise<void> => {
-        if (!wifi.isConnected) {
+        if (!wifi.hasConnection) {
             setNetworkError();
             return;
         }
@@ -150,7 +150,7 @@ const useLessons = () => {
      * @return {Promise<void>} This function does not return anything.
      */
     const finishOrStartLesson = async (next_lesson: Date, onFinish?: () => void): Promise<void> => {
-        if (!wifi.isConnected) {
+        if (!wifi.hasConnection) {
             setNetworkError();
             return;
         }
@@ -230,7 +230,7 @@ const useLessons = () => {
      * @return {Promise<void>} Promise that resolves when the last lesson is loaded.
      */
     const loadLastLesson = async (): Promise<void> => {
-        if (!wifi.isConnected) {
+        if (!wifi.hasConnection) {
             setNetworkError();
             return;
         }
@@ -276,7 +276,7 @@ const useLessons = () => {
      * @return {Promise<void>} This function does not return anything.
      */
     const loadLessons = async ({ loadMore = false, refresh = false, search = '' }: LoadResourcesOptions): Promise<void> => {
-        if (!wifi.isConnected) {
+        if (!wifi.hasConnection) {
             setNetworkError();
             return;
         }
@@ -338,7 +338,7 @@ const useLessons = () => {
      * @return {Promise<void>} This function does not return anything.
      */
     const saveLesson = async (lessonValues: LessonFormValues): Promise<void> => {
-        if (!wifi.isConnected) {
+        if (!wifi.hasConnection) {
             setNetworkError();
             return;
         }
@@ -388,7 +388,7 @@ const useLessons = () => {
      * @return {Promise<void>} This function does not return anything.
      */
     const updateLesson = async (lessonValues: LessonFormValues): Promise<void> => {
-        if (!wifi.isConnected) {
+        if (!wifi.hasConnection) {
             setNetworkError();
             return;
         }

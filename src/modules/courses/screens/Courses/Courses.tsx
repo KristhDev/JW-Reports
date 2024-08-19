@@ -18,7 +18,7 @@ import { useCourses } from '../../hooks';
 import { CoursesTopTabsParamsList } from '../../interfaces';
 
 /* Theme */
-import { styles as themeStylesheet } from '../../../theme';
+import { themeStylesheet } from '../../../theme';
 
 type CoursesProps = MaterialTopTabScreenProps<CoursesTopTabsParamsList>;
 

@@ -1,15 +1,14 @@
-import React, { useEffect, useState } from 'react';
-import { ActivityIndicator, Image, Text, View, useWindowDimensions } from 'react-native';
+import React, { useState } from 'react';
+import { ActivityIndicator, View } from 'react-native';
+import { Image } from 'react-native-image-crop-picker';
 import { useStyles } from 'react-native-unistyles';
 import { Formik } from 'formik';
 import Icon from 'react-native-vector-icons/Ionicons';
 
-/* Components */
-import { Button, DatetimeField, FormField } from '../../../ui';
-
-/* Hooks */
+/* Modules */
+import { Button, DatetimeField, FormCalendar, FormField, FormImage, useUI } from '../../../ui';
 import { useRevisits } from '../../hooks';
-import { useImage, useStatus } from '../../../shared';
+import { useStatus } from '../../../shared';
 
 /* Schemas */
 import { revisitFormSchema } from './schemas';
@@ -18,7 +17,7 @@ import { revisitFormSchema } from './schemas';
 import { RevisitFormValues } from '../../interfaces';
 
 /* Theme */
-import { styles as themeStylesheet } from '../../../theme';
+import { themeStylesheet } from '../../../theme';
 
 const defaultRevisit = require('../../../../assets/revisit-default.jpg');
 
@@ -29,73 +28,25 @@ const defaultRevisit = require('../../../../assets/revisit-default.jpg');
  * @return {JSX.Element} Rendered component form to create or edit a revisit
  */
 export const RevisitForm = (): JSX.Element => {
-    const [ imageHeight, setImageHeight ] = useState<number>(0);
-    const [ imageUri, setImageUri ] = useState<string>('https://local-image.com/images.jpg');
-    const { width: windowWidth } = useWindowDimensions();
+    const [ image, setImage ] = useState<Image | null>(null);
 
-    const { image, takeImageToGallery, takePhoto } = useImage();
-    const { state: { selectedRevisit, isRevisitLoading }, saveRevisit, updateRevisit } = useRevisits();
-    const { setErrorForm } = useStatus();
     const { styles: themeStyles, theme: { colors, fontSizes, margins } } = useStyles(themeStylesheet);
 
+    const { state: { selectedRevisit, isRevisitLoading }, saveRevisit, updateRevisit } = useRevisits();
+    const { setErrorForm } = useStatus();
+    const { state: { userInterface } } = useUI();
+
     /**
-     * If the selectedRevisit.id is an empty string, then saveRevisit is called with the revisitValues
-     * and image. If the selectedRevisit.id is not an empty string, then updateRevisit is called with
-     * the revisitValues and image.
+     * Handles the save or update of a revisit based on the selected revisit ID.
      *
-     * @param {RevisitFormValues} revisitValues - RevisitFormValues
-     * @return {void} This function returns nothing.
+     * @param {RevisitFormValues} revisitValues - The values of the revisit to save or update.
+     * @return {void} This function does not return anything.
      */
     const handleSaveOrUpdate = (revisitValues: RevisitFormValues): void => {
         (selectedRevisit.id === '')
-            ? saveRevisit({ revisitValues, image: isChangeImage() ? image : undefined })
-            : updateRevisit(revisitValues, isChangeImage() ? image : undefined);
+            ? saveRevisit({ revisitValues, image })
+            : updateRevisit(revisitValues, image);
     }
-
-    /**
-     * If selectedRevisit.photo is not null, return true if selectedRevisit.photo is not equal to
-     * imageUri, otherwise return true if the uri of the defaultRevisit image is not equal to imageUri.
-     *
-     * @return {boolean} true if the uri of the defaultRevisit image is not equal to imageUri
-     */
-    const isChangeImage = (): boolean => {
-        if (selectedRevisit?.photo) return selectedRevisit.photo !== imageUri;
-
-        const { uri } = Image.resolveAssetSource(defaultRevisit);
-        return uri !== imageUri;
-    }
-
-    /**
-     * Effect to set imageHeight and imageUri when the component is
-     * mounted taking the default image or the revisit photo
-     */
-    useEffect(() => {
-        if (!selectedRevisit?.photo) {
-            const { height, width, uri } = Image.resolveAssetSource(defaultRevisit);
-            const h = windowWidth / width * height;
-            setImageHeight(h);
-            setImageUri(uri);
-        }
-        else {
-            Image.getSize(selectedRevisit.photo, (width, height) => {
-                const h = windowWidth / width * height;
-                setImageHeight(h);
-                setImageUri(selectedRevisit.photo!);
-            });
-        }
-    }, []);
-
-    /**
-     * Effect to set imageHeight and imageUri every time
-     * image changes value
-     */
-    useEffect(() => {
-        if (image?.path) {
-            const h = windowWidth / (image?.width || windowWidth) * (image?.height || 200);
-            setImageHeight(h);
-            setImageUri(image.path);
-        }
-    }, [ image ]);
 
     return (
         <Formik
@@ -114,7 +65,8 @@ export const RevisitForm = (): JSX.Element => {
 
                     {/* Person name field */}
                     <FormField
-                        icon={
+                        editable={ !isRevisitLoading }
+                        leftIcon={
                             <Icon
                                 color={ colors.icon }
                                 name="person-outline"
@@ -128,6 +80,7 @@ export const RevisitForm = (): JSX.Element => {
 
                     {/* About field */}
                     <FormField
+                        editable={ !isRevisitLoading }
                         label="Información de la persona:"
                         multiline
                         name="about"
@@ -137,6 +90,7 @@ export const RevisitForm = (): JSX.Element => {
 
                     {/* Address field */}
                     <FormField
+                        editable={ !isRevisitLoading }
                         label="Dirección:"
                         multiline
                         name="address"
@@ -145,66 +99,49 @@ export const RevisitForm = (): JSX.Element => {
                     />
 
                     {/* Photo field */}
-                    <View style={ themeStyles.formField }>
-                        <Text style={ themeStyles.formLabel }>
-                            Foto
-                        </Text>
-
-                        {/* Default image or revisit photo */}
-                        <Image
-                            source={{ uri: imageUri }}
-                            style={{ borderRadius: 5, height: imageHeight, width: '100%' }}
-                        />
-
-                        <View style={{ flexDirection: 'row', justifyContent: 'space-around', marginTop: margins.sm }}>
-
-                            {/* Gallery button */}
-                            <Button
-                                containerStyle={{ minWidth: 0 }}
-                                icon={
-                                    <Icon
-                                        color={ colors.contentHeader }
-                                        name="image-outline"
-                                        size={ fontSizes.icon }
-                                    />
-                                }
-                                onPress={ takeImageToGallery }
-                                text="Galería"
-                            />
-
-                            {/* Camera button */}
-                            <Button
-                                containerStyle={{ minWidth: 0 }}
-                                icon={
-                                    <Icon
-                                        color={ colors.contentHeader }
-                                        name="camera-outline"
-                                        size={ fontSizes.icon }
-                                    />
-                                }
-                                onPress={ takePhoto }
-                                text="Cámara"
-                            />
-                        </View>
-                    </View>
+                    <FormImage
+                        defaultImage={ defaultRevisit }
+                        disabled={ isRevisitLoading }
+                        imageUrl={ selectedRevisit.photo }
+                        label="Foto:"
+                        onSelectImage={ setImage }
+                    />
 
                     {/* Next visit field */}
-                    <DatetimeField
-                        icon={
-                            <Icon
-                                color={ colors.contentHeader }
-                                name="calendar-outline"
-                                size={ fontSizes.icon }
-                            />
-                        }
-                        inputDateFormat="DD/MM/YYYY"
-                        label="Próxima visita:"
-                        modalTitle="Próxima visita"
-                        mode="date"
-                        name="nextVisit"
-                        placeholder="Seleccione el día"
-                        style={{ marginBottom: margins.xl }}
-                    />
+                    { (userInterface.oldDatetimePicker) ? (
+                        <DatetimeField
+                            disabled={ isRevisitLoading }
+                            icon={
+                                <Icon
+                                    color={ colors.contentHeader }
+                                    name="calendar-outline"
+                                    size={ fontSizes.icon }
+                                />
+                            }
+                            inputDateFormat="DD/MM/YYYY"
+                            label="Próxima visita:"
+                            modalTitle="Próxima visita"
+                            mode="date"
+                            name="nextVisit"
+                            placeholder="Seleccione el día"
+                            style={{ marginBottom: margins.xl }}
+                        />
+                    ) : (
+                        <FormCalendar
+                            editable={ !isRevisitLoading }
+                            icon={
+                                <Icon
+                                    color={ colors.contentHeader }
+                                    name="calendar-outline"
+                                    size={ fontSizes.icon }
+                                />
+                            }
+                            inputDateFormat="DD/MM/YYYY"
+                            label="Próxima visita:"
+                            name="nextVisit"
+                            style={{ marginBottom: margins.xl }}
+                        />
+                    ) }
 
                     {/* Submit button */}
                     <Button

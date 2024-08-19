@@ -1,6 +1,6 @@
 import { createStyleSheet } from 'react-native-unistyles';
 
-const styles = createStyleSheet(({ margins }) => ({
+export const stylesheet = createStyleSheet(({ margins }) => ({
     container: {
         alignItems: 'center',
         backgroundColor: 'rgba(0, 0, 0, 0.5)',
@@ -8,7 +8,11 @@ const styles = createStyleSheet(({ margins }) => ({
         paddingHorizontal: margins.md,
         justifyContent: 'center',
         zIndex: 999
+    },
+
+    keyboardContent: {
+        alignItems: 'center',
+        flexGrow: 1,
+        justifyContent: 'center',
     }
 }));
-
-export default styles;

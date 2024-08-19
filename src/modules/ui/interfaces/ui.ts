@@ -1,3 +1,16 @@
+export type UserInterface = {
+    oldDatetimePicker: boolean;
+}
+
+export interface UIState {
+    isKeyboardVisible: boolean;
+    userInterface: UserInterface;
+}
+
+export type SetIsVisiblePayload = {
+    isVisible: boolean;
+}
+
 /**
  * NavigationParamsList is a type that is an object with a bunch of properties, each of which is a type
  * that is an object with a single property called undefined.
@@ -69,11 +82,11 @@ export interface ModalProps {
  * ItemOption is an object with a label property of type string and a value property of type string.
  *
  * @property {string} label - The text that will be displayed in the dropdown
- * @property {string} value - The value of the item.
+ * @property {any} value - The value of the item.
  */
 export type ItemOption = {
     label: string;
-    value: string;
+    value: any;
 }
 
 /**

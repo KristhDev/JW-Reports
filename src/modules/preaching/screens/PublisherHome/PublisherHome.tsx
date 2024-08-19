@@ -19,7 +19,7 @@ import { usePreaching } from '../../hooks';
 import { date } from '../../../../utils';
 
 /* Theme */
-import { styles as themeStylesheet } from '../../../theme';
+import { themeStylesheet } from '../../../theme';
 
 /**
  * This screen is in charge of grouping the components to list the preaching days by

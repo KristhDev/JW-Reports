@@ -20,6 +20,9 @@ import { usePreaching } from '../hooks';
 /* Interfaces */
 import { PreachingStackParamsList } from '../interfaces';
 
+/* Utils */
+import { characters } from '../../../utils';
+
 const Stack = createStackNavigator<PreachingStackParamsList>();
 
 /**
@@ -87,14 +90,14 @@ const PreachingStackNavigation = (): JSX.Element => {
      */
     useEffect(() => {
         if (user.precursor !== 'ninguno') setSelectedDate(new Date());
-        if (wifi.isConnected) loadCourses({ filter: 'all' });
+        if (wifi.hasConnection) loadCourses({ filter: 'all' });
     }, []);
 
     /**
      * Effect to load preachings of the selected date.
      */
     useEffect(() => {
-        if (!wifi.isConnected) {
+        if (!wifi.hasConnection) {
             setNetworkError();
             return;
         }
@@ -246,7 +249,7 @@ const PreachingStackNavigation = (): JSX.Element => {
                                     onPressEditButton={ () => navigate({ name: 'PreachingStackNavigation', params: { screen: 'AddOrEditRevisitScreen' } } as never) }
                                 />
                             ),
-                            title: (revisitDetailTitle.length >= 22) ? revisitDetailTitle.slice(0, 22) + '...' : revisitDetailTitle
+                            title: characters.truncate(revisitDetailTitle, 22)
                         }}
                     />
                 </>

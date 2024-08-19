@@ -6,7 +6,7 @@ import { useStyles } from 'react-native-unistyles';
 import { TableCellProps } from './interfaces';
 
 /* Styles */
-import stylesheet from './styles';
+import { stylesheet } from './styles';
 
 /**
  * This component is responsible for displaying a cell for the tables

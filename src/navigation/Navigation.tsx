@@ -3,9 +3,9 @@ import { AppState, StatusBar } from 'react-native';
 import { CardStyleInterpolators, createStackNavigator } from '@react-navigation/stack';
 
 /* Modules */
-import { NavigationParamsList } from '../modules/ui';
+import { NavigationParamsList, useUI } from '../modules/ui';
 import { AuthStackNavigation, useAuth } from '../modules/auth';
-import { SettingsStackNavigation, StatusModal, useNetwork, usePermissions, useStatus } from '../modules/shared';
+import { SettingsStackNavigation, StatusModal, useNetwork, usePermissions } from '../modules/shared';
 import { useCourses } from '../modules/courses';
 import { useLessons } from '../modules/lessons';
 import { usePreaching } from '../modules/preaching';
@@ -26,30 +26,42 @@ const Stack = createStackNavigator<NavigationParamsList>();
  * @return {JSX.Element} rendered component to show navigation
  */
 const Navigation = (): JSX.Element => {
-    const { state: { permissions }, checkPermissions } = usePermissions();
+    const { state: { isAuthenticated }, refreshAuth } = useAuth();
     const { clearCourses } = useCourses();
     const { clearLessons } = useLessons();
+    const { state: { permissions }, checkPermissions } = usePermissions();
     const { clearPreaching } = usePreaching();
     const { clearRevisits } = useRevisits();
-    const { clearStatus } = useStatus();
-    const { state: { isAuthenticated }, refreshAuth } = useAuth();
     const { state: { theme } } = useTheme();
     const { wifi } = useNetwork();
+    const { listenHideKeyboard, listenShowKeyboard } = useUI();
 
     /**
      * Effect to clear store when mount component.
      */
     useEffect(() => {
         checkPermissions();
-        clearStatus();
 
-        if (wifi.isConnected) {
+        if (wifi.hasConnection) {
             clearCourses();
             clearLessons();
             clearPreaching();
             clearRevisits();
 
             refreshAuth();
+        }
+    }, []);
+
+    /**
+     * Effect to listen keyboard.
+     */
+    useEffect(() => {
+        const showListener = listenShowKeyboard();
+        const hideListener = listenHideKeyboard();
+
+        return () => {
+            showListener.remove();
+            hideListener.remove();
         }
     }, []);
 

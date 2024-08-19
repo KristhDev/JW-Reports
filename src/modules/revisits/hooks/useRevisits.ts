@@ -81,7 +81,7 @@ const useRevisits = () => {
      * @return {Promise<string | void>} This function returns a string
      */
     const completeRevisit = async (onFailFinish?: () => void): Promise<string> => {
-        if (!wifi.isConnected) {
+        if (!wifi.hasConnection) {
             setNetworkError();
             return '';
         }
@@ -149,7 +149,7 @@ const useRevisits = () => {
      * @return {Promise<void>} This function does not return anything
      */
     const deleteRevisit = async (back: boolean = false, onFinish?: () => void): Promise<void> => {
-        if (!wifi.isConnected) {
+        if (!wifi.hasConnection) {
             setNetworkError();
             return;
         }
@@ -224,7 +224,7 @@ const useRevisits = () => {
      * @return {Promise<void>} - Returns a promise that resolves when the last revisit is loaded.
      */
     const loadLastRevisit = async (): Promise<void> => {
-        if (!wifi.isConnected) {
+        if (!wifi.hasConnection) {
             setNetworkError();
             return;
         }
@@ -264,7 +264,7 @@ const useRevisits = () => {
     const loadRevisits = async ({ filter, loadMore = false, refresh = false, search = '' }: loadRevisitsOptions): Promise<void> => {
         dispatch(setRevisitFilter({ filter }));
 
-        if (!wifi.isConnected) {
+        if (!wifi.hasConnection) {
             setNetworkError();
             return;
         }
@@ -328,7 +328,7 @@ const useRevisits = () => {
      * @return {Promise<void>} This function does not return anything.
      */
     const saveRevisit = async ({ revisitValues, back = true, image, onFinish }: SaveRevisitOptions): Promise<void> => {
-        if (!wifi.isConnected) {
+        if (!wifi.hasConnection) {
             setNetworkError();
             return;
         }
@@ -394,11 +394,11 @@ const useRevisits = () => {
      * This function is responsible for updating a revisit and returns to the previous screen.
      *
      * @param {RevisitFormValues} revisitValues - Revisit values to update
-     * @param {Image} image - Image to upload, default is `undefined`
+     * @param {Image | null} image - Image to upload, default is `undefined`
      * @return {Promise<void>} This function does not return anything
      */
-    const updateRevisit = async (revisitValues: RevisitFormValues, image?: Image): Promise<void> => {
-        if (!wifi.isConnected) {
+    const updateRevisit = async (revisitValues: RevisitFormValues, image: Image | null): Promise<void> => {
+        if (!wifi.hasConnection) {
             setNetworkError();
             return;
         }
@@ -427,7 +427,7 @@ const useRevisits = () => {
         if (image) {
 
             /* If revisit has an image you have to delete it to update it with the new one */
-            if (photo) {
+            if (photo && photo.trim().length > 0) {
                 const { error: errorDelete } = await deleteImage(photo);
 
                 const next = setSupabaseError(errorDelete, 400, () => dispatch(setIsRevisitLoading({ isLoading: false })));

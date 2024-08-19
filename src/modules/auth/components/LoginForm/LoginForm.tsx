@@ -16,7 +16,7 @@ import { useStatus } from '../../../shared';
 import { loginFormSchema } from './schemas';
 
 /* Theme */
-import { styles as themeStylesheet } from '../../../theme';
+import { themeStylesheet } from '../../../theme';
 
 /**
  * Renders a login form component.
@@ -51,7 +51,7 @@ export const LoginForm = (): JSX.Element => {
                     {/* Email field */}
                     <FormField
                         autoCapitalize="none"
-                        icon={
+                        leftIcon={
                             <Icon
                                 color={ colors.icon }
                                 name="mail-outline"
@@ -67,7 +67,14 @@ export const LoginForm = (): JSX.Element => {
                     {/* Password field */}
                     <FormField
                         autoCapitalize="none"
-                        icon={
+                        leftIcon={
+                            <Icon
+                                color={ colors.icon }
+                                name="key-outline"
+                                size={ fontSizes.icon }
+                            />
+                        }
+                        rightIcon={
                             <EyeBtn
                                 onToggle={ setShowPassword }
                                 value={ showPassword }

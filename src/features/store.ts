@@ -1,7 +1,7 @@
 import { configureStore } from '@reduxjs/toolkit';
 import { combineReducers } from 'redux';
 import { persistReducer, persistStore } from 'reduxjs-toolkit-persist';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import { PersistConfig } from 'reduxjs-toolkit-persist/lib/types';
 
 /* Reducers */
 import { authReducer } from '../modules/auth/features';
@@ -10,9 +10,10 @@ import { lessonsReducer } from '../modules/lessons/features';
 import { permissionsReducer, statusReducer } from '../modules/shared/features';
 import { preachingReducer } from '../modules/preaching/features';
 import { revisitsReducer } from '../modules/revisits/features';
+import { uiReducer } from '../modules/ui/features';
 
 /* Utils */
-import { asyncStorageKeys } from '../utils';
+import { storageKeys, storePersistor } from '../utils';
 
 /* Debugger */
 import reactotron from '../../ReactotronConfig';
@@ -25,13 +26,19 @@ const reducers = combineReducers({
     permissions: permissionsReducer,
     preaching: preachingReducer,
     revisits: revisitsReducer,
-    status: statusReducer
+    status: statusReducer,
+    ui: uiReducer
 });
 
 /* Persisting the store. */
-const persistConfig = {
-    key: asyncStorageKeys.STORE,
-    storage: AsyncStorage
+const persistConfig: PersistConfig<RootState> = {
+    key: storageKeys.STORE,
+    storage: storePersistor,
+    blacklist: [
+        'status',
+        'permissions',
+        'ui'
+    ],
 };
 
 const reducer = persistReducer(persistConfig, reducers);

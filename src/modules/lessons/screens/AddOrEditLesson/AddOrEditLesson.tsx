@@ -1,7 +1,7 @@
 import React from 'react';
 import { View } from 'react-native';
 import { useStyles } from 'react-native-unistyles';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-controller';
 
 /* Components */
 import { LessonForm } from '../../components';
@@ -11,7 +11,7 @@ import { Title } from '../../../ui';
 import { useLessons } from '../../hooks';
 
 /* Theme */
-import { styles as themeStylesheet } from '../../../theme';
+import { themeStylesheet } from '../../../theme';
 
 /**
  * This screen is responsible for grouping the components

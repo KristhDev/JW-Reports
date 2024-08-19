@@ -1,12 +1,13 @@
 import React, { FC } from 'react';
 import { Modal as ModalRN, View } from 'react-native';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-controller';
 import { useStyles } from 'react-native-unistyles';
 
 /* Interfaces */
 import { ModalProps } from './interfaces';
 
 /* Styles */
-import stylesheet from './styles';
+import { stylesheet } from './styles';
 
 /**
  * This modal is a layout for the other modals of the app.
@@ -25,7 +26,12 @@ const Modal: FC<ModalProps> = ({ children, isOpen }): JSX.Element => {
             visible={ isOpen }
         >
             <View style={ styles.container }>
-                { children }
+                <KeyboardAwareScrollView
+                    contentContainerStyle={ styles.keyboardContent }
+                    overScrollMode="never"
+                >
+                    { children }
+                </KeyboardAwareScrollView>
             </View>
         </ModalRN>
     );

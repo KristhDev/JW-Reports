@@ -1,14 +1,14 @@
 import React from 'react';
 import { View } from 'react-native';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-controller';
 import { useStyles } from 'react-native-unistyles';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 /* Components */
 import { RegisterForm } from '../../components';
 import { Title } from '../../../ui';
 
 /* Theme */
-import { styles as themeStylesheet } from '../../../theme';
+import { themeStylesheet } from '../../../theme';
 
 /**
  * This screen is to show the form that will allow users
@@ -21,8 +21,8 @@ const Register = (): JSX.Element => {
 
     return (
         <KeyboardAwareScrollView
-            contentContainerStyle={{ flexGrow: 1, paddingBottom: margins.md }}
-            extraHeight={ 50 }
+            bottomOffset={ margins.xl }
+            contentContainerStyle={{ flexGrow: 1, paddingBottom: margins.sm }}
             overScrollMode="never"
         >
             <View style={ themeStyles.screenContainer }>

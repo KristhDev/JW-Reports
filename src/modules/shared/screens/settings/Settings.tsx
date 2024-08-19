@@ -7,15 +7,16 @@ import { useNavigation } from '@react-navigation/native';
 import { REPOSITORY_URL } from '@env';
 
 /* Modules */
-import { SectionBtn, SectionContent } from '../../../../ui';
-import { useStatus } from '../../../hooks';
-import { ThemeModal, useTheme } from '../../../../theme';
+import { OptionsModal, SectionBtn, SectionContent, UI_OPTIONS, useUI } from '../../../ui';
+import { useStatus } from '../../hooks';
+import { ThemeModal, useTheme } from '../../../theme';
 
 /* Utils */
-import { THEME_OPTIONS } from '../../../../theme';
+import { deviceInfo } from '../../../../utils';
+import { THEME_OPTIONS } from '../../../theme';
 
 /* Package */
-import { version as appVersion } from '../../../../../../package.json';
+import { version as appVersion } from '../../../../../package.json';
 
 /**
  * This screen is responsible for displaying all the app's settings through
@@ -25,11 +26,21 @@ import { version as appVersion } from '../../../../../../package.json';
  */
 const Settings = (): JSX.Element => {
     const [ showThemeModal, setShowThemeModal ] = useState<boolean>(false);
+    const [ showOldDatetimePicker, setShowOldDatetimePicker ] = useState<boolean>(false);
+
     const { navigate } = useNavigation();
     const { theme: { colors, fontSizes, margins } } = useStyles();
 
     const { setStatus } = useStatus();
     const { state: { theme } } = useTheme();
+    const { state: { userInterface }, setOldDatetimePicker } = useUI();
+
+    const buildVersion = deviceInfo.getBuildVersion();
+
+    const handleChangeDatetimePicker = (value: boolean): void => {
+        setOldDatetimePicker(value);
+        setShowOldDatetimePicker(false);
+    }
 
     /**
      * When the user clicks the button, set the status to a new object with a code of 200 and a msg of
@@ -64,12 +75,18 @@ const Settings = (): JSX.Element => {
                     />
                 </SectionContent>
 
-                {/* Screen section */}
-                <SectionContent title="PANTALLA">
+                {/* UI section */}
+                <SectionContent title="INTERFAZ DE USUARIO">
                     <SectionBtn
                         onPress={ () => setShowThemeModal(true) }
                         subText={ THEME_OPTIONS.find(t => t.value === theme)?.label || '' }
                         text="Apariencia"
+                    />
+
+                    <SectionBtn
+                        onPress={ () => setShowOldDatetimePicker(true) }
+                        subText={ userInterface.oldDatetimePicker ? 'Habilitado' : 'Deshabilitado' }
+                        text="Anteriores selectores de fecha y hora"
                     />
                 </SectionContent>
 
@@ -89,7 +106,7 @@ const Settings = (): JSX.Element => {
                 >
                     <SectionBtn
                         onPress={ () => {} }
-                        subText={ appVersion }
+                        subText={ `${ appVersion } (${ buildVersion })` }
                         text="Versión"
                     />
 
@@ -118,6 +135,15 @@ const Settings = (): JSX.Element => {
             <ThemeModal
                 isOpen={ showThemeModal }
                 onClose={ () => setShowThemeModal(false) }
+            />
+
+            <OptionsModal
+                isOpen={ showOldDatetimePicker }
+                items={ UI_OPTIONS }
+                onCancel={ () => setShowOldDatetimePicker(false) }
+                onChangeValue={ handleChangeDatetimePicker }
+                title="Anteriores selectores de fecha y hora"
+                value={ userInterface.oldDatetimePicker }
             />
         </>
     );

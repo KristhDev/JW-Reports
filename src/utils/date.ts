@@ -1,6 +1,16 @@
-import dayjs from 'dayjs';
+import dayjs, { Dayjs } from 'dayjs';
+import localeEs from 'dayjs/locale/es';
+import weekday from 'dayjs/plugin/weekday';
 
 export const date = {
+    locale: {
+        es: localeEs
+    },
+
+    plugins: {
+        weekday
+    },
+
     /**
      * Formats the given data using the specified format.
      *
@@ -10,16 +20,6 @@ export const date = {
      */
     format: (date: string | number | Date, format: string): string => {
         return dayjs(date).format(format);
-    },
-
-    /**
-     * Sets the locale for dayjs library.
-     *
-     * @param {string} locale - The locale to set for dayjs.
-     * @return {void} This function does not return anything.
-     */
-    setLocale: (locale: string): void => {
-        dayjs.locale(locale);
     },
 
     /**
@@ -51,12 +51,34 @@ export const date = {
     },
 
     /**
+     * Returns the first date of the month for the given date in the specified format.
+     *
+     * @param {string | number | Date} date - The date to get the first date of the month for.
+     * @param {string} format - The format string specifying the desired output format.
+     * @return {string} The formatted first date of the month.
+     */
+    getFirstDateOfMonth: (date: string | number | Date, format: string): string => {
+        return dayjs(date).startOf('month').format(format);
+    },
+
+    /**
      * Returns the first day of the current week in the format 'YYYY-MM-DD'.
      *
      * @return {string} The first day of the current week in the format 'YYYY-MM-DD'.
      */
     getFirstDayOfCurrentWeek: (): string => {
         return dayjs().startOf('week').format('YYYY-MM-DD');
+    },
+
+    /**
+     * Returns the last date of the month for a given date in the specified format.
+     *
+     * @param {string | number | Date} date - The input date.
+     * @param {string} format - The desired format for the output date.
+     * @return {string} The last date of the month in the specified format.
+     */
+    getLastDateOfMonth: (date: string | number | Date, format: string): string => {
+        return dayjs(date).endOf('month').format(format);
     },
 
     /**
@@ -69,25 +91,23 @@ export const date = {
     },
 
     /**
-     * Returns the first date of the month for the given date in the specified format.
+     * Returns the name of the month corresponding to the given month number.
      *
-     * @param {string | number | Date} date - The date to get the first date of the month for.
-     * @param {string} format - The format string specifying the desired output format.
-     * @return {string} The formatted first date of the month.
+     * @param {number} month - The month number (0-11).
+     * @return {string} The name of the month in full form.
      */
-    getFirstDateOfMonth: (date: string | number | Date, format: string): string => {
-        return dayjs(date).startOf('month').format(format);
+    getMonthName: (month: number): string => {
+        return dayjs().month(month).format('MMMM');
     },
 
     /**
-     * Returns the last date of the month for a given date in the specified format.
+     * Returns the month of a given date.
      *
-     * @param {string | number | Date} date - The input date.
-     * @param {string} format - The desired format for the output date.
-     * @return {string} The last date of the month in the specified format.
+     * @param {string | number | Date} date - The date to extract the month from.
+     * @return {number} The month of the given date (0-11).
      */
-    getLastDateOfMonth: (date: string | number | Date, format: string): string => {
-        return dayjs(date).endOf('month').format(format);
+    getMonthOfDate: (date: string | number | Date): number => {
+        return dayjs(date).get('month');
     },
 
     /**
@@ -120,6 +140,71 @@ export const date = {
      */
     isBefore: (initHour: string | number | Date, finalHour: string | number | Date): boolean => {
         return dayjs(initHour).isBefore(dayjs(finalHour));
+    },
+
+    /**
+     * Sets the hour of a given date to the specified number of hours.
+     *
+     * @param {string | number | Date} date - The date to modify. Can be a string in ISO 8601 format, a number representing milliseconds since the Unix Epoch, or a Date object.
+     * @param {number} hours - The number of hours to set the date to.
+     * @return {string} The modified date in ISO 8601 format.
+     */
+    setHoursToDate: (date: string | number | Date, hours: number): string => {
+        return dayjs(date).set('hour', hours).toISOString();
+    },
+
+    /**
+     * Sets the locale for dayjs library.
+     *
+     * @param {string} locale - The locale to set for dayjs.
+     * @return {void} This function does not return anything.
+     */
+    setLocale: (locale: string | ILocale): void => {
+        dayjs.locale(locale);
+    },
+
+    /**
+     * Sets the minutes of a given date to the specified number of minutes.
+     *
+     * @param {string | number | Date} date - The date to modify. Can be a string in ISO 8601 format, a number representing milliseconds since the Unix Epoch, or a Date object.
+     * @param {number} minutes - The number of minutes to set the date to.
+     * @return {string} The modified date in ISO 8601 format.
+     */
+    setMinutesToDate: (date: string | number | Date, minutes: number): string => {
+        return dayjs(date).set('minute', minutes).toISOString();
+    },
+
+    /**
+     * Sets the month of a given date to the specified number of months.
+     *
+     * @param {string | number | Date} date - The date to modify. Can be a string in ISO 8601 format, a number representing milliseconds since the Unix Epoch, or a Date object.
+     * @param {number} month - The number of months to set the date to (0-11).
+     * @return {string} The modified date in ISO 8601 format.
+     */
+    setMonthToDate: (date: string | number | Date, month: number): string => {
+        return dayjs(date).set('month', month).toISOString();
+    },
+
+    /**
+     * Sets the seconds of a given date to the specified number of seconds.
+     *
+     * @param {string | number | Date} date - The date to modify. Can be a string in ISO 8601 format, a number representing milliseconds since the Unix Epoch, or a Date object.
+     * @param {number} seconds - The number of seconds to set the date to.
+     * @return {string} The modified date in ISO 8601 format.
+     */
+    setSecondsToDate: (date: string | number | Date, seconds: number): string => {
+        return dayjs(date).set('second', seconds).toISOString();
+    },
+
+    /**
+     * Sets the year of a given date to the specified number of years.
+     *
+     * @param {string | number | Date} date - The date to modify. Can be a string in ISO 8601 format, a number representing milliseconds since the Unix Epoch, or a Date object.
+     * @param {number} year - The number of years to set the date to.
+     * @return {string} The modified date in ISO 8601 format.
+     */
+    setYearToDate: (date: string | number | Date, year: number): string => {
+        return dayjs(date).set('year', year).toISOString();
     },
 
     /**
@@ -181,5 +266,25 @@ export const date = {
      */
     sumNumbers: (numbers: number[]): number => {
         return numbers.reduce((total, number) => total + number, 0);
+    },
+
+    /**
+     * Converts a given date to a Date object.
+     *
+     * @param {string | number} date - The date to convert.
+     * @return {Date} The Date object representation of the date.
+     */
+    toDate: (date: string | number): Date => {
+        return dayjs(date).toDate();
+    },
+
+    /**
+     * Converts a given date to an ISO string.
+     *
+     * @param {string | number | Date | Dayjs | null | undefined} date - The date to convert.
+     * @return {string} The ISO string representation of the date.
+     */
+    toISOString: (date: string | number | Date | Dayjs | null | undefined): string => {
+        return dayjs(date).toISOString();
     }
 }

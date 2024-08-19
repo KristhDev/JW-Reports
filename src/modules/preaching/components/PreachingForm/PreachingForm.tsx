@@ -5,7 +5,7 @@ import { Formik } from 'formik';
 import Icon from 'react-native-vector-icons/Ionicons';
 
 /* Components */
-import { Button, DatetimeField } from '../../../ui/components';
+import { Button, DatetimeField, FormCalendar, FormTime, useUI } from '../../../ui';
 
 /* Hooks */
 import { usePreaching } from '../../hooks';
@@ -18,7 +18,7 @@ import { preachingFormSchema } from './schemas';
 import { PreachingFormValues } from '../../interfaces';
 
 /* Theme */
-import { styles as themeStylesheet } from '../../../theme';
+import { themeStylesheet } from '../../../theme';
 
 /**
  * This component is responsible for rendering the fields to create
@@ -27,9 +27,11 @@ import { styles as themeStylesheet } from '../../../theme';
  * @returns {JSX.Element} The preaching form component.
  */
 export const PreachingForm = (): JSX.Element => {
-    const { setErrorForm } = useStatus();
     const { styles: themeStyles, theme: { colors, fontSizes, margins } } = useStyles(themeStylesheet);
+
     const { state: { isPreachingLoading, seletedPreaching }, savePreaching, updatePreaching } = usePreaching();
+    const { setErrorForm } = useStatus();
+    const { state: { userInterface } } = useUI();
 
     /**
      * If the selected preaching has an id, then update the preaching, otherwise save the preaching.
@@ -58,56 +60,108 @@ export const PreachingForm = (): JSX.Element => {
                 <View style={{ ...themeStyles.formContainer, justifyContent: 'flex-start', paddingBottom: margins.xl }}>
 
                     {/* Day field */}
-                    <DatetimeField
-                        icon={
-                            <Icon
-                                color={ colors.contentHeader }
-                                name="calendar-outline"
-                                size={ fontSizes.icon }
-                            />
-                        }
-                        inputDateFormat="DD"
-                        label="Día de predicación:"
-                        modalTitle="Día de predicación"
-                        mode="date"
-                        name="day"
-                        placeholder="Seleccione el día"
-                    />
+                    { userInterface.oldDatetimePicker ? (
+                        <DatetimeField
+                            disabled={ isPreachingLoading }
+                            icon={
+                                <Icon
+                                    color={ colors.contentHeader }
+                                    name="calendar-outline"
+                                    size={ fontSizes.icon }
+                                />
+                            }
+                            inputDateFormat="DD"
+                            label="Día de predicación:"
+                            modalTitle="Día de predicación"
+                            mode="date"
+                            name="day"
+                            placeholder="Seleccione el día"
+                        />
+                    ) : (
+                        <FormCalendar
+                            editable={ !isPreachingLoading }
+                            icon={
+                                <Icon
+                                    color={ colors.contentHeader }
+                                    name="calendar-outline"
+                                    size={ fontSizes.icon }
+                                />
+                            }
+                            inputDateFormat="DD"
+                            label="Día de predicación:"
+                            name="day"
+                        />
+                    ) }
 
                     {/* Init hour field */}
-                    <DatetimeField
-                        icon={
-                            <Icon
-                                color={ colors.contentHeader }
-                                name="time-outline"
-                                size={ fontSizes.icon }
-                            />
-                        }
-                        inputDateFormat="HH:mm"
-                        label="Hora de inicio:"
-                        modalTitle="Hora de inicio"
-                        mode="time"
-                        name="initHour"
-                        placeholder="Seleccione la hora"
-                    />
+                    { (userInterface.oldDatetimePicker) ? (
+                        <DatetimeField
+                            disabled={ isPreachingLoading }
+                            icon={
+                                <Icon
+                                    color={ colors.contentHeader }
+                                    name="time-outline"
+                                    size={ fontSizes.icon }
+                                />
+                            }
+                            inputDateFormat="HH:mm"
+                            label="Hora de inicio:"
+                            modalTitle="Hora de inicio"
+                            mode="time"
+                            name="initHour"
+                            placeholder="Seleccione la hora"
+                        />
+                    ) : (
+                        <FormTime
+                            editable={ !isPreachingLoading }
+                            icon={
+                                <Icon
+                                    color={ colors.contentHeader }
+                                    name="time-outline"
+                                    size={ fontSizes.icon }
+                                />
+                            }
+                            inputDateFormat="HH:mm"
+                            label="Hora de inicio:"
+                            name="initHour"
+                        />
+                    ) }
 
                     {/* Final hour field */}
-                    <DatetimeField
-                        icon={
-                            <Icon
-                                color={ colors.contentHeader }
-                                name="time-outline"
-                                size={ fontSizes.icon }
-                            />
-                        }
-                        inputDateFormat="HH:mm"
-                        label="Hora de fin:"
-                        modalTitle="Hora de fin"
-                        mode="time"
-                        name="finalHour"
-                        placeholder="Seleccione la hora"
-                        style={{ marginBottom: margins.xl }}
-                    />
+                    { userInterface.oldDatetimePicker ? (
+                        <DatetimeField
+                            disabled={ isPreachingLoading }
+                            icon={
+                                <Icon
+                                    color={ colors.contentHeader }
+                                    name="time-outline"
+                                    size={ fontSizes.icon }
+                                />
+                            }
+                            inputDateFormat="HH:mm"
+                            label="Hora de fin:"
+                            modalTitle="Hora de fin"
+                            mode="time"
+                            name="finalHour"
+                            placeholder="Seleccione la hora"
+                            style={{ marginBottom: margins.xl }}
+                        />
+                    ) : (
+                        <FormTime
+                            editable={ !isPreachingLoading }
+                            icon={
+                                <Icon
+                                    color={ colors.contentHeader }
+                                    name="time-outline"
+                                    size={ fontSizes.icon }
+                                />
+                            }
+                            inputDateFormat="HH:mm"
+                            label="Hora de fin:"
+                            name="finalHour"
+                            style={{ marginBottom: margins.xl }}
+                        />
+                    ) }
 
                     {/* Submit button */}
                     <Button

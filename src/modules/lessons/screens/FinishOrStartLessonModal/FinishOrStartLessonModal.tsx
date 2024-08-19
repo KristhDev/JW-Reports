@@ -5,9 +5,9 @@ import { Formik } from 'formik';
 import Icon from 'react-native-vector-icons/Ionicons';
 
 /* Modules */
-import { Modal, ModalActions, DatetimeField, ModalProps } from '../../../ui';
+import { Modal, ModalActions, ModalProps, FormCalendar, useUI, DatetimeField } from '../../../ui';
 import { useLessons } from '../../hooks';
-import { styles as themeStylesheet } from '../../../theme';
+import { themeStylesheet } from '../../../theme';
 
 /**
  * This modal is responsible for grouping the components to finish
@@ -19,8 +19,10 @@ import { styles as themeStylesheet } from '../../../theme';
 const FinishOrStartLessonModal: FC<ModalProps> = ({ isOpen, onClose }) => {
     const [ reschedule, setReschedule ] = useState<boolean>(false);
 
-    const { state: { selectedLesson, isLessonLoading }, finishOrStartLesson } = useLessons();
     const { styles: themeStyles, theme: { colors, fontSizes, margins } } = useStyles(themeStylesheet);
+
+    const { state: { selectedLesson, isLessonLoading }, finishOrStartLesson } = useLessons();
+    const { state: { userInterface } } = useUI();
 
     const modalMsg = (selectedLesson.done)
         ? '¿Está seguro de reprogramar esta clase?'
@@ -103,22 +105,38 @@ const FinishOrStartLessonModal: FC<ModalProps> = ({ isOpen, onClose }) => {
                                     </Text>
 
                                     {/* Next lesson field */}
-                                    <DatetimeField
-                                        icon={
-                                            <Icon
-                                                color={ colors.contentHeader }
-                                                name="calendar-outline"
-                                                size={ fontSizes.icon }
-                                            />
-                                        }
-                                        inputDateFormat="DD/MM/YYYY"
-                                        label="Reprogramar clase:"
-                                        modalTitle="Reprogramar clase"
-                                        mode="date"
-                                        name="nextLesson"
-                                        placeholder="Seleccione el día"
-                                        style={{ marginBottom: 0 }}
-                                    />
+                                    { (userInterface.oldDatetimePicker) ? (
+                                        <DatetimeField
+                                            icon={
+                                                <Icon
+                                                    color={ colors.contentHeader }
+                                                    name="calendar-outline"
+                                                    size={ fontSizes.icon }
+                                                />
+                                            }
+                                            inputDateFormat="DD/MM/YYYY"
+                                            label="Reprogramar clase:"
+                                            modalTitle="Reprogramar clase"
+                                            mode="date"
+                                            name="nextLesson"
+                                            placeholder="Seleccione el día"
+                                            style={{ marginBottom: 0 }}
+                                        />
+                                    ) : (
+                                        <FormCalendar
+                                            icon={
+                                                <Icon
+                                                    color={ colors.contentHeader }
+                                                    name="calendar-outline"
+                                                    size={ fontSizes.icon }
+                                                />
+                                            }
+                                            inputDateFormat="DD/MM/YYYY"
+                                            label="Reprogramar clase:"
+                                            name="nextLesson"
+                                            style={{ marginBottom: 0 }}
+                                        />
+                                    ) }
 
                                     {/* Modal actions */}
                                     <ModalActions

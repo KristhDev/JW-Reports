@@ -1,6 +1,6 @@
 import { createStyleSheet } from 'react-native-unistyles';
 
-const styles = createStyleSheet(({ colors, margins, fontSizes }) => ({
+export const stylesheet = createStyleSheet(({ colors, margins, fontSizes }) => ({
     container: {
         padding: margins.sm
     },
@@ -11,5 +11,3 @@ const styles = createStyleSheet(({ colors, margins, fontSizes }) => ({
         textAlign: 'center'
     }
 }));
-
-export default styles;

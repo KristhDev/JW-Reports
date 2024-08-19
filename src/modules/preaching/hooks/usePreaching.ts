@@ -56,7 +56,7 @@ const usePreaching = () => {
      * @return {Promise<void>} This function does not return anything.
      */
     const deletePreaching = async (onFinish?: () => void): Promise<void> => {
-        if (!wifi.isConnected) {
+        if (!wifi.hasConnection) {
             setNetworkError();
             return;
         }
@@ -132,7 +132,7 @@ const usePreaching = () => {
      * @return {Promise<void>} This function does not return anything.
      */
     const loadPreachings = async (date: Date): Promise<void> => {
-        if (!wifi.isConnected) {
+        if (!wifi.hasConnection) {
             setNetworkError();
             return;
         }
@@ -168,7 +168,7 @@ const usePreaching = () => {
      * @return {Promise<void>} This function does not return anything.
      */
     const savePreaching = async (preachingValues: PreachingFormValues): Promise<void> => {
-        if (!wifi.isConnected) {
+        if (!wifi.hasConnection) {
             setNetworkError();
             return;
         }
@@ -212,7 +212,7 @@ const usePreaching = () => {
      * @return {Promise<void>} This function does not return anything.
      */
     const updatePreaching = async (preachingValues: PreachingFormValues): Promise<void> => {
-        if (!wifi.isConnected) {
+        if (!wifi.hasConnection) {
             setNetworkError();
             return;
         }

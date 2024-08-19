@@ -18,7 +18,7 @@ import { useRevisits } from '../../hooks';
 import { RevisitsTopTabsParamsList } from '../../interfaces';
 
 /* Theme */
-import { styles as themeStylesheet } from '../../../theme';
+import { themeStylesheet } from '../../../theme';
 
 type RevisitsProps = MaterialTopTabScreenProps<RevisitsTopTabsParamsList>;
 

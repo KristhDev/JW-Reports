@@ -7,7 +7,7 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import { CheckboxProps } from './interfaces';
 
 /* Styles */
-import stylesheet from './styles';
+import { stylesheet } from './styles';
 
 /**
  * Renders a checkbox component with the specified props.

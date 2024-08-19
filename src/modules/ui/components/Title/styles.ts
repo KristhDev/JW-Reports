@@ -1,6 +1,6 @@
 import { createStyleSheet } from 'react-native-unistyles';
 
-const styles = createStyleSheet(({ colors, margins, fontSizes }) => ({
+export const stylesheet = createStyleSheet(({ colors, margins, fontSizes }) => ({
     titleContainer: {
         alignItems: 'flex-start',
         marginBottom: margins.xl,
@@ -13,5 +13,3 @@ const styles = createStyleSheet(({ colors, margins, fontSizes }) => ({
         fontWeight: 'bold'
     }
 }));
-
-export default styles;

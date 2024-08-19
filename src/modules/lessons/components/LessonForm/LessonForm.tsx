@@ -4,10 +4,8 @@ import { useStyles } from 'react-native-unistyles';
 import { Formik } from 'formik';
 import Icon from 'react-native-vector-icons/Ionicons';
 
-/* Components */
-import { Button, DatetimeField, FormField } from '../../../ui';
-
-/* Hooks */
+/* Modules */
+import { Button, DatetimeField, FormCalendar, FormField, useUI } from '../../../ui';
 import { useLessons } from '../../../lessons';
 import { useStatus } from '../../../shared';
 
@@ -18,7 +16,7 @@ import { lessonFormSchema } from './schemas';
 import { LessonFormValues } from '../../interfaces';
 
 /* Theme */
-import { styles as themeStylesheet } from '../../../theme';
+import { themeStylesheet } from '../../../theme';
 
 /**
  * This component is responsible for rendering the fields to create
@@ -27,9 +25,11 @@ import { styles as themeStylesheet } from '../../../theme';
  * @returns {JSX.Element} The lesson form component.
  */
 export const LessonForm = (): JSX.Element => {
+    const { styles: themeStyles, theme: { colors, fontSizes, margins } } = useStyles(themeStylesheet);
+
     const { state: { isLessonLoading, selectedLesson }, saveLesson, updateLesson } = useLessons();
     const { setErrorForm } = useStatus();
-    const { styles: themeStyles, theme: { colors, fontSizes, margins } } = useStyles(themeStylesheet);
+    const { state: { userInterface } } = useUI();
 
     /**
      * If the selectedLesson.id is an empty string, then saveLesson, otherwise updateLesson.
@@ -61,6 +61,7 @@ export const LessonForm = (): JSX.Element => {
 
                     {/* Description field */}
                     <FormField
+                        editable={ !isLessonLoading }
                         label="¿Qué verán la próxima clase?"
                         multiline
                         name="description"
@@ -69,22 +70,40 @@ export const LessonForm = (): JSX.Element => {
                     />
 
                     {/* Next lesson field */}
-                    <DatetimeField
-                        icon={
-                            <Icon
-                                color={ colors.contentHeader }
-                                name="calendar-outline"
-                                size={ fontSizes.icon }
-                            />
-                        }
-                        inputDateFormat="DD/MM/YYYY"
-                        label="Próxima clase:"
-                        modalTitle="Próxima clase"
-                        mode="date"
-                        name="nextLesson"
-                        placeholder="Seleccione el día"
-                        style={{ marginBottom: margins.xl }}
-                    />
+                    { (userInterface.oldDatetimePicker) ? (
+                        <DatetimeField
+                            disabled={ isLessonLoading }
+                            icon={
+                                <Icon
+                                    color={ colors.contentHeader }
+                                    name="calendar-outline"
+                                    size={ fontSizes.icon }
+                                />
+                            }
+                            inputDateFormat="DD/MM/YYYY"
+                            label="Próxima clase:"
+                            modalTitle="Próxima clase"
+                            mode="date"
+                            name="nextLesson"
+                            placeholder="Seleccione el día"
+                            style={{ marginBottom: margins.xl }}
+                        />
+                    ) : (
+                        <FormCalendar
+                            editable={ !isLessonLoading }
+                            icon={
+                                <Icon
+                                    color={ colors.contentHeader }
+                                    name="calendar-outline"
+                                    size={ fontSizes.icon }
+                                />
+                            }
+                            inputDateFormat="DD/MM/YYYY"
+                            label="Próxima clase:"
+                            name="nextLesson"
+                            style={{ marginBottom: margins.xl }}
+                        />
+                    ) }
 
                     <View style={{ flex: 1 }} />
 

@@ -61,7 +61,7 @@ export const LessonsList = (): JSX.Element => {
     const handleRefreshing = (): void => {
         setSearchTerm('');
 
-        if (wifi.isConnected) {
+        if (wifi.hasConnection) {
             setLessonsPagination({ from: 0, to: 9 });
             removeLessons();
         }
@@ -76,7 +76,7 @@ export const LessonsList = (): JSX.Element => {
      * @return {void} This function does not return any value.
      */
     const handleEndReach = (): void => {
-        if (!hasMoreLessons || isLessonsLoading || !wifi.isConnected) return;
+        if (!hasMoreLessons || isLessonsLoading || !wifi.hasConnection) return;
         loadLessons({ search: searchTerm, loadMore: true });
     }
 
@@ -133,7 +133,7 @@ export const LessonsList = (): JSX.Element => {
      */
     useEffect(() => {
         if (searchTerm.trim().length > 0) {
-            if (wifi.isConnected) {
+            if (wifi.hasConnection) {
                 setLessonsPagination({ from: 0, to: 9 });
                 removeLessons();
             }
@@ -141,7 +141,7 @@ export const LessonsList = (): JSX.Element => {
             loadLessons({ search: searchTerm, refresh: true });
             setIsRefreshing(false);
         }
-        else if (searchTerm.trim().length === 0 && lessons.length === 0 && wifi.isConnected) {
+        else if (searchTerm.trim().length === 0 && lessons.length === 0 && wifi.hasConnection) {
             setLessonsPagination({ from: 0, to: 9 });
             removeLessons();
             loadLessons({ search: '', refresh: true });

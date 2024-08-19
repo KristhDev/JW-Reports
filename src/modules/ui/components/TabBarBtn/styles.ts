@@ -1,13 +1,11 @@
 import { createStyleSheet } from 'react-native-unistyles';
 
-const styles = createStyleSheet({
+export const stylesheet = createStyleSheet(({ borderRadius }) => ({
     pressable: {
         alignItems: 'center',
-        borderRadius: 50,
+        borderRadius: borderRadius.xxl,
         flex: 1,
         height: 100,
         justifyContent: 'center'
     }
-});
-
-export default styles;
+}));

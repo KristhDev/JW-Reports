@@ -18,7 +18,7 @@ import { TABLE_PREACHING_HEADERS } from '../../utils';
 import { date } from '../../../../utils';
 
 /* Styles */
-import stylesheet from './styles';
+import { stylesheet } from './styles';
 
 /**
  * This component is responsible for displaying a table that contains the data
@@ -27,12 +27,13 @@ import stylesheet from './styles';
  * @returns {JSX.Element} The table component with the data of the preaching days.
  */
 export const PreachingTable = (): JSX.Element => {
-    const { navigate } = useNavigation();
     const { width } = useWindowDimensions();
+
+    const { navigate } = useNavigation();
+    const { styles } = useStyles(stylesheet);
 
     const { state: { preachings }, setSelectedPreaching } = usePreaching();
     const { state: { theme } } = useTheme();
-    const { styles } = useStyles(stylesheet);
 
     const cellWidth = (width - 24) / 6;
     const cellWidthHours = (width - 24) / 3;

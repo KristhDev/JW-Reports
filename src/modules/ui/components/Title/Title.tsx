@@ -6,7 +6,7 @@ import { useStyles } from 'react-native-unistyles';
 import { TitleProps } from './interfaces';
 
 /* Styles */
-import stylesheet from './styles';
+import { stylesheet } from './styles';
 
 /**
  * This component is responsible for render a title for screens.\

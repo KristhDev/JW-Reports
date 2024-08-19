@@ -3,9 +3,9 @@ import { Linking, Text, View } from 'react-native';
 import { useStyles } from 'react-native-unistyles';
 
 /* Modules */
-import { Modal, ModalActions } from '../../../../ui';
-import { useStatus } from '../../../hooks';
-import { styles as themeStylesheet } from '../../../../theme';
+import { Modal, ModalActions } from '../../../ui';
+import { useStatus } from '../../hooks';
+import { themeStylesheet } from '../../../theme';
 
 /**
  * This modal is responsible for displaying the success and error

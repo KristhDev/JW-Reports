@@ -78,7 +78,7 @@ const useAuth = () => {
     const refreshAuth = async (): Promise<void> => {
         if (state.token?.trim().length <= 0) return;
 
-        if (!wifi.isConnected) {
+        if (!wifi.hasConnection) {
             setNetworkError();
             return;
         }
@@ -94,7 +94,7 @@ const useAuth = () => {
      * @return {Promise<void>} A promise that resolves when the password reset is complete.
      */
     const resetPassword = async ({ email }: EmailData): Promise<void> => {
-        if (!wifi.isConnected) {
+        if (!wifi.hasConnection) {
             setNetworkError();
             return;
         }
@@ -123,7 +123,7 @@ const useAuth = () => {
      * @return {Promise<void>} A promise that resolves when the sign-in process is complete.
      */
     const signIn = async ({ email, password }: SignInData): Promise<void> => {
-        if (!wifi.isConnected) {
+        if (!wifi.hasConnection) {
             setNetworkError('Lo sentimos pero no dispones de conexión a Internet.');
             return;
         }
@@ -143,7 +143,7 @@ const useAuth = () => {
     const signOut = async (): Promise<void> => {
         if (!state.isAuthenticated) return;
 
-        if (wifi.isConnected) {
+        if (wifi.hasConnection) {
             const { error } = await supabase.auth.signOut();
             notifications.close();
             setSupabaseError(error, 500);
@@ -167,7 +167,7 @@ const useAuth = () => {
      * @return {Promise<void>} A promise that resolves when the sign-up process is complete.
      */
     const signUp = async ({ name, surname, email, password }: SignUpData, onSuccess?: () => void): Promise<void> => {
-        if (!wifi.isConnected) {
+        if (!wifi.hasConnection) {
             setNetworkError('Lo sentimos pero no dispones de conexión a Internet.');
             return;
         }
@@ -231,7 +231,7 @@ const useAuth = () => {
      * @return {Promise<void>} - A promise that resolves when the update is complete.
      */
     const updateEmail = async ({ email }: EmailData, onFinish?: () => void): Promise<void> => {
-        if (!wifi.isConnected) {
+        if (!wifi.hasConnection) {
             setNetworkError();
             return;
         }
@@ -289,7 +289,7 @@ const useAuth = () => {
      * @return {Promise<void>} A promise that resolves when the password update is complete.
      */
     const updatePassword = async ({ password }: UpdatePasswordData, onFinish?: () => void): Promise<void> => {
-        if (!wifi.isConnected) {
+        if (!wifi.hasConnection) {
             setNetworkError();
             return;
         }
@@ -333,7 +333,7 @@ const useAuth = () => {
      * @return {Promise<void>} This function does not return anything.
      */
     const updateProfile = async (values: ProfileData): Promise<void> => {
-        if (!wifi.isConnected) {
+        if (!wifi.hasConnection) {
             setNetworkError();
             return;
         }

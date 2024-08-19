@@ -6,7 +6,7 @@ import { useStyles } from 'react-native-unistyles';
 import { RadioBtnProps } from './interfaces';
 
 /* Styles */
-import stylesheet from './styles';
+import { stylesheet } from './styles';
 
 /**
  * This component is responsible for displaying a radio button with a

@@ -1,8 +1,8 @@
 import { createStyleSheet } from 'react-native-unistyles';
 
-const styles = createStyleSheet(({ colors, fontSizes, margins }) =>({
+export const stylesheet = createStyleSheet(({ borderRadius, colors, fontSizes, margins }) =>({
     buttonPressable: {
-        borderRadius: 10,
+        borderRadius: (borderRadius.xs + 2),
         backgroundColor: colors.button,
     },
 
@@ -24,5 +24,3 @@ const styles = createStyleSheet(({ colors, fontSizes, margins }) =>({
         textAlign: 'center',
     },
 }));
-
-export default styles;

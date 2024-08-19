@@ -71,7 +71,7 @@ const useCourses = () => {
      * @return {Promise<void>} This function does not return anything.
      */
     const activeOrSuspendCourse = async (onFinish?: () => void): Promise<void> => {
-        if (!wifi.isConnected) {
+        if (!wifi.hasConnection) {
             setNetworkError();
             return;
         }
@@ -158,7 +158,7 @@ const useCourses = () => {
      * @return {Promise<void>} This function does not return anything.
      */
     const deleteCourse = async (back: boolean = false, onFinish?: () => void): Promise<void> => {
-        if (!wifi.isConnected) {
+        if (!wifi.hasConnection) {
             setNetworkError();
             return;
         }
@@ -234,7 +234,7 @@ const useCourses = () => {
      * @return {Promise<void>} This function does not return anything.
      */
     const finishOrStartCourse = async (onFinish?: () => void): Promise<void> => {
-        if (!wifi.isConnected) {
+        if (!wifi.hasConnection) {
             setNetworkError();
             return;
         }
@@ -327,7 +327,7 @@ const useCourses = () => {
     const loadCourses = async ({ filter, loadMore = false, refresh = false, search = '' }: loadCoursesOptions): Promise<void> => {
         dispatch(setCourseFilter({ filter }));
 
-        if (!wifi.isConnected) {
+        if (!wifi.hasConnection) {
             setNetworkError();
             return;
         }
@@ -394,7 +394,7 @@ const useCourses = () => {
      * @return {Promise<void>} This function does not return anything.
      */
     const saveCourse = async (courseValues: CourseFormValues, onFinish?: () => void): Promise<void> => {
-        if (!wifi.isConnected) {
+        if (!wifi.hasConnection) {
             setNetworkError();
             return;
         }
@@ -446,7 +446,7 @@ const useCourses = () => {
      * @return {Promise<void>} This function does not return anything.
      */
     const updateCourse = async (courseValues: CourseFormValues): Promise<void> => {
-        if (!wifi.isConnected) {
+        if (!wifi.hasConnection) {
             setNetworkError();
             return;
         }

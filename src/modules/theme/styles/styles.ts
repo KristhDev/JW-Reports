@@ -1,16 +1,17 @@
 import { createStyleSheet } from 'react-native-unistyles';
 
-const styles = createStyleSheet(({ colors, fontSizes, margins }) => ({
+export const themeStylesheet = createStyleSheet(({ borderRadius, colors, fontSizes, margins }) => ({
     btnLink: {
         flexDirection: 'row',
         justifyContent: 'center',
         marginTop: margins.xl,
     },
 
-    defaultBorder: {
-        borderRadius: 5,
-        borderWidth: 0.5
-    },
+    defaultBorder: (isFocused: boolean) => ({
+        borderColor: (!isFocused) ? colors.text : colors.focus,
+        borderRadius: (borderRadius.xs - 3),
+        borderWidth: 0.5,
+    }),
 
     fabBottomRight: {
         bottom: margins.sm,
@@ -20,15 +21,16 @@ const styles = createStyleSheet(({ colors, fontSizes, margins }) => ({
         width: 60
     },
 
-    focusExternalBorder: {
-        borderRadius: 7,
-        borderWidth: 1
-    },
+    focusExternalBorder: (isFocused: boolean) => ({
+        borderColor: (isFocused) ? '#FFFFFF' : 'transparent',
+        borderRadius: (borderRadius.xs - 1),
+        borderWidth: 1,
+    }),
 
-    focusInternalBorder: {
-        borderWidth: 1.5,
-        paddingRight: (margins.xs + 2)
-    },
+    focusInternalBorder: (isFocused: boolean) => ({
+        borderColor: (isFocused) ? colors.focus : 'transparent',
+        borderWidth: 1.5
+    }),
 
     formContainer: {
         alignItems: 'center',
@@ -38,11 +40,13 @@ const styles = createStyleSheet(({ colors, fontSizes, margins }) => ({
     },
 
     formControl: {
-        borderColor: colors.text,
         alignItems: 'center',
-        borderRadius: 5,
+        borderColor: colors.text,
+        borderRadius: (borderRadius.xs - 3),
         borderWidth: 0.5,
-        flexDirection: 'row'
+        flexDirection: 'row',
+        gap: (margins.xs - 2),
+        paddingHorizontal: (margins.xs + 2),
     },
 
     formField: {
@@ -53,8 +57,8 @@ const styles = createStyleSheet(({ colors, fontSizes, margins }) => ({
 
     formInput: {
         color: colors.inputText,
+        flex: 1,
         fontSize: (fontSizes.sm + 1),
-        paddingLeft: (margins.xs + 2),
     },
 
     formInputText: {
@@ -76,8 +80,9 @@ const styles = createStyleSheet(({ colors, fontSizes, margins }) => ({
 
     formSelectPressableContainer: {
         alignItems: 'center',
+        flex: 1,
         flexDirection: 'row',
-        padding: (margins.xs + 2)
+        gap: margins.xs - 2,
     },
 
     formText: {
@@ -86,9 +91,39 @@ const styles = createStyleSheet(({ colors, fontSizes, margins }) => ({
         marginRight: (margins.xs + 2)
     },
 
+    menuButton: {
+        position: 'absolute',
+        right: margins.xs,
+        top: margins.xs,
+        height: fontSizes.lg + 3,
+        width: fontSizes.lg + 3,
+    },
+
+    menuContainer: (width: number) => ({
+        backgroundColor: colors.contentHeader,
+        borderRadius: borderRadius.xs,
+        elevation: 0,
+        overflow: 'hidden',
+        shadowOpacity: 0,
+        width: width,
+    }),
+
+    menuItemText: {
+        color: colors.text,
+        fontSize: (fontSizes.sm + 2),
+        paddingHorizontal: margins.xs,
+        paddingVertical: (margins.xs / 2)
+    },
+
+    menuPosition: {
+        position: 'absolute',
+        right: 20,
+        top: 30,
+    },
+
     modalContainer: {
         backgroundColor: colors.modal,
-        borderRadius: 10,
+        borderRadius: borderRadius.sm,
         justifyContent: 'space-between',
         padding: margins.md,
         width: '100%'
@@ -116,5 +151,3 @@ const styles = createStyleSheet(({ colors, fontSizes, margins }) => ({
         paddingTop: (margins.lg - 2)
     }
 }));
-
-export default styles;
