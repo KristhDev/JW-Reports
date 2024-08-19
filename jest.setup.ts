@@ -1,8 +1,8 @@
 import 'react-native-gesture-handler/jestSetup';
 import 'react-native-url-polyfill/auto';
+import './src/config/unistyles';
 
 import { Image } from 'react-native';
-import { breakpoints as mockBreakpoints, darkColors as mockDarkColors, fontSizes as mockFontSizes, margins as mockMargins } from './src/modules/theme';
 
 export const onCancelMock = jest.fn();
 export const onChangeValueMock = jest.fn();
@@ -24,6 +24,7 @@ import * as usePreaching from './src/modules/preaching/hooks/usePreaching';
 import * as useRevisits from './src/modules/revisits/hooks/useRevisits';
 import * as useStatus from './src/modules/shared/hooks/useStatus';
 import * as useTheme from './src/modules/theme/hooks/useTheme';
+import * as useUI from './src/modules/ui/hooks/useUI';
 
 export const useAuthSpy = jest.spyOn(useAuth, 'default');
 export const useCoursesSpy = jest.spyOn(useCourses, 'default');
@@ -35,6 +36,7 @@ export const usePreachingSpy = jest.spyOn(usePreaching, 'default');
 export const useRevisitsSpy = jest.spyOn(useRevisits, 'default');
 export const useStatusSpy = jest.spyOn(useStatus, 'default');
 export const useThemeSpy = jest.spyOn(useTheme, 'default');
+export const useUIspy = jest.spyOn(useUI, 'default');
 
 jest.spyOn(Image, 'resolveAssetSource').mockImplementation(() => ({
     uri: 'https://www.google.com/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png',
@@ -57,10 +59,6 @@ jest.mock('@bugfender/rn-bugfender', () => {
 
 jest.mock('react-native/Libraries/Animated/NativeAnimatedHelper');
 jest.mock('react-native/Libraries/EventEmitter/NativeEventEmitter');
-
-jest.mock('@react-native-async-storage/async-storage', () =>
-    require('@react-native-async-storage/async-storage/jest/async-storage-mock')
-);
 
 jest.mock('@react-native-community/netinfo', () =>
     require('@react-native-community/netinfo/jest/netinfo-mock.js')
@@ -100,11 +98,13 @@ jest.mock('@react-navigation/native', () => {
 });
 
 export const mockDeviceInfo = {
+    getBuildNumber: jest.fn().mockImplementation(() => 9102),
     getSystemVersion: jest.fn().mockImplementation(() => '12')
 }
 
 jest.mock('react-native-device-info', () => ({
-    getSystemVersion: () => mockDeviceInfo.getSystemVersion()
+    getSystemVersion: () => mockDeviceInfo.getSystemVersion(),
+    getBuildNumber: () => mockDeviceInfo.getBuildNumber()
 }));
 
 jest.mock('react-native-system-navigation-bar', () => {
@@ -124,13 +124,9 @@ jest.mock('react-native-image-crop-picker', () => ({
     openPicker: () => mockImageCropPicker.openPicker()
 }));
 
-jest.mock('react-native-keyboard-aware-scroll-view', () => {
-    return {
-        KeyboardAwareScrollView: jest
-            .fn()
-            .mockImplementation(({ children }) => children)
-    }
-});
+jest.mock('react-native-keyboard-controller', () =>
+    require('react-native-keyboard-controller/jest'),
+);
 
 jest.mock('react-native-onesignal', () => ({
     OneSignal: {
@@ -150,7 +146,7 @@ jest.mock('react-native-permissions', () => require('react-native-permissions/mo
 
 jest.mock('react-native-reanimated', () => {
     const Reanimated = require('react-native-reanimated/mock');
-    Reanimated.default.call = () => { }
+    Reanimated.default.call = () => {}
 
     return Reanimated;
 });
@@ -173,87 +169,29 @@ jest.mock('react-native-unistyles', () => {
 
     return {
         ...real,
-        useStyles: (stylesheet: any) => {
-            return {
-                breakpoints: mockBreakpoints,
-                styles: stylesheet,
-                theme: {
-                    colors: mockDarkColors,
-                    margins: mockMargins,
-                    fontSizes: mockFontSizes
-                },
-            }
-        },
-        createStyleSheet: (callback: Object | Function) => {
-            if (typeof callback === 'object') return callback;
-
-            return callback({
-                colors: {
-                    background: '#000000',
-                    bottom: '#292929',
-                    button: '#C0A7E1',
-                    buttonTranslucent: 'rgba(192, 167, 225, 0.50)',
-                    buttonTransparent: 'rgba(255, 255, 255, 0.15)',
-                    card: '#292929',
-                    contentHeader: '#121212',
-                    focus: '#D8981A',
-                    header: '#292929',
-                    headerText: '#FFFFFF',
-                    icon: '#BFBFBF',
-                    inputText: '#FFFFFF',
-                    linkText: '#A0B9E2',
-                    modal: '#292929',
-                    modalText: '#B4B4B4',
-                    navbar: '#000000',
-                    text: '#FFFFFF',
-                    titleSecondary: '#93A8AB',
-                    titleText: '#FFFFFF',
-                },
-                fontSizes: {
-                    xs: 8,
-                    sm: 16,
-                    md: 24,
-                    lg: 32,
-                    xl: 40,
-                    xxl: 48,
-
-                    icon: 25
-                },
-                margins: {
-                    xs: 8,
-                    sm: 16,
-                    md: 24,
-                    lg: 32,
-                    xl: 40,
-                    xxl: 48,
-                    xxxl: 56
-                }
-            });
-        },
-        colorScheme: 'dark',
-        setTheme: mockUnistylesSetTheme,
-        themeName: 'dark',
+        UnistylesRuntime: {
+            colorScheme: 'dark',
+            setTheme: mockUnistylesSetTheme,
+            themeName: 'dark',
+        }
     }
 });
 
 jest.mock('reactotron-react-native', () => ({
-    setAsyncStorageHandler: () => ({
-        configure: () => ({
-            useReactNative: () => ({
+    configure: () => ({
+        useReactNative: () => ({
+            use: () => ({
                 use: () => ({
                     use: () => ({
                         use: () => ({
-                            use: () => ({
-                                connect: () => jest.fn()
-                            })
+                            connect: () => jest.fn()
                         })
                     })
                 })
             })
-        }),
+        })
     }),
     openInEditor: jest.fn(),
-    configure: jest.fn(),
     useReactNative: jest.fn(),
     use: jest.fn(),
     connect: jest.fn(),
@@ -264,5 +202,7 @@ jest.mock('reactotron-react-native', () => ({
 jest.mock('reactotron-redux', () => ({
     reactotronRedux: jest.fn()
 }));
+
+jest.mock('reactotron-react-native-mmkv', () => jest.fn());
 
 jest.setTimeout(100 * 1000);
