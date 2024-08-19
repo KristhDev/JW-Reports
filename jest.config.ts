@@ -14,7 +14,7 @@ const jestConfig: Config = {
         '<rootDir>/__tests__/setups/',
         '<rootDir>/__tests__/config',
         '<rootDir/>/src',
-        '<rootDir/>/ReactotronConfig.js'
+        '<rootDir/>/ReactotronConfig.ts'
     ],
     preset: 'react-native',
     setupFiles: [ './jest.setup.ts' ],
