@@ -1,16 +1,15 @@
 import groovy.json.JsonSlurper
 
-def getNpmVersion() {
+def getVersionName() {
     def inputFile = new File("../package.json")
     def packageJson = new JsonSlurper().parseText(inputFile.text)
     return packageJson["version"]
 }
 
-def getGitVersion() {
+def getVersionCode() {
     def process = "git rev-list development --first-parent --count".execute()
     return process.text.toInteger()
 }
-
 
 apply plugin: "com.android.application"
 apply plugin: "org.jetbrains.kotlin.android"
@@ -89,8 +88,8 @@ def enableProguardInReleaseBuilds = false
  */
 def jscFlavor = 'org.webkit:android-jsc:+'
 
-def userVer = getNpmVersion()
-def googleVer = getGitVersion()
+def versionName = getVersionName()
+def versionCode = getVersionCode()
 
 android {
     ndkVersion rootProject.ext.ndkVersion
@@ -103,8 +102,8 @@ android {
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         vectorDrawables.useSupportLibrary = true
-        versionCode googleVer
-        versionName userVer
+        versionCode versionCode
+        versionName versionName
     }
     signingConfigs {
         debug {
