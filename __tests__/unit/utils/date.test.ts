@@ -3,20 +3,36 @@ import { date } from '../../../src/utils';
 describe('Test date util', () => {
     it('should have respective methods', () => {
         expect(date).toEqual({
-            format: expect.any(Function),
-            setLocale: expect.any(Function),
+            locale: {
+                es: expect.any(Object),
+            },
+            plugins: {
+                weekday: expect.any(Function),
+            },
+
             extend: expect.any(Function),
+            format: expect.any(Function),
             getArrayValuesOfWeek: expect.any(Function),
-            getFirstDayOfCurrentWeek: expect.any(Function),
-            getLastDayOfCurrentWeek: expect.any(Function),
             getFirstDateOfMonth: expect.any(Function),
+            getFirstDayOfCurrentWeek: expect.any(Function),
             getLastDateOfMonth: expect.any(Function),
+            getLastDayOfCurrentWeek: expect.any(Function),
+            getMonthName: expect.any(Function),
+            getMonthOfDate: expect.any(Function),
             getRestMins: expect.any(Function),
             getYearOfDate: expect.any(Function),
             isBefore: expect.any(Function),
+            setHoursToDate: expect.any(Function),
+            setLocale: expect.any(Function),
+            setMinutesToDate: expect.any(Function),
+            setMonthToDate: expect.any(Function),
+            setSecondsToDate: expect.any(Function),
+            setYearToDate: expect.any(Function),
             sumHours: expect.any(Function),
             sumMins: expect.any(Function),
-            sumNumbers: expect.any(Function)
+            sumNumbers: expect.any(Function),
+            toDate: expect.any(Function),
+            toISOString: expect.any(Function),
         });
     });
 
