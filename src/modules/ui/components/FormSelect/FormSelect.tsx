@@ -133,6 +133,7 @@ export const FormSelect: FC<FormSelectProps> = ({
                                         placeholder={ placeholder }
                                         placeholderTextColor={ colors.icon }
                                         style={[ themeStyles.formInput, inputTextStyle ]}
+                                        testID="form-select-input"
                                         value={ String(items.find(i => i.value === field?.value)?.label || '') }
                                     />
 
