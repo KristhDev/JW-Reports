@@ -56,18 +56,18 @@ describe('Test in <FormSelect /> component', () => {
     it('should change value of select option', async () => {
         renderComponent();
 
-        /* Get touchable */
-        const touchable = await screen.findByTestId('form-select-touchable');
-        await user.press(touchable);
+        /* Get pressable */
+        const pressable = await screen.findByTestId('form-select-pressable');
+        await user.press(pressable);
 
         /* Get radio touchable */
         const options = await screen.findAllByTestId('radio-btn-pressable');
         await user.press(options[1]);
 
-        /* Get text value of select option */
-        const textValue = await screen.findByTestId('form-select-text-value');
+        /* Get text input of select option */
+        const textInput = await screen.findByTestId('form-select-input');
 
         /* Check if text contain option selected */
-        expect(textValue).toHaveTextContent(itemsOptions[1].label);
+        expect(textInput).toHaveDisplayValue(itemsOptions[1].label);
     });
 });

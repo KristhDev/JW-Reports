@@ -24,7 +24,7 @@ describe('Test in <ListEmptyComponent /> component', () => {
 
         /* Get text and check if containt message pass by props */
         const msg = screen.getByTestId('info-text-text');
-        expect(msg.props.children).toBe(emptyMessage);
+        expect(msg).toHaveTextContent(emptyMessage);
     });
 
     it('should not render message', async () => {

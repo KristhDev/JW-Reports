@@ -22,6 +22,6 @@ describe('Test in <InfoText /> component', () => {
 
         /* Check if text exists and containt text pass by props */
         expect(text).toBeTruthy();
-        expect(text.props.children).toBe(textInfo);
+        expect(text).toHaveTextContent(textInfo);
     });
 });

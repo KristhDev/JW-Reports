@@ -21,7 +21,7 @@ const renderComponent = () => render(
         { () => (
             <FormField
                 autoCapitalize="none"
-                icon={
+                leftIcon={
                     <Icon
                         color={ darkColors.icon }
                         name="person-outline"
