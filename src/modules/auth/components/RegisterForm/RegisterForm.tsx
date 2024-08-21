@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { ActivityIndicator, Text, TouchableOpacity, View } from 'react-native';
-import { useStyles } from 'react-native-unistyles';
-import { useNavigation } from '@react-navigation/native';
 import { Formik } from 'formik';
+import { useNavigation } from '@react-navigation/native';
+import { useStyles } from 'react-native-unistyles';
 import Icon from 'react-native-vector-icons/Ionicons';
 
 /* Components */
@@ -28,11 +28,11 @@ export const RegisterForm = (): JSX.Element => {
     const [ showPassword, setShowPassword ] = useState<boolean>(false);
     const [ showConfirmPassword, setShowConfirmPassword ] = useState<boolean>(false);
 
-    const { navigate } = useNavigation();
+    const navigation = useNavigation();
+    const { styles: themeStyles, theme: { colors, fontSizes, margins } } = useStyles(themeStylesheet);
 
     const { state: { isAuthLoading }, signUp } = useAuth();
     const { setErrorForm } = useStatus();
-    const { styles: themeStyles, theme: { colors, fontSizes, margins } } = useStyles(themeStylesheet);
 
     return (
         <Formik
@@ -162,7 +162,7 @@ export const RegisterForm = (): JSX.Element => {
 
                         <TouchableOpacity
                             activeOpacity={ 0.75 }
-                            onPress={ () => navigate('LoginScreen' as never) }
+                            onPress={ () => navigation.navigate('LoginScreen' as never) }
                             testID="register-form-sign-in"
                         >
                             <Text style={ themeStyles.formLink }>

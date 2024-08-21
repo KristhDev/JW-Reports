@@ -25,13 +25,13 @@ import { themeStylesheet } from '../../../theme';
  */
 export const LoginForm = (): JSX.Element => {
     const [ showPassword, setShowPassword ] = useState<boolean>(false);
-
-    const { navigate } = useNavigation();
     const { width } = useWindowDimensions();
+
+    const navigation = useNavigation();
+    const { styles: themeStyles, theme: { colors, fontSizes, margins } } = useStyles(themeStylesheet);
 
     const { state: { isAuthLoading }, signIn } = useAuth();
     const { setErrorForm } = useStatus();
-    const { styles: themeStyles, theme: { colors, fontSizes, margins } } = useStyles(themeStylesheet);
 
     return (
         <Formik
@@ -108,7 +108,7 @@ export const LoginForm = (): JSX.Element => {
 
                         <TouchableOpacity
                             activeOpacity={ 0.75 }
-                            onPress={ () => navigate('RegisterScreen' as never) }
+                            onPress={ () => navigation.navigate('RegisterScreen' as never) }
                             testID="login-form-sign-up"
                         >
                             <Text style={ themeStyles.formLink }>
@@ -121,7 +121,7 @@ export const LoginForm = (): JSX.Element => {
                     <View style={{ ...themeStyles.btnLink, marginTop: margins.sm }}>
                         <TouchableOpacity
                             activeOpacity={ 0.75 }
-                            onPress={ () => navigate('ForgotPasswordScreen' as never) }
+                            onPress={ () => navigation.navigate('ForgotPasswordScreen' as never) }
                             testID="login-form-forgor-pass"
                         >
                             <Text style={ themeStyles.formLink }>

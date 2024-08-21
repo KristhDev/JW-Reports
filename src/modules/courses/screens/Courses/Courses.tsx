@@ -30,10 +30,10 @@ type CoursesProps = MaterialTopTabScreenProps<CoursesTopTabsParamsList>;
  * @return {JSX.Element} rendered component to show list of courses
  */
 const Courses: FC<CoursesProps> = ({ route }): JSX.Element => {
-    const { addListener, removeListener, getState, navigate } = useNavigation();
+    const navigation = useNavigation();
+    const { styles: themeStyles, theme: { colors, fontSizes } } = useStyles(themeStylesheet);
 
     const { setCoursesScreenHistory, setSelectedCourse } = useCourses();
-    const { styles: themeStyles, theme: { colors, fontSizes } } = useStyles(themeStylesheet);
 
     /**
      * The function handleNavigate is a function that takes no parameters and returns nothing. It sets
@@ -44,7 +44,7 @@ const Courses: FC<CoursesProps> = ({ route }): JSX.Element => {
      */
     const handleNavigate = (): void => {
         setSelectedCourse(INIT_COURSE);
-        navigate('AddOrEditCourseScreen' as never);
+        navigation.navigate('AddOrEditCourseScreen' as never);
     }
 
     /**
@@ -52,14 +52,14 @@ const Courses: FC<CoursesProps> = ({ route }): JSX.Element => {
      * in screen.
      */
     useEffect(() => {
-        addListener('focus', () => {
-            const navigationState = getState();
+        navigation.addListener('focus', () => {
+            const navigationState = navigation.getState();
             if (!navigationState) return;
             setCoursesScreenHistory(navigationState.routeNames[navigationState.index]);
         });
 
         return () => {
-            removeListener('focus', () => {});
+            navigation.removeListener('focus', () => {});
         }
     }, []);
 

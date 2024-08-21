@@ -27,7 +27,7 @@ import { themeStylesheet } from '../../../theme';
  * @return {JSX.Element} rendered component to show delete modal
  */
 const DeleteModal: FC<DeleteModalProps> = ({ text, isLoading, isOpen, onClose, onConfirm }): JSX.Element => {
-    const { styles: themeStyles, theme: { colors } } = useStyles(themeStylesheet);
+    const { styles: themeStyles, theme: { colors, fontSizes } } = useStyles(themeStylesheet);
 
     return (
         <Modal isOpen={ isOpen }>
@@ -55,7 +55,7 @@ const DeleteModal: FC<DeleteModalProps> = ({ text, isLoading, isOpen, onClose, o
             ) : (
                 <ActivityIndicator
                     color={ colors.button }
-                    size={ 50 }
+                    size={ fontSizes.xxl }
                     testID="delete-modal-loading"
                 />
             ) }

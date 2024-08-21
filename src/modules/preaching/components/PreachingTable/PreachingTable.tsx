@@ -1,7 +1,7 @@
 import React, { Children } from 'react';
 import { TouchableHighlight, View, useWindowDimensions } from 'react-native';
-import { useStyles } from 'react-native-unistyles';
 import { useNavigation } from '@react-navigation/native';
+import { useStyles } from 'react-native-unistyles';
 
 /* Components */
 import { TableCell } from '../../../ui';
@@ -29,8 +29,8 @@ import { stylesheet } from './styles';
 export const PreachingTable = (): JSX.Element => {
     const { width } = useWindowDimensions();
 
-    const { navigate } = useNavigation();
     const { styles } = useStyles(stylesheet);
+    const navigation = useNavigation();
 
     const { state: { preachings }, setSelectedPreaching } = usePreaching();
     const { state: { theme } } = useTheme();
@@ -47,7 +47,7 @@ export const PreachingTable = (): JSX.Element => {
      */
     const handleGoToEditPreaching = (preaching: Preaching): void => {
         setSelectedPreaching(preaching);
-        navigate('AddOrEditPreachingScreen' as never);
+        navigation.navigate('AddOrEditPreachingScreen' as never);
     }
 
     return (

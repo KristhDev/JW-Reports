@@ -36,8 +36,8 @@ export const RevisitsList: FC<RevisitsListProps> = ({ emptyMessage, filter, titl
 
     const { theme: { fontSizes, margins } } = useStyles();
 
-    const { getState, isFocused } = useNavigation();
-    const navigationState = getState();
+    const navigation = useNavigation();
+    const navigationState = navigation.getState();
 
     const {
         state: {
@@ -172,7 +172,7 @@ export const RevisitsList: FC<RevisitsListProps> = ({ emptyMessage, filter, titl
      * Effect to set refresh flag Revisits using revisitsScreenHistory
      */
     useEffect(() => {
-        if (isFocused()) {
+        if (navigation.isFocused()) {
             const prevLast = revisitsScreenHistory[revisitsScreenHistory.length - 2];
             if (!navigationState) return;
             const last = navigationState.routeNames[navigationState.index];
@@ -190,7 +190,7 @@ export const RevisitsList: FC<RevisitsListProps> = ({ emptyMessage, filter, titl
      * refreshRevisits is true
      */
     useEffect(() => {
-        if (isFocused() && refreshRevisits && wifi.hasConnection) {
+        if (navigation.isFocused() && refreshRevisits && wifi.hasConnection) {
             removeRevisits();
             loadRevisits({ filter, search: searchTerm, refresh: true });
         }

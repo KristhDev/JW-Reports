@@ -33,12 +33,13 @@ import { stylesheet } from './styles';
 const CourseDetail = (): JSX.Element => {
     const [ showASModal, setShowASModal ] = useState<boolean>(false);
     const [ showFSModal, setShowFSModal ] = useState<boolean>(false);
-    const { addListener, getState, navigate, removeListener } = useNavigation();
+
+    const navigation = useNavigation();
+    const { styles: themeStyles, theme: { colors, fontSizes, margins } } = useStyles(themeStylesheet);
+    const { styles } = useStyles(stylesheet);
 
     const { state: { selectedCourse }, setSelectedCourse } = useCourses();
     const { setSelectedLesson } = useLessons();
-    const { styles: themeStyles, theme: { colors, fontSizes, margins } } = useStyles(themeStylesheet);
-    const { styles } = useStyles(stylesheet);
 
     const statusCourseText = (selectedCourse.finished)
         ? 'Terminado'
@@ -58,7 +59,7 @@ const CourseDetail = (): JSX.Element => {
             nextLesson: new Date().toString()
         });
 
-        navigate('AddOrEditLessonScreen' as never);
+        navigation.navigate('AddOrEditLessonScreen' as never);
     }
 
     /**
@@ -67,7 +68,7 @@ const CourseDetail = (): JSX.Element => {
      * @return {void} This function does not return anything.
      */
     const handleLessonsList = (): void => {
-        navigate('LessonsScreen' as never);
+        navigation.navigate('LessonsScreen' as never);
     }
 
     /**
@@ -75,15 +76,15 @@ const CourseDetail = (): JSX.Element => {
      * is zero.
      */
     useEffect(() => {
-        addListener('blur', () => {
-            const navigationState = getState();
+        navigation.addListener('blur', () => {
+            const navigationState = navigation.getState();
             if (!navigationState) return;
 
             if (navigationState.index === 0) setSelectedCourse(INIT_COURSE);
         });
 
         return () => {
-            removeListener('blur', () => {});
+            navigation.removeListener('blur', () => {});
         }
     }, [ selectedCourse ]);
 

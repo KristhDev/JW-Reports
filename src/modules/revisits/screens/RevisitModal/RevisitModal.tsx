@@ -196,7 +196,7 @@ const RevisitModal: FC<ModalProps> = ({ isOpen, onClose }) => {
             ) : (
                 <ActivityIndicator
                     color={ colors.button }
-                    size={ (fontSizes.xxl + 2) }
+                    size={ fontSizes.xxl }
                     testID="revisit-modal-loading"
                 />
             ) }

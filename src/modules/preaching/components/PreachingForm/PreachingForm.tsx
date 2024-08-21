@@ -1,7 +1,7 @@
 import React from 'react';
 import { ActivityIndicator, View } from 'react-native';
-import { useStyles } from 'react-native-unistyles';
 import { Formik } from 'formik';
+import { useStyles } from 'react-native-unistyles';
 import Icon from 'react-native-vector-icons/Ionicons';
 
 /* Components */

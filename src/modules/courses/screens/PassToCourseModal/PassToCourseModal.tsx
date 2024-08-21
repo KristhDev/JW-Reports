@@ -28,10 +28,11 @@ import { themeStylesheet } from '../../../theme';
 const PassToCourseModal: FC<ModalProps> = ({ isOpen, onClose }): JSX.Element => {
     const [ startCourse, setStartCourse ] = useState<boolean>(false);
 
+    const { styles: themeStyles, theme: { colors, fontSizes, margins } } = useStyles(themeStylesheet);
+
     const { state: { selectedRevisit } } = useRevisits();
     const { state: { isCourseLoading }, saveCourse } = useCourses();
     const { setStatus } = useStatus();
-    const { styles: themeStyles, theme: { colors, fontSizes, margins } } = useStyles(themeStylesheet);
 
     /**
      * This is the confirmation function of the modal that executes one or another function
@@ -147,7 +148,7 @@ const PassToCourseModal: FC<ModalProps> = ({ isOpen, onClose }): JSX.Element => 
             ) : (
                 <ActivityIndicator
                     color={ colors.button }
-                    size={ (fontSizes.xxl + 2) }
+                    size={ fontSizes.xxl }
                 />
             ) }
         </Modal>

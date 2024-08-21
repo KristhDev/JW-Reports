@@ -26,9 +26,10 @@ export const CredentialsForm = (): JSX.Element => {
     const [ showPassword, setShowPassword ] = useState<boolean>(false);
     const [ showConfirmPassword, setShowConfirmPassword ] = useState<boolean>(false);
 
+    const { theme: { colors, fontSizes, margins } } = useStyles();
+
     const { state: { user, isAuthLoading }, updateEmail, updatePassword } = useAuth();
     const { setErrorForm } = useStatus();
-    const { theme: { colors, fontSizes, margins } } = useStyles();
 
     /**
      * Handles updating the email.

@@ -78,7 +78,7 @@ export const SearchInput: FC<SearchInputProps> = ({ onClean, onSearch, refreshin
                     placeholder="Buscar"
                     placeholderTextColor={ colors.icon }
                     returnKeyType="search"
-                    style={{ ...themeStyles.formInput, flex: 1 }}
+                    style={ themeStyles.formInput }
                     testID="search-input-text-input"
                     value={ searchText }
                 />

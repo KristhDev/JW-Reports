@@ -1,7 +1,7 @@
 import React, { FC, useState } from 'react';
 import { ActivityIndicator, Text, View } from 'react-native';
-import { useStyles } from 'react-native-unistyles';
 import { Formik } from 'formik';
+import { useStyles } from 'react-native-unistyles';
 import Icon from 'react-native-vector-icons/Ionicons';
 
 /* Modules */
@@ -155,7 +155,7 @@ const FinishOrStartLessonModal: FC<ModalProps> = ({ isOpen, onClose }) => {
             ) : (
                 <ActivityIndicator
                     color={ colors.button }
-                    size={ (fontSizes.xxl + 2) }
+                    size={ fontSizes.xxl }
                     testID="modal-loading"
                 />
             ) }

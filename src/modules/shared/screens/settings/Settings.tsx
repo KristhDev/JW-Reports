@@ -28,7 +28,7 @@ const Settings = (): JSX.Element => {
     const [ showThemeModal, setShowThemeModal ] = useState<boolean>(false);
     const [ showOldDatetimePicker, setShowOldDatetimePicker ] = useState<boolean>(false);
 
-    const { navigate } = useNavigation();
+    const navigation = useNavigation();
     const { theme: { colors, fontSizes, margins } } = useStyles();
 
     const { setStatus } = useStatus();
@@ -37,6 +37,12 @@ const Settings = (): JSX.Element => {
 
     const buildVersion = deviceInfo.getBuildVersion();
 
+    /**
+     * Changes the state of the old datetime picker and hides the modal
+     *
+     * @param {boolean} value - The value to set the old datetime picker state
+     * @return {void} This function returns nothing
+     */
     const handleChangeDatetimePicker = (value: boolean): void => {
         setOldDatetimePicker(value);
         setShowOldDatetimePicker(false);
@@ -63,13 +69,13 @@ const Settings = (): JSX.Element => {
                 {/* Acount secction */}
                 <SectionContent title="MI CUENTA">
                     <SectionBtn
-                        onPress={ () => navigate('ProfileScreen' as never) }
+                        onPress={ () => navigation.navigate('ProfileScreen' as never) }
                         subText="Actualice sus datos personales"
                         text="Perfil"
                     />
 
                     <SectionBtn
-                        onPress={ () => navigate('CredentialsScreen' as never) }
+                        onPress={ () => navigation.navigate('CredentialsScreen' as never) }
                         subText="Cambie sus credenciales (correo y contraseña)"
                         text="Credenciales"
                     />

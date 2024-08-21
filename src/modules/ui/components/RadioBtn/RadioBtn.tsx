@@ -36,18 +36,8 @@ export const RadioBtn: FC<RadioBtnProps> = ({ isSelected, label, onPress, style 
                 onPress={ onPress }
                 testID="radio-btn-pressable"
             >
-                <View
-                    style={{
-                        ...styles.radioPressable,
-                        borderColor: (isSelected) ? colors.button : colors.icon,
-                    }}
-                >
-                    <View
-                        style={{
-                            ...styles.radioCircle,
-                            backgroundColor: (isSelected) ? colors.button : 'transparent'
-                        }}
-                    />
+                <View style={ styles.radioPressable(isSelected) }>
+                    <View style={ styles.radioCircle(isSelected) } />
                 </View>
             </Pressable>
 

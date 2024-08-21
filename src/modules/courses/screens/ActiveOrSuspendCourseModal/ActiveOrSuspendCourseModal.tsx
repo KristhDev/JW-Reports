@@ -26,7 +26,7 @@ import { themeStylesheet } from '../../../theme';
  */
 const ActiveOrSuspendCourseModal: FC<ModalProps> = ({ onClose, isOpen }): JSX.Element => {
     const { state: { selectedCourse, isCourseLoading }, activeOrSuspendCourse } = useCourses();
-    const { styles: themeStyles, theme: { colors } } = useStyles(themeStylesheet);
+    const { styles: themeStyles, theme: { colors, fontSizes } } = useStyles(themeStylesheet);
 
     const modalMsg = (selectedCourse.suspended)
         ? '¿Está seguro de continuar este curso?'
@@ -72,7 +72,7 @@ const ActiveOrSuspendCourseModal: FC<ModalProps> = ({ onClose, isOpen }): JSX.El
             ) : (
                 <ActivityIndicator
                     color={ colors.button }
-                    size={ 50 }
+                    size={ fontSizes.xxl }
                     testID="modal-loading"
                 />
             ) }

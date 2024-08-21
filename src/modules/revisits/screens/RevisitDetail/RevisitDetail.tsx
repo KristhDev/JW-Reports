@@ -25,7 +25,7 @@ const RevisitDetail = (): JSX.Element => {
     const [ showModal, setShowModal ] = useState<boolean>(false);
     const { width: windowWidth } = useWindowDimensions();
 
-    const { addListener, removeListener, getState } = useNavigation();
+    const navigation = useNavigation();
     const { styles: themeStyles, theme: { fontSizes, margins } } = useStyles(themeStylesheet);
     const { styles } = useStyles(stylesheet);
 
@@ -50,8 +50,8 @@ const RevisitDetail = (): JSX.Element => {
      * navigation and then is zero.
      */
     useEffect(() => {
-        addListener('blur', () => {
-            const navigationState = getState();
+        navigation.addListener('blur', () => {
+            const navigationState = navigation.getState();
             if (!navigationState) return;
 
             if (navigationState.index === 0) {
@@ -63,7 +63,7 @@ const RevisitDetail = (): JSX.Element => {
         });
 
         return () => {
-            removeListener('blur', () => {});
+            navigation.removeListener('blur', () => {});
         }
     }, [ selectedRevisit ]);
 

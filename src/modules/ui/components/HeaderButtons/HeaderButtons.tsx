@@ -61,7 +61,7 @@ export const HeaderButtons: FC<HeaderButtonsProps> = ({
 }): JSX.Element => {
     const [ showMonthPicker, setShowMonthPicker ] = useState<boolean>(false);
 
-    const { navigate } = useNavigation();
+    const navigation = useNavigation();
     const { theme: { colors, fontSizes, margins } } = useStyles();
 
     const { signOut } = useAuth();
@@ -140,7 +140,7 @@ export const HeaderButtons: FC<HeaderButtonsProps> = ({
                             />
                         }
                         style={{ marginRight: (margins.xs - 2) }}
-                        onPress={ () => navigate('SettingsStackNavigation' as never) }
+                        onPress={ () => navigation.navigate('SettingsStackNavigation' as never) }
                         touchColor={ colors.buttonTransparent }
                     />
                 ) }

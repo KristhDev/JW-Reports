@@ -36,12 +36,13 @@ const Home = (): JSX.Element => {
     const [ isRefreshing, setIsRefreshing ] = useState<boolean>(false);
     const [ showReportModal, setShowReportModal ] = useState<boolean>(false);
     const [ showPreachingInfoModal, setShowPreachingInfoModal ] = useState<boolean>(false);
-    const { navigate } = useNavigation();
     const { height } = useWindowDimensions();
+
+    const navigation = useNavigation();
+    const { styles: themeStyles, theme: { colors, fontSizes, margins } } = useStyles(themeStylesheet);
 
     const { state: { user } } = useAuth();
     const { state: { selectedDate, preachings, isPreachingsLoading }, setSelectedPreaching, loadPreachings } = usePreaching();
-    const { styles: themeStyles, theme: { colors, fontSizes, margins } } = useStyles(themeStylesheet);
 
     const month = date.format(selectedDate,'MMMM').toUpperCase();
     const currentMonth = date.format(new Date(), 'MMMM').toUpperCase();
@@ -61,7 +62,7 @@ const Home = (): JSX.Element => {
             finalHour: new Date().toString()
         });
 
-        navigate('AddOrEditPreachingScreen' as never);
+        navigation.navigate('AddOrEditPreachingScreen' as never);
     }
 
     /**
@@ -99,7 +100,7 @@ const Home = (): JSX.Element => {
                 { (isPreachingsLoading) && (
                     <ActivityIndicator
                         color={ colors.button }
-                        size={ (fontSizes.xxl + 2) }
+                        size={ fontSizes.xxl }
                         style={{ marginTop: height * 0.32 }}
                         testID="home-loading"
                     />

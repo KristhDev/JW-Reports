@@ -30,10 +30,10 @@ type RevisitsProps = MaterialTopTabScreenProps<RevisitsTopTabsParamsList>;
  * @return {JSX.Element} rendered component to show list of revisits
  */
 const Revisits: FC<RevisitsProps> = ({ route }): JSX.Element => {
-    const { navigate, addListener, removeListener, getState } = useNavigation();
+    const navigation = useNavigation();
+    const { styles: themeStyles, theme: { colors, fontSizes } } = useStyles(themeStylesheet);
 
     const { setSelectedRevisit, setRevisitsScreenHistory } = useRevisits();
-    const { styles: themeStyles, theme: { colors, fontSizes } } = useStyles(themeStylesheet);
 
     /**
      * I'm going to set the selectedRevisit to the INIT_REVISIT object, but I'm going to override the
@@ -47,7 +47,7 @@ const Revisits: FC<RevisitsProps> = ({ route }): JSX.Element => {
             nextVisit: new Date().toString()
         });
 
-        navigate('AddOrEditRevisitScreen' as never);
+        navigation.navigate('AddOrEditRevisitScreen' as never);
     }
 
     /**
@@ -55,14 +55,14 @@ const Revisits: FC<RevisitsProps> = ({ route }): JSX.Element => {
      * in screen.
      */
     useEffect(() => {
-        addListener('focus', () => {
-            const navigationState = getState();
+        navigation.addListener('focus', () => {
+            const navigationState = navigation.getState();
             if (!navigationState) return;
             setRevisitsScreenHistory(navigationState.routeNames[navigationState.index]);
         });
 
         return () => {
-            removeListener('focus', () => {});
+            navigation.removeListener('focus', () => {});
         }
     }, []);
 

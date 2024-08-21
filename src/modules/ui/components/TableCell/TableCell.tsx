@@ -21,9 +21,7 @@ export const TableCell: FC<TableCellProps> = ({ text, style }): JSX.Element => {
     const { styles } = useStyles(stylesheet);
 
     return (
-        <View
-            style={[ styles.tableCell, style ]}
-        >
+        <View style={[ styles.tableCell, style ]}>
             <Text
                 style={ styles.tableCellText }
                 testID="table-cell-text"

@@ -1,7 +1,7 @@
 import React from 'react';
 import { ActivityIndicator, View } from 'react-native';
-import { useStyles } from 'react-native-unistyles';
 import { Formik } from 'formik';
+import { useStyles } from 'react-native-unistyles';
 import Icon from 'react-native-vector-icons/Ionicons';
 
 /* Components */
@@ -27,9 +27,10 @@ import { themeStylesheet } from '../../../theme';
  * @return {JSX.Element} The course form component.
  */
 export const CourseForm = (): JSX.Element => {
+    const { styles: themeStyles, theme: { colors, fontSizes, margins } } = useStyles(themeStylesheet);
+
     const { state: { isCourseLoading, selectedCourse }, saveCourse, updateCourse } = useCourses();
     const { setErrorForm } = useStatus();
-    const { styles: themeStyles, theme: { colors, fontSizes, margins } } = useStyles(themeStylesheet);
 
     /**
      * If the selectedCourse.id is an empty string, then save the formValues, otherwise update the

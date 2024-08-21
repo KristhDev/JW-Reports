@@ -28,11 +28,11 @@ import { themeStylesheet } from '../../../theme';
  * @return {JSX.Element} The rendered form component.
  */
 export const ForgotPasswordForm = (): JSX.Element => {
-    const { navigate } = useNavigation();
+    const navigation = useNavigation();
+    const { styles: themeStyles, theme: { colors, fontSizes, margins } } = useStyles(themeStylesheet);
 
     const { state: { isAuthLoading }, resetPassword } = useAuth();
     const { setErrorForm } = useStatus();
-    const { styles: themeStyles, theme: { colors, fontSizes, margins } } = useStyles(themeStylesheet);
 
     /**
      * Handles the reset password functionality.
@@ -95,7 +95,7 @@ export const ForgotPasswordForm = (): JSX.Element => {
                     <View style={{ ...themeStyles.btnLink, marginBottom: 100 }}>
                         <TouchableOpacity
                             activeOpacity={ 0.75 }
-                            onPress={ () => navigate('LoginScreen' as never) }
+                            onPress={ () => navigation.navigate('LoginScreen' as never) }
                             testID="forgot-pass-form-sign-in"
                         >
                             <Text style={ themeStyles.formLink }>

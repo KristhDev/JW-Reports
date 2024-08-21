@@ -37,7 +37,7 @@ export const RevisitCard: FC<RevisitCardProps> = ({ onDelete, onPass, onRevisit,
     const [ isOpen, setIsOpen ] = useState<boolean>(false);
     const { width } = useWindowDimensions();
 
-    const { navigate } = useNavigation();
+    const navigation = useNavigation();
     const { styles: themeStyles } = useStyles(themeStylesheet);
     const { styles, theme: { colors, fontSizes, margins } } = useStyles(stylesheet);
 
@@ -53,7 +53,7 @@ export const RevisitCard: FC<RevisitCardProps> = ({ onDelete, onPass, onRevisit,
      */
     const handleRevisitDetail = (): void => {
         setSelectedRevisit(revisit);
-        navigate(screenToNavigate as never);
+        navigation.navigate(screenToNavigate as never);
     }
 
     /**
@@ -65,7 +65,7 @@ export const RevisitCard: FC<RevisitCardProps> = ({ onDelete, onPass, onRevisit,
     const handleEdit = (): void => {
         setIsOpen(false);
         setSelectedRevisit(revisit);
-        navigate('AddOrEditRevisitScreen' as never);
+        navigation.navigate('AddOrEditRevisitScreen' as never);
     }
 
     /**

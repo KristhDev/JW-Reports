@@ -1,6 +1,6 @@
 import React from 'react';
-import { useStyles } from 'react-native-unistyles';
 import { useNavigation } from '@react-navigation/native';
+import { useStyles } from 'react-native-unistyles';
 import Icon from 'react-native-vector-icons/Ionicons';
 
 /* Features */
@@ -23,10 +23,10 @@ import { themeStylesheet } from '../../../theme';
  * @return {JSX.Element} rendered component to show list of lessons
  */
 const Lessons = (): JSX.Element => {
-    const { navigate } = useNavigation();
+    const { styles: themeStyles, theme: { colors, fontSizes } } = useStyles(themeStylesheet);
+    const navigation = useNavigation();
 
     const { setSelectedLesson } = useLessons();
-    const { styles: themeStyles, theme: { colors, fontSizes } } = useStyles(themeStylesheet);
 
     /**
      * I want to set the selectedLesson to the INIT_LESSON, but I want to change the next_lesson
@@ -40,7 +40,7 @@ const Lessons = (): JSX.Element => {
             nextLesson: new Date().toString(),
         });
 
-        navigate('AddOrEditLessonScreen' as never);
+        navigation.navigate('AddOrEditLessonScreen' as never);
     }
 
     return (

@@ -41,8 +41,8 @@ export const CoursesList: FC<CoursesListProps> = ({ emptyMessage, filter, title 
     const [ showASModal, setShowASModal ] = useState<boolean>(false);
     const [ showFSModal, setShowFSModal ] = useState<boolean>(false);
 
-    const { getState, isFocused } = useNavigation();
-    const navigationState = getState();
+    const navigation = useNavigation();
+    const navigationState = navigation.getState();
 
     const { theme: { fontSizes, margins } } = useStyles();
 
@@ -172,7 +172,7 @@ export const CoursesList: FC<CoursesListProps> = ({ emptyMessage, filter, title 
      * Effect to set refresh flag Courses using coursesScreenHistory
      */
     useEffect(() => {
-        if (isFocused()) {
+        if (navigation.isFocused()) {
             if (!navigationState) return;
 
             const prevLast = coursesScreenHistory[coursesScreenHistory.length - 2];
@@ -191,7 +191,7 @@ export const CoursesList: FC<CoursesListProps> = ({ emptyMessage, filter, title 
      * refreshCourses is true
      */
     useEffect(() => {
-        if (isFocused() && refreshCourses && wifi.hasConnection) {
+        if (navigation.isFocused() && refreshCourses && wifi.hasConnection) {
             removeCourses();
             loadCourses({ filter, search: searchTerm, refresh: true });
         }
@@ -201,11 +201,11 @@ export const CoursesList: FC<CoursesListProps> = ({ emptyMessage, filter, title 
      * Effect to remove lessons of selectedCourse
      */
     useEffect(() => {
-        if (isFocused() && lessons.length > 0) {
+        if (navigation.isFocused() && lessons.length > 0) {
             setLessonsPagination({ from: 0, to: 9 });
             removeLessons();
         }
-    }, [ isFocused() ]);
+    }, [ navigation.isFocused() ]);
 
     return (
         <>

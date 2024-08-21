@@ -1,4 +1,4 @@
-import { request, PERMISSIONS, requestNotifications, PermissionStatus } from 'react-native-permissions';
+import { request, PERMISSIONS } from 'react-native-permissions';
 
 /* Features */
 import { useAppDispatch, useAppSelector } from '../../../features';
@@ -29,14 +29,12 @@ const usePermissions = () => {
     const askPermission = async (permission: keyof Permissions): Promise<void> => {
         const askPermissions = {
             camera: PERMISSIONS.ANDROID.CAMERA,
+            notifications: PERMISSIONS.ANDROID.POST_NOTIFICATIONS,
             readExternalStorage: PERMISSIONS.ANDROID.READ_EXTERNAL_STORAGE,
-            readMediaImages: PERMISSIONS.ANDROID.READ_MEDIA_IMAGES,
+            readMediaImages: PERMISSIONS.ANDROID.READ_MEDIA_IMAGES
         }
 
-        let result: PermissionStatus = 'unavailable';
-
-        if (permission === 'notifications') result = (await requestNotifications([ 'alert', 'badge', 'sound' ])).status;
-        else result = await request(askPermissions[permission]);
+        const result = await request(askPermissions[permission]);
 
         if (result === 'unavailable') {
             setStatus({
