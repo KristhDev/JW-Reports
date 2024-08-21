@@ -4,6 +4,6 @@ import { NetInfoStateType } from '@react-native-community/netinfo';
 import { Wifi } from '../../src/modules/shared';
 
 export const wifiMock: Wifi = {
-    isConnected: true,
+    hasConnection: true,
     type: NetInfoStateType.wifi
 }
