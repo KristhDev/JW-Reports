@@ -36,7 +36,7 @@ export const usePreachingSpy = jest.spyOn(usePreaching, 'default');
 export const useRevisitsSpy = jest.spyOn(useRevisits, 'default');
 export const useStatusSpy = jest.spyOn(useStatus, 'default');
 export const useThemeSpy = jest.spyOn(useTheme, 'default');
-export const useUIspy = jest.spyOn(useUI, 'default');
+export const useUISpy = jest.spyOn(useUI, 'default');
 
 jest.spyOn(Image, 'resolveAssetSource').mockImplementation(() => ({
     uri: 'https://www.google.com/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png',
