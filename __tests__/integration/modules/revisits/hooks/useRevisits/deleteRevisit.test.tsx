@@ -41,6 +41,7 @@ describe('Test useRevisits hook - deleteRevisit', () => {
         await act(async () => {
             await result.current.useRevisits.saveRevisit({
                 back: true,
+                image: null,
                 onFinish: onFinishMock,
                 revisitValues: testRevisit
             });

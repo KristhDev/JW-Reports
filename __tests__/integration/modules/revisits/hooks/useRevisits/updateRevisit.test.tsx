@@ -42,6 +42,7 @@ describe('Test useRevisits hook - updateRevisit', () => {
             await result.current.useRevisits.saveRevisit({
                 back: true,
                 onFinish: onFinishMock,
+                image: null,
                 revisitValues: testRevisit
             });
         });
@@ -51,7 +52,7 @@ describe('Test useRevisits hook - updateRevisit', () => {
         });
 
         await act(async () => {
-            await result.current.useRevisits.updateRevisit({ ...testRevisit, personName: 'Chris Frami' });
+            await result.current.useRevisits.updateRevisit({ ...testRevisit, personName: 'Chris Frami' }, null);
         });
 
         /* Check if revisits and selectedRevisit is updated */
@@ -114,7 +115,7 @@ describe('Test useRevisits hook - updateRevisit', () => {
         const { result } = renderUseRevisits(mockStore);
 
         await act(async () => {
-            await result.current.useRevisits.updateRevisit(testRevisit);
+            await result.current.useRevisits.updateRevisit(testRevisit, null);
         });
 
         /* Check if revisits state inst changed */
@@ -135,7 +136,7 @@ describe('Test useRevisits hook - updateRevisit', () => {
         });
 
         await act(async () => {
-            await result.current.useRevisits.updateRevisit(testRevisit);
+            await result.current.useRevisits.updateRevisit(testRevisit, null);
         });
 
         /* Check if revisits state inst changed */
@@ -159,7 +160,8 @@ describe('Test useRevisits hook - updateRevisit', () => {
             await result.current.useRevisits.saveRevisit({
                 back: true,
                 onFinish: onFinishMock,
-                revisitValues: testRevisit
+                revisitValues: testRevisit,
+                image: null
             });
         });
 
@@ -168,7 +170,7 @@ describe('Test useRevisits hook - updateRevisit', () => {
         });
 
         await act(async () => {
-            await result.current.useRevisits.updateRevisit({ ...testRevisit, nextVisit: new Date('invalid') });
+            await result.current.useRevisits.updateRevisit({ ...testRevisit, nextVisit: new Date('invalid') }, null);
         });
 
         /* Check if revisits and selectedRevisits inst updated */

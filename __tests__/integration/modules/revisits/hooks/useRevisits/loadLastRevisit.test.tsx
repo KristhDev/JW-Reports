@@ -42,6 +42,7 @@ describe('Test useRevisits hook - loadLastRevisit', () => {
             await result.current.useRevisits.saveRevisit({
                 back: true,
                 onFinish: onFinishMock,
+                image: null,
                 revisitValues: testRevisit
             });
         });

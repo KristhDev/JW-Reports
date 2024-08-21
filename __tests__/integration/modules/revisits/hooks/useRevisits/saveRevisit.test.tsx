@@ -42,6 +42,7 @@ describe('Test useRevisits hook - saveRevisit', () => {
             await result.current.useRevisits.saveRevisit({
                 back: true,
                 onFinish: onFinishMock,
+                image: null,
                 revisitValues: testRevisit
             });
         });
@@ -106,6 +107,7 @@ describe('Test useRevisits hook - saveRevisit', () => {
             await result.current.useRevisits.saveRevisit({
                 back: false,
                 onFinish: onFinishMock,
+                image: null,
                 revisitValues: testRevisit
             });
         });
@@ -165,6 +167,7 @@ describe('Test useRevisits hook - saveRevisit', () => {
             await result.current.useRevisits.saveRevisit({
                 back: true,
                 onFinish: onFinishMock,
+                image: null,
                 revisitValues: testRevisit
             });
         });
@@ -192,6 +195,7 @@ describe('Test useRevisits hook - saveRevisit', () => {
         await act(async () => {
             await result.current.useRevisits.saveRevisit({
                 back: true,
+                image: null,
                 onFinish: onFinishMock,
                 revisitValues: {
                     ...testRevisit,

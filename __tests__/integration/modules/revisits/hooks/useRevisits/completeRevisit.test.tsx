@@ -41,7 +41,8 @@ describe('Test useRevisits hook - completeRevisit', () => {
         await act(async () => {
             await result.current.useRevisits.saveRevisit({
                 back: true,
-                revisitValues: testRevisit
+                image: null,
+                revisitValues: testRevisit,
             });
         });
 
