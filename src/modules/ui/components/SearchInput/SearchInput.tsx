@@ -60,10 +60,7 @@ export const SearchInput: FC<SearchInputProps> = ({ onClean, onSearch, refreshin
 
             {/* Input container */}
             <View
-                style={{
-                    ...styles.inputContainer,
-                    borderColor: (isFocused) ? colors.button : colors.icon
-                }}
+                style={ styles.inputContainer(isFocused) }
                 testID="search-input-text-input-container"
             >
 
@@ -95,7 +92,7 @@ export const SearchInput: FC<SearchInputProps> = ({ onClean, onSearch, refreshin
                         <Ionicons
                             color={ (searchText.length === 0) ? 'transparent' : colors.icon }
                             name="close-outline"
-                            size={ (fontSizes.icon + 5) }
+                            size={ fontSizes.icon }
                         />
                     </Pressable>
                 </View>
