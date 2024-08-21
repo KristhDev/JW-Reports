@@ -3,7 +3,7 @@ import { ActivityIndicator, View } from 'react-native';
 import { Image } from 'react-native-image-crop-picker';
 import { useStyles } from 'react-native-unistyles';
 import { Formik } from 'formik';
-import Icon from 'react-native-vector-icons/Ionicons';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
 /* Modules */
 import { Button, DatetimeField, FormCalendar, FormField, FormImage, useUI } from '../../../ui';
@@ -67,7 +67,7 @@ export const RevisitForm = (): JSX.Element => {
                     <FormField
                         editable={ !isRevisitLoading }
                         leftIcon={
-                            <Icon
+                            <Ionicons
                                 color={ colors.icon }
                                 name="person-outline"
                                 size={ fontSizes.icon }
@@ -112,7 +112,7 @@ export const RevisitForm = (): JSX.Element => {
                         <DatetimeField
                             disabled={ isRevisitLoading }
                             icon={
-                                <Icon
+                                <Ionicons
                                     color={ colors.contentHeader }
                                     name="calendar-outline"
                                     size={ fontSizes.icon }
@@ -130,7 +130,7 @@ export const RevisitForm = (): JSX.Element => {
                         <FormCalendar
                             editable={ !isRevisitLoading }
                             icon={
-                                <Icon
+                                <Ionicons
                                     color={ colors.contentHeader }
                                     name="calendar-outline"
                                     size={ fontSizes.icon }

@@ -1,7 +1,7 @@
 import React from 'react';
 import { useNavigation } from '@react-navigation/native';
 import { useStyles } from 'react-native-unistyles';
-import Icon from 'react-native-vector-icons/Ionicons';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
 /* Features */
 import { INIT_LESSON } from '../../features';
@@ -50,7 +50,7 @@ const Lessons = (): JSX.Element => {
             <Fab
                 color={ colors.button }
                 icon={
-                    <Icon
+                    <Ionicons
                         color={ colors.contentHeader }
                         name="add-circle-outline"
                         size={ fontSizes.xl }

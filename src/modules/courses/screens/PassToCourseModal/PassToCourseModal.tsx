@@ -2,7 +2,7 @@ import React, { FC, useState } from 'react';
 import { View, ActivityIndicator, Text } from 'react-native';
 import { useStyles } from 'react-native-unistyles';
 import { Formik } from 'formik';
-import Icon from 'react-native-vector-icons/Ionicons';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
 /* Screens */
 import { FormField, Modal, ModalProps,  } from '../../../ui';
@@ -119,7 +119,7 @@ const PassToCourseModal: FC<ModalProps> = ({ isOpen, onClose }): JSX.Element => 
                                     {/* Publication field */}
                                     <FormField
                                         leftIcon={
-                                            <Icon
+                                            <Ionicons
                                                 color={ colors.icon }
                                                 name="book-outline"
                                                 size={ fontSizes.icon }

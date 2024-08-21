@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { ActivityIndicator, ScrollView, useWindowDimensions, RefreshControl } from 'react-native';
 import { useStyles } from 'react-native-unistyles';
 import { useNavigation } from '@react-navigation/native';
-import Icon from 'react-native-vector-icons/Ionicons';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
 /* Features */
 import { INIT_PREACHING } from '../../features';
@@ -124,7 +124,7 @@ const Home = (): JSX.Element => {
                 <Fab
                     color={ colors.button }
                     icon={
-                        <Icon
+                        <Ionicons
                             color={ colors.contentHeader }
                             name="information-circle-outline"
                             size={ (fontSizes.xl + 1) }
@@ -139,7 +139,7 @@ const Home = (): JSX.Element => {
             <Fab
                 color={ colors.button }
                 icon={
-                    <Icon
+                    <Ionicons
                         color={ colors.contentHeader }
                         name="reader-outline"
                         size={ fontSizes.xl }
@@ -153,7 +153,7 @@ const Home = (): JSX.Element => {
             <Fab
                 color={ colors.button }
                 icon={
-                    <Icon
+                    <Ionicons
                         color={ colors.contentHeader }
                         name="add-circle-outline"
                         size={ fontSizes.xl }

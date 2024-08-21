@@ -3,7 +3,7 @@ import { Pressable, Text, View, useWindowDimensions } from 'react-native';
 import { useStyles } from 'react-native-unistyles';
 import { useNavigation } from '@react-navigation/native';
 import { Menu, MenuOption, MenuOptions, MenuTrigger } from 'react-native-popup-menu';
-import Icon from 'react-native-vector-icons/Ionicons';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
 /* Components */
 import { Fab } from '../../../ui';
@@ -119,7 +119,7 @@ export const RevisitCard: FC<RevisitCardProps> = ({ onDelete, onPass, onRevisit,
                 <Fab
                     color="transparent"
                     icon={
-                        <Icon
+                        <Ionicons
                             color={ colors.button }
                             name="ellipsis-vertical"
                             size={ (fontSizes.md - 3) }

@@ -2,7 +2,7 @@ import React, { useState, FC } from 'react';
 import { ActivityIndicator, Text, View } from 'react-native';
 import { useStyles } from 'react-native-unistyles';
 import { Formik } from 'formik';
-import Icon from 'react-native-vector-icons/Ionicons';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
 /* Modules */
 import { DatetimeField, FormCalendar, FormField, Modal, ModalActions, ModalProps, useUI } from '../../../ui';
@@ -148,7 +148,7 @@ const RevisitModal: FC<ModalProps> = ({ isOpen, onClose }) => {
                                         { (userInterface.oldDatetimePicker) ? (
                                             <DatetimeField
                                                 icon={
-                                                    <Icon
+                                                    <Ionicons
                                                         color={ colors.contentHeader }
                                                         name="calendar-outline"
                                                         size={ fontSizes.icon }
@@ -165,7 +165,7 @@ const RevisitModal: FC<ModalProps> = ({ isOpen, onClose }) => {
                                         ) : (
                                             <FormCalendar
                                                 icon={
-                                                    <Icon
+                                                    <Ionicons
                                                         color={ colors.contentHeader }
                                                         name="calendar-outline"
                                                         size={ fontSizes.icon }

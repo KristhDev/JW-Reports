@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { View, ActivityIndicator } from 'react-native';
 import { useStyles } from 'react-native-unistyles';
 import { Formik } from 'formik';
-import Icon from 'react-native-vector-icons/Ionicons';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
 /* Components */
 import { Button, EyeBtn, FormField } from '../../../ui';
@@ -71,7 +71,7 @@ export const CredentialsForm = (): JSX.Element => {
                         <FormField
                             autoCapitalize="none"
                             leftIcon={
-                                <Icon
+                                <Ionicons
                                     color={ colors.icon }
                                     name="mail-outline"
                                     size={ fontSizes.icon }
@@ -117,7 +117,7 @@ export const CredentialsForm = (): JSX.Element => {
                         <FormField
                             autoCapitalize="none"
                             leftIcon={
-                                <Icon
+                                <Ionicons
                                     color={ colors.icon }
                                     name="key-outline"
                                     size={ fontSizes.icon }
@@ -139,7 +139,7 @@ export const CredentialsForm = (): JSX.Element => {
                         <FormField
                             autoCapitalize="none"
                             leftIcon={
-                                <Icon
+                                <Ionicons
                                     color={ colors.icon }
                                     name="key-outline"
                                     size={ fontSizes.icon }

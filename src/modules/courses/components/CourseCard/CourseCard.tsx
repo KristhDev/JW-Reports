@@ -3,7 +3,7 @@ import { Pressable, Text, View, useWindowDimensions } from 'react-native';
 import { Menu, MenuOption, MenuOptions, MenuTrigger } from 'react-native-popup-menu';
 import { useNavigation } from '@react-navigation/native';
 import { useStyles } from 'react-native-unistyles';
-import Icon from 'react-native-vector-icons/Ionicons';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
 /* Components */
 import { Fab } from '../../../ui';
@@ -160,7 +160,7 @@ export const CourseCard: FC<CourseCardProps> = ({ course, onActiveOrSuspend, onD
                 <Fab
                     color={ 'transparent' }
                     icon={
-                        <Icon
+                        <Ionicons
                             color={ colors.button }
                             name="ellipsis-vertical"
                             size={ (fontSizes.md - 3) }

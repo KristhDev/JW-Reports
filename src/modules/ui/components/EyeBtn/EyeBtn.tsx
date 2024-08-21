@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
 import { TouchableOpacity } from 'react-native';
 import { useStyles } from 'react-native-unistyles';
-import Icon from 'react-native-vector-icons/Ionicons';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
 /* Interfaces */
 import { EyeBtnProps } from './interfaces';
@@ -25,7 +25,7 @@ export const EyeBtn: FC<EyeBtnProps> = ({ onToggle, value }): JSX.Element => {
             onPress={ () => onToggle(!value) }
             testID="eye-btn-touchable"
         >
-            <Icon
+            <Ionicons
                 color={ colors.icon }
                 name={ (value) ? 'eye-off-outline' : 'eye-outline' }
                 size={ fontSizes.icon }

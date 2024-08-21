@@ -1,5 +1,5 @@
 import React from 'react';
-import Icon from 'react-native-vector-icons/Ionicons';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 import { useStyles } from 'react-native-unistyles';
 
 /* Components */
@@ -22,7 +22,7 @@ export const ThemeBtn = (): JSX.Element => {
         <Fab
             color={ colors.button }
             icon={
-                <Icon
+                <Ionicons
                     color={ colors.contentHeader }
                     name={ (theme === 'dark') ? 'sunny-outline' : 'moon-outline' }
                     size={ (theme === 'dark') ? (fontSizes.lg + 3) : (fontSizes.icon + 5) }

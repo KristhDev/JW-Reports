@@ -2,7 +2,7 @@ import React from 'react';
 import { ActivityIndicator, View } from 'react-native';
 import { useStyles } from 'react-native-unistyles';
 import { Formik } from 'formik';
-import Icon from 'react-native-vector-icons/Ionicons';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
 /* Modules */
 import { Button, DatetimeField, FormCalendar, FormField, useUI } from '../../../ui';
@@ -74,7 +74,7 @@ export const LessonForm = (): JSX.Element => {
                         <DatetimeField
                             disabled={ isLessonLoading }
                             icon={
-                                <Icon
+                                <Ionicons
                                     color={ colors.contentHeader }
                                     name="calendar-outline"
                                     size={ fontSizes.icon }
@@ -92,7 +92,7 @@ export const LessonForm = (): JSX.Element => {
                         <FormCalendar
                             editable={ !isLessonLoading }
                             icon={
-                                <Icon
+                                <Ionicons
                                     color={ colors.contentHeader }
                                     name="calendar-outline"
                                     size={ fontSizes.icon }

@@ -3,7 +3,7 @@ import { View, ActivityIndicator } from 'react-native';
 import { Formik } from 'formik';
 import { useStyles } from 'react-native-unistyles';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import Icon from 'react-native-vector-icons/Ionicons';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
 /* Components */
 import { Button, Checkbox, FormField, FormSelect } from '../../../ui';
@@ -71,7 +71,7 @@ export const ProfileForm = (): JSX.Element => {
                     <FormField
                         autoCapitalize="none"
                         leftIcon={
-                            <Icon
+                            <Ionicons
                                 color={ colors.icon }
                                 name="person-outline"
                                 size={ fontSizes.icon }
@@ -86,7 +86,7 @@ export const ProfileForm = (): JSX.Element => {
                     <FormField
                         autoCapitalize="none"
                         leftIcon={
-                            <Icon
+                            <Ionicons
                                 color={ colors.icon }
                                 name="people-outline"
                                 size={ fontSizes.icon }
@@ -100,7 +100,7 @@ export const ProfileForm = (): JSX.Element => {
                     {/* Precursor field */}
                     <FormSelect
                         icon={
-                            <Icon
+                            <Ionicons
                                 color={ colors.icon }
                                 name="briefcase-outline"
                                 size={ fontSizes.icon }
@@ -122,7 +122,7 @@ export const ProfileForm = (): JSX.Element => {
                                 autoCapitalize="none"
                                 editable={ editHoursRequirement }
                                 leftIcon={
-                                    <Icon
+                                    <Ionicons
                                         color={ colors.icon }
                                         name="time-outline"
                                         size={ fontSizes.icon }

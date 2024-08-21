@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { ActivityIndicator, ScrollView, RefreshControl } from 'react-native';
 import { useStyles } from 'react-native-unistyles';
-import Icon from 'react-native-vector-icons/Ionicons';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
 /* Modules */
 import { useCourses, PassToCourseModal } from '../../../courses';
@@ -228,7 +228,7 @@ const PublisherHome = (): JSX.Element => {
             <Fab
                 color={ colors.button }
                 icon={
-                    <Icon
+                    <Ionicons
                         color={ colors.contentHeader }
                         name="reader-outline"
                         size={ fontSizes.xl }

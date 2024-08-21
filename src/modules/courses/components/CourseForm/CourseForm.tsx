@@ -2,7 +2,7 @@ import React from 'react';
 import { ActivityIndicator, View } from 'react-native';
 import { Formik } from 'formik';
 import { useStyles } from 'react-native-unistyles';
-import Icon from 'react-native-vector-icons/Ionicons';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
 /* Components */
 import { Button, FormField } from '../../../ui';
@@ -63,7 +63,7 @@ export const CourseForm = (): JSX.Element => {
                     {/* Person name field */}
                     <FormField
                         leftIcon={
-                            <Icon
+                            <Ionicons
                                 color={ colors.icon }
                                 name="person-outline"
                                 size={ fontSizes.icon }
@@ -95,7 +95,7 @@ export const CourseForm = (): JSX.Element => {
                     {/* Publication field */}
                     <FormField
                         leftIcon={
-                            <Icon
+                            <Ionicons
                                 color={ colors.icon }
                                 name="book-outline"
                                 size={ fontSizes.icon }

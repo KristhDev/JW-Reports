@@ -1,7 +1,7 @@
 import React, { FC, useEffect, useState } from 'react';
 import { View, TextInput, Pressable } from 'react-native';
 import { useStyles } from 'react-native-unistyles';
-import Icon from 'react-native-vector-icons/Ionicons';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
 /* Interfaces */
 import { SearchInputProps } from './interfaces';
@@ -52,7 +52,7 @@ export const SearchInput: FC<SearchInputProps> = ({ onClean, onSearch, refreshin
         <View style={ styles.searchInputContainer }>
 
             {/* Search icon */}
-            <Icon
+            <Ionicons
                 color={ colors.icon }
                 name="search-outline"
                 size={ fontSizes.icon }
@@ -92,7 +92,7 @@ export const SearchInput: FC<SearchInputProps> = ({ onClean, onSearch, refreshin
                         style={ styles.cleanBtn }
                         testID="search-input-clear-btn"
                     >
-                        <Icon
+                        <Ionicons
                             color={ (searchText.length === 0) ? 'transparent' : colors.icon }
                             name="close-outline"
                             size={ (fontSizes.icon + 5) }

@@ -2,7 +2,7 @@ import React, { useState, FC  } from 'react';
 import { View, Text, Pressable, TextInput } from 'react-native';
 import { useStyles } from 'react-native-unistyles';
 import { useField } from 'formik';
-import Icon from 'react-native-vector-icons/Ionicons';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
 /* Screens */
 import { OptionsModal } from '../../screens';
@@ -137,7 +137,7 @@ export const FormSelect: FC<FormSelectProps> = ({
                                         value={ String(items.find(i => i.value === field?.value)?.label || '') }
                                     />
 
-                                    <Icon
+                                    <Ionicons
                                         name="chevron-down-outline"
                                         color={ colors.icon }
                                         size={ fontSizes.icon }

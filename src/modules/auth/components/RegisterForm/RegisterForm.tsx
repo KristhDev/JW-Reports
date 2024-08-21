@@ -3,7 +3,7 @@ import { ActivityIndicator, Text, TouchableOpacity, View } from 'react-native';
 import { Formik } from 'formik';
 import { useNavigation } from '@react-navigation/native';
 import { useStyles } from 'react-native-unistyles';
-import Icon from 'react-native-vector-icons/Ionicons';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
 /* Components */
 import { Button, EyeBtn, FormField } from '../../../ui/components';
@@ -54,7 +54,7 @@ export const RegisterForm = (): JSX.Element => {
                     <FormField
                         autoCapitalize="none"
                         leftIcon={
-                            <Icon
+                            <Ionicons
                                 color={ colors.icon }
                                 name="person-outline"
                                 size={ fontSizes.icon }
@@ -69,7 +69,7 @@ export const RegisterForm = (): JSX.Element => {
                     <FormField
                         autoCapitalize="none"
                         leftIcon={
-                            <Icon
+                            <Ionicons
                                 color={ colors.icon }
                                 name="people-outline"
                                 size={ fontSizes.icon }
@@ -84,7 +84,7 @@ export const RegisterForm = (): JSX.Element => {
                     <FormField
                         autoCapitalize="none"
                         leftIcon={
-                            <Icon
+                            <Ionicons
                                 color={ colors.icon }
                                 name="mail-outline"
                                 size={ fontSizes.icon }
@@ -100,7 +100,7 @@ export const RegisterForm = (): JSX.Element => {
                     <FormField
                         autoCapitalize="none"
                         leftIcon={
-                            <Icon
+                            <Ionicons
                                 color={ colors.icon }
                                 name="key-outline"
                                 size={ fontSizes.icon }
@@ -122,7 +122,7 @@ export const RegisterForm = (): JSX.Element => {
                     <FormField
                         autoCapitalize="none"
                         leftIcon={
-                            <Icon
+                            <Ionicons
                                 color={ colors.icon }
                                 name="key-outline"
                                 size={ fontSizes.icon }

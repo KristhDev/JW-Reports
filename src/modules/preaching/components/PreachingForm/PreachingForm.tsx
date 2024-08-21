@@ -2,7 +2,7 @@ import React from 'react';
 import { ActivityIndicator, View } from 'react-native';
 import { Formik } from 'formik';
 import { useStyles } from 'react-native-unistyles';
-import Icon from 'react-native-vector-icons/Ionicons';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
 /* Components */
 import { Button, DatetimeField, FormCalendar, FormTime, useUI } from '../../../ui';
@@ -64,7 +64,7 @@ export const PreachingForm = (): JSX.Element => {
                         <DatetimeField
                             disabled={ isPreachingLoading }
                             icon={
-                                <Icon
+                                <Ionicons
                                     color={ colors.contentHeader }
                                     name="calendar-outline"
                                     size={ fontSizes.icon }
@@ -81,7 +81,7 @@ export const PreachingForm = (): JSX.Element => {
                         <FormCalendar
                             editable={ !isPreachingLoading }
                             icon={
-                                <Icon
+                                <Ionicons
                                     color={ colors.contentHeader }
                                     name="calendar-outline"
                                     size={ fontSizes.icon }
@@ -98,7 +98,7 @@ export const PreachingForm = (): JSX.Element => {
                         <DatetimeField
                             disabled={ isPreachingLoading }
                             icon={
-                                <Icon
+                                <Ionicons
                                     color={ colors.contentHeader }
                                     name="time-outline"
                                     size={ fontSizes.icon }
@@ -115,7 +115,7 @@ export const PreachingForm = (): JSX.Element => {
                         <FormTime
                             editable={ !isPreachingLoading }
                             icon={
-                                <Icon
+                                <Ionicons
                                     color={ colors.contentHeader }
                                     name="time-outline"
                                     size={ fontSizes.icon }
@@ -132,7 +132,7 @@ export const PreachingForm = (): JSX.Element => {
                         <DatetimeField
                             disabled={ isPreachingLoading }
                             icon={
-                                <Icon
+                                <Ionicons
                                     color={ colors.contentHeader }
                                     name="time-outline"
                                     size={ fontSizes.icon }
@@ -150,7 +150,7 @@ export const PreachingForm = (): JSX.Element => {
                         <FormTime
                             editable={ !isPreachingLoading }
                             icon={
-                                <Icon
+                                <Ionicons
                                     color={ colors.contentHeader }
                                     name="time-outline"
                                     size={ fontSizes.icon }

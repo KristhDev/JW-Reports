@@ -2,7 +2,7 @@ import React, { FC, useEffect } from 'react';
 import { useNavigation } from '@react-navigation/native';
 import { useStyles } from 'react-native-unistyles';
 import { MaterialTopTabScreenProps } from '@react-navigation/material-top-tabs';
-import Icon from 'react-native-vector-icons/Ionicons';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
 /* Features */
 import { INIT_REVISIT } from '../../features';
@@ -78,7 +78,7 @@ const Revisits: FC<RevisitsProps> = ({ route }): JSX.Element => {
                 <Fab
                     color={ colors.button }
                     icon={
-                        <Icon
+                        <Ionicons
                             color={ colors.contentHeader }
                             name="add-circle-outline"
                             size={ fontSizes.xl }
