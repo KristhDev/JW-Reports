@@ -1,6 +1,6 @@
 import React from 'react';
 import { render, screen, userEvent } from '@testing-library/react-native';
-import Icon from 'react-native-vector-icons/Ionicons';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
 /* Setup */
 import { onPressMock } from '../../../../../jest.setup';
@@ -13,7 +13,7 @@ const user = userEvent.setup();
 const renderComponent = () => render(
     <Button
         icon={
-            <Icon
+            <Ionicons
                 name="flask-outline"
                 size={ 25 }
                 testID="button-icon"

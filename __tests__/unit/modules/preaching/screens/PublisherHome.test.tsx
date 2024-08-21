@@ -9,7 +9,8 @@ import {
     useLessonsSpy,
     usePreachingSpy,
     useRevisitsSpy,
-    useStatusSpy
+    useStatusSpy,
+    useUISpy
 } from '../../../../../jest.setup';
 
 /* Mocks */
@@ -36,6 +37,7 @@ import {
 import { PublisherHome } from '../../../../../src/modules/preaching';
 import { INIT_REVISIT } from '../../../../../src/modules/revisits';
 import { INIT_LESSON } from '../../../../../src/modules/lessons';
+import { UI_INITIAL_STATE } from '../../../../../src/modules/ui';
 
 const renderScreen = () => render(
     <MenuProvider>
@@ -76,6 +78,10 @@ describe('Test in <PublisherHome /> screen', () => {
     useStatusSpy.mockImplementation(() => ({
         setStatus: setStatusMock,
         setErrorForm: setErrorFormMock
+    }) as any);
+
+    useUISpy.mockImplementation(() => ({
+        state: UI_INITIAL_STATE
     }) as any);
 
     it('should to match snapshot', () => {

@@ -2,13 +2,14 @@ import React from 'react';
 import { render, screen, userEvent } from '@testing-library/react-native';
 
 /* Setup */
-import { mockUseNavigation, useStatusSpy, useThemeSpy } from '../../../../../../jest.setup';
+import { mockUseNavigation, useStatusSpy, useThemeSpy, useUISpy } from '../../../../../jest.setup';
 
 /* Mocks */
-import { setStatusMock, setThemeMock } from '../../../../../mocks';
+import { setStatusMock, setThemeMock } from '../../../../mocks';
 
 /* Modules */
-import { Settings } from '../../../../../../src/modules/shared';
+import { Settings } from '../../../../../src/modules/shared';
+import { UI_INITIAL_STATE } from '../../../../../src/modules/ui';
 
 const user = userEvent.setup();
 const renderScreen = () => render(<Settings />);
@@ -21,6 +22,10 @@ describe('Test in <Settings /> screen', () => {
     useThemeSpy.mockImplementation(() => ({
         state: { theme: 'dark', selectedTheme: 'dark' },
         setTheme: setThemeMock
+    }) as any);
+
+    useUISpy.mockImplementation(() => ({
+        state: UI_INITIAL_STATE
     }) as any);
 
     beforeEach(() => {
@@ -55,7 +60,7 @@ describe('Test in <Settings /> screen', () => {
 
         /* Get pressables */
         const pressables = screen.getAllByTestId('section-btn-pressable');
-        await user.press(pressables[6]);
+        await user.press(pressables[7]);
 
         /* Check if setStatus is called one time with respective value */
         expect(setStatusMock).toHaveBeenCalledTimes(1);

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Formik } from 'formik';
 import { render, screen } from '@testing-library/react-native';
-import Icon from 'react-native-vector-icons/Ionicons';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
 /* Modules */
 import { DatetimeField } from '../../../../../src/modules/ui';
@@ -15,7 +15,7 @@ const renderComponent = () => render(
         { () => (
             <DatetimeField
                 icon={
-                    <Icon
+                    <Ionicons
                         color={ darkColors.contentHeader }
                         name="calendar-outline"
                         size={ 25 }

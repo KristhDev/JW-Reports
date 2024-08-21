@@ -3,13 +3,14 @@ import { render, screen, userEvent } from '@testing-library/react-native';
 import { MenuProvider } from 'react-native-popup-menu';
 
 /* Setup */
-import { useCoursesSpy, useRevisitsSpy, useStatusSpy } from '../../../../../jest.setup';
+import { useCoursesSpy, useRevisitsSpy, useStatusSpy, useUISpy } from '../../../../../jest.setup';
 
 /* Mocks */
 import { coursesStateMock, revisitsStateMock, setSelectedRevisitMock } from '../../../../mocks';
 
 /* Modules */
 import { INIT_REVISIT, Revisits } from '../../../../../src/modules/revisits';
+import { UI_INITIAL_STATE } from '../../../../../src/modules/ui';
 
 const user = userEvent.setup();
 const renderScreen = () => render(
@@ -64,6 +65,10 @@ describe('Test in <Revisits /> screen', () => {
 
     useStatusSpy.mockImplementation(() => ({
         setStatus: jest.fn(),
+    }) as any);
+
+    useUISpy.mockImplementation(() => ({
+        state: UI_INITIAL_STATE
     }) as any);
 
     beforeEach(() => {

@@ -2,13 +2,14 @@ import React from 'react';
 import { act, render, screen } from '@testing-library/react-native';
 
 /* Setup */
-import { useImageSpy, useRevisitsSpy, useStatusSpy } from '../../../../../jest.setup';
+import { useImageSpy, useRevisitsSpy, useStatusSpy, useUISpy } from '../../../../../jest.setup';
 
 /* Mocks */
 import { imageMock, revisitsStateMock, selectedRevisitStateMock } from '../../../../mocks';
 
 /* Modules */
 import { AddOrEditRevisit } from '../../../../../src/modules/revisits';
+import { UI_INITIAL_STATE } from '../../../../../src/modules/ui';
 
 const renderScreen = () => render(<AddOrEditRevisit />);
 
@@ -33,6 +34,10 @@ describe('Test in <AddOrEditRevisit /> screen', () => {
         image: imageMock,
         takeImageToGallery: jest.fn(),
         takePhoto: jest.fn()
+    }) as any);
+
+    useUISpy.mockImplementation(() => ({
+        state: UI_INITIAL_STATE
     }) as any);
 
     it('should to match snapshot', async () => {

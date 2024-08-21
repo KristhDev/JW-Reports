@@ -1,7 +1,7 @@
 import React from 'react';
 import { render, screen, userEvent } from '@testing-library/react-native';
 import { Formik } from 'formik';
-import Icon from 'react-native-vector-icons/Ionicons';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
 /* Modules */
 import { FormField } from '../../../../../src/modules/ui';
@@ -22,7 +22,7 @@ const renderComponent = () => render(
             <FormField
                 autoCapitalize="none"
                 leftIcon={
-                    <Icon
+                    <Ionicons
                         color={ darkColors.icon }
                         name="person-outline"
                         size={ 25 }

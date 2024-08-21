@@ -2,13 +2,14 @@ import React from 'react';
 import { render, screen, userEvent } from '@testing-library/react-native';
 
 /* Setup */
-import { onCloseMock, useLessonsSpy } from '../../../../../jest.setup';
+import { onCloseMock, useLessonsSpy, useUISpy } from '../../../../../jest.setup';
 
 /* Mock */
 import { finishOrStartLessonMock, lessonSelectedStateMock } from '../../../../mocks';
 
 /* Modules */
 import { FinishOrStartLessonModal } from '../../../../../src/modules/lessons';
+import { UI_INITIAL_STATE } from '../../../../../src/modules/ui';
 
 const user = userEvent.setup();
 const renderScreen = () => render(
@@ -22,6 +23,10 @@ describe('Test in <FinishOrStartLessonModal /> screen', () => {
     useLessonsSpy.mockImplementation(() => ({
         state: lessonSelectedStateMock,
         finishOrStartLesson: finishOrStartLessonMock
+    }) as any);
+
+    useUISpy.mockImplementation(() => ({
+        state: UI_INITIAL_STATE
     }) as any);
 
     it('should to match snapshot', () => {

@@ -3,13 +3,14 @@ import { render, screen, userEvent } from '@testing-library/react-native';
 import { MenuProvider } from 'react-native-popup-menu';
 
 /* Setup */
-import { useCoursesSpy, useLessonsSpy, useNetworkSpy } from '../../../../../jest.setup';
+import { useCoursesSpy, useLessonsSpy, useNetworkSpy, useUISpy } from '../../../../../jest.setup';
 
 /* Mocks */
 import { courseSelectedStateMock, lessonsStateMock, setSelectedLessonMock, wifiMock } from '../../../../mocks';
 
 /* Modules */
 import { INIT_LESSON, Lessons } from '../../../../../src/modules/lessons';
+import { UI_INITIAL_STATE } from '../../../../../src/modules/ui';
 
 const user = userEvent.setup();
 const renderScreen = () => render(
@@ -36,6 +37,10 @@ describe('Test in <Lessons /> screen', () => {
     useNetworkSpy.mockImplementation(() => ({
         wifi: wifiMock
     }));
+
+    useUISpy.mockImplementation(() => ({
+        state: UI_INITIAL_STATE
+    }) as any);
 
     beforeEach(() => {
         jest.clearAllMocks();

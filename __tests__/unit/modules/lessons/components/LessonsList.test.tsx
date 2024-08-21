@@ -3,7 +3,7 @@ import { render, screen, userEvent } from '@testing-library/react-native';
 import { MenuProvider } from 'react-native-popup-menu';
 
 /* Setup */
-import { useCoursesSpy, useLessonsSpy, useNetworkSpy } from '../../../../../jest.setup';
+import { useCoursesSpy, useLessonsSpy, useNetworkSpy, useUISpy } from '../../../../../jest.setup';
 
 /* Mocks */
 import {
@@ -21,6 +21,7 @@ import {
 
 /* Modules */
 import { LessonsList } from '../../../../../src/modules/lessons';
+import { UI_INITIAL_STATE } from '../../../../../src/modules/ui';
 
 const emptyMessageTest = 'No has agregado clases a este curso.';
 const titleTest = `Clases del curso con ${ courseSelectedStateMock.selectedCourse.personName }`;
@@ -49,6 +50,10 @@ describe('Test in <LessonsList /> component', () => {
 
     useNetworkSpy.mockImplementation(() => ({
         wifi: wifiMock
+    }) as any);
+
+    useUISpy.mockImplementation(() => ({
+        state: UI_INITIAL_STATE
     }) as any);
 
     beforeEach(() => {

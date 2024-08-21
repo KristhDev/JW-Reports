@@ -2,13 +2,14 @@ import React from 'react';
 import { render, screen } from '@testing-library/react-native';
 
 /* Setup */
-import { useRevisitsSpy, useStatusSpy } from '../../../../../jest.setup';
+import { useRevisitsSpy, useStatusSpy, useUISpy } from '../../../../../jest.setup';
 
 /* Mocks */
 import { selectedRevisitStateMock, setSelectedRevisitMock } from '../../../../mocks';
 
 /* Modules */
 import { RevisitDetail } from '../../../../../src/modules/revisits';
+import { UI_INITIAL_STATE } from '../../../../../src/modules/ui';
 
 /* Utils */
 import { date } from '../../../../../src/utils';
@@ -27,6 +28,10 @@ describe('Test in <RevisitDetail /> screen', () => {
 
     useStatusSpy.mockImplementation(() => ({
         setErrorForm: jest.fn()
+    }) as any);
+
+    useUISpy.mockImplementation(() => ({
+        state: UI_INITIAL_STATE
     }) as any);
 
     beforeEach(() => {

@@ -2,13 +2,14 @@ import React from 'react';
 import { render, screen } from '@testing-library/react-native';
 
 /* Setup */
-import { useCoursesSpy, useLessonsSpy } from '../../../../../jest.setup';
+import { useCoursesSpy, useLessonsSpy, useUISpy } from '../../../../../jest.setup';
 
 /* Mocks */
 import { courseSelectedStateMock, lessonSelectedStateMock, setSelectedLessonMock } from '../../../../mocks';
 
 /* Modules */
 import { LessonDetail } from '../../../../../src/modules/lessons';
+import { UI_INITIAL_STATE } from '../../../../../src/modules/ui';
 
 /* Utils */
 import { date } from '../../../../../src/utils';
@@ -27,6 +28,10 @@ describe('Test in <LessonDetail /> screen', () => {
         state: lessonSelectedStateMock,
         finishOrStartLesson: jest.fn(),
         setSelectedLesson: setSelectedLessonMock
+    }) as any);
+
+    useUISpy.mockImplementation(() => ({
+        state: UI_INITIAL_STATE
     }) as any);
 
     beforeEach(() => {

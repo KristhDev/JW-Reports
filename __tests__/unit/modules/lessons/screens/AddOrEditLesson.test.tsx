@@ -2,13 +2,14 @@ import React from 'react';
 import { act, render, screen } from '@testing-library/react-native';
 
 /* Setup */
-import { useLessonsSpy, useStatusSpy } from '../../../../../jest.setup';
+import { useLessonsSpy, useStatusSpy, useUISpy } from '../../../../../jest.setup';
 
 /* Mocks */
 import { initialLessonsStateMock, lessonSelectedStateMock } from '../../../../mocks';
 
 /* Modules */
 import { AddOrEditLesson } from '../../../../../src/modules/lessons';
+import { UI_INITIAL_STATE } from '../../../../../src/modules/ui';
 
 const renderScreen = () => render(<AddOrEditLesson />);
 
@@ -27,6 +28,10 @@ describe('Test in <AddOrEditLesson /> screen', () => {
 
     useStatusSpy.mockImplementation(() => ({
         setErrorForm: jest.fn()
+    }) as any);
+
+    useUISpy.mockImplementation(() => ({
+        state: UI_INITIAL_STATE
     }) as any);
 
     it('should to match snapshot', async () => {

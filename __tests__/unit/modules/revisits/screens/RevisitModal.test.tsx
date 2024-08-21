@@ -2,13 +2,14 @@ import React from 'react';
 import { act, render, screen, userEvent } from '@testing-library/react-native';
 
 /* Setup */
-import { onCloseMock, useRevisitsSpy, useStatusSpy } from '../../../../../jest.setup';
+import { onCloseMock, useRevisitsSpy, useStatusSpy, useUISpy } from '../../../../../jest.setup';
 
 /* Mocks */
 import { saveRevisitMock, selectedRevisitStateMock, setErrorFormMock } from '../../../../mocks';
 
 /* Modules */
 import { RevisitModal } from '../../../../../src/modules/revisits';
+import { UI_INITIAL_STATE } from '../../../../../src/modules/ui';
 
 const completeMsg = 'Test complete msg'
 const completeRevisitMock = jest.fn().mockResolvedValue(completeMsg);
@@ -30,6 +31,10 @@ describe('Test in <RevisitModal /> screen', () => {
 
     useStatusSpy.mockImplementation(() => ({
         setErrorForm: setErrorFormMock
+    }) as any);
+
+    useUISpy.mockImplementation(() => ({
+        state: UI_INITIAL_STATE
     }) as any);
 
     it('should to match snapshot', async () => {
@@ -112,6 +117,7 @@ describe('Test in <RevisitModal /> screen', () => {
                 nextVisit: expect.any(Date)
             },
             back: false,
+            image: null,
             onFinish: onCloseMock
         });
     });
