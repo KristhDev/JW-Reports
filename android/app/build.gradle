@@ -88,8 +88,8 @@ def enableProguardInReleaseBuilds = false
  */
 def jscFlavor = 'org.webkit:android-jsc:+'
 
-def versionName = getVersionName()
-def versionCode = getVersionCode()
+def vn = getVersionName()
+def vc = getVersionCode()
 
 android {
     ndkVersion rootProject.ext.ndkVersion
@@ -102,8 +102,8 @@ android {
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         vectorDrawables.useSupportLibrary = true
-        versionCode versionCode
-        versionName versionName
+        versionCode vc
+        versionName vn
     }
     signingConfigs {
         debug {
