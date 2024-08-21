@@ -21,6 +21,9 @@ import { useNetwork } from '../../../shared';
 /* Interfaces */
 import { Lesson } from '../../interfaces';
 
+/* Theme */
+import { themeStylesheet } from '../../../theme';
+
 /**
  * Render a list of lessons.
  *
@@ -32,7 +35,7 @@ export const LessonsList = (): JSX.Element => {
     const [ showDeleteModal, setShowDeleteModal ] = useState<boolean>(false);
     const [ showFSModal, setShowFSModal ] = useState<boolean>(false);
 
-    const { theme: { fontSizes, margins } } = useStyles();
+    const { styles: themeStyles, theme: { fontSizes, margins } } = useStyles(themeStylesheet);
 
     const { state: { selectedCourse } } = useCourses();
 
@@ -152,7 +155,7 @@ export const LessonsList = (): JSX.Element => {
     return (
         <>
             <FlatList
-                contentContainerStyle={{ alignItems: 'center', padding: margins.md, paddingBottom: 100, flexGrow: 1 }}
+                contentContainerStyle={ themeStyles.flatListContainer }
                 data={ lessons }
                 keyExtractor={ (item) => item.id }
                 ListFooterComponent={
@@ -170,7 +173,7 @@ export const LessonsList = (): JSX.Element => {
                         />
 
                         <SearchInput
-                            onClean={ handleRefreshing }
+                            onClean={ () => setSearchTerm('') }
                             onSearch={ setSearchTerm }
                             refreshing={ isRefreshing }
                             searchTerm={ searchTerm }
