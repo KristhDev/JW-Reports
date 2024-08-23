@@ -2,7 +2,7 @@ import React from 'react';
 import { act, render, screen, userEvent } from '@testing-library/react-native';
 
 /* Setup */
-import { usePreachingSpy, useStatusSpy } from '../../../../../jest.setup';
+import { usePreachingSpy, useStatusSpy, useUISpy } from '../../../../../jest.setup';
 
 /* Mocks */
 import {
@@ -16,6 +16,7 @@ import {
 
 /* Modules */
 import { INIT_PREACHING, PreachingForm } from '../../../../../src/modules/preaching';
+import { UI_INITIAL_STATE } from '../../../../../src/modules/ui';
 
 const preachingDay = '2022-12-29 00:00:00';
 const initHour = '2022-12-30 09:00:00';
@@ -41,6 +42,10 @@ describe('Test in <PreachingForm /> component', () => {
 
     useStatusSpy.mockImplementation(() => ({
         setErrorForm: setErrorFormMock
+    }) as any);
+
+    useUISpy.mockImplementation(() => ({
+        state: UI_INITIAL_STATE
     }) as any);
 
     beforeEach(() => {
@@ -136,6 +141,29 @@ describe('Test in <PreachingForm /> component', () => {
             day: new Date(preachingSelectedStateMock.seletedPreaching.day),
             initHour: new Date(preachingSelectedStateMock.seletedPreaching.initHour),
             finalHour: new Date(preachingSelectedStateMock.seletedPreaching.finalHour),
+        });
+    });
+
+    it('should render old date fields when userInterface.oldDatetimePicker is true', async () => {
+
+        /* Mock data of useUI */
+        useUISpy.mockImplementation(() => ({
+            state: {
+                ...UI_INITIAL_STATE,
+                userInterface: {
+                    ...UI_INITIAL_STATE.userInterface,
+                    oldDatetimePicker: true
+                }
+            }
+        }) as any);
+
+        renderComponent();
+
+        const dateTimeInputs = await screen.findAllByTestId('datetimefield-text-input');
+        expect(dateTimeInputs).toHaveLength(3);
+
+        dateTimeInputs.forEach((input) => {
+            expect(input).toBeOnTheScreen();
         });
     });
 });
