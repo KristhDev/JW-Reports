@@ -1,8 +1,9 @@
+import { Image } from 'react-native';
+import mockSafeAreaContext from 'react-native-safe-area-context/jest/mock';
+
 import 'react-native-gesture-handler/jestSetup';
 import 'react-native-url-polyfill/auto';
 import './src/config/unistyles';
-
-import { Image } from 'react-native';
 
 export const onCancelMock = jest.fn();
 export const onChangeValueMock = jest.fn();
@@ -89,8 +90,8 @@ jest.mock('@react-navigation/native', () => {
 
     return {
         ...actual,
+        useFocusEffect: () => jest.fn().mockImplementation(callback => callback()),
         useNavigation: () => mockUseNavigation,
-
         useRoute: () => ({
             name: 'LessonDetailScreen'
         })
@@ -144,25 +145,7 @@ jest.mock('react-native-onesignal', () => ({
 
 jest.mock('react-native-permissions', () => require('react-native-permissions/mock'));
 
-jest.mock('react-native-reanimated', () => {
-    const Reanimated = require('react-native-reanimated/mock');
-    Reanimated.default.call = () => {}
-
-    return Reanimated;
-});
-
-jest.mock('react-native-safe-area-context', () => {
-    const actual = jest.requireActual('react-native-safe-area-context');
-
-    return {
-        ...actual,
-        useSafeAreaInsets: () => ({
-            top: 30
-        })
-    }
-});
-
-export const mockUnistylesSetTheme = jest.fn();
+jest.mock('react-native-safe-area-context', () => mockSafeAreaContext);
 
 jest.mock('react-native-unistyles', () => {
     const real = jest.requireActual('react-native-unistyles');
@@ -171,7 +154,7 @@ jest.mock('react-native-unistyles', () => {
         ...real,
         UnistylesRuntime: {
             colorScheme: 'dark',
-            setTheme: mockUnistylesSetTheme,
+            setTheme: jest.fn(),
             themeName: 'dark',
         }
     }
