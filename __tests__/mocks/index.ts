@@ -8,3 +8,4 @@ export * from './preaching';
 export * from './revisits';
 export * from './status';
 export * from './theme';
+export * from './utils';
