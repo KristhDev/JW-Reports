@@ -20,7 +20,7 @@ describe('Test in useImage hook', () => {
 
         /* Check if hook return respective properties */
         expect(result.current.useImage).toEqual({
-            image: {},
+            image: null,
             setImage: expect.any(Function),
             deleteImage: expect.any(Function),
             takeImageToGallery: expect.any(Function),
@@ -64,7 +64,7 @@ describe('Test in useImage hook', () => {
 
         /* Check if openPicker isnt called and image is empty */
         expect(mockImageCropPicker.openPicker).not.toHaveBeenCalled();
-        expect(result.current.useImage.image).toEqual({});
+        expect(result.current.useImage.image).toBeNull();
     });
 
     it('should not access to gallery when permission is unavailable in android below 13', async () => {
@@ -79,7 +79,7 @@ describe('Test in useImage hook', () => {
 
         /* Check if openPicker isnt called and image is empty */
         expect(mockImageCropPicker.openPicker).not.toHaveBeenCalled();
-        expect(result.current.useImage.image).toEqual({});
+        expect(result.current.useImage.image).toBeNull();
     });
 
     it('should not access to gallery when permission is denied in android above 12', async () => {
@@ -101,7 +101,7 @@ describe('Test in useImage hook', () => {
 
         /* Check if openPicker isnt called and image is empty */
         expect(mockImageCropPicker.openPicker).not.toHaveBeenCalled();
-        expect(result.current.useImage.image).toEqual({});
+        expect(result.current.useImage.image).toBeNull();
     });
 
     it('should not access to gallery when permission is unavailable in android above 12', async () => {
@@ -123,7 +123,7 @@ describe('Test in useImage hook', () => {
 
         /* Check if openPicker isnt called and image is empty */
         expect(mockImageCropPicker.openPicker).not.toHaveBeenCalled();
-        expect(result.current.useImage.image).toEqual({});
+        expect(result.current.useImage.image).toBeNull();
     });
 
     it('should get image with takePhoto', async () => {
@@ -151,7 +151,7 @@ describe('Test in useImage hook', () => {
 
         /* Check if openCamera isnt called and image is empty */
         expect(mockImageCropPicker.openCamera).not.toHaveBeenCalled();
-        expect(result.current.useImage.image).toEqual({});
+        expect(result.current.useImage.image).toBeNull();
     });
 
     it('should not access to camera when permission is unavailable', async () => {
@@ -164,6 +164,6 @@ describe('Test in useImage hook', () => {
 
         /* Check if openCamera isnt called and image is empty */
         expect(mockImageCropPicker.openCamera).not.toHaveBeenCalled();
-        expect(result.current.useImage.image).toEqual({});
+        expect(result.current.useImage.image).toBeNull();
     });
 });

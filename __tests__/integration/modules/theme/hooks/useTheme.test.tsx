@@ -4,10 +4,10 @@ import { act, waitFor } from '@testing-library/react-native';
 import { renderUseTheme } from '../../../../setups';
 
 /* Mocks */
-import { darkState, lightState } from '../../../../mocks';
+import { darkState, getItemStorageSpy, lightState, setItemStorageSpy } from '../../../../mocks';
 
 /* Utils */
-import { storage } from '../../../../../src/utils';
+import { storageKeys } from '../../../../../src/utils';
 
 describe('Test in useTheme hook', () => {
     beforeEach(() => {
@@ -27,7 +27,7 @@ describe('Test in useTheme hook', () => {
     });
 
     it('should change theme with setTheme', async () => {
-        // (AsyncStorage.getItem as jest.Mock).mockResolvedValue('light');
+        getItemStorageSpy.mockReturnValue('light');
 
         const { result } = renderUseTheme();
 
@@ -38,8 +38,8 @@ describe('Test in useTheme hook', () => {
         /* Check if deviceTheme changed */
         expect(result.current.state).toEqual(lightState);
 
-        /* Check if AsyncStorage.setItem is called with respective args */
-        // expect(AsyncStorage.setItem).toHaveBeenCalled();
-        // expect(AsyncStorage.setItem).toHaveBeenCalledWith(asyncStorageKeys.THEME, 'light');
+        /* Check if storage.setItem is called with respective args */
+        expect(setItemStorageSpy).toHaveBeenCalled();
+        expect(setItemStorageSpy).toHaveBeenCalledWith(storageKeys.THEME, 'light');
     });
 });
