@@ -2,7 +2,7 @@ import React from 'react';
 import { act, render, screen, userEvent } from '@testing-library/react-native';
 
 /* Setup */
-import { useAuthSpy, useNetworkSpy, useStatusSpy } from '../../../../../jest.setup';
+import { useAuthSpy, useNetworkSpy, useStatusSpy, useUISpy } from '../../../../../jest.setup';
 
 /* Mocks */
 import { setErrorFormMock, testUser, updateProfileMock, wifiMock } from '../../../../mocks';
@@ -14,10 +14,6 @@ const user = userEvent.setup();
 const renderComponent = () => render(<ProfileForm />);
 
 describe('Test in <ProfileForm /> component', () => {
-    beforeEach(() => {
-        jest.clearAllMocks();
-    });
-
     useAuthSpy.mockImplementation(() => ({
         state: { user: testUser, isAuthLoading: false },
         updateProfile: updateProfileMock
@@ -30,6 +26,16 @@ describe('Test in <ProfileForm /> component', () => {
     useNetworkSpy.mockImplementation(() => ({
         wifi: wifiMock
     }) as any);
+
+    useUISpy.mockImplementation(() => ({
+        state: {
+            isKeyboardVisible: false
+        }
+    }) as any);
+
+    beforeEach(() => {
+        jest.clearAllMocks();
+    });
 
     it('should to match snapshot', async () => {
         renderComponent();

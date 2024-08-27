@@ -2,7 +2,7 @@ import React from 'react';
 import { act, render, screen, userEvent } from '@testing-library/react-native';
 
 /* Setup */
-import { mockUseNavigation, useAuthSpy, useStatusSpy } from '../../../../../jest.setup';
+import { mockUseNavigation, useAuthSpy, useStatusSpy, useUISpy } from '../../../../../jest.setup';
 
 /* Mocks */
 import { setErrorFormMock, signInMock } from '../../../../mocks';
@@ -25,6 +25,12 @@ describe('Test in <LoginForm /> component', () => {
 
     useStatusSpy.mockImplementation(() => ({
         setErrorForm: setErrorFormMock
+    }) as any);
+
+    useUISpy.mockImplementation(() => ({
+        state: {
+            isKeyboardVisible: false
+        }
     }) as any);
 
     it('should to match snapshot', async () => {

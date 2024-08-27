@@ -2,7 +2,7 @@ import React from 'react';
 import { act, render, screen, userEvent } from '@testing-library/react-native';
 
 /* Setup */
-import { useAuthSpy, useStatusSpy } from '../../../../../jest.setup';
+import { useAuthSpy, useStatusSpy, useUISpy } from '../../../../../jest.setup';
 
 /* Mocks */
 import { setErrorFormMock, testUser, updateEmailMock, updatePasswordMock } from '../../../../mocks';
@@ -22,6 +22,12 @@ describe('Test in <CredentialsForm /> component', () => {
 
     useStatusSpy.mockImplementation(() => ({
         setErrorForm: setErrorFormMock
+    }) as any);
+
+    useUISpy.mockImplementation(() => ({
+        state: {
+            isKeyboardVisible: false
+        }
     }) as any);
 
     beforeEach(() => {

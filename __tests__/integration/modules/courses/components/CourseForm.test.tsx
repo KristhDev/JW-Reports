@@ -2,7 +2,7 @@ import React from 'react';
 import { act, render, screen, userEvent } from '@testing-library/react-native';
 
 /* Setup */
-import { useCoursesSpy, useStatusSpy } from '../../../../../jest.setup';
+import { useCoursesSpy, useStatusSpy, useUISpy } from '../../../../../jest.setup';
 
 /* Mocks */
 import { courseSelectedStateMock, coursesStateMock, saveCourseMock, setErrorFormMock, updateCourseMock } from '../../../../mocks';
@@ -22,6 +22,12 @@ describe('Test in <CourseForm /> component', () => {
 
     useStatusSpy.mockImplementation(() => ({
         setErrorForm: setErrorFormMock
+    }) as any);
+
+    useUISpy.mockImplementation(() => ({
+        state: {
+            isKeyboardVisible: false
+        }
     }) as any);
 
     beforeEach(() => {

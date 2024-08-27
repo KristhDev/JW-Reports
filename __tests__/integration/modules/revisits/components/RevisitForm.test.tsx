@@ -2,7 +2,7 @@ import React from 'react';
 import { act, render, screen, userEvent } from '@testing-library/react-native';
 
 /* Setup */
-import { useImageSpy, useRevisitsSpy, useStatusSpy } from '../../../../../jest.setup';
+import { useImageSpy, useRevisitsSpy, useStatusSpy, useUISpy } from '../../../../../jest.setup';
 
 /* Mocks */
 import {
@@ -18,6 +18,7 @@ import {
 
 /* Modules */
 import { RevisitForm } from '../../../../../src/modules/revisits';
+import { UI_INITIAL_STATE } from '../../../../../src/modules/ui';
 
 const personName = 'Clifton DAmore';
 const about = 'Possimus magnam cum quo saepe et accusamus consectetur molestiae. Eos et et nobis dolor. Enim repellat quia officia fuga qui. Cumque delectus unde possimus consequatur ducimus.';
@@ -47,6 +48,10 @@ describe('Test in <RevisitForm /> component', () => {
 
     useStatusSpy.mockImplementation(() => ({
         setErrorForm: setErrorFormMock
+    }) as any);
+
+    useUISpy.mockImplementation(() => ({
+        state: UI_INITIAL_STATE
     }) as any);
 
     beforeEach(() => {

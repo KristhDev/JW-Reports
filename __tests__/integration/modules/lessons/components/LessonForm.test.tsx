@@ -2,7 +2,7 @@ import React from 'react';
 import { act, render, screen, userEvent } from '@testing-library/react-native';
 
 /* Setup */
-import { useLessonsSpy, useStatusSpy } from '../../../../../jest.setup';
+import { useLessonsSpy, useStatusSpy, useUISpy } from '../../../../../jest.setup';
 
 /* Mocks */
 import {
@@ -15,6 +15,7 @@ import {
 
 /* Modules */
 import { LessonForm } from '../../../../../src/modules/lessons';
+import { UI_INITIAL_STATE } from '../../../../../src/modules/ui';
 
 const user = userEvent.setup();
 const renderComponent = () => render(<LessonForm />);
@@ -34,6 +35,10 @@ describe('Test in <LessonForm /> component', () => {
 
     useStatusSpy.mockImplementation(() => ({
         setErrorForm: setErrorFormMock
+    }) as any);
+
+    useUISpy.mockImplementation(() => ({
+        state: UI_INITIAL_STATE
     }) as any);
 
     beforeEach(() => {
