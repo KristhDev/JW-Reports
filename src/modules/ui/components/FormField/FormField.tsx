@@ -1,5 +1,5 @@
 import React, { useState, FC, useRef, useEffect } from 'react';
-import { View, Text, TextInput, Keyboard } from 'react-native';
+import { View, Text, TextInput } from 'react-native';
 import { useStyles } from 'react-native-unistyles';
 import { useField } from 'formik';
 
@@ -8,6 +8,7 @@ import { FormFieldProps } from './interfaces';
 
 /* Theme */
 import { themeStylesheet } from '../../../theme';
+import { useUI } from '../../hooks';
 
 /**
  * This component is responsible for displaying fields for forms of
@@ -53,6 +54,7 @@ export const FormField: FC<FormFieldProps> = ({
 
     const textInputRef = useRef<TextInput>(null);
 
+    const { state: { isKeyboardVisible } } = useUI();
     const { styles: themeStyles, theme: { colors } } = useStyles(themeStylesheet);
 
     /**
@@ -63,19 +65,12 @@ export const FormField: FC<FormFieldProps> = ({
     const handleBlur = (): void => {
         setIsFocused(false);
         textInputRef.current?.blur();
-
-        setTimeout(() => {
-            helpers.setTouched(!meta.touched);
-        }, 100);
+        helpers.setTouched(!meta.touched);
     }
 
     useEffect(() => {
-        const hideListener = Keyboard.addListener('keyboardDidHide', () => handleBlur());
-
-        return () => {
-            hideListener.remove();
-        };
-    }, []);
+        if (!isKeyboardVisible) handleBlur();
+    }, [ isKeyboardVisible ]);
 
     return (
         <View style={[ themeStyles.formField, style ]}>
@@ -118,12 +113,9 @@ export const FormField: FC<FormFieldProps> = ({
                             value={ String(field.value) }
                             ref={ textInputRef }
                             { ...rest }
+                            onBlur={ handleBlur }
                             onFocus={ () => setIsFocused(true) }
                             testID="form-field-text-input"
-                            onBlur={ () => {
-                                setIsFocused(false);
-                                helpers.setTouched(!meta.touched);
-                            } }
                         />
 
                         { rightIcon }
