@@ -3,6 +3,9 @@ import { render, screen, userEvent } from '@testing-library/react-native';
 import { Formik } from 'formik';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
+/* Setup */
+import { useUISpy } from '../../../../../jest.setup';
+
 /* Modules */
 import { FormField } from '../../../../../src/modules/ui';
 import { darkColors } from '../../../../../src/modules/theme';
@@ -38,6 +41,12 @@ const renderComponent = () => render(
 );
 
 describe('Test in <FormField /> component', () => {
+    useUISpy.mockImplementation(() => ({
+        state: {
+            isKeyboardVisible: false
+        }
+    }) as any);
+
     it('should to match snapshot', () => {
         renderComponent();
         expect(screen.toJSON()).toMatchSnapshot();
@@ -52,12 +61,12 @@ describe('Test in <FormField /> component', () => {
         const icon = screen.getByTestId('form-field-icon');
 
         /* Check if exists this elemets and has props */
-        expect(label).toBeTruthy();
-        expect(label.props.children).toBe(fieldLabel);
-        expect(input).toBeTruthy();
+        expect(label).toBeOnTheScreen();
+        expect(label).toHaveTextContent(fieldLabel);
+        expect(input).toBeOnTheScreen();
         expect(input.props.autoCapitalize).toBe('none');
         expect(input.props.placeholder).toBe(fieldPlaceholder);
-        expect(icon).toBeTruthy();
+        expect(icon).toBeOnTheScreen();
     });
 
     it('should change value of text input', async () => {
