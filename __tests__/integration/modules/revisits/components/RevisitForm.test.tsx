@@ -161,4 +161,27 @@ describe('Test in <RevisitForm /> component', () => {
         /* Check if takePhoto is called one time */
         expect(takePhotoMock).toHaveBeenCalledTimes(1);
     });
+
+    it('should render old date fields when userInterface.oldDatetimePicker is true', async () => {
+
+        /* Mock data of useUI */
+        useUISpy.mockImplementation(() => ({
+            state: {
+                ...UI_INITIAL_STATE,
+                userInterface: {
+                    ...UI_INITIAL_STATE.userInterface,
+                    oldDatetimePicker: true
+                }
+            }
+        }) as any);
+
+        renderComponent();
+
+        const dateTimeInputs = await screen.findAllByTestId('datetimefield-text-input');
+        expect(dateTimeInputs).toHaveLength(1);
+
+        dateTimeInputs.forEach((input) => {
+            expect(input).toBeOnTheScreen();
+        });
+    });
 });
