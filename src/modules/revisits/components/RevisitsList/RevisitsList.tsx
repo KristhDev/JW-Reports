@@ -100,7 +100,7 @@ export const RevisitsList: FC<RevisitsListProps> = ({ emptyMessage, filter, titl
         if (wifi.hasConnection) {
             setRevisitsPagination({ from: 0, to: 9 });
             removeRevisits();
-            loadRevisits({ filter, search: '', refresh: true });
+            loadRevisits({ filter, search, refresh: true });
         }
     }
 
