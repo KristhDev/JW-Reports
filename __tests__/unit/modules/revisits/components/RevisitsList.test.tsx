@@ -3,7 +3,7 @@ import { render, screen, userEvent } from '@testing-library/react-native';
 import { MenuProvider } from 'react-native-popup-menu';
 
 /* Setup */
-import { useCoursesSpy, useNetworkSpy, useRevisitsSpy, useStatusSpy } from '../../../../../jest.setup';
+import { useCoursesSpy, useNetworkSpy, useRevisitsSpy, useStatusSpy, useUISpy } from '../../../../../jest.setup';
 
 /* Mocks */
 import {
@@ -24,6 +24,7 @@ import {
 
 /* Modules */
 import { RevisitsList } from '../../../../../src/modules/revisits';
+import { UI_INITIAL_STATE } from '../../../../../src/modules/ui';
 
 const emptyMessageTest = 'No hay revisitas disponibles';
 const titleTest = 'Mis Revisitas';
@@ -63,6 +64,10 @@ describe('Test in <RevisitsList /> component', () => {
 
     useNetworkSpy.mockImplementation(() => ({
         wifi: wifiMock
+    }) as any);
+
+    useUISpy.mockImplementation(() => ({
+        state: UI_INITIAL_STATE
     }) as any);
 
     beforeEach(() => {
@@ -130,6 +135,20 @@ describe('Test in <RevisitsList /> component', () => {
     });
 
     it('should search when searchInput is submit', async () => {
+
+        /* Mock data of useRevisits */
+        useRevisitsSpy.mockImplementation(() => ({
+            state: initialRevisitsStateMock,
+            deleteRevisit: deleteRevisitMock,
+            loadRevisits: loadRevisitsMock,
+            removeRevisits: removeRevisitsMock,
+            setRefreshRevisits: setRefreshRevisitsMock,
+            setRevisitsPagination: setRevisitsPaginationMock,
+            setSelectedRevisit: setSelectedRevisitMock,
+            completeRevisit: completeRevisitMock,
+            saveRevisit: saveRevisitMock,
+        }) as any);
+
         renderComponent();
 
         /* Get search input text, type search and submit */

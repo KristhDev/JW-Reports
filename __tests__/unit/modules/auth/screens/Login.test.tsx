@@ -2,13 +2,14 @@ import React from 'react';
 import { act, render, screen } from '@testing-library/react-native';
 
 /* Setup */
-import { useAuthSpy, useStatusSpy, useThemeSpy } from '../../../../../jest.setup';
+import { useAuthSpy, useStatusSpy, useThemeSpy, useUISpy } from '../../../../../jest.setup';
 
 /* Mocks */
 import { setErrorFormMock, setThemeMock, signInMock } from '../../../../mocks';
 
 /* Modules */
 import { Login } from '../../../../../src/modules/auth';
+import { UI_INITIAL_STATE } from '../../../../../src/modules/ui';
 
 const renderScreen = () => render(<Login />);
 
@@ -26,6 +27,10 @@ describe('Test in <Login /> screen', () => {
         state: { theme: 'dark', selectedTheme: 'dark' },
         setTheme: setThemeMock
     }));
+
+    useUISpy.mockImplementation(() => ({
+        state: UI_INITIAL_STATE
+    }) as any);
 
     it('should to match snapshot', async () => {
         renderScreen();

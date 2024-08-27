@@ -121,6 +121,21 @@ describe('Test in <LessonsList /> component', () => {
     });
 
     it('should search when searchInput is submit', async () => {
+        /* Mock data of useLessons */
+        useLessonsSpy.mockImplementation(() => ({
+            state: {
+                ...initialLessonsStateMock,
+                isLessonsLoading: false,
+                lessons: [],
+            },
+            deleteLesson: deleteLessonMock,
+            loadLessons: loadLessonsMock,
+            removeLessons: removeLessonsMock,
+            setLessonsPagination: setLessonsPaginationMock,
+            setSelectedLesson: setSelectedLessonMock,
+            finishOrStartLesson: finishOrStartLessonMock,
+        }) as any);
+
         renderScreen();
 
         /* Get search input text, type search and submit */

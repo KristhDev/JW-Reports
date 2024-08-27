@@ -2,13 +2,14 @@ import React from 'react';
 import { act, render, screen, userEvent } from '@testing-library/react-native';
 
 /* Setup */
-import { onCloseMock, useCoursesSpy, useRevisitsSpy, useStatusSpy } from '../../../../../jest.setup';
+import { onCloseMock, useCoursesSpy, useRevisitsSpy, useStatusSpy, useUISpy } from '../../../../../jest.setup';
 
 /* Mocks */
 import { saveCourseMock, selectedRevisitStateMock, setStatusMock } from '../../../../mocks';
 
 /* Modules */
 import { PassToCourseModal } from '../../../../../src/modules/courses';
+import { UI_INITIAL_STATE } from '../../../../../src/modules/ui';
 
 const user = userEvent.setup();
 const renderScreen = () => render(
@@ -30,6 +31,10 @@ describe('Test in <PassToCourseModal /> screen', () => {
 
     useStatusSpy.mockImplementation(() => ({
         setStatus: setStatusMock
+    }) as any);
+
+    useUISpy.mockImplementation(() => ({
+        state: UI_INITIAL_STATE
     }) as any);
 
     it('should to match snapshot', async () => {

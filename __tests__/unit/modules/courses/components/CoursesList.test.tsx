@@ -3,7 +3,7 @@ import { MenuProvider } from 'react-native-popup-menu';
 import { render, screen, userEvent } from '@testing-library/react-native';
 
 /* Setup */
-import { useCoursesSpy, useLessonsSpy } from '../../../../../jest.setup';
+import { useCoursesSpy, useLessonsSpy, useNetworkSpy, useUISpy } from '../../../../../jest.setup';
 
 /* Mocks */
 import {
@@ -20,11 +20,13 @@ import {
     setLessonsPaginationMock,
     setRefreshCoursesMock,
     setSelectedCourseMock,
-    setSelectedLessonMock
+    setSelectedLessonMock,
+    wifiMock
 } from '../../../../mocks';
 
 /* Modules */
 import { CoursesList } from '../../../../../src/modules/courses';
+import { UI_INITIAL_STATE } from '../../../../../src/modules/ui';
 
 const emptyMessageTest = 'No hay cursos disponibles';
 const titleTest = 'Mis Cursos';
@@ -59,6 +61,14 @@ describe('Test in <CoursesList /> component', () => {
         removeLessons: removeLessonsMock,
         setLessonsPagination: setLessonsPaginationMock,
         setSelectedLesson: setSelectedLessonMock
+    }) as any);
+
+    useNetworkSpy.mockImplementation(() => ({
+        wifi: wifiMock
+    }) as any);
+
+    useUISpy.mockImplementation(() => ({
+        state: UI_INITIAL_STATE
     }) as any);
 
     beforeEach(() => {
@@ -140,6 +150,20 @@ describe('Test in <CoursesList /> component', () => {
     });
 
     it('should search when searchInput is submit', async () => {
+
+        /* Mock data of useCourses */
+        useCoursesSpy.mockImplementation(() => ({
+            state: initialCoursesStateMock,
+            activeOrSuspendCourse: activeOrSuspendCourseMock,
+            deleteCourse: deleteCourseMock,
+            finishOrStartCourse: finishOrStartCourseMock,
+            loadCourses: loadCoursesMock,
+            removeCourses: removeCoursesMock,
+            setCoursesPagination: setCoursesPaginationMock,
+            setRefreshCourses: setRefreshCoursesMock,
+            setSelectedCourse: setSelectedCourseMock
+        }) as any);
+
         renderComponent();
 
         /* Get search input text, type search and submit */

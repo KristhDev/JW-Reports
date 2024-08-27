@@ -2,13 +2,14 @@ import React from 'react';
 import { act, render, screen } from '@testing-library/react-native';
 
 /* Setup */
-import { useAuthSpy, useStatusSpy } from '../../../../../jest.setup';
+import { useAuthSpy, useStatusSpy, useUISpy } from '../../../../../jest.setup';
 
 /* Mocks */
 import { resetPasswordMock, setErrorFormMock } from '../../../../mocks';
 
 /* Modules */
 import { ForgotPassword } from '../../../../../src/modules/auth';
+import { UI_INITIAL_STATE } from '../../../../../src/modules/ui';
 
 const renderScreen = () => render(<ForgotPassword />);
 
@@ -20,6 +21,10 @@ describe('Test in <ForgotPassword /> screen', () => {
 
     useStatusSpy.mockImplementation(() => ({
         setErrorForm: setErrorFormMock
+    }) as any);
+
+    useUISpy.mockImplementation(() => ({
+        state: UI_INITIAL_STATE
     }) as any);
 
     it('should to match snapshot', async () => {
