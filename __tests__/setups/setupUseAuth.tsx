@@ -10,7 +10,7 @@ import { preachingReducer, PreachingState } from '../../src/modules/preaching';
 import { revisitsReducer, RevisitsState } from '../../src/modules/revisits';
 import { statusReducer, StatusState, useStatus } from '../../src/modules/shared';
 
-export interface InitialState {
+interface InitialState {
     auth: AuthState;
     courses: CoursesState;
     lessons: LessonsState;

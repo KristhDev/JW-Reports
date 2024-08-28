@@ -8,3 +8,4 @@ export * from './setupUsePreaching';
 export * from './setupUseRevisits';
 export * from './setupUseStatus';
 export * from './setupUseTheme';
+export * from './setupUseUI';
