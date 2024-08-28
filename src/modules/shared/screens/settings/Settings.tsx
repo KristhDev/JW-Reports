@@ -32,7 +32,7 @@ const Settings = (): JSX.Element => {
     const { theme: { colors, fontSizes, margins } } = useStyles();
 
     const { setStatus } = useStatus();
-    const { state: { theme } } = useTheme();
+    const { state: { selectedTheme } } = useTheme();
     const { state: { userInterface }, setOldDatetimePicker } = useUI();
 
     const buildVersion = deviceInfo.getBuildVersion();
@@ -85,7 +85,7 @@ const Settings = (): JSX.Element => {
                 <SectionContent title="INTERFAZ DE USUARIO">
                     <SectionBtn
                         onPress={ () => setShowThemeModal(true) }
-                        subText={ THEME_OPTIONS.find(t => t.value === theme)?.label || '' }
+                        subText={ THEME_OPTIONS.find(t => t.value === selectedTheme)?.label || '' }
                         text="Apariencia"
                     />
 
