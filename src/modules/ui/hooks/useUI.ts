@@ -16,8 +16,16 @@ const useUI = () => {
 
     const setIsKeyboardVisible = (isVisible: boolean) => dispatch(setIsKeyboardVisibleAction({ isVisible }));
 
+    /**
+     * Sets the oldDatetimePicker state to the provided boolean value,
+     * and updates the userInterface object in the local storage.
+     *
+     * @param {boolean} show - A boolean value indicating whether to show the old
+     * datetime picker or not.
+     * @return {void}
+     */
     const setOldDatetimePicker = (show: boolean): void => {
-        dispatch(setOldDatetimePickerAction({ isVisible: show }));
+        dispatch(setOldDatetimePickerAction({ oldDatetimePicker: show }));
 
         storage.setItem(
             storageKeys.USER_INTERFACE,

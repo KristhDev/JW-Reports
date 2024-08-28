@@ -11,6 +11,10 @@ export type SetIsVisiblePayload = {
     isVisible: boolean;
 }
 
+export type SetOldDatetimePickerPayload = {
+    oldDatetimePicker: boolean;
+}
+
 /**
  * NavigationParamsList is a type that is an object with a bunch of properties, each of which is a type
  * that is an object with a single property called undefined.

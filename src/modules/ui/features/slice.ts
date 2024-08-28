@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 /* Interfaces */
-import { SetIsVisiblePayload, UIState } from '../interfaces';
+import { SetIsVisiblePayload, SetOldDatetimePickerPayload, UIState } from '../interfaces';
 
 /* utils */
 import { getUIStored } from '../utils';
@@ -19,8 +19,8 @@ const uiSlice = createSlice({
             state.isKeyboardVisible = action.payload.isVisible;
         },
 
-        setOldDatetimePicker: (state, action: PayloadAction<SetIsVisiblePayload>) => {
-            state.userInterface.oldDatetimePicker = action.payload.isVisible;
+        setOldDatetimePicker: (state, action: PayloadAction<SetOldDatetimePickerPayload>) => {
+            state.userInterface.oldDatetimePicker = action.payload.oldDatetimePicker;
         }
     }
 });
