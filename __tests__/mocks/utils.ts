@@ -1,4 +1,6 @@
 import { storage } from '../../src/utils';
 
-export const setItemStorageSpy = jest.spyOn(storage, 'setItem');
-export const getItemStorageSpy = jest.spyOn(storage, 'getItem');
+export const storageSpy = {
+    getItem: jest.spyOn(storage, 'getItem'),
+    setItem: jest.spyOn(storage, 'setItem')
+}
