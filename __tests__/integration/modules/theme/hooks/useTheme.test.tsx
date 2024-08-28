@@ -4,7 +4,7 @@ import { act, waitFor } from '@testing-library/react-native';
 import { renderUseTheme } from '../../../../setups';
 
 /* Mocks */
-import { darkState, getItemStorageSpy, lightState, setItemStorageSpy } from '../../../../mocks';
+import { storageSpy, darkState, lightState } from '../../../../mocks';
 
 /* Utils */
 import { storageKeys } from '../../../../../src/utils';
@@ -27,7 +27,7 @@ describe('Test in useTheme hook', () => {
     });
 
     it('should change theme with setTheme', async () => {
-        getItemStorageSpy.mockReturnValue('light');
+        storageSpy.getItem.mockReturnValue('light');
 
         const { result } = renderUseTheme();
 
@@ -39,7 +39,7 @@ describe('Test in useTheme hook', () => {
         expect(result.current.state).toEqual(lightState);
 
         /* Check if storage.setItem is called with respective args */
-        expect(setItemStorageSpy).toHaveBeenCalled();
-        expect(setItemStorageSpy).toHaveBeenCalledWith(storageKeys.THEME, 'light');
+        expect(storageSpy.setItem).toHaveBeenCalled();
+        expect(storageSpy.setItem).toHaveBeenCalledWith(storageKeys.THEME, 'light');
     });
 });
