@@ -13,6 +13,11 @@ module.exports = {
       'allowUndefined': true,
       'verbose': false
     } ],
-    'react-native-reanimated/plugin'
+    [
+      'react-native-reanimated/plugin',
+      {
+        relativeSourceLocation: true
+      }
+    ]
   ]
 };
