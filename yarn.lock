@@ -2069,10 +2069,10 @@
   dependencies:
     "@sinonjs/commons" "^3.0.0"
 
-"@supabase/auth-js@2.64.4":
-  version "2.64.4"
-  resolved "https://registry.yarnpkg.com/@supabase/auth-js/-/auth-js-2.64.4.tgz#f27fdabf1ebd1b532ceb57e8bbe66969ee09cfba"
-  integrity sha512-9ITagy4WP4FLl+mke1rchapOH0RQpf++DI+WSG2sO1OFOZ0rW3cwAM0nCrMOxu+Zw4vJ4zObc08uvQrXx590Tg==
+"@supabase/auth-js@2.65.0":
+  version "2.65.0"
+  resolved "https://registry.yarnpkg.com/@supabase/auth-js/-/auth-js-2.65.0.tgz#e345c492f8cbc31cd6289968eae0e349ff0f39e9"
+  integrity sha512-+wboHfZufAE2Y612OsKeVP4rVOeGZzzMLD/Ac3HrTQkkY4qXNjI6Af9gtmxwccE5nFvTiF114FEbIQ1hRq5uUw==
   dependencies:
     "@supabase/node-fetch" "^2.6.14"
 
@@ -2114,12 +2114,12 @@
   dependencies:
     "@supabase/node-fetch" "^2.6.14"
 
-"@supabase/supabase-js@^2.45.2":
-  version "2.45.2"
-  resolved "https://registry.yarnpkg.com/@supabase/supabase-js/-/supabase-js-2.45.2.tgz#75df2b651942a1aba2ff7e6b02393d5ab3b86d9e"
-  integrity sha512-kJKY3ISFusVKQWCP8Kqo20Ebxy2WLp6Ry/Suco0aQsPXH7bvn7clswsdhcfcH/5Tr0MYz/jcCjF0n/27SetiCw==
+"@supabase/supabase-js@^2.45.3":
+  version "2.45.3"
+  resolved "https://registry.yarnpkg.com/@supabase/supabase-js/-/supabase-js-2.45.3.tgz#d32b7a7b379958a10dcce32af1182f82b5b82218"
+  integrity sha512-4wAux6cuVMrdH/qUjKn6p3p3L9AtAO3Une6ojIrtpCj1RaXKVoyIATiacSRAI+pKff6XZBVCGC29v+z4Jo/uSw==
   dependencies:
-    "@supabase/auth-js" "2.64.4"
+    "@supabase/auth-js" "2.65.0"
     "@supabase/functions-js" "2.4.1"
     "@supabase/node-fetch" "2.6.15"
     "@supabase/postgrest-js" "1.15.8"
@@ -6183,10 +6183,10 @@ react-native-image-crop-picker@^0.41.2:
   resolved "https://registry.yarnpkg.com/react-native-image-crop-picker/-/react-native-image-crop-picker-0.41.2.tgz#824fa8fee8391fbb3e0b5ae2973221a2dff0cafb"
   integrity sha512-GcDu/adXU/1y/MrxsbOfqcGRGWC2pTttt5VGy/jyRJ6GXfoC29fTQf8SG5kGtc5schSR6K+mKYO4uW6eJPljlQ==
 
-react-native-keyboard-controller@^1.13.2:
-  version "1.13.2"
-  resolved "https://registry.yarnpkg.com/react-native-keyboard-controller/-/react-native-keyboard-controller-1.13.2.tgz#f2b080140e906393978ba0cfd1700e11deb12b67"
-  integrity sha512-FZkxByqboqa2bq2fXtEnD7f78VmKbu5cHjEfubHfV2ZtkGolZ01XTqKkEQ172GvFSjC5iuF1L3h7C4g8R6Xq9Q==
+react-native-keyboard-controller@^1.13.3:
+  version "1.13.3"
+  resolved "https://registry.yarnpkg.com/react-native-keyboard-controller/-/react-native-keyboard-controller-1.13.3.tgz#8e2cfbc55c65004fe2b4864f4a5c3184b62a3f7b"
+  integrity sha512-C6W0Ta5cCKa58pTL3A8WPFNvDgwc5+Qs3pj4v3Q4Emk1INkUEkJDsWyV7HdR232V/98mLSWai2W/8HlqsOAqhQ==
 
 react-native-mmkv@^2.12.2:
   version "2.12.2"
@@ -6215,10 +6215,10 @@ react-native-onesignal@^5.2.3:
   dependencies:
     invariant "^2.2.2"
 
-react-native-pager-view@^6.4.0:
-  version "6.4.0"
-  resolved "https://registry.yarnpkg.com/react-native-pager-view/-/react-native-pager-view-6.4.0.tgz#33b62b6036f6ec40c651c2a39dff7e3bc364ceac"
-  integrity sha512-6nuzjN0tXJXyOqRU2f9ZHfGuaFR7sptpAV1eIZIkm2GPnpvZ50mawQ2HTMvM6Ezic+WbuiUryy76yUWLFcvsBw==
+react-native-pager-view@^6.4.1:
+  version "6.4.1"
+  resolved "https://registry.yarnpkg.com/react-native-pager-view/-/react-native-pager-view-6.4.1.tgz#82d04107229c19967a503de53a231dd95fcccd10"
+  integrity sha512-HnDxXTRHnR6WJ/vnOitv0C32KG9MJjxLnxswuQlBJmQ7RxF2GWOHSPIRAdZ9fLxdLstV38z9Oz1C95+t+yXkcg==
 
 react-native-permissions@^4.1.5:
   version "4.1.5"
@@ -6284,10 +6284,10 @@ react-native-ui-datepicker@^2.0.3:
     react-native-wheely "^0.6.0"
     uninstall "^0.0.0"
 
-react-native-unistyles@^2.9.1:
-  version "2.9.1"
-  resolved "https://registry.yarnpkg.com/react-native-unistyles/-/react-native-unistyles-2.9.1.tgz#e5d6fb7b8c656b662d3b282a5836edf503aa73c1"
-  integrity sha512-MG+yPPHEvDuGJgXWoIEm9NcA3BEo4hK2wigvN5W4tCN8CwWwQHv4JyBBGXvF0RCQZq8qwPcfGQBdfEkfjURamA==
+react-native-unistyles@^2.9.2:
+  version "2.9.2"
+  resolved "https://registry.yarnpkg.com/react-native-unistyles/-/react-native-unistyles-2.9.2.tgz#af5bc402254eae6fe3737fe73803214771f5c4e9"
+  integrity sha512-eAK4akGbQj/5rd6co+XhPp817mX8MXvzHEkqs/nLP8jn+KvY4Z1V6ef0OJ9wUtn9YY/yiRuL1h7wvqP/RocV4A==
 
 react-native-url-polyfill@^2.0.0:
   version "2.0.0"
