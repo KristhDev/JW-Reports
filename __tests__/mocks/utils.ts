@@ -1,4 +1,4 @@
-import { storage } from '../../src/utils';
+import { storage } from '@utils';
 
 export const storageSpy = {
     getItem: jest.spyOn(storage, 'getItem'),

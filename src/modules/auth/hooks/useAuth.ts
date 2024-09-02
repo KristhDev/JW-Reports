@@ -4,27 +4,27 @@ import { AuthResponse } from '@supabase/supabase-js';
 import { SITIE_URL } from '@env';
 
 /* Supabase */
-import { supabase } from '../../../config';
+import { supabase } from '@config';
 
 /* Adapters */
 import { userAdpater } from '../adapters';
 
 /* Features */
 import { clearAuth as clearAuthAction, setIsAuthLoading, setUser as setUserAction, updateUser } from '../features';
-import { useAppDispatch, useAppSelector } from '../../../features';
-import { clearCourses } from '../../courses';
-import { clearLessons } from '../../lessons';
-import { clearPreaching } from '../../preaching';
-import { clearRevisits } from '../../revisits';
+import { useAppDispatch, useAppSelector } from '@features';
+import { clearCourses } from '@courses';
+import { clearLessons } from '@lessons';
+import { clearPreaching } from '@preaching';
+import { clearRevisits } from '@revisits';
 
 /* Hooks */
-import { useNetwork, useStatus } from '../../shared';
+import { useNetwork, useStatus } from '@shared';
 
 /* Interfaces */
 import { SignInData, ProfileData, SignUpData, UserEndpoint, EmailData, UpdatePasswordData } from '../interfaces';
 
 /* Services */
-import { notifications } from '../../../services';
+import { notifications } from '@services';
 
 /**
  * Hook to management authentication of store with state and actions

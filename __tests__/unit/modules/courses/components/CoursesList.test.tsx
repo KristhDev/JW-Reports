@@ -3,7 +3,7 @@ import { MenuProvider } from 'react-native-popup-menu';
 import { render, screen, userEvent } from '@testing-library/react-native';
 
 /* Setup */
-import { useCoursesSpy, useLessonsSpy, useNetworkSpy, useUISpy } from '../../../../../jest.setup';
+import { useCoursesSpy, useLessonsSpy, useNetworkSpy, useUISpy } from '@test-setup';
 
 /* Mocks */
 import {
@@ -22,11 +22,11 @@ import {
     setSelectedCourseMock,
     setSelectedLessonMock,
     wifiMock
-} from '../../../../mocks';
+} from '@mocks';
 
 /* Modules */
-import { CoursesList } from '../../../../../src/modules/courses';
-import { UI_INITIAL_STATE } from '../../../../../src/modules/ui';
+import { CoursesList } from '@courses';
+import { UI_INITIAL_STATE } from '@ui';
 
 const emptyMessageTest = 'No hay cursos disponibles';
 const titleTest = 'Mis Cursos';

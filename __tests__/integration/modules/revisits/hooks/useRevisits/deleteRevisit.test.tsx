@@ -1,8 +1,8 @@
 import { act } from '@testing-library/react-native';
 
 /* Setups */
-import { onFinishMock, mockUseNavigation, useNetworkSpy } from '../../../../../../jest.setup';
-import { getMockStoreUseRevisits, renderUseRevisits } from '../../../../../setups';
+import { onFinishMock, mockUseNavigation, useNetworkSpy } from '@test-setup';
+import { getMockStoreUseRevisits, renderUseRevisits } from '@setups';
 
 /* Mocks */
 import {
@@ -12,7 +12,7 @@ import {
     testCredentials,
     testRevisit,
     wifiMock
-} from '../../../../../mocks';
+} from '@mocks';
 
 describe('Test useRevisits hook - deleteRevisit', () => {
     useNetworkSpy.mockImplementation(() => ({

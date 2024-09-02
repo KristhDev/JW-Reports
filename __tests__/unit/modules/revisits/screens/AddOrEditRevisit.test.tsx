@@ -2,14 +2,14 @@ import React from 'react';
 import { act, render, screen } from '@testing-library/react-native';
 
 /* Setup */
-import { useImageSpy, useRevisitsSpy, useStatusSpy, useUISpy } from '../../../../../jest.setup';
+import { useImageSpy, useRevisitsSpy, useStatusSpy, useUISpy } from '@test-setup';
 
 /* Mocks */
-import { imageMock, revisitsStateMock, selectedRevisitStateMock } from '../../../../mocks';
+import { imageMock, revisitsStateMock, selectedRevisitStateMock } from '@mocks';
 
 /* Modules */
-import { AddOrEditRevisit } from '../../../../../src/modules/revisits';
-import { UI_INITIAL_STATE } from '../../../../../src/modules/ui';
+import { AddOrEditRevisit } from '@revisits';
+import { UI_INITIAL_STATE } from '@ui';
 
 const renderScreen = () => render(<AddOrEditRevisit />);
 

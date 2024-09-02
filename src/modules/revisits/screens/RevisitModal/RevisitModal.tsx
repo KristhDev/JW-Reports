@@ -5,12 +5,12 @@ import { Formik } from 'formik';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
 /* Modules */
-import { DatetimeField, FormCalendar, FormField, Modal, ModalActions, ModalProps, useUI } from '../../../ui';
-import { themeStylesheet } from '../../../theme';
+import { themeStylesheet } from '@theme';
+import { DatetimeField, FormCalendar, FormField, Modal, ModalActions, ModalProps, useUI } from '@ui';
 
 /* Hooks */
 import { useRevisits } from '../../hooks';
-import { useStatus } from '../../../shared';
+import { useStatus } from '@shared';
 
 /* Scahemas */
 import { revisitFormSchema } from './schemas';

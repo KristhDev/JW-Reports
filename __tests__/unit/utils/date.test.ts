@@ -1,4 +1,4 @@
-import { date } from '../../../src/utils';
+import { date } from '@utils';
 
 describe('Test date util', () => {
     it('should have respective methods', () => {

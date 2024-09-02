@@ -2,14 +2,14 @@ import React from 'react';
 import { act, render, screen } from '@testing-library/react-native';
 
 /* Setup */
-import { usePreachingSpy, useStatusSpy, useUISpy } from '../../../../../jest.setup';
+import { usePreachingSpy, useStatusSpy, useUISpy } from '@test-setup';
 
 /* Mocks */
-import { preachingsStateMock } from '../../../../mocks';
+import { preachingsStateMock } from '@mocks';
 
 /* Modules */
-import { AddOrEditPreaching, INIT_PREACHING } from '../../../../../src/modules/preaching';
-import { UI_INITIAL_STATE } from '../../../../../src/modules/ui';
+import { AddOrEditPreaching, INIT_PREACHING } from '@preaching';
+import { UI_INITIAL_STATE } from '@ui';
 
 const renderScreen = () => render(<AddOrEditPreaching />);
 

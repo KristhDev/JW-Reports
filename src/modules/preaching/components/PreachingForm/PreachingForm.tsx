@@ -5,11 +5,11 @@ import { useStyles } from 'react-native-unistyles';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
 /* Components */
-import { Button, DatetimeField, FormCalendar, FormTime, useUI } from '../../../ui';
+import { Button, DatetimeField, FormCalendar, FormTime, useUI } from '@ui';
 
 /* Hooks */
 import { usePreaching } from '../../hooks';
-import { useStatus } from '../../../shared';
+import { useStatus } from '@shared';
 
 /* Schemas */
 import { preachingFormSchema } from './schemas';
@@ -18,7 +18,7 @@ import { preachingFormSchema } from './schemas';
 import { PreachingFormValues } from '../../interfaces';
 
 /* Theme */
-import { themeStylesheet } from '../../../theme';
+import { themeStylesheet } from '@theme';
 
 /**
  * This component is responsible for rendering the fields to create

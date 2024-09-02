@@ -10,7 +10,7 @@ import { ThemeContext } from './';
 import { Theme } from '../interfaces';
 
 /* Utils */
-import { storage, storageKeys } from '../../../utils';
+import { storage, storageKeys } from '@utils';
 
 /**
  * A function that sets the theme, and then sets the selected theme, and then sets the colors, and

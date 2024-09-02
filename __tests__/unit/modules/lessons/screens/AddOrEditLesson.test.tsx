@@ -2,14 +2,14 @@ import React from 'react';
 import { act, render, screen } from '@testing-library/react-native';
 
 /* Setup */
-import { useLessonsSpy, useStatusSpy, useUISpy } from '../../../../../jest.setup';
+import { useLessonsSpy, useStatusSpy, useUISpy } from '@test-setup';
 
 /* Mocks */
-import { initialLessonsStateMock, lessonSelectedStateMock } from '../../../../mocks';
+import { initialLessonsStateMock, lessonSelectedStateMock } from '@mocks';
 
 /* Modules */
-import { AddOrEditLesson } from '../../../../../src/modules/lessons';
-import { UI_INITIAL_STATE } from '../../../../../src/modules/ui';
+import { AddOrEditLesson } from '@lessons';
+import { UI_INITIAL_STATE } from '@ui';
 
 const renderScreen = () => render(<AddOrEditLesson />);
 

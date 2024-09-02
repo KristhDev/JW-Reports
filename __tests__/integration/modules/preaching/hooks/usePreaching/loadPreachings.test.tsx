@@ -1,10 +1,8 @@
 import { act } from '@testing-library/react-native';
 
 /* Setup */
-import { getMockStoreUsePreaching, renderUsePreaching } from '../../../../../setups';
-
-/* Setup */
-import { useNetworkSpy } from '../../../../../../jest.setup';
+import { useNetworkSpy } from '@test-setup';
+import { getMockStoreUsePreaching, renderUsePreaching } from '@setups';
 
 /* Mocks */
 import {
@@ -13,8 +11,10 @@ import {
     initialStatusStateMock,
     testCredentials,
     wifiMock
-} from '../../../../../mocks';
-import { supabase } from '../../../../../config';
+} from '@mocks';
+
+/* Config */
+import { supabase } from '@test-config';
 
 describe('Test usePreaching hook - loadPreachings', () => {
     useNetworkSpy.mockImplementation(() => ({

@@ -2,13 +2,13 @@ import { useNavigation } from '@react-navigation/native';
 import { Image } from 'react-native-image-crop-picker';
 
 /* Supabase */
-import { supabase } from '../../../config';
+import { supabase } from '@config';
 
 /* Adapters */
 import { revisitAdapter, revisitFormValuesAdapter } from '../adapters';
 
 /* Features */
-import { useAppDispatch, useAppSelector } from '../../../features';
+import { useAppDispatch, useAppSelector } from '@features';
 import {
     INIT_REVISIT,
     addRevisit,
@@ -32,10 +32,10 @@ import {
 } from '../features';
 
 /* Hooks */
-import { useImage, useNetwork, useStatus } from '../../shared/hooks';
+import { useImage, useNetwork, useStatus } from '@shared';
 
 /* Interfaces */
-import { Pagination } from '../../ui';
+import { Pagination } from '@ui';
 import {
     loadRevisitsOptions,
     Revisit,
@@ -45,10 +45,10 @@ import {
 } from '../interfaces';
 
 /* Services */
-import { logger } from '../../../services';
+import { logger } from '@services';
 
 /* Utils */
-import { date } from '../../../utils';
+import { date } from '@utils';
 
 /**
  * Hook to management revisits of store with state and actions

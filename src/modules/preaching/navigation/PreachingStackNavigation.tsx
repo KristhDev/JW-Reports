@@ -4,24 +4,24 @@ import { CardStyleInterpolators, createStackNavigator } from '@react-navigation/
 import { useNavigation } from '@react-navigation/native';
 
 /* Screens */
-import { useCourses } from '../../courses';
-import { AddOrEditLesson, LessonDetail, useLessons } from '../../lessons';
-import { AddOrEditRevisit, RevisitDetail, useRevisits } from '../../revisits';
+import { useCourses } from '@courses';
+import { AddOrEditLesson, LessonDetail, useLessons } from '@lessons';
+import { AddOrEditRevisit, RevisitDetail, useRevisits } from '@revisits';
 import { AddOrEditPreaching, PrecursorHome, PublisherHome } from '../screens';
 
 /* Components */
-import { BackButton, HeaderButtons } from '../../ui';
+import { BackButton, HeaderButtons } from '@ui';
 
 /* Hooks */
-import { useAuth } from '../../auth';
-import { useNetwork, useStatus } from '../../shared';
+import { useAuth } from '@auth';
+import { useNetwork, useStatus } from '@shared';
 import { usePreaching } from '../hooks';
 
 /* Interfaces */
 import { PreachingStackParamsList } from '../interfaces';
 
 /* Utils */
-import { characters } from '../../../utils';
+import { characters } from '@utils';
 
 const Stack = createStackNavigator<PreachingStackParamsList>();
 

@@ -1,7 +1,7 @@
 import { date, object } from 'yup';
 
 /* Utils */
-import { date as dateUtil } from '../../../../utils';
+import { date as dateUtil } from '@utils';
 
 /* Validation schema for preaching */
 export const preachingFormSchema = object().shape({

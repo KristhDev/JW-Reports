@@ -6,9 +6,9 @@ import { Formik } from 'formik';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
 /* Modules */
-import { Button, DatetimeField, FormCalendar, FormField, FormImage, useUI } from '../../../ui';
 import { useRevisits } from '../../hooks';
-import { useStatus } from '../../../shared';
+import { useStatus } from '@shared';
+import { Button, DatetimeField, FormCalendar, FormField, FormImage, useUI } from '@ui';
 
 /* Schemas */
 import { revisitFormSchema } from './schemas';
@@ -17,9 +17,9 @@ import { revisitFormSchema } from './schemas';
 import { RevisitFormValues } from '../../interfaces';
 
 /* Theme */
-import { themeStylesheet } from '../../../theme';
+import { themeStylesheet } from '@theme';
 
-const defaultRevisit = require('../../../../assets/revisit-default.jpg');
+const defaultRevisit = require('@assets/revisit-default.jpg');
 
 /**
  * This component is responsible for rendering the fields to create

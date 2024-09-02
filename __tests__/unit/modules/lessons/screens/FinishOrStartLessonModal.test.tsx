@@ -2,14 +2,14 @@ import React from 'react';
 import { render, screen, userEvent } from '@testing-library/react-native';
 
 /* Setup */
-import { onCloseMock, useLessonsSpy, useUISpy } from '../../../../../jest.setup';
+import { onCloseMock, useLessonsSpy, useUISpy } from '@test-setup';
 
 /* Mock */
-import { finishOrStartLessonMock, lessonSelectedStateMock } from '../../../../mocks';
+import { finishOrStartLessonMock, lessonSelectedStateMock } from '@mocks';
 
 /* Modules */
-import { FinishOrStartLessonModal } from '../../../../../src/modules/lessons';
-import { UI_INITIAL_STATE } from '../../../../../src/modules/ui';
+import { FinishOrStartLessonModal } from '@lessons';
+import { UI_INITIAL_STATE } from '@ui';
 
 const user = userEvent.setup();
 const renderScreen = () => render(

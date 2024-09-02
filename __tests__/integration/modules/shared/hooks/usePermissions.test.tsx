@@ -2,10 +2,10 @@ import { act } from '@testing-library/react-native';
 import { request } from 'react-native-permissions';
 
 /* Setup */
-import { getMockStoreUsePermissions, renderUsePermissions } from '../../../../setups';
+import { getMockStoreUsePermissions, renderUsePermissions } from '@setups';
 
 /* Mocks */
-import { grantedStateMock, initialPermissionsStateMock, initialStatusStateMock } from '../../../../mocks';
+import { grantedStateMock, initialPermissionsStateMock, initialStatusStateMock } from '@mocks';
 
 describe('Test in usePermissions hook', () => {
     let mockStore = {} as any;

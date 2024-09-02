@@ -1,5 +1,5 @@
-import { Course, INIT_COURSE } from '../../src/modules/courses';
-import { INIT_LESSON, Lesson, LessonsState } from './../../src/modules/lessons';
+import { Course, INIT_COURSE } from '@courses';
+import { INIT_LESSON, Lesson, LessonsState } from '@lessons';
 
 export const deleteLessonMock = jest.fn();
 export const finishOrStartLessonMock = jest.fn();

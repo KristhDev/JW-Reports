@@ -3,10 +3,10 @@ import { render, screen, userEvent } from '@testing-library/react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
 /* Setup */
-import { onPressMock } from '../../../../../jest.setup';
+import { onPressMock } from '@test-setup';
 
 /* Components */
-import { Button } from '../../../../../src/modules/ui';
+import { Button } from '@ui';
 
 const user = userEvent.setup();
 

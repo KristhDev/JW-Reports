@@ -1,4 +1,4 @@
-import { StatusState } from '../../src/modules/shared';
+import { StatusState } from '@shared';
 
 export const clearStatusMock = jest.fn();
 export const setErrorFormMock = jest.fn();

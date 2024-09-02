@@ -1,4 +1,4 @@
-import { TABLE_PREACHING_HEADERS } from '../../../../../src/modules/preaching';
+import { TABLE_PREACHING_HEADERS } from '@preaching';
 
 describe('Test in constants of preaching module', () => {
     it('should to match snapshot - TABLE_PREACHING_HEADERS', () => {

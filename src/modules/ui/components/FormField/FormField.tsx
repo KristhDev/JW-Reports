@@ -3,12 +3,14 @@ import { View, Text, TextInput } from 'react-native';
 import { useStyles } from 'react-native-unistyles';
 import { useField } from 'formik';
 
+/* Hooks */
+import { useUI } from '../../hooks';
+
 /* Interfaces */
 import { FormFieldProps } from './interfaces';
 
 /* Theme */
-import { themeStylesheet } from '../../../theme';
-import { useUI } from '../../hooks';
+import { themeStylesheet } from '@theme';
 
 /**
  * This component is responsible for displaying fields for forms of

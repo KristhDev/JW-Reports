@@ -11,10 +11,10 @@ import { Modal } from '../Modal';
 import { MonthPickerModalProps } from './interfaces';
 
 /* Utils */
-import { characters, date } from '../../../../utils';
+import { characters, date } from '@utils';
 
 /* Theme */
-import { themeStylesheet } from '../../../theme';
+import { themeStylesheet } from '@theme';
 import { stylesheet } from './styles';
 
 /**

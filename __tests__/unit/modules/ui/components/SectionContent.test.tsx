@@ -2,7 +2,7 @@ import React from 'react';
 import { render, screen } from '@testing-library/react-native';
 
 /* Modules */
-import { SectionContent } from '../../../../../src/modules/ui';
+import { SectionContent } from '@ui';
 
 const contentTitle = 'Title test';
 
@@ -21,7 +21,7 @@ describe('Test in <SectionContent /> component', () => {
         const title = screen.getByTestId('info-text-text');
 
         /* Check if title exists and contain respective value */
-        expect(title).toBeTruthy();
-        expect(title.props.children).toBe(contentTitle);
+        expect(title).toBeOnTheScreen();
+        expect(title).toHaveTextContent(contentTitle);
     });
 });

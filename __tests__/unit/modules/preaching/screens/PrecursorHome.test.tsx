@@ -2,16 +2,16 @@ import React from 'react';
 import { render, screen, userEvent } from '@testing-library/react-native';
 
 /* Setup */
-import { mockUseNavigation, useAuthSpy, useCoursesSpy, usePreachingSpy, useThemeSpy } from '../../../../../jest.setup';
+import { mockUseNavigation, useAuthSpy, useCoursesSpy, usePreachingSpy, useThemeSpy } from '@test-setup';
 
 /* Mocks */
-import { coursesStateMock, loadPreachingsMock, preachingsStateMock, setSelectedPreachingMock, testUser } from '../../../../mocks';
+import { coursesStateMock, loadPreachingsMock, preachingsStateMock, setSelectedPreachingMock, testUser } from '@mocks';
 
 /* Modules */
-import { INIT_PREACHING, PrecursorHome } from '../../../../../src/modules/preaching';
+import { INIT_PREACHING, PrecursorHome } from '@preaching';
 
 /* Utils */
-import { date } from '../../../../../src/utils';
+import { date } from '@utils';
 
 const user = userEvent.setup();
 const renderScreen = () => render(<PrecursorHome />);

@@ -2,14 +2,14 @@ import React from 'react';
 import { act, render, screen } from '@testing-library/react-native';
 
 /* Setup */
-import { useAuthSpy, useStatusSpy, useUISpy } from '../../../../../jest.setup';
+import { useAuthSpy, useStatusSpy, useUISpy } from '@test-setup';
 
 /* Mocks */
-import { resetPasswordMock, setErrorFormMock } from '../../../../mocks';
+import { resetPasswordMock, setErrorFormMock } from '@mocks';
 
 /* Modules */
-import { ForgotPassword } from '../../../../../src/modules/auth';
-import { UI_INITIAL_STATE } from '../../../../../src/modules/ui';
+import { ForgotPassword } from '@auth';
+import { UI_INITIAL_STATE } from '@ui';
 
 const renderScreen = () => render(<ForgotPassword />);
 

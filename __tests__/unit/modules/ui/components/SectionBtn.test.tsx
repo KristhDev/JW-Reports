@@ -2,10 +2,10 @@ import React from 'react';
 import { render, screen, userEvent } from '@testing-library/react-native';
 
 /* Setup */
-import { onPressMock } from '../../../../../jest.setup';
+import { onPressMock } from '@test-setup';
 
 /* Modules */
-import { SectionBtn } from '../../../../../src/modules/ui';
+import { SectionBtn } from '@ui';
 
 const user = userEvent.setup();
 

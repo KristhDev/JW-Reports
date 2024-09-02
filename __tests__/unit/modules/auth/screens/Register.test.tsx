@@ -2,14 +2,14 @@ import React from 'react';
 import { act, render, screen } from '@testing-library/react-native';
 
 /* Setup */
-import { useAuthSpy, useStatusSpy, useThemeSpy, useUISpy } from '../../../../../jest.setup';
+import { useAuthSpy, useStatusSpy, useThemeSpy, useUISpy } from '@test-setup';
 
 /* Mocks */
-import { setErrorFormMock, setThemeMock, signUpMock } from '../../../../mocks';
+import { setErrorFormMock, setThemeMock, signUpMock } from '@mocks';
 
 /* Modules */
-import { Register } from '../../../../../src/modules/auth';
-import { UI_INITIAL_STATE } from '../../../../../src/modules/ui';
+import { Register } from '@auth';
+import { UI_INITIAL_STATE } from '@ui';
 
 const renderScreen = () => render(<Register />);
 

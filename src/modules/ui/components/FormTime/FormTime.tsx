@@ -13,10 +13,10 @@ import { Modal } from '../../screens';
 import { FormTimeProps } from './interfaces';
 
 /* Utils */
-import { date } from '../../../../utils';
+import { date } from '@utils';
 
 /* Theme */
-import { themeStylesheet } from '../../../theme';
+import { themeStylesheet } from '@theme';
 import { stylesheet } from './styles';
 
 export const FormTime: FC<FormTimeProps> = ({

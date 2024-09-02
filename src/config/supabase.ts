@@ -1,7 +1,7 @@
 import { createClient } from '@supabase/supabase-js';
 
 /* Utils */
-import { storage, storageKeys } from '../utils';
+import { storage, storageKeys } from '@utils';
 
 /* Env */
 import { SUPABASE_APY_KEY, SUPABASE_URL } from '@env';

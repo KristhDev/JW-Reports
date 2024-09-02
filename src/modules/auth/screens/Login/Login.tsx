@@ -5,10 +5,10 @@ import { useStyles } from 'react-native-unistyles';
 
 /* Components */
 import { LoginForm } from '../../components';
-import { ThemeBtn, Title } from '../../../ui';
+import { ThemeBtn, Title } from '@ui';
 
 /* Styles */
-import { themeStylesheet } from '../../../theme';
+import { themeStylesheet } from '@theme';
 
 /**
  * This screen is to display the form to login with

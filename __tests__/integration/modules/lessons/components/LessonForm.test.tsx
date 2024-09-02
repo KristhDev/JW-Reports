@@ -2,7 +2,7 @@ import React from 'react';
 import { act, render, screen, userEvent } from '@testing-library/react-native';
 
 /* Setup */
-import { useLessonsSpy, useStatusSpy, useUISpy } from '../../../../../jest.setup';
+import { useLessonsSpy, useStatusSpy, useUISpy } from '@test-setup';
 
 /* Mocks */
 import {
@@ -11,11 +11,11 @@ import {
     saveLessonMock,
     setErrorFormMock,
     updateLessonMock
-} from '../../../../mocks';
+} from '@mocks';
 
 /* Modules */
-import { LessonForm } from '../../../../../src/modules/lessons';
-import { UI_INITIAL_STATE } from '../../../../../src/modules/ui';
+import { LessonForm } from '@lessons';
+import { UI_INITIAL_STATE } from '@ui';
 
 const user = userEvent.setup();
 const renderComponent = () => render(<LessonForm />);

@@ -2,13 +2,13 @@ import React from 'react';
 import { act, render, screen, userEvent } from '@testing-library/react-native';
 
 /* Setup */
-import { mockUseNavigation, useAuthSpy, useStatusSpy, useUISpy } from '../../../../../jest.setup';
+import { mockUseNavigation, useAuthSpy, useStatusSpy, useUISpy } from '@test-setup';
 
 /* Mocks */
-import { resetPasswordMock, setErrorFormMock } from '../../../../mocks';
+import { resetPasswordMock, setErrorFormMock } from '@mocks';
 
 /* Modules */
-import { ForgotPasswordForm } from '../../../../../src/modules/auth';
+import { ForgotPasswordForm } from '@auth';
 
 const user = userEvent.setup();
 const renderComponent = () => render(<ForgotPasswordForm />);

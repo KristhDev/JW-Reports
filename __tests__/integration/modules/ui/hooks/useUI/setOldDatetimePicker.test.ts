@@ -1,10 +1,10 @@
 import { act } from '@testing-library/react-native';
 
 /* Setups */
-import { getMockStoreUseUI, renderUseUI } from '../../../../../setups';
+import { getMockStoreUseUI, renderUseUI } from '@setups';
 
 /* Mocks */
-import { initialUIState, storageSpy } from '../../../../../mocks';
+import { initialUIState, storageSpy } from '@mocks';
 
 describe('Test in setOldDatetimePicker', () => {
     it('should change property oldDatetimePicker', async () => {

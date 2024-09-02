@@ -2,7 +2,7 @@ import React from 'react';
 import { render, screen } from '@testing-library/react-native';
 
 /* Modules */
-import { ListEmptyComponent } from '../../../../../src/modules/ui';
+import { ListEmptyComponent } from '@ui';
 
 const emptyMessage = 'Empty message test';
 

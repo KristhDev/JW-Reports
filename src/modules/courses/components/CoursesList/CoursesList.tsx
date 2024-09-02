@@ -8,22 +8,22 @@ import { INIT_COURSE } from '../../features';
 
 /* Screens */
 import { ActiveOrSuspendCourseModal, FinishOrStartCourseModal } from '../../screens';
-import { DeleteModal, ListEmptyComponent, ListFooterComponent, SearchInput, Title } from '../../../ui';
+import { DeleteModal, ListEmptyComponent, ListFooterComponent, SearchInput, Title } from '@ui';
 
 /* Components */
 import { CourseCard } from '../CourseCard';
 
 /* Hooks */
 import { useCourses } from '../../hooks';
-import { useLessons } from '../../../lessons';
-import { useNetwork } from '../../../shared';
+import { useLessons } from '@lessons';
+import { useNetwork } from '@shared';
 
 /* Interfaces */
 import { CoursesListProps } from './interfaces';
 import { Course } from '../../interfaces';
 
 /* Theme */
-import { themeStylesheet } from '../../../theme';
+import { themeStylesheet } from '@theme';
 
 /**
  * This component is responsible for rendering a list of courses based

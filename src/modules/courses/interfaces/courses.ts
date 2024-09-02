@@ -1,5 +1,5 @@
-import { Lesson, LessonEndpoint } from '../../lessons';
-import { LoadResourcesOptions, Pagination } from '../../ui';
+import { Lesson, LessonEndpoint } from '@lessons';
+import { LoadResourcesOptions, Pagination } from '@ui';
 
 /**
  * This type is to define the structure that the course navigation will have.

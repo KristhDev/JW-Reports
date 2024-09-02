@@ -5,9 +5,9 @@ import { Formik } from 'formik';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
 /* Modules */
-import { Button, DatetimeField, FormCalendar, FormField, useUI } from '../../../ui';
-import { useLessons } from '../../../lessons';
-import { useStatus } from '../../../shared';
+import { useLessons } from '@lessons';
+import { useStatus } from '@shared';
+import { Button, DatetimeField, FormCalendar, FormField, useUI } from '@ui';
 
 /* Schemas */
 import { lessonFormSchema } from './schemas';
@@ -16,7 +16,7 @@ import { lessonFormSchema } from './schemas';
 import { LessonFormValues } from '../../interfaces';
 
 /* Theme */
-import { themeStylesheet } from '../../../theme';
+import { themeStylesheet } from '@theme';
 
 /**
  * This component is responsible for rendering the fields to create

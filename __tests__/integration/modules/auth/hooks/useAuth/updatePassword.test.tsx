@@ -1,8 +1,8 @@
 import { act } from '@testing-library/react-native';
 
 /* Setups */
-import { onFinishMock, useNetworkSpy } from '../../../../../../jest.setup';
-import { getMockStoreUseAuth, renderUseAuth } from '../../../../../setups';
+import { onFinishMock, useNetworkSpy } from '@test-setup';
+import { getMockStoreUseAuth, renderUseAuth } from '@setups';
 
 /* Mocks */
 import {
@@ -15,7 +15,7 @@ import {
     initialStatusStateMock,
     testCredentials,
     wifiMock
-} from '../../../../../mocks';
+} from '@mocks';
 
 describe('Test in useAuth hook - updatePassword', () => {
     useNetworkSpy.mockImplementation(() => ({

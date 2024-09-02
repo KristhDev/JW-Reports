@@ -2,10 +2,10 @@ import React from 'react';
 import { render, screen, userEvent } from '@testing-library/react-native';
 
 /* Setup */
-import { onToggleMock } from '../../../../../jest.setup';
+import { onToggleMock } from '@test-setup';
 
 /* Modules */
-import { EyeBtn } from '../../../../../src/modules/ui';
+import { EyeBtn } from '@ui';
 
 const user = userEvent.setup();
 

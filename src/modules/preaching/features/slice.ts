@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 /* Interfaces */
-import { RemoveResourcePayload, SetIsDeletingPayload, SetIsLoadingPayload } from '../../shared';
+import { RemoveResourcePayload, SetIsDeletingPayload, SetIsLoadingPayload } from '@shared';
 import { Preaching, PreachingPayload, PreachingState, SetPreachingsPayload, SetSelectedDatePayload } from '../interfaces';
 
 /* Initial preaching */

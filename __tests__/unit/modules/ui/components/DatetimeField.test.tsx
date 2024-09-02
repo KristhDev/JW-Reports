@@ -4,8 +4,8 @@ import { render, screen } from '@testing-library/react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
 /* Modules */
-import { DatetimeField } from '../../../../../src/modules/ui';
-import { darkColors } from '../../../../../src/modules/theme';
+import { darkColors } from '@theme';
+import { DatetimeField } from '@ui';
 
 const renderComponent = () => render(
     <Formik
@@ -46,6 +46,6 @@ describe('Test in <DatetimeField /> component', () => {
 
         /* Check if label exists and contain text pass by props */
         expect(label).toBeTruthy();
-        expect(label.props.children).toBe('Día de predicación:');
+        expect(label).toHaveTextContent('Día de predicación:');
     });
 });

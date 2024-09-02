@@ -2,7 +2,7 @@
 import { UserInterface } from '../interfaces';
 
 /* utils */
-import { storage, storageKeys } from '../../../utils';
+import { storage, storageKeys } from '@utils';
 
 export const getUIStored = (): UserInterface => {
     let initialUserInterface: UserInterface = {

@@ -4,18 +4,18 @@ import { useNavigation } from '@react-navigation/native';
 import { useStyles } from 'react-native-unistyles';
 
 /* Components */
-import { TableCell } from '../../../ui';
+import { TableCell } from '@ui';
 
 /* Hooks */
 import { usePreaching } from '../../hooks';
-import { useTheme } from '../../../theme';
+import { useTheme } from '@theme';
 
 /* Interfaces */
 import { Preaching } from '../../interfaces';
 
 /* Utils */
 import { TABLE_PREACHING_HEADERS } from '../../utils';
-import { date } from '../../../../utils';
+import { date } from '@utils';
 
 /* Styles */
 import { stylesheet } from './styles';

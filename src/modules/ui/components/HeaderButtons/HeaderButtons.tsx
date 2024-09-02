@@ -12,15 +12,15 @@ import { DeleteModal, MonthPickerModal } from '../../screens';
 import { Fab } from '../Fab';
 
 /* Hooks */
-import { useAuth } from '../../../auth';
-import { usePreaching } from '../../../preaching';
+import { useAuth } from '@auth';
+import { usePreaching } from '@preaching';
 import { useUI } from '../../hooks';
 
 /* Interfaces */
 import { HeaderButtonsProps } from './interfaces';
 
 /* Theme */
-import { date } from '../../../../utils';
+import { date } from '@utils';
 
 /**
  * This component is responsible for displaying various buttons that will be in the

@@ -2,11 +2,11 @@ import React from 'react';
 import { render, screen, userEvent } from '@testing-library/react-native';
 
 /* Setup */
-import { onPressMock } from '../../../../../jest.setup';
+import { onPressMock } from '@test-setup';
 
 /* Modules */
-import { BackButton } from '../../../../../src/modules/ui';
-import { darkColors } from '../../../../../src/modules/theme';
+import { darkColors } from '@theme';
+import { BackButton } from '@ui';
 
 const user = userEvent.setup();
 const renderComponent = (iconColor?: string) => render(<BackButton onPress={ onPressMock } color={ iconColor } />);

@@ -1,11 +1,11 @@
 import { act } from '@testing-library/react-native';
 
 /* Supabase admin client */
-import { supabase } from '../../../../../config';
+import { supabase } from '@config';
 
 /* Setup */
-import { useNetworkSpy } from '../../../../../../jest.setup';
-import { getMockStoreUseAuth, renderUseAuth } from '../../../../../setups';
+import { useNetworkSpy } from '@test-setup';
+import { getMockStoreUseAuth, renderUseAuth } from '@setups';
 
 /* Mocks */
 import {
@@ -17,7 +17,7 @@ import {
     initialStatusStateMock,
     newUserData,
     wifiMock
-} from '../../../../../mocks';
+} from '@mocks';
 
 describe('Test in useAuth hook - signUp', () => {
     useNetworkSpy.mockImplementation(() => ({

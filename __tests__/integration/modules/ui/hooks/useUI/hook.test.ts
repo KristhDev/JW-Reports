@@ -1,8 +1,8 @@
 /* Setups */
-import { getMockStoreUseUI, renderUseUI } from '../../../../../setups';
+import { getMockStoreUseUI, renderUseUI } from '@setups';
 
 /* Mocks */
-import { initialUIState } from '../../../../../mocks';
+import { initialUIState } from '@mocks';
 
 describe('Test in useUI hook', () => {
     let mockStore = {} as any;

@@ -1,8 +1,8 @@
 import { act } from '@testing-library/react-native';
 
 /* Setups */
-import { onFinishMock, useNetworkSpy } from '../../../../../../jest.setup';
-import { getMockStoreUsePreaching, renderUsePreaching } from '../../../../../setups';
+import { onFinishMock, useNetworkSpy } from '@test-setup';
+import { getMockStoreUsePreaching, renderUsePreaching } from '@setups';
 
 /* Mocks */
 import {
@@ -12,7 +12,7 @@ import {
     preachingSelectedStateMock,
     testCredentials,
     wifiMock
-} from '../../../../../mocks';
+} from '@mocks';
 
 const initialMockStore = getMockStoreUsePreaching({
     auth: initialAuthStateMock,

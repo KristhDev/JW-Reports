@@ -5,11 +5,11 @@ import { useNavigation } from '@react-navigation/native';
 
 /* Modules */
 import { INIT_REVISIT, RevisitModal, useRevisits } from '../../';
-import { themeStylesheet } from '../../../theme';
-import { Title } from '../../../ui';
+import { themeStylesheet } from '@theme';
+import { Title } from '@ui';
 
 /* Utils */
-import { date } from '../../../../utils';
+import { date } from '@utils';
 
 /* Styles */
 import { stylesheet } from './styles';

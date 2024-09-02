@@ -3,7 +3,7 @@ import mockSafeAreaContext from 'react-native-safe-area-context/jest/mock';
 
 import 'react-native-gesture-handler/jestSetup';
 import 'react-native-url-polyfill/auto';
-import './src/config/unistyles';
+import '@config/unistyles';
 
 export const onCancelMock = jest.fn();
 export const onChangeValueMock = jest.fn();
@@ -15,17 +15,17 @@ export const onPressMock = jest.fn();
 export const onSearchMock = jest.fn();
 export const onToggleMock = jest.fn();
 
-import * as useAuth from './src/modules/auth/hooks/useAuth';
-import * as useCourses from './src/modules/courses/hooks/useCourses';
-import * as useImage from './src/modules/shared/hooks/useImage';
-import * as useLessons from './src/modules/lessons/hooks/useLessons';
-import * as useNetwork from './src/modules/shared/hooks/useNetwork';
-import * as usePermissions from './src/modules/shared/hooks/usePermissions';
-import * as usePreaching from './src/modules/preaching/hooks/usePreaching';
-import * as useRevisits from './src/modules/revisits/hooks/useRevisits';
-import * as useStatus from './src/modules/shared/hooks/useStatus';
-import * as useTheme from './src/modules/theme/hooks/useTheme';
-import * as useUI from './src/modules/ui/hooks/useUI';
+import * as useAuth from '@auth/hooks/useAuth';
+import * as useCourses from '@courses/hooks/useCourses';
+import * as useImage from '@shared/hooks/useImage';
+import * as useLessons from '@lessons/hooks/useLessons';
+import * as useNetwork from '@shared/hooks/useNetwork';
+import * as usePermissions from '@shared/hooks/usePermissions';
+import * as usePreaching from '@preaching/hooks/usePreaching';
+import * as useRevisits from '@revisits/hooks/useRevisits';
+import * as useStatus from '@shared/hooks/useStatus';
+import * as useTheme from '@theme/hooks/useTheme';
+import * as useUI from '@ui/hooks/useUI';
 
 export const useAuthSpy = jest.spyOn(useAuth, 'default');
 export const useCoursesSpy = jest.spyOn(useCourses, 'default');

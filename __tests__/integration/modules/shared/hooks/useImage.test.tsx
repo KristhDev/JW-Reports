@@ -1,11 +1,11 @@
 import { act } from '@testing-library/react-native';
 
 /* Setups */
-import { mockDeviceInfo, mockImageCropPicker } from '../../../../../jest.setup';
-import { getMockStoreUseImage, renderUseImage } from '../../../../setups';
+import { mockDeviceInfo, mockImageCropPicker } from '@test-setup';
+import { getMockStoreUseImage, renderUseImage } from '@setups';
 
 /* Mocks */
-import { deniedStateMock, grantedStateMock, imageMock, initialStatusStateMock, unavailableStateMock } from '../../../../mocks';
+import { deniedStateMock, grantedStateMock, imageMock, initialStatusStateMock, unavailableStateMock } from '@mocks';
 
 mockDeviceInfo.getSystemVersion.mockImplementation(() => '12');
 

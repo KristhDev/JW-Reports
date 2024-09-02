@@ -1,8 +1,8 @@
 import { act } from '@testing-library/react-native';
 
 /* Setup */
-import { useNetworkSpy } from '../../../../../../jest.setup';
-import { getMockStoreUsePreaching, renderUsePreaching } from '../../../../../setups';
+import { useNetworkSpy } from '@test-setup';
+import { getMockStoreUsePreaching, renderUsePreaching } from '@setups';
 
 /* Mocks */
 import {
@@ -11,7 +11,7 @@ import {
     initialStatusStateMock,
     preachingsMock,
     wifiMock
-} from '../../../../../mocks';
+} from '@mocks';
 
 describe('Test usePreaching hook - setSelectedPreaching', () => {
     useNetworkSpy.mockImplementation(() => ({

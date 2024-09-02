@@ -8,10 +8,10 @@ import CoursesTopTabsNavigation from './CoursesTopTabsNavigation';
 
 /* Screens */
 import { AddOrEditCourse, CourseDetail } from '../screens';
-import { AddOrEditLesson, LessonDetail, Lessons, useLessons } from '../../lessons';
+import { AddOrEditLesson, LessonDetail, Lessons, useLessons } from '@lessons';
 
 /* Components */
-import { BackButton, HeaderButtons } from '../../ui';
+import { BackButton, HeaderButtons } from '@ui';
 
 /* Hooks */
 import { useCourses } from '../hooks';
@@ -20,7 +20,7 @@ import { useCourses } from '../hooks';
 import { CoursesStackParamsList } from '../interfaces';
 
 /* Utils */
-import { characters } from '../../../utils';
+import { characters } from '@utils';
 
 const Stack = createStackNavigator<CoursesStackParamsList>();
 

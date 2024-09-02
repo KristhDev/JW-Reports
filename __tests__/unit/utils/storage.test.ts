@@ -1,4 +1,4 @@
-import { storage, storePersistor, storageKeys } from '../../../src/utils';
+import { storage, storePersistor, storageKeys } from '@utils';
 
 describe('Test in util storage', () => {
     it('should match snapshot - storageKeys', () => {

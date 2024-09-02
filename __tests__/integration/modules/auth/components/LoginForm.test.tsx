@@ -2,13 +2,13 @@ import React from 'react';
 import { act, render, screen, userEvent } from '@testing-library/react-native';
 
 /* Setup */
-import { mockUseNavigation, useAuthSpy, useStatusSpy, useUISpy } from '../../../../../jest.setup';
+import { mockUseNavigation, useAuthSpy, useStatusSpy, useUISpy } from '@test-setup';
 
 /* Mocks */
-import { setErrorFormMock, signInMock } from '../../../../mocks';
+import { setErrorFormMock, signInMock } from '@mocks';
 
 /* Modules */
-import { LoginForm } from '../../../../../src/modules/auth';
+import { LoginForm } from '@auth';
 
 const user = userEvent.setup();
 const renderComponent = () => render(<LoginForm />);

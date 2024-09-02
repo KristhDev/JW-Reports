@@ -2,13 +2,13 @@ import React from 'react';
 import { act, render, screen, userEvent } from '@testing-library/react-native';
 
 /* Setup */
-import { useCoursesSpy, useStatusSpy, useUISpy } from '../../../../../jest.setup';
+import { useCoursesSpy, useStatusSpy, useUISpy } from '@test-setup';
 
 /* Mocks */
-import { courseSelectedStateMock, coursesStateMock, saveCourseMock, setErrorFormMock, updateCourseMock } from '../../../../mocks';
+import { courseSelectedStateMock, coursesStateMock, saveCourseMock, setErrorFormMock, updateCourseMock } from '@mocks';
 
 /* Modules */
-import { CourseForm } from '../../../../../src/modules/courses';
+import { CourseForm } from '@courses';
 
 const user = userEvent.setup();
 const renderComponent = () => render(<CourseForm />);

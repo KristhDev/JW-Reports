@@ -6,7 +6,7 @@ import { Menu, MenuOption, MenuOptions, MenuTrigger } from 'react-native-popup-m
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
 /* Components */
-import { Fab } from '../../../ui';
+import { Fab } from '@ui';
 
 /* Hooks */
 import { useRevisits } from '../../hooks';
@@ -15,11 +15,11 @@ import { useRevisits } from '../../hooks';
 import { RevisitCardProps } from './interfaces';
 
 /* Utils */
-import { characters, date } from '../../../../utils';
+import { characters, date } from '@utils';
 
 /* Styles */
 import { stylesheet } from './styles';
-import { themeStylesheet } from '../../../theme';
+import { themeStylesheet } from '@theme';
 
 /**
  * This component is responsible for rendering part of the information of a

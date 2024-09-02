@@ -13,17 +13,17 @@ import { PreachingInfoModal } from '../PreachingInfoModal';
 
 /* Components */
 import { PreachingTable } from '../../components';
-import { Fab, InfoText, Title } from '../../../ui';
+import { Fab, InfoText, Title } from '@ui';
 
 /* Hooks */
-import { useAuth } from '../../../auth';
+import { useAuth } from '@auth';
 import { usePreaching } from '../../hooks';
 
 /* Utils */
-import { date } from '../../../../utils';
+import { date } from '@utils';
 
 /* Theme */
-import { themeStylesheet } from '../../../theme';
+import { themeStylesheet } from '@theme';
 
 /**
  * This screen is in charge of grouping the components to list the preaching days by

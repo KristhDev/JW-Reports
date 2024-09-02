@@ -1,7 +1,7 @@
 import React from 'react';
 import { renderHook } from '@testing-library/react-native';
 
-import { NetworkProvider, useNetwork } from '../../src/modules/shared';
+import { NetworkProvider, useNetwork } from '@shared';
 
 export const renderUseNetwork = () => renderHook(
     () => useNetwork(),

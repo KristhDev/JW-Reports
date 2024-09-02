@@ -2,7 +2,7 @@ import React from 'react';
 import { render, screen } from '@testing-library/react-native';
 
 /* Modules */
-import { ListFooterComponent } from '../../../../../src/modules/ui';
+import { ListFooterComponent } from '@ui';
 
 const renderComponent = (showLoader: boolean, marginTopPlus: boolean) => render(
     <ListFooterComponent

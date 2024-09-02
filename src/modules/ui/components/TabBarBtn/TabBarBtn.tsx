@@ -4,7 +4,7 @@ import { useStyles } from 'react-native-unistyles';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
 /* Hooks */
-import { useTheme } from '../../../theme';
+import { useTheme } from '@theme';
 
 /* Interfaces */
 import { TabBarBtnProps } from './interfaces';

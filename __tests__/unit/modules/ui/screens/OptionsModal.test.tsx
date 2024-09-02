@@ -2,10 +2,10 @@ import React from 'react';
 import { render, screen, userEvent } from '@testing-library/react-native';
 
 /* Setup */
-import { onCancelMock, onChangeValueMock } from '../../../../../jest.setup';
+import { onCancelMock, onChangeValueMock } from '@test-setup';
 
 /* Modules */
-import { ItemOption, OptionsModal } from '../../../../../src/modules/ui';
+import { ItemOption, OptionsModal } from '@ui';
 
 const modalTitle = 'Select an option';
 

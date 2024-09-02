@@ -11,17 +11,17 @@ import { ActiveOrSuspendCourseModal } from '../ActiveOrSuspendCourseModal';
 import { FinishOrStartCourseModal }  from '../FinishOrStartCourseModal';
 
 /* Components */
-import { InfoText, Title } from '../../../ui/components';
+import { InfoText, Title } from '@ui';
 
 /* Hooks */
 import { useCourses } from '../../hooks';
-import { INIT_LESSON, useLessons } from '../../../lessons';
+import { INIT_LESSON, useLessons } from '@lessons';
 
 /* Utils */
-import { date } from '../../../../utils';
+import { date } from '@utils';
 
 /* Styles */
-import { themeStylesheet } from '../../../theme';
+import { themeStylesheet } from '@theme';
 import { stylesheet } from './styles';
 
 /**

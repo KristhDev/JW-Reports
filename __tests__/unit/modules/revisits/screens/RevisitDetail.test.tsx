@@ -2,17 +2,17 @@ import React from 'react';
 import { render, screen } from '@testing-library/react-native';
 
 /* Setup */
-import { useRevisitsSpy, useStatusSpy, useUISpy } from '../../../../../jest.setup';
+import { useRevisitsSpy, useStatusSpy, useUISpy } from '@test-setup';
 
 /* Mocks */
-import { selectedRevisitStateMock, setSelectedRevisitMock } from '../../../../mocks';
+import { selectedRevisitStateMock, setSelectedRevisitMock } from '@mocks';
 
 /* Modules */
-import { RevisitDetail } from '../../../../../src/modules/revisits';
-import { UI_INITIAL_STATE } from '../../../../../src/modules/ui';
+import { RevisitDetail } from '@revisits';
+import { UI_INITIAL_STATE } from '@ui';
 
 /* Utils */
-import { date } from '../../../../../src/utils';
+import { date } from '@utils';
 
 const revisitPhoto = 'https://img.freepik.com/free-vector/nature-scene-with-river-hills-forest-mountain-landscape-flat-cartoon-style-illustration_1150-37326.jpg';
 

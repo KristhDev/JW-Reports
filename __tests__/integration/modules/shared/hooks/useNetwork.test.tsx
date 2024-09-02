@@ -1,8 +1,8 @@
 /* Setup */
-import { renderUseNetwork } from '../../../../setups';
+import { renderUseNetwork } from '@setups';
 
 /* Modules */
-import { INIT_WIFI_STATE } from '../../../../../src/modules/shared';
+import { INIT_WIFI_STATE } from '@shared';
 
 describe('Test in useNetwork hook', () => {
     it('shoud return respective properties', async () => {

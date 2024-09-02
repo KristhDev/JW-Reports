@@ -7,16 +7,15 @@ import { useNavigation } from '@react-navigation/native';
 import { REPOSITORY_URL } from '@env';
 
 /* Modules */
-import { OptionsModal, SectionBtn, SectionContent, UI_OPTIONS, useUI } from '../../../ui';
 import { useStatus } from '../../hooks';
-import { ThemeModal, useTheme } from '../../../theme';
+import { ThemeModal, useTheme, THEME_OPTIONS } from '@theme';
+import { OptionsModal, SectionBtn, SectionContent, UI_OPTIONS, useUI } from '@ui';
 
 /* Utils */
-import { deviceInfo } from '../../../../utils';
-import { THEME_OPTIONS } from '../../../theme';
+import { deviceInfo } from '@utils';
 
 /* Package */
-import { version as appVersion } from '../../../../../package.json';
+import { version as appVersion } from '@package';
 
 /**
  * This screen is responsible for displaying all the app's settings through

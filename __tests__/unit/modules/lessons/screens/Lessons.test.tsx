@@ -3,14 +3,14 @@ import { render, screen, userEvent } from '@testing-library/react-native';
 import { MenuProvider } from 'react-native-popup-menu';
 
 /* Setup */
-import { useCoursesSpy, useLessonsSpy, useNetworkSpy, useUISpy } from '../../../../../jest.setup';
+import { useCoursesSpy, useLessonsSpy, useNetworkSpy, useUISpy } from '@test-setup';
 
 /* Mocks */
-import { courseSelectedStateMock, lessonsStateMock, setSelectedLessonMock, wifiMock } from '../../../../mocks';
+import { courseSelectedStateMock, lessonsStateMock, setSelectedLessonMock, wifiMock } from '@mocks';
 
 /* Modules */
-import { INIT_LESSON, Lessons } from '../../../../../src/modules/lessons';
-import { UI_INITIAL_STATE } from '../../../../../src/modules/ui';
+import { INIT_LESSON, Lessons } from '@lessons';
+import { UI_INITIAL_STATE } from '@ui';
 
 const user = userEvent.setup();
 const renderScreen = () => render(

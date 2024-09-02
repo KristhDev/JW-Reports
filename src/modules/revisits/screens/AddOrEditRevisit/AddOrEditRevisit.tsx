@@ -5,13 +5,13 @@ import { useStyles } from 'react-native-unistyles';
 
 /* Components */
 import { RevisitForm } from '../../components';
-import { Title } from '../../../ui';
+import { Title } from '@ui';
 
 /* Hooks */
 import { useRevisits } from '../../hooks';
 
 /* Theme */
-import { themeStylesheet } from '../../../theme';
+import { themeStylesheet } from '@theme';
 
 /**
  * This screen is responsible for grouping the components to add or

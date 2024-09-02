@@ -1,13 +1,13 @@
 import { act, waitFor } from '@testing-library/react-native';
 
 /* Setup */
-import { renderUseTheme } from '../../../../setups';
+import { renderUseTheme } from '@setups';
 
 /* Mocks */
-import { storageSpy, darkState, lightState } from '../../../../mocks';
+import { storageSpy, darkState, lightState } from '@mocks';
 
 /* Utils */
-import { storageKeys } from '../../../../../src/utils';
+import { storageKeys } from '@utils';
 
 describe('Test in useTheme hook', () => {
     beforeEach(() => {

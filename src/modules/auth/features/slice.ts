@@ -2,7 +2,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 /* Interfaces */
 import { AuthState, SetUserPayload, User, UserPayload } from '../interfaces';
-import { SetIsLoadingPayload } from '../../shared';
+import { SetIsLoadingPayload } from '@shared';
 
 export const INIT_USER: User = {
     id: '',

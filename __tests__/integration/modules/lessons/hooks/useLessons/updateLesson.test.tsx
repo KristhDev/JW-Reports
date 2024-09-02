@@ -1,11 +1,11 @@
 import { act } from '@testing-library/react-native';
 
 /* Supabase */
-import { supabase } from '../../../../../config';
+import { supabase } from '@test-config';
 
 /* Setups */
-import { mockUseNavigation, useNetworkSpy } from '../../../../../../jest.setup';
-import { getMockStoreUseLessons, renderUseLessons } from '../../../../../setups';
+import { mockUseNavigation, useNetworkSpy } from '@test-setup';
+import { getMockStoreUseLessons, renderUseLessons } from '@setups';
 
 /* Mocks */
 import {
@@ -17,7 +17,7 @@ import {
     testCredentials,
     testLesson,
     wifiMock
-} from '../../../../../mocks';
+} from '@mocks';
 
 describe('Test in useLessons hook - updateLesson', () => {
     useNetworkSpy.mockImplementation(() => ({

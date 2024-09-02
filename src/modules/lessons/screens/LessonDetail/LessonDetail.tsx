@@ -10,17 +10,17 @@ import { INIT_LESSON } from '../../features';
 import { FinishOrStartLessonModal } from '../FinishOrStartLessonModal';
 
 /* Components */
-import { InfoText, Title } from '../../../ui';
+import { InfoText, Title } from '@ui';
 
 /* Hooks */
-import { useCourses } from '../../../courses';
+import { useCourses } from '@courses';
 import { useLessons } from '../../hooks';
 
 /* Utils */
-import { date } from '../../../../utils';
+import { date } from '@utils';
 
 /* Styles */
-import { themeStylesheet } from '../../../theme';
+import { themeStylesheet } from '@theme';
 import { stylesheet } from './styles';
 
 /**

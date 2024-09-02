@@ -11,7 +11,7 @@ import {
     useRevisitsSpy,
     useStatusSpy,
     useUISpy
-} from '../../../../../jest.setup';
+} from '@test-setup';
 
 /* Mocks */
 import {
@@ -31,13 +31,13 @@ import {
     setSelectedRevisitMock,
     setStatusMock,
     testUser
-} from '../../../../mocks';
+} from '@mocks';
 
 /* Modules */
-import { PublisherHome } from '../../../../../src/modules/preaching';
-import { INIT_REVISIT } from '../../../../../src/modules/revisits';
-import { INIT_LESSON } from '../../../../../src/modules/lessons';
-import { UI_INITIAL_STATE } from '../../../../../src/modules/ui';
+import { PublisherHome } from '@preaching';
+import { INIT_REVISIT } from '@revisits';
+import { INIT_LESSON } from '@lessons';
+import { UI_INITIAL_STATE } from '@ui';
 
 const renderScreen = () => render(
     <MenuProvider>

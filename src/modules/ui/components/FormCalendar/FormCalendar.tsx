@@ -14,10 +14,10 @@ import { Modal } from '../../screens';
 import { FormCalendarProps } from './interfaces';
 
 /* Utils */
-import { date, localeEs } from '../../../../utils';
+import { date, localeEs } from '@utils';
 
 /* Theme */
-import { themeStylesheet } from '../../../theme';
+import { themeStylesheet } from '@theme';
 
 /**
  * Renders a form calendar component.

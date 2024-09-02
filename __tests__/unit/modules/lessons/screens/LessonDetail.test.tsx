@@ -2,20 +2,17 @@ import React from 'react';
 import { render, screen } from '@testing-library/react-native';
 
 /* Setup */
-import { useCoursesSpy, useLessonsSpy, useUISpy } from '../../../../../jest.setup';
+import { useCoursesSpy, useLessonsSpy, useUISpy } from '@test-setup';
 
 /* Mocks */
-import { courseSelectedStateMock, lessonSelectedStateMock, setSelectedLessonMock } from '../../../../mocks';
+import { courseSelectedStateMock, lessonSelectedStateMock, setSelectedLessonMock } from '@mocks';
 
 /* Modules */
-import { LessonDetail } from '../../../../../src/modules/lessons';
-import { UI_INITIAL_STATE } from '../../../../../src/modules/ui';
+import { LessonDetail } from '@lessons';
+import { UI_INITIAL_STATE } from '@ui';
 
 /* Utils */
-import { date } from '../../../../../src/utils';
-
-/* Mock hooks */
-jest.mock('../../../../../src/modules/lessons/hooks/useLessons.ts');
+import { date } from '@utils';
 
 const renderScreen = () => render(<LessonDetail />);
 

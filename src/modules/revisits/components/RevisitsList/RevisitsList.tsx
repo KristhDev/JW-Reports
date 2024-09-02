@@ -4,18 +4,18 @@ import { useStyles } from 'react-native-unistyles';
 import { useFocusEffect, useNavigation } from '@react-navigation/native';
 
 /* Features */
-import { INIT_REVISIT, Revisit, RevisitCard, RevisitModal, useRevisits } from '../../';
-import { PassToCourseModal } from '../../../courses';
-import { DeleteModal, ListEmptyComponent, ListFooterComponent, SearchInput, Title } from '../../../ui';
+import { PassToCourseModal } from '@courses';
+import { INIT_REVISIT, Revisit, RevisitCard, RevisitModal, useRevisits } from '@revisits';
+import { DeleteModal, ListEmptyComponent, ListFooterComponent, SearchInput, Title } from '@ui';
 
 /* Hooks */
-import { useNetwork,  } from '../../../shared';
+import { useNetwork } from '@shared';
 
 /* Interfaces */
 import { RevisitsListProps } from './interfaces';
 
 /* Theme */
-import { themeStylesheet } from '../../../theme';
+import { themeStylesheet } from '@theme';
 
 /**
  * This component is responsible for rendering a list of revisits based

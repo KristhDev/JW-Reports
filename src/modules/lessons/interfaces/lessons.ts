@@ -1,5 +1,5 @@
-import { Course, CourseEndpoint } from '../../courses';
-import { Pagination } from '../../ui';
+import { Course, CourseEndpoint } from '@courses';
+import { Pagination } from '@ui';
 
 /**
  * Defining the structure of the LessonsState object.

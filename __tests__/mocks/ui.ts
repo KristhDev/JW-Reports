@@ -1,4 +1,4 @@
-import { UIState } from '../../src/modules/ui';
+import { UIState } from '@ui';
 
 export const initialUIState: UIState = {
     isKeyboardVisible: false,

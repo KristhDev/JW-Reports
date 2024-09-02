@@ -6,7 +6,7 @@ import { useStyles } from 'react-native-unistyles';
 import { Fab } from '../Fab';
 
 /* Hooks */
-import { useTheme } from '../../../theme';
+import { useTheme } from '@theme';
 
 /**
  * This component is responsible for render button to change

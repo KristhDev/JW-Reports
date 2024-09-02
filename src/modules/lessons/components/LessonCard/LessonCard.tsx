@@ -6,7 +6,7 @@ import { useNavigation } from '@react-navigation/native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
 /* Components */
-import { Fab } from '../../../ui';
+import { Fab } from '@ui';
 
 /* Hooks */
 import { useLessons } from '../../hooks';
@@ -15,10 +15,10 @@ import { useLessons } from '../../hooks';
 import { LessonCardProps } from './interfaces';
 
 /* Utils */
-import { characters, date } from '../../../../utils';
+import { characters, date } from '@utils';
 
 /* Styles */
-import { themeStylesheet } from '../../../theme';
+import { themeStylesheet } from '@theme';
 import { stylesheet } from './styles';
 
 /**

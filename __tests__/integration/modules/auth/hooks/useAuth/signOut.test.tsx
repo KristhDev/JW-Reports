@@ -1,8 +1,8 @@
 import { act } from '@testing-library/react-native';
 
 /* Setup */
-import { useNetworkSpy } from '../../../../../../jest.setup';
-import { getMockStoreUseAuth, renderUseAuth } from '../../../../../setups';
+import { useNetworkSpy } from '@test-setup';
+import { getMockStoreUseAuth, renderUseAuth } from '@setups';
 
 /* Mocks */
 import {
@@ -14,7 +14,7 @@ import {
     revisitsStateMock,
     testCredentials,
     wifiMock
-} from '../../../../../mocks';
+} from '@mocks';
 
 describe('Test in useAuth hook - signOut', () => {
     useNetworkSpy.mockImplementation(() => ({

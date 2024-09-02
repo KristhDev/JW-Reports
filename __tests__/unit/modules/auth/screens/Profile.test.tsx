@@ -2,14 +2,14 @@ import React from 'react';
 import { act, render, screen } from '@testing-library/react-native';
 
 /* Setup */
-import { useAuthSpy, useStatusSpy, useUISpy } from '../../../../../jest.setup';
+import { useAuthSpy, useStatusSpy, useUISpy } from '@test-setup';
 
 /* Mocks */
-import { setErrorFormMock, testUser, updateProfileMock } from '../../../../mocks';
+import { setErrorFormMock, testUser, updateProfileMock } from '@mocks';
 
 /* Modules */
-import { Profile } from '../../../../../src/modules/auth';
-import { UI_INITIAL_STATE } from '../../../../../src/modules/ui';
+import { Profile } from '@auth';
+import { UI_INITIAL_STATE } from '@ui';
 
 const renderScreen = () => render(<Profile />);
 

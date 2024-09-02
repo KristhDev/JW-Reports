@@ -2,10 +2,10 @@ import React from 'react';
 import { render, screen, userEvent } from '@testing-library/react-native';
 
 /* Setup */
-import { onPressMock } from '../../../../../jest.setup';
+import { onPressMock } from '@test-setup';
 
 /* Components */
-import { Checkbox } from '../../../../../src/modules/ui';
+import { Checkbox } from '@ui';
 
 const user = userEvent.setup();
 

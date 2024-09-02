@@ -1,5 +1,5 @@
-import React, { FC, useEffect } from 'react';
-import { useNavigation } from '@react-navigation/native';
+import React, { FC, useCallback } from 'react';
+import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import { useStyles } from 'react-native-unistyles';
 import { MaterialTopTabScreenProps } from '@react-navigation/material-top-tabs';
 import Ionicons from 'react-native-vector-icons/Ionicons';
@@ -9,7 +9,7 @@ import { INIT_REVISIT } from '../../features';
 
 /* Components */
 import { RevisitsList } from '../../components';
-import { Fab } from '../../../ui';
+import { Fab } from '@ui';
 
 /* Hooks */
 import { useRevisits } from '../../hooks';
@@ -18,7 +18,7 @@ import { useRevisits } from '../../hooks';
 import { RevisitsTopTabsParamsList } from '../../interfaces';
 
 /* Theme */
-import { themeStylesheet } from '../../../theme';
+import { themeStylesheet } from '@theme';
 
 type RevisitsProps = MaterialTopTabScreenProps<RevisitsTopTabsParamsList>;
 
@@ -54,17 +54,13 @@ const Revisits: FC<RevisitsProps> = ({ route }): JSX.Element => {
      * Effect to set revisitsScreenHistory when call focus event
      * in screen.
      */
-    useEffect(() => {
-        navigation.addListener('focus', () => {
+    useFocusEffect(
+        useCallback(() => {
             const navigationState = navigation.getState();
             if (!navigationState) return;
             setRevisitsScreenHistory(navigationState.routeNames[navigationState.index]);
-        });
-
-        return () => {
-            navigation.removeListener('focus', () => {});
-        }
-    }, []);
+        }, [])
+    );
 
     return (
         <>

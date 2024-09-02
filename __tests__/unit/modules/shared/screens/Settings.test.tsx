@@ -2,14 +2,14 @@ import React from 'react';
 import { render, screen, userEvent } from '@testing-library/react-native';
 
 /* Setup */
-import { mockUseNavigation, useStatusSpy, useThemeSpy, useUISpy } from '../../../../../jest.setup';
+import { mockUseNavigation, useStatusSpy, useThemeSpy, useUISpy } from '@test-setup';
 
 /* Mocks */
-import { setStatusMock, setThemeMock } from '../../../../mocks';
+import { setStatusMock, setThemeMock } from '@mocks';
 
 /* Modules */
-import { Settings } from '../../../../../src/modules/shared';
-import { UI_INITIAL_STATE } from '../../../../../src/modules/ui';
+import { Settings } from '@shared';
+import { UI_INITIAL_STATE } from '@ui';
 
 const user = userEvent.setup();
 const renderScreen = () => render(<Settings />);

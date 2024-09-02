@@ -2,13 +2,13 @@ import React from 'react';
 import { render, screen, userEvent } from '@testing-library/react-native';
 
 /* Setup */
-import { useThemeSpy } from '../../../../../jest.setup';
+import { useThemeSpy } from '@test-setup';
 
 /* Mocks */
-import { setThemeMock } from '../../../../mocks';
+import { setThemeMock } from '@mocks';
 
 /* Modules */
-import { ThemeBtn } from '../../../../../src/modules/ui';
+import { ThemeBtn } from '@ui';
 
 const user = userEvent.setup();
 const renderComponent = () => render(<ThemeBtn />);

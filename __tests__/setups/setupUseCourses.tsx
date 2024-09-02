@@ -4,10 +4,10 @@ import { configureStore } from '@reduxjs/toolkit';
 import { renderHook } from '@testing-library/react-native';
 
 /* Modules */
-import { authReducer, AuthState, useAuth } from '../../src/modules/auth';
-import { coursesReducer, CoursesState, useCourses } from '../../src/modules/courses';
-import { lessonsReducer, LessonsState, useLessons } from '../../src/modules/lessons';
-import { statusReducer, StatusState, useStatus } from '../../src/modules/shared';
+import { authReducer, AuthState, useAuth } from '@auth';
+import { coursesReducer, CoursesState, useCourses } from '@courses';
+import { lessonsReducer, LessonsState, useLessons } from '@lessons';
+import { statusReducer, StatusState, useStatus } from '@shared';
 
 interface InitialState {
     auth: AuthState;

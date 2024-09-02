@@ -2,7 +2,7 @@ import React from 'react';
 import { act, render, screen, userEvent } from '@testing-library/react-native';
 
 /* Setup */
-import { useImageSpy, useRevisitsSpy, useStatusSpy, useUISpy } from '../../../../../jest.setup';
+import { useImageSpy, useRevisitsSpy, useStatusSpy, useUISpy } from '@test-setup';
 
 /* Mocks */
 import {
@@ -14,11 +14,11 @@ import {
     takeImageToGalleryMock,
     takePhotoMock,
     updateRevisitMock
-} from '../../../../mocks';
+} from '@mocks';
 
 /* Modules */
-import { RevisitForm } from '../../../../../src/modules/revisits';
-import { UI_INITIAL_STATE } from '../../../../../src/modules/ui';
+import { RevisitForm } from '@revisits';
+import { UI_INITIAL_STATE } from '@ui';
 
 const personName = 'Clifton DAmore';
 const about = 'Possimus magnam cum quo saepe et accusamus consectetur molestiae. Eos et et nobis dolor. Enim repellat quia officia fuga qui. Cumque delectus unde possimus consequatur ducimus.';

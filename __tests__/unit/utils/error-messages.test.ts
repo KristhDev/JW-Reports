@@ -1,4 +1,4 @@
-import { authErrorMessages, commonErrorMessages, translateErrorMsg } from '../../../src/utils';
+import { authErrorMessages, commonErrorMessages, translateErrorMsg } from '@utils';
 
 describe('Test in util error-messages', () => {
     it('should match snapshot authErrorMessages', () => {

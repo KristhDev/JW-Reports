@@ -5,9 +5,9 @@ import { useStyles } from 'react-native-unistyles';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
 /* Modules */
-import { Modal, ModalActions, ModalProps, FormCalendar, useUI, DatetimeField } from '../../../ui';
 import { useLessons } from '../../hooks';
-import { themeStylesheet } from '../../../theme';
+import { themeStylesheet } from '@theme';
+import { Modal, ModalActions, ModalProps, FormCalendar, useUI, DatetimeField } from '@ui';
 
 /**
  * This modal is responsible for grouping the components to finish

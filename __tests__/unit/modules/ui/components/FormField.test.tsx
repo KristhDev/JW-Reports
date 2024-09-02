@@ -4,11 +4,11 @@ import { Formik } from 'formik';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
 /* Setup */
-import { useUISpy } from '../../../../../jest.setup';
+import { useUISpy } from '@test-setup';
 
 /* Modules */
-import { FormField } from '../../../../../src/modules/ui';
-import { darkColors } from '../../../../../src/modules/theme';
+import { darkColors } from '@theme';
+import { FormField } from '@ui';
 
 const fieldLabel = 'Nombre:';
 const fieldPlaceholder = 'Ingrese su nombre';

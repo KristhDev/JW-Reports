@@ -2,7 +2,7 @@ import React from 'react';
 import { render, screen } from '@testing-library/react-native';
 
 /* Modules */
-import { InfoText } from '../../../../../src/modules/ui';
+import { InfoText } from '@ui';
 
 const textInfo = 'Info text test';
 

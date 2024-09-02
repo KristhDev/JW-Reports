@@ -5,13 +5,13 @@ import { useStyles } from 'react-native-unistyles';
 
 /* Components */
 import { PreachingForm } from '../../components';
-import { Title } from '../../../ui';
+import { Title } from '@ui';
 
 /* Hooks */
 import { usePreaching } from '../../hooks';
 
 /* Theme */
-import { themeStylesheet } from '../../../theme';
+import { themeStylesheet } from '@theme';
 
 /**
  * This screen is responsible for grouping the components to add or

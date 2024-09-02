@@ -2,13 +2,13 @@ import React from 'react';
 import { render, screen, userEvent } from '@testing-library/react-native';
 
 /* Setup */
-import { mockUseNavigation, usePreachingSpy, useThemeSpy } from '../../../../../jest.setup';
+import { mockUseNavigation, usePreachingSpy, useThemeSpy } from '@test-setup';
 
 /* Mocks */
-import { preachingsStateMock, setSelectedPreachingMock } from '../../../../mocks';
+import { preachingsStateMock, setSelectedPreachingMock } from '@mocks';
 
 /* Modules */
-import { PreachingTable } from '../../../../../src/modules/preaching';
+import { PreachingTable } from '@preaching';
 
 const user = userEvent.setup();
 const renderComponent = () => render(<PreachingTable />);

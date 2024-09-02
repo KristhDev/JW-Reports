@@ -4,12 +4,12 @@ import { configureStore } from '@reduxjs/toolkit';
 import { renderHook } from '@testing-library/react-native';
 
 /* Mocks */
-import { grantedStateMock } from '../mocks';
+import { grantedStateMock } from '@mocks';
 
 /* Modules */
-import { authReducer, AuthState, useAuth } from '../../src/modules/auth';
-import { revisitsReducer, RevisitsState, useRevisits } from '../../src/modules/revisits';
-import { permissionsReducer, statusReducer, StatusState, useStatus } from '../../src/modules/shared';
+import { authReducer, AuthState, useAuth } from '@auth';
+import { revisitsReducer, RevisitsState, useRevisits } from '@revisits';
+import { permissionsReducer, statusReducer, StatusState, useStatus } from '@shared';
 
 interface InitialState {
     auth: AuthState;

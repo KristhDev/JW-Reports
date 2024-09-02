@@ -4,7 +4,7 @@ import dayjs from 'dayjs';
 import { Preaching, ReamainingOfHoursRequirement, RemainingHoursOfWeeklyRequirement } from '../interfaces';
 
 /* Utils */
-import { date } from '../../../utils';
+import { date } from '@utils';
 
 export const report = {
     /**

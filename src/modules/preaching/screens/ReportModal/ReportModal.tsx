@@ -3,21 +3,21 @@ import { View, Text, Share, TextInput } from 'react-native';
 import { useStyles } from 'react-native-unistyles';
 
 /* Screens */
-import { Modal, RadioBtn, ModalActions } from '../../../ui';
+import { Modal, RadioBtn, ModalActions } from '@ui';
 
 /* Hooks */
-import { useAuth } from '../../../auth';
+import { useAuth } from '@auth';
 import { usePreaching } from '../../hooks';
-import { useCourses } from '../../../courses';
+import { useCourses } from '@courses';
 
 /* Interfaces */
 import { ReportModalProps } from './interfaces';
 
 /* Utils */
-import { characters, date } from '../../../../utils';
+import { characters, date } from '@utils';
 
 /* Styles */
-import { themeStylesheet } from '../../../theme';
+import { themeStylesheet } from '@theme';
 import { stylesheet } from './styles';
 
 const particitions = [

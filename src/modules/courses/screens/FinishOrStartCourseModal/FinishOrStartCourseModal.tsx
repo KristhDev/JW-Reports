@@ -3,9 +3,9 @@ import { ActivityIndicator, Text, View } from 'react-native';
 import { useStyles } from 'react-native-unistyles';
 
 /* Modules */
-import { Modal, ModalProps, ModalActions } from '../../../ui';
 import { useCourses } from '../../hooks';
-import { themeStylesheet } from '../../../theme';
+import { themeStylesheet } from '@theme';
+import { Modal, ModalProps, ModalActions } from '@ui';
 
 /**
  * This modal is responsible for grouping the components to finish

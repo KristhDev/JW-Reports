@@ -3,11 +3,11 @@ import { render, screen, userEvent } from '@testing-library/react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
 /* Setup */
-import { onPressMock } from '../../../../../jest.setup';
+import { onPressMock } from '@test-setup';
 
 /* Modules */
-import { Fab } from '../../../../../src/modules/ui';
-import { darkColors } from '../../../../../src/modules/theme';
+import { darkColors } from '@theme';
+import { Fab } from '@ui';
 
 const user = userEvent.setup();
 

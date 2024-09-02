@@ -2,10 +2,10 @@ import React from 'react';
 import { render, screen, userEvent } from '@testing-library/react-native';
 
 /* Setup */
-import { onCleanMock, onSearchMock } from '../../../../../jest.setup';
+import { onCleanMock, onSearchMock } from '@test-setup';
 
 /* Modules */
-import { SearchInput } from '../../../../../src/modules/ui';
+import { SearchInput } from '@ui';
 
 const textValue = 'Search test';
 const user = userEvent.setup();

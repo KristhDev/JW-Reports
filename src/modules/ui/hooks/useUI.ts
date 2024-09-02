@@ -1,14 +1,14 @@
 import { EmitterSubscription, Keyboard } from 'react-native';
 
 /* Features */
-import { useAppDispatch, useAppSelector } from '../../../features';
+import { useAppDispatch, useAppSelector } from '@features';
 import {
     setIsKeyboardVisible as setIsKeyboardVisibleAction,
     setOldDatetimePicker as setOldDatetimePickerAction
 } from '../features';
 
 /* Utils */
-import { storage, storageKeys } from '../../../utils';
+import { storage, storageKeys } from '@utils';
 
 const useUI = () => {
     const dispatch = useAppDispatch();

@@ -4,19 +4,16 @@ import { useStyles } from 'react-native-unistyles';
 import { Formik } from 'formik';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
-/* Screens */
-import { FormField, Modal, ModalProps,  } from '../../../ui';
-
-/* Components */
-import { ModalActions } from '../../../ui';
+/* UI */
+import { FormField, Modal, ModalProps, ModalActions } from '@ui';
 
 /* Hooks */
 import { useCourses } from '../../hooks';
-import { useRevisits } from '../../../revisits';
-import { useStatus } from '../../../shared';
+import { useRevisits } from '@revisits';
+import { useStatus } from '@shared';
 
 /* Theme */
-import { themeStylesheet } from '../../../theme';
+import { themeStylesheet } from '@theme';
 
 /**
  * This modal is responsible for grouping the components to

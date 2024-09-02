@@ -12,7 +12,7 @@ import { ModalActions } from '../../components';
 import { DeleteModalProps } from './interfaces';
 
 /* Theme */
-import { themeStylesheet } from '../../../theme';
+import { themeStylesheet } from '@theme';
 
 /**
  * This modal is for removing resources of all kinds.

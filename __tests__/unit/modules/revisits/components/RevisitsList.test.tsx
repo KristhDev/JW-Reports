@@ -3,7 +3,7 @@ import { render, screen, userEvent } from '@testing-library/react-native';
 import { MenuProvider } from 'react-native-popup-menu';
 
 /* Setup */
-import { useCoursesSpy, useNetworkSpy, useRevisitsSpy, useStatusSpy, useUISpy } from '../../../../../jest.setup';
+import { useCoursesSpy, useNetworkSpy, useRevisitsSpy, useStatusSpy, useUISpy } from '@test-setup';
 
 /* Mocks */
 import {
@@ -20,11 +20,11 @@ import {
     setSelectedRevisitMock,
     setStatusMock,
     wifiMock
-} from '../../../../mocks';
+} from '@mocks';
 
 /* Modules */
-import { RevisitsList } from '../../../../../src/modules/revisits';
-import { UI_INITIAL_STATE } from '../../../../../src/modules/ui';
+import { RevisitsList } from '@revisits';
+import { UI_INITIAL_STATE } from '@ui';
 
 const emptyMessageTest = 'No hay revisitas disponibles';
 const titleTest = 'Mis Revisitas';

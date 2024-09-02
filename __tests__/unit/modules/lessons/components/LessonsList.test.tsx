@@ -3,7 +3,7 @@ import { render, screen, userEvent } from '@testing-library/react-native';
 import { MenuProvider } from 'react-native-popup-menu';
 
 /* Setup */
-import { useCoursesSpy, useLessonsSpy, useNetworkSpy, useUISpy } from '../../../../../jest.setup';
+import { useCoursesSpy, useLessonsSpy, useNetworkSpy, useUISpy } from '@test-setup';
 
 /* Mocks */
 import {
@@ -17,11 +17,11 @@ import {
     setLessonsPaginationMock,
     setSelectedLessonMock,
     wifiMock
-} from '../../../../mocks';
+} from '@mocks';
 
 /* Modules */
-import { LessonsList } from '../../../../../src/modules/lessons';
-import { UI_INITIAL_STATE } from '../../../../../src/modules/ui';
+import { LessonsList } from '@lessons';
+import { UI_INITIAL_STATE } from '@ui';
 
 const emptyMessageTest = 'No has agregado clases a este curso.';
 const titleTest = `Clases del curso con ${ courseSelectedStateMock.selectedCourse.personName }`;

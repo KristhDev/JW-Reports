@@ -5,10 +5,10 @@ import { useStyles } from 'react-native-unistyles';
 
 /* Components */
 import { RegisterForm } from '../../components';
-import { Title } from '../../../ui';
+import { Title } from '@ui';
 
 /* Theme */
-import { themeStylesheet } from '../../../theme';
+import { themeStylesheet } from '@theme';
 
 /**
  * This screen is to show the form that will allow users

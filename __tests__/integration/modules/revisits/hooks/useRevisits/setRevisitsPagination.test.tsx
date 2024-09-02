@@ -1,11 +1,11 @@
 import { act } from '@testing-library/react-native';
 
 /* Setup */
-import { useNetworkSpy } from '../../../../../../jest.setup';
-import { getMockStoreUseRevisits, renderUseRevisits } from '../../../../../setups';
+import { useNetworkSpy } from '@test-setup';
+import { getMockStoreUseRevisits, renderUseRevisits } from '@setups';
 
 /* Mocks */
-import { initialAuthStateMock, initialRevisitsStateMock, initialStatusStateMock, wifiMock } from '../../../../../mocks';
+import { initialAuthStateMock, initialRevisitsStateMock, initialStatusStateMock, wifiMock } from '@mocks';
 
 describe('Test useRevisits hook - setRevisitsPagination', () => {
     useNetworkSpy.mockImplementation(() => ({

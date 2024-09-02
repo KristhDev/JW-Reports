@@ -2,7 +2,7 @@ import React from 'react';
 import { act, render, screen, userEvent } from '@testing-library/react-native';
 
 /* Setup */
-import { usePreachingSpy, useStatusSpy, useUISpy } from '../../../../../jest.setup';
+import { usePreachingSpy, useStatusSpy, useUISpy } from '@test-setup';
 
 /* Mocks */
 import {
@@ -12,11 +12,11 @@ import {
     savePreachingMock,
     setErrorFormMock,
     updatePreachingMock
-} from '../../../../mocks';
+} from '@mocks';
 
 /* Modules */
-import { INIT_PREACHING, PreachingForm } from '../../../../../src/modules/preaching';
-import { UI_INITIAL_STATE } from '../../../../../src/modules/ui';
+import { INIT_PREACHING, PreachingForm } from '@preaching';
+import { UI_INITIAL_STATE } from '@ui';
 
 const preachingDay = '2022-12-29 00:00:00';
 const initHour = '2022-12-30 09:00:00';

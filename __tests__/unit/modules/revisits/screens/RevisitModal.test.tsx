@@ -2,14 +2,14 @@ import React from 'react';
 import { act, render, screen, userEvent } from '@testing-library/react-native';
 
 /* Setup */
-import { onCloseMock, useRevisitsSpy, useStatusSpy, useUISpy } from '../../../../../jest.setup';
+import { onCloseMock, useRevisitsSpy, useStatusSpy, useUISpy } from '@test-setup';
 
 /* Mocks */
-import { saveRevisitMock, selectedRevisitStateMock, setErrorFormMock } from '../../../../mocks';
+import { saveRevisitMock, selectedRevisitStateMock, setErrorFormMock } from '@mocks';
 
 /* Modules */
-import { RevisitModal } from '../../../../../src/modules/revisits';
-import { UI_INITIAL_STATE } from '../../../../../src/modules/ui';
+import { RevisitModal } from '@revisits';
+import { UI_INITIAL_STATE } from '@ui';
 
 const completeMsg = 'Test complete msg'
 const completeRevisitMock = jest.fn().mockResolvedValue(completeMsg);

@@ -1,13 +1,13 @@
 import { useNavigation } from '@react-navigation/native';
 
 /* Supabase */
-import { supabase } from '../../../config';
+import { supabase } from '@config';
 
 /* Adapters */
 import { courseAdapter, courseFormValuesAdapter } from '../adapters';
 
 /* Features */
-import { useAppDispatch, useAppSelector } from '../../../features';
+import { useAppDispatch, useAppSelector } from '@features';
 import {
     INIT_COURSE,
     addCourse,
@@ -29,15 +29,15 @@ import {
 } from '../features';
 
 /* Hooks */
-import { addLastLesson, useLessons } from '../../lessons';
-import { useStatus, useNetwork } from '../../shared';
+import { addLastLesson, useLessons } from '@lessons';
+import { useStatus, useNetwork } from '@shared';
 
 /* Interfaces */
 import { Course, CourseFormValues, loadCoursesOptions, CourseEndpoint } from '../interfaces';
-import { Pagination } from '../../ui';
+import { Pagination } from '@ui';
 
 /* Utils */
-import { date } from '../../../utils';
+import { date } from '@utils';
 
 /**
  * Hook to management courses of store with state and actions

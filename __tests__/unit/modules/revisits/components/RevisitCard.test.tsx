@@ -3,16 +3,16 @@ import { render, screen, userEvent } from '@testing-library/react-native';
 import { MenuProvider } from 'react-native-popup-menu';
 
 /* Setup */
-import { mockUseNavigation, useRevisitsSpy } from '../../../../../jest.setup';
+import { mockUseNavigation, useRevisitsSpy } from '@test-setup';
 
 /* Mocks */
-import { onDeleteMock, onPassMock, onRevisitMock, selectedRevisitStateMock, setSelectedRevisitMock } from '../../../../mocks';
+import { onDeleteMock, onPassMock, onRevisitMock, selectedRevisitStateMock, setSelectedRevisitMock } from '@mocks';
 
 /* Modules */
-import { Revisit, RevisitCard } from '../../../../../src/modules/revisits';
+import { Revisit, RevisitCard } from '@revisits';
 
 /* Utils */
-import { date } from '../../../../../src/utils';
+import { date } from '@utils';
 
 const selectedRevisit = selectedRevisitStateMock.selectedRevisit;
 

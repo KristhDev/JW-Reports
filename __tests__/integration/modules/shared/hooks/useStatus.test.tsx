@@ -1,10 +1,10 @@
 import { act } from '@testing-library/react-native';
 
 /* Setup */
-import { getMockStoreUseStatus, renderUseStatus } from '../../../../setups';
+import { getMockStoreUseStatus, renderUseStatus } from '@setups';
 
 /* Mocks */
-import { initialStatusStateMock, successStateMock, errorStateMock, networkStateMock } from '../../../../mocks';
+import { initialStatusStateMock, successStateMock, errorStateMock, networkStateMock } from '@mocks';
 
 describe('Test in useStatus hook', () => {
     it('should return the initial state', () => {

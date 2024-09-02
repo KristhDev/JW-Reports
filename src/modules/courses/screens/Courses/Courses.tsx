@@ -1,7 +1,7 @@
-import React, { FC, useEffect } from 'react';
+import React, { FC, useCallback } from 'react';
 import { useStyles } from 'react-native-unistyles';
 import { MaterialTopTabScreenProps } from '@react-navigation/material-top-tabs';
-import { useNavigation } from '@react-navigation/native';
+import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
 /* Features */
@@ -9,7 +9,7 @@ import { INIT_COURSE } from '../../features';
 
 /* Components */
 import { CoursesList } from '../../components';
-import { Fab } from '../../../ui';
+import { Fab } from '@ui';
 
 /* Hooks */
 import { useCourses } from '../../hooks';
@@ -18,7 +18,7 @@ import { useCourses } from '../../hooks';
 import { CoursesTopTabsParamsList } from '../../interfaces';
 
 /* Theme */
-import { themeStylesheet } from '../../../theme';
+import { themeStylesheet } from '@theme';
 
 type CoursesProps = MaterialTopTabScreenProps<CoursesTopTabsParamsList>;
 
@@ -51,17 +51,13 @@ const Courses: FC<CoursesProps> = ({ route }): JSX.Element => {
      * Effect to set coursesScreenHistory when call focus event
      * in screen.
      */
-    useEffect(() => {
-        navigation.addListener('focus', () => {
+    useFocusEffect(
+        useCallback(() => {
             const navigationState = navigation.getState();
             if (!navigationState) return;
             setCoursesScreenHistory(navigationState.routeNames[navigationState.index]);
-        });
-
-        return () => {
-            navigation.removeListener('focus', () => {});
-        }
-    }, []);
+        }, [])
+    );
 
     return (
         <>

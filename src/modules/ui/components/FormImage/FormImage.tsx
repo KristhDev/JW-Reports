@@ -7,13 +7,13 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import { Button } from '../Button';
 
 /* Hooks */
-import { useImage } from '../../../shared';
+import { useImage } from '@shared';
 
 /* Interfaces */
 import { FormImageProps } from './interfaces';
 
 /* Theme */
-import { themeStylesheet } from '../../../theme';
+import { themeStylesheet } from '@theme';
 
 /**
  * Renders a form image component with the ability to select an image from the gallery or camera.

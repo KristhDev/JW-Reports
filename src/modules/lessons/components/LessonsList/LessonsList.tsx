@@ -5,24 +5,21 @@ import { useStyles } from 'react-native-unistyles';
 /* Features */
 import { INIT_LESSON } from '../../features';
 
-/* Screens */
+/* Modules */
 import { FinishOrStartLessonModal } from '../../screens';
-import { DeleteModal } from '../../../ui';
-
-/* Components */
+import { DeleteModal, ListEmptyComponent, ListFooterComponent, SearchInput, Title } from '@ui';
 import { LessonCard } from '../LessonCard';
-import { ListEmptyComponent, ListFooterComponent, SearchInput, Title } from '../../../ui';
 
 /* Hooks */
-import { useCourses } from '../../../courses';
+import { useCourses } from '@courses';
 import { useLessons } from '../../hooks';
-import { useNetwork } from '../../../shared';
+import { useNetwork } from '@shared';
 
 /* Interfaces */
 import { Lesson } from '../../interfaces';
 
 /* Theme */
-import { themeStylesheet } from '../../../theme';
+import { themeStylesheet } from '@theme';
 
 /**
  * Render a list of lessons.

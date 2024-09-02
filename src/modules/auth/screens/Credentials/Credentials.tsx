@@ -5,10 +5,10 @@ import { useStyles } from 'react-native-unistyles';
 
 /* Components */
 import { CredentialsForm } from '../../components';
-import { Title } from '../../../ui';
+import { Title } from '@ui';
 
 /* Theme */
-import { themeStylesheet } from '../../../theme';
+import { themeStylesheet } from '@theme';
 
 /**
  * This screen is to display the form to change the credentials

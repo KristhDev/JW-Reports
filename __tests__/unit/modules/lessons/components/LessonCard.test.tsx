@@ -3,16 +3,16 @@ import { render, screen, userEvent } from '@testing-library/react-native';
 import { MenuProvider } from 'react-native-popup-menu';
 
 /* Setup */
-import { mockUseNavigation, useLessonsSpy } from '../../../../../jest.setup';
+import { mockUseNavigation, useLessonsSpy } from '@test-setup';
 
 /* Mocks */
-import { lessonsMock, setSelectedLessonMock } from '../../../../mocks';
+import { lessonsMock, setSelectedLessonMock } from '@mocks';
 
 /* Modules */
-import { LessonCard } from '../../../../../src/modules/lessons';
+import { LessonCard } from '@lessons';
 
 /* Utils */
-import { date } from '../../../../../src/utils';
+import { date } from '@utils';
 
 const lesson = lessonsMock[0];
 

@@ -11,7 +11,7 @@ import {
     useImage,
     usePermissions,
     useStatus
-} from '../../src/modules/shared';
+} from '@shared';
 
 interface InitialState {
     permissions: PermissionsState;

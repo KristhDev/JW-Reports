@@ -3,7 +3,7 @@ import { Provider } from 'react-redux';
 import { configureStore } from '@reduxjs/toolkit';
 import { renderHook } from '@testing-library/react-native';
 
-import { statusReducer, StatusState, useStatus } from '../../src/modules/shared';
+import { statusReducer, StatusState, useStatus } from '@shared';
 
 export const getMockStoreUseStatus = (initialState: StatusState) => {
     return configureStore({

@@ -1,13 +1,13 @@
 import { useNavigation } from '@react-navigation/native';
 
 /* Supabase */
-import { supabase } from '../../../config';
+import { supabase } from '@config';
 
 /* Adapters */
 import { preachingAdapter } from '../adapters';
 
 /* Features */
-import { useAppDispatch, useAppSelector } from '../../../features';
+import { useAppDispatch, useAppSelector } from '@features';
 import {
     INIT_PREACHING,
     addPreaching,
@@ -23,13 +23,13 @@ import {
 } from '../features';
 
 /* Hooks */
-import { useNetwork, useStatus } from '../../shared';
+import { useNetwork, useStatus } from '@shared';
 
 /* Interfaces */
 import { Preaching, PreachingFormValues, PreachingEndpoint } from '../interfaces';
 
 /* Utils */
-import { date as dateUtil } from '../../../utils';
+import { date as dateUtil } from '@utils';
 
 /**
  * Hook to management preaching of store with state and actions

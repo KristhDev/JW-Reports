@@ -3,7 +3,7 @@ import { View } from 'react-native';
 import { render, screen } from '@testing-library/react-native';
 
 /* Screens */
-import { Modal } from '../../../../../src/modules/ui';
+import { Modal } from '@ui';
 
 const renderScreen = () => render(
     <Modal isOpen>

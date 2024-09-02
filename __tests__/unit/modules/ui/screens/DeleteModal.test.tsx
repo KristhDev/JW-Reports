@@ -2,10 +2,10 @@ import React from 'react';
 import { render, screen, userEvent } from '@testing-library/react-native';
 
 /* Setup */
-import { onCloseMock, onCofirmMock } from '../../../../../jest.setup';
+import { onCloseMock, onCofirmMock } from '@test-setup';
 
 /* Screens */
-import { DeleteModal } from '../../../../../src/modules/ui';
+import { DeleteModal } from '@ui';
 
 const user = userEvent.setup();
 

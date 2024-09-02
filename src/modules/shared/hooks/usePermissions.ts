@@ -1,7 +1,7 @@
 import { request, PERMISSIONS } from 'react-native-permissions';
 
 /* Features */
-import { useAppDispatch, useAppSelector } from '../../../features';
+import { useAppDispatch, useAppSelector } from '@features';
 import { checkPermissions as checkPermissionsThunk, setPermission,  } from '../features';
 
 /* Hooks */

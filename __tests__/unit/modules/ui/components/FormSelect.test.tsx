@@ -3,7 +3,7 @@ import { Formik } from 'formik';
 import { render, screen, userEvent } from '@testing-library/react-native';
 
 /* Modules */
-import { FormSelect, ItemOption } from '../../../../../src/modules/ui';
+import { FormSelect, ItemOption } from '@ui';
 
 const itemsOptions: ItemOption[] = [
     { label: 'Test option 1', value: 'test-option-1' },

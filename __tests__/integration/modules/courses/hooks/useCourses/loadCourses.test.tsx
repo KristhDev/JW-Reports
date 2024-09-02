@@ -1,8 +1,8 @@
 import { act } from '@testing-library/react-native';
 
 /* Setup */
-import { useNetworkSpy } from '../../../../../../jest.setup';
-import { getMockStoreUseCourses, renderUseCourses } from '../../../../../setups';
+import { useNetworkSpy } from '@test-setup';
+import { getMockStoreUseCourses, renderUseCourses } from '@setups';
 
 /* Mocks */
 import {
@@ -12,7 +12,7 @@ import {
     initialStatusStateMock,
     testCredentials,
     wifiMock
-} from '../../../../../mocks';
+} from '@mocks';
 
 describe('Test in useCourses hook - loadCourses', () => {
     useNetworkSpy.mockImplementation(() => ({

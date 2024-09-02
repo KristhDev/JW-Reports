@@ -5,11 +5,11 @@ import { useStyles } from 'react-native-unistyles';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
 /* Components */
-import { Button, FormField } from '../../../ui';
+import { Button, FormField } from '@ui';
 
 /* Hooks */
 import { useCourses } from '../../hooks';
-import { useStatus } from '../../../shared';
+import { useStatus } from '@shared';
 
 /* Schemas */
 import { courseFormSchema } from './schemas';
@@ -18,7 +18,7 @@ import { courseFormSchema } from './schemas';
 import { CourseFormValues } from '../../interfaces';
 
 /* Theme */
-import { themeStylesheet } from '../../../theme';
+import { themeStylesheet } from '@theme';
 
 /**
  * This component is responsible for rendering the fields to create

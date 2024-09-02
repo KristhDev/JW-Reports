@@ -5,11 +5,11 @@ import { Formik } from 'formik';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
 /* Components */
-import { Button, EyeBtn, FormField } from '../../../ui';
+import { Button, EyeBtn, FormField } from '@ui';
 
 /* Hooks */
 import { useAuth } from '../../hooks';
-import { useStatus } from '../../../shared';
+import { useStatus } from '@shared';
 
 /* Schemas */
 import { emailFormSchema, passwordFormSchema } from './schemas';

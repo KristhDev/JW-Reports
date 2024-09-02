@@ -2,13 +2,13 @@ import React from 'react';
 import { act, render, screen, userEvent } from '@testing-library/react-native';
 
 /* Setup */
-import { useAuthSpy, useNetworkSpy, useStatusSpy, useUISpy } from '../../../../../jest.setup';
+import { useAuthSpy, useNetworkSpy, useStatusSpy, useUISpy } from '@test-setup';
 
 /* Mocks */
-import { setErrorFormMock, testUser, updateProfileMock, wifiMock } from '../../../../mocks';
+import { setErrorFormMock, testUser, updateProfileMock, wifiMock } from '@mocks';
 
 /* Modules */
-import { ProfileForm } from '../../../../../src/modules/auth';
+import { ProfileForm } from '@auth';
 
 const user = userEvent.setup();
 const renderComponent = () => render(<ProfileForm />);

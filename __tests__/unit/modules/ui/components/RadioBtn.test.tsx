@@ -2,10 +2,10 @@ import React from 'react';
 import { render, screen, userEvent } from '@testing-library/react-native';
 
 /* Setup */
-import { onPressMock } from '../../../../../jest.setup';
+import { onPressMock } from '@test-setup';
 
 /* Modules */
-import { RadioBtn } from '../../../../../src/modules/ui';
+import { RadioBtn } from '@ui';
 
 const radioLabel = 'Label test';
 
@@ -36,8 +36,8 @@ describe('Test in <RadioBtn /> component', () => {
         const label = screen.getByTestId('radio-btn-text');
 
         /* Check if label exists and contain text pass by props */
-        expect(label).toBeTruthy();
-        expect(label.props.children).toBe(radioLabel);
+        expect(label).toBeOnTheScreen();
+        expect(label).toHaveTextContent(radioLabel);
     });
 
     it('should call onPress when pressed', async () => {

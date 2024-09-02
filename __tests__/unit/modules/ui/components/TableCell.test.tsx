@@ -2,7 +2,7 @@ import React from 'react';
 import { render, screen } from '@testing-library/react-native';
 
 /* Modules */
-import { TableCell } from '../../../../../src/modules/ui';
+import { TableCell } from '@ui';
 
 const text = 'Cell';
 
@@ -21,7 +21,7 @@ describe('Test in <TableCell /> component', () => {
         const cellText = screen.getByTestId('table-cell-text');
 
         /* Check if text exists and contain respective value */
-        expect(cellText).toBeTruthy();
-        expect(cellText.props.children).toBe(text);
+        expect(cellText).toBeOnTheScreen();
+        expect(cellText).toHaveTextContent(text);
     });
 });

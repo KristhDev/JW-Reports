@@ -4,22 +4,22 @@ import { useStyles } from 'react-native-unistyles';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
 /* Modules */
-import { useCourses, PassToCourseModal } from '../../../courses';
-import { FinishOrStartLessonModal, INIT_LESSON, LessonCard, LessonWithCourse, useLessons } from '../../../lessons';
-import { INIT_REVISIT, RevisitCard, Revisit, RevisitModal, useRevisits } from '../../../revisits';
+import { useCourses, PassToCourseModal } from '@courses';
+import { FinishOrStartLessonModal, INIT_LESSON, LessonCard, LessonWithCourse, useLessons } from '@lessons';
+import { INIT_REVISIT, RevisitCard, Revisit, RevisitModal, useRevisits } from '@revisits';
 
 /* Components */
 import { ReportModal } from '../ReportModal';
-import { DeleteModal, Fab, InfoText, Title } from '../../../ui';
+import { DeleteModal, Fab, InfoText, Title } from '@ui';
 
 /* Hooks */
 import { usePreaching } from '../../hooks';
 
 /* Utils */
-import { date } from '../../../../utils';
+import { date } from '@utils';
 
 /* Theme */
-import { themeStylesheet } from '../../../theme';
+import { themeStylesheet } from '@theme';
 
 /**
  * This screen is in charge of grouping the components to list the preaching days by

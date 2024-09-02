@@ -1,8 +1,8 @@
 import { act } from '@testing-library/react-native';
 
 /* Setup */
-import { useNetworkSpy } from '../../../../../../jest.setup';
-import { getMockStoreUseLessons, renderUseLessons } from '../../../../../setups';
+import { useNetworkSpy } from '@test-setup';
+import { getMockStoreUseLessons, renderUseLessons } from '@setups';
 
 /* Mocks */
 import {
@@ -11,7 +11,7 @@ import {
     initialLessonsStateMock,
     initialStatusStateMock,
     wifiMock
-} from '../../../../../mocks';
+} from '@mocks';
 
 const mockStore = getMockStoreUseLessons({
     auth: initialAuthStateMock,

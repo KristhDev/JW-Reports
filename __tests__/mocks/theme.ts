@@ -1,4 +1,4 @@
-import { ThemeState } from '../../src/modules/theme';
+import { ThemeState } from '@theme';
 
 export const setThemeMock = jest.fn();
 
