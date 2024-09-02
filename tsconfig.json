@@ -1,3 +1,38 @@
 {
-  "extends": "@react-native/typescript-config/tsconfig.json"
+  "extends": "@react-native/typescript-config/tsconfig.json",
+  "compilerOptions": {
+    "baseUrl": "./",
+    "paths": {
+      "@assets/*": [ "src/assets/*" ],
+      "@auth": [ "src/modules/auth" ],
+      "@auth/*": [ "src/modules/auth/*" ],
+      "@config": [ "src/config" ],
+      "@config/*": [ "src/config/*" ],
+      "@courses": [ "src/modules/courses" ],
+      "@courses/*": [ "src/modules/courses/*" ],
+      "@features": [ "src/features" ],
+      "@lessons": [ "src/modules/lessons" ],
+      "@lessons/*": [ "src/modules/lessons/*" ],
+      "@mocks": [ "./__tests__/mocks" ],
+      "@navigation": [ "src/navigation" ],
+      "@package": [ "./package.json" ],
+      "@preaching": [ "src/modules/preaching" ],
+      "@preaching/*": [ "src/modules/preaching/*" ],
+      "@providers": [ "src/providers" ],
+      "@revisits": [ "src/modules/revisits" ],
+      "@revisits/*": [ "src/modules/revisits/*" ],
+      "@services": [ "src/services" ],
+      "@services/*": [ "src/services/*" ],
+      "@setups": [ "./__tests__/setups" ],
+      "@shared": [ "src/modules/shared" ],
+      "@shared/*": [ "src/modules/shared/*" ],
+      "@test-config": [ "./__tests__/config" ],
+      "@test-setup": [ "./jest.setup.ts" ],
+      "@theme": [ "src/modules/theme" ],
+      "@theme/*": [ "src/modules/theme/*" ],
+      "@ui": [ "src/modules/ui" ],
+      "@ui/*": [ "src/modules/ui/*" ],
+      "@utils": [ "src/utils" ],
+    }    
+  }
 }
