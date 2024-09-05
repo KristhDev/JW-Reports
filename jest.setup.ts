@@ -40,7 +40,7 @@ export const useThemeSpy = jest.spyOn(useTheme, 'default');
 export const useUISpy = jest.spyOn(useUI, 'default');
 
 jest.spyOn(Image, 'resolveAssetSource').mockImplementation(() => ({
-    uri: 'https://www.google.com/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png',
+    uri: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTar_ouGael5ODlrC1kbFbKLpEPSJtTQqdaIg&s',
     width: 300,
     height: 180,
     scale: 1
