@@ -1183,10 +1183,10 @@
   resolved "https://registry.yarnpkg.com/@bugfender/common/-/common-1.4.0.tgz#e7483949cee6269a4ba78c1e82c03f31ca14f4ce"
   integrity sha512-EWsdYow0IqIjZERXVwKDHtoZKRFIknQDt/QpdVC4K2Yu1nTjkYecQRYJdnuP+Cvgn4JMrKl0HaTux2IjOyyLvA==
 
-"@bugfender/rn-bugfender@^2.2.1":
-  version "2.2.1"
-  resolved "https://registry.yarnpkg.com/@bugfender/rn-bugfender/-/rn-bugfender-2.2.1.tgz#06824e03e7c6d00d4a49329e82b8d6633a9b23f5"
-  integrity sha512-N0N1VppJBSBYdD5G1QYILMM9nQXvGK/H9kPsZAZYopEQOQLqi+TGsxNWyYuuDXtrJ97tem0x067ExAB7eANOuA==
+"@bugfender/rn-bugfender@^3.0.0":
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/@bugfender/rn-bugfender/-/rn-bugfender-3.0.0.tgz#e1b11ebb78dc5b08200e2c25a5657570a4a8535b"
+  integrity sha512-wCmWdo2lZ1ECMoev5/4z7pWA9qT3SMv5cbXydpRO9oMb9hSXwN8bNb4cZzHbnf5CFzzDEhrNGzII852QHJgmXA==
 
 "@bugfender/sdk@^2.3.0":
   version "2.3.0"
@@ -2126,10 +2126,10 @@
     "@supabase/realtime-js" "2.10.2"
     "@supabase/storage-js" "2.7.0"
 
-"@testing-library/react-native@^12.6.0":
-  version "12.6.0"
-  resolved "https://registry.yarnpkg.com/@testing-library/react-native/-/react-native-12.6.0.tgz#016b19070c85b0ca8a3081a405a9e22eaa1f534d"
-  integrity sha512-godF8rqf4tuolaiGwy7jZXleYfObCwb3b8LW9592DinMrno6idFsLVCovuMrhl8+YbTA3b4yMBn4BbSKY4lDjQ==
+"@testing-library/react-native@^12.6.1":
+  version "12.6.1"
+  resolved "https://registry.yarnpkg.com/@testing-library/react-native/-/react-native-12.6.1.tgz#dbb6b00246a3cffbffa18bbbb618fab968c0de28"
+  integrity sha512-ykXKeQEkqJ/lk0dqGfEspODjV5skmUh/6vVtyGZQsneFrcqGZJrO4uGhmChICLbnEKkstxXkjXeyoB7z8k9InQ==
   dependencies:
     jest-matcher-utils "^29.7.0"
     pretty-format "^29.7.0"
@@ -6234,10 +6234,10 @@ react-native-flipper@^0.164.0:
   resolved "https://registry.yarnpkg.com/react-native-flipper/-/react-native-flipper-0.164.0.tgz#64f6269a86a13a72e30f53ba9f5281d2073a7697"
   integrity sha512-iJhIe3rqx6okuzBp4AJsTa2b8VRAOGzoLRFx/4HGbaGvu8AurZjz8TTQkhJsRma8dsHN2b6KKZPvGGW3wdWzvA==
 
-react-native-gesture-handler@^2.18.1:
-  version "2.18.1"
-  resolved "https://registry.yarnpkg.com/react-native-gesture-handler/-/react-native-gesture-handler-2.18.1.tgz#ec9206f34cd2f34a66c0430b2c416d31ee6dff17"
-  integrity sha512-WF2fxQ5kTaxHghlkBM4YxO86SyGWVwrSNgJ1E8z/ZtL2xD5B3bg5agvuVFfOzvceC114yq71s6E9vKPz94ZxRw==
+react-native-gesture-handler@^2.19.0:
+  version "2.19.0"
+  resolved "https://registry.yarnpkg.com/react-native-gesture-handler/-/react-native-gesture-handler-2.19.0.tgz#16deaefcefe77d6b4b7fa48a82ef52be61ddbb07"
+  integrity sha512-Cc6DnSnn5hhgiuJOtlOJmXkbBBOZkW9UnJJG+DrWPq2jJuNvM4g5qq2plsywhxQj9xT7FyXZwVVblaXabfGZvQ==
   dependencies:
     "@egjs/hammerjs" "^2.0.17"
     hoist-non-react-statics "^3.3.0"
@@ -6249,10 +6249,10 @@ react-native-image-crop-picker@^0.41.2:
   resolved "https://registry.yarnpkg.com/react-native-image-crop-picker/-/react-native-image-crop-picker-0.41.2.tgz#824fa8fee8391fbb3e0b5ae2973221a2dff0cafb"
   integrity sha512-GcDu/adXU/1y/MrxsbOfqcGRGWC2pTttt5VGy/jyRJ6GXfoC29fTQf8SG5kGtc5schSR6K+mKYO4uW6eJPljlQ==
 
-react-native-keyboard-controller@^1.13.3:
-  version "1.13.3"
-  resolved "https://registry.yarnpkg.com/react-native-keyboard-controller/-/react-native-keyboard-controller-1.13.3.tgz#8e2cfbc55c65004fe2b4864f4a5c3184b62a3f7b"
-  integrity sha512-C6W0Ta5cCKa58pTL3A8WPFNvDgwc5+Qs3pj4v3Q4Emk1INkUEkJDsWyV7HdR232V/98mLSWai2W/8HlqsOAqhQ==
+react-native-keyboard-controller@^1.13.4:
+  version "1.13.4"
+  resolved "https://registry.yarnpkg.com/react-native-keyboard-controller/-/react-native-keyboard-controller-1.13.4.tgz#0f85ac2a1b594fd65283d98cb044f331ab598ec5"
+  integrity sha512-80unzD4S+ybgYOluhdeV4zV62ejg6Jt0l5iw7PuA1y3aM1a1+5tS2WoHLNk8605oDaGcVLGNMNF0Qv4GWe97Bg==
 
 react-native-mmkv@^2.12.2:
   version "2.12.2"
@@ -6274,10 +6274,10 @@ react-native-month-year-picker@^1.9.0:
     invariant "^2.2.4"
     moment "^2.29.4"
 
-react-native-onesignal@^5.2.3:
-  version "5.2.3"
-  resolved "https://registry.yarnpkg.com/react-native-onesignal/-/react-native-onesignal-5.2.3.tgz#45006729b713e7bbc8cbb93f32545c333b7c9d78"
-  integrity sha512-0DFUHI1gnYYWTHq9jgW+JKXJ897gjXhfePlGQhoTq/m3Cnv3SqyiyIMXVfeIhGQtOfz1uFDrryd4E11S186/dw==
+react-native-onesignal@^5.2.4:
+  version "5.2.4"
+  resolved "https://registry.yarnpkg.com/react-native-onesignal/-/react-native-onesignal-5.2.4.tgz#09cdcc60febf210a0f5249d8415fa3d51e111941"
+  integrity sha512-nTjZ+Y6xw//J5kDixwkKS+qsqVYJVcahE0sA80KWxNVSeUxWjUlrRFuGipk9A8DeeaRU8Ps73D/P++h/qvXYHQ==
   dependencies:
     invariant "^2.2.2"
 
