@@ -137,6 +137,7 @@ const RevisitModal: FC<ModalProps> = ({ isOpen, onClose }) => {
 
                                         {/* About field */}
                                         <FormField
+                                            editable={ !isRevisitLoading }
                                             label="Información actual:"
                                             multiline
                                             name="about"
@@ -147,6 +148,7 @@ const RevisitModal: FC<ModalProps> = ({ isOpen, onClose }) => {
                                         {/* Next visit field */}
                                         { (userInterface.oldDatetimePicker) ? (
                                             <DatetimeField
+                                                disabled={ isRevisitLoading }
                                                 icon={
                                                     <Ionicons
                                                         color={ colors.contentHeader }
@@ -164,6 +166,7 @@ const RevisitModal: FC<ModalProps> = ({ isOpen, onClose }) => {
                                             />
                                         ) : (
                                             <FormCalendar
+                                                editable={ !isRevisitLoading }
                                                 icon={
                                                     <Ionicons
                                                         color={ colors.contentHeader }
