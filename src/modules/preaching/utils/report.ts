@@ -28,14 +28,12 @@ export const report = {
      */
     getHoursRequirementByWeek: (hoursRequirement: number): string => {
         const hoursByDay = hoursRequirement / 28;
-        const minsByDay = hoursByDay * 60;
-        const minsByWeek = minsByDay * 7;
-
-        const hourByWeek = Math.floor(minsByWeek / 60);
+        const hourByWeek = Math.floor(hoursByDay * 7);
+        const minsByWeek = hoursByDay * 60 * 7;
 
         const minsRest = (Math.round(minsByWeek % 60) === 60)
             ? '00'
-            : Math.round(minsByWeek % 60);
+            : Math.round(minsByWeek % 60).toString();
 
         return `${ (minsRest === '00') ? hourByWeek + 1 : hourByWeek }:${ minsRest }`;
     },
