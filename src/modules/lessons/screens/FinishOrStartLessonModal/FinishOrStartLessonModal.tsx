@@ -107,6 +107,7 @@ const FinishOrStartLessonModal: FC<ModalProps> = ({ isOpen, onClose }) => {
                                     {/* Next lesson field */}
                                     { (userInterface.oldDatetimePicker) ? (
                                         <DatetimeField
+                                            disabled={ isLessonLoading }
                                             icon={
                                                 <Ionicons
                                                     color={ colors.contentHeader }
@@ -124,6 +125,7 @@ const FinishOrStartLessonModal: FC<ModalProps> = ({ isOpen, onClose }) => {
                                         />
                                     ) : (
                                         <FormCalendar
+                                            editable={ !isLessonLoading }
                                             icon={
                                                 <Ionicons
                                                     color={ colors.contentHeader }
