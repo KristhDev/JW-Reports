@@ -35,7 +35,7 @@ import { themeStylesheet } from '@theme';
  * @return {JSX.Element} The rendered form calendar component.
  */
 export const FormCalendar: FC<FormCalendarProps> = ({
-    editable,
+    editable = true,
     icon,
     inputDateFormat,
     label,

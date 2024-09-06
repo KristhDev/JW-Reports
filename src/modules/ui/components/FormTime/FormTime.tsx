@@ -33,7 +33,7 @@ import { stylesheet } from './styles';
  * @return {JSX.Element} The rendered form time component.
  */
 export const FormTime: FC<FormTimeProps> = ({
-    editable,
+    editable = true,
     icon,
     inputDateFormat,
     label,
