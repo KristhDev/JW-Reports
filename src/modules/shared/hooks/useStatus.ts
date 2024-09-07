@@ -1,18 +1,18 @@
 import { AuthError, PostgrestError } from '@supabase/supabase-js';
 
 /* Features */
-import { useAppDispatch, useAppSelector } from '../../../features';
+import { useAppDispatch, useAppSelector } from '@features';
 import { clearStatus as clearStatusAction, setStatus as setStatusAction,  } from '../features';
 
 /* Interfaces */
 import { SetStatusPayload } from '../interfaces';
-import { StorageError } from '../../ui';
+import { StorageError } from '@ui';
 
 /* Services */
-import { logger } from '../../../services';
+import { logger } from '@services';
 
 /* Utils */
-import { translateErrorMsg } from '../../../utils';
+import { translateErrorMsg } from '@utils';
 
 /**
  * Hook to management status of store with state and actions

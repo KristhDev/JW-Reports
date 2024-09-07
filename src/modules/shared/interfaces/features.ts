@@ -1,4 +1,4 @@
-import { Pagination } from '../../ui/interfaces/ui';
+import { Pagination } from '@ui';
 
 /**
  * Payload for setting the loading state.

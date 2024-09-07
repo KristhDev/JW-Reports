@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { View, ActivityIndicator } from 'react-native';
-import { useStyles } from 'react-native-unistyles';
 import { Formik } from 'formik';
+import { useStyles } from 'react-native-unistyles';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import Icon from 'react-native-vector-icons/Ionicons';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
 /* Components */
 import { Button, Checkbox, FormField, FormSelect } from '../../../ui';
@@ -30,12 +30,27 @@ import { themeStylesheet } from '../../../theme';
  */
 export const ProfileForm = (): JSX.Element => {
     const { top } = useSafeAreaInsets();
+    const { styles: themeStyles, theme: { colors, fontSizes, margins } } = useStyles(themeStylesheet);
 
     const { state: { user, isAuthLoading }, updateProfile } = useAuth();
     const { setErrorForm } = useStatus();
-    const { styles: themeStyles, theme: { colors, fontSizes, margins } } = useStyles(themeStylesheet);
 
-    const [ editHoursRequirement, setEditHoursRequirement ] = useState<boolean>(![ 0, 30, 50, 90 ].includes(user?.hoursRequirement || 0));
+    const [ editHoursRequirement, setEditHoursRequirement ] = useState<boolean>(
+        !Object.values(HOURS_REQUIREMENTS).includes(user?.hoursRequirement || 0)
+    );
+
+    /**
+     * Handles the selection of the hours requirement in the profile form.
+     *
+     * @param {string} value - The selected value of the hours requirement.
+     * @param {Function} setFieldValue - A function to set the value of the field.
+     *
+     * @return {void} This function does not return anything.
+     */
+    const handleSelect = (value: string, setFieldValue: (field: string, value: any) => void): void => {
+        setFieldValue('hoursRequirement', HOURS_REQUIREMENTS[value as keyof typeof HOURS_REQUIREMENTS] || 0);
+        setEditHoursRequirement(false);
+    }
 
     return (
         <Formik
@@ -56,7 +71,7 @@ export const ProfileForm = (): JSX.Element => {
                     <FormField
                         autoCapitalize="none"
                         leftIcon={
-                            <Icon
+                            <Ionicons
                                 color={ colors.icon }
                                 name="person-outline"
                                 size={ fontSizes.icon }
@@ -71,7 +86,7 @@ export const ProfileForm = (): JSX.Element => {
                     <FormField
                         autoCapitalize="none"
                         leftIcon={
-                            <Icon
+                            <Ionicons
                                 color={ colors.icon }
                                 name="people-outline"
                                 size={ fontSizes.icon }
@@ -85,7 +100,7 @@ export const ProfileForm = (): JSX.Element => {
                     {/* Precursor field */}
                     <FormSelect
                         icon={
-                            <Icon
+                            <Ionicons
                                 color={ colors.icon }
                                 name="briefcase-outline"
                                 size={ fontSizes.icon }
@@ -94,10 +109,7 @@ export const ProfileForm = (): JSX.Element => {
                         items={ PRECURSORS_OPTIONS }
                         label="Precursor:"
                         name="precursor"
-                        onChange={ (value) => {
-                            setFieldValue('hoursRequirement', HOURS_REQUIREMENTS[value as keyof typeof HOURS_REQUIREMENTS] || 0);
-                            setEditHoursRequirement(false);
-                        } }
+                        onChange={ (value) => handleSelect(value, setFieldValue) }
                         placeholder="Seleccione una opción"
                         style={{ marginBottom: (values.precursor !== 'ninguno') ? margins.sm : margins.xl }}
                         title="Seleccione su precursorado"
@@ -110,7 +122,7 @@ export const ProfileForm = (): JSX.Element => {
                                 autoCapitalize="none"
                                 editable={ editHoursRequirement }
                                 leftIcon={
-                                    <Icon
+                                    <Ionicons
                                         color={ colors.icon }
                                         name="time-outline"
                                         size={ fontSizes.icon }
@@ -140,7 +152,7 @@ export const ProfileForm = (): JSX.Element => {
                                 size={ fontSizes.icon }
                             />
                         ) }
-                        onPress={ (isValid) ? handleSubmit : () => setErrorForm(errors)  }
+                        onPress={ (isValid) ? handleSubmit : () => setErrorForm(errors) }
                         pressableStyle={{ marginBottom: top }}
                         text="Guardar"
                     />

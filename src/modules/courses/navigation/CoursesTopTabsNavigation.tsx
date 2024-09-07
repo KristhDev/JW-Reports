@@ -26,32 +26,27 @@ const CoursesTopTabsNavigation = (): JSX.Element => {
             sceneContainerStyle={{
                 backgroundColor: colors.contentHeader,
             }}
-            screenOptions={ ({ navigation }) => {
-                const { isFocused } = navigation;
-                const pressColor = (isFocused()) ? colors.buttonTranslucent : colors.buttonTransparent;
-
-                return {
-                    tabBarActiveTintColor: colors.button,
-                    tabBarInactiveTintColor: colors.headerText,
-                    tabBarIndicatorStyle: {
-                        backgroundColor: colors.button,
-                        height: 3
-                    },
-                    tabBarItemStyle: {
-                        width: width / 3
-                    },
-                    tabBarLabelStyle: {
-                        fontWeight: (isFocused()) ? 'bold' : 'normal'
-                    },
-                    tabBarPressColor: pressColor,
-                    tabBarScrollEnabled: true,
-                    tabBarStyle: {
-                        backgroundColor: colors.contentHeader,
-                        borderBottomWidth: 1,
-                        borderBottomColor: colors.header
-                    },
-                }
-            } }
+            screenOptions={ ({ navigation }) => ({
+                tabBarActiveTintColor: colors.button,
+                tabBarInactiveTintColor: colors.headerText,
+                tabBarIndicatorStyle: {
+                    backgroundColor: colors.button,
+                    height: 3
+                },
+                tabBarItemStyle: {
+                    width: width / 3
+                },
+                tabBarLabelStyle: {
+                    fontWeight: navigation.isFocused() ? 'bold' : 'normal'
+                },
+                tabBarPressColor: navigation.isFocused() ? colors.buttonTranslucent : colors.buttonTransparent,
+                tabBarScrollEnabled: true,
+                tabBarStyle: {
+                    backgroundColor: colors.contentHeader,
+                    borderBottomWidth: 1,
+                    borderBottomColor: colors.header
+                },
+            }) }
         >
             <Tabs.Screen
                 component={ Courses }

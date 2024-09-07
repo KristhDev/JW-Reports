@@ -2,7 +2,7 @@ import React, { useState, FC  } from 'react';
 import { View, Text, Pressable, TextInput } from 'react-native';
 import { useStyles } from 'react-native-unistyles';
 import { useField } from 'formik';
-import Icon from 'react-native-vector-icons/Ionicons';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
 /* Screens */
 import { OptionsModal } from '../../screens';
@@ -11,7 +11,7 @@ import { OptionsModal } from '../../screens';
 import { FormSelectProps } from './interfaces';
 
 /* Theme */
-import { themeStylesheet } from '../../../theme';
+import { themeStylesheet } from '@theme';
 
 /**
  * This component is responsible for displaying a field to select a value among
@@ -133,10 +133,11 @@ export const FormSelect: FC<FormSelectProps> = ({
                                         placeholder={ placeholder }
                                         placeholderTextColor={ colors.icon }
                                         style={[ themeStyles.formInput, inputTextStyle ]}
+                                        testID="form-select-input"
                                         value={ String(items.find(i => i.value === field?.value)?.label || '') }
                                     />
 
-                                    <Icon
+                                    <Ionicons
                                         name="chevron-down-outline"
                                         color={ colors.icon }
                                         size={ fontSizes.icon }

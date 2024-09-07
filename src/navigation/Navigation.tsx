@@ -3,20 +3,20 @@ import { AppState, StatusBar } from 'react-native';
 import { CardStyleInterpolators, createStackNavigator } from '@react-navigation/stack';
 
 /* Modules */
-import { NavigationParamsList, useUI } from '../modules/ui';
-import { AuthStackNavigation, useAuth } from '../modules/auth';
-import { SettingsStackNavigation, StatusModal, useNetwork, usePermissions } from '../modules/shared';
-import { useCourses } from '../modules/courses';
-import { useLessons } from '../modules/lessons';
-import { usePreaching } from '../modules/preaching';
-import { useRevisits } from '../modules/revisits';
-import { useTheme } from '../modules/theme';
+import { AuthStackNavigation, useAuth } from '@auth';
+import { useCourses } from '@courses';
+import { useLessons } from '@lessons';
+import { usePreaching } from '@preaching';
+import { useRevisits } from '@revisits';
+import { SettingsStackNavigation, StatusModal, useNetwork, usePermissions } from '@shared';
+import { useTheme } from '@theme';
+import { NavigationParamsList, useUI } from '@ui';
 
 /* Navigation */
 import MainTabsBottomNavigation from './MainTabsBottomNavigation';
 
 /* Services */
-import { notifications } from '../services';
+import { notifications } from '@services';
 
 const Stack = createStackNavigator<NavigationParamsList>();
 

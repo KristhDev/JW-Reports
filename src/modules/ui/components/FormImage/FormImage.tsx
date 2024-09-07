@@ -7,13 +7,13 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import { Button } from '../Button';
 
 /* Hooks */
-import { useImage } from '../../../shared';
+import { useImage } from '@shared';
 
 /* Interfaces */
 import { FormImageProps } from './interfaces';
 
 /* Theme */
-import { themeStylesheet } from '../../../theme';
+import { themeStylesheet } from '@theme';
 
 /**
  * Renders a form image component with the ability to select an image from the gallery or camera.
@@ -86,7 +86,10 @@ export const FormImage: FC<FormImageProps> = ({
 
     return (
         <View style={[ themeStyles.formField, style ]}>
-            <Text style={[ themeStyles.formLabel, labelStyle ]}>
+            <Text
+                style={[ themeStyles.formLabel, labelStyle ]}
+                testID="form-image-label"
+            >
                 { label }
             </Text>
 
@@ -94,6 +97,7 @@ export const FormImage: FC<FormImageProps> = ({
             <Image
                 source={{ uri: imageUri }}
                 style={[ { borderRadius: 5, height: imageHeight, width: '100%' }, imageStyle ]}
+                testID="form-image-image"
             />
 
             <View style={{ flexDirection: 'row', justifyContent: 'space-around', marginTop: margins.sm }}>

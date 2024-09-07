@@ -1,5 +1,5 @@
 import React, { FC } from 'react';
-import Icon from 'react-native-vector-icons/Ionicons';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 import { useStyles } from 'react-native-unistyles';
 
 /* Components */
@@ -22,7 +22,7 @@ export const BackButton: FC<{ color?: string, onPress?: () => void }> = ({ color
         <Fab
             color="transparent"
             icon={
-                <Icon
+                <Ionicons
                     color={ color ?? colors.button }
                     name="arrow-back-outline"
                     size={ (fontSizes.lg - 2) }

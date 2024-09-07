@@ -1,20 +1,20 @@
 import React from 'react';
-import { useStyles } from 'react-native-unistyles';
 import { useNavigation } from '@react-navigation/native';
-import Icon from 'react-native-vector-icons/Ionicons';
+import { useStyles } from 'react-native-unistyles';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
 /* Features */
 import { INIT_LESSON } from '../../features';
 
 /* Components */
 import { LessonsList } from '../../components';
-import { Fab } from '../../../ui';
+import { Fab } from '@ui';
 
 /* Hooks */
 import { useLessons } from '../../hooks';
 
 /* Theme */
-import { themeStylesheet } from '../../../theme';
+import { themeStylesheet } from '@theme';
 
 /**
  * This screen is responsible for grouping the components to show
@@ -23,10 +23,10 @@ import { themeStylesheet } from '../../../theme';
  * @return {JSX.Element} rendered component to show list of lessons
  */
 const Lessons = (): JSX.Element => {
-    const { navigate } = useNavigation();
+    const { styles: themeStyles, theme: { colors, fontSizes } } = useStyles(themeStylesheet);
+    const navigation = useNavigation();
 
     const { setSelectedLesson } = useLessons();
-    const { styles: themeStyles, theme: { colors, fontSizes } } = useStyles(themeStylesheet);
 
     /**
      * I want to set the selectedLesson to the INIT_LESSON, but I want to change the next_lesson
@@ -40,7 +40,7 @@ const Lessons = (): JSX.Element => {
             nextLesson: new Date().toString(),
         });
 
-        navigate('AddOrEditLessonScreen' as never);
+        navigation.navigate('AddOrEditLessonScreen' as never);
     }
 
     return (
@@ -50,7 +50,7 @@ const Lessons = (): JSX.Element => {
             <Fab
                 color={ colors.button }
                 icon={
-                    <Icon
+                    <Ionicons
                         color={ colors.contentHeader }
                         name="add-circle-outline"
                         size={ fontSizes.xl }

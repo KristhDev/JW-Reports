@@ -2,20 +2,14 @@ import React, { FC } from 'react';
 import { ActivityIndicator, Text, View } from 'react-native';
 import { useStyles } from 'react-native-unistyles';
 
-/* Screens */
-import { Modal } from '../../../ui/screens';
-
-/* Components */
-import { ModalActions } from '../../../ui/components';
+/* UI */
+import { Modal, ModalActions, ModalProps } from '@ui';
 
 /* Hooks */
 import { useCourses } from '../../hooks';
 
-/* Interfaces */
-import { ModalProps } from '../../../ui';
-
 /* Theme */
-import { themeStylesheet } from '../../../theme';
+import { themeStylesheet } from '@theme';
 
 /**
  * This is a modal that groups the components to activate
@@ -26,7 +20,7 @@ import { themeStylesheet } from '../../../theme';
  */
 const ActiveOrSuspendCourseModal: FC<ModalProps> = ({ onClose, isOpen }): JSX.Element => {
     const { state: { selectedCourse, isCourseLoading }, activeOrSuspendCourse } = useCourses();
-    const { styles: themeStyles, theme: { colors } } = useStyles(themeStylesheet);
+    const { styles: themeStyles, theme: { colors, fontSizes } } = useStyles(themeStylesheet);
 
     const modalMsg = (selectedCourse.suspended)
         ? '¿Está seguro de continuar este curso?'
@@ -72,7 +66,7 @@ const ActiveOrSuspendCourseModal: FC<ModalProps> = ({ onClose, isOpen }): JSX.El
             ) : (
                 <ActivityIndicator
                     color={ colors.button }
-                    size={ 50 }
+                    size={ fontSizes.xxl }
                     testID="modal-loading"
                 />
             ) }

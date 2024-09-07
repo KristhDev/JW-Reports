@@ -14,10 +14,10 @@ import { Modal } from '../../screens';
 import { FormCalendarProps } from './interfaces';
 
 /* Utils */
-import { date, localeEs } from '../../../../utils';
+import { date, localeEs } from '@utils';
 
 /* Theme */
-import { themeStylesheet } from '../../../theme';
+import { themeStylesheet } from '@theme';
 
 /**
  * Renders a form calendar component.
@@ -35,7 +35,7 @@ import { themeStylesheet } from '../../../theme';
  * @return {JSX.Element} The rendered form calendar component.
  */
 export const FormCalendar: FC<FormCalendarProps> = ({
-    editable,
+    editable = true,
     icon,
     inputDateFormat,
     label,

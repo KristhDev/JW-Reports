@@ -3,14 +3,14 @@ import { useStyles } from 'react-native-unistyles';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
 /* Modules */
-import { useAuth } from '../modules/auth';
-import { CoursesStackNavigation } from '../modules/courses';
-import { MainTabsBottomParamsList, TabBar } from '../modules/ui';
-import { PreachingStackNavigation } from '../modules/preaching';
-import { RevisitsStackNavigation } from '../modules/revisits';
+import { useAuth } from '@auth';
+import { CoursesStackNavigation } from '@courses';
+import { PreachingStackNavigation } from '@preaching';
+import { RevisitsStackNavigation } from '@revisits';
+import { MainTabsBottomParamsList, TabBar } from '@ui';
 
 /* Services */
-import { notifications } from '../services';
+import { notifications } from '@services';
 
 const Tabs = createBottomTabNavigator<MainTabsBottomParamsList>();
 

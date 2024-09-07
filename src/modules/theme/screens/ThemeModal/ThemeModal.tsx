@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
 
 /* Screens */
-import { OptionsModal, ModalProps } from '../../../ui';
+import { OptionsModal, ModalProps } from '@ui';
 
 /* Hooks */
 import { useTheme } from '../../hooks';

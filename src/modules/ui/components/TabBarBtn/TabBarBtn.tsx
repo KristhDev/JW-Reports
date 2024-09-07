@@ -1,10 +1,10 @@
 import React, { FC, useEffect, useState } from 'react';
 import { Pressable, Text, useWindowDimensions } from 'react-native';
 import { useStyles } from 'react-native-unistyles';
-import Icon from 'react-native-vector-icons/Ionicons';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
 /* Hooks */
-import { useTheme } from '../../../theme';
+import { useTheme } from '@theme';
 
 /* Interfaces */
 import { TabBarBtnProps } from './interfaces';
@@ -59,7 +59,7 @@ export const TabBarBtn: FC<TabBarBtnProps> = ({ active, color, iconName, onPress
             style={ styles.pressable }
         >
             <>
-                <Icon
+                <Ionicons
                     color={ color }
                     name={ iconName || '' }
                     size={ fontSizes.icon }

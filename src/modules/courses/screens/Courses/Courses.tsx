@@ -1,15 +1,15 @@
-import React, { FC, useEffect } from 'react';
+import React, { FC, useCallback } from 'react';
 import { useStyles } from 'react-native-unistyles';
 import { MaterialTopTabScreenProps } from '@react-navigation/material-top-tabs';
-import { useNavigation } from '@react-navigation/native';
-import Icon from 'react-native-vector-icons/Ionicons';
+import { useFocusEffect, useNavigation } from '@react-navigation/native';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
 /* Features */
 import { INIT_COURSE } from '../../features';
 
 /* Components */
 import { CoursesList } from '../../components';
-import { Fab } from '../../../ui';
+import { Fab } from '@ui';
 
 /* Hooks */
 import { useCourses } from '../../hooks';
@@ -18,7 +18,7 @@ import { useCourses } from '../../hooks';
 import { CoursesTopTabsParamsList } from '../../interfaces';
 
 /* Theme */
-import { themeStylesheet } from '../../../theme';
+import { themeStylesheet } from '@theme';
 
 type CoursesProps = MaterialTopTabScreenProps<CoursesTopTabsParamsList>;
 
@@ -30,10 +30,10 @@ type CoursesProps = MaterialTopTabScreenProps<CoursesTopTabsParamsList>;
  * @return {JSX.Element} rendered component to show list of courses
  */
 const Courses: FC<CoursesProps> = ({ route }): JSX.Element => {
-    const { addListener, removeListener, getState, navigate } = useNavigation();
+    const navigation = useNavigation();
+    const { styles: themeStyles, theme: { colors, fontSizes } } = useStyles(themeStylesheet);
 
     const { setCoursesScreenHistory, setSelectedCourse } = useCourses();
-    const { styles: themeStyles, theme: { colors, fontSizes } } = useStyles(themeStylesheet);
 
     /**
      * The function handleNavigate is a function that takes no parameters and returns nothing. It sets
@@ -44,24 +44,20 @@ const Courses: FC<CoursesProps> = ({ route }): JSX.Element => {
      */
     const handleNavigate = (): void => {
         setSelectedCourse(INIT_COURSE);
-        navigate('AddOrEditCourseScreen' as never);
+        navigation.navigate('AddOrEditCourseScreen' as never);
     }
 
     /**
      * Effect to set coursesScreenHistory when call focus event
      * in screen.
      */
-    useEffect(() => {
-        addListener('focus', () => {
-            const navigationState = getState();
+    useFocusEffect(
+        useCallback(() => {
+            const navigationState = navigation.getState();
             if (!navigationState) return;
             setCoursesScreenHistory(navigationState.routeNames[navigationState.index]);
-        });
-
-        return () => {
-            removeListener('focus', () => {});
-        }
-    }, []);
+        }, [])
+    );
 
     return (
         <>
@@ -75,7 +71,7 @@ const Courses: FC<CoursesProps> = ({ route }): JSX.Element => {
                 <Fab
                     color={ colors.button }
                     icon={
-                        <Icon
+                        <Ionicons
                             color={ colors.contentHeader }
                             name="add-circle-outline"
                             size={ fontSizes.xl }

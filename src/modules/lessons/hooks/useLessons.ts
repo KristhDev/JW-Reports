@@ -1,13 +1,13 @@
 import { useNavigation } from '@react-navigation/native';
 
 /* Supabase */
-import { supabase } from '../../../config';
+import { supabase } from '@config';
 
 /* Adapters */
 import { lessonAdapter } from '../adapters';
 
 /* Features */
-import { useAppDispatch, useAppSelector } from '../../../features';
+import { useAppDispatch, useAppSelector } from '@features';
 import {
     addLastLesson,
     addLesson,
@@ -28,22 +28,22 @@ import {
 } from '../features';
 
 /* Hooks */
-import { addLastLessonInCourse, courseAdapter, INIT_COURSE, replaceLastLessonInCourse, updateLastLessonInCourse } from '../../courses';
-import { useNetwork, useStatus } from '../../shared';
+import { addLastLessonInCourse, courseAdapter, INIT_COURSE, replaceLastLessonInCourse, updateLastLessonInCourse } from '@courses';
+import { useNetwork, useStatus } from '@shared';
 
 /* Interfaces */
 import { Lesson, LessonEndpoint, LessonFormValues, LessonWithCourseEndpoint } from '../interfaces';
-import { LoadResourcesOptions, Pagination } from '../../ui';
+import { LoadResourcesOptions, Pagination } from '@ui';
 
 /* Utils */
-import { date } from '../../../utils';
+import { date } from '@utils';
 
 /**
  * Hook to management lessons of store with state and actions
  */
 const useLessons = () => {
     const dispatch = useAppDispatch();
-    const { goBack, navigate } = useNavigation();
+    const navigation = useNavigation();
     const { wifi } = useNetwork();
 
     const state = useAppSelector(store => store.lessons);
@@ -129,7 +129,7 @@ const useLessons = () => {
         dispatch(removeLesson({ id: state.selectedLesson.id }));
         dispatch(replaceLastLessonInCourse({ lessonId: state.selectedLesson.id, lastLesson: state.lessons[0] }));
         onFinish && onFinish();
-        back && goBack();
+        back && navigation.goBack();
 
         setSelectedLesson({
             ...INIT_LESSON,
@@ -378,7 +378,7 @@ const useLessons = () => {
             msg: 'Has agregado una clase al curso correctamente.'
         });
 
-        navigate('LessonsScreen' as never);
+        navigation.navigate('LessonsScreen' as never);
     }
 
     /**
@@ -440,7 +440,7 @@ const useLessons = () => {
             msg: 'Has actualizado la clase correctamente.'
         });
 
-        goBack();
+        navigation.goBack();
     }
 
     return {

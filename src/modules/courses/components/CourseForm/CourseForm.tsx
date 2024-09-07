@@ -1,15 +1,15 @@
 import React from 'react';
 import { ActivityIndicator, View } from 'react-native';
-import { useStyles } from 'react-native-unistyles';
 import { Formik } from 'formik';
-import Icon from 'react-native-vector-icons/Ionicons';
+import { useStyles } from 'react-native-unistyles';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
 /* Components */
-import { Button, FormField } from '../../../ui';
+import { Button, FormField } from '@ui';
 
 /* Hooks */
 import { useCourses } from '../../hooks';
-import { useStatus } from '../../../shared';
+import { useStatus } from '@shared';
 
 /* Schemas */
 import { courseFormSchema } from './schemas';
@@ -18,7 +18,7 @@ import { courseFormSchema } from './schemas';
 import { CourseFormValues } from '../../interfaces';
 
 /* Theme */
-import { themeStylesheet } from '../../../theme';
+import { themeStylesheet } from '@theme';
 
 /**
  * This component is responsible for rendering the fields to create
@@ -27,9 +27,10 @@ import { themeStylesheet } from '../../../theme';
  * @return {JSX.Element} The course form component.
  */
 export const CourseForm = (): JSX.Element => {
+    const { styles: themeStyles, theme: { colors, fontSizes, margins } } = useStyles(themeStylesheet);
+
     const { state: { isCourseLoading, selectedCourse }, saveCourse, updateCourse } = useCourses();
     const { setErrorForm } = useStatus();
-    const { styles: themeStyles, theme: { colors, fontSizes, margins } } = useStyles(themeStylesheet);
 
     /**
      * If the selectedCourse.id is an empty string, then save the formValues, otherwise update the
@@ -62,7 +63,7 @@ export const CourseForm = (): JSX.Element => {
                     {/* Person name field */}
                     <FormField
                         leftIcon={
-                            <Icon
+                            <Ionicons
                                 color={ colors.icon }
                                 name="person-outline"
                                 size={ fontSizes.icon }
@@ -94,7 +95,7 @@ export const CourseForm = (): JSX.Element => {
                     {/* Publication field */}
                     <FormField
                         leftIcon={
-                            <Icon
+                            <Ionicons
                                 color={ colors.icon }
                                 name="book-outline"
                                 size={ fontSizes.icon }

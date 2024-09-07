@@ -3,10 +3,10 @@ import { Pressable, Text, View, useWindowDimensions } from 'react-native';
 import { useStyles } from 'react-native-unistyles';
 import { Menu, MenuOption, MenuOptions, MenuTrigger } from 'react-native-popup-menu';
 import { useNavigation } from '@react-navigation/native';
-import Icon from 'react-native-vector-icons/Ionicons';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
 /* Components */
-import { Fab } from '../../../ui';
+import { Fab } from '@ui';
 
 /* Hooks */
 import { useLessons } from '../../hooks';
@@ -15,10 +15,10 @@ import { useLessons } from '../../hooks';
 import { LessonCardProps } from './interfaces';
 
 /* Utils */
-import { characters, date } from '../../../../utils';
+import { characters, date } from '@utils';
 
 /* Styles */
-import { themeStylesheet } from '../../../theme';
+import { themeStylesheet } from '@theme';
 import { stylesheet } from './styles';
 
 /**
@@ -34,9 +34,9 @@ import { stylesheet } from './styles';
  */
 export const LessonCard: FC<LessonCardProps> = ({ lesson, screenToNavigate, onClick, onDelete, onFinish }): JSX.Element => {
     const [ isOpen, setIsOpen ] = useState<boolean>(false);
-    const { navigate } = useNavigation();
     const { width } = useWindowDimensions();
 
+    const navigation = useNavigation();
     const { styles, theme: { colors, fontSizes, margins } } = useStyles(stylesheet);
     const { styles: themeStyles, } = useStyles(themeStylesheet);
 
@@ -53,7 +53,7 @@ export const LessonCard: FC<LessonCardProps> = ({ lesson, screenToNavigate, onCl
     const handleLessonDetail = (): void => {
         setSelectedLesson(lesson);
         onClick && onClick();
-        navigate(screenToNavigate as never);
+        navigation.navigate(screenToNavigate as never);
     }
 
     /**
@@ -65,7 +65,7 @@ export const LessonCard: FC<LessonCardProps> = ({ lesson, screenToNavigate, onCl
     const handleEdit = (): void => {
         setIsOpen(false);
         setSelectedLesson(lesson);
-        navigate('AddOrEditLessonScreen' as never);
+        navigation.navigate('AddOrEditLessonScreen' as never);
     }
 
     /**
@@ -113,7 +113,7 @@ export const LessonCard: FC<LessonCardProps> = ({ lesson, screenToNavigate, onCl
                 <Fab
                     color={ 'transparent' }
                     icon={
-                        <Icon
+                        <Ionicons
                             color={ colors.button }
                             name="ellipsis-vertical"
                             size={ (fontSizes.md - 3) }

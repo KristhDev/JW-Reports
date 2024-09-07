@@ -1,4 +1,4 @@
-import { CourseFilter } from '../../interfaces/courses';
+import { CourseFilter } from '../../interfaces';
 
 /* Defining the props that will be passed to the component. */
 export interface CoursesListProps {

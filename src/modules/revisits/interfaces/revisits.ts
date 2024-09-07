@@ -1,7 +1,7 @@
 import { Image } from 'react-native-image-crop-picker';
 
 /* Interfaces */
-import { LoadResourcesOptions, Pagination } from '../../ui/';
+import { LoadResourcesOptions, Pagination } from '@ui';
 
 /**
  * RevisitsStackParamsList is a type that is an object with three properties, each of which is a

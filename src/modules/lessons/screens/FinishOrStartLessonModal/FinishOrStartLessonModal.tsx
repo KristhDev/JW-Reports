@@ -1,13 +1,13 @@
 import React, { FC, useState } from 'react';
 import { ActivityIndicator, Text, View } from 'react-native';
-import { useStyles } from 'react-native-unistyles';
 import { Formik } from 'formik';
-import Icon from 'react-native-vector-icons/Ionicons';
+import { useStyles } from 'react-native-unistyles';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
 /* Modules */
-import { Modal, ModalActions, ModalProps, FormCalendar, useUI, DatetimeField } from '../../../ui';
 import { useLessons } from '../../hooks';
-import { themeStylesheet } from '../../../theme';
+import { themeStylesheet } from '@theme';
+import { Modal, ModalActions, ModalProps, FormCalendar, useUI, DatetimeField } from '@ui';
 
 /**
  * This modal is responsible for grouping the components to finish
@@ -107,8 +107,9 @@ const FinishOrStartLessonModal: FC<ModalProps> = ({ isOpen, onClose }) => {
                                     {/* Next lesson field */}
                                     { (userInterface.oldDatetimePicker) ? (
                                         <DatetimeField
+                                            disabled={ isLessonLoading }
                                             icon={
-                                                <Icon
+                                                <Ionicons
                                                     color={ colors.contentHeader }
                                                     name="calendar-outline"
                                                     size={ fontSizes.icon }
@@ -124,8 +125,9 @@ const FinishOrStartLessonModal: FC<ModalProps> = ({ isOpen, onClose }) => {
                                         />
                                     ) : (
                                         <FormCalendar
+                                            editable={ !isLessonLoading }
                                             icon={
-                                                <Icon
+                                                <Ionicons
                                                     color={ colors.contentHeader }
                                                     name="calendar-outline"
                                                     size={ fontSizes.icon }
@@ -155,7 +157,7 @@ const FinishOrStartLessonModal: FC<ModalProps> = ({ isOpen, onClose }) => {
             ) : (
                 <ActivityIndicator
                     color={ colors.button }
-                    size={ (fontSizes.xxl + 2) }
+                    size={ fontSizes.xxl }
                     testID="modal-loading"
                 />
             ) }

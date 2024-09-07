@@ -3,9 +3,9 @@ import { ActivityIndicator, Text, View } from 'react-native';
 import { useStyles } from 'react-native-unistyles';
 
 /* Modules */
-import { Modal, ModalProps, ModalActions } from '../../../ui';
 import { useCourses } from '../../hooks';
-import { themeStylesheet } from '../../../theme';
+import { themeStylesheet } from '@theme';
+import { Modal, ModalProps, ModalActions } from '@ui';
 
 /**
  * This modal is responsible for grouping the components to finish
@@ -15,8 +15,9 @@ import { themeStylesheet } from '../../../theme';
  * @return {JSX.Element} rendered component to show modal
  */
 const FinishOrStartCourseModal: FC<ModalProps> = ({ isOpen, onClose }): JSX.Element => {
-    const { state: { selectedCourse, isCourseLoading }, finishOrStartCourse } = useCourses();
     const { styles: themeStyles, theme: { colors, fontSizes } } = useStyles(themeStylesheet);
+
+    const { state: { selectedCourse, isCourseLoading }, finishOrStartCourse } = useCourses();
 
     const modalMsg = (selectedCourse.finished)
         ? '¿Está seguro de volver a comenzar este curso?'
@@ -57,7 +58,7 @@ const FinishOrStartCourseModal: FC<ModalProps> = ({ isOpen, onClose }): JSX.Elem
             ) : (
                 <ActivityIndicator
                     color={ colors.button }
-                    size={ (fontSizes.xxl + 2) }
+                    size={ fontSizes.xxl }
                     testID="modal-loading"
                 />
             ) }

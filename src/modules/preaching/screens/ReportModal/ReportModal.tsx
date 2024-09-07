@@ -3,21 +3,21 @@ import { View, Text, Share, TextInput } from 'react-native';
 import { useStyles } from 'react-native-unistyles';
 
 /* Screens */
-import { Modal, RadioBtn, ModalActions } from '../../../ui';
+import { Modal, RadioBtn, ModalActions } from '@ui';
 
 /* Hooks */
-import { useAuth } from '../../../auth';
+import { useAuth } from '@auth';
 import { usePreaching } from '../../hooks';
-import { useCourses } from '../../../courses';
+import { useCourses } from '@courses';
 
 /* Interfaces */
 import { ReportModalProps } from './interfaces';
 
 /* Utils */
-import { date } from '../../../../utils';
+import { characters, date } from '@utils';
 
 /* Styles */
-import { themeStylesheet } from '../../../theme';
+import { themeStylesheet } from '@theme';
 import { stylesheet } from './styles';
 
 const particitions = [
@@ -41,11 +41,12 @@ const ReportModal: FC<ReportModalProps> = ({ isOpen, month, onClose }): JSX.Elem
         end: comment.length || 0
     });
 
+    const { styles: themeStyles, theme: { colors, margins } } = useStyles(themeStylesheet);
+    const { styles } = useStyles(stylesheet);
+
     const { state: { user } } = useAuth();
     const { state: { preachings } } = usePreaching();
     const { state: { courses } } = useCourses();
-    const { styles: themeStyles, theme: { colors, margins } } = useStyles(themeStylesheet);
-    const { styles } = useStyles(stylesheet);
 
     const username = `${ user.name } ${ user.surname }`;
     const totalHours = date.sumHours(preachings.map(p => ({ init: p.initHour, finish: p.finalHour })));
@@ -63,7 +64,7 @@ const ReportModal: FC<ReportModalProps> = ({ isOpen, month, onClose }): JSX.Elem
 
         let report = '*Informe De Predicación* \n \n';
         report += `Nombre: ${ username }\n`;
-        report += `Mes: ${ month.toLowerCase() }\n`;
+        report += `Mes: ${ characters.capitalize(month) }\n`;
 
         if (user.precursor !== 'ninguno') report += `Horas: ${ totalHours }\n`;
         else report += `Participo en el ministerio: ${ participated }`;
@@ -101,7 +102,7 @@ const ReportModal: FC<ReportModalProps> = ({ isOpen, month, onClose }): JSX.Elem
 
                     <View style={{ flexDirection: 'row' }}>
                         <Text style={{ ...styles.reportText, color: colors.text }}>Mes: </Text>
-                        <Text style={{ ...styles.reportText, color: colors.modalText }}>{ month.toLowerCase() }</Text>
+                        <Text style={{ ...styles.reportText, color: colors.modalText }}>{ characters.capitalize(month) }</Text>
                     </View>
 
                     { (user.precursor !== 'ninguno') && (
@@ -154,9 +155,7 @@ const ReportModal: FC<ReportModalProps> = ({ isOpen, month, onClose }): JSX.Elem
                                         selectionColor={ colors.linkText }
                                         style={{
                                             ...themeStyles.formInput,
-                                            flex: 1,
                                             maxHeight: 105,
-                                            paddingRight: 5,
                                             textAlignVertical: 'top',
                                         }}
                                         value={ comment }

@@ -1,13 +1,13 @@
 import React, { FC, useEffect, useState } from 'react';
 import { View, TextInput, Pressable } from 'react-native';
 import { useStyles } from 'react-native-unistyles';
-import Icon from 'react-native-vector-icons/Ionicons';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
 /* Interfaces */
 import { SearchInputProps } from './interfaces';
 
 /* Styles */
-import { themeStylesheet } from '../../../theme';
+import { themeStylesheet } from '@theme';
 import { stylesheet } from './styles';
 
 /**
@@ -52,7 +52,7 @@ export const SearchInput: FC<SearchInputProps> = ({ onClean, onSearch, refreshin
         <View style={ styles.searchInputContainer }>
 
             {/* Search icon */}
-            <Icon
+            <Ionicons
                 color={ colors.icon }
                 name="search-outline"
                 size={ fontSizes.icon }
@@ -60,10 +60,7 @@ export const SearchInput: FC<SearchInputProps> = ({ onClean, onSearch, refreshin
 
             {/* Input container */}
             <View
-                style={{
-                    ...styles.inputContainer,
-                    borderColor: (isFocused) ? colors.button : colors.icon
-                }}
+                style={ styles.inputContainer(isFocused) }
                 testID="search-input-text-input-container"
             >
 
@@ -78,7 +75,7 @@ export const SearchInput: FC<SearchInputProps> = ({ onClean, onSearch, refreshin
                     placeholder="Buscar"
                     placeholderTextColor={ colors.icon }
                     returnKeyType="search"
-                    style={{ ...themeStyles.formInput, flex: 1 }}
+                    style={ themeStyles.formInput }
                     testID="search-input-text-input"
                     value={ searchText }
                 />
@@ -92,10 +89,10 @@ export const SearchInput: FC<SearchInputProps> = ({ onClean, onSearch, refreshin
                         style={ styles.cleanBtn }
                         testID="search-input-clear-btn"
                     >
-                        <Icon
+                        <Ionicons
                             color={ (searchText.length === 0) ? 'transparent' : colors.icon }
                             name="close-outline"
-                            size={ (fontSizes.icon + 5) }
+                            size={ fontSizes.icon }
                         />
                     </Pressable>
                 </View>

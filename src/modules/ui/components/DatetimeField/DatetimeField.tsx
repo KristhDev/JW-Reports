@@ -11,10 +11,10 @@ import { Button } from '../Button';
 import { DatetimeFieldProps } from './interfaces';
 
 /* Utils */
-import { date } from '../../../../utils';
+import { date } from '@utils';
 
 /* Theme */
-import { themeStylesheet } from '../../../theme';
+import { themeStylesheet } from '@theme';
 
 /**
  * This component is responsible for displaying a field to select a

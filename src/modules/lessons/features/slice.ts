@@ -8,12 +8,12 @@ import {
     RemoveResourcePayload,
     SetIsDeletingPayload,
     SetIsLoadingPayload,
-} from '../../shared';
+} from '@shared';
 
 import { Lesson, LessonPayload, LessonsState, SetLessonsPayload, SetLessonWithCoursePayload } from '../interfaces';
 
 /* Courses */
-import { INIT_COURSE } from '../../courses';
+import { INIT_COURSE } from '@courses';
 
 /* Initial lesson */
 export const INIT_LESSON: Lesson = {

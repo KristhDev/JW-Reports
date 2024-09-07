@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { ActivityIndicator, Text, TouchableOpacity, View } from 'react-native';
-import { useStyles } from 'react-native-unistyles';
-import { useNavigation } from '@react-navigation/native';
 import { Formik } from 'formik';
-import Icon from 'react-native-vector-icons/Ionicons';
+import { useNavigation } from '@react-navigation/native';
+import { useStyles } from 'react-native-unistyles';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
 /* Components */
 import { Button, EyeBtn, FormField } from '../../../ui/components';
@@ -28,11 +28,11 @@ export const RegisterForm = (): JSX.Element => {
     const [ showPassword, setShowPassword ] = useState<boolean>(false);
     const [ showConfirmPassword, setShowConfirmPassword ] = useState<boolean>(false);
 
-    const { navigate } = useNavigation();
+    const navigation = useNavigation();
+    const { styles: themeStyles, theme: { colors, fontSizes, margins } } = useStyles(themeStylesheet);
 
     const { state: { isAuthLoading }, signUp } = useAuth();
     const { setErrorForm } = useStatus();
-    const { styles: themeStyles, theme: { colors, fontSizes, margins } } = useStyles(themeStylesheet);
 
     return (
         <Formik
@@ -54,7 +54,7 @@ export const RegisterForm = (): JSX.Element => {
                     <FormField
                         autoCapitalize="none"
                         leftIcon={
-                            <Icon
+                            <Ionicons
                                 color={ colors.icon }
                                 name="person-outline"
                                 size={ fontSizes.icon }
@@ -69,7 +69,7 @@ export const RegisterForm = (): JSX.Element => {
                     <FormField
                         autoCapitalize="none"
                         leftIcon={
-                            <Icon
+                            <Ionicons
                                 color={ colors.icon }
                                 name="people-outline"
                                 size={ fontSizes.icon }
@@ -84,7 +84,7 @@ export const RegisterForm = (): JSX.Element => {
                     <FormField
                         autoCapitalize="none"
                         leftIcon={
-                            <Icon
+                            <Ionicons
                                 color={ colors.icon }
                                 name="mail-outline"
                                 size={ fontSizes.icon }
@@ -100,7 +100,7 @@ export const RegisterForm = (): JSX.Element => {
                     <FormField
                         autoCapitalize="none"
                         leftIcon={
-                            <Icon
+                            <Ionicons
                                 color={ colors.icon }
                                 name="key-outline"
                                 size={ fontSizes.icon }
@@ -122,7 +122,7 @@ export const RegisterForm = (): JSX.Element => {
                     <FormField
                         autoCapitalize="none"
                         leftIcon={
-                            <Icon
+                            <Ionicons
                                 color={ colors.icon }
                                 name="key-outline"
                                 size={ fontSizes.icon }
@@ -162,7 +162,7 @@ export const RegisterForm = (): JSX.Element => {
 
                         <TouchableOpacity
                             activeOpacity={ 0.75 }
-                            onPress={ () => navigate('LoginScreen' as never) }
+                            onPress={ () => navigation.navigate('LoginScreen' as never) }
                             testID="register-form-sign-in"
                         >
                             <Text style={ themeStyles.formLink }>

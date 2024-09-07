@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { ScrollView, Text, TouchableOpacity, View } from 'react-native';
-import { useStyles } from 'react-native-unistyles';
 import { useNavigation, useRoute } from '@react-navigation/native';
+import { useStyles } from 'react-native-unistyles';
 
 /* Features */
 import { INIT_LESSON } from '../../features';
@@ -10,17 +10,17 @@ import { INIT_LESSON } from '../../features';
 import { FinishOrStartLessonModal } from '../FinishOrStartLessonModal';
 
 /* Components */
-import { InfoText, Title } from '../../../ui';
+import { InfoText, Title } from '@ui';
 
 /* Hooks */
-import { useCourses } from '../../../courses';
+import { useCourses } from '@courses';
 import { useLessons } from '../../hooks';
 
 /* Utils */
-import { date } from '../../../../utils';
+import { date } from '@utils';
 
 /* Styles */
-import { themeStylesheet } from '../../../theme';
+import { themeStylesheet } from '@theme';
 import { stylesheet } from './styles';
 
 /**
@@ -31,13 +31,15 @@ import { stylesheet } from './styles';
  */
 const LessonDetail = (): JSX.Element => {
     const [ showFSModal, setShowFSModal ] = useState<boolean>(false);
-    const { addListener, getState, removeListener } = useNavigation();
-    const { name } = useRoute();
+
+    const navigation = useNavigation();
+    const route = useRoute();
+
+    const { styles: themeStyles, theme: { fontSizes, margins } } = useStyles(themeStylesheet);
+    const { styles } = useStyles(stylesheet);
 
     const { state: { selectedCourse } } = useCourses();
     const { state: { selectedLesson }, setSelectedLesson } = useLessons();
-    const { styles: themeStyles, theme: { fontSizes, margins } } = useStyles(themeStylesheet);
-    const { styles } = useStyles(stylesheet);
 
     const statusLessonText = (selectedLesson.done) ? 'Impartida' : 'Por impartir';
     const nextVisit = date.format(selectedLesson.nextLesson, 'DD [de] MMMM [del] YYYY');
@@ -47,11 +49,11 @@ const LessonDetail = (): JSX.Element => {
      * is different from 4.
      */
     useEffect(() => {
-        addListener('blur', () => {
-            const navigationState = getState();
+        navigation.addListener('blur', () => {
+            const navigationState = navigation.getState();
             if (!navigationState) return;
 
-            if ((name === 'LessonDetailScreen' && navigationState.index !== 4) || (name === 'HomeLessonDetailScreen' && navigationState.index !== 2)) {
+            if ((route.name === 'LessonDetailScreen' && navigationState.index !== 4) || (route.name === 'HomeLessonDetailScreen' && navigationState.index !== 2)) {
                 setSelectedLesson({
                     ...INIT_LESSON,
                     nextLesson: new Date().toString()
@@ -60,7 +62,7 @@ const LessonDetail = (): JSX.Element => {
         });
 
         return () => {
-            removeListener('blur', () => {});
+            navigation.removeListener('blur', () => {});
         }
     }, []);
 

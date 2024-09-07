@@ -4,16 +4,16 @@ import { persistReducer, persistStore } from 'reduxjs-toolkit-persist';
 import { PersistConfig } from 'reduxjs-toolkit-persist/lib/types';
 
 /* Reducers */
-import { authReducer } from '../modules/auth/features';
-import { coursesReducer } from '../modules/courses/features';
-import { lessonsReducer } from '../modules/lessons/features';
-import { permissionsReducer, statusReducer } from '../modules/shared/features';
-import { preachingReducer } from '../modules/preaching/features';
-import { revisitsReducer } from '../modules/revisits/features';
-import { uiReducer } from '../modules/ui/features';
+import { authReducer } from '@auth/features';
+import { coursesReducer } from '@courses/features';
+import { lessonsReducer } from '@lessons/features';
+import { permissionsReducer, statusReducer } from '@shared/features';
+import { preachingReducer } from '@preaching/features';
+import { revisitsReducer } from '@revisits/features';
+import { uiReducer } from '@ui/features';
 
 /* Utils */
-import { storageKeys, storePersistor } from '../utils';
+import { storageKeys, storePersistor } from '@utils';
 
 /* Debugger */
 import reactotron from '../../ReactotronConfig';

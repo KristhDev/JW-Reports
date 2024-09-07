@@ -5,11 +5,11 @@ import { PersistGate } from 'reduxjs-toolkit-persist/lib/integration/react';
 import { MenuProvider } from 'react-native-popup-menu';
 
 /* Features */
-import { store, persistor } from '../features';
+import { store, persistor } from '@features';
 
 /* Modules */
-import { NetworkProvider } from '../modules/shared';
-import { ThemeProvider } from '../modules/theme';
+import { NetworkProvider } from '@shared';
+import { ThemeProvider } from '@theme';
 
 /**
  * A React functional component that wraps its children with various providers.

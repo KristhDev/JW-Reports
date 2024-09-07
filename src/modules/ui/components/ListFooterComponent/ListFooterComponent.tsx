@@ -18,18 +18,16 @@ import { ListFooterComponentProps } from './interfaces';
 export const ListFooterComponent: FC<ListFooterComponentProps> = ({ marginTopPlus, showLoader }): JSX.Element => {
     const { height } = useWindowDimensions();
 
-    const { theme: { colors } } = useStyles();
+    const { theme: { colors, fontSizes } } = useStyles();
+
+    if (!showLoader) return (<></>);
 
     return (
-        <>
-            { (showLoader) && (
-                <ActivityIndicator
-                    color={ colors.button }
-                    size="large"
-                    style={{ marginTop: height * ((marginTopPlus) ? 0.22 : 0.10)  }}
-                    testID="loader"
-                />
-            ) }
-        </>
-    )
+        <ActivityIndicator
+            color={ colors.button }
+            size={ fontSizes.xxl }
+            style={{ marginTop: height * ((marginTopPlus) ? 0.22 : 0.10)  }}
+            testID="loader"
+        />
+    );
 }

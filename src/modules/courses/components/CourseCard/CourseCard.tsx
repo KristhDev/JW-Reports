@@ -1,26 +1,26 @@
 import React, { FC, useState } from 'react';
 import { Pressable, Text, View, useWindowDimensions } from 'react-native';
-import { useStyles } from 'react-native-unistyles';
 import { Menu, MenuOption, MenuOptions, MenuTrigger } from 'react-native-popup-menu';
 import { useNavigation } from '@react-navigation/native';
-import Icon from 'react-native-vector-icons/Ionicons';
+import { useStyles } from 'react-native-unistyles';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
 /* Components */
-import { Fab } from '../../../ui';
+import { Fab } from '@ui';
 
 /* Hooks */
 import { useCourses } from '../../hooks';
-import { useLessons } from '../../../lessons';
+import { useLessons } from '@lessons';
 
 /* Interfaces */
 import { CourseCardProps } from './interfaces';
 
 /* Utils */
-import { characters } from '../../../../utils';
+import { characters } from '@utils';
 
 /* Styles */
 import { stylesheet } from './styles';
-import { themeStylesheet } from '../../../theme';
+import { themeStylesheet } from '@theme';
 
 /**
  * This component is responsible for rendering part of the information of a
@@ -35,9 +35,9 @@ import { themeStylesheet } from '../../../theme';
  */
 export const CourseCard: FC<CourseCardProps> = ({ course, onActiveOrSuspend, onDelete, onFinishOrStart }): JSX.Element => {
     const [ isOpen, setIsOpen ] = useState<boolean>(false);
-    const { navigate } = useNavigation();
     const { width } = useWindowDimensions();
 
+    const navigation = useNavigation();
     const { styles: themeStyles } = useStyles(themeStylesheet);
     const { styles, theme: { colors, fontSizes, margins } } = useStyles(stylesheet);
 
@@ -52,7 +52,7 @@ export const CourseCard: FC<CourseCardProps> = ({ course, onActiveOrSuspend, onD
      */
     const handleCourseDetail = (): void => {
         setSelectedCourse(course);
-        navigate('CourseDetailScreen' as never);
+        navigation.navigate('CourseDetailScreen' as never);
     }
 
     /**
@@ -64,7 +64,7 @@ export const CourseCard: FC<CourseCardProps> = ({ course, onActiveOrSuspend, onD
     const handleEdit = (): void => {
         setIsOpen(false);
         setSelectedCourse(course);
-        navigate('AddOrEditCourseScreen' as never);
+        navigation.navigate('AddOrEditCourseScreen' as never);
     }
 
     /**
@@ -83,7 +83,7 @@ export const CourseCard: FC<CourseCardProps> = ({ course, onActiveOrSuspend, onD
             nextLesson: new Date().toString()
         });
 
-        navigate('AddOrEditLessonScreen' as never);
+        navigation.navigate('AddOrEditLessonScreen' as never);
     }
 
     /**
@@ -95,7 +95,7 @@ export const CourseCard: FC<CourseCardProps> = ({ course, onActiveOrSuspend, onD
     const handleLessonList = (): void => {
         setIsOpen(false);
         setSelectedCourse(course);
-        navigate('LessonsScreen' as never);
+        navigation.navigate('LessonsScreen' as never);
     }
 
     /**
@@ -160,7 +160,7 @@ export const CourseCard: FC<CourseCardProps> = ({ course, onActiveOrSuspend, onD
                 <Fab
                     color={ 'transparent' }
                     icon={
-                        <Icon
+                        <Ionicons
                             color={ colors.button }
                             name="ellipsis-vertical"
                             size={ (fontSizes.md - 3) }

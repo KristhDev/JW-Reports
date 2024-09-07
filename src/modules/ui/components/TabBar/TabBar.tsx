@@ -22,7 +22,7 @@ import { stylesheet } from './styles';
  * @return {JSX.Element} Return jsx element to render tab bar of navigation
  */
 export const TabBar: FC<BottomTabBarProps> = ({ state, descriptors }): JSX.Element => {
-    const { navigate } = useNavigation();
+    const navigation = useNavigation();
     const { styles } = useStyles(stylesheet);
 
     const { state: { isKeyboardVisible } } = useUI();
@@ -34,6 +34,20 @@ export const TabBar: FC<BottomTabBarProps> = ({ state, descriptors }): JSX.Eleme
         'CoursesStackNavigation': 'CoursesTopTabsNavigation',
     }
 
+    /**
+     * This function returns the tint color of the icon in the tab bar.
+     * If the index is equal to the current state.index, the function returns
+     * the tabBarActiveTintColor, otherwise it returns the tabBarInactiveTintColor.
+     * If the tintColor is not defined, the function returns undefined.
+     * @param {number} index - The index of the tab bar icon.
+     * @return {string | undefined} The tint color of the icon in the tab bar.
+     */
+    const handleGetTintColor = (index: number): string | undefined => {
+        return (state.index === index)
+            ? descriptors[state.routes[index].key]?.options.tabBarActiveTintColor
+            : descriptors[state.routes[index].key]?.options.tabBarInactiveTintColor;
+    }
+
     if (isKeyboardVisible) return (<></>);
 
     return (
@@ -41,16 +55,12 @@ export const TabBar: FC<BottomTabBarProps> = ({ state, descriptors }): JSX.Eleme
             { state.routes.map((route, index) => (
                 <TabBarBtn
                     active={ state.index === index }
-                    key={ route.key }
-                    onPress={ () => navigate({ name: route.name, params: { screen: firstScreens[(route.name as keyof typeof firstScreens)] } } as never) }
+                    color={ handleGetTintColor(index) }
                     iconName={ icons[index] }
+                    key={ route.key }
+                    onPress={ () => navigation.navigate({ name: route.name, params: { screen: firstScreens[(route.name as keyof typeof firstScreens)] } } as never) }
                     title={ descriptors[route.key]?.options.title || '' }
                     totalTabs={ state.routes.length }
-                    color={
-                        (state.index === index)
-                            ? descriptors[route.key]?.options.tabBarActiveTintColor
-                            : descriptors[route.key]?.options.tabBarInactiveTintColor
-                    }
                 />
             )) }
         </View>

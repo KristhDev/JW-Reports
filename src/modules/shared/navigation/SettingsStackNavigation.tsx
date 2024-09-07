@@ -3,9 +3,9 @@ import { useStyles } from 'react-native-unistyles';
 import { CardStyleInterpolators, createStackNavigator } from '@react-navigation/stack';
 
 /* Modules */
-import { Profile, Credentials } from '../../auth';
+import { Profile, Credentials } from '@auth';
 import { Settings } from '../screens';
-import { BackButton } from '../../ui';
+import { BackButton } from '@ui';
 
 const Stack = createStackNavigator();
 

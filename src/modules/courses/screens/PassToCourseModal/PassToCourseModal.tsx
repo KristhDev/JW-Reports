@@ -2,21 +2,18 @@ import React, { FC, useState } from 'react';
 import { View, ActivityIndicator, Text } from 'react-native';
 import { useStyles } from 'react-native-unistyles';
 import { Formik } from 'formik';
-import Icon from 'react-native-vector-icons/Ionicons';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
-/* Screens */
-import { FormField, Modal, ModalProps,  } from '../../../ui';
-
-/* Components */
-import { ModalActions } from '../../../ui';
+/* UI */
+import { FormField, Modal, ModalProps, ModalActions } from '@ui';
 
 /* Hooks */
 import { useCourses } from '../../hooks';
-import { useRevisits } from '../../../revisits';
-import { useStatus } from '../../../shared';
+import { useRevisits } from '@revisits';
+import { useStatus } from '@shared';
 
 /* Theme */
-import { themeStylesheet } from '../../../theme';
+import { themeStylesheet } from '@theme';
 
 /**
  * This modal is responsible for grouping the components to
@@ -28,10 +25,11 @@ import { themeStylesheet } from '../../../theme';
 const PassToCourseModal: FC<ModalProps> = ({ isOpen, onClose }): JSX.Element => {
     const [ startCourse, setStartCourse ] = useState<boolean>(false);
 
+    const { styles: themeStyles, theme: { colors, fontSizes, margins } } = useStyles(themeStylesheet);
+
     const { state: { selectedRevisit } } = useRevisits();
     const { state: { isCourseLoading }, saveCourse } = useCourses();
     const { setStatus } = useStatus();
-    const { styles: themeStyles, theme: { colors, fontSizes, margins } } = useStyles(themeStylesheet);
 
     /**
      * This is the confirmation function of the modal that executes one or another function
@@ -118,7 +116,7 @@ const PassToCourseModal: FC<ModalProps> = ({ isOpen, onClose }): JSX.Element => 
                                     {/* Publication field */}
                                     <FormField
                                         leftIcon={
-                                            <Icon
+                                            <Ionicons
                                                 color={ colors.icon }
                                                 name="book-outline"
                                                 size={ fontSizes.icon }
@@ -147,7 +145,7 @@ const PassToCourseModal: FC<ModalProps> = ({ isOpen, onClose }): JSX.Element => 
             ) : (
                 <ActivityIndicator
                     color={ colors.button }
-                    size={ (fontSizes.xxl + 2) }
+                    size={ fontSizes.xxl }
                 />
             ) }
         </Modal>

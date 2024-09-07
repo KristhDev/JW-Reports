@@ -1,25 +1,25 @@
 import React, { useState } from 'react';
 import { ActivityIndicator, ScrollView, RefreshControl } from 'react-native';
 import { useStyles } from 'react-native-unistyles';
-import Icon from 'react-native-vector-icons/Ionicons';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
 /* Modules */
-import { useCourses, PassToCourseModal } from '../../../courses';
-import { FinishOrStartLessonModal, INIT_LESSON, LessonCard, LessonWithCourse, useLessons } from '../../../lessons';
-import { INIT_REVISIT, RevisitCard, Revisit, RevisitModal, useRevisits } from '../../../revisits';
+import { useCourses, PassToCourseModal } from '@courses';
+import { FinishOrStartLessonModal, INIT_LESSON, LessonCard, LessonWithCourse, useLessons } from '@lessons';
+import { INIT_REVISIT, RevisitCard, Revisit, RevisitModal, useRevisits } from '@revisits';
 
 /* Components */
 import { ReportModal } from '../ReportModal';
-import { DeleteModal, Fab, InfoText, Title } from '../../../ui';
+import { DeleteModal, Fab, InfoText, Title } from '@ui';
 
 /* Hooks */
 import { usePreaching } from '../../hooks';
 
 /* Utils */
-import { date } from '../../../../utils';
+import { date } from '@utils';
 
 /* Theme */
-import { themeStylesheet } from '../../../theme';
+import { themeStylesheet } from '@theme';
 
 /**
  * This screen is in charge of grouping the components to list the preaching days by
@@ -37,10 +37,21 @@ const PublisherHome = (): JSX.Element => {
     const [ showReportModal, setShowReportModal ] = useState<boolean>(false);
     const [ showRevisitModal, setShowRevisitModal ] = useState<boolean>(false);
 
+    const { styles: themeStyles, theme: { colors, fontSizes, margins } } = useStyles(themeStylesheet);
+
     const { state: { selectedDate } } = usePreaching();
 
     const { setSelectedCourse } = useCourses();
-    const { state: { isLastLessonLoading, isLessonDeleting, lastLesson }, deleteLesson, loadLastLesson, setSelectedLesson } = useLessons();
+    const {
+        state: {
+            isLastLessonLoading,
+            isLessonDeleting,
+            lastLesson
+        },
+        deleteLesson,
+        loadLastLesson,
+        setSelectedLesson
+    } = useLessons();
 
     const {
         state: {
@@ -51,8 +62,6 @@ const PublisherHome = (): JSX.Element => {
         setSelectedRevisit,
         loadLastRevisit
     } = useRevisits();
-
-    const { styles: themeStyles, theme: { colors, fontSizes, margins } } = useStyles(themeStylesheet);
 
     const month = date.format(selectedDate, 'MMMM').toUpperCase();
 
@@ -157,7 +166,7 @@ const PublisherHome = (): JSX.Element => {
                 { (isLastLessonLoading) && (
                     <ActivityIndicator
                         color={ colors.button }
-                        size={ (fontSizes.xxl + 2) }
+                        size={ fontSizes.xxl }
                         style={{ marginVertical: 63.75 }}
                         testID="last-lesson-loading"
                     />
@@ -191,7 +200,7 @@ const PublisherHome = (): JSX.Element => {
                 { (isLastRevisitLoading) && (
                     <ActivityIndicator
                         color={ colors.button }
-                        size={ 50 }
+                        size={ fontSizes.xxl }
                         style={{ marginVertical: 63.75 }}
                         testID="last-revisit-loading"
                     />
@@ -219,7 +228,7 @@ const PublisherHome = (): JSX.Element => {
             <Fab
                 color={ colors.button }
                 icon={
-                    <Icon
+                    <Ionicons
                         color={ colors.contentHeader }
                         name="reader-outline"
                         size={ fontSizes.xl }

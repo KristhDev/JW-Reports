@@ -2,19 +2,19 @@ import React, { useEffect } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import SplashScreen from 'react-native-splash-screen';
 
-import './src/config/unistyles';
+import '@config/unistyles';
 
 /* Providers */
-import { Provider } from './src/providers';
+import { Provider } from '@providers';
 
 /* Navigation */
-import { Navigation } from './src/navigation';
+import { Navigation } from '@navigation';
 
 /* Services */
-import { logger, notifications } from './src/services';
+import { logger, notifications } from '@services';
 
 /* Utils */
-import { date } from './src/utils';
+import { date } from '@utils';
 
 /* Global config of date util */
 date.extend(date.plugins.weekday);

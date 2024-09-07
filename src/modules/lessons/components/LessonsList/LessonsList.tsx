@@ -1,25 +1,25 @@
 import React, { useEffect, useState } from 'react';
-import { FlatList } from 'react-native';
+import { FlatList, RefreshControl } from 'react-native';
 import { useStyles } from 'react-native-unistyles';
 
 /* Features */
 import { INIT_LESSON } from '../../features';
 
-/* Screens */
+/* Modules */
 import { FinishOrStartLessonModal } from '../../screens';
-import { DeleteModal } from '../../../ui';
-
-/* Components */
+import { DeleteModal, ListEmptyComponent, ListFooterComponent, SearchInput, Title } from '@ui';
 import { LessonCard } from '../LessonCard';
-import { ListEmptyComponent, ListFooterComponent, SearchInput, Title } from '../../../ui';
 
 /* Hooks */
-import { useCourses } from '../../../courses';
+import { useCourses } from '@courses';
 import { useLessons } from '../../hooks';
-import { useNetwork } from '../../../shared';
+import { useNetwork } from '@shared';
 
 /* Interfaces */
 import { Lesson } from '../../interfaces';
+
+/* Theme */
+import { themeStylesheet } from '@theme';
 
 /**
  * Render a list of lessons.
@@ -32,7 +32,7 @@ export const LessonsList = (): JSX.Element => {
     const [ showDeleteModal, setShowDeleteModal ] = useState<boolean>(false);
     const [ showFSModal, setShowFSModal ] = useState<boolean>(false);
 
-    const { theme: { fontSizes, margins } } = useStyles();
+    const { styles: themeStyles, theme: { fontSizes, margins } } = useStyles(themeStylesheet);
 
     const { state: { selectedCourse } } = useCourses();
 
@@ -52,6 +52,10 @@ export const LessonsList = (): JSX.Element => {
 
     const { wifi } = useNetwork();
 
+    const emptyMsg = (searchTerm.trim().length > 0 && lessons.length === 0)
+        ? `No se encontraron resultados para: ${ searchTerm.trim() }`
+        : 'No has agregado clases a este curso.'
+
     /**
      * When the user refreshes the page, reset the search term, reset the pagination, remove the
      * lessons from the state, and load the lessons again.
@@ -59,14 +63,32 @@ export const LessonsList = (): JSX.Element => {
      * @return {void} This function does not return any value.
      */
     const handleRefreshing = (): void => {
+        if (isLessonsLoading) return;
+
+        setIsRefreshing(true);
         setSearchTerm('');
 
         if (wifi.hasConnection) {
             setLessonsPagination({ from: 0, to: 9 });
             removeLessons();
+            loadLessons({ refresh: true });
         }
 
-        loadLessons({ refresh: true });
+        setIsRefreshing(false);
+    }
+
+    /**
+     * When the user searches for lessons, reset the pagination, remove the lessons from the state,
+     * and load the lessons again with the search term.
+     *
+     * @return {void} This function does not return any value.
+     */
+    const handleSearch = (): void => {
+        if (!wifi.hasConnection || isLessonsLoading) return;
+
+        setLessonsPagination({ from: 0, to: 9 });
+        removeLessons();
+        loadLessons({ search: searchTerm, refresh: true });
     }
 
     /**
@@ -120,39 +142,17 @@ export const LessonsList = (): JSX.Element => {
     }
 
     /**
-     * Effect to set isRefreshing to false when it changes
-     * and it is false
-     */
-    useEffect(() => {
-        if (isRefreshing) setIsRefreshing(false);
-    }, [ isRefreshing ]);
-
-    /**
      * Effect to perform lesson search every time
      * searchText changes
      */
     useEffect(() => {
-        if (searchTerm.trim().length > 0) {
-            if (wifi.hasConnection) {
-                setLessonsPagination({ from: 0, to: 9 });
-                removeLessons();
-            }
-
-            loadLessons({ search: searchTerm, refresh: true });
-            setIsRefreshing(false);
-        }
-        else if (searchTerm.trim().length === 0 && lessons.length === 0 && wifi.hasConnection) {
-            setLessonsPagination({ from: 0, to: 9 });
-            removeLessons();
-            loadLessons({ search: '', refresh: true });
-            setIsRefreshing(false);
-        }
+        handleSearch();
     }, [ searchTerm ]);
 
     return (
         <>
             <FlatList
-                contentContainerStyle={{ alignItems: 'center', padding: margins.md, paddingBottom: 100, flexGrow: 1 }}
+                contentContainerStyle={ themeStyles.flatListContainer }
                 data={ lessons }
                 keyExtractor={ (item) => item.id }
                 ListFooterComponent={
@@ -170,7 +170,7 @@ export const LessonsList = (): JSX.Element => {
                         />
 
                         <SearchInput
-                            onClean={ handleRefreshing }
+                            onClean={ () => setSearchTerm('') }
                             onSearch={ setSearchTerm }
                             refreshing={ isRefreshing }
                             searchTerm={ searchTerm }
@@ -179,23 +179,20 @@ export const LessonsList = (): JSX.Element => {
                 }
                 ListEmptyComponent={
                     <ListEmptyComponent
-                        msg={
-                            (searchTerm.trim().length > 0 && lessons.length === 0)
-                                ? `No se encontraron resultados para: ${ searchTerm.trim() }`
-                                : 'No has agregado clases a este curso.'
-                        }
+                        msg={ emptyMsg }
                         showMsg={ !isLessonsLoading && lessons.length === 0 }
                     />
                 }
                 ListHeaderComponentStyle={{ alignSelf: 'flex-start' }}
                 onEndReached={ handleEndReach }
                 onEndReachedThreshold={ 0.5 }
-                onRefresh={ () => {
-                    setIsRefreshing(true);
-                    handleRefreshing();
-                } }
                 overScrollMode="never"
-                refreshing={ isRefreshing }
+                refreshControl={
+                    <RefreshControl
+                        onRefresh={ handleRefreshing }
+                        refreshing={ isRefreshing }
+                    />
+                }
                 renderItem={ ({ item }) => (
                     <LessonCard
                         lesson={ item }

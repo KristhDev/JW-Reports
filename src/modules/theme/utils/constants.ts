@@ -1,4 +1,4 @@
-import { ItemOption } from '../../ui';
+import { ItemOption } from '@ui';
 
 /**
  * The theme options to select

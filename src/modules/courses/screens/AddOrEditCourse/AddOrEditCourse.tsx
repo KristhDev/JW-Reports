@@ -5,13 +5,13 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-controller';
 
 /* Components */
 import { CourseForm } from '../../components';
-import { Title } from '../../../ui';
+import { Title } from '@ui';
 
 /* Hooks */
 import { useCourses } from '../../hooks';
 
 /* Theme */
-import { themeStylesheet } from '../../../theme';
+import { themeStylesheet } from '@theme';
 
 /**
  * This screen is responsible for grouping the components

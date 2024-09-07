@@ -3,10 +3,10 @@ import { Pressable, Text, View, useWindowDimensions } from 'react-native';
 import { useStyles } from 'react-native-unistyles';
 import { useNavigation } from '@react-navigation/native';
 import { Menu, MenuOption, MenuOptions, MenuTrigger } from 'react-native-popup-menu';
-import Icon from 'react-native-vector-icons/Ionicons';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
 /* Components */
-import { Fab } from '../../../ui';
+import { Fab } from '@ui';
 
 /* Hooks */
 import { useRevisits } from '../../hooks';
@@ -15,11 +15,11 @@ import { useRevisits } from '../../hooks';
 import { RevisitCardProps } from './interfaces';
 
 /* Utils */
-import { characters, date } from '../../../../utils';
+import { characters, date } from '@utils';
 
 /* Styles */
 import { stylesheet } from './styles';
-import { themeStylesheet } from '../../../theme';
+import { themeStylesheet } from '@theme';
 
 /**
  * This component is responsible for rendering part of the information of a
@@ -37,7 +37,7 @@ export const RevisitCard: FC<RevisitCardProps> = ({ onDelete, onPass, onRevisit,
     const [ isOpen, setIsOpen ] = useState<boolean>(false);
     const { width } = useWindowDimensions();
 
-    const { navigate } = useNavigation();
+    const navigation = useNavigation();
     const { styles: themeStyles } = useStyles(themeStylesheet);
     const { styles, theme: { colors, fontSizes, margins } } = useStyles(stylesheet);
 
@@ -53,7 +53,7 @@ export const RevisitCard: FC<RevisitCardProps> = ({ onDelete, onPass, onRevisit,
      */
     const handleRevisitDetail = (): void => {
         setSelectedRevisit(revisit);
-        navigate(screenToNavigate as never);
+        navigation.navigate(screenToNavigate as never);
     }
 
     /**
@@ -65,7 +65,7 @@ export const RevisitCard: FC<RevisitCardProps> = ({ onDelete, onPass, onRevisit,
     const handleEdit = (): void => {
         setIsOpen(false);
         setSelectedRevisit(revisit);
-        navigate('AddOrEditRevisitScreen' as never);
+        navigation.navigate('AddOrEditRevisitScreen' as never);
     }
 
     /**
@@ -119,7 +119,7 @@ export const RevisitCard: FC<RevisitCardProps> = ({ onDelete, onPass, onRevisit,
                 <Fab
                     color="transparent"
                     icon={
-                        <Icon
+                        <Ionicons
                             color={ colors.button }
                             name="ellipsis-vertical"
                             size={ (fontSizes.md - 3) }

@@ -7,16 +7,15 @@ import { useNavigation } from '@react-navigation/native';
 import { REPOSITORY_URL } from '@env';
 
 /* Modules */
-import { OptionsModal, SectionBtn, SectionContent, UI_OPTIONS, useUI } from '../../../ui';
 import { useStatus } from '../../hooks';
-import { ThemeModal, useTheme } from '../../../theme';
+import { ThemeModal, useTheme, THEME_OPTIONS } from '@theme';
+import { OptionsModal, SectionBtn, SectionContent, UI_OPTIONS, useUI } from '@ui';
 
 /* Utils */
-import { deviceInfo } from '../../../../utils';
-import { THEME_OPTIONS } from '../../../theme';
+import { deviceInfo } from '@utils';
 
 /* Package */
-import { version as appVersion } from '../../../../../package.json';
+import { version as appVersion } from '@package';
 
 /**
  * This screen is responsible for displaying all the app's settings through
@@ -28,15 +27,21 @@ const Settings = (): JSX.Element => {
     const [ showThemeModal, setShowThemeModal ] = useState<boolean>(false);
     const [ showOldDatetimePicker, setShowOldDatetimePicker ] = useState<boolean>(false);
 
-    const { navigate } = useNavigation();
+    const navigation = useNavigation();
     const { theme: { colors, fontSizes, margins } } = useStyles();
 
     const { setStatus } = useStatus();
-    const { state: { theme } } = useTheme();
+    const { state: { selectedTheme } } = useTheme();
     const { state: { userInterface }, setOldDatetimePicker } = useUI();
 
     const buildVersion = deviceInfo.getBuildVersion();
 
+    /**
+     * Changes the state of the old datetime picker and hides the modal
+     *
+     * @param {boolean} value - The value to set the old datetime picker state
+     * @return {void} This function returns nothing
+     */
     const handleChangeDatetimePicker = (value: boolean): void => {
         setOldDatetimePicker(value);
         setShowOldDatetimePicker(false);
@@ -63,13 +68,13 @@ const Settings = (): JSX.Element => {
                 {/* Acount secction */}
                 <SectionContent title="MI CUENTA">
                     <SectionBtn
-                        onPress={ () => navigate('ProfileScreen' as never) }
+                        onPress={ () => navigation.navigate('ProfileScreen' as never) }
                         subText="Actualice sus datos personales"
                         text="Perfil"
                     />
 
                     <SectionBtn
-                        onPress={ () => navigate('CredentialsScreen' as never) }
+                        onPress={ () => navigation.navigate('CredentialsScreen' as never) }
                         subText="Cambie sus credenciales (correo y contraseña)"
                         text="Credenciales"
                     />
@@ -79,7 +84,7 @@ const Settings = (): JSX.Element => {
                 <SectionContent title="INTERFAZ DE USUARIO">
                     <SectionBtn
                         onPress={ () => setShowThemeModal(true) }
-                        subText={ THEME_OPTIONS.find(t => t.value === theme)?.label || '' }
+                        subText={ THEME_OPTIONS.find(t => t.value === selectedTheme)?.label || '' }
                         text="Apariencia"
                     />
 
