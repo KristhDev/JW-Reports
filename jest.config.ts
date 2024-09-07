@@ -10,9 +10,10 @@ const jestConfig: Config = {
     moduleDirectories: [ 'node_modules', '<rootDir>' ],
     moduleFileExtensions: [ 'ts', 'tsx', 'js', 'jsx', 'json', 'node', 'setup.ts' ],
     modulePathIgnorePatterns: [
+        '<rootDir>/__tests__/config/',
+        '<rootDir>/__tests__/coverage/',
         '<rootDir>/__tests__/mocks/',
         '<rootDir>/__tests__/setups/',
-        '<rootDir>/__tests__/config',
         '<rootDir/>/src',
         '<rootDir/>/ReactotronConfig.ts'
     ],
