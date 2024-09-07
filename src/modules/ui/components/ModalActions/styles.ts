@@ -1,11 +1,12 @@
 import { createStyleSheet } from 'react-native-unistyles';
 
-const styles = createStyleSheet(({ colors, fontSizes, margins }) => ({
+export const stylesheet = createStyleSheet(({ colors, fontSizes, margins }) => ({
     modalActions: {
         flexDirection: 'row',
         justifyContent: 'flex-end',
         marginTop: margins.xl,
-        gap: margins.xs
+        gap: margins.xs,
+        width: '100%'
     },
 
     modalButton: {
@@ -18,5 +19,3 @@ const styles = createStyleSheet(({ colors, fontSizes, margins }) => ({
         fontSize: fontSizes.sm
     },
 }));
-
-export default styles;

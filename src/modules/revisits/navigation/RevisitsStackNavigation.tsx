@@ -7,8 +7,11 @@ import { useNavigation } from '@react-navigation/native';
 import RevisitsTopTabsNavigation from './RevisitsTopTabsNavigation';
 
 /* Modules */
-import { AddOrEditRevisit, RevisitDetail, RevisitsStackParamsList, useRevisits } from '../';
-import { BackButton, HeaderButtons } from '../../ui/';
+import { AddOrEditRevisit, RevisitDetail, RevisitsStackParamsList, useRevisits } from '@revisits';
+import { BackButton, HeaderButtons } from '@ui';
+
+/* Utils */
+import { characters } from '@utils';
 
 const Stack = createStackNavigator<RevisitsStackParamsList>();
 
@@ -75,7 +78,7 @@ const RevisitsStackNavigation = (): JSX.Element => {
                             onPressEditButton={ () => navigate('AddOrEditRevisitScreen' as never) }
                         />
                     ),
-                    title: (revisitDetailTitle.length >= 22) ? revisitDetailTitle.slice(0, 22) + '...' : revisitDetailTitle
+                    title: characters.truncate(revisitDetailTitle, 22)
                 }}
             />
 

@@ -1,6 +1,6 @@
 import { createStyleSheet } from 'react-native-unistyles';
 
-const styles = createStyleSheet(({ colors }) => ({
+export const stylesheet = createStyleSheet(({ colors }) => ({
     table: {
         alignItems: 'center',
         borderColor: colors.background,
@@ -13,5 +13,3 @@ const styles = createStyleSheet(({ colors }) => ({
         width: '100%'
     }
 }));
-
-export default styles

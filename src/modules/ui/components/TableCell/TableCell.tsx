@@ -6,7 +6,7 @@ import { useStyles } from 'react-native-unistyles';
 import { TableCellProps } from './interfaces';
 
 /* Styles */
-import stylesheet from './styles';
+import { stylesheet } from './styles';
 
 /**
  * This component is responsible for displaying a cell for the tables
@@ -21,9 +21,7 @@ export const TableCell: FC<TableCellProps> = ({ text, style }): JSX.Element => {
     const { styles } = useStyles(stylesheet);
 
     return (
-        <View
-            style={[ styles.tableCell, style ]}
-        >
+        <View style={[ styles.tableCell, style ]}>
             <Text
                 style={ styles.tableCellText }
                 testID="table-cell-text"

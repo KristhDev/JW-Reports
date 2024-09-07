@@ -1,27 +1,29 @@
 import { createStyleSheet } from 'react-native-unistyles';
 
-const styles = createStyleSheet(({ colors, margins, fontSizes }) => ({
+export const stylesheet = createStyleSheet(({ borderRadius, colors, margins, fontSizes }) => ({
     radioContainer: {
         alignItems: 'center',
         flexDirection: 'row',
         marginBottom: (margins.xs - 3)
     },
 
-    radioPressable: {
+    radioPressable: (isSelected: boolean) => ({
         alignItems: 'center',
-        borderRadius: 999,
+        borderColor: (isSelected) ? colors.button : colors.icon,
+        borderRadius: borderRadius.rounded,
         borderWidth: 2,
         height: 20,
         justifyContent: 'center',
         padding: (margins.xs - 5),
         width: 20
-    },
+    }),
 
-    radioCircle: {
-        borderRadius: 999,
+    radioCircle: (isSelected: boolean) => ({
+        backgroundColor: (isSelected) ? colors.button : 'transparent',
+        borderRadius: borderRadius.rounded,
         height: '100%',
         width: '100%'
-    },
+    }),
 
     radioLabel: {
         color: colors.text,
@@ -29,5 +31,3 @@ const styles = createStyleSheet(({ colors, margins, fontSizes }) => ({
         marginLeft: margins.xs
     }
 }));
-
-export default styles;

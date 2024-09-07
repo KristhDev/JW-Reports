@@ -6,7 +6,7 @@ import { useStyles } from 'react-native-unistyles';
 import { RadioBtnProps } from './interfaces';
 
 /* Styles */
-import stylesheet from './styles';
+import { stylesheet } from './styles';
 
 /**
  * This component is responsible for displaying a radio button with a
@@ -36,18 +36,8 @@ export const RadioBtn: FC<RadioBtnProps> = ({ isSelected, label, onPress, style 
                 onPress={ onPress }
                 testID="radio-btn-pressable"
             >
-                <View
-                    style={{
-                        ...styles.radioPressable,
-                        borderColor: (isSelected) ? colors.button : colors.icon,
-                    }}
-                >
-                    <View
-                        style={{
-                            ...styles.radioCircle,
-                            backgroundColor: (isSelected) ? colors.button : 'transparent'
-                        }}
-                    />
+                <View style={ styles.radioPressable(isSelected) }>
+                    <View style={ styles.radioCircle(isSelected) } />
                 </View>
             </Pressable>
 

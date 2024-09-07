@@ -7,16 +7,16 @@ import { decode } from 'base64-arraybuffer';
 import { SUPABASE_BUCKET, SUPABASE_REVISITS_FOLDER } from '@env';
 
 /* Supaḃase */
-import { supabase } from '../../../config';
+import { supabase } from '@config';
 
 /* Hooks */
 import { usePermissions, useStatus } from './';
 
 /* Interfaces */
-import { StorageError } from '../../ui';
+import { StorageError } from '@ui';
 
 /* Utils */
-import { deviceInfo } from '../../../utils';
+import { deviceInfo } from '@utils';
 
 /**
  * This hook allows to group the functions and states in relation to the images.
@@ -26,7 +26,7 @@ const useImage = () => {
     const { setStatus } = useStatus();
     const { theme: { colors } } = useStyles();
 
-    const [ image, setImage ] = useState<Image>({} as Image);
+    const [ image, setImage ] = useState<Image | null>(null);
 
     const androidVersion = deviceInfo.getSystemVersion();
 

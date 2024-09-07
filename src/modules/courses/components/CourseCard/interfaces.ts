@@ -1,4 +1,4 @@
-import { Course } from '../../interfaces/courses';
+import { Course } from '../../interfaces';
 
 /* Defining the props that the component will receive. */
 export interface CourseCardProps {

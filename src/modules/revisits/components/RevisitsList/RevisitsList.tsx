@@ -1,18 +1,21 @@
-import React, { FC, useEffect, useState } from 'react';
-import { FlatList } from 'react-native';
+import React, { FC, useCallback, useEffect, useState } from 'react';
+import { FlatList, RefreshControl } from 'react-native';
 import { useStyles } from 'react-native-unistyles';
-import { useNavigation } from '@react-navigation/native';
+import { useFocusEffect, useNavigation } from '@react-navigation/native';
 
 /* Features */
-import { INIT_REVISIT, Revisit, RevisitCard, RevisitModal, useRevisits } from '../../';
-import { PassToCourseModal } from '../../../courses';
-import { DeleteModal, ListEmptyComponent, ListFooterComponent, SearchInput, Title } from '../../../ui';
+import { PassToCourseModal } from '@courses';
+import { INIT_REVISIT, Revisit, RevisitCard, RevisitModal, useRevisits } from '@revisits';
+import { DeleteModal, ListEmptyComponent, ListFooterComponent, SearchInput, Title } from '@ui';
 
 /* Hooks */
-import { useNetwork,  } from '../../../shared';
+import { useNetwork } from '@shared';
 
 /* Interfaces */
 import { RevisitsListProps } from './interfaces';
+
+/* Theme */
+import { themeStylesheet } from '@theme';
 
 /**
  * This component is responsible for rendering a list of revisits based
@@ -34,10 +37,14 @@ export const RevisitsList: FC<RevisitsListProps> = ({ emptyMessage, filter, titl
     const [ showPassModal, setShowPassModal ] = useState<boolean>(false);
     const [ showDeleteModal, setShowDeleteModal ] = useState<boolean>(false);
 
-    const { theme: { fontSizes, margins } } = useStyles();
+    const { styles: themeStyles, theme: { fontSizes, margins } } = useStyles(themeStylesheet);
 
-    const { getState, isFocused } = useNavigation();
-    const navigationState = getState();
+    const navigation = useNavigation();
+    const navigationState = navigation.getState();
+
+    const emptyMsg = (searchTerm.trim().length > 0)
+        ? `No se encontraron revisitas con la busqueda: ${ searchTerm.trim() }`
+        : emptyMessage
 
     const {
         state: {
@@ -65,14 +72,18 @@ export const RevisitsList: FC<RevisitsListProps> = ({ emptyMessage, filter, titl
      * @return {void} This function returns nothing
      */
     const handleRefreshing = (): void => {
+        if (isRevisitsLoading) return;
+
+        setIsRefreshing(true);
         setSearchTerm('');
 
-        if (wifi.isConnected) {
+        if (wifi.hasConnection) {
             setRevisitsPagination({ from: 0, to: 9 });
             removeRevisits();
+            loadRevisits({ filter, refresh: true });
         }
 
-        loadRevisits({ filter, refresh: true });
+        setIsRefreshing(false);
     }
 
     /**
@@ -82,15 +93,14 @@ export const RevisitsList: FC<RevisitsListProps> = ({ emptyMessage, filter, titl
      * @param {string} search - string
      * @return {void} This function does not return any value
      */
-    const handleResetRevisits = (search: string): void => {
-        if (search.trim().length === 0 && revisits.length === 0) {
-            if (wifi.isConnected) {
-                setRevisitsPagination({ from: 0, to: 9 });
-                removeRevisits();
-            }
+    const handleSearchRevisits = (search: string): void => {
+        if (isRevisitsLoading) return;
+        setSearchTerm(search);
 
-            loadRevisits({ filter, search: '', refresh: true });
-            setIsRefreshing(false);
+        if (wifi.hasConnection) {
+            setRevisitsPagination({ from: 0, to: 9 });
+            removeRevisits();
+            loadRevisits({ filter, search, refresh: true });
         }
     }
 
@@ -101,7 +111,7 @@ export const RevisitsList: FC<RevisitsListProps> = ({ emptyMessage, filter, titl
      * @return {void} This function does not return any value
      */
     const handleEndReach = (): void => {
-        if (!hasMoreRevisits || isRevisitsLoading || !wifi.isConnected) return;
+        if (!hasMoreRevisits || isRevisitsLoading || !wifi.hasConnection) return;
         loadRevisits({ filter, search: searchTerm, loadMore: true });
     }
 
@@ -144,62 +154,34 @@ export const RevisitsList: FC<RevisitsListProps> = ({ emptyMessage, filter, titl
     }
 
     /**
-     * Effect to set isRefreshing to false when it changes
-     * and it is false
-     */
-    useEffect(() => {
-        if (isRefreshing) setIsRefreshing(false);
-    }, [ isRefreshing ]);
-
-    /**
-     * Effect to perform revisit search every time
-     * searchText changes
-     */
-    useEffect(() => {
-        if (searchTerm.trim().length > 0) {
-
-            if (wifi.isConnected) {
-                setRevisitsPagination({ from: 0, to: 9 });
-                removeRevisits();
-            }
-
-            loadRevisits({ filter, search: searchTerm, refresh: true });
-            setIsRefreshing(false);
-        }
-    }, [ searchTerm ]);
-
-    /**
-     * Effect to set refresh flag Revisits using revisitsScreenHistory
-     */
-    useEffect(() => {
-        if (isFocused()) {
-            const prevLast = revisitsScreenHistory[revisitsScreenHistory.length - 2];
-            if (!navigationState) return;
-            const last = navigationState.routeNames[navigationState.index];
-
-            /**
-             * If the penultimate screen is different from the last screen
-             * of revisitsScreenHistory, the revisits are refreshed
-             */
-            setRefreshRevisits(prevLast !== last);
-        }
-    }, [ revisitsScreenHistory ]);
-
-    /**
      * Effect to refresh revisits if isFocused is true and if
      * refreshRevisits is true
      */
     useEffect(() => {
-        if (isFocused() && refreshRevisits && wifi.isConnected) {
-            removeRevisits();
-            loadRevisits({ filter, search: searchTerm, refresh: true });
-        }
-    }, [ refreshRevisits, navigationState?.history ]);
+        if (!navigation.isFocused() || !refreshRevisits || !wifi.hasConnection) return;
+
+        removeRevisits();
+        loadRevisits({ filter, search: searchTerm, refresh: true });
+    }, [ refreshRevisits, navigationState?.index ]);
+
+    /**
+     * Effect to set refresh flag Revisits using revisitsScreenHistory
+     */
+    useFocusEffect(
+        useCallback(() => {
+            if (!navigationState) return;
+
+            const prevLast = revisitsScreenHistory[revisitsScreenHistory.length - 2];
+            const last = navigationState.routeNames[navigationState.index];
+
+            setRefreshRevisits(prevLast !== last);
+        }, [ navigationState?.routeNames, navigationState?.index, revisitsScreenHistory ])
+    );
 
     return (
         <>
             <FlatList
-                contentContainerStyle={{ alignItems: 'center', padding: margins.md, paddingBottom: 100, flexGrow: 1 }}
+                contentContainerStyle={ themeStyles.flatListContainer }
                 data={ revisits }
                 keyExtractor={ (item) => item.id }
                 ListFooterComponent={
@@ -217,11 +199,8 @@ export const RevisitsList: FC<RevisitsListProps> = ({ emptyMessage, filter, titl
                         />
 
                         <SearchInput
-                            onClean={ handleRefreshing }
-                            onSearch={ (text) => {
-                                setSearchTerm(text);
-                                handleResetRevisits(text);
-                            } }
+                            onClean={ () => handleSearchRevisits('') }
+                            onSearch={ handleSearchRevisits }
                             searchTerm={ searchTerm }
                             refreshing={ isRefreshing }
                         />
@@ -229,23 +208,20 @@ export const RevisitsList: FC<RevisitsListProps> = ({ emptyMessage, filter, titl
                 }
                 ListEmptyComponent={
                     <ListEmptyComponent
-                        msg={
-                            (searchTerm.trim().length > 0)
-                                ? `No se encontraron revisitas con la busqueda: ${ searchTerm.trim() }`
-                                : emptyMessage
-                        }
+                        msg={ emptyMsg }
                         showMsg={ !isRevisitsLoading && revisits.length === 0 }
                     />
                 }
                 ListHeaderComponentStyle={{ alignSelf: 'flex-start' }}
                 onEndReached={ handleEndReach }
                 onEndReachedThreshold={ 0.5 }
-                onRefresh={ () => {
-                    setIsRefreshing(true);
-                    handleRefreshing()
-                } }
                 overScrollMode="never"
-                refreshing={ isRefreshing }
+                refreshControl={
+                    <RefreshControl
+                        onRefresh={ handleRefreshing }
+                        refreshing={ isRefreshing }
+                    />
+                }
                 renderItem={ ({ item }) => (
                     <RevisitCard
                         onDelete={ () => handleShowModal(item, setShowDeleteModal) }

@@ -1,25 +1,24 @@
 import React, { Children, FC, useState } from 'react';
-import { KeyboardAvoidingView, ScrollView, View, Text, Share, TextInput } from 'react-native';
+import { View, Text, Share, TextInput } from 'react-native';
 import { useStyles } from 'react-native-unistyles';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 /* Screens */
-import { Modal, RadioBtn, ModalActions } from '../../../ui';
+import { Modal, RadioBtn, ModalActions } from '@ui';
 
 /* Hooks */
-import { useAuth } from '../../../auth';
+import { useAuth } from '@auth';
 import { usePreaching } from '../../hooks';
-import { useCourses } from '../../../courses';
+import { useCourses } from '@courses';
 
 /* Interfaces */
 import { ReportModalProps } from './interfaces';
 
 /* Utils */
-import { date } from '../../../../utils';
+import { characters, date } from '@utils';
 
 /* Styles */
-import { styles as themeStylesheet } from '../../../theme';
-import stylesheet from './styles';
+import { themeStylesheet } from '@theme';
+import { stylesheet } from './styles';
 
 const particitions = [
     { label: 'Si', value: 'si' },
@@ -42,13 +41,12 @@ const ReportModal: FC<ReportModalProps> = ({ isOpen, month, onClose }): JSX.Elem
         end: comment.length || 0
     });
 
-    const { top } = useSafeAreaInsets();
+    const { styles: themeStyles, theme: { colors, margins } } = useStyles(themeStylesheet);
+    const { styles } = useStyles(stylesheet);
 
     const { state: { user } } = useAuth();
     const { state: { preachings } } = usePreaching();
     const { state: { courses } } = useCourses();
-    const { styles: themeStyles, theme: { colors, margins } } = useStyles(themeStylesheet);
-    const { styles } = useStyles(stylesheet);
 
     const username = `${ user.name } ${ user.surname }`;
     const totalHours = date.sumHours(preachings.map(p => ({ init: p.initHour, finish: p.finalHour })));
@@ -66,7 +64,7 @@ const ReportModal: FC<ReportModalProps> = ({ isOpen, month, onClose }): JSX.Elem
 
         let report = '*Informe De Predicación* \n \n';
         report += `Nombre: ${ username }\n`;
-        report += `Mes: ${ month.toLowerCase() }\n`;
+        report += `Mes: ${ characters.capitalize(month) }\n`;
 
         if (user.precursor !== 'ninguno') report += `Horas: ${ totalHours }\n`;
         else report += `Participo en el ministerio: ${ participated }`;
@@ -91,135 +89,99 @@ const ReportModal: FC<ReportModalProps> = ({ isOpen, month, onClose }): JSX.Elem
 
     return (
         <Modal isOpen={ isOpen }>
-            <KeyboardAvoidingView
-                behavior="padding"
-                style={{ flex: 1, width: '100%' }}
-            >
-                <ScrollView
-                    contentContainerStyle={{
-                        alignItems: 'center',
-                        flexGrow: 1,
-                        justifyContent: 'center',
-                        paddingVertical: top,
-                        width: '100%'
-                    }}
-                    overScrollMode="never"
-                    showsVerticalScrollIndicator={ false }
-                >
-                    <View style={ styles.reportModal }>
-                        <Text style={ styles.reportModalInfo }>Estás a punto de entregar tu informe predicación, por favor revisalo.</Text>
+            <View style={ styles.reportModal }>
+                <Text style={ styles.reportModalInfo }>Estás a punto de entregar tu informe predicación, por favor revisalo.</Text>
 
-                        <View style={{ marginTop: margins.xl }}>
-                            <Text style={ styles.reportTitle }>Informe De Predicación</Text>
+                <View style={{ marginTop: margins.xl }}>
+                    <Text style={ styles.reportTitle }>Informe De Predicación</Text>
 
-                            <View style={{ flexDirection: 'row' }}>
-                                <Text style={{ ...styles.reportText, color: colors.text }}>Nombre: </Text>
-                                <Text style={{ ...styles.reportText, color: colors.modalText }}>{ username }</Text>
+                    <View style={{ flexDirection: 'row' }}>
+                        <Text style={{ ...styles.reportText, color: colors.text }}>Nombre: </Text>
+                        <Text style={{ ...styles.reportText, color: colors.modalText }}>{ username }</Text>
+                    </View>
+
+                    <View style={{ flexDirection: 'row' }}>
+                        <Text style={{ ...styles.reportText, color: colors.text }}>Mes: </Text>
+                        <Text style={{ ...styles.reportText, color: colors.modalText }}>{ characters.capitalize(month) }</Text>
+                    </View>
+
+                    { (user.precursor !== 'ninguno') && (
+                        <View style={{ flexDirection: 'row' }}>
+                            <Text style={{ ...styles.reportText, color: colors.text }}>Horas: </Text>
+                            <Text style={{ ...styles.reportText, color: colors.modalText }}>{ totalHours }</Text>
+                        </View>
+                    ) }
+
+                    <View style={{ flexDirection: 'row' }}>
+                        <Text style={{ ...styles.reportText, color: colors.text }}>Cursos: </Text>
+                        <Text style={{ ...styles.reportText, color: colors.modalText }}>{ totalCourses }</Text>
+                    </View>
+
+                    { (user.precursor === 'ninguno') && (
+                        <View style={{ flexDirection: 'column' }}>
+                            <Text style={{ ...styles.reportText, color: colors.text, marginBottom: 5 }}>Participo en el ministerio: </Text>
+
+                            <View style={{ flexDirection: 'row', gap: margins.lg, paddingVertical: margins.xs }}>
+                                { Children.toArray(particitions.map(particition => (
+                                    <RadioBtn
+                                        isSelected={ (participated === particition.value) }
+                                        label={ particition.label }
+                                        onPress={ () => setParticipated(particition.value) }
+                                    />
+                                ))) }
                             </View>
+                        </View>
+                    ) }
 
-                            <View style={{ flexDirection: 'row' }}>
-                                <Text style={{ ...styles.reportText, color: colors.text }}>Mes: </Text>
-                                <Text style={{ ...styles.reportText, color: colors.modalText }}>{ month.toLowerCase() }</Text>
-                            </View>
+                    {/* Comment section */}
+                    <View style={{ flexDirection: 'column' }}>
+                        <Text style={{ ...styles.reportText, color: colors.text, marginBottom: 5 }}>Comentarios: </Text>
 
-                            { (user.precursor !== 'ninguno') && (
-                                <View style={{ flexDirection: 'row' }}>
-                                    <Text style={{ ...styles.reportText, color: colors.text }}>Horas: </Text>
-                                    <Text style={{ ...styles.reportText, color: colors.modalText }}>{ totalHours }</Text>
-                                </View>
-                            ) }
-
-                            <View style={{ flexDirection: 'row' }}>
-                                <Text style={{ ...styles.reportText, color: colors.text }}>Cursos: </Text>
-                                <Text style={{ ...styles.reportText, color: colors.modalText }}>{ totalCourses }</Text>
-                            </View>
-
-                            { (user.precursor === 'ninguno') && (
-                                <View style={{ flexDirection: 'column' }}>
-                                    <Text style={{ ...styles.reportText, color: colors.text, marginBottom: 5 }}>Participo en el ministerio: </Text>
-
-                                    <View style={{ flexDirection: 'row', gap: margins.lg, paddingVertical: margins.xs }}>
-                                        { Children.toArray(particitions.map(particition => (
-                                            <RadioBtn
-                                                isSelected={ (participated === particition.value) }
-                                                label={ particition.label }
-                                                onPress={ () => setParticipated(particition.value) }
-                                            />
-                                        ))) }
-                                    </View>
-                                </View>
-                            ) }
-
-                            {/* Comment section */}
-                            <View style={{ flexDirection: 'column' }}>
-                                <Text style={{ ...styles.reportText, color: colors.text, marginBottom: 5 }}>Comentarios: </Text>
-
-                                <View
-                                    style={{
-                                        ...themeStyles.focusExternalBorder,
-                                        borderColor: (isFocused) ? '#FFFFFF' : 'transparent',
-                                        marginTop: margins.sm
-                                    }}
-                                >
-                                    <View
+                        <View style={[ themeStyles.focusExternalBorder(isFocused), { marginTop: margins.sm } ]}>
+                            <View style={ themeStyles.defaultBorder(isFocused) }>
+                                <View style={[ themeStyles.formControl, themeStyles.focusInternalBorder(isFocused) ]}>
+                                    <TextInput
+                                        autoCorrect={ false }
+                                        cursorColor={ colors.button }
+                                        multiline
+                                        numberOfLines={ 4 }
+                                        onBlur={ () => setIsFocused(false) }
+                                        onChangeText={ setComment }
+                                        onFocus={ () => setIsFocused(true) }
+                                        onSelectionChange={ ({ nativeEvent }) => setSelection(nativeEvent.selection) }
+                                        placeholder="Ninguno"
+                                        placeholderTextColor={ colors.icon }
+                                        selection={ selection }
+                                        selectionColor={ colors.linkText }
                                         style={{
-                                            ...themeStyles.defaultBorder,
-                                            borderColor: (!isFocused) ? colors.text : colors.focus
+                                            ...themeStyles.formInput,
+                                            maxHeight: 105,
+                                            textAlignVertical: 'top',
                                         }}
-                                    >
-                                        <View
-                                            style={{
-                                                ...themeStyles.formControl,
-                                                ...themeStyles.focusInternalBorder,
-                                                borderColor: (isFocused) ? colors.focus : 'transparent',
-                                            }}
-                                        >
-                                            <TextInput
-                                                autoCorrect={ false }
-                                                cursorColor={ colors.button }
-                                                multiline
-                                                numberOfLines={ 4 }
-                                                onBlur={ () => setIsFocused(false) }
-                                                onChangeText={ setComment }
-                                                onFocus={ () => setIsFocused(true) }
-                                                onSelectionChange={ ({ nativeEvent }) => setSelection(nativeEvent.selection) }
-                                                placeholder="Ninguno"
-                                                placeholderTextColor={ colors.icon }
-                                                selection={ selection }
-                                                selectionColor={ colors.linkText }
-                                                style={{
-                                                    ...themeStyles.formInput,
-                                                    flex: 1,
-                                                    maxHeight: 105,
-                                                    paddingRight: 5,
-                                                    textAlignVertical: 'top',
-                                                }}
-                                                value={ comment }
-                                            />
-                                        </View>
-                                    </View>
+                                        value={ comment }
+                                    />
                                 </View>
                             </View>
                         </View>
-
-                        { (restMins > 0) && (
-                            <Text style={ styles.restMinsText }>
-                                Para este mes te sobraron { restMins } minutos, guardalos para el siguiente mes.
-                            </Text>
-                        ) }
-
-                        {/* Modal actions */}
-                        <ModalActions
-                            cancelButtonText="CANCELAR"
-                            confirmTextButton="ENTREGAR"
-                            onCancel={ handleClose }
-                            onConfirm={ handleDeliver }
-                            showCancelButton
-                            showConfirmButton
-                        />
                     </View>
-                </ScrollView>
-            </KeyboardAvoidingView>
+                </View>
+
+                { (restMins > 0) && (
+                    <Text style={ styles.restMinsText }>
+                        Para este mes te sobraron { restMins } minutos, guardalos para el siguiente mes.
+                    </Text>
+                ) }
+
+                {/* Modal actions */}
+                <ModalActions
+                    cancelButtonText="CANCELAR"
+                    confirmTextButton="ENTREGAR"
+                    onCancel={ handleClose }
+                    onConfirm={ handleDeliver }
+                    showCancelButton
+                    showConfirmButton
+                />
+            </View>
         </Modal>
     );
 }

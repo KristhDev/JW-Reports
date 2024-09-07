@@ -4,7 +4,7 @@ import { Bugfender, LogLevel } from '@bugfender/rn-bugfender';
 import { BUGFENDER_API_KEY } from '@env';
 
 /* Version */
-import { version as appVersion } from '../../package.json';
+import { version as appVersion } from '@package';
 
 export const logger = {
     init: (): void => {

@@ -1,13 +1,13 @@
 import { useNavigation } from '@react-navigation/native';
 
 /* Supabase */
-import { supabase } from '../../../config';
+import { supabase } from '@config';
 
 /* Adapters */
 import { courseAdapter, courseFormValuesAdapter } from '../adapters';
 
 /* Features */
-import { useAppDispatch, useAppSelector } from '../../../features';
+import { useAppDispatch, useAppSelector } from '@features';
 import {
     INIT_COURSE,
     addCourse,
@@ -29,15 +29,15 @@ import {
 } from '../features';
 
 /* Hooks */
-import { addLastLesson, useLessons } from '../../lessons';
-import { useStatus, useNetwork } from '../../shared';
+import { addLastLesson, useLessons } from '@lessons';
+import { useStatus, useNetwork } from '@shared';
 
 /* Interfaces */
 import { Course, CourseFormValues, loadCoursesOptions, CourseEndpoint } from '../interfaces';
-import { Pagination } from '../../ui';
+import { Pagination } from '@ui';
 
 /* Utils */
-import { date } from '../../../utils';
+import { date } from '@utils';
 
 /**
  * Hook to management courses of store with state and actions
@@ -71,7 +71,7 @@ const useCourses = () => {
      * @return {Promise<void>} This function does not return anything.
      */
     const activeOrSuspendCourse = async (onFinish?: () => void): Promise<void> => {
-        if (!wifi.isConnected) {
+        if (!wifi.hasConnection) {
             setNetworkError();
             return;
         }
@@ -158,7 +158,7 @@ const useCourses = () => {
      * @return {Promise<void>} This function does not return anything.
      */
     const deleteCourse = async (back: boolean = false, onFinish?: () => void): Promise<void> => {
-        if (!wifi.isConnected) {
+        if (!wifi.hasConnection) {
             setNetworkError();
             return;
         }
@@ -234,7 +234,7 @@ const useCourses = () => {
      * @return {Promise<void>} This function does not return anything.
      */
     const finishOrStartCourse = async (onFinish?: () => void): Promise<void> => {
-        if (!wifi.isConnected) {
+        if (!wifi.hasConnection) {
             setNetworkError();
             return;
         }
@@ -327,7 +327,7 @@ const useCourses = () => {
     const loadCourses = async ({ filter, loadMore = false, refresh = false, search = '' }: loadCoursesOptions): Promise<void> => {
         dispatch(setCourseFilter({ filter }));
 
-        if (!wifi.isConnected) {
+        if (!wifi.hasConnection) {
             setNetworkError();
             return;
         }
@@ -394,7 +394,7 @@ const useCourses = () => {
      * @return {Promise<void>} This function does not return anything.
      */
     const saveCourse = async (courseValues: CourseFormValues, onFinish?: () => void): Promise<void> => {
-        if (!wifi.isConnected) {
+        if (!wifi.hasConnection) {
             setNetworkError();
             return;
         }
@@ -446,7 +446,7 @@ const useCourses = () => {
      * @return {Promise<void>} This function does not return anything.
      */
     const updateCourse = async (courseValues: CourseFormValues): Promise<void> => {
-        if (!wifi.isConnected) {
+        if (!wifi.hasConnection) {
             setNetworkError();
             return;
         }

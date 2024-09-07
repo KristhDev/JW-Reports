@@ -9,7 +9,7 @@ import {
     RemoveResourcePayload,
     SetIsDeletingPayload,
     SetIsLoadingPayload,
-} from '../../shared';
+} from '@shared';
 
 import {
     AddLastLessonInCoursePayload,
@@ -20,7 +20,7 @@ import {
     ReplaceLastLessonInCoursePayload,
     SetCoursesPayload,
 } from '../interfaces';
-import { LessonPayload } from '../../lessons';
+import { LessonPayload } from '@lessons';
 
 /* Initial course */
 export const INIT_COURSE: Course = {

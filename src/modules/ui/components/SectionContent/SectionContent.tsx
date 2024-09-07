@@ -9,7 +9,7 @@ import { InfoText } from '../InfoText';
 import { SectionContentProps } from './interfaces';
 
 /* Styles */
-import stylesheet from './styles';
+import { stylesheet } from './styles';
 
 /**
  * This component renders the content of a section with title that

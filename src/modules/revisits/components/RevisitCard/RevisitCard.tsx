@@ -3,10 +3,10 @@ import { Pressable, Text, View, useWindowDimensions } from 'react-native';
 import { useStyles } from 'react-native-unistyles';
 import { useNavigation } from '@react-navigation/native';
 import { Menu, MenuOption, MenuOptions, MenuTrigger } from 'react-native-popup-menu';
-import Icon from 'react-native-vector-icons/Ionicons';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
 /* Components */
-import { Fab } from '../../../ui';
+import { Fab } from '@ui';
 
 /* Hooks */
 import { useRevisits } from '../../hooks';
@@ -15,10 +15,11 @@ import { useRevisits } from '../../hooks';
 import { RevisitCardProps } from './interfaces';
 
 /* Utils */
-import { date } from '../../../../utils';
+import { characters, date } from '@utils';
 
 /* Styles */
-import stylesheet from './styles';
+import { stylesheet } from './styles';
+import { themeStylesheet } from '@theme';
 
 /**
  * This component is responsible for rendering part of the information of a
@@ -34,11 +35,13 @@ import stylesheet from './styles';
  */
 export const RevisitCard: FC<RevisitCardProps> = ({ onDelete, onPass, onRevisit, revisit, screenToNavigate }): JSX.Element => {
     const [ isOpen, setIsOpen ] = useState<boolean>(false);
-    const { navigate } = useNavigation();
     const { width } = useWindowDimensions();
 
-    const { setSelectedRevisit } = useRevisits();
+    const navigation = useNavigation();
+    const { styles: themeStyles } = useStyles(themeStylesheet);
     const { styles, theme: { colors, fontSizes, margins } } = useStyles(stylesheet);
+
+    const { setSelectedRevisit } = useRevisits();
 
     const nextVisit = date.format(revisit.nextVisit, 'DD [de] MMMM [del] YYYY');
 
@@ -50,7 +53,7 @@ export const RevisitCard: FC<RevisitCardProps> = ({ onDelete, onPass, onRevisit,
      */
     const handleRevisitDetail = (): void => {
         setSelectedRevisit(revisit);
-        navigate(screenToNavigate as never);
+        navigation.navigate(screenToNavigate as never);
     }
 
     /**
@@ -62,7 +65,7 @@ export const RevisitCard: FC<RevisitCardProps> = ({ onDelete, onPass, onRevisit,
     const handleEdit = (): void => {
         setIsOpen(false);
         setSelectedRevisit(revisit);
-        navigate('AddOrEditRevisitScreen' as never);
+        navigation.navigate('AddOrEditRevisitScreen' as never);
     }
 
     /**
@@ -110,20 +113,20 @@ export const RevisitCard: FC<RevisitCardProps> = ({ onDelete, onPass, onRevisit,
                     style={ styles.textDescription }
                     testID="revisit-card-about-text"
                 >
-                    { (revisit.about.length > 200) ? revisit.about.substring(0, 200) + '...' : revisit.about }
+                    { characters.truncate(revisit.about, 200) }
                 </Text>
 
                 <Fab
                     color="transparent"
                     icon={
-                        <Icon
+                        <Ionicons
                             color={ colors.button }
                             name="ellipsis-vertical"
                             size={ (fontSizes.md - 3) }
                         />
                     }
                     onPress={ () => setIsOpen(true) }
-                    style={ styles.fab }
+                    style={ themeStyles.menuButton }
                     touchColor={ colors.buttonTransparent }
                 />
 
@@ -131,33 +134,33 @@ export const RevisitCard: FC<RevisitCardProps> = ({ onDelete, onPass, onRevisit,
                 <Menu
                     onBackdropPress={ () => setIsOpen(false) }
                     opened={ isOpen }
-                    style={ styles.menuPosition }
+                    style={ themeStyles.menuPosition }
                 >
                     <MenuTrigger text="" />
 
                     <MenuOptions
-                        optionsContainerStyle={{ backgroundColor: colors.card, borderRadius: 5, width: 220 }}
+                        optionsContainerStyle={ themeStyles.menuContainer(220) }
                     >
                         <MenuOption onSelect={ handleEdit }>
-                            <Text style={ styles.textMenuOpt }>
+                            <Text style={ themeStyles.menuItemText }>
                                 Editar
                             </Text>
                         </MenuOption>
 
                         <MenuOption onSelect={ () => handleAction(onRevisit) }>
-                            <Text style={ styles.textMenuOpt }>
+                            <Text style={ themeStyles.menuItemText }>
                                 { (revisit.done) ? 'Volver a visitar' : 'Marcar como visitada' }
                             </Text>
                         </MenuOption>
 
                         <MenuOption onSelect={ () => handleAction(onPass) }>
-                            <Text style={ styles.textMenuOpt }>
+                            <Text style={ themeStyles.menuItemText }>
                                 Pasar a curso bíblico
                             </Text>
                         </MenuOption>
 
                         <MenuOption onSelect={ () => handleAction(onDelete) }>
-                            <Text style={ styles.textMenuOpt }>
+                            <Text style={ themeStyles.menuItemText }>
                                 Eliminar
                             </Text>
                         </MenuOption>

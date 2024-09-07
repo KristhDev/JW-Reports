@@ -2,14 +2,14 @@ import React, { useState } from 'react';
 import { View, ActivityIndicator } from 'react-native';
 import { useStyles } from 'react-native-unistyles';
 import { Formik } from 'formik';
-import Icon from 'react-native-vector-icons/Ionicons';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
 /* Components */
-import { Button, EyeBtn, FormField } from '../../../ui';
+import { Button, EyeBtn, FormField } from '@ui';
 
 /* Hooks */
 import { useAuth } from '../../hooks';
-import { useStatus } from '../../../shared';
+import { useStatus } from '@shared';
 
 /* Schemas */
 import { emailFormSchema, passwordFormSchema } from './schemas';
@@ -26,9 +26,10 @@ export const CredentialsForm = (): JSX.Element => {
     const [ showPassword, setShowPassword ] = useState<boolean>(false);
     const [ showConfirmPassword, setShowConfirmPassword ] = useState<boolean>(false);
 
+    const { theme: { colors, fontSizes, margins } } = useStyles();
+
     const { state: { user, isAuthLoading }, updateEmail, updatePassword } = useAuth();
     const { setErrorForm } = useStatus();
-    const { theme: { colors, fontSizes, margins } } = useStyles();
 
     /**
      * Handles updating the email.
@@ -69,8 +70,8 @@ export const CredentialsForm = (): JSX.Element => {
                         {/* Email field */}
                         <FormField
                             autoCapitalize="none"
-                            icon={
-                                <Icon
+                            leftIcon={
+                                <Ionicons
                                     color={ colors.icon }
                                     name="mail-outline"
                                     size={ fontSizes.icon }
@@ -115,7 +116,14 @@ export const CredentialsForm = (): JSX.Element => {
                         {/* New password field */}
                         <FormField
                             autoCapitalize="none"
-                            icon={
+                            leftIcon={
+                                <Ionicons
+                                    color={ colors.icon }
+                                    name="key-outline"
+                                    size={ fontSizes.icon }
+                                />
+                            }
+                            rightIcon={
                                 <EyeBtn
                                     onToggle={ setShowPassword }
                                     value={ showPassword }
@@ -130,7 +138,14 @@ export const CredentialsForm = (): JSX.Element => {
                         {/* Confirm password field */}
                         <FormField
                             autoCapitalize="none"
-                            icon={
+                            leftIcon={
+                                <Ionicons
+                                    color={ colors.icon }
+                                    name="key-outline"
+                                    size={ fontSizes.icon }
+                                />
+                            }
+                            rightIcon={
                                 <EyeBtn
                                     onToggle={ setShowConfirmPassword }
                                     value={ showConfirmPassword }

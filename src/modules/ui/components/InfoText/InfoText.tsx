@@ -6,7 +6,7 @@ import { useStyles } from 'react-native-unistyles';
 import { InfoTextProps } from './interfaces';
 
 /* Styles */
-import stylesheet from './styles';
+import { stylesheet } from './styles';
 
 /**
  * This component is responsible for displaying a help text

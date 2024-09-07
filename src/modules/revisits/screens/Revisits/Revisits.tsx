@@ -1,15 +1,15 @@
-import React, { FC, useEffect } from 'react';
-import { useNavigation } from '@react-navigation/native';
+import React, { FC, useCallback } from 'react';
+import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import { useStyles } from 'react-native-unistyles';
 import { MaterialTopTabScreenProps } from '@react-navigation/material-top-tabs';
-import Icon from 'react-native-vector-icons/Ionicons';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
 /* Features */
 import { INIT_REVISIT } from '../../features';
 
 /* Components */
 import { RevisitsList } from '../../components';
-import { Fab } from '../../../ui';
+import { Fab } from '@ui';
 
 /* Hooks */
 import { useRevisits } from '../../hooks';
@@ -18,7 +18,7 @@ import { useRevisits } from '../../hooks';
 import { RevisitsTopTabsParamsList } from '../../interfaces';
 
 /* Theme */
-import { styles as themeStylesheet } from '../../../theme';
+import { themeStylesheet } from '@theme';
 
 type RevisitsProps = MaterialTopTabScreenProps<RevisitsTopTabsParamsList>;
 
@@ -30,10 +30,10 @@ type RevisitsProps = MaterialTopTabScreenProps<RevisitsTopTabsParamsList>;
  * @return {JSX.Element} rendered component to show list of revisits
  */
 const Revisits: FC<RevisitsProps> = ({ route }): JSX.Element => {
-    const { navigate, addListener, removeListener, getState } = useNavigation();
+    const navigation = useNavigation();
+    const { styles: themeStyles, theme: { colors, fontSizes } } = useStyles(themeStylesheet);
 
     const { setSelectedRevisit, setRevisitsScreenHistory } = useRevisits();
-    const { styles: themeStyles, theme: { colors, fontSizes } } = useStyles(themeStylesheet);
 
     /**
      * I'm going to set the selectedRevisit to the INIT_REVISIT object, but I'm going to override the
@@ -47,24 +47,20 @@ const Revisits: FC<RevisitsProps> = ({ route }): JSX.Element => {
             nextVisit: new Date().toString()
         });
 
-        navigate('AddOrEditRevisitScreen' as never);
+        navigation.navigate('AddOrEditRevisitScreen' as never);
     }
 
     /**
      * Effect to set revisitsScreenHistory when call focus event
      * in screen.
      */
-    useEffect(() => {
-        addListener('focus', () => {
-            const navigationState = getState();
+    useFocusEffect(
+        useCallback(() => {
+            const navigationState = navigation.getState();
             if (!navigationState) return;
             setRevisitsScreenHistory(navigationState.routeNames[navigationState.index]);
-        });
-
-        return () => {
-            removeListener('focus', () => {});
-        }
-    }, []);
+        }, [])
+    );
 
     return (
         <>
@@ -78,7 +74,7 @@ const Revisits: FC<RevisitsProps> = ({ route }): JSX.Element => {
                 <Fab
                     color={ colors.button }
                     icon={
-                        <Icon
+                        <Ionicons
                             color={ colors.contentHeader }
                             name="add-circle-outline"
                             size={ fontSizes.xl }

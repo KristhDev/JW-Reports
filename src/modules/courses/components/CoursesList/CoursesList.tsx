@@ -1,26 +1,29 @@
-import React, { FC, useEffect, useState } from 'react';
-import { FlatList } from 'react-native';
+import React, { FC, useCallback, useEffect, useState } from 'react';
+import { FlatList, RefreshControl } from 'react-native';
 import { useStyles } from 'react-native-unistyles';
-import { useNavigation } from '@react-navigation/native';
+import { useFocusEffect, useNavigation } from '@react-navigation/native';
 
 /* Features */
 import { INIT_COURSE } from '../../features';
 
 /* Screens */
 import { ActiveOrSuspendCourseModal, FinishOrStartCourseModal } from '../../screens';
-import { DeleteModal, ListEmptyComponent, ListFooterComponent, SearchInput, Title } from '../../../ui';
+import { DeleteModal, ListEmptyComponent, ListFooterComponent, SearchInput, Title } from '@ui';
 
 /* Components */
 import { CourseCard } from '../CourseCard';
 
 /* Hooks */
 import { useCourses } from '../../hooks';
-import { useLessons } from '../../../lessons';
-import { useNetwork } from '../../../shared';
+import { useLessons } from '@lessons';
+import { useNetwork } from '@shared';
 
 /* Interfaces */
 import { CoursesListProps } from './interfaces';
 import { Course } from '../../interfaces';
+
+/* Theme */
+import { themeStylesheet } from '@theme';
 
 /**
  * This component is responsible for rendering a list of courses based
@@ -41,10 +44,10 @@ export const CoursesList: FC<CoursesListProps> = ({ emptyMessage, filter, title 
     const [ showASModal, setShowASModal ] = useState<boolean>(false);
     const [ showFSModal, setShowFSModal ] = useState<boolean>(false);
 
-    const { getState, isFocused } = useNavigation();
-    const navigationState = getState();
+    const navigation = useNavigation();
+    const navigationState = navigation.getState();
 
-    const { theme: { fontSizes, margins } } = useStyles();
+    const { styles: themeStyles, theme: { fontSizes, margins } } = useStyles(themeStylesheet);
 
     const {
         state: {
@@ -67,6 +70,10 @@ export const CoursesList: FC<CoursesListProps> = ({ emptyMessage, filter, title 
 
     const { wifi } = useNetwork();
 
+    const emptyMsg = (searchTerm.trim().length > 0)
+        ? `No se encontraron cursos con la busqueda: ${ searchTerm.trim() }`
+        : emptyMessage;
+
     /**
      * When the user refreshes the page, the search term is reset, the pagination is reset, the courses
      * are removed, and the courses are loaded.
@@ -74,14 +81,18 @@ export const CoursesList: FC<CoursesListProps> = ({ emptyMessage, filter, title 
      * @return {void} This function does not return any value.
      */
     const handleRefreshing = (): void => {
+        if (isCoursesLoading) return;
+
+        setIsRefreshing(true);
         setSearchTerm('');
 
-        if (wifi.isConnected) {
+        if (wifi.hasConnection) {
             setCoursesPagination({ from: 0, to: 9 });
             removeCourses();
+            loadCourses({ filter, refresh: true });
         }
 
-        loadCourses({ filter, refresh: true });
+        setIsRefreshing(false);
     }
 
     /**
@@ -91,15 +102,14 @@ export const CoursesList: FC<CoursesListProps> = ({ emptyMessage, filter, title 
      * @param {string} search - string
      * @return {void} This function does not return any value.
      */
-    const handleResetCourses = (search: string): void => {
-        if (search.trim().length === 0 && courses.length === 0) {
-            if (wifi.isConnected) {
-                setCoursesPagination({ from: 0, to: 9 });
-                removeCourses();
-            }
+    const handleSearchCourses = (search: string): void => {
+        if (isCoursesLoading) return;
+        setSearchTerm(search);
 
-            loadCourses({ filter, search: '', refresh: true });
-            setIsRefreshing(false);
+        if (wifi.hasConnection) {
+            setCoursesPagination({ from: 0, to: 9 });
+            removeCourses();
+            loadCourses({ filter, search, refresh: true });
         }
     }
 
@@ -110,7 +120,7 @@ export const CoursesList: FC<CoursesListProps> = ({ emptyMessage, filter, title 
      * @return {void} This function does not return any value.
      */
     const handleEndReach = (): void => {
-        if (!hasMoreCourses || isCoursesLoading || !wifi.isConnected) return;
+        if (!hasMoreCourses || isCoursesLoading || !wifi.hasConnection) return;
         loadCourses({ filter, search: searchTerm, loadMore: true });
     }
 
@@ -148,69 +158,46 @@ export const CoursesList: FC<CoursesListProps> = ({ emptyMessage, filter, title 
     }
 
     /**
-     * Effect to set isRefreshing to false when it changes
-     * and it is false
+     * Effect to load courses if isFocused is true and if
+     * refreshCourses is true
      */
     useEffect(() => {
-        if (isRefreshing) setIsRefreshing(false);
-    }, [ isRefreshing ]);
+        if (!navigation.isFocused() || !refreshCourses || !wifi.hasConnection) return;
 
-    /**
-     * Effect to perform course search every time
-     * searchText changes
-     */
-    useEffect(() => {
-        if (searchTerm.trim().length > 0) {
-            setCoursesPagination({ from: 0, to: 9 });
-            removeCourses();
-            loadCourses({ filter, search: searchTerm, refresh: true });
-            setIsRefreshing(false);
-        }
-    }, [ searchTerm ]);
+        removeCourses();
+        loadCourses({ filter, search: searchTerm, refresh: true });
+    }, [ refreshCourses, navigationState?.index ]);
 
     /**
      * Effect to set refresh flag Courses using coursesScreenHistory
      */
-    useEffect(() => {
-        if (isFocused()) {
+    useFocusEffect(
+        useCallback(() => {
             if (!navigationState) return;
 
             const prevLast = coursesScreenHistory[coursesScreenHistory.length - 2];
             const last = navigationState.routeNames[navigationState.index];
 
-            /**
-             * If the penultimate screen is different from the last screen
-             * of coursesScreenHistory, the courses are refreshed
-             */
             setRefreshCourses(prevLast !== last);
-        }
-    }, [ coursesScreenHistory ]);
-
-    /**
-     * Effect to refresh courses if isFocused is true and if
-     * refreshCourses is true
-     */
-    useEffect(() => {
-        if (isFocused() && refreshCourses && wifi.isConnected) {
-            removeCourses();
-            loadCourses({ filter, search: searchTerm, refresh: true });
-        }
-    }, [ refreshCourses, navigationState?.index ]);
+        }, [ navigationState?.routeNames, navigationState?.index, coursesScreenHistory ])
+    );
 
     /**
      * Effect to remove lessons of selectedCourse
      */
-    useEffect(() => {
-        if (isFocused() && lessons.length > 0) {
+    useFocusEffect(
+        useCallback(() => {
+            if (lessons.length === 0) return;
+
             setLessonsPagination({ from: 0, to: 9 });
             removeLessons();
-        }
-    }, [ isFocused() ]);
+        }, [ lessons ])
+    );
 
     return (
         <>
             <FlatList
-                contentContainerStyle={{ alignItems: 'center', padding: margins.md, paddingBottom: 100, flexGrow: 1 }}
+                contentContainerStyle={ themeStyles.flatListContainer }
                 data={ courses }
                 keyExtractor={ (item) => item.id }
                 ListFooterComponent={
@@ -228,11 +215,8 @@ export const CoursesList: FC<CoursesListProps> = ({ emptyMessage, filter, title 
                         />
 
                         <SearchInput
-                            onClean={ handleRefreshing }
-                            onSearch={ (search) => {
-                                setSearchTerm(search);
-                                handleResetCourses(search);
-                            } }
+                            onClean={ () => handleSearchCourses('') }
+                            onSearch={ handleSearchCourses }
                             refreshing={ isRefreshing }
                             searchTerm={ searchTerm }
                         />
@@ -240,23 +224,20 @@ export const CoursesList: FC<CoursesListProps> = ({ emptyMessage, filter, title 
                 }
                 ListEmptyComponent={
                     <ListEmptyComponent
-                        msg={
-                            (searchTerm.trim().length > 0)
-                                ? `No se encontraron cursos con la busqueda: ${ searchTerm.trim() }`
-                                : emptyMessage
-                        }
+                        msg={ emptyMsg }
                         showMsg={ !isCoursesLoading && courses.length === 0 }
                     />
                 }
                 ListHeaderComponentStyle={{ alignSelf: 'flex-start' }}
                 onEndReached={ handleEndReach }
                 onEndReachedThreshold={ 0.5 }
-                onRefresh={ () => {
-                    handleRefreshing();
-                    setIsRefreshing(true);
-                } }
                 overScrollMode="never"
-                refreshing={ isRefreshing }
+                refreshControl={
+                    <RefreshControl
+                        onRefresh={ handleRefreshing }
+                        refreshing={ isRefreshing }
+                    />
+                }
                 renderItem={ ({ item }) => (
                     <CourseCard
                         course={ item }

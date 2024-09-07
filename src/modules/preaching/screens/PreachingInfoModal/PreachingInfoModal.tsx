@@ -2,23 +2,20 @@ import React, { FC } from 'react';
 import { Text, View } from 'react-native';
 import { useStyles } from 'react-native-unistyles';
 
-/* Screens */
-import { Button, Modal } from '../../../ui';
+/* UI */
+import { Button, Modal, ModalProps } from '@ui';
 
 /* Hooks */
-import { useAuth } from '../../../auth';
+import { useAuth } from '@auth';
 import { usePreaching } from '../../hooks';
 
-/* Interfaces */
-import { ModalProps } from '../../../ui';
-
 /* Utils */
-import { date } from '../../../../utils';
+import { date } from '@utils';
 import { report } from '../../utils';
 
 /* Styles */
-import stylesheet from './styles';
-import { styles as themeStylesheet } from '../../../theme';
+import { stylesheet } from './styles';
+import { themeStylesheet } from '@theme';
 
 /**
  * Generates a preaching information modal component.
@@ -28,11 +25,11 @@ import { styles as themeStylesheet } from '../../../theme';
  * @return {JSX.Element} - The preaching information modal component.
  */
 const PreachingInfoModal: FC<ModalProps> = ({ isOpen, onClose }): JSX.Element => {
+    const { styles: themeStyles, theme: { colors, fontSizes, margins } } = useStyles(themeStylesheet);
+    const { styles } = useStyles(stylesheet);
+
     const { state: { user } } = useAuth();
     const { state: { preachings } } = usePreaching();
-
-    const { styles: themeStyles } = useStyles(themeStylesheet);
-    const { styles, theme: { colors, fontSizes, margins } } = useStyles(stylesheet);
 
     const preachingsOfWeek = date.getArrayValuesOfWeek(preachings);
 

@@ -1,16 +1,16 @@
 import React, { FC, useEffect, useState } from 'react';
 import { Pressable, Text, useWindowDimensions } from 'react-native';
 import { useStyles } from 'react-native-unistyles';
-import Icon from 'react-native-vector-icons/Ionicons';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
 /* Hooks */
-import { useTheme } from '../../../theme';
+import { useTheme } from '@theme';
 
 /* Interfaces */
 import { TabBarBtnProps } from './interfaces';
 
 /* Styles */
-import stylesheet from './styles';
+import { stylesheet } from './styles';
 
 /**
  * This component is responsible for displaying a button for the navigation bar.
@@ -32,8 +32,9 @@ import stylesheet from './styles';
 export const TabBarBtn: FC<TabBarBtnProps> = ({ active, color, iconName, onPress, title, totalTabs }): JSX.Element => {
     const { styles, theme: { colors, fontSizes } } = useStyles(stylesheet);
     const [ pressColor, setPressColor ] = useState((active) ? colors.buttonTranslucent : colors.buttonTransparent);
-    const { state: { theme } } = useTheme();
+
     const { width } = useWindowDimensions();
+    const { state: { theme } } = useTheme();
 
     /**
      * Effect to change pressColor when the button is pressed
@@ -58,7 +59,7 @@ export const TabBarBtn: FC<TabBarBtnProps> = ({ active, color, iconName, onPress
             style={ styles.pressable }
         >
             <>
-                <Icon
+                <Ionicons
                     color={ color }
                     name={ iconName || '' }
                     size={ fontSizes.icon }

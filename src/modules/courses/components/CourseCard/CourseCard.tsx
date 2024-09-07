@@ -1,22 +1,26 @@
 import React, { FC, useState } from 'react';
 import { Pressable, Text, View, useWindowDimensions } from 'react-native';
-import { useStyles } from 'react-native-unistyles';
 import { Menu, MenuOption, MenuOptions, MenuTrigger } from 'react-native-popup-menu';
 import { useNavigation } from '@react-navigation/native';
-import Icon from 'react-native-vector-icons/Ionicons';
+import { useStyles } from 'react-native-unistyles';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
 /* Components */
-import { Fab } from '../../../ui';
+import { Fab } from '@ui';
 
 /* Hooks */
 import { useCourses } from '../../hooks';
-import { useLessons } from '../../../lessons';
+import { useLessons } from '@lessons';
 
 /* Interfaces */
 import { CourseCardProps } from './interfaces';
 
+/* Utils */
+import { characters } from '@utils';
+
 /* Styles */
-import stylesheet from './styles';
+import { stylesheet } from './styles';
+import { themeStylesheet } from '@theme';
 
 /**
  * This component is responsible for rendering part of the information of a
@@ -31,12 +35,14 @@ import stylesheet from './styles';
  */
 export const CourseCard: FC<CourseCardProps> = ({ course, onActiveOrSuspend, onDelete, onFinishOrStart }): JSX.Element => {
     const [ isOpen, setIsOpen ] = useState<boolean>(false);
-    const { navigate } = useNavigation();
     const { width } = useWindowDimensions();
+
+    const navigation = useNavigation();
+    const { styles: themeStyles } = useStyles(themeStylesheet);
+    const { styles, theme: { colors, fontSizes, margins } } = useStyles(stylesheet);
 
     const { setSelectedCourse } = useCourses();
     const { state: { selectedLesson }, setSelectedLesson } = useLessons();
-    const { styles, theme: { colors, fontSizes, margins } } = useStyles(stylesheet);
 
     /**
      * When the user clicks on a course, set the selected course to the course that was clicked on and
@@ -46,7 +52,7 @@ export const CourseCard: FC<CourseCardProps> = ({ course, onActiveOrSuspend, onD
      */
     const handleCourseDetail = (): void => {
         setSelectedCourse(course);
-        navigate('CourseDetailScreen' as never);
+        navigation.navigate('CourseDetailScreen' as never);
     }
 
     /**
@@ -58,7 +64,7 @@ export const CourseCard: FC<CourseCardProps> = ({ course, onActiveOrSuspend, onD
     const handleEdit = (): void => {
         setIsOpen(false);
         setSelectedCourse(course);
-        navigate('AddOrEditCourseScreen' as never);
+        navigation.navigate('AddOrEditCourseScreen' as never);
     }
 
     /**
@@ -77,7 +83,7 @@ export const CourseCard: FC<CourseCardProps> = ({ course, onActiveOrSuspend, onD
             nextLesson: new Date().toString()
         });
 
-        navigate('AddOrEditLessonScreen' as never);
+        navigation.navigate('AddOrEditLessonScreen' as never);
     }
 
     /**
@@ -89,7 +95,7 @@ export const CourseCard: FC<CourseCardProps> = ({ course, onActiveOrSuspend, onD
     const handleLessonList = (): void => {
         setIsOpen(false);
         setSelectedCourse(course);
-        navigate('LessonsScreen' as never);
+        navigation.navigate('LessonsScreen' as never);
     }
 
     /**
@@ -148,20 +154,20 @@ export const CourseCard: FC<CourseCardProps> = ({ course, onActiveOrSuspend, onD
                     style={ styles.textDescription }
                     testID="course-card-about-text"
                 >
-                    { (course.personAbout.length > 200) ? course.personAbout.substring(0, 200) + '...' : course.personAbout }
+                    { characters.truncate(course.personAbout, 200) }
                 </Text>
 
                 <Fab
                     color={ 'transparent' }
                     icon={
-                        <Icon
+                        <Ionicons
                             color={ colors.button }
                             name="ellipsis-vertical"
                             size={ (fontSizes.md - 3) }
                         />
                     }
                     onPress={ () => setIsOpen(true) }
-                    style={ styles.fab }
+                    style={ themeStyles.menuButton }
                     touchColor={ colors.buttonTransparent }
                 />
 
@@ -169,24 +175,24 @@ export const CourseCard: FC<CourseCardProps> = ({ course, onActiveOrSuspend, onD
                 <Menu
                     onBackdropPress={ () => setIsOpen(false) }
                     opened={ isOpen }
-                    style={ styles.menuPosition }
+                    style={ themeStyles.menuPosition }
                 >
                     <MenuTrigger text="" />
 
-                    <MenuOptions optionsContainerStyle={{ backgroundColor: colors.card, borderRadius: 5, width: 220 }}>
+                    <MenuOptions optionsContainerStyle={ themeStyles.menuContainer(220) }>
 
                         {/* Show menu options then course.finished is false */}
                         {/* It is not possible edit, continue or suspend the course if this is finished */}
                         { (!course.finished) && (
                             <>
                                 <MenuOption onSelect={ handleEdit }>
-                                    <Text style={ styles.textMenuOpt }>
+                                    <Text style={ themeStyles.menuItemText }>
                                         Editar
                                     </Text>
                                 </MenuOption>
 
                                 <MenuOption onSelect={ () => handleSelect(onActiveOrSuspend) }>
-                                    <Text style={ styles.textMenuOpt }>
+                                    <Text style={ themeStyles.menuItemText }>
                                         { (course.suspended) ? 'Continuar' : 'Suspender' }
                                     </Text>
                                 </MenuOption>
@@ -194,7 +200,7 @@ export const CourseCard: FC<CourseCardProps> = ({ course, onActiveOrSuspend, onD
                         ) }
 
                         <MenuOption onSelect={ handleLessonList }>
-                            <Text style={ styles.textMenuOpt }>
+                            <Text style={ themeStyles.menuItemText }>
                                 Clases
                             </Text>
                         </MenuOption>
@@ -204,13 +210,13 @@ export const CourseCard: FC<CourseCardProps> = ({ course, onActiveOrSuspend, onD
                         { (!course.suspended) && (
                             <>
                                 <MenuOption onSelect={ handleAddClass }>
-                                    <Text style={ styles.textMenuOpt }>
+                                    <Text style={ themeStyles.menuItemText }>
                                         Agregar clase
                                     </Text>
                                 </MenuOption>
 
                                 <MenuOption onSelect={ () => handleSelect(onFinishOrStart) }>
-                                    <Text style={ styles.textMenuOpt }>
+                                    <Text style={ themeStyles.menuItemText }>
                                         { (course.finished) ? 'Comenzar de nuevo' : 'Terminar' }
                                     </Text>
                                 </MenuOption>
@@ -218,7 +224,7 @@ export const CourseCard: FC<CourseCardProps> = ({ course, onActiveOrSuspend, onD
                         ) }
 
                         <MenuOption onSelect={ () => handleSelect(onDelete) }>
-                            <Text style={ styles.textMenuOpt }>
+                            <Text style={ themeStyles.menuItemText }>
                                 Eliminar
                             </Text>
                         </MenuOption>

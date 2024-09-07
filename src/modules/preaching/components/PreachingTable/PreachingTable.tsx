@@ -1,24 +1,24 @@
 import React, { Children } from 'react';
 import { TouchableHighlight, View, useWindowDimensions } from 'react-native';
-import { useStyles } from 'react-native-unistyles';
 import { useNavigation } from '@react-navigation/native';
+import { useStyles } from 'react-native-unistyles';
 
 /* Components */
-import { TableCell } from '../../../ui';
+import { TableCell } from '@ui';
 
 /* Hooks */
 import { usePreaching } from '../../hooks';
-import { useTheme } from '../../../theme';
+import { useTheme } from '@theme';
 
 /* Interfaces */
 import { Preaching } from '../../interfaces';
 
 /* Utils */
 import { TABLE_PREACHING_HEADERS } from '../../utils';
-import { date } from '../../../../utils';
+import { date } from '@utils';
 
 /* Styles */
-import stylesheet from './styles';
+import { stylesheet } from './styles';
 
 /**
  * This component is responsible for displaying a table that contains the data
@@ -27,12 +27,13 @@ import stylesheet from './styles';
  * @returns {JSX.Element} The table component with the data of the preaching days.
  */
 export const PreachingTable = (): JSX.Element => {
-    const { navigate } = useNavigation();
     const { width } = useWindowDimensions();
+
+    const { styles } = useStyles(stylesheet);
+    const navigation = useNavigation();
 
     const { state: { preachings }, setSelectedPreaching } = usePreaching();
     const { state: { theme } } = useTheme();
-    const { styles } = useStyles(stylesheet);
 
     const cellWidth = (width - 24) / 6;
     const cellWidthHours = (width - 24) / 3;
@@ -46,7 +47,7 @@ export const PreachingTable = (): JSX.Element => {
      */
     const handleGoToEditPreaching = (preaching: Preaching): void => {
         setSelectedPreaching(preaching);
-        navigate('AddOrEditPreachingScreen' as never);
+        navigation.navigate('AddOrEditPreachingScreen' as never);
     }
 
     return (

@@ -1,14 +1,17 @@
-import React, { FC, useEffect, useState } from 'react';
-import { Keyboard, View } from 'react-native';
-import { useStyles } from 'react-native-unistyles';
+import React, { FC } from 'react';
+import { View } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { BottomTabBarProps } from '@react-navigation/bottom-tabs';
+import { useStyles } from 'react-native-unistyles';
 
 /* Components */
 import { TabBarBtn } from '../TabBarBtn';
 
+/* Hooks */
+import { useUI } from '../../hooks';
+
 /* Styles */
-import stylesheet from './styles';
+import { stylesheet } from './styles';
 
 /**
  * This component is responsible for displaying a custom navigation bar
@@ -19,9 +22,10 @@ import stylesheet from './styles';
  * @return {JSX.Element} Return jsx element to render tab bar of navigation
  */
 export const TabBar: FC<BottomTabBarProps> = ({ state, descriptors }): JSX.Element => {
-    const [ hideTabBar, setHideTabBar ] = useState<boolean>(false);
-    const { navigate } = useNavigation();
+    const navigation = useNavigation();
     const { styles } = useStyles(stylesheet);
+
+    const { state: { isKeyboardVisible } } = useUI();
 
     const icons = [ 'home-outline', 'briefcase-outline', 'book-outline' ];
     const firstScreens = {
@@ -31,44 +35,34 @@ export const TabBar: FC<BottomTabBarProps> = ({ state, descriptors }): JSX.Eleme
     }
 
     /**
-     * Effect to show or hide tabbar when the keyboard is shown or hidden
+     * This function returns the tint color of the icon in the tab bar.
+     * If the index is equal to the current state.index, the function returns
+     * the tabBarActiveTintColor, otherwise it returns the tabBarInactiveTintColor.
+     * If the tintColor is not defined, the function returns undefined.
+     * @param {number} index - The index of the tab bar icon.
+     * @return {string | undefined} The tint color of the icon in the tab bar.
      */
-    useEffect(() => {
-        Keyboard.addListener('keyboardDidShow', () => {
-            setHideTabBar(true);
-        });
+    const handleGetTintColor = (index: number): string | undefined => {
+        return (state.index === index)
+            ? descriptors[state.routes[index].key]?.options.tabBarActiveTintColor
+            : descriptors[state.routes[index].key]?.options.tabBarInactiveTintColor;
+    }
 
-        Keyboard.addListener('keyboardDidHide', () => {
-            setHideTabBar(false);
-        });
-
-        return () => {
-            Keyboard.removeAllListeners('keyboardDidShow');
-            Keyboard.removeAllListeners('keyboardDidHide');
-        }
-    }, []);
+    if (isKeyboardVisible) return (<></>);
 
     return (
-        <>
-            { (!hideTabBar) && (
-                <View style={styles.container }>
-                    { state.routes.map((route, index) => (
-                        <TabBarBtn
-                            active={ state.index === index }
-                            key={ route.key }
-                            onPress={ () => navigate({ name: route.name, params: { screen: firstScreens[(route.name as keyof typeof firstScreens)] } } as never) }
-                            iconName={ icons[index] }
-                            title={ descriptors[route.key]?.options.title || '' }
-                            totalTabs={ state.routes.length }
-                            color={
-                                (state.index === index)
-                                    ? descriptors[route.key]?.options.tabBarActiveTintColor
-                                    : descriptors[route.key]?.options.tabBarInactiveTintColor
-                            }
-                        />
-                    )) }
-                </View>
-            ) }
-        </>
+        <View style={ styles.container }>
+            { state.routes.map((route, index) => (
+                <TabBarBtn
+                    active={ state.index === index }
+                    color={ handleGetTintColor(index) }
+                    iconName={ icons[index] }
+                    key={ route.key }
+                    onPress={ () => navigation.navigate({ name: route.name, params: { screen: firstScreens[(route.name as keyof typeof firstScreens)] } } as never) }
+                    title={ descriptors[route.key]?.options.title || '' }
+                    totalTabs={ state.routes.length }
+                />
+            )) }
+        </View>
     );
 }

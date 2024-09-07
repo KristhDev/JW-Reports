@@ -1,13 +1,13 @@
 import { useNavigation } from '@react-navigation/native';
 
 /* Supabase */
-import { supabase } from '../../../config';
+import { supabase } from '@config';
 
 /* Adapters */
 import { lessonAdapter } from '../adapters';
 
 /* Features */
-import { useAppDispatch, useAppSelector } from '../../../features';
+import { useAppDispatch, useAppSelector } from '@features';
 import {
     addLastLesson,
     addLesson,
@@ -28,22 +28,22 @@ import {
 } from '../features';
 
 /* Hooks */
-import { addLastLessonInCourse, courseAdapter, INIT_COURSE, replaceLastLessonInCourse, updateLastLessonInCourse } from '../../courses';
-import { useNetwork, useStatus } from '../../shared';
+import { addLastLessonInCourse, courseAdapter, INIT_COURSE, replaceLastLessonInCourse, updateLastLessonInCourse } from '@courses';
+import { useNetwork, useStatus } from '@shared';
 
 /* Interfaces */
 import { Lesson, LessonEndpoint, LessonFormValues, LessonWithCourseEndpoint } from '../interfaces';
-import { LoadResourcesOptions, Pagination } from '../../ui';
+import { LoadResourcesOptions, Pagination } from '@ui';
 
 /* Utils */
-import { date } from '../../../utils';
+import { date } from '@utils';
 
 /**
  * Hook to management lessons of store with state and actions
  */
 const useLessons = () => {
     const dispatch = useAppDispatch();
-    const { goBack, navigate } = useNavigation();
+    const navigation = useNavigation();
     const { wifi } = useNetwork();
 
     const state = useAppSelector(store => store.lessons);
@@ -69,7 +69,7 @@ const useLessons = () => {
      * @return {Promise<void>} This function does not return anything.
      */
     const deleteLesson = async (back: boolean = false, onFinish?: () => void): Promise<void> => {
-        if (!wifi.isConnected) {
+        if (!wifi.hasConnection) {
             setNetworkError();
             return;
         }
@@ -129,7 +129,7 @@ const useLessons = () => {
         dispatch(removeLesson({ id: state.selectedLesson.id }));
         dispatch(replaceLastLessonInCourse({ lessonId: state.selectedLesson.id, lastLesson: state.lessons[0] }));
         onFinish && onFinish();
-        back && goBack();
+        back && navigation.goBack();
 
         setSelectedLesson({
             ...INIT_LESSON,
@@ -150,7 +150,7 @@ const useLessons = () => {
      * @return {Promise<void>} This function does not return anything.
      */
     const finishOrStartLesson = async (next_lesson: Date, onFinish?: () => void): Promise<void> => {
-        if (!wifi.isConnected) {
+        if (!wifi.hasConnection) {
             setNetworkError();
             return;
         }
@@ -230,7 +230,7 @@ const useLessons = () => {
      * @return {Promise<void>} Promise that resolves when the last lesson is loaded.
      */
     const loadLastLesson = async (): Promise<void> => {
-        if (!wifi.isConnected) {
+        if (!wifi.hasConnection) {
             setNetworkError();
             return;
         }
@@ -276,7 +276,7 @@ const useLessons = () => {
      * @return {Promise<void>} This function does not return anything.
      */
     const loadLessons = async ({ loadMore = false, refresh = false, search = '' }: LoadResourcesOptions): Promise<void> => {
-        if (!wifi.isConnected) {
+        if (!wifi.hasConnection) {
             setNetworkError();
             return;
         }
@@ -338,7 +338,7 @@ const useLessons = () => {
      * @return {Promise<void>} This function does not return anything.
      */
     const saveLesson = async (lessonValues: LessonFormValues): Promise<void> => {
-        if (!wifi.isConnected) {
+        if (!wifi.hasConnection) {
             setNetworkError();
             return;
         }
@@ -378,7 +378,7 @@ const useLessons = () => {
             msg: 'Has agregado una clase al curso correctamente.'
         });
 
-        navigate('LessonsScreen' as never);
+        navigation.navigate('LessonsScreen' as never);
     }
 
     /**
@@ -388,7 +388,7 @@ const useLessons = () => {
      * @return {Promise<void>} This function does not return anything.
      */
     const updateLesson = async (lessonValues: LessonFormValues): Promise<void> => {
-        if (!wifi.isConnected) {
+        if (!wifi.hasConnection) {
             setNetworkError();
             return;
         }
@@ -440,7 +440,7 @@ const useLessons = () => {
             msg: 'Has actualizado la clase correctamente.'
         });
 
-        goBack();
+        navigation.goBack();
     }
 
     return {

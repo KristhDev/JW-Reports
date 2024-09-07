@@ -3,20 +3,24 @@ import { View } from 'react-native';
 import { useStyles } from 'react-native-unistyles';
 import { useNavigation } from '@react-navigation/native';
 import MonthPicker from 'react-native-month-year-picker';
-import Icon from 'react-native-vector-icons/Ionicons';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
 /* Screens */
-import { DeleteModal } from '../../screens';
+import { DeleteModal, MonthPickerModal } from '../../screens';
 
 /* Components */
 import { Fab } from '../Fab';
 
 /* Hooks */
-import { useAuth } from '../../../auth';
-import { usePreaching } from '../../../preaching';
+import { useAuth } from '@auth';
+import { usePreaching } from '@preaching';
+import { useUI } from '../../hooks';
 
 /* Interfaces */
 import { HeaderButtonsProps } from './interfaces';
+
+/* Theme */
+import { date } from '@utils';
 
 /**
  * This component is responsible for displaying various buttons that will be in the
@@ -56,11 +60,13 @@ export const HeaderButtons: FC<HeaderButtonsProps> = ({
     showDeleteModal = false,
 }): JSX.Element => {
     const [ showMonthPicker, setShowMonthPicker ] = useState<boolean>(false);
-    const { navigate } = useNavigation();
+
+    const navigation = useNavigation();
+    const { theme: { colors, fontSizes, margins } } = useStyles();
 
     const { signOut } = useAuth();
     const { setSelectedDate, state: { selectedDate } } = usePreaching();
-    const { theme: { colors, fontSizes, margins } } = useStyles();
+    const { state: { userInterface } } = useUI();
 
     /**
      * When the user selects a date, hide the month picker and set the selected date to the date the
@@ -74,6 +80,19 @@ export const HeaderButtons: FC<HeaderButtonsProps> = ({
         if (date) setSelectedDate(date);
     }
 
+    /**
+     * Updates the selected date and hides the month picker based on the provided value.
+     *
+     * @param {string} value - The value representing the selected month and year.
+     * @return {void} This function does not return anything.
+     */
+    const handleSelectMonthYear = (value: string): void => {
+        const newDate = date.toDate(value);
+
+        setSelectedDate(newDate);
+        setShowMonthPicker(false);
+    }
+
     return (
         <>
             <View style={{ flexDirection: 'row' }}>
@@ -81,7 +100,7 @@ export const HeaderButtons: FC<HeaderButtonsProps> = ({
                     <Fab
                         color={ 'transparent' }
                         icon={
-                            <Icon
+                            <Ionicons
                                 color={ colors.button }
                                 name="log-out-outline"
                                 size={ (fontSizes.lg + 2) }
@@ -97,7 +116,7 @@ export const HeaderButtons: FC<HeaderButtonsProps> = ({
                     <Fab
                         color={ 'transparent' }
                         icon={
-                            <Icon
+                            <Ionicons
                                 color={ colors.button }
                                 name="calendar-outline"
                                 size={ 28 }
@@ -114,14 +133,14 @@ export const HeaderButtons: FC<HeaderButtonsProps> = ({
                     <Fab
                         color={ 'transparent' }
                         icon={
-                            <Icon
+                            <Ionicons
                                 color={ colors.button }
                                 name="settings-outline"
                                 size={ (fontSizes.lg - 2) }
                             />
                         }
                         style={{ marginRight: (margins.xs - 2) }}
-                        onPress={ () => navigate('SettingsStackNavigation' as never) }
+                        onPress={ () => navigation.navigate('SettingsStackNavigation' as never) }
                         touchColor={ colors.buttonTransparent }
                     />
                 ) }
@@ -130,7 +149,7 @@ export const HeaderButtons: FC<HeaderButtonsProps> = ({
                     <Fab
                         color={ 'transparent' }
                         icon={
-                            <Icon
+                            <Ionicons
                                 color={ colors.button }
                                 name="pencil-outline"
                                 size={ (fontSizes.lg - 2) }
@@ -146,7 +165,7 @@ export const HeaderButtons: FC<HeaderButtonsProps> = ({
                     <Fab
                         color={ 'transparent' }
                         icon={
-                            <Icon
+                            <Ionicons
                                 color={ colors.button }
                                 name="trash-outline"
                                 size={ (fontSizes.lg - 2) }
@@ -159,7 +178,7 @@ export const HeaderButtons: FC<HeaderButtonsProps> = ({
                 ) }
             </View>
 
-            { (showMonthPicker) && (
+            { (showMonthPicker && userInterface.oldDatetimePicker) && (
                 <MonthPicker
                     cancelButton="Cancelar"
                     locale="es"
@@ -167,6 +186,15 @@ export const HeaderButtons: FC<HeaderButtonsProps> = ({
                     okButton="Seleccionar"
                     onChange={ (_, date) => handleOnChange(date) }
                     value={ selectedDate }
+                />
+            ) }
+
+            { (!userInterface.oldDatetimePicker) && (
+                <MonthPickerModal
+                    isOpen={ showMonthPicker && !userInterface.oldDatetimePicker }
+                    monthDate={ date.toISOString(selectedDate) }
+                    onClose={ () => setShowMonthPicker(false) }
+                    onConfirm={ handleSelectMonthYear }
                 />
             ) }
 

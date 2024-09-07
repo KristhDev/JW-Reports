@@ -3,7 +3,7 @@ import { View, Text, TouchableOpacity, useWindowDimensions, ActivityIndicator } 
 import { useStyles } from 'react-native-unistyles';
 import { useNavigation } from '@react-navigation/native';
 import { Formik } from 'formik';
-import Icon from 'react-native-vector-icons/Ionicons';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
 /* Components */
 import { Button, EyeBtn, FormField } from '../../../ui';
@@ -16,7 +16,7 @@ import { useStatus } from '../../../shared';
 import { loginFormSchema } from './schemas';
 
 /* Theme */
-import { styles as themeStylesheet } from '../../../theme';
+import { themeStylesheet } from '../../../theme';
 
 /**
  * Renders a login form component.
@@ -25,13 +25,13 @@ import { styles as themeStylesheet } from '../../../theme';
  */
 export const LoginForm = (): JSX.Element => {
     const [ showPassword, setShowPassword ] = useState<boolean>(false);
-
-    const { navigate } = useNavigation();
     const { width } = useWindowDimensions();
+
+    const navigation = useNavigation();
+    const { styles: themeStyles, theme: { colors, fontSizes, margins } } = useStyles(themeStylesheet);
 
     const { state: { isAuthLoading }, signIn } = useAuth();
     const { setErrorForm } = useStatus();
-    const { styles: themeStyles, theme: { colors, fontSizes, margins } } = useStyles(themeStylesheet);
 
     return (
         <Formik
@@ -51,8 +51,8 @@ export const LoginForm = (): JSX.Element => {
                     {/* Email field */}
                     <FormField
                         autoCapitalize="none"
-                        icon={
-                            <Icon
+                        leftIcon={
+                            <Ionicons
                                 color={ colors.icon }
                                 name="mail-outline"
                                 size={ fontSizes.icon }
@@ -67,7 +67,14 @@ export const LoginForm = (): JSX.Element => {
                     {/* Password field */}
                     <FormField
                         autoCapitalize="none"
-                        icon={
+                        leftIcon={
+                            <Ionicons
+                                color={ colors.icon }
+                                name="key-outline"
+                                size={ fontSizes.icon }
+                            />
+                        }
+                        rightIcon={
                             <EyeBtn
                                 onToggle={ setShowPassword }
                                 value={ showPassword }
@@ -101,7 +108,7 @@ export const LoginForm = (): JSX.Element => {
 
                         <TouchableOpacity
                             activeOpacity={ 0.75 }
-                            onPress={ () => navigate('RegisterScreen' as never) }
+                            onPress={ () => navigation.navigate('RegisterScreen' as never) }
                             testID="login-form-sign-up"
                         >
                             <Text style={ themeStyles.formLink }>
@@ -114,7 +121,7 @@ export const LoginForm = (): JSX.Element => {
                     <View style={{ ...themeStyles.btnLink, marginTop: margins.sm }}>
                         <TouchableOpacity
                             activeOpacity={ 0.75 }
-                            onPress={ () => navigate('ForgotPasswordScreen' as never) }
+                            onPress={ () => navigation.navigate('ForgotPasswordScreen' as never) }
                             testID="login-form-forgor-pass"
                         >
                             <Text style={ themeStyles.formLink }>

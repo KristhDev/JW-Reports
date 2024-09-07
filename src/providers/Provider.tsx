@@ -1,14 +1,15 @@
 import React, { FC, PropsWithChildren } from 'react';
 import { Provider as ReduxProvider } from 'react-redux';
+import { KeyboardProvider } from 'react-native-keyboard-controller';
 import { PersistGate } from 'reduxjs-toolkit-persist/lib/integration/react';
 import { MenuProvider } from 'react-native-popup-menu';
 
 /* Features */
-import { store, persistor } from '../features';
+import { store, persistor } from '@features';
 
 /* Modules */
-import { NetworkProvider } from '../modules/shared';
-import { ThemeProvider } from '../modules/theme';
+import { NetworkProvider } from '@shared';
+import { ThemeProvider } from '@theme';
 
 /**
  * A React functional component that wraps its children with various providers.
@@ -19,17 +20,19 @@ import { ThemeProvider } from '../modules/theme';
  */
 const Provider: FC<PropsWithChildren> = ({ children }): JSX.Element => {
     return (
-        <NetworkProvider>
-            <MenuProvider>
-                <ThemeProvider>
-                    <ReduxProvider store={ store }>
-                        <PersistGate loading={ null } persistor={ persistor }>
-                            { children }
-                        </PersistGate>
-                    </ReduxProvider>
-                </ThemeProvider>
-            </MenuProvider>
-        </NetworkProvider>
+        <KeyboardProvider>
+            <NetworkProvider>
+                <MenuProvider>
+                    <ThemeProvider>
+                        <ReduxProvider store={ store }>
+                            <PersistGate loading={ null } persistor={ persistor }>
+                                { children }
+                            </PersistGate>
+                        </ReduxProvider>
+                    </ThemeProvider>
+                </MenuProvider>
+            </NetworkProvider>
+        </KeyboardProvider>
     );
 }
 

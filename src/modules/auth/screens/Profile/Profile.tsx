@@ -1,14 +1,14 @@
 import React from 'react';
 import { View } from 'react-native';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-controller';
 import { useStyles } from 'react-native-unistyles';
 
 /* Components */
 import { ProfileForm } from '../../components';
-import { Title } from '../../../ui';
+import { Title } from '@ui';
 
 /* Theme */
-import { styles as themeStylesheet } from '../../../theme';
+import { themeStylesheet } from '@theme';
 
 /**
  * This screen is to display the form that changes the

@@ -1,20 +1,18 @@
-import { StyleSheet } from 'react-native';
+import { createStyleSheet } from 'react-native-unistyles';
 
-const styles = StyleSheet.create({
+export const stylesheet = createStyleSheet(({ borderRadius, fontSizes }) => ({
     fabView: {
-        borderRadius: 50,
-        height: 48,
-        width: 48,
+        borderRadius: borderRadius.rounded,
+        height: fontSizes.xxl,
+        width: fontSizes.xxl,
         zIndex: 999
     },
 
     fab: {
         alignItems: 'center',
-        borderRadius: 50,
+        borderRadius: borderRadius.rounded,
         height: '100%',
         justifyContent: 'center',
         width: '100%',
     }
-});
-
-export default styles;
+}));

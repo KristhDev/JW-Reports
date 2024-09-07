@@ -1,9 +1,9 @@
 import { createStyleSheet } from 'react-native-unistyles';
 
-const styles = createStyleSheet(({ colors, fontSizes, margins }) => ({
+export const stylesheet = createStyleSheet(({ borderRadius, colors, fontSizes, margins }) => ({
     reportModal: {
         backgroundColor: colors.modal,
-        borderRadius: 10,
+        borderRadius: borderRadius.sm,
         padding: margins.md,
         width: '100%'
     },
@@ -16,7 +16,7 @@ const styles = createStyleSheet(({ colors, fontSizes, margins }) => ({
 
     reportTitle: {
         color: colors.text,
-        fontSize: 20,
+        fontSize: (fontSizes.sm + 4),
         fontWeight: 'bold'
     },
 
@@ -30,5 +30,3 @@ const styles = createStyleSheet(({ colors, fontSizes, margins }) => ({
         marginTop: margins.sm
     }
 }));
-
-export default styles;

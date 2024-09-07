@@ -1,14 +1,14 @@
 import React from 'react';
 import { View } from 'react-native';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-controller';
 import { useStyles } from 'react-native-unistyles';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 /* Components */
 import { LoginForm } from '../../components';
-import { ThemeBtn, Title } from '../../../ui';
+import { ThemeBtn, Title } from '@ui';
 
 /* Styles */
-import { styles as themeStylesheet } from '../../../theme';
+import { themeStylesheet } from '@theme';
 
 /**
  * This screen is to display the form to login with

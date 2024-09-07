@@ -1,6 +1,6 @@
 import { createStyleSheet } from 'react-native-unistyles';
 
-const styles = createStyleSheet(({ colors, fontSizes, margins }) => ({
+export const stylesheet = createStyleSheet(({ colors, fontSizes, margins }) => ({
     sectionContainer: {
         paddingBottom: margins.md,
         width: '100%'
@@ -31,5 +31,3 @@ const styles = createStyleSheet(({ colors, fontSizes, margins }) => ({
         right: margins.md
     }
 }));
-
-export default styles;

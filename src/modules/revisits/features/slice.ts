@@ -8,7 +8,7 @@ import {
     RemoveResourcePayload,
     SetIsDeletingPayload,
     SetIsLoadingPayload
-} from '../../shared';
+} from '@shared';
 
 import {
     Revisit,

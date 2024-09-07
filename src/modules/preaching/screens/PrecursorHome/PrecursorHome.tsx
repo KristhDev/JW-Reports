@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { ActivityIndicator, ScrollView, useWindowDimensions, RefreshControl } from 'react-native';
 import { useStyles } from 'react-native-unistyles';
 import { useNavigation } from '@react-navigation/native';
-import Icon from 'react-native-vector-icons/Ionicons';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
 /* Features */
 import { INIT_PREACHING } from '../../features';
@@ -13,17 +13,17 @@ import { PreachingInfoModal } from '../PreachingInfoModal';
 
 /* Components */
 import { PreachingTable } from '../../components';
-import { Fab, InfoText, Title } from '../../../ui';
+import { Fab, InfoText, Title } from '@ui';
 
 /* Hooks */
-import { useAuth } from '../../../auth';
+import { useAuth } from '@auth';
 import { usePreaching } from '../../hooks';
 
 /* Utils */
-import { date } from '../../../../utils';
+import { date } from '@utils';
 
 /* Theme */
-import { styles as themeStylesheet } from '../../../theme';
+import { themeStylesheet } from '@theme';
 
 /**
  * This screen is in charge of grouping the components to list the preaching days by
@@ -36,12 +36,13 @@ const Home = (): JSX.Element => {
     const [ isRefreshing, setIsRefreshing ] = useState<boolean>(false);
     const [ showReportModal, setShowReportModal ] = useState<boolean>(false);
     const [ showPreachingInfoModal, setShowPreachingInfoModal ] = useState<boolean>(false);
-    const { navigate } = useNavigation();
     const { height } = useWindowDimensions();
+
+    const navigation = useNavigation();
+    const { styles: themeStyles, theme: { colors, fontSizes, margins } } = useStyles(themeStylesheet);
 
     const { state: { user } } = useAuth();
     const { state: { selectedDate, preachings, isPreachingsLoading }, setSelectedPreaching, loadPreachings } = usePreaching();
-    const { styles: themeStyles, theme: { colors, fontSizes, margins } } = useStyles(themeStylesheet);
 
     const month = date.format(selectedDate,'MMMM').toUpperCase();
     const currentMonth = date.format(new Date(), 'MMMM').toUpperCase();
@@ -61,7 +62,7 @@ const Home = (): JSX.Element => {
             finalHour: new Date().toString()
         });
 
-        navigate('AddOrEditPreachingScreen' as never);
+        navigation.navigate('AddOrEditPreachingScreen' as never);
     }
 
     /**
@@ -99,7 +100,7 @@ const Home = (): JSX.Element => {
                 { (isPreachingsLoading) && (
                     <ActivityIndicator
                         color={ colors.button }
-                        size={ (fontSizes.xxl + 2) }
+                        size={ fontSizes.xxl }
                         style={{ marginTop: height * 0.32 }}
                         testID="home-loading"
                     />
@@ -123,7 +124,7 @@ const Home = (): JSX.Element => {
                 <Fab
                     color={ colors.button }
                     icon={
-                        <Icon
+                        <Ionicons
                             color={ colors.contentHeader }
                             name="information-circle-outline"
                             size={ (fontSizes.xl + 1) }
@@ -138,7 +139,7 @@ const Home = (): JSX.Element => {
             <Fab
                 color={ colors.button }
                 icon={
-                    <Icon
+                    <Ionicons
                         color={ colors.contentHeader }
                         name="reader-outline"
                         size={ fontSizes.xl }
@@ -152,7 +153,7 @@ const Home = (): JSX.Element => {
             <Fab
                 color={ colors.button }
                 icon={
-                    <Icon
+                    <Ionicons
                         color={ colors.contentHeader }
                         name="add-circle-outline"
                         size={ fontSizes.xl }

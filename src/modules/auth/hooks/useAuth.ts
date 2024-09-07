@@ -4,27 +4,27 @@ import { AuthResponse } from '@supabase/supabase-js';
 import { SITIE_URL } from '@env';
 
 /* Supabase */
-import { supabase } from '../../../config';
+import { supabase } from '@config';
 
 /* Adapters */
 import { userAdpater } from '../adapters';
 
 /* Features */
 import { clearAuth as clearAuthAction, setIsAuthLoading, setUser as setUserAction, updateUser } from '../features';
-import { useAppDispatch, useAppSelector } from '../../../features';
-import { clearCourses } from '../../courses';
-import { clearLessons } from '../../lessons';
-import { clearPreaching } from '../../preaching';
-import { clearRevisits } from '../../revisits';
+import { useAppDispatch, useAppSelector } from '@features';
+import { clearCourses } from '@courses';
+import { clearLessons } from '@lessons';
+import { clearPreaching } from '@preaching';
+import { clearRevisits } from '@revisits';
 
 /* Hooks */
-import { useNetwork, useStatus } from '../../shared';
+import { useNetwork, useStatus } from '@shared';
 
 /* Interfaces */
 import { SignInData, ProfileData, SignUpData, UserEndpoint, EmailData, UpdatePasswordData } from '../interfaces';
 
 /* Services */
-import { notifications } from '../../../services';
+import { notifications } from '@services';
 
 /**
  * Hook to management authentication of store with state and actions
@@ -78,7 +78,7 @@ const useAuth = () => {
     const refreshAuth = async (): Promise<void> => {
         if (state.token?.trim().length <= 0) return;
 
-        if (!wifi.isConnected) {
+        if (!wifi.hasConnection) {
             setNetworkError();
             return;
         }
@@ -94,7 +94,7 @@ const useAuth = () => {
      * @return {Promise<void>} A promise that resolves when the password reset is complete.
      */
     const resetPassword = async ({ email }: EmailData): Promise<void> => {
-        if (!wifi.isConnected) {
+        if (!wifi.hasConnection) {
             setNetworkError();
             return;
         }
@@ -123,7 +123,7 @@ const useAuth = () => {
      * @return {Promise<void>} A promise that resolves when the sign-in process is complete.
      */
     const signIn = async ({ email, password }: SignInData): Promise<void> => {
-        if (!wifi.isConnected) {
+        if (!wifi.hasConnection) {
             setNetworkError('Lo sentimos pero no dispones de conexión a Internet.');
             return;
         }
@@ -143,7 +143,7 @@ const useAuth = () => {
     const signOut = async (): Promise<void> => {
         if (!state.isAuthenticated) return;
 
-        if (wifi.isConnected) {
+        if (wifi.hasConnection) {
             const { error } = await supabase.auth.signOut();
             notifications.close();
             setSupabaseError(error, 500);
@@ -167,7 +167,7 @@ const useAuth = () => {
      * @return {Promise<void>} A promise that resolves when the sign-up process is complete.
      */
     const signUp = async ({ name, surname, email, password }: SignUpData, onSuccess?: () => void): Promise<void> => {
-        if (!wifi.isConnected) {
+        if (!wifi.hasConnection) {
             setNetworkError('Lo sentimos pero no dispones de conexión a Internet.');
             return;
         }
@@ -231,7 +231,7 @@ const useAuth = () => {
      * @return {Promise<void>} - A promise that resolves when the update is complete.
      */
     const updateEmail = async ({ email }: EmailData, onFinish?: () => void): Promise<void> => {
-        if (!wifi.isConnected) {
+        if (!wifi.hasConnection) {
             setNetworkError();
             return;
         }
@@ -289,7 +289,7 @@ const useAuth = () => {
      * @return {Promise<void>} A promise that resolves when the password update is complete.
      */
     const updatePassword = async ({ password }: UpdatePasswordData, onFinish?: () => void): Promise<void> => {
-        if (!wifi.isConnected) {
+        if (!wifi.hasConnection) {
             setNetworkError();
             return;
         }
@@ -333,7 +333,7 @@ const useAuth = () => {
      * @return {Promise<void>} This function does not return anything.
      */
     const updateProfile = async (values: ProfileData): Promise<void> => {
-        if (!wifi.isConnected) {
+        if (!wifi.hasConnection) {
             setNetworkError();
             return;
         }

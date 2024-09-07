@@ -1,13 +1,13 @@
 import React, { FC } from 'react';
 import { Pressable, Text, View } from 'react-native';
 import { useStyles } from 'react-native-unistyles';
-import Icon from 'react-native-vector-icons/Ionicons';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
 /* Interfaces */
 import { CheckboxProps } from './interfaces';
 
 /* Styles */
-import stylesheet from './styles';
+import { stylesheet } from './styles';
 
 /**
  * Renders a checkbox component with the specified props.
@@ -41,7 +41,7 @@ export const Checkbox: FC<CheckboxProps> = ({ label, onPress, status, style, tex
                         backgroundColor: (status === 'checked') ? colors.button : 'transparent',
                     }}
                 >
-                    <Icon
+                    <Ionicons
                         name="checkmark-sharp"
                         color={ (status === 'checked') ? colors.contentHeader : 'transparent' }
                         size={ 20 }

@@ -1,18 +1,19 @@
 import { configureStore } from '@reduxjs/toolkit';
 import { combineReducers } from 'redux';
 import { persistReducer, persistStore } from 'reduxjs-toolkit-persist';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import { PersistConfig } from 'reduxjs-toolkit-persist/lib/types';
 
 /* Reducers */
-import { authReducer } from '../modules/auth/features';
-import { coursesReducer } from '../modules/courses/features';
-import { lessonsReducer } from '../modules/lessons/features';
-import { permissionsReducer, statusReducer } from '../modules/shared/features';
-import { preachingReducer } from '../modules/preaching/features';
-import { revisitsReducer } from '../modules/revisits/features';
+import { authReducer } from '@auth/features';
+import { coursesReducer } from '@courses/features';
+import { lessonsReducer } from '@lessons/features';
+import { permissionsReducer, statusReducer } from '@shared/features';
+import { preachingReducer } from '@preaching/features';
+import { revisitsReducer } from '@revisits/features';
+import { uiReducer } from '@ui/features';
 
 /* Utils */
-import { asyncStorageKeys } from '../utils';
+import { storageKeys, storePersistor } from '@utils';
 
 /* Combining all the reducers into one reducer. */
 const reducers = combineReducers({
@@ -22,13 +23,19 @@ const reducers = combineReducers({
     permissions: permissionsReducer,
     preaching: preachingReducer,
     revisits: revisitsReducer,
-    status: statusReducer
+    status: statusReducer,
+    ui: uiReducer
 });
 
 /* Persisting the store. */
-const persistConfig = {
-    key: asyncStorageKeys.STORE,
-    storage: AsyncStorage
+const persistConfig: PersistConfig<RootState> = {
+    key: storageKeys.STORE,
+    storage: storePersistor,
+    blacklist: [
+        'status',
+        'permissions',
+        'ui'
+    ],
 };
 
 const reducer = persistReducer(persistConfig, reducers);

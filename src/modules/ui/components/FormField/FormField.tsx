@@ -1,13 +1,16 @@
 import React, { useState, FC, useRef, useEffect } from 'react';
-import { View, Text, TextInput, Keyboard } from 'react-native';
+import { View, Text, TextInput } from 'react-native';
 import { useStyles } from 'react-native-unistyles';
 import { useField } from 'formik';
+
+/* Hooks */
+import { useUI } from '../../hooks';
 
 /* Interfaces */
 import { FormFieldProps } from './interfaces';
 
 /* Theme */
-import { styles as themeStylesheet } from '../../../theme';
+import { themeStylesheet } from '@theme';
 
 /**
  * This component is responsible for displaying fields for forms of
@@ -34,11 +37,12 @@ import { styles as themeStylesheet } from '../../../theme';
  */
 export const FormField: FC<FormFieldProps> = ({
     controlStyle,
-    icon,
     inputStyle,
     label,
     labelStyle,
+    leftIcon,
     name,
+    rightIcon,
     style,
     ...rest
 }): JSX.Element => {
@@ -52,7 +56,8 @@ export const FormField: FC<FormFieldProps> = ({
 
     const textInputRef = useRef<TextInput>(null);
 
-    const { styles: themeStyles, theme: { colors, margins } } = useStyles(themeStylesheet);
+    const { state: { isKeyboardVisible } } = useUI();
+    const { styles: themeStyles, theme: { colors } } = useStyles(themeStylesheet);
 
     /**
      * Handles the blur event for the input field.
@@ -62,19 +67,12 @@ export const FormField: FC<FormFieldProps> = ({
     const handleBlur = (): void => {
         setIsFocused(false);
         textInputRef.current?.blur();
-
-        setTimeout(() => {
-            helpers.setTouched(!meta.touched);
-        }, 100);
+        helpers.setTouched(!meta.touched);
     }
 
     useEffect(() => {
-        const hideListener = Keyboard.addListener('keyboardDidHide', () => handleBlur());
-
-        return () => {
-            hideListener.remove();
-        };
-    }, []);
+        if (!isKeyboardVisible) handleBlur();
+    }, [ isKeyboardVisible ]);
 
     return (
         <View style={[ themeStyles.formField, style ]}>
@@ -87,30 +85,18 @@ export const FormField: FC<FormFieldProps> = ({
                 { label }
             </Text>
 
-            <View
-                style={{
-                    ...themeStyles.focusExternalBorder,
-                    borderColor: (isFocused) ? '#FFFFFF' : 'transparent'
-                }}
-            >
-                <View
-                    style={{
-                        ...themeStyles.defaultBorder,
-                        borderColor: (!isFocused) ? colors.text : colors.focus
-                    }}
-                >
+            <View style={ themeStyles.focusExternalBorder(isFocused) }>
+                <View style={ themeStyles.defaultBorder(isFocused) }>
 
                     {/* Input container */}
                     <View
                         style={[
-                            {
-                                ...themeStyles.formControl,
-                                ...themeStyles.focusInternalBorder,
-                                borderColor: (isFocused) ? colors.focus : 'transparent',
-                            },
+                            themeStyles.formControl,
+                            themeStyles.focusInternalBorder(isFocused),
                             controlStyle
                         ]}
                     >
+                        { leftIcon }
 
                         {/* Text input */}
                         <TextInput
@@ -122,26 +108,19 @@ export const FormField: FC<FormFieldProps> = ({
                             selection={ selection }
                             selectionColor={ colors.linkText }
                             style={[
-                                {
-                                    ...themeStyles.formInput,
-                                    flex: 1,
-                                    paddingRight: (margins.xs - 3),
-                                    textAlignVertical: (rest.multiline) ? 'top' : 'center',
-                                },
+                                themeStyles.formInput,
+                                { textAlignVertical: (rest.multiline) ? 'top' : 'center' },
                                 inputStyle
                             ]}
                             value={ String(field.value) }
                             ref={ textInputRef }
                             { ...rest }
+                            onBlur={ handleBlur }
                             onFocus={ () => setIsFocused(true) }
                             testID="form-field-text-input"
-                            onBlur={ () => {
-                                setIsFocused(false);
-                                helpers.setTouched(!meta.touched);
-                            } }
                         />
 
-                        { icon }
+                        { rightIcon }
                     </View>
                 </View>
             </View>

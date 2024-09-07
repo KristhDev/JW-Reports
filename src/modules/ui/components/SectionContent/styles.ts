@@ -1,6 +1,6 @@
 import { createStyleSheet } from 'react-native-unistyles';
 
-const styles = createStyleSheet(({ colors, fontSizes, margins }) => ({
+export const stylesheet = createStyleSheet(({ colors, fontSizes, margins }) => ({
     sectionContainer: {
         borderBottomColor: colors.header,
         borderBottomWidth: 1,
@@ -14,5 +14,3 @@ const styles = createStyleSheet(({ colors, fontSizes, margins }) => ({
         textAlign: 'left'
     }
 }));
-
-export default styles;
