@@ -18,6 +18,7 @@ export { RadioBtn } from './RadioBtn';
 export { SearchInput } from './SearchInput';
 export { SectionBtn } from './SectionBtn';
 export { SectionContent } from './SectionContent';
+export { Switch } from './Switch';
 export { TabBar } from './TabBar';
 export { TabBarBtn } from './TabBarBtn';
 export { TableCell } from './TableCell';
