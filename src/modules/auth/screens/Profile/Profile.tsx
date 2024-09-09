@@ -27,7 +27,7 @@ const Profile = (): JSX.Element => {
             <View style={ themeStyles.screenContainer }>
                 <Title
                     containerStyle={ themeStyles.titleContainer }
-                    text="Mi perfil"
+                    text="MI PERFIL"
                     textStyle={{ fontSize: fontSizes.md }}
                 />
 

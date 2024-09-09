@@ -32,7 +32,7 @@ const AddOrEditRevisit = (): JSX.Element => {
             <View style={ themeStyles.screenContainer }>
                 <Title
                     containerStyle={ themeStyles.titleContainer }
-                    text={ `${ (selectedRevisit.id === '') ? 'Agregar' : 'Editar' } revisita` }
+                    text={ `${ (selectedRevisit.id === '') ? 'AGREGAR' : 'EDITAR' } REVISITA` }
                     textStyle={{ fontSize: fontSizes.md }}
                 />
 
