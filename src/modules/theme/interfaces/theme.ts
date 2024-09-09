@@ -31,6 +31,8 @@ export interface Colors {
     modal: string;
     modalText: string;
     navbar: string;
+    switchThumb: string;
+    switchTrack: string;
     text: string;
     titleSecondary: string;
     titleText: string;
