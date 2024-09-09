@@ -192,7 +192,8 @@ const useAuth = () => {
                     name,
                     surname,
                     precursor: 'ninguno',
-                    hours_requirement: 0
+                    hours_requirement: 0,
+                    hours_ldc: false
                 }
             }
         });
@@ -350,8 +351,15 @@ const useAuth = () => {
 
         dispatch(setIsAuthLoading({ isLoading: true }));
 
-        const { hoursRequirement, ...rest } = values;
-        const { error } = await supabase.auth.updateUser({ data: { ...rest, hours_requirement: hoursRequirement } });
+        const { hoursRequirement, hoursLDC, ...rest } = values;
+
+        const { error } = await supabase.auth.updateUser({
+            data: {
+                ...rest,
+                hours_requirement: hoursRequirement,
+                hours_ldc: hoursLDC
+            }
+        });
 
         const next = setSupabaseError(error, 400, () => dispatch(setIsAuthLoading({ isLoading: false })));
         if (next) return;
