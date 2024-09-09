@@ -13,6 +13,7 @@ export const userAdpater = (user: UserEndpoint): User => ({
     email: user.email,
     precursor: user.precursor,
     hoursRequirement: +user.hours_requirement,
+    hoursLDC: user.hours_ldc,
     createdAt: user.createdAt,
     updatedAt: user.updatedAt
 });
