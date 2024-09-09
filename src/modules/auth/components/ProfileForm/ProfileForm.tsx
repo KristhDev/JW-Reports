@@ -58,7 +58,8 @@ export const ProfileForm = (): JSX.Element => {
                 name: user.name,
                 surname: user.surname,
                 precursor: user.precursor,
-                hoursRequirement: user?.hoursRequirement || 0
+                hoursRequirement: user?.hoursRequirement || 0,
+                hoursLDC: user?.hoursLDC || false
             }}
             onSubmit={ updateProfile }
             validateOnMount
@@ -111,8 +112,8 @@ export const ProfileForm = (): JSX.Element => {
                         name="precursor"
                         onChange={ (value) => handleSelect(value, setFieldValue) }
                         placeholder="Seleccione una opción"
-                        style={{ marginBottom: (values.precursor !== 'ninguno') ? margins.sm : margins.xl }}
                         title="Seleccione su precursorado"
+                        style={{ marginBottom: 0 }}
                     />
 
                     { (values.precursor !== 'ninguno') && (
@@ -131,7 +132,7 @@ export const ProfileForm = (): JSX.Element => {
                                 label="Requerimiento de horas:"
                                 name="hoursRequirement"
                                 placeholder="Ingrese su requerimiento de horas"
-                                style={{ marginBottom: margins.md }}
+                                style={{ marginBottom: 0, marginTop: margins.sm }}
                             />
 
                             {/* Checkbox to edit hours requirement */}
@@ -139,9 +140,17 @@ export const ProfileForm = (): JSX.Element => {
                                 onPress={ () => setEditHoursRequirement(!editHoursRequirement) }
                                 status={ editHoursRequirement ? 'checked' : 'unchecked' }
                                 label="Editar requerimiento de horas"
+                                style={{ marginBottom: 0, marginTop: margins.md }}
                             />
                         </>
                     ) }
+
+                    <Checkbox
+                        onPress={ () => setFieldValue('hoursLDC', !values.hoursLDC) }
+                        status={ values.hoursLDC ? 'checked' : 'unchecked' }
+                        label="Estoy participando en LDC"
+                        style={{ marginBottom: 0, marginTop: margins.md }}
+                    />
 
                     {/* Submit button */}
                     <Button
@@ -153,7 +162,7 @@ export const ProfileForm = (): JSX.Element => {
                             />
                         ) }
                         onPress={ (isValid) ? handleSubmit : () => setErrorForm(errors) }
-                        pressableStyle={{ marginBottom: top }}
+                        pressableStyle={{ marginBottom: top, marginTop: margins.xl }}
                         text="Guardar"
                     />
                 </View>
