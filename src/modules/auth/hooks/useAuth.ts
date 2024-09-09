@@ -71,20 +71,30 @@ const useAuth = () => {
     }
 
     /**
-     * Refreshes the authentication session by checking if the token is present and valid.
+     * Gets the user authentication and sets the user in the reducer.
      *
      * @return {Promise<void>} This function does not return any value.
      */
-    const refreshAuth = async (): Promise<void> => {
-        if (state.token?.trim().length <= 0) return;
+    const getAuth = async (): Promise<void> => {
+        if (!state.token) return;
 
         if (!wifi.hasConnection) {
             setNetworkError();
             return;
         }
 
-        const result = await supabase.auth.refreshSession({ refresh_token: state.token });
-        setUser(result);
+        const user = await supabase.auth.getUser();
+        const session = await supabase.auth.getSession();
+
+        const response: AuthResponse = {
+            data: {
+                session: session.data?.session,
+                user: user.data?.user
+            },
+            error: user?.error || session?.error
+        } as AuthResponse;
+
+        setUser(response);
     }
 
     /**
@@ -361,7 +371,7 @@ const useAuth = () => {
         clearAuth,
 
         // Functions
-        refreshAuth,
+        getAuth,
         resetPassword,
         signIn,
         signOut,
