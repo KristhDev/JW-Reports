@@ -1,3 +1,4 @@
+import { AppState } from 'react-native';
 import { createClient } from '@supabase/supabase-js';
 
 /* Utils */
@@ -14,9 +15,15 @@ export const supabase = createClient(
     SUPABASE_APY_KEY,
     {
         auth: {
+            autoRefreshToken: true,
+            persistSession: true,
             storage,
-            storageKey: storageKeys.AUTH,
-            persistSession: true
+            storageKey: storageKeys.AUTH
         }
     }
 );
+
+AppState.addEventListener('change', (state) => {
+    if (state === 'active') supabase.auth.startAutoRefresh();
+    else supabase.auth.stopAutoRefresh();
+})
