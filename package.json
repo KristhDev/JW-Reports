@@ -16,6 +16,7 @@
     "@bugfender/common": "^1.4.0",
     "@bugfender/rn-bugfender": "^3.0.0",
     "@bugfender/sdk": "^2.3.0",
+    "@emailjs/react-native": "^4.2.2",
     "@react-native-community/datetimepicker": "^8.2.0",
     "@react-native-community/netinfo": "^11.3.2",
     "@react-native-masked-view/masked-view": "^0.3.1",
