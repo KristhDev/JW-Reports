@@ -38,6 +38,7 @@ import { Pagination } from '@ui';
 
 /* Utils */
 import { date } from '@utils';
+import { coursesMessages } from '../utils';
 
 /**
  * Hook to management courses of store with state and actions
@@ -91,11 +92,7 @@ const useCourses = () => {
         if (state.selectedCourse.id === '') {
             dispatch(setIsCourseLoading({ isLoading: false }));
             onFinish && onFinish();
-
-            setStatus({
-                code: 400,
-                msg: 'No hay un curso seleccionado.'
-            });
+            setStatus({ code: 400, msg: coursesMessages.UNSELECTED });
 
             return;
         }
@@ -104,11 +101,7 @@ const useCourses = () => {
         if (state.selectedCourse.finished) {
             dispatch(setIsCourseLoading({ isLoading: false }));
             onFinish && onFinish();
-
-            setStatus({
-                code: 400,
-                msg: 'No puedes suspender o renovar un curso terminado.'
-            });
+            setStatus({ code: 400, msg: coursesMessages.FINISHED });
 
             return;
         }
@@ -130,9 +123,7 @@ const useCourses = () => {
 
         if (next) return;
 
-        const msg = (data!.suspended)
-            ? 'Has suspendido el curso correctamente.'
-            : 'Has renovado el curso correctamente.'
+        const msg = (data!.suspended) ? coursesMessages.SUSPENDED_SUCCESS : coursesMessages.RENEW_SUCCESS;
 
         dispatch(updateCourseAction({ course: courseAdapter(data!) }));
 
@@ -178,11 +169,7 @@ const useCourses = () => {
         if (state.selectedCourse.id === '') {
             onFinish && onFinish();
             dispatch(setIsCourseDeleting({ isDeleting: false }));
-
-            setStatus({
-                code: 400,
-                msg: 'No hay un curso seleccionado para eliminar.'
-            });
+            setStatus({ code: 400, msg: coursesMessages.UNSELECTED_DELETE });
 
             return;
         }
@@ -221,10 +208,7 @@ const useCourses = () => {
 
         setSelectedCourse(INIT_COURSE);
 
-        setStatus({
-            code: 200,
-            msg: 'Has eliminado el curso correctamente.'
-        });
+        setStatus({ code: 200, msg: coursesMessages.DELETED_SUCCESS });
     }
 
     /**
@@ -254,11 +238,7 @@ const useCourses = () => {
         if (state.selectedCourse.id === '') {
             dispatch(setIsCourseLoading({ isLoading: false }));
             onFinish && onFinish();
-
-            setStatus({
-                code: 400,
-                msg: 'No hay un curso seleccionado.'
-            });
+            setStatus({ code: 400, msg: coursesMessages.UNSELECTED });
 
             return;
         }
@@ -267,11 +247,7 @@ const useCourses = () => {
         if (state.selectedCourse.suspended) {
             dispatch(setIsCourseLoading({ isLoading: false }));
             onFinish && onFinish();
-
-            setStatus({
-                code: 400,
-                msg: 'No pudes terminar o comenzar de nuevo un curso suspendido.'
-            });
+            setStatus({ code: 400, msg: coursesMessages.UNSELECTED_FINISH_OR_START });
 
             return;
         }
@@ -293,9 +269,7 @@ const useCourses = () => {
 
         if (next) return;
 
-        const msg = (data!.finished)
-            ? 'Has terminado el curso correctamente.'
-            : 'Has comenzado de nuevo el curso correctamente.'
+        const msg = (data!.finished) ? coursesMessages.FINISHED_SUCCESS : coursesMessages.RESTARTED_SUCCESS;
 
         dispatch(updateCourseAction({ course: courseAdapter(data!) }));
 
@@ -424,11 +398,7 @@ const useCourses = () => {
 
         dispatch(addCourse({ course: courseAdapter(data!) }));
         onFinish && onFinish();
-
-        setStatus({
-            code: 201,
-            msg: 'Has agregado un curso correctamente.'
-        });
+        setStatus({ code: 201, msg: coursesMessages.ADDED_SUCCESS });
 
         navigate({
             name: 'CoursesStackNavigation',
@@ -463,11 +433,7 @@ const useCourses = () => {
 
         if (state.selectedCourse.id === '') {
             dispatch(setIsCourseLoading({ isLoading: false }));
-
-            setStatus({
-                code: 400,
-                msg: 'No hay un curso seleccionado para actualizar.'
-            });
+            setStatus({ code: 400, msg: coursesMessages.UNSELECTED_UPDATE });
 
             return;
         }
@@ -496,11 +462,7 @@ const useCourses = () => {
             }));
         }
 
-        setStatus({
-            code: 200,
-            msg: 'Has actualizado el curso correctamente.'
-        });
-
+        setStatus({ code: 200, msg: coursesMessages.UPDATED_SUCCESS });
         goBack();
     }
 
