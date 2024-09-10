@@ -15,3 +15,7 @@ export interface FormImageProps {
     showGalleryButton?: boolean;
     style?: StyleProp<ViewStyle>;
 }
+
+export interface FormImageRef {
+    clearImage: () => Promise<void>;
+}
