@@ -10,6 +10,9 @@ import useStatus from './useStatus';
 /* Interfaces */
 import { Permissions } from '../interfaces';
 
+/* Utils */
+import { permissionsMessages, permissionsStatus } from '../utils';
+
 /**
  * Hook to management permissions of store
  * with state, actions and thunks
@@ -36,9 +39,9 @@ const usePermissions = () => {
 
         const result = await request(askPermissions[permission]);
 
-        if (result === 'unavailable') {
+        if (result === permissionsStatus.UNAVAILABLE) {
             setStatus({
-                msg: 'Lo sentimos pero su dispositivo no soporta está funcionalidad.',
+                msg: permissionsMessages.UNSUPPORTED,
                 code: 418
             });
         }
