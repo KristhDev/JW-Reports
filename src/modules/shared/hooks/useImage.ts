@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useStyles } from 'react-native-unistyles';
-import { openPicker, openCamera, Image } from 'react-native-image-crop-picker';
+import { clean, openPicker, openCamera, Image } from 'react-native-image-crop-picker';
 import { decode } from 'base64-arraybuffer';
 
 /* Env */
@@ -16,7 +16,8 @@ import { usePermissions, useStatus } from './';
 import { StorageError } from '@ui';
 
 /* Utils */
-import { deviceInfo } from '@utils';
+import { deviceInfo, ImageError } from '@utils';
+import { permissionsMessages, permissionsStatus } from '../utils';
 
 /**
  * This hook allows to group the functions and states in relation to the images.
@@ -29,6 +30,28 @@ const useImage = () => {
     const [ image, setImage ] = useState<Image | null>(null);
 
     const androidVersion = deviceInfo.getSystemVersion();
+
+    const isCameraUnavailable = permissions.camera === permissionsStatus.UNAVAILABLE;
+    const isCameraDenied = permissions.camera === permissionsStatus.DENIED;
+    const isCameraGranted = permissions.camera === permissionsStatus.GRANTED;
+
+    const isReadExternalStorageUnavailable = (permissions.readExternalStorage === 'unavailable' && androidVersion < '13');
+    const isReadExternalStorageDenied = (permissions.readExternalStorage === 'denied' && androidVersion < '13');
+    const isReadExternalStorageGranted = (permissions.readExternalStorage === 'granted' && androidVersion < '13');
+
+    const isReadMediaImagesUnavailable = (permissions.readMediaImages === 'unavailable' && androidVersion >= '13');
+    const isReadMediaImagesDenied = (permissions.readMediaImages === 'denied' && androidVersion >= '13');
+    const isReadMediaImagesGranted = (permissions.readMediaImages === 'granted' && androidVersion >= '13');
+
+    /**
+     * Clear the current image and delete it from the device
+     *
+     * @return {Promise<void>} This function does not return anything.
+     */
+    const clearImage = async (): Promise<void> => {
+        setImage(null);
+        await clean();
+    }
 
     /**
      * It takes a URI, splits it into an array, and then removes the last item in the array
@@ -52,19 +75,16 @@ const useImage = () => {
      */
     const takeImageToGallery = async (): Promise<void> => {
         /* Asking for the readExternalStorage or readMediaImages permission. */
-        if (permissions.readExternalStorage === 'unavailable' && androidVersion < '13') await askPermission('readExternalStorage');
-        if (permissions.readExternalStorage === 'unavailable' && androidVersion >= '13') await askPermission('readMediaImages');
+        if (isReadExternalStorageUnavailable) await askPermission('readExternalStorage');
+        if (isReadMediaImagesUnavailable) await askPermission('readMediaImages');
 
         /* This is a message that is shown to the user when the readExternalStorage or readMediaImages permission is denied. */
-        if ((permissions.readExternalStorage === 'denied' && androidVersion < '13') || (permissions.readMediaImages === 'denied' && androidVersion >= '13')) {
-            setStatus({
-                msg: 'Para realizar está acción necesitas permisos del dispositivo, por favor abra la configuración de su dispositivo y active los permisos de la aplicación',
-                code: 400
-            });
+        if (isReadExternalStorageDenied || isReadMediaImagesDenied) {
+            setStatus({ msg: permissionsMessages.REQUEST, code: 400 });
         }
 
         /* This is the code that is executed when the readExternalStorage or readMediaImages permission is granted. */
-        if ((permissions.readExternalStorage === 'granted' && androidVersion < '13') || (permissions.readMediaImages === 'granted' && androidVersion >= '13')) {
+        if (isReadExternalStorageGranted || isReadMediaImagesGranted) {
             try {
                 const result = await openPicker({
                     cropperActiveWidgetColor: colors.button,
@@ -82,7 +102,9 @@ const useImage = () => {
                 setImage(result);
             }
             catch (error) {
-                console.log(error);
+                const imageError = new ImageError((error as any).message);
+                console.log(imageError);
+                throw imageError;
             }
         }
     }
@@ -95,18 +117,13 @@ const useImage = () => {
      */
     const takePhoto = async (): Promise<void> => {
         /* Asking for the camera permission. */
-        if (permissions.camera === 'unavailable') await askPermission('camera');
+        if (isCameraUnavailable) await askPermission('camera');
 
         /* This is a message that is shown to the user when the camera permission is denied. */
-        if (permissions.camera === 'denied') {
-            setStatus({
-                msg: 'Para realizar está acción necesitas permisos del dispositivo, por favor abra la configuración de su dispositivo y active los permisos de la aplicación',
-                code: 400
-            });
-        }
+        if (isCameraDenied) setStatus({ msg: permissionsMessages.REQUEST, code: 400 });
 
         /* This is the code that is executed when the camera permission is granted. */
-        if (permissions.camera === 'granted') {
+        if (isCameraGranted) {
             try {
                 const result = await openCamera({
                     cropperActiveWidgetColor: colors.button,
@@ -123,7 +140,9 @@ const useImage = () => {
                 setImage(result);
             }
             catch (error) {
-                console.log(error);
+                const imageError = new ImageError((error as any).message);
+                console.log(imageError);
+                throw imageError;
             }
         }
     }
@@ -133,20 +152,20 @@ const useImage = () => {
      * @param {Image} photo - This is the image that is being uploaded
      * @return {Promise<{ data: { publicUrl: string } | null, error: StorageError | null }>} This function return object
      */
-    const uploadImage = async (photo: Image): Promise<{ data: { publicUrl: string } | null, error: StorageError | null }> => {
+    const uploadImage = async (photo: Image, folder: string): Promise<{ data: { publicUrl: string } | null, error: StorageError | null }> => {
         const file = photo.path.split('/')[photo.path.split('/').length - 1];
         const [ fileName, fileExt ] = file.split('.');
         const id = Math.floor(Math.random()).toString(16);
 
         const result = await supabase.storage
             .from(SUPABASE_BUCKET)
-            .upload(`${ SUPABASE_REVISITS_FOLDER }/${ id }-${ fileName }.${ fileExt }`, decode(photo.data!), {
+            .upload(`${ folder }/${ id }-${ fileName }.${ fileExt }`, decode(photo.data!), {
                 contentType: photo.mime
             });
 
         if (result.error) return result;
 
-        const { data } = await supabase.storage
+        const { data } = supabase.storage
             .from(SUPABASE_BUCKET)
             .getPublicUrl(result.data.path);
 
@@ -162,6 +181,7 @@ const useImage = () => {
         setImage,
 
         /* Functions */
+        clearImage,
         deleteImage,
         takeImageToGallery,
         takePhoto,
