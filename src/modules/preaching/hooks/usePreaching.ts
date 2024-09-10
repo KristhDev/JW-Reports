@@ -29,6 +29,8 @@ import { useNetwork, useStatus } from '@shared';
 import { Preaching, PreachingFormValues, PreachingEndpoint } from '../interfaces';
 
 /* Utils */
+import { authMessages } from '@auth';
+import { preachingMessages } from '../utils';
 import { date as dateUtil } from '@utils';
 
 /**
@@ -75,11 +77,7 @@ const usePreaching = () => {
         if (state.seletedPreaching.id === '') {
             onFinish && onFinish();
             dispatch(setIsPreachingDeleting({ isDeleting: false }));
-
-            setStatus({
-                code: 400,
-                msg: 'No hay un día de predicación seleccionado para eliminar.'
-            });
+            setStatus({ code: 400, msg: preachingMessages.UNSELECTED_DELETE });
 
             return;
         }
@@ -87,11 +85,7 @@ const usePreaching = () => {
         if (state.seletedPreaching.userId !== user.id) {
             onFinish && onFinish();
             dispatch(setIsPreachingDeleting({ isDeleting: false }));
-
-            setStatus({
-                code: 400,
-                msg: 'Lo sentimos, pero no puedes realizar está acción.'
-            });
+            setStatus({ code: 400, msg: authMessages.UNAUTHORIZED });
 
             return;
         }
@@ -119,10 +113,7 @@ const usePreaching = () => {
             finalHour: new Date().toString()
         });
 
-        setStatus({
-            code: 200,
-            msg: 'Has eliminado tu día de predicación correctamente.'
-        });
+        setStatus({ code: 200, msg: preachingMessages.DELETED_SUCCESS });
     }
 
     /**
@@ -197,11 +188,7 @@ const usePreaching = () => {
             dispatch(addPreaching({ preaching: preachingAdapter(data!) }));
         }
 
-        setStatus({
-            code: 201,
-            msg: 'Has agregado tu día de predicación correctamente.'
-        });
-
+        setStatus({ code: 201, msg: preachingMessages.ADDED_SUCCESS });
         goBack();
     }
 
@@ -226,11 +213,7 @@ const usePreaching = () => {
 
         if (state.seletedPreaching === undefined || state.seletedPreaching.id === '') {
             dispatch(setIsPreachingLoading({ isLoading: false }));
-
-            setStatus({
-                code: 400,
-                msg: 'No hay un día de predicación seleccionado para actualizar.'
-            });
+            setStatus({ code: 400, msg: preachingMessages.UNSELECTED_UPDATE });
 
             return;
         }
@@ -251,11 +234,7 @@ const usePreaching = () => {
         if (next) return;
 
         dispatch(updatePreachingAction({ preaching: preachingAdapter(data!) }));
-
-        setStatus({
-            code: 200,
-            msg: 'Has actualizado tu día de predicación correctamente.'
-        });
+        setStatus({ code: 200, msg: preachingMessages.UPDATED_SUCCESS });
 
         setSelectedPreaching({
             ...INIT_PREACHING,
