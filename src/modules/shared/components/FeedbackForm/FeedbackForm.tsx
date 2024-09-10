@@ -3,23 +3,34 @@ import { ActivityIndicator, View } from 'react-native';
 import { Formik } from 'formik';
 import { useStyles } from 'react-native-unistyles';
 
+/* Components */
 import { Button, FormField } from '@ui';
 
-import { useStatus } from '../../hooks';
+/* Hooks */
+import { useEmail, useStatus } from '../../hooks';
 
+/* Schemas */
 import { feedbackFormSchema } from './schemas';
 
+/* Styles */
 import { themeStylesheet } from '@theme';
 
+/**
+ * This component is responsible for rendering the fields to send a feedback
+ * and also handles the logic to send the email.
+ *
+ * @returns {JSX.Element} The rendered form component.
+ */
 export const FeedbackForm = (): JSX.Element => {
     const { styles: themeStyles, theme: { colors, fontSizes, margins } } = useStyles(themeStylesheet);
 
+    const { sendFeedbackEmail } = useEmail();
     const { setErrorForm } = useStatus();
 
     return (
         <Formik
             initialValues={{ message: '' }}
-            onSubmit={ () => {} }
+            onSubmit={ (values, { resetForm }) => sendFeedbackEmail(values.message, resetForm) }
             validateOnMount
             validationSchema={ feedbackFormSchema }
         >
