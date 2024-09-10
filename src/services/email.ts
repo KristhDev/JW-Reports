@@ -1,7 +1,10 @@
-import EmailJs from '@emailjs/react-native';
+import EmailJs, { EmailJSResponseStatus } from '@emailjs/react-native';
 
 /* Interfaces */
 import { SendEmailOptions } from '@shared';
+
+/* Utils */
+import { EmailError } from '@utils';
 
 /* Env */
 import { EMAILJS_PUBLIC_KEY, EMAILJS_SERVICE_ID } from '@env';
@@ -23,17 +26,22 @@ export const email = {
      * @param {SendEmailOptions} options - The options to send the email
      * @returns {Promise<void>} - A promise that resolves when the email is sent
      */
-    send: async ({ email, message, templateId }: SendEmailOptions): Promise<void> => {
+    send: async ({ email, imageUrl, message, templateId }: SendEmailOptions): Promise<void> => {
         try {
             await EmailJs.send(
                 EMAILJS_SERVICE_ID,
                 templateId,
-                { email, message }
+                { email, imageUrl, message }
             );
         }
         catch (error) {
-            console.log(error);
-            throw error;
+            let message = '';
+
+            if (error instanceof EmailJSResponseStatus) message = error.text;
+            else message = Object.hasOwn(error as Error, 'message') ? (error as Error).message : 'Ocurrio un error al enviar el correo';
+
+            const emailError = new EmailError(message);
+            throw emailError;
         }
     }
 }
