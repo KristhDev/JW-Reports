@@ -28,7 +28,7 @@ import {
 } from '../features';
 
 /* Hooks */
-import { addLastLessonInCourse, courseAdapter, INIT_COURSE, replaceLastLessonInCourse, updateLastLessonInCourse } from '@courses';
+import { addLastLessonInCourse, courseAdapter, coursesMessages, INIT_COURSE, replaceLastLessonInCourse, updateLastLessonInCourse } from '@courses';
 import { useNetwork, useStatus } from '@shared';
 
 /* Interfaces */
@@ -36,6 +36,8 @@ import { Lesson, LessonEndpoint, LessonFormValues, LessonWithCourseEndpoint } fr
 import { LoadResourcesOptions, Pagination } from '@ui';
 
 /* Utils */
+import { authMessages } from '@auth';
+import { lessonsMessages } from '../utils';
 import { date } from '@utils';
 
 /**
@@ -89,11 +91,7 @@ const useLessons = () => {
         if (state.selectedLesson.id === '') {
             onFinish && onFinish();
             dispatch(setIsLessonDeleting({ isDeleting: false }));
-
-            setStatus({
-                code: 400,
-                msg: 'No hay una clase seleccionada para eliminar.'
-            });
+            setStatus({ code: 400, msg: lessonsMessages.UNSELECTED_DELETE });
 
             return;
         }
@@ -102,11 +100,7 @@ const useLessons = () => {
         if (selectedCourse.userId !== user.id) {
             onFinish && onFinish();
             dispatch(setIsLessonDeleting({ isDeleting: false }));
-
-            setStatus({
-                code: 400,
-                msg: 'No tienes permiso para realizar está acción.'
-            });
+            setStatus({ code: 400, msg: authMessages.UNAUTHORIZED });
 
             return;
         }
@@ -136,10 +130,7 @@ const useLessons = () => {
             nextLesson: new Date().toString()
         });
 
-        setStatus({
-            code: 200,
-            msg: 'Has eliminado la clase correctamente.'
-        });
+        setStatus({ code: 200, msg: lessonsMessages.DELETED_SUCCESS });
     }
 
     /**
@@ -170,11 +161,7 @@ const useLessons = () => {
         if (state.selectedLesson.id === '') {
             dispatch(setIsLessonLoading({ isLoading: false }));
             onFinish && onFinish();
-
-            setStatus({
-                code: 400,
-                msg: 'No hay una clase seleccionada.'
-            });
+            setStatus({ code: 400, msg: lessonsMessages.UNSELECTED });
 
             return;
         }
@@ -183,11 +170,7 @@ const useLessons = () => {
         if (selectedCourse.suspended || selectedCourse.finished) {
             dispatch(setIsLessonLoading({ isLoading: false }));
             onFinish && onFinish();
-
-            setStatus({
-                code: 400,
-                msg: 'No pudes terminar o reprogramar de nuevo una clase de un curso suspendido o terminado.'
-            });
+            setStatus({ code: 400, msg: lessonsMessages.SUSPENDED_OR_FINISHED });
 
             return;
         }
@@ -217,10 +200,7 @@ const useLessons = () => {
         onFinish && onFinish();
         dispatch(setIsLessonLoading({ isLoading: false }));
 
-        const msg = (data!.done)
-            ? 'Has terminado la clase correctamente.'
-            : 'Has reprogrado la clase correctamente.'
-
+        const msg = (data!.done) ? lessonsMessages.FINISHED_SUCCESS : lessonsMessages.RESTARTED_SUCCESS;
         setStatus({ code: 200, msg });
     }
 
@@ -291,11 +271,7 @@ const useLessons = () => {
          /* Should not update if selectedCourse .id is an empty string */
         if (selectedCourse.id === '') {
             setIsLessonsLoading(false);
-
-            setStatus({
-                code: 400,
-                msg: 'No hay un curso seleccionado.'
-            });
+            setStatus({ code: 400, msg: coursesMessages.UNSELECTED });
 
             return;
         }
@@ -373,11 +349,7 @@ const useLessons = () => {
 
         if (user.precursor === 'ninguno') await loadLastLesson();
 
-        setStatus({
-            code: 201,
-            msg: 'Has agregado una clase al curso correctamente.'
-        });
-
+        setStatus({ code: 201, msg: lessonsMessages.ADDED_SUCCESS });
         navigation.navigate('LessonsScreen' as never);
     }
 
@@ -405,11 +377,7 @@ const useLessons = () => {
 
         if (state.selectedLesson.id === '') {
             dispatch(setIsLessonLoading({ isLoading: false }));
-
-            setStatus({
-                code: 400,
-                msg: 'No hay una clase seleccionada para actualizar.'
-            });
+            setStatus({ code: 400, msg: lessonsMessages.UNSELECTED_UPDATE });
 
             return;
         }
@@ -434,11 +402,7 @@ const useLessons = () => {
         dispatch(updateLessonAction({ lesson }));
 
         dispatch(setIsLessonLoading({ isLoading: false }));
-
-        setStatus({
-            code: 200,
-            msg: 'Has actualizado la clase correctamente.'
-        });
+        setStatus({ code: 200, msg: lessonsMessages.UPDATED_SUCCESS });
 
         navigation.goBack();
     }
