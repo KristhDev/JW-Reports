@@ -26,6 +26,9 @@ import { SignInData, ProfileData, SignUpData, UserEndpoint, EmailData, UpdatePas
 /* Services */
 import { notifications } from '@services';
 
+/* Utils */
+import { authMessages } from '../utils';
+
 /**
  * Hook to management authentication of store with state and actions
  */
@@ -200,11 +203,7 @@ const useAuth = () => {
 
         if (result?.data?.user?.identities?.length === 0) {
             dispatch(setIsAuthLoading({ isLoading: false }));
-
-            setStatus({
-                code: 400,
-                msg: 'Lo sentimos, pero este correo ya está registrado.'
-            });
+            setStatus({ code: 400, msg: authMessages.EMAIL_ALREADY_REGISTERED });
 
             await supabase.auth.signOut();
 
@@ -252,11 +251,7 @@ const useAuth = () => {
         if (email.trim().length === 0) {
             dispatch(setIsAuthLoading({ isLoading: false }));
             onFinish && onFinish();
-
-            setStatus({
-                code: 400,
-                msg: 'El correo no puede estar vacío.'
-            });
+            setStatus({ code: 400, msg: authMessages.EMAIL_EMPTY });
 
             return;
         }
@@ -264,11 +259,7 @@ const useAuth = () => {
         if (state.user.email === email) {
             dispatch(setIsAuthLoading({ isLoading: false }));
             onFinish && onFinish();
-
-            setStatus({
-                code: 400,
-                msg: 'Para actualizar tu correo debes cambiarlo.'
-            });
+            setStatus({ code: 400, msg: authMessages.EMAIL_UPDATE_UNCHANGED });
 
             return;
         }
@@ -310,11 +301,7 @@ const useAuth = () => {
         if (password.trim().length === 0) {
             dispatch(setIsAuthLoading({ isLoading: false }));
             onFinish && onFinish();
-
-            setStatus({
-                code: 400,
-                msg: 'La contraseña no puede estar vacía.'
-            });
+            setStatus({ code: 400, msg: authMessages.PASSWORD_EMPTY });
 
             return;
         }
@@ -330,11 +317,7 @@ const useAuth = () => {
 
         dispatch(setIsAuthLoading({ isLoading: false }));
         onFinish && onFinish();
-
-        setStatus({
-            code: 200,
-            msg: 'Has actualizado tu contraseña correctamente.'
-        });
+        setStatus({ code: 200, msg: authMessages.PASSWORD_UPDATED });
     }
 
     /**
@@ -365,11 +348,7 @@ const useAuth = () => {
         if (next) return;
 
         dispatch(updateUser({ user: { ...state.user, ...values } }));
-
-        setStatus({
-            code: 200,
-            msg: 'Has actualizado tu perfil correctamente.'
-        });
+        setStatus({ code: 200, msg: authMessages.PROFILE_UPDATED });
     }
 
     return {

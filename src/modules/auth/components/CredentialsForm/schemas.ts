@@ -1,20 +1,22 @@
 import { object, ref, string } from 'yup';
 
+import { authMessages } from '../../utils';
+
 /* Validation schema for new email */
 export const emailFormSchema = (email: string) => object().shape({
     email: string()
-        .email('Correo electrónico inválido.')
-        .notOneOf([ email ], 'Para actualizar tu correo debes cambiarlo.')
-        .required('El correo electrónico es requerido.')
+        .email(authMessages.EMAIL_INVALID)
+        .notOneOf([ email ], authMessages.EMAIL_UPDATE_UNCHANGED)
+        .required(authMessages.EMAIL_EMPTY)
 });
 
 /* Validation schema for new password */
 export const passwordFormSchema = object().shape({
     password: string()
-        .min(6, 'La nueva contraseña debe tener al menos 6 caracteres.')
-        .required('La nueva contraseña no puede estar vacía.'),
+        .min(6, authMessages.PASSWORD_MIN_LENGTH)
+        .required(authMessages.PASSWORD_EMPTY),
 
     confirmPassword: string()
-        .oneOf([ ref('password'), undefined ], 'Las contraseñas no coinciden.')
-        .required('La confirmación de la contraseña es requerida.'),
+        .oneOf([ ref('password'), undefined ], authMessages.PASSWORD_NOT_MATCH)
+        .required(authMessages.CONFIRM_PASSWORD_EMPTY),
 });
