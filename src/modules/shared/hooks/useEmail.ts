@@ -10,7 +10,7 @@ import useStatus from './useStatus';
 import { email } from '@services';
 
 /* Interfaces */
-import { ReportErrorOptions } from '../interfaces';
+import { ReportErrorOptions, UtilFunctions } from '../interfaces';
 
 /* Utils */
 import { emailMessages } from '../utils';
@@ -27,7 +27,7 @@ const useEmail = () => {
      * @param {Function} [onSuccess] - A callback function that will be called if the email is sent successfully.
      * @return {Promise<void>} The promise that will be resolved when the email is sent, or rejected if there is an error.
      */
-    const sendFeedbackEmail = async (message: string, onSuccess?: () => void): Promise<void> => {
+    const sendFeedbackEmail = async (message: string, { onFinish, onSuccess }: UtilFunctions): Promise<void> => {
         try {
             await email.send({
                 email: user.email,
@@ -42,6 +42,9 @@ const useEmail = () => {
             console.log(error);
             setStatus({ code: 400, msg: emailMessages.FEEDBACK_FAILED });
         }
+        finally {
+            onFinish && onFinish();
+        }
     }
 
     /**
@@ -51,7 +54,7 @@ const useEmail = () => {
      * @param {Function} [onSuccess] - A callback function that will be called if the email is sent successfully.
      * @return {Promise<void>} The promise that will be resolved when the email is sent, or rejected if there is an error.
      */
-    const sendReportErrorEmail = async ({ message, image }: ReportErrorOptions, options: { onSuccess?: () => void, onFinish?: () => void }): Promise<void> => {
+    const sendReportErrorEmail = async ({ message, image }: ReportErrorOptions, { onFinish, onSuccess }: UtilFunctions): Promise<void> => {
         try {
             let imageUrl = 'https://t4.ftcdn.net/jpg/04/73/25/49/360_F_473254957_bxG9yf4ly7OBO5I0O5KABlN930GwaMQz.jpg';
 
@@ -70,14 +73,14 @@ const useEmail = () => {
             });
 
             setStatus({ code: 200, msg: emailMessages.REPORT_ERROR_SUCCESS });
-            options.onSuccess && options.onSuccess();
+            onSuccess && onSuccess();
         }
         catch (error) {
             console.log(error);
             setStatus({ code: 400, msg: emailMessages.REPORT_ERROR_FAILED });
         }
         finally {
-            options.onFinish && options.onFinish();
+            onFinish && onFinish();
         }
     }
 
