@@ -9,6 +9,9 @@ import { Button, FormField } from '@ui';
 /* Hooks */
 import { useEmail, useStatus } from '../../hooks';
 
+/* Interfaces */
+import { FormActions } from '../../interfaces';
+
 /* Schemas */
 import { feedbackFormSchema } from './schemas';
 
@@ -27,10 +30,24 @@ export const FeedbackForm = (): JSX.Element => {
     const { sendFeedbackEmail } = useEmail();
     const { setErrorForm } = useStatus();
 
+    /**
+     * Handles the send feedback email functionality.
+     *
+     * @param {string} message - The message to send in the email.
+     * @param {{ resetForm: () => void, setSubmitting: (isSubmitting: boolean) => void }} formActions - The actions to call when the email is sent.
+     * @return {void} This function does not return any value.
+     */
+    const handleSubmit = (message: string, { resetForm, setSubmitting }: FormActions): void => {
+        sendFeedbackEmail(message, {
+            onFinish: resetForm,
+            onSuccess: () => setSubmitting && setSubmitting(false)
+        });
+    }
+
     return (
         <Formik
             initialValues={{ message: '' }}
-            onSubmit={ (values, { resetForm }) => sendFeedbackEmail(values.message, resetForm) }
+            onSubmit={ ({ message }, { resetForm, setSubmitting }) => handleSubmit(message, { resetForm, setSubmitting }) }
             validateOnMount
             validationSchema={ feedbackFormSchema }
         >
