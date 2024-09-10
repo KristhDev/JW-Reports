@@ -97,6 +97,20 @@ const Settings = (): JSX.Element => {
                     />
                 </SectionContent>
 
+                <SectionContent title="COMENTARIOS">
+                    <SectionBtn
+                        onPress={ () => navigation.navigate('FeedbackScreen' as never) }
+                        subText="Comparta sus sugerencias para mejorar la aplicación."
+                        text="Sugerencias"
+                    />
+
+                    <SectionBtn
+                        onPress={ () => navigation.navigate('ReportErrorScreen' as never) }
+                        subText="Reporte los errores que se presenten en la aplicación."
+                        text="Reportar un error"
+                    />
+                </SectionContent>
+
                 {/* About section */}
                 <SectionContent
                     containerStyle={{ borderBottomWidth: 0 }}
