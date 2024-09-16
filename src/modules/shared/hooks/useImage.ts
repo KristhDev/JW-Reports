@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { PermissionStatus } from 'react-native-permissions';
 import { useStyles } from 'react-native-unistyles';
 import { clean, openPicker, openCamera, Image } from 'react-native-image-crop-picker';
 import { decode } from 'base64-arraybuffer';
@@ -31,17 +32,20 @@ const useImage = () => {
 
     const androidVersion = deviceInfo.getSystemVersion();
 
-    const isCameraUnavailable = permissions.camera === permissionsStatus.UNAVAILABLE;
+    const isCameraBlocked = permissions.camera === permissionsStatus.BLOCKED;
     const isCameraDenied = permissions.camera === permissionsStatus.DENIED;
     const isCameraGranted = permissions.camera === permissionsStatus.GRANTED;
+    const isCameraUnavailable = permissions.camera === permissionsStatus.UNAVAILABLE;
 
-    const isReadExternalStorageUnavailable = (permissions.readExternalStorage === 'unavailable' && androidVersion < '13');
+    const isReadExternalStorageBlocked = (permissions.readExternalStorage === 'blocked' && androidVersion < '13');
     const isReadExternalStorageDenied = (permissions.readExternalStorage === 'denied' && androidVersion < '13');
     const isReadExternalStorageGranted = (permissions.readExternalStorage === 'granted' && androidVersion < '13');
+    const isReadExternalStorageUnavailable = (permissions.readExternalStorage === 'unavailable' && androidVersion < '13');
 
-    const isReadMediaImagesUnavailable = (permissions.readMediaImages === 'unavailable' && androidVersion >= '13');
+    const isReadMediaImagesBlocked = (permissions.readMediaImages === 'blocked' && androidVersion >= '13');
     const isReadMediaImagesDenied = (permissions.readMediaImages === 'denied' && androidVersion >= '13');
     const isReadMediaImagesGranted = (permissions.readMediaImages === 'granted' && androidVersion >= '13');
+    const isReadMediaImagesUnavailable = (permissions.readMediaImages === 'unavailable' && androidVersion >= '13');
 
     /**
      * Clear the current image and delete it from the device
@@ -62,7 +66,7 @@ const useImage = () => {
         const imageId = uri.split('/')[uri.split('/').length - 1];
 
         const result = await supabase.storage
-            .from('jw-reports')
+            .from(SUPABASE_BUCKET)
             .remove([ `${ SUPABASE_REVISITS_FOLDER }/${ imageId }` ]);
 
         return result;
@@ -74,23 +78,32 @@ const useImage = () => {
      * @return {Promise<void>} This function does not return anything.
      */
     const takeImageToGallery = async (): Promise<void> => {
-        /* Asking for the readExternalStorage or readMediaImages permission. */
-        if (isReadExternalStorageUnavailable) await askPermission('readExternalStorage');
-        if (isReadMediaImagesUnavailable) await askPermission('readMediaImages');
+        let permissionStatus: PermissionStatus = permissionsStatus.DENIED;
 
-        /* This is a message that is shown to the user when the readExternalStorage or readMediaImages permission is denied. */
-        if (isReadExternalStorageDenied || isReadMediaImagesDenied) {
-            setStatus({ msg: permissionsMessages.REQUEST, code: 400 });
+        /* This is a message that is shown to the user when the readExternalStorage or readMediaImages permission is unavailable. */
+        if (isReadExternalStorageUnavailable || isReadMediaImagesUnavailable) {
+            setStatus({ msg: permissionsMessages.UNSUPPORTED, code: 418 });
+            return;
         }
 
+        /* This is a message that is shown to the user when the readExternalStorage or readMediaImages permission is blocked. */
+        if (isReadExternalStorageBlocked || isReadMediaImagesBlocked) {
+            setStatus({ msg: permissionsMessages.REQUEST, code: 401 });
+            return;
+        }
+
+        /* Asking for the readExternalStorage or readMediaImages permission. */
+        if (isReadExternalStorageDenied) permissionStatus = await askPermission('readExternalStorage');
+        if (isReadMediaImagesDenied) permissionStatus = await askPermission('readMediaImages');
+
         /* This is the code that is executed when the readExternalStorage or readMediaImages permission is granted. */
-        if (isReadExternalStorageGranted || isReadMediaImagesGranted) {
+        if (isReadExternalStorageGranted || isReadMediaImagesGranted || permissionStatus === permissionsStatus.GRANTED) {
             try {
                 const result = await openPicker({
                     cropperActiveWidgetColor: colors.button,
                     cropperStatusBarColor: '#000000',
                     cropperToolbarColor: '#000000',
-                    cropperToolbarTitle: 'Editar Foto',
+                    cropperToolbarTitle: 'Editar Imagen',
                     cropperToolbarWidgetColor: '#FFFFFF',
                     cropping: true,
                     freeStyleCropEnabled: true,
@@ -116,14 +129,25 @@ const useImage = () => {
      * @return {Promise<void>} This function does not return anything.
      */
     const takePhoto = async (): Promise<void> => {
-        /* Asking for the camera permission. */
-        if (isCameraUnavailable) await askPermission('camera');
+        let permissionStatus: PermissionStatus = permissionsStatus.DENIED;
 
-        /* This is a message that is shown to the user when the camera permission is denied. */
-        if (isCameraDenied) setStatus({ msg: permissionsMessages.REQUEST, code: 400 });
+        /* This is a message that is shown to the user when the camera permission is unavailable. */
+        if (isCameraUnavailable) {
+            setStatus({ msg: permissionsMessages.UNSUPPORTED, code: 418 });
+            return;
+        }
+
+        /* This is a message that is shown to the user when the camera permission is blocked. */
+        if (isCameraBlocked) {
+            setStatus({ msg: permissionsMessages.REQUEST, code: 401 });
+            return;
+        }
+
+        /* This is the code that is executed when the camera permission is denied. */
+        if (isCameraDenied || permissionStatus === permissionsStatus.DENIED) permissionStatus = await askPermission('camera');
 
         /* This is the code that is executed when the camera permission is granted. */
-        if (isCameraGranted) {
+        if (isCameraGranted || permissionStatus === permissionsStatus.GRANTED || permissionStatus === permissionsStatus.UNAVAILABLE) {
             try {
                 const result = await openCamera({
                     cropperActiveWidgetColor: colors.button,
