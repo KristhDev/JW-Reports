@@ -1,3 +1,5 @@
+import { PermissionStatus } from 'react-native-permissions';
+
 export const reportErrorDefaultImgs = {
     dark: require('@assets/shared/report-error-dark.png'),
     light: require('@assets/shared/report-error-light.png')
@@ -8,7 +10,7 @@ export const permissionsMessages = {
     UNSUPPORTED: 'Lo sentimos pero su dispositivo no soporta esta funcionalidad.',
 }
 
-export const permissionsStatus = {
+export const permissionsStatus: Record<'BLOCKED' | 'LIMITED' | 'GRANTED' | 'DENIED' | 'UNAVAILABLE', PermissionStatus> = {
     BLOCKED: 'blocked',
     LIMITED: 'limited',
     GRANTED: 'granted',
