@@ -106,30 +106,30 @@ const ReportModal: FC<ReportModalProps> = ({ isOpen, month, onClose }): JSX.Elem
                     <Text style={ styles.reportTitle }>Informe De Predicación</Text>
 
                     <View style={{ flexDirection: 'row' }}>
-                        <Text style={{ ...styles.reportText, color: colors.text }}>Nombre: </Text>
-                        <Text style={{ ...styles.reportText, color: colors.modalText }}>{ username }</Text>
+                        <Text style={ styles.reportText(colors.text) }>Nombre: </Text>
+                        <Text style={ styles.reportText(colors.modalText) }>{ username }</Text>
                     </View>
 
                     <View style={{ flexDirection: 'row' }}>
-                        <Text style={{ ...styles.reportText, color: colors.text }}>Mes: </Text>
-                        <Text style={{ ...styles.reportText, color: colors.modalText }}>{ characters.capitalize(month) }</Text>
+                        <Text style={ styles.reportText(colors.text) }>Mes: </Text>
+                        <Text style={ styles.reportText(colors.modalText) }>{ characters.capitalize(month) }</Text>
                     </View>
 
                     { (user.precursor !== 'ninguno') && (
                         <View style={{ flexDirection: 'row' }}>
-                            <Text style={{ ...styles.reportText, color: colors.text }}>Horas: </Text>
-                            <Text style={{ ...styles.reportText, color: colors.modalText }}>{ totalHours }</Text>
+                            <Text style={ styles.reportText(colors.text) }>Horas: </Text>
+                            <Text style={ styles.reportText(colors.modalText) }>{ totalHours }</Text>
                         </View>
                     ) }
 
                     <View style={{ flexDirection: 'row' }}>
-                        <Text style={{ ...styles.reportText, color: colors.text }}>Cursos: </Text>
-                        <Text style={{ ...styles.reportText, color: colors.modalText }}>{ totalCourses }</Text>
+                        <Text style={ styles.reportText(colors.text) }>Cursos: </Text>
+                        <Text style={ styles.reportText(colors.modalText) }>{ totalCourses }</Text>
                     </View>
 
                     { (user.precursor === 'ninguno') && (
                         <View style={{ flexDirection: 'column' }}>
-                            <Text style={{ ...styles.reportText, color: colors.text }}>Participo en el ministerio: </Text>
+                            <Text style={ styles.reportText(colors.text) }>Participo en el ministerio: </Text>
 
                             <View style={{ flexDirection: 'row', gap: margins.lg, paddingVertical: margins.xs }}>
                                 { Children.toArray(particitions.map(particition => (
@@ -145,7 +145,7 @@ const ReportModal: FC<ReportModalProps> = ({ isOpen, month, onClose }): JSX.Elem
 
                     {/* Comment section */}
                     <View style={{ flexDirection: 'column' }}>
-                        <Text style={{ ...styles.reportText, color: colors.text, marginBottom: margins.sm - 4 }}>
+                        <Text style={{ ...styles.reportText(colors.text), marginBottom: margins.sm - 4 }}>
                             Comentarios:
                         </Text>
 
@@ -179,7 +179,7 @@ const ReportModal: FC<ReportModalProps> = ({ isOpen, month, onClose }): JSX.Elem
 
                     { (user.hoursLDC && user.precursor !== 'ninguno') && (
                         <View style={{ flexDirection: 'column', marginTop: margins.sm - 4 }}>
-                            <Text style={{ ...styles.reportText, color: colors.text, marginBottom: margins.sm - 4 }}>
+                            <Text style={{ ...styles.reportText(colors.text), marginBottom: margins.sm - 4 }}>
                                 Horas LDC:
                             </Text>
 
