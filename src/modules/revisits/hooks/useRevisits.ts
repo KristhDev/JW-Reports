@@ -59,7 +59,7 @@ import { SUPABASE_REVISITS_FOLDER } from '@env';
  */
 const useRevisits = () => {
     const dispatch = useAppDispatch();
-    const { goBack, navigate } = useNavigation();
+    const navigation = useNavigation();
 
     const state = useAppSelector(store => store.revisits);
     const { isAuthenticated, user } = useAppSelector(store => store.auth);
@@ -200,7 +200,7 @@ const useRevisits = () => {
 
         dispatch(removeRevisit({ id: state.selectedRevisit.id }));
         onFinish && onFinish();
-        back && navigate('RevisitsTopTabsNavigation' as never);
+        back && navigation.navigate('RevisitsTopTabsNavigation' as never);
 
         setSelectedRevisit(INIT_REVISIT);
 
@@ -379,7 +379,7 @@ const useRevisits = () => {
 
         setStatus({ code: status, msg: successMsg });
 
-        back && navigate('RevisitsTopTabsNavigation' as never);
+        back && navigation.navigate('RevisitsTopTabsNavigation' as never);
         if (user.precursor === 'ninguno') await loadLastRevisit();
     }
 
@@ -451,7 +451,7 @@ const useRevisits = () => {
 
         if (user.precursor === 'ninguno') await loadLastRevisit();
 
-        goBack();
+        navigation.goBack();
     }
 
     return {

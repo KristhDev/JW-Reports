@@ -38,7 +38,7 @@ import { date as dateUtil } from '@utils';
  */
 const usePreaching = () => {
     const dispatch = useAppDispatch();
-    const { goBack } = useNavigation();
+    const navigation = useNavigation();
 
     const state = useAppSelector(store => store.preaching);
     const { user, isAuthenticated } = useAppSelector(store => store.auth);
@@ -104,7 +104,7 @@ const usePreaching = () => {
 
         dispatch(removePreaching({ id: state.seletedPreaching.id }));
         onFinish && onFinish();
-        goBack();
+        navigation.goBack();
 
         setSelectedPreaching({
             ...INIT_PREACHING,
@@ -189,7 +189,7 @@ const usePreaching = () => {
         }
 
         setStatus({ code: 201, msg: preachingMessages.ADDED_SUCCESS });
-        goBack();
+        navigation.goBack();
     }
 
     /**
@@ -243,7 +243,7 @@ const usePreaching = () => {
             finalHour: new Date().toString()
         });
 
-        goBack();
+        navigation.goBack();
     }
 
     return {

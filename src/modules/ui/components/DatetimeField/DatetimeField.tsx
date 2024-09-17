@@ -119,7 +119,6 @@ export const DatetimeField: FC<DatetimeFieldProps> = ({
                     containerStyle={{ minWidth: 0, paddingHorizontal: (margins.xs + 1) }}
                     icon={ icon }
                     onPress={ () => setOpen(true) }
-                    text=""
                     pressableStyle={{ marginLeft: margins.sm }}
                 />
             </View>

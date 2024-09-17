@@ -45,7 +45,7 @@ import { coursesMessages } from '../utils';
  */
 const useCourses = () => {
     const dispatch = useAppDispatch();
-    const { goBack, navigate } = useNavigation();
+    const navigation = useNavigation();
     const { wifi } = useNetwork();
 
     const state = useAppSelector(store => store.courses);
@@ -204,7 +204,7 @@ const useCourses = () => {
         dispatch(removeCourse({ id: state.selectedCourse.id }));
 
         onFinish && onFinish();
-        back && navigate('CoursesScreen' as never);
+        back && navigation.navigate('CoursesScreen' as never);
 
         setSelectedCourse(INIT_COURSE);
 
@@ -400,7 +400,7 @@ const useCourses = () => {
         onFinish && onFinish();
         setStatus({ code: 201, msg: coursesMessages.ADDED_SUCCESS });
 
-        navigate({
+        navigation.navigate({
             name: 'CoursesStackNavigation',
             params: {
                 screen: 'CoursesTopTabsNavigation'
@@ -463,7 +463,7 @@ const useCourses = () => {
         }
 
         setStatus({ code: 200, msg: coursesMessages.UPDATED_SUCCESS });
-        goBack();
+        navigation.goBack();
     }
 
     return {

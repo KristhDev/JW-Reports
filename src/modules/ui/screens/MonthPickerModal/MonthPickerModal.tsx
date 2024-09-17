@@ -108,7 +108,6 @@ const MonthPickerModal: FC<MonthPickerModalProps> = ({ isOpen, monthDate, onClos
                                 />
                             }
                             onPress={ () => handleChangeMonthNumber(-1) }
-                            text=""
                         />
 
                         <View style={[ themeStyles.formControl, styles.controlInput ]}>
@@ -134,7 +133,6 @@ const MonthPickerModal: FC<MonthPickerModalProps> = ({ isOpen, monthDate, onClos
                                 />
                             }
                             onPress={ () => handleChangeMonthNumber(+1) }
-                            text=""
                         />
                     </View>
 
@@ -149,7 +147,6 @@ const MonthPickerModal: FC<MonthPickerModalProps> = ({ isOpen, monthDate, onClos
                                 />
                             }
                             onPress={ () => setYear(year - 1) }
-                            text=""
                         />
 
                         <View style={[ themeStyles.formControl, styles.controlInput ]}>
@@ -177,7 +174,6 @@ const MonthPickerModal: FC<MonthPickerModalProps> = ({ isOpen, monthDate, onClos
                                 />
                             }
                             onPress={ () => setYear(year + 1) }
-                            text=""
                         />
                     </View>
                 </View>
