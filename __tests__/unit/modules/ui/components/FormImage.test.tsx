@@ -8,17 +8,11 @@ import { onChangeValueMock, useImageSpy } from '@test-setup';
 import { takeImageToGalleryMock, takePhotoMock } from '@mocks';
 
 /* Modules */
-import { FormImage } from '@ui';
+import { FormImage, FormImageProps } from '@ui';
 
 const defaultImage = require('@assets/revisit-default.jpg');
 
-const renderComponent = () => render(
-    <FormImage
-        defaultImage={ defaultImage }
-        label="Imagen:"
-        onSelectImage={ onChangeValueMock }
-    />
-);
+const renderComponent = (props: FormImageProps) => render(<FormImage { ...props } />);
 
 const user = userEvent.setup();
 
@@ -34,12 +28,25 @@ describe('Test in <FormImage /> component', () => {
     });
 
     it('should to match snapshot', () => {
-        renderComponent();
+        renderComponent({
+            defaultImage,
+            label: 'Imagen:',
+            onSelectImage: onChangeValueMock,
+            showCameraButton: true,
+            showGalleryButton: true
+        });
+
         expect(screen.toJSON()).toMatchSnapshot();
     });
 
     it('should render respective props', () => {
-        renderComponent();
+        renderComponent({
+            defaultImage,
+            label: 'Imagen:',
+            onSelectImage: onChangeValueMock,
+            showCameraButton: true,
+            showGalleryButton: true
+        });
 
         const label = screen.getByTestId('form-image-label');
         const image = screen.getByTestId('form-image-image');
@@ -51,7 +58,13 @@ describe('Test in <FormImage /> component', () => {
     });
 
     it('should call takeImageToGallery when gallery button is pressed', async () => {
-        renderComponent();
+        renderComponent({
+            defaultImage,
+            label: 'Imagen:',
+            onSelectImage: onChangeValueMock,
+            showCameraButton: true,
+            showGalleryButton: true
+        });
 
         const pressables = screen.getAllByTestId('button-pressable');
         await user.press(pressables[0]);
@@ -60,11 +73,43 @@ describe('Test in <FormImage /> component', () => {
     });
 
     it('should call takePhoto when camera button is pressed', async () => {
-        renderComponent();
+        renderComponent({
+            defaultImage,
+            label: 'Imagen:',
+            onSelectImage: onChangeValueMock,
+            showCameraButton: true,
+            showGalleryButton: true
+        });
 
         const pressables = screen.getAllByTestId('button-pressable');
         await user.press(pressables[1]);
 
         expect(takePhotoMock).toHaveBeenCalledTimes(1);
+    });
+
+    it('should render gallery button when showGalleryButton is true', () => {
+        renderComponent({
+            defaultImage,
+            label: 'Imagen:',
+            onSelectImage: onChangeValueMock,
+            showCameraButton: true,
+            showGalleryButton: true
+        });
+
+        const pressables = screen.getAllByTestId('button-pressable');
+        expect(pressables[0]).toBeOnTheScreen();
+    });
+
+    it('should render camera button when showCameraButton is true', () => {
+        renderComponent({
+            defaultImage,
+            label: 'Imagen:',
+            onSelectImage: onChangeValueMock,
+            showCameraButton: true,
+            showGalleryButton: true
+        });
+
+        const pressables = screen.getAllByTestId('button-pressable');
+        expect(pressables[1]).toBeOnTheScreen();
     });
 });
