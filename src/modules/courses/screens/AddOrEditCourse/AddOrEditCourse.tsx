@@ -33,7 +33,7 @@ const AddOrEditCourse = (): JSX.Element => {
                 <Title
                     containerStyle={ themeStyles.titleContainer }
                     textStyle={{ fontSize: fontSizes.md }}
-                    text={ `${ (selectedCourse.id === '') ? 'Agregar' : 'Editar' } curso bíblico` }
+                    text={ `${ (selectedCourse.id === '') ? 'AGREGAR' : 'EDITAR' } CURSO BÍBLICO` }
                 />
 
                 <CourseForm />

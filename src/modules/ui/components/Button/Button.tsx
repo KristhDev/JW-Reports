@@ -9,26 +9,20 @@ import { ButtonProps } from './interfaces';
 import { stylesheet } from './styles';
 
 /**
- * This component shows a custom button for the different actions of the app.
+ * This component is responsible for displaying a button with a
+ * pressable area, text and/or icon, and a container style.
  *
- * @param {ButtonProps} props {
- *      containerStyle: StyleProp<ViewStyle>,
- *      disabled: boolean,
- *      icon: ReactNode,
- *      onPress: () => void,
- *      text: string,
- *      textStyle: StyleProp<TextStyle>,
- *      pressableStyle: StyleProp<ViewStyle>,
- *      underlayColor: string
- *  } - This is a props to functionality of the component
- * - containerStyle: This is a style of the container, default is `undefined`
- * - disabled: This is a boolean, default is `undefined`
- * - icon: This is a ReactNode, default is `undefined`
- * - onPress: This is a function that is called when the button is pressed
- * - text: This is a string
- * - textStyle: This is a style of the text, default is `undefined`
- * - pressableStyle: This is a style of the pressable, default is `undefined`
- * - underlayColor: This is a color of the underlay, default is `undefined`
+ * @param {ButtonProps} props { containerStyle: StyleProp<ViewStyle>, disabled: boolean, icon: ReactNode, onPress: () => void, pressableStyle: StyleProp<ViewStyle>, style: StyleProp<ViewStyle>, text: string, textStyle: StyleProp<TextStyle>, underlayColor: string } - This is the props
+ * for functionality of the component
+ * - containerStyle: This is the style of the outer container, default is `undefined`
+ * - disabled: This is the disabled state of the button, default is `false`
+ * - icon: This is the icon of the button, default is `undefined`
+ * - onPress: This is the function to be called when the button is pressed, default is `undefined`
+ * - pressableStyle: This is the style of the pressable area, default is `undefined`
+ * - style: This is the style of the button, default is `undefined`
+ * - text: This is the text of the button, default is `undefined`
+ * - textStyle: This is the style of the text, default is `undefined`
+ * - underlayColor: This is the color of the underlay, default is `rgba(0, 0, 0, 0.30)`
  * @return {JSX.Element} Return jsx element to render button
  */
 export const Button: FC<ButtonProps> = ({
@@ -36,23 +30,24 @@ export const Button: FC<ButtonProps> = ({
     disabled,
     icon,
     onPress,
+    pressableStyle,
+    style,
     text,
     textStyle,
-    pressableStyle,
-    underlayColor
+    underlayColor = 'rgba(0, 0, 0, 0.30)'
 }): JSX.Element => {
     const { styles } = useStyles(stylesheet);
 
     return (
-        <View style={{ borderRadius: styles.buttonPressable.borderRadius, overflow: 'hidden' }}>
+        <View style={[ styles.buttonContainer, style ]}>
             <Pressable
-                android_ripple={{ color: underlayColor || 'rgba(0, 0, 0, 0.30)' }}
+                android_ripple={{ color: underlayColor }}
                 disabled={ disabled }
                 onPress={ onPress }
                 style={[ styles.buttonPressable, pressableStyle ]}
                 testID="button-pressable"
             >
-                <View style={[ styles.buttonContainer, containerStyle ]}>
+                <View style={[ styles.buttonContent, containerStyle ]}>
                     { (text) && (
                         <Text
                             style={[ styles.buttonText, textStyle ]}

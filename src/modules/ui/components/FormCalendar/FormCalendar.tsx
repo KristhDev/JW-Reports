@@ -119,7 +119,6 @@ export const FormCalendar: FC<FormCalendarProps> = ({
                     containerStyle={{ minWidth: 0, paddingHorizontal: (margins.xs + 1) }}
                     icon={ icon }
                     onPress={ () => setShowCalendarModal(true) }
-                    text=""
                     pressableStyle={{ marginLeft: margins.sm }}
                 />
             </View>

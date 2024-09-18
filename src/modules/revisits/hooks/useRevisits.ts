@@ -48,14 +48,18 @@ import {
 import { logger } from '@services';
 
 /* Utils */
+import { revisitsMessages } from '../utils';
 import { date } from '@utils';
+
+/* ENV */
+import { SUPABASE_REVISITS_FOLDER } from '@env';
 
 /**
  * Hook to management revisits of store with state and actions
  */
 const useRevisits = () => {
     const dispatch = useAppDispatch();
-    const { goBack, navigate } = useNavigation();
+    const navigation = useNavigation();
 
     const state = useAppSelector(store => store.revisits);
     const { isAuthenticated, user } = useAppSelector(store => store.auth);
@@ -101,11 +105,7 @@ const useRevisits = () => {
         if (state.selectedRevisit.id === '') {
             onFailFinish && onFailFinish();
             dispatch(setIsRevisitLoading({ isLoading: false }));
-
-            setStatus({
-                code: 400,
-                msg: 'No hay una revisita seleccionada para completar.'
-            });
+            setStatus({ code: 400, msg: revisitsMessages.UNSELECTED_COMPLETE });
 
             return '';
         }
@@ -138,7 +138,7 @@ const useRevisits = () => {
             dispatch(setLastRevisit({ revisit }));
         }
 
-        return 'Has marcado como completa tu revisita correctamente.';
+        return revisitsMessages.COMPLETED_SUCCESS;
     }
 
     /**
@@ -169,11 +169,7 @@ const useRevisits = () => {
         if (state.selectedRevisit.id === '') {
             onFinish && onFinish();
             dispatch(setIsRevisitDeleting({ isDeleting: false }));
-
-            setStatus({
-                code: 400,
-                msg: 'No hay una revisita seleccionada para eliminar.'
-            });
+            setStatus({ code: 400, msg: revisitsMessages.UNSELECTED_DELETE });
 
             return;
         }
@@ -204,7 +200,7 @@ const useRevisits = () => {
 
         dispatch(removeRevisit({ id: state.selectedRevisit.id }));
         onFinish && onFinish();
-        back && navigate('RevisitsTopTabsNavigation' as never);
+        back && navigation.navigate('RevisitsTopTabsNavigation' as never);
 
         setSelectedRevisit(INIT_REVISIT);
 
@@ -212,10 +208,7 @@ const useRevisits = () => {
             await loadLastRevisit();
         }
 
-        setStatus({
-            code: 200,
-            msg: 'Has eliminado tu revisita correctamente.'
-        });
+        setStatus({ code: 200, msg: revisitsMessages.DELETED_SUCCESS });
     }
 
     /**
@@ -348,7 +341,7 @@ const useRevisits = () => {
 
         /* If image is other than undefined, an attempt is made to upload */
         if (image) {
-            const { data, error } = await uploadImage(image);
+            const { data, error } = await uploadImage(image, SUPABASE_REVISITS_FOLDER);
 
             const next = setSupabaseError(error, 400, () => {
                 dispatch(setIsRevisitLoading({ isLoading: false }));
@@ -381,12 +374,12 @@ const useRevisits = () => {
         onFinish && onFinish();
 
         const successMsg = (back)
-            ? 'Has agregado tu revisita correctamente.'
+            ? revisitsMessages.ADDED_SUCCESS
             : `Has agregado correctamente a ${ data!.person_name } para volverla a visitar.`
 
         setStatus({ code: status, msg: successMsg });
 
-        back && navigate('RevisitsTopTabsNavigation' as never);
+        back && navigation.navigate('RevisitsTopTabsNavigation' as never);
         if (user.precursor === 'ninguno') await loadLastRevisit();
     }
 
@@ -412,11 +405,7 @@ const useRevisits = () => {
 
         if (state.selectedRevisit.id === '') {
             dispatch(setIsRevisitLoading({ isLoading: false }));
-
-            setStatus({
-                code: 400,
-                msg: 'No hay una revisita seleccionada para actualizar.'
-            });
+            setStatus({ code: 400, msg: revisitsMessages.UNSELECTED_UPDATE });
 
             return;
         }
@@ -434,7 +423,7 @@ const useRevisits = () => {
                 if (next) return;
             }
 
-            const { data: dataImage, error: errorImage } = await uploadImage(image);
+            const { data: dataImage, error: errorImage } = await uploadImage(image, SUPABASE_REVISITS_FOLDER);
 
             const next = setSupabaseError(errorImage, 400, () => dispatch(setIsRevisitLoading({ isLoading: false })));
             if (next) return;
@@ -458,15 +447,11 @@ const useRevisits = () => {
         if (next) return;
 
         dispatch(updateRevisitAction({ revisit: revisitAdapter(data!) }));
-
-        setStatus({
-            code: 200,
-            msg: 'Has actualizado tu revisita correctamente.'
-        });
+        setStatus({ code: 200, msg: revisitsMessages.UPDATED_SUCCESS });
 
         if (user.precursor === 'ninguno') await loadLastRevisit();
 
-        goBack();
+        navigation.goBack();
     }
 
     return {

@@ -34,9 +34,17 @@ const particitions = [
  */
 const ReportModal: FC<ReportModalProps> = ({ isOpen, month, onClose }): JSX.Element => {
     const [ comment, setComment ] = useState<string>('');
+    const [ hoursLDC, setHoursLDC ] = useState<string>('');
     const [ participated, setParticipated ] = useState<string>('si');
-    const [ isFocused, setIsFocused ] = useState<boolean>(false);
-    const [ selection, setSelection ] = useState({
+
+    const [ isFocusedComment, setIsFocusedComment ] = useState<boolean>(false);
+    const [ selectionComment, setSelectionComment ] = useState({
+        start: comment.length || 0,
+        end: comment.length || 0
+    });
+
+    const [ isFocusedLDC, setIsFocusedLDC ] = useState<boolean>(false);
+    const [ selectionLDC, setSelectionLDC ] = useState({
         start: comment.length || 0,
         end: comment.length || 0
     });
@@ -69,6 +77,8 @@ const ReportModal: FC<ReportModalProps> = ({ isOpen, month, onClose }): JSX.Elem
         if (user.precursor !== 'ninguno') report += `Horas: ${ totalHours }\n`;
         else report += `Participo en el ministerio: ${ participated }`;
 
+        if (user.precursor !== 'ninguno' && hoursLDC.trim().length > 0) report += `Horas LDC: ${ hoursLDC }\n`;
+
         report += `Cursos: ${ totalCourses } \n`;
         report += 'Comentarios: \n';
         report += `${ (comment.trim().length > 0) ? comment : 'Ninguno' }`;
@@ -96,30 +106,30 @@ const ReportModal: FC<ReportModalProps> = ({ isOpen, month, onClose }): JSX.Elem
                     <Text style={ styles.reportTitle }>Informe De Predicación</Text>
 
                     <View style={{ flexDirection: 'row' }}>
-                        <Text style={{ ...styles.reportText, color: colors.text }}>Nombre: </Text>
-                        <Text style={{ ...styles.reportText, color: colors.modalText }}>{ username }</Text>
+                        <Text style={ styles.reportText(colors.text) }>Nombre: </Text>
+                        <Text style={ styles.reportText(colors.modalText) }>{ username }</Text>
                     </View>
 
                     <View style={{ flexDirection: 'row' }}>
-                        <Text style={{ ...styles.reportText, color: colors.text }}>Mes: </Text>
-                        <Text style={{ ...styles.reportText, color: colors.modalText }}>{ characters.capitalize(month) }</Text>
+                        <Text style={ styles.reportText(colors.text) }>Mes: </Text>
+                        <Text style={ styles.reportText(colors.modalText) }>{ characters.capitalize(month) }</Text>
                     </View>
 
                     { (user.precursor !== 'ninguno') && (
                         <View style={{ flexDirection: 'row' }}>
-                            <Text style={{ ...styles.reportText, color: colors.text }}>Horas: </Text>
-                            <Text style={{ ...styles.reportText, color: colors.modalText }}>{ totalHours }</Text>
+                            <Text style={ styles.reportText(colors.text) }>Horas: </Text>
+                            <Text style={ styles.reportText(colors.modalText) }>{ totalHours }</Text>
                         </View>
                     ) }
 
                     <View style={{ flexDirection: 'row' }}>
-                        <Text style={{ ...styles.reportText, color: colors.text }}>Cursos: </Text>
-                        <Text style={{ ...styles.reportText, color: colors.modalText }}>{ totalCourses }</Text>
+                        <Text style={ styles.reportText(colors.text) }>Cursos: </Text>
+                        <Text style={ styles.reportText(colors.modalText) }>{ totalCourses }</Text>
                     </View>
 
                     { (user.precursor === 'ninguno') && (
                         <View style={{ flexDirection: 'column' }}>
-                            <Text style={{ ...styles.reportText, color: colors.text, marginBottom: 5 }}>Participo en el ministerio: </Text>
+                            <Text style={ styles.reportText(colors.text) }>Participo en el ministerio: </Text>
 
                             <View style={{ flexDirection: 'row', gap: margins.lg, paddingVertical: margins.xs }}>
                                 { Children.toArray(particitions.map(particition => (
@@ -135,23 +145,25 @@ const ReportModal: FC<ReportModalProps> = ({ isOpen, month, onClose }): JSX.Elem
 
                     {/* Comment section */}
                     <View style={{ flexDirection: 'column' }}>
-                        <Text style={{ ...styles.reportText, color: colors.text, marginBottom: 5 }}>Comentarios: </Text>
+                        <Text style={{ ...styles.reportText(colors.text), marginBottom: margins.sm - 4 }}>
+                            Comentarios:
+                        </Text>
 
-                        <View style={[ themeStyles.focusExternalBorder(isFocused), { marginTop: margins.sm } ]}>
-                            <View style={ themeStyles.defaultBorder(isFocused) }>
-                                <View style={[ themeStyles.formControl, themeStyles.focusInternalBorder(isFocused) ]}>
+                        <View style={[ themeStyles.focusExternalBorder(isFocusedComment) ]}>
+                            <View style={ themeStyles.defaultBorder(isFocusedComment) }>
+                                <View style={[ themeStyles.formControl, themeStyles.focusInternalBorder(isFocusedComment) ]}>
                                     <TextInput
                                         autoCorrect={ false }
                                         cursorColor={ colors.button }
                                         multiline
                                         numberOfLines={ 4 }
-                                        onBlur={ () => setIsFocused(false) }
+                                        onBlur={ () => setIsFocusedComment(false) }
                                         onChangeText={ setComment }
-                                        onFocus={ () => setIsFocused(true) }
-                                        onSelectionChange={ ({ nativeEvent }) => setSelection(nativeEvent.selection) }
+                                        onFocus={ () => setIsFocusedComment(true) }
+                                        onSelectionChange={ ({ nativeEvent }) => setSelectionComment(nativeEvent.selection) }
                                         placeholder="Ninguno"
                                         placeholderTextColor={ colors.icon }
-                                        selection={ selection }
+                                        selection={ selectionComment }
                                         selectionColor={ colors.linkText }
                                         style={{
                                             ...themeStyles.formInput,
@@ -164,6 +176,36 @@ const ReportModal: FC<ReportModalProps> = ({ isOpen, month, onClose }): JSX.Elem
                             </View>
                         </View>
                     </View>
+
+                    { (user.hoursLDC && user.precursor !== 'ninguno') && (
+                        <View style={{ flexDirection: 'column', marginTop: margins.sm - 4 }}>
+                            <Text style={{ ...styles.reportText(colors.text), marginBottom: margins.sm - 4 }}>
+                                Horas LDC:
+                            </Text>
+
+                            <View style={[ themeStyles.focusExternalBorder(isFocusedLDC) ]}>
+                                <View style={ themeStyles.defaultBorder(isFocusedLDC) }>
+                                    <View style={[ themeStyles.formControl, themeStyles.focusInternalBorder(isFocusedLDC) ]}>
+                                        <TextInput
+                                            autoCorrect={ false }
+                                            cursorColor={ colors.button }
+                                            keyboardType="decimal-pad"
+                                            onBlur={ () => setIsFocusedLDC(false) }
+                                            onChangeText={ setHoursLDC }
+                                            onFocus={ () => setIsFocusedLDC(true) }
+                                            onSelectionChange={ ({ nativeEvent }) => setSelectionLDC(nativeEvent.selection) }
+                                            placeholder="Ingrese sus horas LDC completas"
+                                            placeholderTextColor={ colors.icon }
+                                            selection={ selectionLDC }
+                                            selectionColor={ colors.linkText }
+                                            style={ themeStyles.formInput }
+                                            value={ hoursLDC }
+                                        />
+                                    </View>
+                                </View>
+                            </View>
+                        </View>
+                    ) }
                 </View>
 
                 { (restMins > 0) && (

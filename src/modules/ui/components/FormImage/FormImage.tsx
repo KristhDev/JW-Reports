@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useState } from 'react';
+import React, { forwardRef, useEffect, useImperativeHandle, useState } from 'react';
 import { Image, Text, useWindowDimensions, View } from 'react-native';
 import { useStyles } from 'react-native-unistyles';
 import Ionicons from 'react-native-vector-icons/Ionicons';
@@ -10,10 +10,11 @@ import { Button } from '../Button';
 import { useImage } from '@shared';
 
 /* Interfaces */
-import { FormImageProps } from './interfaces';
+import { FormImageProps, FormImageRef } from './interfaces';
 
 /* Theme */
 import { themeStylesheet } from '@theme';
+import { stylesheet } from './styles';
 
 /**
  * Renders a form image component with the ability to select an image from the gallery or camera.
@@ -29,24 +30,29 @@ import { themeStylesheet } from '@theme';
  * @param {StyleProp<ViewStyle>} props.style - The style to apply to the component container.
  * @return {JSX.Element} The rendered form image component.
  */
-export const FormImage: FC<FormImageProps> = ({
+export const FormImage  = forwardRef<FormImageRef, FormImageProps>(({
+    cameraButtonText = 'Cámara',
+    label,
+    onSelectImage,
     defaultImage,
     disabled,
+    galleryButtonText = 'Galería',
     imageStyle,
     imageUrl,
-    label,
     labelStyle,
-    onSelectImage,
-    style
-}): JSX.Element => {
+    showCameraButton,
+    showGalleryButton,
+    style,
+}, ref): JSX.Element => {
     const [ imageHeight, setImageHeight ] = useState<number>(0);
     const [ imageUri, setImageUri ] = useState<string>('https://local-image.com/images.jpg');
 
     const { width: windowWidth } = useWindowDimensions();
 
-    const { styles: themeStyles, theme: { colors, fontSizes, margins } } = useStyles(themeStylesheet);
+    const { styles: themeStyles, theme: { colors, fontSizes } } = useStyles(themeStylesheet);
+    const { styles } = useStyles(stylesheet);
 
-    const { image, takeImageToGallery, takePhoto } = useImage();
+    const { image, clearImage, takeImageToGallery, takePhoto } = useImage();
 
     useEffect(() => {
         onSelectImage(image);
@@ -82,7 +88,15 @@ export const FormImage: FC<FormImageProps> = ({
             setImageHeight(h);
             setImageUri(image.path);
         }
+        else {
+            const { height, width, uri } = Image.resolveAssetSource(defaultImage);
+            const h = windowWidth / width * height;
+            setImageHeight(h);
+            setImageUri(uri);
+        }
     }, [ image ]);
+
+    useImperativeHandle(ref, () => ({ clearImage }));
 
     return (
         <View style={[ themeStyles.formField, style ]}>
@@ -95,43 +109,50 @@ export const FormImage: FC<FormImageProps> = ({
 
             {/* Default image or revisit photo */}
             <Image
+                resizeMode="contain"
                 source={{ uri: imageUri }}
-                style={[ { borderRadius: 5, height: imageHeight, width: '100%' }, imageStyle ]}
+                style={[ styles.image(imageHeight), imageStyle ]}
                 testID="form-image-image"
             />
 
-            <View style={{ flexDirection: 'row', justifyContent: 'space-around', marginTop: margins.sm }}>
+            <View style={ styles.actions }>
 
                 {/* Gallery button */}
-                <Button
-                    containerStyle={{ minWidth: 0 }}
-                    disabled={ disabled }
-                    icon={
-                        <Ionicons
-                            color={ colors.contentHeader }
-                            name="image-outline"
-                            size={ fontSizes.icon }
-                        />
-                    }
-                    onPress={ takeImageToGallery }
-                    text="Galería"
-                />
+                { (showGalleryButton) && (
+                    <Button
+                        containerStyle={{ minWidth: 0 }}
+                        disabled={ disabled }
+                        icon={
+                            <Ionicons
+                                color={ colors.contentHeader }
+                                name="image-outline"
+                                size={ fontSizes.icon }
+                            />
+                        }
+                        onPress={ takeImageToGallery }
+                        style={{ flex: 1 }}
+                        text={ galleryButtonText }
+                    />
+                ) }
 
                 {/* Camera button */}
-                <Button
-                    containerStyle={{ minWidth: 0 }}
-                    disabled={ disabled }
-                    icon={
-                        <Ionicons
-                            color={ colors.contentHeader }
-                            name="camera-outline"
-                            size={ fontSizes.icon }
-                        />
-                    }
-                    onPress={ takePhoto }
-                    text="Cámara"
-                />
+                { (showCameraButton) && (
+                    <Button
+                        containerStyle={{ minWidth: 0 }}
+                        disabled={ disabled }
+                        icon={
+                            <Ionicons
+                                color={ colors.contentHeader }
+                                name="camera-outline"
+                                size={ fontSizes.icon }
+                            />
+                        }
+                        onPress={ takePhoto }
+                        style={{ flex: 1 }}
+                        text={ cameraButtonText }
+                    />
+                ) }
             </View>
         </View>
     );
-}
+});

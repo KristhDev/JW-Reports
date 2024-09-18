@@ -20,9 +20,10 @@ export const stylesheet = createStyleSheet(({ borderRadius, colors, fontSizes, m
         fontWeight: 'bold'
     },
 
-    reportText: {
+    reportText: (color: string) => ({
+        color,
         fontSize: (fontSizes.sm + 1),
-    },
+    }),
 
     restMinsText: {
         color: colors.modalText,

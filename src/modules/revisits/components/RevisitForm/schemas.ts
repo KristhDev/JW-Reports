@@ -1,19 +1,21 @@
 import { date, object, string } from 'yup';
 
+import { revisitsMessages } from '../../utils';
+
 /* Validation schema of revisit */
 export const revisitFormSchema = object().shape({
     personName: string()
-        .min(2, 'El nombre de la persona debe tener al menos 2 caracteres.')
-        .required('El nombre de la persona es requerido.'),
+        .min(2, revisitsMessages.PERSON_MIN_LENGTH)
+        .required(revisitsMessages.PERSON_NAME_REQUIRED),
 
     about: string()
-        .min(10, 'La información de la persona debe tener al menos 10 caracteres.')
-        .required('La información de la persona es requerida.'),
+        .min(10, revisitsMessages.ABOUT_MIN_LENGTH)
+        .required(revisitsMessages.ABOUT_REQUIRED),
 
     address: string()
-        .min(10, 'La dirección debe tener al menos 10 caracteres.')
-        .required('La dirección es requerida.'),
+        .min(10, revisitsMessages.ADDRESS_MIN_LENGTH)
+        .required(revisitsMessages.ADDRESS_REQUIRED),
 
     nextVisit: date()
-        .required('La fecha de la próxima visita no puede estar vacía'),
+        .required(revisitsMessages.NEXT_VISIT_REQUIRED),
 });

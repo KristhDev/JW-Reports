@@ -26,7 +26,7 @@ const Stack = createStackNavigator<NavigationParamsList>();
  * @return {JSX.Element} rendered component to show navigation
  */
 const Navigation = (): JSX.Element => {
-    const { state: { isAuthenticated }, refreshAuth } = useAuth();
+    const { state: { isAuthenticated }, getAuth } = useAuth();
     const { clearCourses } = useCourses();
     const { clearLessons } = useLessons();
     const { state: { permissions }, checkPermissions } = usePermissions();
@@ -48,7 +48,7 @@ const Navigation = (): JSX.Element => {
             clearPreaching();
             clearRevisits();
 
-            refreshAuth();
+            getAuth();
         }
     }, []);
 
@@ -87,6 +87,28 @@ const Navigation = (): JSX.Element => {
         }
     }, []);
 
+    if (!isAuthenticated) {
+        return (
+            <>
+                <StatusBar
+                    animated
+                    backgroundColor="transparent"
+                    barStyle={ (theme === 'dark') ? 'light-content' : 'dark-content' }
+                    translucent
+                />
+
+                <StatusModal />
+
+                <Stack.Navigator screenOptions={{ headerShown: false }}>
+                    <Stack.Screen
+                        component={ AuthStackNavigation }
+                        name="AuthStackNavigation"
+                    />
+                </Stack.Navigator>
+            </>
+        );
+    }
+
     return (
         <>
             <StatusBar
@@ -99,27 +121,18 @@ const Navigation = (): JSX.Element => {
             <StatusModal />
 
             <Stack.Navigator screenOptions={{ headerShown: false }}>
-                { (isAuthenticated) ? (
-                    <>
-                        <Stack.Screen
-                            component={ MainTabsBottomNavigation }
-                            name="MainTabsBottomNavigation"
-                        />
+                <Stack.Screen
+                    component={ MainTabsBottomNavigation }
+                    name="MainTabsBottomNavigation"
+                />
 
-                        <Stack.Screen
-                            component={ SettingsStackNavigation }
-                            name="SettingsStackNavigation"
-                            options={{
-                                cardStyleInterpolator: CardStyleInterpolators.forBottomSheetAndroid,
-                            }}
-                        />
-                    </>
-                ) : (
-                    <Stack.Screen
-                        component={ AuthStackNavigation }
-                        name="AuthStackNavigation"
-                    />
-                ) }
+                <Stack.Screen
+                    component={ SettingsStackNavigation }
+                    name="SettingsStackNavigation"
+                    options={{
+                        cardStyleInterpolator: CardStyleInterpolators.forBottomSheetAndroid,
+                    }}
+                />
             </Stack.Navigator>
         </>
     );

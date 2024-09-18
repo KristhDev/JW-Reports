@@ -2,18 +2,19 @@ import { date, object } from 'yup';
 
 /* Utils */
 import { date as dateUtil } from '@utils';
+import { preachingMessages } from '../../utils';
 
 /* Validation schema for preaching */
 export const preachingFormSchema = object().shape({
     day: date()
-        .required('El día no puede estar vacío.'),
+        .required(preachingMessages.DAY_REQUIRED),
 
     initHour: date()
-        .required('La hora inicial no puede estar vacía.')
-        .test('date-min', 'La hora inicial no puede ser mayor que la hora final.', (value, { parent }) => {
+        .required(preachingMessages.INIT_HOUR_REQUIRED)
+        .test('date-min', preachingMessages.INIT_HOUR_GREATER_THAN_FINAL, (value, { parent }) => {
             return dateUtil.isBefore(value, parent.finalHour);
         }),
 
     finalHour: date()
-        .required('La hora final no puede estar vacía.')
+        .required(preachingMessages.FINAL_HOUR_REQUIRED)
 });

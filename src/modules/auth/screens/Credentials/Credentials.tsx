@@ -28,7 +28,7 @@ const Credentials = (): JSX.Element => {
             <View style={ themeStyles.screenContainer }>
                 <Title
                     containerStyle={ themeStyles.titleContainer }
-                    text="Credenciales"
+                    text="CREDENCIALES"
                     textStyle={{ fontSize: fontSizes.md }}
                 />
 

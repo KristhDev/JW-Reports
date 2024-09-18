@@ -12,7 +12,9 @@ import { StorageError } from '@ui';
 import { logger } from '@services';
 
 /* Utils */
-import { translateErrorMsg } from '@utils';
+import { authMessages } from '@auth';
+import { AppErrors } from '@utils';
+import { networkMessages } from '../utils';
 
 /**
  * Hook to management status of store with state and actions
@@ -32,11 +34,7 @@ const useStatus = () => {
      */
     const setErrorForm = <T extends Object>(fromErrors: T): void => {
         const values = Object.values(fromErrors) as string[];
-
-        setStatus({
-            msg: values[0],
-            code: 400
-        });
+        setStatus({ msg: values[0], code: 400 });
     }
 
     /**
@@ -48,11 +46,7 @@ const useStatus = () => {
      */
     const setNetworkError = (msg?: string, onDispatch?: () => void): void => {
         onDispatch && onDispatch();
-
-        setStatus({
-            code: 500,
-            msg: msg || 'Lo sentimos pero no dispones de conexion a Internet. Los datos que hay en la aplicación no son actualizados. Hasta que recuperes la conexión no podras obtener, guardar, editar o eliminar ningún dato.',
-        });
+        setStatus({ code: 500, msg: msg || networkMessages.WIFI_HASNT_CONNECTION });
     }
 
     /**
@@ -67,7 +61,7 @@ const useStatus = () => {
      */
     const setSupabaseError = (error: AuthError | PostgrestError | StorageError | null, status: number, onDispatch?: () => void): boolean => {
         if (error) {
-            const msg = translateErrorMsg(error.message);
+            const msg = AppErrors.translateMsg(error.message);
 
             onDispatch && onDispatch();
             setStatus({ code: status, msg });
@@ -87,11 +81,7 @@ const useStatus = () => {
      */
     const setUnauthenticatedError = (onDispatch?: () => void): void => {
         onDispatch && onDispatch();
-
-        setStatus({
-            code: 401,
-            msg: 'Para realizar está acción debe iniciar sesión.'
-        });
+        setStatus({ code: 401, msg: authMessages.UNATHENTICATED });
     }
 
 

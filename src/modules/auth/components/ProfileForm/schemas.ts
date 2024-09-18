@@ -1,16 +1,18 @@
 import { object, string } from 'yup';
 
+import { authMessages, precursorMessages, PRECURSORS_OPTIONS } from '../../utils';
+
 /* Validation schema for profile values */
 export const profileFormSchema = object().shape({
     name: string()
-        .min(2, 'El nombre debe tener al menos 2 caracteres.')
-        .required('El nombre es requerido.'),
+        .min(2, authMessages.NAME_MIN_LENGTH)
+        .required(authMessages.NAME_EMPTY),
 
     surname: string()
-        .min(2, 'Los apellidos deben tener al menos 2 caracteres.')
-        .required('Los apellidos son requeridos.'),
+        .min(2, authMessages.SURNAME_MIN_LENGTH)
+        .required(authMessages.SURNAME_EMPTY),
 
     precursor: string()
-        .oneOf([ 'ninguno', 'auxiliar', 'regular', 'especial' ], 'Por favor seleccione una opción de precursor.')
-        .required('El campo precursor es requerido.')
+        .oneOf(PRECURSORS_OPTIONS.map(op => op.value), precursorMessages.PRECURSOR_INVALID)
+        .required(precursorMessages.PRECURSOR_EMPTY),
 });

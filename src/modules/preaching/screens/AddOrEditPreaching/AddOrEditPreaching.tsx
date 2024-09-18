@@ -32,7 +32,7 @@ const AddOrEditPreaching = (): JSX.Element => {
                 <Title
                     containerStyle={ themeStyles.titleContainer }
                     textStyle={{ fontSize: fontSizes.md }}
-                    text={ `${ (seletedPreaching.id === '') ? 'Agregar' : 'Editar' } día de predicación` }
+                    text={ `${ (seletedPreaching.id === '') ? 'AGREGAR' : 'EDITAR' } DÍA DE PREDICACIÓN` }
                 />
 
                 <PreachingForm />

@@ -4,7 +4,7 @@ import { CardStyleInterpolators, createStackNavigator } from '@react-navigation/
 
 /* Modules */
 import { Profile, Credentials } from '@auth';
-import { Settings } from '../screens';
+import { FeedbackScreen, ReportErrorScreen, Settings } from '../screens';
 import { BackButton } from '@ui';
 
 const Stack = createStackNavigator();
@@ -15,7 +15,7 @@ const Stack = createStackNavigator();
  * @return {JSX.Element} rendered component to show stack navigation
  */
 const SettingsStackNavigation = (): JSX.Element => {
-    const { theme: { colors } } = useStyles();
+    const { theme: { colors, margins } } = useStyles();
 
     return (
         <Stack.Navigator
@@ -28,8 +28,9 @@ const SettingsStackNavigation = (): JSX.Element => {
                 headerStyle: {
                     backgroundColor: colors.header
                 },
-                headerTintColor: colors.headerText,
                 headerShadowVisible: false,
+                headerTintColor: colors.headerText,
+                headerTitleStyle: { marginLeft: -margins.xs },
             }}
         >
             <Stack.Screen
@@ -55,6 +56,24 @@ const SettingsStackNavigation = (): JSX.Element => {
                 options={{
                     cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
                     title: 'Credenciales'
+                }}
+            />
+
+            <Stack.Screen
+                component={ FeedbackScreen }
+                name="FeedbackScreen"
+                options={{
+                    cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
+                    title: 'Sugerencias'
+                }}
+            />
+
+            <Stack.Screen
+                component={ ReportErrorScreen }
+                name="ReportErrorScreen"
+                options={{
+                    cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
+                    title: 'Reportar Error'
                 }}
             />
         </Stack.Navigator>
