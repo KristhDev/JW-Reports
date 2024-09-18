@@ -58,6 +58,27 @@ jest.mock('@bugfender/rn-bugfender', () => {
     }
 });
 
+/**
+ * Aunque en el proyecto no tenga instalado este paquete es una dependencia de
+ * @emailjs/react-native por lo que es necesario aplicar un mock
+ */
+jest.mock('@react-native-async-storage/async-storage', () =>
+    require('@react-native-async-storage/async-storage/jest/async-storage-mock')
+);
+
+jest.mock('@emailjs/react-native', () => {
+    const real = jest.requireActual<typeof import('@emailjs/react-native')>('@emailjs/react-native');
+
+    return {
+        ...real,
+        default: {
+            init: jest.fn(),
+            send: jest.fn(),
+            sendForm: jest.fn()
+        }
+    }
+});
+
 jest.mock('react-native/Libraries/Animated/NativeAnimatedHelper');
 jest.mock('react-native/Libraries/EventEmitter/NativeEventEmitter');
 
