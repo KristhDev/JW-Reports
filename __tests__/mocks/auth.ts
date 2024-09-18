@@ -7,6 +7,7 @@ export const testUser: User = {
     email: 'Ernestine_Doyle@yahoo.com',
     precursor: 'ninguno',
     hoursRequirement: 0,
+    hoursLDC: false,
     createdAt: '2021-03-10T12:00:00.000Z',
     updatedAt: '2021-03-10T12:00:00.000Z',
 }
@@ -41,6 +42,7 @@ export const initialAuthStateMock: AuthState = {
         email: '',
         precursor: 'ninguno',
         hoursRequirement: 0,
+        hoursLDC: false,
         createdAt: '2021-08-26T15:00:00.000Z',
         updatedAt: '2021-08-26T15:00:00.000Z',
     }
@@ -55,6 +57,7 @@ export const authenticateStateMock: AuthState = {
         id: '3eb3fd2c-31ad-48c3-ab9b-587a059de40d',
         precursor: 'ninguno',
         hoursRequirement: 0,
+        hoursLDC: false,
         createdAt: '2021-08-26T15:00:00.000Z',
         updatedAt: '2021-08-26T15:00:00.000Z',
     }
