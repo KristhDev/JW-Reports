@@ -1,1 +1,2 @@
-export { ListEmptyComponent } from './ListEmptyComponent';
+export * from './ListEmptyComponent';
+export type { ListEmptyComponentProps } from './interfaces';

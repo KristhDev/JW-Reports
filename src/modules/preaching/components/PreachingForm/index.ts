@@ -1,1 +1,2 @@
-export { PreachingForm } from './PreachingForm';
+export * from './PreachingForm';
+export * from './schemas';

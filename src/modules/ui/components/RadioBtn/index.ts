@@ -1,1 +1,2 @@
-export { RadioBtn } from './RadioBtn';
+export * from './RadioBtn';
+export type { RadioBtnProps } from './interfaces';

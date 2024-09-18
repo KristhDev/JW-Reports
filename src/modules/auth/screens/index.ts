@@ -1,5 +1,5 @@
-export { Credentials } from './Credentials';
-export { ForgotPassword } from './ForgotPassword';
-export { Login } from './Login';
-export { Profile } from './Profile';
-export { Register } from './Register';
+export * from './Credentials';
+export * from './ForgotPassword';
+export * from './Login';
+export * from './Profile';
+export * from './Register';

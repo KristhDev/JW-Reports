@@ -1,1 +1,2 @@
-export { CourseForm } from './CourseForm';
+export * from './CourseForm';
+export * from './schemas';

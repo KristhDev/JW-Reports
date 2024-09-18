@@ -1,1 +1,2 @@
-export { SectionBtn } from './SectionBtn'
+export * from './SectionBtn';
+export type { SectionBtnProps } from './interfaces';

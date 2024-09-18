@@ -1,1 +1,2 @@
-export { ReportErrorForm } from './ReportErrorForm';
+export * from './ReportErrorForm';
+export * from './schemas';

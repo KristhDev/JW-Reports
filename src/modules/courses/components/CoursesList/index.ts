@@ -1,1 +1,2 @@
-export { CoursesList } from './CoursesList';
+export * from './CoursesList';
+export type { CoursesListProps } from './interfaces'

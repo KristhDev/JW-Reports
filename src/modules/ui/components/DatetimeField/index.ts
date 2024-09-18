@@ -1,1 +1,2 @@
-export { DatetimeField } from './DatetimeField';
+export * from './DatetimeField';
+export type { DatetimeFieldProps } from './interfaces';

@@ -1,2 +1,2 @@
-export { FeedbackForm } from './FeedbackForm';
-export { ReportErrorForm } from './ReportErrorForm';
+export * from './FeedbackForm';
+export * from './ReportErrorForm';
