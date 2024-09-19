@@ -17,6 +17,7 @@ export const onToggleMock = jest.fn();
 
 import * as useAuth from '@auth/hooks/useAuth';
 import * as useCourses from '@courses/hooks/useCourses';
+import * as useEmail from '@shared/hooks/useEmail';
 import * as useImage from '@shared/hooks/useImage';
 import * as useLessons from '@lessons/hooks/useLessons';
 import * as useNetwork from '@shared/hooks/useNetwork';
@@ -29,6 +30,7 @@ import * as useUI from '@ui/hooks/useUI';
 
 export const useAuthSpy = jest.spyOn(useAuth, 'default');
 export const useCoursesSpy = jest.spyOn(useCourses, 'default');
+export const useEmailSpy = jest.spyOn(useEmail, 'default');
 export const useImageSpy = jest.spyOn(useImage, 'default');
 export const useLessonsSpy = jest.spyOn(useLessons, 'default');
 export const useNetworkSpy = jest.spyOn(useNetwork, 'default');
