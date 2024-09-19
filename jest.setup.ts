@@ -122,7 +122,7 @@ jest.mock('@react-navigation/native', () => {
 });
 
 export const mockDeviceInfo = {
-    getBuildNumber: jest.fn().mockImplementation(() => 9102),
+    getBuildNumber: jest.fn().mockImplementation(() => '9102'),
     getSystemVersion: jest.fn().mockImplementation(() => '12')
 }
 
