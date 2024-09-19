@@ -1,20 +1,19 @@
 import React from 'react';
+import { View } from 'react-native';
 import { render, screen, userEvent } from '@testing-library/react-native';
 
 /* Setup */
 import { onPressMock } from '@test-setup';
 
 /* Modules */
-import { SectionBtn } from '@ui';
+import { SectionBtn, SectionBtnProps } from '@ui';
 
 const user = userEvent.setup();
 
-const renderComponent = () => render(
-    <SectionBtn
-        onPress={ onPressMock }
-        subText={ subText }
-        text={ text }
-    />
+const renderComponent = (props: SectionBtnProps) => render(
+    <SectionBtn { ...props }>
+        <View testID="section-btn-children" />
+    </SectionBtn>
 );
 
 const text = 'Section text test';
@@ -27,12 +26,12 @@ describe('Test in <SectionBtn /> component', () => {
     });
 
     it('should to match the snapshot', () => {
-        renderComponent();
+        renderComponent({ subText, text, onPress: onPressMock });
         expect(screen.toJSON()).toMatchSnapshot();
     });
 
     it('should render respective props', () => {
-        renderComponent();
+        renderComponent({ subText, text, onPress: onPressMock });
 
         /* Get elements with props of component */
         const textElement = screen.getByTestId('section-btn-text');
@@ -46,7 +45,7 @@ describe('Test in <SectionBtn /> component', () => {
     });
 
     it('should call onPress when pressed', async () => {
-        renderComponent();
+        renderComponent({ subText, text, onPress: onPressMock });
 
         /* Get pressable */
         const pressable = screen.getByTestId('section-btn-pressable');
@@ -54,5 +53,15 @@ describe('Test in <SectionBtn /> component', () => {
 
         /* Check if onPress is called one time */
         expect(onPressMock).toHaveBeenCalledTimes(1);
+    });
+
+    it('should render children when passed', () => {
+        renderComponent({ subText, text, onPress: onPressMock });
+
+        /* Get children */
+        const children = screen.queryByTestId('section-btn-children');
+
+        /* Check if children exists */
+        expect(children).toBeOnTheScreen();
     });
 });
