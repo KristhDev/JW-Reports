@@ -60,7 +60,7 @@ describe('Test in <Settings /> screen', () => {
 
         /* Get pressables */
         const pressables = screen.getAllByTestId('section-btn-pressable');
-        await user.press(pressables[7]);
+        await user.press(pressables[9]);
 
         /* Check if setStatus is called one time with respective value */
         expect(setStatusMock).toHaveBeenCalledTimes(1);
