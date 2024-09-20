@@ -138,14 +138,10 @@ jest.mock('react-native-system-navigation-bar', () => {
     return real;
 });
 
-export const mockImageCropPicker = {
-    openCamera: jest.fn(),
-    openPicker: jest.fn()
-}
-
 jest.mock('react-native-image-crop-picker', () => ({
-    openCamera: () => mockImageCropPicker.openCamera(),
-    openPicker: () => mockImageCropPicker.openPicker()
+    clean: jest.fn(),
+    openCamera: jest.fn(),
+    openPicker: jest.fn(),
 }));
 
 jest.mock('react-native-keyboard-controller', () =>
