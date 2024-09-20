@@ -7,6 +7,9 @@ import { getMockStoreUsePermissions, renderUsePermissions } from '@setups';
 /* Mocks */
 import { grantedStateMock, initialPermissionsStateMock, initialStatusStateMock } from '@mocks';
 
+/* Shared */
+import { permissionsMessages } from '@shared';
+
 describe('Test in usePermissions hook', () => {
     let mockStore = {} as any;
 
@@ -74,7 +77,7 @@ describe('Test in usePermissions hook', () => {
          */
         expect(result.current.usePermissions.state).toEqual(initialPermissionsStateMock);
         expect(result.current.useStatus.state).toEqual({
-            msg: 'Lo sentimos pero su dispositivo no soporta está funcionalidad.',
+            msg: permissionsMessages.UNSUPPORTED,
             code: 418
         });
     });
