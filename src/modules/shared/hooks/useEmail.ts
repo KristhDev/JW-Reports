@@ -21,11 +21,11 @@ const useEmail = () => {
     const { setStatus } = useStatus();
 
     /**
-     * Sends an email with the feedback message to the administrator.
+     * Sends an email to the administrator with the message provided by the user.
      *
-     * @param {string} message - The message to be sent.
-     * @param {Function} [onSuccess] - A callback function that will be called if the email is sent successfully.
-     * @return {Promise<void>} The promise that will be resolved when the email is sent, or rejected if there is an error.
+     * @param {string} message The message to send in the email.
+     * @param {{ onFinish: () => void, onSuccess: () => void }} options The options to call when the email is sent.
+     * @return {Promise<void>} This function does not return any value.
      */
     const sendFeedbackEmail = async (message: string, { onFinish, onSuccess }: UtilFunctions): Promise<void> => {
         try {
@@ -50,8 +50,8 @@ const useEmail = () => {
     /**
      * Sends an email with the error message and image to the administrator.
      *
-     * @param {ReportErrorOptions} options - The options to send the email.
-     * @param {Function} [onSuccess] - A callback function that will be called if the email is sent successfully.
+     * @param {ReportErrorOptions} options The options to send the email.
+     * @param {Function} [onSuccess] A callback function that will be called if the email is sent successfully.
      * @return {Promise<void>} The promise that will be resolved when the email is sent, or rejected if there is an error.
      */
     const sendReportErrorEmail = async ({ message, image }: ReportErrorOptions, { onFinish, onSuccess }: UtilFunctions): Promise<void> => {
