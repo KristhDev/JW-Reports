@@ -1,5 +1,6 @@
 export * from './setupUseAuth';
 export * from './setupUseCourses';
+export * from './setupUseEmail';
 export * from './setupUseImage';
 export * from './setupUseLessons';
 export * from './setupUseNetwork';
