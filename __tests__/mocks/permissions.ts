@@ -9,6 +9,15 @@ export const initialPermissionsStateMock: PermissionsState = {
     }
 }
 
+export const blockedStateMock: PermissionsState = {
+    permissions: {
+        camera: 'blocked',
+        notifications: 'blocked',
+        readExternalStorage: 'blocked',
+        readMediaImages: 'blocked'
+    }
+}
+
 export const deniedStateMock: PermissionsState = {
     permissions: {
         camera: 'denied',
