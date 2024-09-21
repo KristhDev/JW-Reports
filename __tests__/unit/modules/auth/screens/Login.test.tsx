@@ -48,6 +48,6 @@ describe('Test in <Login /> screen', () => {
 
         /* Check if title exists and contain value pass by props */
         expect(title).toBeOnTheScreen();
-        expect(title).toHaveTextContent('Ingresar');
+        expect(title).toHaveTextContent('INGRESAR');
     });
 });
