@@ -24,7 +24,7 @@ import { LessonsList } from '@lessons';
 import { UI_INITIAL_STATE } from '@ui';
 
 const emptyMessageTest = 'No has agregado clases a este curso.';
-const titleTest = `Clases del curso con ${ courseSelectedStateMock.selectedCourse.personName }`;
+const titleTest = `Clases del curso con ${ courseSelectedStateMock.selectedCourse.personName }`.toUpperCase();
 
 const user = userEvent.setup();
 const renderScreen = () => render(
