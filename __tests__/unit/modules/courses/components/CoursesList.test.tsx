@@ -29,7 +29,7 @@ import { CoursesList } from '@courses';
 import { UI_INITIAL_STATE } from '@ui';
 
 const emptyMessageTest = 'No hay cursos disponibles';
-const titleTest = 'Mis Cursos';
+const titleTest = 'Mis Cursos'.toUpperCase();
 
 const user = userEvent.setup();
 
