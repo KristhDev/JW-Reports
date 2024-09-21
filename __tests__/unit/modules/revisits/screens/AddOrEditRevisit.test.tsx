@@ -56,7 +56,7 @@ describe('Test in <AddOrEditRevisit /> screen', () => {
 
         /* Check if title exists and contain value pass by props */
         expect(title).toBeOnTheScreen();
-        expect(title).toHaveTextContent('Agregar revisita');
+        expect(title).toHaveTextContent('AGREGAR REVISITA');
     });
 
     it('should render respective title when seletedPreaching isnt empty', async () => {
@@ -75,6 +75,6 @@ describe('Test in <AddOrEditRevisit /> screen', () => {
 
         /* Check if title exists and contain value pass by props */
         expect(title).toBeOnTheScreen();
-        expect(title).toHaveTextContent('Editar revisita');
+        expect(title).toHaveTextContent('EDITAR REVISITA');
     });
 });
