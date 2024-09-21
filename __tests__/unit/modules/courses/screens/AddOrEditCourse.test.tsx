@@ -44,7 +44,7 @@ describe('Test in <AddOrEditCourse /> screen', () => {
 
         /* Check if title exists and contain value pass by props */
         expect(title).toBeTruthy();
-        expect(title).toHaveTextContent('Agregar curso bíblico');
+        expect(title).toHaveTextContent('AGREGAR CURSO BÍBLICO');
     });
 
     it('should render respective title when seletedCourse isnt empty', async () => {
@@ -63,6 +63,6 @@ describe('Test in <AddOrEditCourse /> screen', () => {
 
         /* Check if title exists and contain value pass by props */
         expect(title).toBeTruthy();
-        expect(title).toHaveTextContent('Editar curso bíblico');
+        expect(title).toHaveTextContent('EDITAR CURSO BÍBLICO');
     });
 });
