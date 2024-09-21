@@ -17,7 +17,7 @@ import { themeStylesheet } from '@theme';
  * @return {JSX.Element} The rendered form screen of credentials
  */
 const Login = (): JSX.Element => {
-    const { styles: themeStyles } = useStyles(themeStylesheet);
+    const { styles: themeStyles, theme: { fontSizes } } = useStyles(themeStylesheet);
 
     return (
         <KeyboardAwareScrollView
@@ -25,7 +25,11 @@ const Login = (): JSX.Element => {
             overScrollMode="never"
         >
             <View style={ themeStyles.screenContainer }>
-                <Title text="Ingresar" />
+                <Title
+                    text="INGRESAR"
+                    textStyle={{ fontSize: fontSizes.lg }}
+                />
+
                 <ThemeBtn />
 
                 <LoginForm />

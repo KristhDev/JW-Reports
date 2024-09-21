@@ -17,7 +17,7 @@ import { themeStylesheet } from '@theme';
  * @return {JSX.Element} The rendered form screen of create account
  */
 const Register = (): JSX.Element => {
-    const { styles: themeStyles, theme: { margins } } = useStyles(themeStylesheet);
+    const { styles: themeStyles, theme: { fontSizes, margins } } = useStyles(themeStylesheet);
 
     return (
         <KeyboardAwareScrollView
@@ -26,7 +26,10 @@ const Register = (): JSX.Element => {
             overScrollMode="never"
         >
             <View style={ themeStyles.screenContainer }>
-                <Title text="Crear cuenta" />
+                <Title
+                    text="CREAR CUENTA"
+                    textStyle={{ fontSize: fontSizes.lg }}
+                />
 
                 <RegisterForm />
             </View>

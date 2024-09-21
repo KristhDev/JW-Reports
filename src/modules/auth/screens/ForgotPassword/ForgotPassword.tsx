@@ -17,7 +17,7 @@ import { themeStylesheet } from '@theme';
  * @return {JSX.Element} The rendered form screen of credentials
  */
 const ForgotPassword = (): JSX.Element => {
-    const { styles: themeStyles } = useStyles(themeStylesheet);
+    const { styles: themeStyles, theme: { fontSizes } } = useStyles(themeStylesheet);
 
     return (
         <KeyboardAwareScrollView
@@ -25,7 +25,10 @@ const ForgotPassword = (): JSX.Element => {
             overScrollMode="never"
         >
             <View style={ themeStyles.screenContainer }>
-                <Title text="Olvide mi contraseña" />
+                <Title
+                    text="OLVIDE MI CONTRASEÑA"
+                    textStyle={{ fontSize: fontSizes.lg }}
+                />
 
                 <ForgotPasswordForm />
             </View>
