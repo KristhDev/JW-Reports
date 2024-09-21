@@ -50,7 +50,7 @@ describe('Test in <AddOrEditLesson /> screen', () => {
 
         /* Check if title exists and contain value pass by props */
         expect(title).toBeOnTheScreen();
-        expect(title).toHaveTextContent('Agregar clase para el curso');
+        expect(title).toHaveTextContent('AGREGAR CLASE AL CURSO');
     });
 
     it('should render respective title when seletedLesson isnt empty', async () => {
@@ -69,6 +69,6 @@ describe('Test in <AddOrEditLesson /> screen', () => {
 
         /* Check if title exists and contain value pass by props */
         expect(title).toBeOnTheScreen();
-        expect(title).toHaveTextContent('Editar clase del curso');
+        expect(title).toHaveTextContent('EDITAR CLASE DEL CURSO');
     });
 });
