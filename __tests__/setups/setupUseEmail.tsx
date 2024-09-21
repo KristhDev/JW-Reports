@@ -5,7 +5,7 @@ import { configureStore } from '@reduxjs/toolkit';
 
 /* Modules */
 import { authReducer, AuthState, useAuth } from '@auth';
-import { permissionsReducer, PermissionsState, statusReducer, StatusState, useEmail, useImage, usePermissions, useStatus } from '@shared';
+import { permissionsReducer, PermissionsState, statusReducer, StatusState, useEmail, usePermissions, useStatus } from '@shared';
 
 interface InitialState {
     auth: AuthState;
@@ -32,7 +32,7 @@ export const getMockStoreUseEmail = ({ auth, permissions, status }: InitialState
 }
 
 export const renderUseEmail = (store: any) => {
-    return renderHook(() => ({ useAuth: useAuth(), useEmail: useEmail(), useImage: useImage(), useStatus: useStatus(), usePermissions: usePermissions() }), {
+    return renderHook(() => ({ useAuth: useAuth(), useEmail: useEmail(), useStatus: useStatus(), usePermissions: usePermissions() }), {
         wrapper: ({ children }) => <Provider store={ store }>{ children }</Provider>
     });
 }
