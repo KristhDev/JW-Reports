@@ -13,6 +13,7 @@ export const onCofirmMock = jest.fn();
 export const onFinishMock = jest.fn();
 export const onPressMock = jest.fn();
 export const onSearchMock = jest.fn();
+export const onSuccessMock = jest.fn();
 export const onToggleMock = jest.fn();
 
 import * as useAuth from '@auth/hooks/useAuth';
