@@ -44,6 +44,6 @@ describe('Test in <ForgotPassword /> screen', () => {
 
         /* Check if title exists and contain value pass by props */
         expect(title).toBeTruthy();
-        expect(title).toHaveTextContent('Credenciales');
+        expect(title).toHaveTextContent('CREDENCIALES');
     });
 });
