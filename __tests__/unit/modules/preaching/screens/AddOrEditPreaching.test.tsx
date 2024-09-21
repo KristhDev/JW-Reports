@@ -52,7 +52,7 @@ describe('Test in <AddOrEditPreaching /> screen', () => {
 
         /* Check if title exists and contain value pass by props */
         expect(title).toBeOnTheScreen();
-        expect(title).toHaveTextContent('Agregar día de predicación');
+        expect(title).toHaveTextContent('AGREGAR DÍA DE PREDICACIÓN');
     });
 
     it('should render respective title when seletedPreaching isnt empty', async () => {
@@ -81,6 +81,6 @@ describe('Test in <AddOrEditPreaching /> screen', () => {
 
         /* Check if title exists and contain value pass by props */
         expect(title).toBeOnTheScreen();
-        expect(title).toHaveTextContent('Editar día de predicación');
+        expect(title).toHaveTextContent('EDITAR DÍA DE PREDICACIÓN');
     });
 });
