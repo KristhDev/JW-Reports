@@ -48,6 +48,6 @@ describe('Test in <Register /> screen', () => {
 
         /* Check if title exists and contain value pass by props */
         expect(title).toBeOnTheScreen();
-        expect(title).toHaveTextContent('Crear cuenta');
+        expect(title).toHaveTextContent('CREAR CUENTA');
     });
 });
