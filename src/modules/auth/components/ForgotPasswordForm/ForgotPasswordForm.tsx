@@ -57,7 +57,7 @@ export const ForgotPasswordForm = (): JSX.Element => {
                 <View style={ themeStyles.formContainer }>
                     <View style={{ ...themeStyles.btnLink, marginTop: 0, marginBottom: margins.xl }}>
                         <Text style={{ ...themeStyles.formText, fontSize: (fontSizes.sm + 2) }}>
-                            Ingresa tu correo electrónico para restablecer tu contraseña y recuperar tu cuenta.
+                            Ingrese su correo electrónico para restablecer su contraseña y recuperar la cuenta.
                         </Text>
                     </View>
 
