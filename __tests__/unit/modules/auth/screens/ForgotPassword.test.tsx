@@ -43,6 +43,6 @@ describe('Test in <ForgotPassword /> screen', () => {
 
         /* Check if title exists and contain value pass by props */
         expect(title).toBeOnTheScreen();
-        expect(title).toHaveTextContent('Olvide mi contraseña');
+        expect(title).toHaveTextContent('OLVIDE MI CONTRASEÑA');
     });
 });
