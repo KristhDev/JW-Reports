@@ -25,8 +25,8 @@ export const authMessages = {
     PROFILE_UPDATED: 'Has actualizado tu perfil correctamente.',
     SURNAME_EMPTY: 'Los apellidos no pueden estar vacíos.',
     SURNAME_MIN_LENGTH: 'Los apellidos deben tener al menos 2 caracteres.',
-    UNATHENTICATED: 'Para realizar esta acción debe iniciar sesión.',
-    UNAUTHORIZED: 'No tienes permisos para realizar esta acción.',
+    UNATHENTICATED: 'Para realizar está acción debe iniciar sesión.',
+    UNAUTHORIZED: 'No tienes permisos para realizar está acción.',
 }
 
 export const precursorMessages = {
