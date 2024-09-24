@@ -13,6 +13,9 @@ import {
     wifiMock
 } from '@mocks';
 
+/* Modules */
+import { authMessages } from '@auth';
+
 describe('Test in useRevisits hook - loadRevisits', () => {
     useNetworkSpy.mockImplementation(() => ({
         wifi: wifiMock
@@ -66,7 +69,7 @@ describe('Test in useRevisits hook - loadRevisits', () => {
         /* Check if status state is equal to respective status */
         expect(result.current.useStatus.state).toEqual({
             code: 401,
-            msg: 'Para realizar está acción debe iniciar sesión.'
+            msg: authMessages.UNATHENTICATED
         });
     });
 });

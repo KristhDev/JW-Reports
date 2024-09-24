@@ -14,6 +14,10 @@ import {
     wifiMock
 } from '@mocks';
 
+/* Modules */
+import { authMessages } from '@auth';
+import { revisitsMessages } from '@revisits';
+
 describe('Test useRevisits hook - updateRevisit', () => {
     useNetworkSpy.mockImplementation(() => ({
         wifi: wifiMock
@@ -96,7 +100,7 @@ describe('Test useRevisits hook - updateRevisit', () => {
         /* Check if status state is equal to respective status */
         expect(result.current.useStatus.state).toEqual({
             code: 200,
-            msg: 'Has actualizado tu revisita correctamente.'
+            msg: revisitsMessages.UPDATED_SUCCESS
         });
 
         /* Check if goBack is called one time */
@@ -124,7 +128,7 @@ describe('Test useRevisits hook - updateRevisit', () => {
         /* Check if status state is equal to respective status */
         expect(result.current.useStatus.state).toEqual({
             code: 401,
-            msg: 'Para realizar está acción debe iniciar sesión.'
+            msg: authMessages.UNATHENTICATED
         });
     });
 
@@ -145,7 +149,7 @@ describe('Test useRevisits hook - updateRevisit', () => {
         /* Check if status state is equal to respective status */
         expect(result.current.useStatus.state).toEqual({
             code: 400,
-            msg: 'No hay una revisita seleccionada para actualizar.'
+            msg: revisitsMessages.UNSELECTED_UPDATE
         });
     });
 

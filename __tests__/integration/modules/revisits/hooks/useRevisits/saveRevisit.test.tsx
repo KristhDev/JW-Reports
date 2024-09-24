@@ -14,6 +14,10 @@ import {
     wifiMock
 } from '@mocks';
 
+/* Modules */
+import { authMessages } from '@auth';
+import { revisitsMessages } from '@revisits';
+
 describe('Test useRevisits hook - saveRevisit', () => {
     useNetworkSpy.mockImplementation(() => ({
         wifi: wifiMock
@@ -75,7 +79,7 @@ describe('Test useRevisits hook - saveRevisit', () => {
         /* Check if status state is equal to respective status */
         expect(result.current.useStatus.state).toEqual({
             code: 201,
-            msg: 'Has agregado tu revisita correctamente.'
+            msg: revisitsMessages.ADDED_SUCCESS
         });
 
         /* Check if onFinish and navigate is called one time with respective arg */
@@ -178,7 +182,7 @@ describe('Test useRevisits hook - saveRevisit', () => {
         /* Check if status state is equal to respective status */
         expect(result.current.useStatus.state).toEqual({
             code: 401,
-            msg: 'Para realizar está acción debe iniciar sesión.'
+            msg: authMessages.UNATHENTICATED
         });
 
         /* Check if onFinish is called one time */
