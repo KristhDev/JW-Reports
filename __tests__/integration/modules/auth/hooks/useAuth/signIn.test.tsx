@@ -53,6 +53,7 @@ describe('Test in useAuth hook - signIn', () => {
                 email: 'andredev@gmail.com',
                 precursor: 'ninguno',
                 hoursRequirement: 0,
+                hoursLDC: false,
                 createdAt: expect.any(String),
                 updatedAt: expect.any(String)
             }
