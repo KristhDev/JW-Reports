@@ -50,7 +50,8 @@ describe('Test in useAuth hook - updateProfile', () => {
                 name: newName,
                 surname: newSurname,
                 precursor: 'regular',
-                hoursRequirement: 50
+                hoursRequirement: 50,
+                hoursLDC: true
             });
         });
 
@@ -65,13 +66,14 @@ describe('Test in useAuth hook - updateProfile', () => {
                 email: testCredentials.email,
                 precursor: 'regular',
                 hoursRequirement: 50,
+                hoursLDC: true,
                 createdAt: expect.any(String),
                 updatedAt: expect.any(String)
             }
         });
 
         await act(async () => {
-            await result.current.useAuth.updateProfile({ name: 'André', surname: 'Rivera', precursor: 'ninguno', hoursRequirement: 0 });
+            await result.current.useAuth.updateProfile({ name: 'André', surname: 'Rivera', precursor: 'ninguno', hoursRequirement: 0, hoursLDC: false });
             await result.current.useAuth.signOut();
         });
     });
@@ -84,7 +86,8 @@ describe('Test in useAuth hook - updateProfile', () => {
                 name: 'AnyName',
                 surname: 'AnySurname',
                 precursor: 'regular',
-                hoursRequirement: 50
+                hoursRequirement: 50,
+                hoursLDC: true
             });
         });
 
