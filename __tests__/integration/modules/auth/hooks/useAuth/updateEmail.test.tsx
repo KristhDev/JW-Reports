@@ -59,6 +59,7 @@ describe('Test in useAuth hook - updateEmail', () => {
                 email: testCredentials.email,
                 precursor: 'ninguno',
                 hoursRequirement: 0,
+                hoursLDC: false,
                 createdAt: expect.any(String),
                 updatedAt: expect.any(String)
             }
@@ -99,8 +100,9 @@ describe('Test in useAuth hook - updateEmail', () => {
                 name: 'André',
                 surname: 'Rivera',
                 email: testCredentials.email,
-                hoursRequirement: 0,
                 precursor: 'ninguno',
+                hoursRequirement: 0,
+                hoursLDC: false,
                 createdAt: expect.any(String),
                 updatedAt: expect.any(String)
             }
@@ -140,8 +142,9 @@ describe('Test in useAuth hook - updateEmail', () => {
                 name: 'André',
                 surname: 'Rivera',
                 email: testCredentials.email,
-                hoursRequirement: 0,
                 precursor: 'ninguno',
+                hoursRequirement: 0,
+                hoursLDC: false,
                 createdAt: expect.any(String),
                 updatedAt: expect.any(String)
             }
@@ -183,6 +186,7 @@ describe('Test in useAuth hook - updateEmail', () => {
                 email: testCredentials.email,
                 precursor: 'ninguno',
                 hoursRequirement: 0,
+                hoursLDC: false,
                 createdAt: expect.any(String),
                 updatedAt: expect.any(String)
             }
@@ -224,6 +228,7 @@ describe('Test in useAuth hook - updateEmail', () => {
                 email: testCredentials.email,
                 precursor: 'ninguno',
                 hoursRequirement: 0,
+                hoursLDC: false,
                 createdAt: expect.any(String),
                 updatedAt: expect.any(String)
             }
