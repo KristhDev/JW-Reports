@@ -14,6 +14,9 @@ import {
     wifiMock
 } from '@mocks';
 
+/* Modules */
+import { authMessages } from '@auth';
+
 describe('Test in useCourses hook - loadCourses', () => {
     useNetworkSpy.mockImplementation(() => ({
         wifi: wifiMock
@@ -69,7 +72,7 @@ describe('Test in useCourses hook - loadCourses', () => {
         expect(result.current.useCourses.state).toEqual(initialCoursesStateMock);
         expect(result.current.useStatus.state).toEqual({
             code: 401,
-            msg: 'Para realizar está acción debe iniciar sesión.'
+            msg: authMessages.UNATHENTICATED
         });
     });
 });

@@ -15,6 +15,10 @@ import {
     wifiMock
 } from '@mocks';
 
+/* Modules */
+import { authMessages } from '@auth';
+import { coursesMessages } from '@courses';
+
 describe('Test in useCourses hook - deleteCourse', () => {
     useNetworkSpy.mockImplementation(() => ({
         wifi: wifiMock
@@ -65,7 +69,7 @@ describe('Test in useCourses hook - deleteCourse', () => {
         /* Check if status state is equal to respective status */
         expect(result.current.useStatus.state).toEqual({
             code: 200,
-            msg: 'Has eliminado el curso correctamente.'
+            msg: coursesMessages.DELETED_SUCCESS
         });
 
         /* Check if onFinish and navigate is called with respective arg */
@@ -95,7 +99,7 @@ describe('Test in useCourses hook - deleteCourse', () => {
         /* Check if status state is equal to respective status */
         expect(result.current.useStatus.state).toEqual({
             code: 401,
-            msg: 'Para realizar está acción debe iniciar sesión.'
+            msg: authMessages.UNATHENTICATED
         });
     });
 
@@ -120,7 +124,7 @@ describe('Test in useCourses hook - deleteCourse', () => {
         /* Check if status state is equal to respective status */
         expect(result.current.useStatus.state).toEqual({
             code: 400,
-            msg: 'No hay un curso seleccionado para eliminar.'
+            msg: coursesMessages.UNSELECTED_DELETE
         });
     });
 });

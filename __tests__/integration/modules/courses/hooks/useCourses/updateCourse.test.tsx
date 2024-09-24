@@ -18,6 +18,10 @@ import {
     wifiMock
 } from '@mocks';
 
+/* Modules */
+import { authMessages } from '@auth';
+import { coursesMessages } from '@courses';
+
 describe('Test in useCourses hook - updateCourse', () => {
     useNetworkSpy.mockImplementation(() => ({
         wifi: wifiMock
@@ -86,7 +90,7 @@ describe('Test in useCourses hook - updateCourse', () => {
         /* Check if status state is equal to respective status */
         expect(result.current.useStatus.state).toEqual({
             code: 200,
-            msg: 'Has actualizado el curso correctamente.'
+            msg: coursesMessages.UPDATED_SUCCESS
         });
 
         /* Check if goBack is called one time */
@@ -117,7 +121,7 @@ describe('Test in useCourses hook - updateCourse', () => {
         /* Check if status state is equal to respective status */
         expect(result.current.useStatus.state).toEqual({
             code: 401,
-            msg: 'Para realizar está acción debe iniciar sesión.'
+            msg: authMessages.UNATHENTICATED
         });
     });
 
@@ -156,7 +160,7 @@ describe('Test in useCourses hook - updateCourse', () => {
         /* Check if status state is equal to respective status */
         expect(result.current.useStatus.state).toEqual({
             code: 400,
-            msg: 'No hay un curso seleccionado para actualizar.'
+            msg: coursesMessages.UNSELECTED_UPDATE
         });
 
         await supabase.from('courses')

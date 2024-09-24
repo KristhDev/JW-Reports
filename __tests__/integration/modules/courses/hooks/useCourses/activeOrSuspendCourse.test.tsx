@@ -18,6 +18,10 @@ import {
     wifiMock
 } from '@mocks';
 
+/* Modules */
+import { authMessages } from '@auth';
+import { coursesMessages } from '@courses';
+
 describe('Test in useCourses hook - activeOrSuspendCourse', () => {
     useNetworkSpy.mockImplementation(() => ({
         wifi: wifiMock
@@ -89,7 +93,7 @@ describe('Test in useCourses hook - activeOrSuspendCourse', () => {
         /* Check if status state is equal to respective status */
         expect(result.current.useStatus.state).toEqual({
             code: 200,
-            msg: 'Has suspendido el curso correctamente.'
+            msg: coursesMessages.SUSPENDED_SUCCESS
         });
 
         /* Check if onFinish is called one time */
@@ -121,7 +125,7 @@ describe('Test in useCourses hook - activeOrSuspendCourse', () => {
         /* Check if status is equal to respective object */
         expect(result.current.useStatus.state).toEqual({
             code: 401,
-            msg: 'Para realizar está acción debe iniciar sesión.'
+            msg: authMessages.UNATHENTICATED
         });
     });
 
@@ -146,7 +150,7 @@ describe('Test in useCourses hook - activeOrSuspendCourse', () => {
         /* Check if status is equal to respective object */
         expect(result.current.useStatus.state).toEqual({
             code: 400,
-            msg: 'No hay un curso seleccionado.'
+            msg: coursesMessages.UNSELECTED
         });
 
         await act(async () => {
@@ -214,7 +218,7 @@ describe('Test in useCourses hook - activeOrSuspendCourse', () => {
         /* Check if status state is equal to respective object */
         expect(result.current.useStatus.state).toEqual({
             code: 400,
-            msg: 'No puedes suspender o renovar un curso terminado.'
+            msg: coursesMessages.FINISHED
         });
 
         await supabase.from('courses')
