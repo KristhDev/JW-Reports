@@ -77,7 +77,8 @@ describe('Test in <ProfileForm /> component', () => {
                 name: testUser.name,
                 surname: testUser.surname,
                 precursor: testUser.precursor,
-                hoursRequirement: testUser.hoursRequirement
+                hoursRequirement: testUser.hoursRequirement,
+                hoursLDC: testUser.hoursLDC
             }, expect.any(Object));
         });
     });
