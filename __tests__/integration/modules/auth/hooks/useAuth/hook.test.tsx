@@ -38,7 +38,7 @@ describe('Test in useAuth hook', () => {
         expect(result.current.useAuth).toEqual({
             state: initialAuthStateMock,
             clearAuth: expect.any(Function),
-            refreshAuth: expect.any(Function),
+            getAuth: expect.any(Function),
             resetPassword: expect.any(Function),
             signIn: expect.any(Function),
             signOut: expect.any(Function),
