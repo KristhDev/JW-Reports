@@ -14,6 +14,10 @@ import {
     wifiMock
 } from '@mocks';
 
+/* Modules */
+import { authMessages } from '@auth';
+import { preachingMessages } from '@preaching';
+
 const initialMockStore = getMockStoreUsePreaching({
     auth: initialAuthStateMock,
     preaching: initialPreachingStateMock,
@@ -87,7 +91,7 @@ describe('Test usePreaching hook - deletePreaching', () => {
         /* Check if status state is equal to respective object */
         expect(result.current.useStatus.state).toEqual({
             code: 200,
-            msg: 'Has eliminado tu día de predicación correctamente.'
+            msg: preachingMessages.DELETED_SUCCESS
         });
 
         await act(async () => {
@@ -112,7 +116,7 @@ describe('Test usePreaching hook - deletePreaching', () => {
         /* Check if status state is equal to respective object */
         expect(result.current.useStatus.state).toEqual({
             code: 400,
-            msg: 'No hay un día de predicación seleccionado para eliminar.'
+            msg: preachingMessages.UNSELECTED_DELETE
         });
 
         /* Check if state is equal to preachings state */
@@ -147,7 +151,7 @@ describe('Test usePreaching hook - deletePreaching', () => {
         /* Check if status state is equal to respective object */
         expect(result.current.useStatus.state).toEqual({
             code: 401,
-            msg: 'Para realizar está acción debe iniciar sesión.'
+            msg: authMessages.UNATHENTICATED
         });
 
         /* Check if state is equal to preachings state */
@@ -182,7 +186,7 @@ describe('Test usePreaching hook - deletePreaching', () => {
         /* Check if status state is equal to respective object */
         expect(result.current.useStatus.state).toEqual({
             code: 400,
-            msg: 'Lo sentimos, pero no puedes realizar está acción.'
+            msg: authMessages.UNAUTHORIZED
         });
 
         /* Check if state is equal to preachings state */

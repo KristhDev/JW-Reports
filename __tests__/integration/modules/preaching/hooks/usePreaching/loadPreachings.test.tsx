@@ -16,6 +16,9 @@ import {
 /* Config */
 import { supabase } from '@test-config';
 
+/* Modules */
+import { authMessages } from '@auth';
+
 describe('Test usePreaching hook - loadPreachings', () => {
     useNetworkSpy.mockImplementation(() => ({
         wifi: wifiMock
@@ -104,7 +107,7 @@ describe('Test usePreaching hook - loadPreachings', () => {
         /* Check if status state is equal to respective object */
         expect(result.current.useStatus.state).toEqual({
             code: 401,
-            msg: 'Para realizar está acción debe iniciar sesión.'
+            msg: authMessages.UNATHENTICATED
         });
     });
 });

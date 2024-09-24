@@ -13,6 +13,10 @@ import {
     wifiMock
 } from '@mocks';
 
+/* Modules */
+import { authMessages } from '@auth';
+import { preachingMessages } from '@preaching';
+
 describe('Test in usePreaching hook - savePreaching', () => {
     useNetworkSpy.mockImplementation(() => ({
         wifi: wifiMock
@@ -68,7 +72,7 @@ describe('Test in usePreaching hook - savePreaching', () => {
         /* Check if status state is equal to respective object */
         expect(result.current.useStatus.state).toEqual({
             code: 201,
-            msg: 'Has agregado tu día de predicación correctamente.'
+            msg: preachingMessages.ADDED_SUCCESS
         });
 
         /* Check if goBack is called one time */
@@ -107,7 +111,7 @@ describe('Test in usePreaching hook - savePreaching', () => {
         /* Check if status state is equal to respective object */
         expect(result.current.useStatus.state).toEqual({
             code: 401,
-            msg: 'Para realizar está acción debe iniciar sesión.'
+            msg: authMessages.UNATHENTICATED
         });
 
         /* Check if goBack is called one time */

@@ -13,6 +13,10 @@ import {
     wifiMock
 } from '@mocks';
 
+/* Modules */
+import { authMessages } from '@auth';
+import { preachingMessages } from '@preaching';
+
 describe('Test in usePreaching hook - updatePreaching', () => {
     useNetworkSpy.mockImplementation(() => ({
         wifi: wifiMock
@@ -89,7 +93,7 @@ describe('Test in usePreaching hook - updatePreaching', () => {
         /* Check if status state is equal to respective object */
         expect(result.current.useStatus.state).toEqual({
             code: 200,
-            msg: 'Has actualizado tu día de predicación correctamente.'
+            msg: preachingMessages.UPDATED_SUCCESS
         });
 
         /* Check if goBack is called two times */
@@ -124,7 +128,7 @@ describe('Test in usePreaching hook - updatePreaching', () => {
         /* Check if status state is equal to respective object */
         expect(result.current.useStatus.state).toEqual({
             code: 401,
-            msg: 'Para realizar está acción debe iniciar sesión.'
+            msg: authMessages.UNATHENTICATED
         });
     });
 
@@ -152,7 +156,7 @@ describe('Test in usePreaching hook - updatePreaching', () => {
         /* Check if status state is equal to respective object */
         expect(result.current.useStatus.state).toEqual({
             code: 400,
-            msg: 'No hay un día de predicación seleccionado para actualizar.'
+            msg: preachingMessages.UNSELECTED_UPDATE
         });
 
         await act(async () => {
