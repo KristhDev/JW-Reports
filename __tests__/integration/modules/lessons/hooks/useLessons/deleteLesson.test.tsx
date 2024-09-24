@@ -19,6 +19,10 @@ import {
     wifiMock
 } from '@mocks';
 
+/* Modules */
+import { authMessages } from '@auth';
+import { lessonsMessages } from '@lessons';
+
 describe('Test in useLessons hook - deleteLesson', () => {
     useNetworkSpy.mockImplementation(() => ({
         wifi: wifiMock
@@ -105,7 +109,7 @@ describe('Test in useLessons hook - deleteLesson', () => {
         /* Check if status state is equal to respective status */
         expect(result.current.useStatus.state).toEqual({
             code: 200,
-            msg: 'Has eliminado la clase correctamente.'
+            msg: lessonsMessages.DELETED_SUCCESS
         });
 
         /* Check if onFinish and navigate is called with respective arg */
@@ -140,7 +144,7 @@ describe('Test in useLessons hook - deleteLesson', () => {
         /* Check if status state is equal to respective status */
         expect(result.current.useStatus.state).toEqual({
             code: 401,
-            msg: 'Para realizar está acción debe iniciar sesión.'
+            msg: authMessages.UNATHENTICATED
         });
     });
 
@@ -162,7 +166,7 @@ describe('Test in useLessons hook - deleteLesson', () => {
         /* Check if status state is equal to respective status */
         expect(result.current.useStatus.state).toEqual({
             code: 400,
-            msg: 'No hay una clase seleccionada para eliminar.'
+            msg: lessonsMessages.UNSELECTED_DELETE
         });
     });
 });

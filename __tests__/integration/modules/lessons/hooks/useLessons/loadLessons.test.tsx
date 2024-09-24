@@ -94,7 +94,7 @@ describe('Test in useLessons hook - loadLessons', () => {
         expect(result.current.useLessons.state).toEqual(initialLessonsStateMock);
         expect(result.current.useStatus.state).toEqual({
             code: 401,
-            msg: 'Para realizar está acción debe iniciar sesión.'
+            msg: authMessages.UNATHENTICATED
         });
     });
 

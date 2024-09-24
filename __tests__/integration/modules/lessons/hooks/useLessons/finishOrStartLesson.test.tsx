@@ -19,6 +19,10 @@ import {
     wifiMock
 } from '@mocks';
 
+/* Modules */
+import { authMessages } from '@auth';
+import { lessonsMessages } from '@lessons';
+
 describe('Test in useLessons hook - finishOrStartLesson', () => {
     useNetworkSpy.mockImplementation(() => ({
         wifi: wifiMock
@@ -117,7 +121,7 @@ describe('Test in useLessons hook - finishOrStartLesson', () => {
 
         /* Check if status state is equal to respective status */
         expect(result.current.useStatus.state).toEqual({
-            msg: 'Has terminado la clase correctamente.',
+            msg: lessonsMessages.FINISHED_SUCCESS,
             code: 200
         });
 
@@ -151,7 +155,7 @@ describe('Test in useLessons hook - finishOrStartLesson', () => {
         /* Check if status state is equal to respective status */
         expect(result.current.useStatus.state).toEqual({
             code: 401,
-            msg: 'Para realizar está acción debe iniciar sesión.'
+            msg: authMessages.UNATHENTICATED
         });
     });
 
@@ -173,7 +177,7 @@ describe('Test in useLessons hook - finishOrStartLesson', () => {
         /* Check if status state is equal to respective status */
         expect(result.current.useStatus.state).toEqual({
             code: 400,
-            msg: 'No hay una clase seleccionada.'
+            msg: lessonsMessages.UNSELECTED
         });
 
         await act(async () => {
@@ -291,7 +295,7 @@ describe('Test in useLessons hook - finishOrStartLesson', () => {
         /* Check if status state is equal to respective status */
         expect(result.current.useStatus.state).toEqual({
             code: 400,
-            msg: 'No pudes terminar o reprogramar de nuevo una clase de un curso suspendido o terminado.'
+            msg: lessonsMessages.SUSPENDED_OR_FINISHED
         });
 
         await supabase.from('lessons')

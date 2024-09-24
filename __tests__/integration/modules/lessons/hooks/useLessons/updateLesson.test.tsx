@@ -206,7 +206,7 @@ describe('Test in useLessons hook - updateLesson', () => {
         /* Check if status state is equal to respective status */
         expect(result.current.useStatus.state).toEqual({
             code: 401,
-            msg: 'Para realizar está acción debe iniciar sesión.'
+            msg: authMessages.UNATHENTICATED
         });
     });
 
