@@ -1,5 +1,5 @@
 import React from 'react';
-import { act, render, screen, userEvent } from '@testing-library/react-native';
+import { act, render, screen, userEvent, waitFor } from '@testing-library/react-native';
 
 /* Setup */
 import { useAuthSpy, useNetworkSpy, useStatusSpy, useUISpy } from '@test-setup';
@@ -80,6 +80,31 @@ describe('Test in <ProfileForm /> component', () => {
                 hoursRequirement: testUser.hoursRequirement,
                 hoursLDC: testUser.hoursLDC
             }, expect.any(Object));
+        });
+    });
+
+    it('should not render hours requirement field when precursor is ninguno', async () => {
+        useAuthSpy.mockImplementation(() => ({
+            state: {
+                isAuthLoading: false,
+                user: {
+                    ...testUser,
+                    precursor: 'ninguno'
+                }
+            },
+            updateProfile: updateProfileMock
+        }) as any);
+
+        renderComponent();
+
+        await waitFor(() => {
+            const hoursRequirementTextInput = screen.queryByPlaceholderText('Ingrese su requerimiento de horas');
+            expect(hoursRequirementTextInput).toBeNull();
+        });
+
+        await waitFor(() => {
+            const hoursRequirementLabel = screen.queryByText('Editar requerimiento de horas');
+            expect(hoursRequirementLabel).toBeNull();
         });
     });
 });
