@@ -152,19 +152,24 @@ jest.mock('react-native-keyboard-controller', () =>
     require('react-native-keyboard-controller/jest'),
 );
 
-jest.mock('react-native-onesignal', () => ({
-    OneSignal: {
-        Debug: {
-            setLogLevel: jest.fn()
-        },
-        initialize: jest.fn(),
-        Notifications: {
-            requestPermission: jest.fn()
-        },
-        login: jest.fn(),
-        logout: jest.fn()
+jest.mock('react-native-onesignal', () => {
+    const real = jest.requireActual<typeof import('react-native-onesignal')>('react-native-onesignal');
+
+    return{
+        ...real,
+        OneSignal: {
+            Debug: {
+                setLogLevel: jest.fn()
+            },
+            initialize: jest.fn(),
+            Notifications: {
+                requestPermission: jest.fn()
+            },
+            login: jest.fn(),
+            logout: jest.fn()
+        }
     }
-}));
+});
 
 jest.mock('react-native-permissions', () => require('react-native-permissions/mock'));
 
