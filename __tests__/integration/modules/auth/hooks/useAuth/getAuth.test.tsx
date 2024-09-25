@@ -16,7 +16,7 @@ import {
     wifiMock
 } from '@mocks';
 
-describe('Test in useAuth hook - refreshAuth', () => {
+describe('Test in useAuth hook - getAuth', () => {
     useNetworkSpy.mockImplementation(() => ({
         wifi: wifiMock
     }) as any);
@@ -39,7 +39,7 @@ describe('Test in useAuth hook - refreshAuth', () => {
 
         await act(async () => {
             await result.current.useAuth.signIn(testCredentials);
-            await result.current.useAuth.refreshAuth();
+            await result.current.useAuth.getAuth();
         });
 
         /* Check if state is equal to authenticated state */
@@ -54,6 +54,7 @@ describe('Test in useAuth hook - refreshAuth', () => {
                 email: 'andredev@gmail.com',
                 precursor: 'ninguno',
                 hoursRequirement: 0,
+                hoursLDC: false,
                 createdAt: expect.any(String),
                 updatedAt: expect.any(String)
             }
@@ -64,7 +65,7 @@ describe('Test in useAuth hook - refreshAuth', () => {
         const { result } = renderUseAuth(mockStore);
 
         await act(async () => {
-            await result.current.useAuth.refreshAuth();
+            await result.current.useAuth.getAuth();
         });
 
         /* Check if state is equal to initial state */
@@ -79,6 +80,10 @@ describe('Test in useAuth hook - refreshAuth', () => {
 
         /* Check if status state is equal to initial state */
         expect(result.current.useStatus.state).toEqual(initialStatusStateMock);
+
+        await act(async () => {
+            await result.current.useAuth.signOut();
+        });
     });
 
     it('should faild when token is invalid', async () => {
@@ -94,7 +99,11 @@ describe('Test in useAuth hook - refreshAuth', () => {
         const { result } = renderUseAuth(mockStore);
 
         await act(async () => {
-            await result.current.useAuth.refreshAuth();
+            await result.current.useAuth.signOut();
+        });
+
+        await act(async () => {
+            await result.current.useAuth.getAuth();
         });
 
         /* Check if state is equal to authenticated state */
