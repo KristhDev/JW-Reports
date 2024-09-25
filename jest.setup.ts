@@ -74,6 +74,9 @@ jest.mock('@emailjs/react-native', () => {
 
     return {
         ...real,
+        init: jest.fn(),
+        send: jest.fn(),
+        sendForm: jest.fn(),
         default: {
             init: jest.fn(),
             send: jest.fn(),
