@@ -1,4 +1,4 @@
-import { Image } from 'react-native';
+import { Image, Share } from 'react-native';
 import mockSafeAreaContext from 'react-native-safe-area-context/jest/mock';
 
 import 'react-native-gesture-handler/jestSetup';
@@ -48,6 +48,8 @@ jest.spyOn(Image, 'resolveAssetSource').mockImplementation(() => ({
     height: 180,
     scale: 1
 }));
+
+export const shareSpy = jest.spyOn(Share, 'share');
 
 jest.mock('@bugfender/rn-bugfender', () => {
     const real = jest.requireActual<typeof import('@bugfender/rn-bugfender')>('@bugfender/rn-bugfender');
