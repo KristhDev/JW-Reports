@@ -70,7 +70,7 @@ const RevisitDetail = (): JSX.Element => {
     return (
         <>
             <ScrollView
-                contentContainerStyle={ styles.scrollView }
+                contentContainerStyle={ themeStyles.scrollView }
                 overScrollMode="never"
                 style={{ flex: 1 }}
             >
@@ -84,14 +84,14 @@ const RevisitDetail = (): JSX.Element => {
 
                 {/* Revisit status */}
                 { (!selectedRevisit.done) ? (
-                    <View style={ styles.sectionStyle }>
+                    <View style={ themeStyles.detailSection }>
                         <View style={{ flexDirection: 'row' }}>
-                            <Text style={{ ...styles.sectionSubTitle, marginBottom: 0 }}>
+                            <Text style={{ ...themeStyles.detailSubTitle, marginBottom: 0 }}>
                                 Próxima visita:
                             </Text>
 
                             <Text
-                                style={ styles.sectionText }
+                                style={ themeStyles.detailText }
                                 testID="revisit-detail-next-visit"
                             >
                                 { ` ${ nextVisit }` }
@@ -107,10 +107,10 @@ const RevisitDetail = (): JSX.Element => {
                     </View>
                 ) : (
                     <View
-                        style={{ ...styles.sectionStyle, flexDirection: 'row', gap: margins.xs }}
+                        style={{ ...themeStyles.detailSection, flexDirection: 'row', gap: margins.xs }}
                         testID="revisit-detail-revisit-again-section"
                     >
-                        <Text style={ styles.sectionText }>
+                        <Text style={ themeStyles.detailText }>
                             Revisita realizada
                         </Text>
 
@@ -124,16 +124,16 @@ const RevisitDetail = (): JSX.Element => {
                 ) }
 
                 {/* About section of revisit */}
-                <View style={ styles.sectionStyle }>
+                <View style={ themeStyles.detailSection }>
                     <Text
-                        style={ styles.sectionSubTitle }
+                        style={ themeStyles.detailSubTitle }
                         testID="revisit-detail-about-subtitle"
                     >
                         Información de { selectedRevisit.personName }:
                     </Text>
 
                     <Text
-                        style={ styles.sectionText }
+                        style={ themeStyles.detailText }
                         testID="revisit-detail-about-text"
                     >
                         { selectedRevisit.about }
@@ -141,13 +141,13 @@ const RevisitDetail = (): JSX.Element => {
                 </View>
 
                 {/* Address section of revisit */}
-                <View style={ styles.sectionStyle }>
-                    <Text style={ styles.sectionSubTitle }>
+                <View style={ themeStyles.detailSection }>
+                    <Text style={ themeStyles.detailSubTitle }>
                         Dirección:
                     </Text>
 
                     <Text
-                        style={ styles.sectionText }
+                        style={ themeStyles.detailText }
                         testID="revisit-detail-address-text"
                     >
                         { selectedRevisit.address }
@@ -156,8 +156,8 @@ const RevisitDetail = (): JSX.Element => {
 
                 {/* Photo section of revisit */}
                 { (selectedRevisit.photo) && (
-                    <View style={ styles.sectionStyle }>
-                        <Text style={ styles.sectionSubTitle }>
+                    <View style={ themeStyles.detailSection }>
+                        <Text style={ themeStyles.detailSubTitle }>
                             Foto:
                         </Text>
 
@@ -177,12 +177,14 @@ const RevisitDetail = (): JSX.Element => {
                 ) }
 
                 {/* Date create revisit */}
-                <Text
-                    style={ styles.dateCreatedText }
-                    testID="revisit-detail-created-date"
-                >
-                    { date.format(selectedRevisit.createdAt, 'DD/MM/YYYY') }
-                </Text>
+                <View style={ themeStyles.createdAtContainer }>
+                    <Text
+                        style={ themeStyles.createdAtText }
+                        testID="revisit-detail-created-date"
+                    >
+                        { date.format(selectedRevisit.createdAt, 'DD/MM/YYYY') }
+                    </Text>
+                </View>
             </ScrollView>
 
             <RevisitModal
