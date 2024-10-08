@@ -13,11 +13,6 @@ export const stylesheet = createStyleSheet(({ colors, fontSizes, margins }) => (
         marginBottom: margins.xs
     },
 
-    sectionTextLink: {
-        color: colors.linkText,
-        fontSize: (fontSizes.sm + 3),
-    },
-
     sectionText: {
         color: colors.text,
         fontSize: (fontSizes.sm + 3)

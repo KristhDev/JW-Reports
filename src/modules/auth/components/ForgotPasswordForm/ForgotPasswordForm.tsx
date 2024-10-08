@@ -1,12 +1,12 @@
 import React from 'react';
-import { View, Text, TouchableOpacity, ActivityIndicator } from 'react-native';
+import { View, Text, ActivityIndicator } from 'react-native';
 import { useStyles } from 'react-native-unistyles';
 import { useNavigation } from '@react-navigation/native';
 import { Formik } from 'formik';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
 /* Components */
-import { Button, FormField } from '../../../ui';
+import { Button, FormField, Link } from '../../../ui';
 
 /* Hooks */
 import { useStatus } from '../../../shared';
@@ -92,16 +92,13 @@ export const ForgotPasswordForm = (): JSX.Element => {
                     />
 
                     {/* Sign in link */}
-                    <View style={{ ...themeStyles.btnLink, marginBottom: 100 }}>
-                        <TouchableOpacity
-                            activeOpacity={ 0.75 }
+                    <View style={{ ...themeStyles.btnLink, marginBottom: margins.sm * 6 }}>
+                        <Link
                             onPress={ () => navigation.navigate('LoginScreen' as never) }
                             testID="forgot-pass-form-sign-in"
                         >
-                            <Text style={ themeStyles.formLink }>
-                                Ingresar con mi cuenta
-                            </Text>
-                        </TouchableOpacity>
+                            Ingresar con mi cuenta
+                        </Link>
                     </View>
 
                     <View style={{ flex: 1 }} />

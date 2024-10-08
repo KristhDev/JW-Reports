@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
-import { ActivityIndicator, Text, TouchableOpacity, View } from 'react-native';
+import { ActivityIndicator, Text, View } from 'react-native';
 import { Formik } from 'formik';
 import { useNavigation } from '@react-navigation/native';
 import { useStyles } from 'react-native-unistyles';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
 /* Components */
-import { Button, EyeBtn, FormField } from '../../../ui/components';
+import { Button, EyeBtn, FormField, Link } from '../../../ui/components';
 
 /* Hooks */
 import { useAuth } from '../../hooks';
@@ -160,15 +160,12 @@ export const RegisterForm = (): JSX.Element => {
                             ¿Ya tienes cuenta?
                         </Text>
 
-                        <TouchableOpacity
-                            activeOpacity={ 0.75 }
+                        <Link
                             onPress={ () => navigation.navigate('LoginScreen' as never) }
                             testID="register-form-sign-in"
                         >
-                            <Text style={ themeStyles.formLink }>
-                                Ingresa aquí
-                            </Text>
-                        </TouchableOpacity>
+                            Ingresa aquí
+                        </Link>
                     </View>
                 </View>
             ) }

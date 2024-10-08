@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { ScrollView, Text, TouchableOpacity, View } from 'react-native';
+import { ScrollView, Text, View } from 'react-native';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { useStyles } from 'react-native-unistyles';
 
@@ -10,7 +10,7 @@ import { INIT_LESSON } from '../../features';
 import { FinishOrStartLessonModal } from '../FinishOrStartLessonModal';
 
 /* Components */
-import { InfoText, Title } from '@ui';
+import { InfoText, Link, Title } from '@ui';
 
 /* Hooks */
 import { useCourses } from '@courses';
@@ -97,17 +97,13 @@ const LessonDetail = (): JSX.Element => {
                         Estado de la clase: { statusLessonText }
                     </Text>
 
-                    <TouchableOpacity
-                        activeOpacity={ 0.75 }
+                    <Link
                         onPress={ () => setShowFSModal(true) }
+                        testID="lesson-detail-status-text-touchable"
+                        textStyle={ themeStyles.sectionTextSize }
                     >
-                        <Text
-                            style={ styles.sectionTextLink }
-                            testID="lesson-detail-status-text-touchable"
-                        >
-                            { (!selectedLesson.done) ? '¿Terminar clase?' : '¿Reprogramar?' }
-                        </Text>
-                    </TouchableOpacity>
+                        { (!selectedLesson.done) ? '¿Terminar clase?' : '¿Reprogramar?' }
+                    </Link>
                 </View>
 
                 {/* Lesson description */}

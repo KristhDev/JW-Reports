@@ -142,6 +142,10 @@ export const themeStylesheet = createStyleSheet(({ borderRadius, colors, fontSiz
         marginBottom: margins.sm
     },
 
+    sectionTextSize: {
+        fontSize: (fontSizes.sm + 3)
+    },
+
     screenContainer: {
         alignItems: 'center',
         flex: 1,

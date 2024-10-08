@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { ScrollView, Text, TouchableOpacity, View } from 'react-native';
+import { ScrollView, Text, View } from 'react-native';
 import { useStyles } from 'react-native-unistyles';
 import { useNavigation } from '@react-navigation/native';
 
@@ -11,7 +11,7 @@ import { ActiveOrSuspendCourseModal } from '../ActiveOrSuspendCourseModal';
 import { FinishOrStartCourseModal }  from '../FinishOrStartCourseModal';
 
 /* Components */
-import { InfoText, Title } from '@ui';
+import { InfoText, Link, Title } from '@ui';
 
 /* Hooks */
 import { useCourses } from '../../hooks';
@@ -120,25 +120,21 @@ const CourseDetail = (): JSX.Element => {
                     </Text>
 
                     { (!selectedCourse.finished) ? (
-                        <TouchableOpacity
-                            activeOpacity={ 0.75 }
+                        <Link
                             onPress={ () => setShowASModal(true) }
                             testID="course-detail-status-touchable"
+                            textStyle={ themeStyles.sectionTextSize }
                         >
-                            <Text style={ styles.sectionTextLink }>
-                                { (selectedCourse.suspended) ? '¿Continuar?' : '¿Suspender?' }
-                            </Text>
-                        </TouchableOpacity>
+                            { (selectedCourse.suspended) ? '¿Continuar?' : '¿Suspender?' }
+                        </Link>
                     ) : (
-                        <TouchableOpacity
-                            activeOpacity={ 0.75 }
+                        <Link
                             onPress={ () => setShowFSModal(true) }
                             testID="course-detail-status-touchable"
+                            textStyle={ themeStyles.sectionTextSize }
                         >
-                            <Text style={ styles.sectionTextLink }>
-                                ¿Comenzar de nuevo?
-                            </Text>
-                        </TouchableOpacity>
+                            ¿Comenzar de nuevo?
+                        </Link>
                     ) }
                 </View>
 
@@ -152,7 +148,7 @@ const CourseDetail = (): JSX.Element => {
                     </Text>
 
                     <Text
-                        style={ styles.sectionText }
+                        style={[ themeStyles.sectionTextSize, styles.sectionTextColor ]}
                         testID="course-detail-about-text"
                     >
                         { selectedCourse.personAbout }
@@ -161,12 +157,12 @@ const CourseDetail = (): JSX.Element => {
 
                 {/* Text person address */}
                 <View style={ styles.sectionContainer }>
-                    <Text style={ styles.sectionSubTitle }>
+                    <Text style={[ styles.sectionSubTitle, styles.sectionTextColor ]}>
                         Dirección:
                     </Text>
 
                     <Text
-                        style={ styles.sectionText }
+                        style={[ themeStyles.sectionTextSize, styles.sectionTextColor ]}
                         testID="course-detail-address-text"
                     >
                         { selectedCourse.personAddress }
@@ -195,38 +191,32 @@ const CourseDetail = (): JSX.Element => {
                                 </Text>
                             </View>
 
-                            <View>
-                                <Text
-                                    style={ styles.cardContentText }
-                                    testID="course-detail-last-lesson-description"
-                                >
-                                    { selectedCourse.lastLesson.description }
-                                </Text>
-                            </View>
+                            <Text
+                                style={ styles.cardContentText }
+                                testID="course-detail-last-lesson-description"
+                            >
+                                { selectedCourse.lastLesson.description }
+                            </Text>
                         </View>
                     ) }
 
-                    <TouchableOpacity
-                        activeOpacity={ 0.75 }
+                    <Link
                         onPress={ handleLessonsList }
                         style={{ marginTop: margins.md }}
                         testID="course-detail-lessons-touchable"
+                        textStyle={ themeStyles.sectionTextSize }
                     >
-                        <Text style={ styles.sectionTextLink }>
-                            Ver todas las clases
-                        </Text>
-                    </TouchableOpacity>
+                        Ver todas las clases
+                    </Link>
 
-                    <TouchableOpacity
-                        activeOpacity={ 0.75 }
+                    <Link
                         onPress={ handleAddLesson }
                         style={{ marginTop: margins.xs }}
                         testID="course-detail-add-lesson-touchable"
+                        textStyle={ themeStyles.sectionTextSize }
                     >
-                        <Text style={ styles.sectionTextLink }>
-                            Agregar clase
-                        </Text>
-                    </TouchableOpacity>
+                        Agregar clase
+                    </Link>
                 </View>
 
                 {/* Date of create course */}

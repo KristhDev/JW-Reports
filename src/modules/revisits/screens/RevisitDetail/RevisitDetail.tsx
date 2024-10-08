@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import { Image, ScrollView, Text, TouchableOpacity, View, useWindowDimensions } from 'react-native';
+import { Image, ScrollView, Text, View, useWindowDimensions } from 'react-native';
 import { useStyles } from 'react-native-unistyles';
 import { useNavigation } from '@react-navigation/native';
 
 /* Modules */
 import { INIT_REVISIT, RevisitModal, useRevisits } from '../../';
 import { themeStylesheet } from '@theme';
-import { Title } from '@ui';
+import { Link, Title } from '@ui';
 
 /* Utils */
 import { date } from '@utils';
@@ -98,14 +98,12 @@ const RevisitDetail = (): JSX.Element => {
                             </Text >
                         </View>
 
-                        <TouchableOpacity
-                            activeOpacity={ 0.75 }
+                        <Link
                             onPress={ () => setShowModal(true) }
+                            textStyle={ themeStyles.sectionTextSize }
                         >
-                            <Text style={ styles.sectionLinkText }>
-                                ¿Ya la visitaste?
-                            </Text>
-                        </TouchableOpacity>
+                            ¿Ya la visitaste?
+                        </Link>
                     </View>
                 ) : (
                     <View
@@ -116,14 +114,12 @@ const RevisitDetail = (): JSX.Element => {
                             Revisita realizada
                         </Text>
 
-                        <TouchableOpacity
-                            activeOpacity={ 0.75 }
+                        <Link
                             onPress={ () => setShowModal(true) }
+                            textStyle={ themeStyles.sectionTextSize }
                         >
-                            <Text style={ styles.sectionLinkText }>
-                                ¿Visitar de nuevo?
-                            </Text>
-                        </TouchableOpacity>
+                            ¿Visitar de nuevo?
+                        </Link>
                     </View>
                 ) }
 
