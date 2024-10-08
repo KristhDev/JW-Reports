@@ -62,3 +62,33 @@ export const authenticateStateMock: AuthState = {
         updatedAt: '2021-08-26T15:00:00.000Z',
     }
 }
+
+export const authenticatePrecursorMock: AuthState = {
+    isAuthenticated: true,
+    isAuthLoading: false,
+    token: '3eb3fd2c-31ad-48c3-ab9b-587a059de40d',
+    user: {
+        ...newUserData,
+        id: '3eb3fd2c-31ad-48c3-ab9b-587a059de40d',
+        precursor: 'regular',
+        hoursRequirement: 50,
+        hoursLDC: false,
+        createdAt: '2021-08-26T15:00:00.000Z',
+        updatedAt: '2021-08-26T15:00:00.000Z',
+    }
+}
+
+export const authenticateLDCMock: AuthState = {
+    isAuthenticated: true,
+    isAuthLoading: false,
+    token: '3eb3fd2c-31ad-48c3-ab9b-587a059de40d',
+    user: {
+        ...newUserData,
+        id: '3eb3fd2c-31ad-48c3-ab9b-587a059de40d',
+        precursor: 'regular',
+        hoursRequirement: 60,
+        hoursLDC: true,
+        createdAt: '2021-08-26T15:00:00.000Z',
+        updatedAt: '2021-08-26T15:00:00.000Z',
+    }
+}
