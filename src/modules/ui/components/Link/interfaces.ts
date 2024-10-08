@@ -1,6 +1,5 @@
-import { ComponentProps } from 'react';
-import { StyleProp, TextStyle, TouchableOpacity } from 'react-native';
+import { StyleProp, TextStyle, TouchableOpacityProps } from 'react-native';
 
-export interface LinkProps extends ComponentProps<typeof TouchableOpacity> {
+export interface LinkProps extends TouchableOpacityProps {
     textStyle?: StyleProp<TextStyle>;
 }
