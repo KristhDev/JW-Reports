@@ -11,6 +11,7 @@ export * from './FormSelect';
 export * from './FormTime';
 export * from './HeaderButtons';
 export * from './InfoText';
+export * from './Link';
 export * from './ListEmptyComponent';
 export * from './ListFooterComponent';
 export * from './ModalActions';
