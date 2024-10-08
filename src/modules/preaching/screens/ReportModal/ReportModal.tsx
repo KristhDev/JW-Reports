@@ -107,24 +107,48 @@ const ReportModal: FC<ReportModalProps> = ({ isOpen, month, onClose }): JSX.Elem
 
                     <View style={{ flexDirection: 'row' }}>
                         <Text style={ styles.reportText(colors.text) }>Nombre: </Text>
-                        <Text style={ styles.reportText(colors.modalText) }>{ username }</Text>
+
+                        <Text
+                            style={ styles.reportText(colors.modalText) }
+                            testID="report-modal-username-text"
+                        >
+                            { username }
+                        </Text>
                     </View>
 
                     <View style={{ flexDirection: 'row' }}>
                         <Text style={ styles.reportText(colors.text) }>Mes: </Text>
-                        <Text style={ styles.reportText(colors.modalText) }>{ characters.capitalize(month) }</Text>
+
+                        <Text
+                            style={ styles.reportText(colors.modalText) }
+                            testID="report-modal-month-text"
+                        >
+                            { characters.capitalize(month) }
+                        </Text>
                     </View>
 
                     { (user.precursor !== 'ninguno') && (
                         <View style={{ flexDirection: 'row' }}>
                             <Text style={ styles.reportText(colors.text) }>Horas: </Text>
-                            <Text style={ styles.reportText(colors.modalText) }>{ totalHours }</Text>
+
+                            <Text
+                                style={ styles.reportText(colors.modalText) }
+                                testID="report-modal-hours-text"
+                            >
+                                { totalHours }
+                            </Text>
                         </View>
                     ) }
 
                     <View style={{ flexDirection: 'row' }}>
                         <Text style={ styles.reportText(colors.text) }>Cursos: </Text>
-                        <Text style={ styles.reportText(colors.modalText) }>{ totalCourses }</Text>
+
+                        <Text
+                            style={ styles.reportText(colors.modalText) }
+                            testID="report-modal-courses-text"
+                        >
+                            { totalCourses }
+                        </Text>
                     </View>
 
                     { (user.precursor === 'ninguno') && (
@@ -170,6 +194,7 @@ const ReportModal: FC<ReportModalProps> = ({ isOpen, month, onClose }): JSX.Elem
                                             maxHeight: 105,
                                             textAlignVertical: 'top',
                                         }}
+                                        testID="report-modal-comment-text-input"
                                         value={ comment }
                                     />
                                 </View>
@@ -199,6 +224,7 @@ const ReportModal: FC<ReportModalProps> = ({ isOpen, month, onClose }): JSX.Elem
                                             selection={ selectionLDC }
                                             selectionColor={ colors.linkText }
                                             style={ themeStyles.formInput }
+                                            testID="report-modal-hours-ldc-text-input"
                                             value={ hoursLDC }
                                         />
                                     </View>
@@ -209,7 +235,10 @@ const ReportModal: FC<ReportModalProps> = ({ isOpen, month, onClose }): JSX.Elem
                 </View>
 
                 { (restMins > 0) && (
-                    <Text style={ styles.restMinsText }>
+                    <Text
+                        style={ styles.restMinsText }
+                        testID="report-modal-rest-mins-text"
+                    >
                         Para este mes te sobraron { restMins } minutos, guardalos para el siguiente mes.
                     </Text>
                 ) }
