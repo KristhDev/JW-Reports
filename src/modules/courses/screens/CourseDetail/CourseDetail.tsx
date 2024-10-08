@@ -91,7 +91,7 @@ const CourseDetail = (): JSX.Element => {
     return (
         <>
             <ScrollView
-                contentContainerStyle={{ alignItems: 'center', flexGrow: 1, padding: margins.md, paddingBottom: 100 }}
+                contentContainerStyle={ themeStyles.scrollView }
                 overScrollMode="never"
                 style={{ flex: 1 }}
             >
@@ -105,15 +105,15 @@ const CourseDetail = (): JSX.Element => {
 
                 {/* Text publication */}
                 <InfoText
-                    containerStyle={{ padding: 0, paddingBottom: margins.md, width: '100%' }}
+                    containerStyle={ themeStyles.publicationTextContainer }
                     text={ selectedCourse.publication.toUpperCase() }
-                    textStyle={{ fontSize: fontSizes.sm, fontWeight: 'bold', textAlign: 'left' }}
+                    textStyle={ themeStyles.publicationText }
                 />
 
                 {/* Course status */}
-                <View style={ styles.sectionContainer }>
+                <View style={ themeStyles.detailSection }>
                     <Text
-                        style={{ ...styles.sectionSubTitle, marginBottom: 0 }}
+                        style={{ ...themeStyles.detailSubTitle, marginBottom: 0 }}
                         testID="course-detail-status"
                     >
                         Estado del curso: { statusCourseText }
@@ -139,16 +139,16 @@ const CourseDetail = (): JSX.Element => {
                 </View>
 
                 {/* Text person about */}
-                <View style={ styles.sectionContainer }>
+                <View style={ themeStyles.detailSection }>
                     <Text
-                        style={ styles.sectionSubTitle }
+                        style={ themeStyles.detailSubTitle }
                         testID="course-detail-about-subtitle"
                     >
                         Información de { selectedCourse.personName }:
                     </Text>
 
                     <Text
-                        style={[ themeStyles.sectionTextSize, styles.sectionTextColor ]}
+                        style={ themeStyles.detailText }
                         testID="course-detail-about-text"
                     >
                         { selectedCourse.personAbout }
@@ -156,13 +156,13 @@ const CourseDetail = (): JSX.Element => {
                 </View>
 
                 {/* Text person address */}
-                <View style={ styles.sectionContainer }>
-                    <Text style={[ styles.sectionSubTitle, styles.sectionTextColor ]}>
+                <View style={ themeStyles.detailSection }>
+                    <Text style={[ themeStyles.detailSubTitle, styles.sectionTextColor ]}>
                         Dirección:
                     </Text>
 
                     <Text
-                        style={[ themeStyles.sectionTextSize, styles.sectionTextColor ]}
+                        style={ themeStyles.detailText }
                         testID="course-detail-address-text"
                     >
                         { selectedCourse.personAddress }
@@ -170,8 +170,8 @@ const CourseDetail = (): JSX.Element => {
                 </View>
 
                 {/* Course last lesson */}
-                <View style={ styles.sectionContainer }>
-                    <Text style={ styles.sectionSubTitle }>
+                <View style={ themeStyles.detailSection }>
+                    <Text style={ themeStyles.detailSubTitle }>
                         Última clase:
                     </Text>
 
@@ -220,12 +220,14 @@ const CourseDetail = (): JSX.Element => {
                 </View>
 
                 {/* Date of create course */}
-                <Text
-                    style={ styles.dateCreatedText }
-                    testID="course-detail-text-date"
-                >
-                    { date.format(selectedCourse.createdAt, 'DD/MM/YYYY') }
-                </Text>
+                <View style={ themeStyles.createdAtContainer }>
+                    <Text
+                        style={ themeStyles.createdAtText }
+                        testID="course-detail-text-date"
+                    >
+                        { date.format(selectedCourse.createdAt, 'DD/MM/YYYY') }
+                    </Text>
+                </View>
             </ScrollView>
 
             <ActiveOrSuspendCourseModal
