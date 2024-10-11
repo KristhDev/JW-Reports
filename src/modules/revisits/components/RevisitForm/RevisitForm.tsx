@@ -105,6 +105,8 @@ export const RevisitForm = (): JSX.Element => {
                         imageUrl={ selectedRevisit.photo }
                         label="Foto:"
                         onSelectImage={ setImage }
+                        showCameraButton
+                        showGalleryButton
                     />
 
                     {/* Next visit field */}

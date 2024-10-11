@@ -1,4 +1,4 @@
-export { AddOrEditLesson } from './AddOrEditLesson';
-export { FinishOrStartLessonModal } from './FinishOrStartLessonModal';
-export { LessonDetail } from './LessonDetail';
-export { Lessons } from './Lessons';
+export * from './AddOrEditLesson';
+export * from './FinishOrStartLessonModal';
+export * from './LessonDetail';
+export * from './Lessons';

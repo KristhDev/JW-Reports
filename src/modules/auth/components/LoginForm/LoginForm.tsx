@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
-import { View, Text, TouchableOpacity, useWindowDimensions, ActivityIndicator } from 'react-native';
+import { View, Text, useWindowDimensions, ActivityIndicator } from 'react-native';
 import { useStyles } from 'react-native-unistyles';
 import { useNavigation } from '@react-navigation/native';
 import { Formik } from 'formik';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
 /* Components */
-import { Button, EyeBtn, FormField } from '../../../ui';
+import { Button, EyeBtn, FormField, Link } from '../../../ui';
 
 /* Hooks */
 import { useAuth } from '../../hooks';
@@ -106,28 +106,22 @@ export const LoginForm = (): JSX.Element => {
                             ¿No tienes cuenta?
                         </Text>
 
-                        <TouchableOpacity
-                            activeOpacity={ 0.75 }
+                        <Link
                             onPress={ () => navigation.navigate('RegisterScreen' as never) }
                             testID="login-form-sign-up"
                         >
-                            <Text style={ themeStyles.formLink }>
-                                Crea una aquí
-                            </Text>
-                        </TouchableOpacity>
+                            Crea una aquí
+                        </Link>
                     </View>
 
                     {/* Forgot password link */}
                     <View style={{ ...themeStyles.btnLink, marginTop: margins.sm }}>
-                        <TouchableOpacity
-                            activeOpacity={ 0.75 }
+                        <Link
                             onPress={ () => navigation.navigate('ForgotPasswordScreen' as never) }
                             testID="login-form-forgor-pass"
                         >
-                            <Text style={ themeStyles.formLink }>
-                                Olvide mi contraseña
-                            </Text>
-                        </TouchableOpacity>
+                            Olvide mi contraseña
+                        </Link>
                     </View>
                 </View>
             ) }

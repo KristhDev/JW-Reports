@@ -1,1 +1,2 @@
-export { FormTime } from './FormTime';
+export * from './FormTime';
+export type { FormTimeProps } from './interfaces';

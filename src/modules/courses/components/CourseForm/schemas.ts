@@ -1,20 +1,22 @@
 import { object, string } from 'yup';
 
+import { coursesMessages } from '../../utils';
+
  /* Validation schema for course */
 export const courseFormSchema = object().shape({
     personName: string()
-        .min(2, 'El nombre de la persona debe tener al menoss 2 caracteres.')
-        .required('El nombre de la persona es requerido.'),
+        .min(2, coursesMessages.PERSON_NAME_MIN_LENGTH)
+        .required(coursesMessages.PERSON_NAME_REQUIRED),
 
     personAbout: string()
-        .min(10, 'La información de la persona debe tener al menos 10 caracteres.')
-        .required('La información de la persona es requerida.'),
+        .min(10, coursesMessages.PERSON_ABOUT_MIN_LENGTH)
+        .required(coursesMessages.PERSON_ABOUT_REQUIRED),
 
     personAddress: string()
-        .min(10, 'La dirección debe tener al menos 10 caracteres.')
-        .required('La dirección es requerida.'),
+        .min(10, coursesMessages.PERSON_ADDRESS_MIN_LENGTH)
+        .required(coursesMessages.PERSON_ADDRESS_REQUIRED),
 
     publication: string()
-        .min(5, 'La publicación de estudio debe tener al menos 5 caracteres.')
-        .required('La publicación de estudio no puede estar vacía'),
+        .min(5, coursesMessages.PUBLICATION_MIN_LENGTH)
+        .required(coursesMessages.PUBLICATION_REQUIRED),
 });

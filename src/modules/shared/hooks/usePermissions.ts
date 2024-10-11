@@ -1,4 +1,4 @@
-import { request, PERMISSIONS } from 'react-native-permissions';
+import { request, PERMISSIONS, PermissionStatus } from 'react-native-permissions';
 
 /* Features */
 import { useAppDispatch, useAppSelector } from '@features';
@@ -9,6 +9,9 @@ import useStatus from './useStatus';
 
 /* Interfaces */
 import { Permissions } from '../interfaces';
+
+/* Utils */
+import { permissionsMessages, permissionsStatus } from '../utils';
 
 /**
  * Hook to management permissions of store
@@ -26,7 +29,7 @@ const usePermissions = () => {
      * @param {keyof Permissions} permission - keyof Permissions
      * @return {Promise<void>} This function does not return anything.
      */
-    const askPermission = async (permission: keyof Permissions): Promise<void> => {
+    const askPermission = async (permission: keyof Permissions): Promise<PermissionStatus> => {
         const askPermissions = {
             camera: PERMISSIONS.ANDROID.CAMERA,
             notifications: PERMISSIONS.ANDROID.POST_NOTIFICATIONS,
@@ -36,14 +39,12 @@ const usePermissions = () => {
 
         const result = await request(askPermissions[permission]);
 
-        if (result === 'unavailable') {
-            setStatus({
-                msg: 'Lo sentimos pero su dispositivo no soporta está funcionalidad.',
-                code: 418
-            });
+        if (result === permissionsStatus.UNAVAILABLE) {
+            setStatus({ msg: permissionsMessages.UNSUPPORTED, code: 418 });
         }
 
         dispatch(setPermission({ key: permission, value: result }));
+        return result;
     }
 
     /**

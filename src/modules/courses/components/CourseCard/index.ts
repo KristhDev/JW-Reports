@@ -1,1 +1,2 @@
-export { CourseCard } from './CourseCard';
+export * from './CourseCard';
+export type { CourseCardProps } from './interfaces'

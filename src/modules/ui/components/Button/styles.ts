@@ -1,12 +1,17 @@
 import { createStyleSheet } from 'react-native-unistyles';
 
 export const stylesheet = createStyleSheet(({ borderRadius, colors, fontSizes, margins }) =>({
+    buttonContainer: {
+        borderRadius: (borderRadius.xs + 2),
+        overflow: 'hidden'
+    },
+
     buttonPressable: {
         borderRadius: (borderRadius.xs + 2),
         backgroundColor: colors.button,
     },
 
-    buttonContainer: {
+    buttonContent: {
         alignItems: 'center',
         flexDirection: 'row',
         gap: margins.sm,

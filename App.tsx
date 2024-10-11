@@ -11,7 +11,7 @@ import { Provider } from '@providers';
 import { Navigation } from '@navigation';
 
 /* Services */
-import { logger, notifications } from '@services';
+import { email, logger, notifications } from '@services';
 
 /* Utils */
 import { date } from '@utils';
@@ -37,6 +37,13 @@ const App = () => {
    */
   useEffect(() => {
     logger.init();
+  }, []);
+
+  /**
+   * Effect to initialize email
+   */
+  useEffect(() => {
+    email.init();
   }, []);
 
   /**

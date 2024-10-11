@@ -165,7 +165,7 @@ export const LessonsList = (): JSX.Element => {
                     <>
                         <Title
                             containerStyle={{ marginVertical: margins.xs }}
-                            text={ `Clases del curso con ${ selectedCourse.personName }` }
+                            text={ `CLASES DEL CURSO CON ${ selectedCourse.personName.toUpperCase() }` }
                             textStyle={{ fontSize: fontSizes.md }}
                         />
 

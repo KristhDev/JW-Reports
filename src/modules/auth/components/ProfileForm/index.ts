@@ -1,1 +1,2 @@
-export { ProfileForm } from './ProfileForm';
+export * from './ProfileForm';
+export * from './schemas'

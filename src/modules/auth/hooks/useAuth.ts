@@ -26,6 +26,9 @@ import { SignInData, ProfileData, SignUpData, UserEndpoint, EmailData, UpdatePas
 /* Services */
 import { notifications } from '@services';
 
+/* Utils */
+import { authMessages } from '../utils';
+
 /**
  * Hook to management authentication of store with state and actions
  */
@@ -59,7 +62,7 @@ const useAuth = () => {
         if (next) return;
 
         dispatch(setUserAction({
-            token: session?.refresh_token!,
+            token: session?.access_token!,
             user: userAdpater({
                 ...user?.user_metadata,
                 id: user?.id!,
@@ -71,20 +74,30 @@ const useAuth = () => {
     }
 
     /**
-     * Refreshes the authentication session by checking if the token is present and valid.
+     * Gets the user authentication and sets the user in the reducer.
      *
      * @return {Promise<void>} This function does not return any value.
      */
-    const refreshAuth = async (): Promise<void> => {
-        if (state.token?.trim().length <= 0) return;
+    const getAuth = async (): Promise<void> => {
+        if (!state.token) return;
 
         if (!wifi.hasConnection) {
             setNetworkError();
             return;
         }
 
-        const result = await supabase.auth.refreshSession({ refresh_token: state.token });
-        setUser(result);
+        const user = await supabase.auth.getUser(state.token);
+        const session = await supabase.auth.getSession();
+
+        const response: AuthResponse = {
+            data: {
+                session: session.data?.session,
+                user: user.data?.user
+            },
+            error: user?.error || session?.error
+        } as AuthResponse;
+
+        setUser(response);
     }
 
     /**
@@ -182,18 +195,15 @@ const useAuth = () => {
                     name,
                     surname,
                     precursor: 'ninguno',
-                    hours_requirement: 0
+                    hours_requirement: 0,
+                    hours_ldc: false
                 }
             }
         });
 
         if (result?.data?.user?.identities?.length === 0) {
             dispatch(setIsAuthLoading({ isLoading: false }));
-
-            setStatus({
-                code: 400,
-                msg: 'Lo sentimos, pero este correo ya está registrado.'
-            });
+            setStatus({ code: 400, msg: authMessages.EMAIL_ALREADY_REGISTERED });
 
             await supabase.auth.signOut();
 
@@ -241,11 +251,7 @@ const useAuth = () => {
         if (email.trim().length === 0) {
             dispatch(setIsAuthLoading({ isLoading: false }));
             onFinish && onFinish();
-
-            setStatus({
-                code: 400,
-                msg: 'El correo no puede estar vacío.'
-            });
+            setStatus({ code: 400, msg: authMessages.EMAIL_EMPTY });
 
             return;
         }
@@ -253,11 +259,7 @@ const useAuth = () => {
         if (state.user.email === email) {
             dispatch(setIsAuthLoading({ isLoading: false }));
             onFinish && onFinish();
-
-            setStatus({
-                code: 400,
-                msg: 'Para actualizar tu correo debes cambiarlo.'
-            });
+            setStatus({ code: 400, msg: authMessages.EMAIL_UPDATE_UNCHANGED });
 
             return;
         }
@@ -299,11 +301,7 @@ const useAuth = () => {
         if (password.trim().length === 0) {
             dispatch(setIsAuthLoading({ isLoading: false }));
             onFinish && onFinish();
-
-            setStatus({
-                code: 400,
-                msg: 'La contraseña no puede estar vacía.'
-            });
+            setStatus({ code: 400, msg: authMessages.PASSWORD_EMPTY });
 
             return;
         }
@@ -319,11 +317,7 @@ const useAuth = () => {
 
         dispatch(setIsAuthLoading({ isLoading: false }));
         onFinish && onFinish();
-
-        setStatus({
-            code: 200,
-            msg: 'Has actualizado tu contraseña correctamente.'
-        });
+        setStatus({ code: 200, msg: authMessages.PASSWORD_UPDATED });
     }
 
     /**
@@ -340,18 +334,21 @@ const useAuth = () => {
 
         dispatch(setIsAuthLoading({ isLoading: true }));
 
-        const { hoursRequirement, ...rest } = values;
-        const { error } = await supabase.auth.updateUser({ data: { ...rest, hours_requirement: hoursRequirement } });
+        const { hoursRequirement, hoursLDC, ...rest } = values;
+
+        const { error } = await supabase.auth.updateUser({
+            data: {
+                ...rest,
+                hours_requirement: hoursRequirement,
+                hours_ldc: hoursLDC
+            }
+        });
 
         const next = setSupabaseError(error, 400, () => dispatch(setIsAuthLoading({ isLoading: false })));
         if (next) return;
 
         dispatch(updateUser({ user: { ...state.user, ...values } }));
-
-        setStatus({
-            code: 200,
-            msg: 'Has actualizado tu perfil correctamente.'
-        });
+        setStatus({ code: 200, msg: authMessages.PROFILE_UPDATED });
     }
 
     return {
@@ -361,7 +358,7 @@ const useAuth = () => {
         clearAuth,
 
         // Functions
-        refreshAuth,
+        getAuth,
         resetPassword,
         signIn,
         signOut,

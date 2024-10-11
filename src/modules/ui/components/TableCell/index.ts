@@ -1,1 +1,2 @@
-export { TableCell } from './TableCell';
+export * from './TableCell';
+export type { TableCellProps } from './interfaces';

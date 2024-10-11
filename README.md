@@ -60,25 +60,31 @@ la escalabilidad de una base de datos relacional.
 Supabase es una opción popular para desarrolladores y empresas que buscan una solución de bases de datos en la nube para
 sus aplicaciones y proyectos.
 
-### 1.4. OneSignal
+### 1.4. EmailJS
+Un servicio que permite enviar correos electrónicos directamente desde aplicaciones web sin necesidad de configurar un servidor 
+backend. Utiliza servicios como Gmail, Outlook o servicios personalizados de SMTP para enviar correos electrónicos a través de una 
+API.
+
+### 1.5. OneSignal
 Es una **plataforma de mensajería y automatización de notificaciones push** para sitios web y aplicaciones móviles. Permite a
 los desarrolladores y propietarios de sitios web **enviar notificaciones push personalizadas y automatizadas** a los usuarios en
 tiempo real.
 
-### 1.5. Jest
+### 1.6. Jest
 Es la **herramienta de Test más popular** y recomendada para React. Es creado por Facebook. Jest no es solo una biblioteca, es
 un marco de prueba. Significa que **viene con una biblioteca de afirmaciones, un corredor de pruebas y soporte** para cosas.
 Como ha sido diseñado específicamente para probar las aplicaciones React, también se puede utilizar en otros marcos de JavaScript.
 
-### 1.6. React Native Testing Library
+### 1.7. React Native Testing Library
 Nos ofrece un nuevo enfoque a más alto nivel sobre los tests, válido tanto para **unitarios como para integración** y al combinarlos
 podemos conseguir una cobertura de tests con la que podemos confirmar que estamos desarrollando sobre seguro en proyectos de
 cualquier tamaño.
 
-### 1.7. Enlaces
+### 1.8. Enlaces
  * [React Native](https://reactnative.dev)  
  * [TypeScript](https://www.typescriptlang.org)  
  * [Supabase](https://supabase.com)  
+ * [EmailJS](https://emailjs.com)
  * [OneSignal](https://onesignal.com)
  * [Jest](https://jestjs.io)
  * [React Native Testing Library](https://callstack.github.io/react-native-testing-library)
@@ -608,17 +614,21 @@ proyecto, la única que tiene un valor es **REPOSITORY_URL** que es este mismo r
 ha seguido todos los pasos ya tiene todos los valores, simplemente **escribalos en el archivo .env**. A continuación le dejo una 
 tabla con la explicación de cada una de las variables:
 
-| Variable                  | Explicación                                                   |
-|---------------------------|---------------------------------------------------------------|
-| BUGFENDER_API_KEY         | Clave de API de Bugfender                                    |
-| REPOSITORY_URL            | https://github.com/KristhDev/JW-Reports                       |
-| SITIE_URL                 | Sitio de Internet para la autenticación de los usuarios       |
-| SUPABASE_APY_KEY          | Clave de aplicación de Supabase                               |
-| SUPABASE_BUCKET           | Nombre del bucket para la subida de archivos                  |
-| SUPABASE_REVISITS_FOLDER  | Nombre del directorio de revisits                             |
-| SUPABASE_URL              | URL del proyecto de Supabase                                  |
-| SUPABASE_SERVICE_ROLE_KEY | Clave de rol para el servicio de Supabase (solo para testing) |
-| ONESIGNAL_APP_ID          | ID de la aplicación de OneSignal                              |
+| Variable                         | Explicación                                                   |
+|----------------------------------|---------------------------------------------------------------|
+| BUGFENDER_API_KEY                | Clave de API de Bugfender                                     |
+| EMAILJS_FEEDBACK_TEMPLATE_ID     | ID de la plantilla de correo de feedback en EmailJS           |
+| EMAILJS_PUBLIC_KEY               | Clave publica de EmailJS                                      |
+| EMAILJS_REPORT_ERROR_TEMPLATE_ID | ID de la plantilla de correo de error en EmailJS              |
+| EMAILJS_SERVICE_ID               | ID de servicio de EmailJS                                     |
+| REPOSITORY_URL                   | https://github.com/KristhDev/JW-Reports                       |
+| SITIE_URL                        | Sitio de Internet para la autenticación de los usuarios       |
+| SUPABASE_APY_KEY                 | Clave de aplicación de Supabase                               |
+| SUPABASE_BUCKET                  | Nombre del bucket para la subida de archivos                  |
+| SUPABASE_REVISITS_FOLDER         | Nombre del directorio de revisits                             |
+| SUPABASE_URL                     | URL del proyecto de Supabase                                  |
+| SUPABASE_SERVICE_ROLE_KEY        | Clave de rol para el servicio de Supabase (solo para testing) |
+| ONESIGNAL_APP_ID                 | ID de la aplicación de OneSignal                              |
 
 ### 5.12. Correr aplicación
 Para esto necesita tener una **máquina virtual de Android Studio** ejecutándose, use la versión del **SDK de Android** más

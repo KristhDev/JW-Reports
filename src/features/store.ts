@@ -15,6 +15,9 @@ import { uiReducer } from '@ui/features';
 /* Utils */
 import { storageKeys, storePersistor } from '@utils';
 
+/* Debugger */
+import reactotron from '../../ReactotronConfig';
+
 /* Combining all the reducers into one reducer. */
 const reducers = combineReducers({
     auth: authReducer,
@@ -44,7 +47,12 @@ const reducer = persistReducer(persistConfig, reducers);
 export const store = configureStore({
     reducer,
     devTools: false,
-    enhancers: (getDefaultEnhancers) => getDefaultEnhancers(),
+    enhancers: (getDefaultEnhancers) => {
+        const enhancers = getDefaultEnhancers();
+
+        if (__DEV__ && !process.env.JEST_WORKER_ID) enhancers.push(reactotron.createEnhancer!());
+        return enhancers;
+    },
     middleware: (getDefaultMiddleware) => getDefaultMiddleware({ serializableCheck: false })
 });
 

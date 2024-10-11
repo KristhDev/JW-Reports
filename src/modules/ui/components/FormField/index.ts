@@ -1,1 +1,2 @@
-export { FormField } from './FormField';
+export * from './FormField';
+export type { FormFieldProps } from './interfaces';

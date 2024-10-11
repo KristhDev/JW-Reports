@@ -191,7 +191,6 @@ export const FormTime: FC<FormTimeProps> = ({
                     containerStyle={{ minWidth: 0, paddingHorizontal: (margins.xs + 1) }}
                     icon={ icon }
                     onPress={ handleShowHourPicker }
-                    text=""
                     pressableStyle={{ marginLeft: margins.sm }}
                 />
             </View>
@@ -218,7 +217,6 @@ export const FormTime: FC<FormTimeProps> = ({
                                     />
                                 }
                                 onPress={ () => addHour(-1) }
-                                text=""
                             />
 
                             <View style={[ themeStyles.formControl, styles.modalInputContainer ]}>
@@ -248,7 +246,6 @@ export const FormTime: FC<FormTimeProps> = ({
                                     />
                                 }
                                 onPress={ () => addHour(+1) }
-                                text=""
                             />
                         </View>
 
@@ -268,7 +265,6 @@ export const FormTime: FC<FormTimeProps> = ({
                                     />
                                 }
                                 onPress={ () => addMinutes(-1) }
-                                text=""
                             />
 
                             <View style={[ themeStyles.formControl, styles.modalInputContainer ]}>
@@ -298,7 +294,6 @@ export const FormTime: FC<FormTimeProps> = ({
                                     />
                                 }
                                 onPress={ () => addMinutes(+1) }
-                                text=""
                             />
                         </View>
                     </View>

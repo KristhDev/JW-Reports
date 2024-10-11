@@ -9,7 +9,7 @@ import { REPOSITORY_URL } from '@env';
 /* Modules */
 import { useStatus } from '../../hooks';
 import { ThemeModal, useTheme, THEME_OPTIONS } from '@theme';
-import { OptionsModal, SectionBtn, SectionContent, UI_OPTIONS, useUI } from '@ui';
+import { SectionBtn, SectionContent, Switch, useUI } from '@ui';
 
 /* Utils */
 import { deviceInfo } from '@utils';
@@ -25,7 +25,6 @@ import { version as appVersion } from '@package';
  */
 const Settings = (): JSX.Element => {
     const [ showThemeModal, setShowThemeModal ] = useState<boolean>(false);
-    const [ showOldDatetimePicker, setShowOldDatetimePicker ] = useState<boolean>(false);
 
     const navigation = useNavigation();
     const { theme: { colors, fontSizes, margins } } = useStyles();
@@ -35,17 +34,6 @@ const Settings = (): JSX.Element => {
     const { state: { userInterface }, setOldDatetimePicker } = useUI();
 
     const buildVersion = deviceInfo.getBuildVersion();
-
-    /**
-     * Changes the state of the old datetime picker and hides the modal
-     *
-     * @param {boolean} value - The value to set the old datetime picker state
-     * @return {void} This function returns nothing
-     */
-    const handleChangeDatetimePicker = (value: boolean): void => {
-        setOldDatetimePicker(value);
-        setShowOldDatetimePicker(false);
-    }
 
     /**
      * When the user clicks the button, set the status to a new object with a code of 200 and a msg of
@@ -89,10 +77,15 @@ const Settings = (): JSX.Element => {
                     />
 
                     <SectionBtn
-                        onPress={ () => setShowOldDatetimePicker(true) }
-                        subText={ userInterface.oldDatetimePicker ? 'Habilitado' : 'Deshabilitado' }
-                        text="Anteriores selectores de fecha y hora"
-                    />
+                        onPress={ () => setOldDatetimePicker(!userInterface.oldDatetimePicker) }
+                        subText="Puede escoger entre los actuales o los antiguos selectores de mes, fecha y tiempo"
+                        text="Selectores de mes, fecha y hora"
+                    >
+                        <Switch
+                            onChange={ () => setOldDatetimePicker(!userInterface.oldDatetimePicker) }
+                            value={ userInterface.oldDatetimePicker }
+                        />
+                    </SectionBtn>
                 </SectionContent>
 
                 {/* Privacy section */}
@@ -101,6 +94,20 @@ const Settings = (): JSX.Element => {
                         onPress={ () => Linking.openSettings() }
                         subText="Admita o rechace los permisos de la aplicación (tenga en cuenta que ciertas funcionalidades se verán afectadas)."
                         text="Permisos"
+                    />
+                </SectionContent>
+
+                <SectionContent title="COMENTARIOS">
+                    <SectionBtn
+                        onPress={ () => navigation.navigate('FeedbackScreen' as never) }
+                        subText="Comparta sus sugerencias para mejorar la aplicación."
+                        text="Sugerencias"
+                    />
+
+                    <SectionBtn
+                        onPress={ () => navigation.navigate('ReportErrorScreen' as never) }
+                        subText="Reporte los errores que se presenten en la aplicación."
+                        text="Reportar un error"
                     />
                 </SectionContent>
 
@@ -140,15 +147,6 @@ const Settings = (): JSX.Element => {
             <ThemeModal
                 isOpen={ showThemeModal }
                 onClose={ () => setShowThemeModal(false) }
-            />
-
-            <OptionsModal
-                isOpen={ showOldDatetimePicker }
-                items={ UI_OPTIONS }
-                onCancel={ () => setShowOldDatetimePicker(false) }
-                onChangeValue={ handleChangeDatetimePicker }
-                title="Anteriores selectores de fecha y hora"
-                value={ userInterface.oldDatetimePicker }
             />
         </>
     );

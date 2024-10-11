@@ -36,6 +36,7 @@ export interface AuthState {
  * @property {string} email - The email of the user
  * @property {string} precursor - The precursor of the user
  * @property {number} hoursRequirement - The hours requirement of the user
+ * @property {boolean} hoursLDC - The hours ldc of the user
  * @property {string} createdAt - The created at of the user
  * @property {string} updatedAt - The updated at of the user
  */
@@ -46,6 +47,7 @@ export interface User {
     email: string;
     precursor: Precursor;
     hoursRequirement: number;
+    hoursLDC: boolean;
     createdAt: string;
     updatedAt: string;
 }
@@ -59,6 +61,7 @@ export interface User {
  * @property {string} email - The email of the user
  * @property {string} precursor - The precursor of the user
  * @property {number} hours_requirement - The hours requirement of the user
+ * @property {boolean} hours_ldc - The hours ldc of the user
  * @property {string} createdAt - The created at of the user
  * @property {string} updatedAt - The updated at of the user
  */
@@ -69,6 +72,7 @@ export interface UserEndpoint {
     email: string;
     precursor: Precursor;
     hours_requirement: number;
+    hours_ldc: boolean;
     createdAt: string;
     updatedAt: string;
 }
@@ -82,12 +86,14 @@ export type Precursor = 'ninguno' | 'auxiliar' | 'regular' | 'especial';
  * @property {string} surname - The surname of the user
  * @property {string} precursor - The precursor of the user
  * @property {number} hoursRequirement - The hours requirement of the user
+ * @property {boolean} hoursLDC - The hours ldc of the user
  */
 export interface ProfileData {
     name: string;
     surname: string;
     precursor: Precursor;
     hoursRequirement: number;
+    hoursLDC: boolean;
 }
 
 /**

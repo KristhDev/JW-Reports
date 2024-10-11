@@ -23,6 +23,10 @@ const AddOrEditLesson = (): JSX.Element => {
     const { styles: themeStyles, theme: { fontSizes } } = useStyles(themeStylesheet);
     const { state: { selectedLesson } } = useLessons();
 
+    const title = (selectedLesson.id === '')
+        ? 'AGREGAR CLASE AL CURSO'
+        : 'EDITAR CLASE DEL CURSO';
+
     return (
         <KeyboardAwareScrollView
             contentContainerStyle={{ flexGrow: 1 }}
@@ -32,7 +36,7 @@ const AddOrEditLesson = (): JSX.Element => {
                 <Title
                     containerStyle={ themeStyles.titleContainer }
                     textStyle={{ fontSize: fontSizes.md }}
-                    text={ (selectedLesson.id === '') ? 'Agregar clase para el curso' : 'Editar clase del curso' }
+                    text={ title }
                 />
 
                 <LessonForm />

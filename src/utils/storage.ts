@@ -26,10 +26,10 @@ export const storage = {
      * A function to get the value associated with the given key from storage.
      *
      * @param {string} key - The key to retrieve the value for.
-     * @return {string | undefined} The value associated with the key, or undefined if not found.
+     * @return {string | null} The value associated with the key, or null if not found.
      */
-    getItem: (key: string): string | undefined => {
-        return mmkvStorage.getString(key);
+    getItem: (key: string): string | null => {
+        return mmkvStorage.getString(key) || null;
     },
 
     /**

@@ -7,8 +7,9 @@ export interface ButtonProps {
     disabled?: boolean;
     icon?: ReactNode;
     onPress: () => void;
-    text: string;
-    textStyle?: StyleProp<TextStyle>;
     pressableStyle?: StyleProp<ViewStyle>;
+    style?: StyleProp<ViewStyle>;
+    text?: string;
+    textStyle?: StyleProp<TextStyle>;
     underlayColor?: string;
 }

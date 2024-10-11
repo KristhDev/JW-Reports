@@ -1,1 +1,2 @@
-export { TabBarBtn } from './TabBarBtn';
+export * from './TabBarBtn';
+export type { TabBarBtnProps } from './interfaces';

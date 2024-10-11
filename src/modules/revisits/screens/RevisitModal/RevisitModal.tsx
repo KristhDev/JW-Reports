@@ -13,7 +13,7 @@ import { useRevisits } from '../../hooks';
 import { useStatus } from '@shared';
 
 /* Scahemas */
-import { revisitFormSchema } from './schemas';
+import { newRevisitFormSchema } from './schemas';
 
 /**
  * This modal is responsible for grouping the components to
@@ -130,7 +130,7 @@ const RevisitModal: FC<ModalProps> = ({ isOpen, onClose }) => {
                                 }}
                                 onSubmit={ handleConfirm }
                                 validateOnMount
-                                validationSchema={ revisitFormSchema }
+                                validationSchema={ newRevisitFormSchema }
                             >
                                 { ({ handleSubmit, isValid, errors }) => (
                                     <View style={{ alignItems: 'center' }}>

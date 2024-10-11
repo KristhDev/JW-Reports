@@ -11,6 +11,7 @@ export const INIT_USER: User = {
     email: '',
     precursor: 'ninguno',
     hoursRequirement: 0,
+    hoursLDC: false,
     createdAt: Date.now().toString(),
     updatedAt: Date.now().toString()
 }
