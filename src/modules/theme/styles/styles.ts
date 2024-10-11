@@ -7,11 +7,40 @@ export const themeStylesheet = createStyleSheet(({ borderRadius, colors, fontSiz
         marginTop: margins.xl,
     },
 
+    createdAtContainer: {
+        alignItems: 'flex-end',
+        flex: 1,
+        marginTop: margins.md * 2,
+        width: '100%'
+    },
+
+    createdAtText: {
+        color: colors.modalText,
+        fontSize: fontSizes.sm
+    },
+
     defaultBorder: (isFocused: boolean) => ({
         borderColor: (!isFocused) ? colors.text : colors.focus,
         borderRadius: (borderRadius.xs - 3),
         borderWidth: 0.5,
     }),
+
+    detailSection: {
+        marginBottom: margins.lg,
+        width: '100%'
+    },
+
+    detailSubTitle: {
+        color: colors.text,
+        fontSize: (fontSizes.sm + 3),
+        fontWeight: 'bold',
+        marginBottom: margins.sm
+    },
+
+    detailText: {
+        color: colors.text,
+        fontSize: (fontSizes.sm + 3)
+    },
 
     fabBottomRight: {
         bottom: margins.sm,
@@ -71,11 +100,6 @@ export const themeStylesheet = createStyleSheet(({ borderRadius, colors, fontSiz
         color: colors.titleText,
         fontSize: (fontSizes.sm + 2),
         marginBottom: margins.sm,
-    },
-
-    formLink: {
-        color: colors.linkText,
-        fontSize: margins.sm
     },
 
     formSelectPressableContainer: {
@@ -142,9 +166,31 @@ export const themeStylesheet = createStyleSheet(({ borderRadius, colors, fontSiz
         marginBottom: margins.sm
     },
 
+    publicationTextContainer: {
+        padding: 0,
+        paddingBottom: margins.md,
+        width: '100%'
+    },
+
+    publicationText: {
+        fontSize: fontSizes.sm,
+        fontWeight: 'bold',
+        textAlign: 'left'
+    },
+
+    sectionTextSize: {
+        fontSize: (fontSizes.sm + 3)
+    },
+
     screenContainer: {
         alignItems: 'center',
         flex: 1,
+        padding: margins.md
+    },
+
+    scrollView: {
+        alignItems: 'center',
+        flexGrow: 1,
         padding: margins.md
     },
 

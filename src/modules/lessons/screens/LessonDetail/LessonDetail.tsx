@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { ScrollView, Text, TouchableOpacity, View } from 'react-native';
+import { ScrollView, Text, View } from 'react-native';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { useStyles } from 'react-native-unistyles';
 
@@ -10,7 +10,7 @@ import { INIT_LESSON } from '../../features';
 import { FinishOrStartLessonModal } from '../FinishOrStartLessonModal';
 
 /* Components */
-import { InfoText, Title } from '@ui';
+import { InfoText, Link, Title } from '@ui';
 
 /* Hooks */
 import { useCourses } from '@courses';
@@ -21,7 +21,6 @@ import { date } from '@utils';
 
 /* Styles */
 import { themeStylesheet } from '@theme';
-import { stylesheet } from './styles';
 
 /**
  * This screen is responsible for grouping the components to
@@ -35,8 +34,7 @@ const LessonDetail = (): JSX.Element => {
     const navigation = useNavigation();
     const route = useRoute();
 
-    const { styles: themeStyles, theme: { fontSizes, margins } } = useStyles(themeStylesheet);
-    const { styles } = useStyles(stylesheet);
+    const { styles: themeStyles, theme: { fontSizes } } = useStyles(themeStylesheet);
 
     const { state: { selectedCourse } } = useCourses();
     const { state: { selectedLesson }, setSelectedLesson } = useLessons();
@@ -69,7 +67,7 @@ const LessonDetail = (): JSX.Element => {
     return (
         <>
             <ScrollView
-                contentContainerStyle={{ alignItems: 'center', padding: margins.md, paddingBottom: 100, flexGrow: 1 }}
+                contentContainerStyle={ themeStyles.scrollView }
                 overScrollMode="never"
                 style={{ flex: 1 }}
             >
@@ -83,44 +81,40 @@ const LessonDetail = (): JSX.Element => {
 
                 {/* Text publication */}
                 <InfoText
-                    containerStyle={{ padding: 0, paddingBottom: margins.md, width: '100%' }}
+                    containerStyle={ themeStyles.publicationTextContainer }
                     text={ selectedCourse.publication.toUpperCase() }
-                    textStyle={{ fontSize: fontSizes.sm, fontWeight: 'bold', textAlign: 'left' }}
+                    textStyle={ themeStyles.publicationText }
                 />
 
                 {/* Lesson status */}
-                <View style={ styles.sectionContainer }>
+                <View style={ themeStyles.detailSection }>
                     <Text
-                        style={{ ...styles.sectionSubTitle, marginBottom: 0 }}
+                        style={{ ...themeStyles.detailSubTitle, marginBottom: 0 }}
                         testID="lesson-detail-status-text"
                     >
                         Estado de la clase: { statusLessonText }
                     </Text>
 
-                    <TouchableOpacity
-                        activeOpacity={ 0.75 }
+                    <Link
                         onPress={ () => setShowFSModal(true) }
+                        testID="lesson-detail-status-text-touchable"
+                        textStyle={ themeStyles.sectionTextSize }
                     >
-                        <Text
-                            style={ styles.sectionTextLink }
-                            testID="lesson-detail-status-text-touchable"
-                        >
-                            { (!selectedLesson.done) ? '¿Terminar clase?' : '¿Reprogramar?' }
-                        </Text>
-                    </TouchableOpacity>
+                        { (!selectedLesson.done) ? '¿Terminar clase?' : '¿Reprogramar?' }
+                    </Link>
                 </View>
 
                 {/* Lesson description */}
-                <View style={ styles.sectionContainer }>
+                <View style={ themeStyles.detailSection }>
                     <Text
-                        style={ styles.sectionSubTitle }
+                        style={ themeStyles.detailSubTitle }
                         testID="lesson-detail-description-subtitle"
                     >
                         { (selectedLesson.done) ? 'Se analizo:' : 'Se analizará:' }
                     </Text>
 
                     <Text
-                        style={ styles.sectionText }
+                        style={ themeStyles.detailText }
                         testID="lesson-detail-description-text"
                     >
                         { selectedLesson.description }
@@ -128,25 +122,27 @@ const LessonDetail = (): JSX.Element => {
                 </View>
 
                 {/* Lesson create date */}
-                <View style={ styles.sectionContainer }>
-                    <Text style={ styles.sectionSubTitle }>
+                <View style={ themeStyles.detailSection }>
+                    <Text style={ themeStyles.detailSubTitle }>
                         Fecha:
                     </Text>
 
                     <Text
-                        style={ styles.sectionText }
+                        style={ themeStyles.detailText }
                         testID="lesson-detail-next-visit-text"
                     >
                         { `${ nextVisit }` }
                     </Text>
                 </View>
 
-                <Text
-                    style={ styles.dateCreatedText }
-                    testID="lesson-detail-date-created-text"
-                >
-                    { date.format(selectedLesson.createdAt, 'DD/MM/YYYY') }
-                </Text>
+                <View style={ themeStyles.createdAtContainer }>
+                    <Text
+                        style={ themeStyles.createdAtText }
+                        testID="lesson-detail-date-created-text"
+                    >
+                        { date.format(selectedLesson.createdAt, 'DD/MM/YYYY') }
+                    </Text>
+                </View>
             </ScrollView>
 
             <FinishOrStartLessonModal

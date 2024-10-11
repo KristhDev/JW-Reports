@@ -1,1 +1,2 @@
-export { RegisterForm } from './RegisterForm';
+export * from './RegisterForm';
+export * from './schemas';

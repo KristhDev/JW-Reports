@@ -1,1 +1,2 @@
-export { SectionContent } from './SectionContent';
+export * from './SectionContent';
+export type { SectionContentProps } from './interfaces';

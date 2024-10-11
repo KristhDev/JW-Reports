@@ -1,1 +1,2 @@
-export { LessonCard } from './LessonCard';
+export * from './LessonCard';
+export type { LessonCardProps } from './interfaces'

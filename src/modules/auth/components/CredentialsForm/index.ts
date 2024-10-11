@@ -1,1 +1,2 @@
-export { CredentialsForm } from './CredentialsForm';
+export * from './CredentialsForm';
+export * from './schemas';

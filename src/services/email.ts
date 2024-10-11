@@ -38,7 +38,11 @@ export const email = {
             let message = '';
 
             if (error instanceof EmailJSResponseStatus) message = error.text;
-            else message = Object.hasOwn(error as Error, 'message') ? (error as Error).message : 'Ocurrio un error al enviar el correo';
+            else {
+                message = Object.hasOwn(error as Error, 'message')
+                    ? (error as Error).message
+                    : 'Ocurrio un error al enviar el correo';
+            }
 
             const emailError = new EmailError(message);
             throw emailError;

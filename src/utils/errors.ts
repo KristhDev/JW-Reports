@@ -19,7 +19,7 @@ export class AppErrors {
     public static translateMsg = (message: string): string => {
         return (AppErrors.supabaseAuthErrors as any)[message] ||
             (AppErrors.supabaseCommonErrors as any)[message] ||
-            'Ocurrio un error al realizar esta acción, por favor vuelvalo a intentar.';
+            'Ocurrió un error al realizar está acción, por favor vuelvalo a intentar.';
     }
 }
 

@@ -1,2 +1,2 @@
-export { FormImage } from './FormImage';
-export * from './interfaces';
+export * from './FormImage';
+export type { FormImageProps, FormImageRef } from './interfaces';

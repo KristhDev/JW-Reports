@@ -1,1 +1,1 @@
-export { PreachingTable } from './PreachingTable';
+export * from './PreachingTable';
