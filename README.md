@@ -625,6 +625,7 @@ tabla con la explicación de cada una de las variables:
 | SITIE_URL                        | Sitio de Internet para la autenticación de los usuarios       |
 | SUPABASE_APY_KEY                 | Clave de aplicación de Supabase                               |
 | SUPABASE_BUCKET                  | Nombre del bucket para la subida de archivos                  |
+| SUPABASE_ERRORS_FOLDER           | Nombre del directorio de errores                              |
 | SUPABASE_REVISITS_FOLDER         | Nombre del directorio de revisits                             |
 | SUPABASE_URL                     | URL del proyecto de Supabase                                  |
 | SUPABASE_SERVICE_ROLE_KEY        | Clave de rol para el servicio de Supabase (solo para testing) |
