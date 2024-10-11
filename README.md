@@ -776,39 +776,25 @@ un programa vemos el **flujo de los datos y páralela en el tiempo**, lo que nos
 del proyecto se encuentra en archivo ```ReactotronConfig.js``` que contiene la configuración de Reactotron, se conforma de la 
 configuración que trae por defecto para React Native, aparte de la integración con Async Storage, Open Editor y Redux DevTools.
 
-### 8.1. Rama development o testing
-La parte del debug de la aplicación está configurada en las ramas de **development y testing**. Por lo que puedes acceder a
-cualquiera de ellas, para realizar la depuración, solo cambia a cualquiera de estas dos ramas:
-
-Rama development
-```bash
-git switch development
-```
-
-Rama testing
-```bash
-git switch testing
-```
-
-### 8.2. Instalar dependencias
+### 8.1. Instalar dependencias
 Ahora solo instale las **dependencias** necesarías para poder depurar la aplicación, ejecute el siguiente comando:
 
 ```bash
 yarn install
 ```
 
-### 8.3. Máquina virtual o dispositivo físico
+### 8.2. Máquina virtual o dispositivo físico
 Como recordatorio debe tener un **emulador o máquina virtual de Android Studio** corriendo para realizar la depuración o también
 puede usa su **dispositivo físico** en caso de que su computadora no soporte las **máquinas virtuales**.
 
-### 8.4. Correr aplicación
+### 8.3. Correr aplicación
 Ahora simplemente hay que correr la aplicación, ejecute este comando:
 
 ```bash
 yarn android
 ```
 
-### 8.5. Reactotron
+### 8.4. Reactotron
 Ya habiendo seguido todos los pasos con éxito solo nos queda **abrir el programa de Reactotron**, cuando lo abra espere que 
 detecte la aplicación que ya está corriendo. En caso de que no funcione se puede asegurar la conexión, ejecute el siguiente 
 comando en la raíz del proyecto:
