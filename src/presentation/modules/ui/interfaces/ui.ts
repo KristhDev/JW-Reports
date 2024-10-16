@@ -64,16 +64,3 @@ export type ItemOption = {
     label: string;
     value: any;
 }
-
-/**
- * Defining an interface called StorageError.
- *
- * @property {string} message - The error message.
- * @property {string} name - The error name.
- * @property {string} stack - The error stack.
- */
-export interface StorageError {
-    message: string;
-    name: string;
-    stack?: string;
-}

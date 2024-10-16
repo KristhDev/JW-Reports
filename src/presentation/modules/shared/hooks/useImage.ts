@@ -61,11 +61,10 @@ const useImage = () => {
     /**
      * It takes a URI, splits it into an array, and then removes the last item in the array
      * @param {string} uri - The uri of the image you want to delete.
-     * @return {Promise<ImageError | null>} This function return object.
+     * @return {Promise<void>} This function return object.
      */
-    const deleteImage = async (uri: string): Promise<ImageError | null> => {
-        const result = await ImageService.deleteImage({ bucket: SUPABASE_BUCKET, folder: SUPABASE_REVISITS_FOLDER, uri });
-        return result;
+    const deleteImage = async (uri: string): Promise<void> => {
+        await ImageService.deleteImage({ bucket: SUPABASE_BUCKET, folder: SUPABASE_REVISITS_FOLDER, uri });
     }
 
     /**
@@ -172,7 +171,7 @@ const useImage = () => {
      * @param {Image} photo - This is the image that is being uploaded
      * @return {Promise<string | ImageError>} This function return object
      */
-    const uploadImage = async (photo: Image, folder: string): Promise<string | ImageError> => {
+    const uploadImage = async (photo: Image, folder: string): Promise<string> => {
         const result = await ImageService.uploadImage({ bucket: SUPABASE_BUCKET, folder, image: photo });
         return result;
     }

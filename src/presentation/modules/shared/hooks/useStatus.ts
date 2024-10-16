@@ -1,14 +1,9 @@
-import { AuthError, PostgrestError } from '@supabase/supabase-js';
-
 /* Errors */
-import { AppErrors } from '@domain/errors';
+import { AppErrors, EmailError, ImageError, RequestError } from '@domain/errors';
 
 /* Features */
 import { useAppDispatch, useAppSelector } from '@application/store';
 import { clearStatus as clearStatusAction, setStatus as setStatusAction, SetStatusPayload } from '@application/features';
-
-/* Interfaces */
-import { StorageError } from '@ui';
 
 /* Services */
 import { LoggerService } from '@services';
@@ -26,6 +21,29 @@ const useStatus = () => {
 
     const setStatus = (status: SetStatusPayload) => dispatch(setStatusAction(status));
     const clearStatus = () => dispatch(clearStatusAction());
+
+    /**
+     * This function is to set errors in status of store
+     *
+     * @param {unknown} error - The error to set
+     * @return {void} This function does not return anything
+     */
+    const setError = (error: unknown): void => {
+        console.log(JSON.stringify(error, null, 2));
+        let msg = 'Ocurrio un error inesperado al realizar la acción';
+        let status = 400;
+
+        if (error instanceof RequestError) {
+            msg = AppErrors.translateMsg(error.message);
+            status = error.status;
+        }
+
+        if (error instanceof ImageError) msg = AppErrors.translateMsg(error.message);
+        if (error instanceof EmailError) msg = error.message;
+
+        setStatus({ msg, code: status });
+        LoggerService.error({ ...(error as Error), message: (error as Error).message });
+    }
 
     /**
      * This function is to set errors in formik forms
@@ -51,42 +69,6 @@ const useStatus = () => {
     }
 
     /**
-     * If there's an error, log it, call the onDispatch function if it exists, set the status, and
-     * return true. Otherwise, return false
-     *
-     * @param {AuthError | PostgrestError | StorageError | null } error - AuthError | PostgrestError |
-     * StorageError |  null
-     * @param {number} status - number - The status code of the error
-     * @param {Function} onDispatch - This is a function that will be called if there is an error.
-     * @return {boolean} Returns true if there's an error, false otherwise
-     */
-    const setSupabaseError = (error: AuthError | PostgrestError | StorageError | null, status: number, onDispatch?: () => void): boolean => {
-        if (error) {
-            const msg = AppErrors.translateMsg(error.message);
-
-            onDispatch && onDispatch();
-            setStatus({ code: status, msg });
-            LoggerService.error({ ...error, message: error.message });
-
-            return true;
-        }
-
-        return false;
-    }
-
-    /**
-     * Sets an error with a translated message and a given status code
-     *
-     * @param {string} msg - The error message to be translated
-     * @param {number} status - The status code of the error
-     * @return {void} This function does not return anything
-     */
-    const setTranslatedError = (status: number, msg: string): void => {
-        const error = AppErrors.translateMsg(msg);
-        setStatus({ code: status, msg: error });
-    }
-
-    /**
      * Sets an unauthenticated error and optionally triggers a dispatch function.
      *
      * @param {() => void} onDispatch - An optional function to be triggered.
@@ -101,10 +83,9 @@ const useStatus = () => {
     return {
         clearStatus,
         setErrorForm,
+        setError,
         setNetworkError,
         setStatus,
-        setSupabaseError,
-        setTranslatedError,
         setUnauthenticatedError,
         state,
     }

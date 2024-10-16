@@ -22,9 +22,6 @@ import { CreatePreachingDto, UpdatePreachingDto } from '@domain/dtos';
 /* Entities */
 import { PreachingEntity } from '@domain/entities';
 
-/* Errors */
-import { RequestError } from '@domain/errors';
-
 /* Adapters */
 import { Time } from '@infrasturcture/adapters';
 
@@ -38,7 +35,7 @@ import { useNetwork, useStatus } from '@shared';
 import { PreachingFormValues } from '../interfaces';
 
 /* Utils */
-import { authMessages } from '@auth';
+import { authMessages, useAuth } from '@auth';
 import { preachingMessages } from '../utils';
 
 /**
@@ -49,10 +46,11 @@ const usePreaching = () => {
     const navigation = useNavigation();
 
     const state = useAppSelector(store => store.preaching);
-    const { user, isAuthenticated } = useAppSelector(store => store.auth);
+    const { user } = useAppSelector(store => store.auth);
 
-    const { setStatus, setTranslatedError, setUnauthenticatedError, setNetworkError } = useStatus();
-    const { wifi } = useNetwork();
+    const { isAuthenticated } = useAuth();
+    const { setStatus, setError } = useStatus();
+    const { hasWifiConnection } = useNetwork();
 
     const addPreaching = (preaching: PreachingEntity) => dispatch(addPreachingAction({ preaching }));
     const removePreaching = (id: string) => dispatch(removePreachingAction({ id }));
@@ -65,7 +63,13 @@ const usePreaching = () => {
     const setIsPreachingDeleting = (isDeleting: boolean) => dispatch(setIsPreachingDeletingAction({ isDeleting }));
     const updatePreachingState = (preaching: PreachingEntity) => dispatch(updatePreachingAction({ preaching }));
 
-    const resetSelectedPreaching = () => {
+    /**
+     * Resets the selected preaching to the initial state with the current date
+     * and the current time
+     *
+     * @return {void} This function does not return anything
+     */
+    const resetSelectedPreaching = (): void => {
         setSelectedPreaching({
             ...INIT_PREACHING,
             day: new Date().toString(),
@@ -75,54 +79,67 @@ const usePreaching = () => {
     }
 
     /**
-     * This function is to delete a preaching day and return to the previous screen.
+     * This function checks if the selected preaching can be altered.
+     * If there is no selected preaching or the user does not own the preaching, it returns false.
      *
-     * @param {Function} onFinish - This callback executed when the process is finished (success or failure)
-     * @return {Promise<void>} This function does not return anything.
+     * @param {string} unSelectMsg - The message to display if no preaching is selected.
+     * @param {() => void} onFinish - The callback function to execute when the check is finished.
+     * @returns {boolean} Returns true if the preaching can be altered, otherwise false.
      */
-    const deletePreaching = async (onFinish?: () => void): Promise<void> => {
-        if (!wifi.hasConnection) {
-            setNetworkError();
-            return;
-        }
-
-        if (!isAuthenticated) {
-            setUnauthenticatedError(() => onFinish && onFinish());
-            return;
-        }
-
-        if (state.seletedPreaching.id === '') {
+    const canAlteratePreaching = (unSelectMsg: string, onFinish?: () => void): boolean => {
+        if (!state.seletedPreaching) {
             onFinish && onFinish();
-            setStatus({ code: 400, msg: preachingMessages.UNSELECTED_DELETE });
+            setStatus({ code: 400, msg: unSelectMsg });
 
-            return;
+            return false;
         }
 
         if (state.seletedPreaching.userId !== user.id) {
             onFinish && onFinish();
             setStatus({ code: 400, msg: authMessages.UNAUTHORIZED });
 
-            return;
+            return false;
         }
+
+        return true;
+    }
+
+    /**
+     * This function is to delete a preaching day and return to the previous screen.
+     *
+     * @param {Function} onFinish - This callback executed when the process is finished (success or failure)
+     * @return {Promise<void>} This function does not return anything.
+     */
+    const deletePreaching = async (onFinish?: () => void): Promise<void> => {
+        const wifiConnectionAvailable = hasWifiConnection();
+        if (!wifiConnectionAvailable) return;
+
+        const isAuth = isAuthenticated(onFinish);
+        if (!isAuth) return;
+
+        const canAlterate = canAlteratePreaching(preachingMessages.UNSELECTED_DELETE, onFinish);
+        if (!canAlterate) return;
 
         setIsPreachingDeleting(true);
 
-        const result = await PreachingService.delete(state.seletedPreaching.id, user.id);
+        try {
+            await PreachingService.delete(state.seletedPreaching.id, user.id);
+            removePreaching(state.seletedPreaching.id);
 
-        if (result instanceof RequestError) {
             setIsPreachingDeleting(false);
             onFinish && onFinish();
-            setTranslatedError(result.status, result.message);
 
-            return;
+            navigation.goBack();
+
+            resetSelectedPreaching();
+            setStatus({ code: 200, msg: preachingMessages.DELETED_SUCCESS });
         }
+        catch (error) {
+            setIsPreachingDeleting(false);
+            onFinish && onFinish();
 
-        removePreaching(state.seletedPreaching.id);
-        onFinish && onFinish();
-        navigation.goBack();
-
-        resetSelectedPreaching();
-        setStatus({ code: 200, msg: preachingMessages.DELETED_SUCCESS });
+            setError(error);
+        }
     }
 
     /**
@@ -132,27 +149,21 @@ const usePreaching = () => {
      * @return {Promise<void>} This function does not return anything.
      */
     const loadPreachings = async (date: Date): Promise<void> => {
-        if (!wifi.hasConnection) {
-            setNetworkError();
-            return;
-        }
+        const wifiConnectionAvailable = hasWifiConnection();
+        if (!wifiConnectionAvailable) return;
 
-        if (!isAuthenticated) {
-            setUnauthenticatedError();
-            return;
-        }
+        const isAuth = isAuthenticated();
+        if (!isAuth) return;
 
         setIsPreachingsLoading(true);
 
-        const result = await PreachingService.getByUserIdAndMonth(user.id, date);
-
-        if (result instanceof RequestError) {
-            setTranslatedError(result.status, result.message);
-            setIsPreachingsLoading(false);
-            return;
+        try {
+            const preachings = await PreachingService.getByUserIdAndMonth(user.id, date);
+            setPreachings(preachings);
         }
-
-        setPreachings(result);
+        catch (error) {
+            setError(error);
+        }
     }
 
     /**
@@ -162,31 +173,29 @@ const usePreaching = () => {
      * @return {Promise<void>} This function does not return anything.
      */
     const savePreaching = async (preachingValues: PreachingFormValues): Promise<void> => {
-        if (!wifi.hasConnection) {
-            setNetworkError();
-            return;
-        }
+        const wifiConnectionAvailable = hasWifiConnection();
+        if (!wifiConnectionAvailable) return;
 
-        if (!isAuthenticated) {
-            setUnauthenticatedError();
-            return;
-        }
+        const isAuth = isAuthenticated();
+        if (!isAuth) return;
 
         setIsPreachingLoading(true);
 
-        const createDto = CreatePreachingDto.create({ ...preachingValues, userId: user.id });
-        const result = await PreachingService.create(createDto);
+        try {
+            const createDto = CreatePreachingDto.create({ ...preachingValues, userId: user.id });
+            const result = await PreachingService.create(createDto);
 
-        if (result instanceof RequestError) {
-            setTranslatedError(result.status, result.message);
-            setIsPreachingLoading(false);
-            return;
+            if (Time.format(result.day, 'MMMM') === Time.format(state.selectedDate, 'MMMM')) addPreaching(result);
+
+            setStatus({ code: 201, msg: preachingMessages.ADDED_SUCCESS });
+            navigation.goBack();
         }
-
-        if (Time.format(result.day, 'MMMM') === Time.format(state.selectedDate, 'MMMM')) addPreaching(result);
-
-        setStatus({ code: 201, msg: preachingMessages.ADDED_SUCCESS });
-        navigation.goBack();
+        catch (error) {
+            setError(error);
+        }
+        finally {
+            setIsPreachingLoading(false);
+        }
     }
 
     /**
@@ -196,37 +205,33 @@ const usePreaching = () => {
      * @return {Promise<void>} This function does not return anything.
      */
     const updatePreaching = async (preachingValues: PreachingFormValues): Promise<void> => {
-        if (!wifi.hasConnection) {
-            setNetworkError();
-            return;
-        }
+        const wifi = hasWifiConnection();
+        if (!wifi) return;
 
-        if (!isAuthenticated) {
-            setUnauthenticatedError();
-            return;
-        }
+        const isAuth = isAuthenticated();
+        if (!isAuth) return;
 
-        if (state.seletedPreaching === undefined || state.seletedPreaching.id === '') {
-            setStatus({ code: 400, msg: preachingMessages.UNSELECTED_UPDATE });
-            return;
-        }
+        const canAlterate = canAlteratePreaching(preachingMessages.UNSELECTED_UPDATE);
+        if (!canAlterate) return;
 
         setIsPreachingLoading(true);
 
-        const updateDto = UpdatePreachingDto.create(preachingValues);
-        const result = await PreachingService.update(state.seletedPreaching.id, user.id, updateDto);
+        try {
+            const updateDto = UpdatePreachingDto.create(preachingValues);
+            const preaching = await PreachingService.update(state.seletedPreaching.id, user.id, updateDto);
 
-        if (result instanceof RequestError) {
-            setTranslatedError(result.status, result.message);
-            setIsPreachingLoading(false);
-            return;
+            updatePreachingState(preaching);
+            setStatus({ code: 200, msg: preachingMessages.UPDATED_SUCCESS });
+
+            resetSelectedPreaching();
+            navigation.goBack();
         }
-
-        updatePreachingState(result);
-        setStatus({ code: 200, msg: preachingMessages.UPDATED_SUCCESS });
-
-        resetSelectedPreaching();
-        navigation.goBack();
+        catch (error) {
+            setError(error);
+        }
+        finally {
+            setIsPreachingLoading(false);
+        }
     }
 
     return {

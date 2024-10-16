@@ -1,5 +1,5 @@
 /* Errors */
-import { ImageError } from '@domain/errors';
+import { EmailError } from '@domain/errors';
 
 /* Env */
 import { EMAILJS_FEEDBACK_TEMPLATE_ID, EMAILJS_REPORT_ERROR_TEMPLATE_ID, SUPABASE_ERRORS_FOLDER } from '@env';
@@ -21,7 +21,7 @@ import { emailMessages } from '../utils';
 const useEmail = () => {
     const { state: { user } } = useAuth();
     const { uploadImage } = useImage();
-    const { setStatus } = useStatus();
+    const { setStatus, setError } = useStatus();
 
     /**
      * Sends an email to the administrator with the message provided by the user.
@@ -60,13 +60,7 @@ const useEmail = () => {
     const sendReportErrorEmail = async ({ message, image }: ReportErrorOptions, { onFinish, onSuccess }: UtilFunctions): Promise<void> => {
         try {
             let imageUrl = 'https://t4.ftcdn.net/jpg/04/73/25/49/360_F_473254957_bxG9yf4ly7OBO5I0O5KABlN930GwaMQz.jpg';
-
-            if (image) {
-                const uploadResult = await uploadImage(image, SUPABASE_ERRORS_FOLDER);
-                if (uploadResult instanceof ImageError) throw uploadResult;
-
-                imageUrl = uploadResult;
-            }
+            if (image) imageUrl = await uploadImage(image, SUPABASE_ERRORS_FOLDER);
 
             await EmailService.send({
                 email: user.email,
@@ -79,8 +73,12 @@ const useEmail = () => {
             onSuccess && onSuccess();
         }
         catch (error) {
-            console.log(error);
-            setStatus({ code: 400, msg: emailMessages.REPORT_ERROR_FAILED });
+            if (error instanceof EmailError) {
+                setStatus({ code: 400, msg: emailMessages.REPORT_ERROR_FAILED });
+                return;
+            }
+
+            setError(error);
         }
         finally {
             onFinish && onFinish();

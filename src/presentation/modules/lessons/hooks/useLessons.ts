@@ -31,9 +31,6 @@ import { CreateLessonDto, FinishOrStartLessonDto, UpdateLessonDto } from '@domai
 /* Entities */
 import { LessonEntity, LessonWithCourseEntity } from '@domain/entities';
 
-/* Errors */
-import { RequestError } from '@domain/errors';
-
 /* Services */
 import { LessonsService } from '../services';
 
@@ -46,7 +43,7 @@ import { LessonFormValues } from '../interfaces';
 import { LoadResourcesOptions } from '@ui';
 
 /* Utils */
-import { authMessages } from '@auth';
+import { authMessages, useAuth } from '@auth';
 import { lessonsMessages } from '../utils';
 
 /**
@@ -55,13 +52,14 @@ import { lessonsMessages } from '../utils';
 const useLessons = () => {
     const dispatch = useAppDispatch();
     const navigation = useNavigation();
-    const { wifi } = useNetwork();
+    const { hasWifiConnection } = useNetwork();
 
     const state = useAppSelector(store => store.lessons);
-    const { user, isAuthenticated } = useAppSelector(store => store.auth);
+    const { user } = useAppSelector(store => store.auth);
     const { selectedCourse } = useAppSelector(store => store.courses);
 
-    const { setUnauthenticatedError, setNetworkError, setStatus, setTranslatedError } = useStatus();
+    const { isAuthenticated } = useAuth();
+    const { setError, setStatus } = useStatus();
 
     const addLastLesson = (lesson: LessonWithCourseEntity) => dispatch(addLastLessonAction({ lesson }));
     const addLastLessonInCourse = (courseId: string, lastLesson: LessonEntity) => dispatch(addLastLessonInCourseAction({ courseId, lastLesson }));
@@ -83,6 +81,82 @@ const useLessons = () => {
     const updateLessonActionState = (lesson: LessonEntity) => dispatch(updateLessonAction({ lesson }));
 
     /**
+     * Resets the selected lesson to the initial state with the `nextLesson` date set to the current date.
+     *
+     * @return {void} This function does not return anything.
+     */
+    const resetSelectedLesson = (): void => {
+        setSelectedLesson({
+            ...INIT_LESSON,
+            nextLesson: new Date().toString()
+        });
+    }
+
+    /**
+     * Checks if the user can alterate a lesson. If the lesson is not selected or
+     * the user is not authorized to alterate the lesson, it sets the status with
+     * a corresponding error message and returns false.
+     *
+     * @param {string} unSelectedMsg - The error message to display if the lesson
+     * is not selected
+     * @param {Function} onError - A callback to execute if an error occurs
+     * @return {boolean} True if the user can alterate the lesson, false otherwise
+     */
+    const canAlterateLesson = (unSelectedMsg: string, onError?: () => void): boolean => {
+        if (state.selectedLesson.id === '') {
+            onError && onError();
+            setStatus({ code: 400, msg: unSelectedMsg });
+
+            return false;
+        }
+
+        if (selectedCourse.userId !== user.id) {
+            onError && onError();
+            setStatus({ code: 401, msg: authMessages.UNAUTHORIZED });
+
+            return false;
+        }
+
+        return true;
+    }
+
+    /**
+     * Checks if the selected course is either suspended or finished. If so, it sets the status
+     * with a corresponding error message and executes the optional error callback.
+     *
+     * @param {Function} onError - A callback to execute if the course is suspended or finished.
+     * @return {boolean} Returns true if the course is suspended or finished, false otherwise.
+     */
+    const isSelectedCourseSuspendedOrFinished = (onError?: () => void): boolean => {
+        if (selectedCourse.suspended || selectedCourse.finished) {
+            onError && onError();
+            setStatus({ code: 400, msg: lessonsMessages.SUSPENDED_OR_FINISHED });
+
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
+     * Checks if the selected course is empty. If the selected course ID is an empty string,
+     * it sets the status with an error message and executes the optional error callback.
+     *
+     * @param {Function} onError - A callback to execute if the course is empty.
+     * @return {boolean} Returns true if the selected course is empty, false otherwise.
+     */
+    const isSelectedCourseEmpty = (onError?: () => void): boolean => {
+        if (selectedCourse.id === '') {
+            onError && onError();
+            setStatus({ code: 400, msg: coursesMessages.UNSELECTED });
+
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
      * It deletes a lesson from the database and updates the state of the app.
      *
      * @param {boolean} back - This parameter allows you to return to the previous screen, by default it is `false`
@@ -90,59 +164,39 @@ const useLessons = () => {
      * @return {Promise<void>} This function does not return anything.
      */
     const deleteLesson = async (back: boolean = false, onFinish?: () => void): Promise<void> => {
-        if (!wifi.hasConnection) {
-            setNetworkError();
-            return;
-        }
+        const wifiConnectionAvailable = hasWifiConnection();
+        if (!wifiConnectionAvailable) return;
 
-        if (!isAuthenticated) {
-            setUnauthenticatedError(() => onFinish && onFinish());
-            return;
-        }
+        const isAuth = isAuthenticated(onFinish);
+        if (!isAuth) return;
 
-        /* Should not delete if selectedLesson.id is an empty string */
-        if (state.selectedLesson.id === '') {
-            onFinish && onFinish();
-            setStatus({ code: 400, msg: lessonsMessages.UNSELECTED_DELETE });
-
-            return;
-        }
-
-        /* Cannot delete a class if the selectedCourse.user_id is different from user.id */
-        if (selectedCourse.userId !== user.id) {
-            onFinish && onFinish();
-            setStatus({ code: 400, msg: authMessages.UNAUTHORIZED });
-
-            return;
-        }
+        const canAlterate = canAlterateLesson(lessonsMessages.UNSELECTED_DELETE, onFinish);
+        if (!canAlterate) return;
 
         setIsLessonDeleting(true);
 
-        const result = await LessonsService.delete(state.selectedLesson.id);
+        try {
+            await LessonsService.delete(state.selectedLesson.id);
+            removeLesson(state.selectedLesson.id);
 
-        if (result instanceof RequestError) {
+            if (user.precursor === 'ninguno' && state.selectedLesson.id === state.lastLesson.id) {
+                await loadLastLesson();
+            }
+
+            replaceLastLessonInCourse(state.selectedLesson.id, state.lessons[0]);
+            onFinish && onFinish();
+            setStatus({ code: 200, msg: lessonsMessages.DELETED_SUCCESS });
+
+            resetSelectedLesson();
+            back && navigation.goBack();
+
+        }
+        catch (error) {
             setIsLessonDeleting(false);
             onFinish && onFinish();
-            setTranslatedError(result.status, result.message);
 
-            return;
+            setError(error);
         }
-
-        if (user.precursor === 'ninguno' && state.selectedLesson.id === state.lastLesson.id) {
-            await loadLastLesson();
-        }
-
-        removeLesson(state.selectedLesson.id);
-        replaceLastLessonInCourse(state.selectedLesson.id, state.lessons[0]);
-        onFinish && onFinish();
-        back && navigation.goBack();
-
-        setSelectedLesson({
-            ...INIT_LESSON,
-            nextLesson: new Date().toString()
-        });
-
-        setStatus({ code: 200, msg: lessonsMessages.DELETED_SUCCESS });
     }
 
     /**
@@ -153,54 +207,38 @@ const useLessons = () => {
      * @return {Promise<void>} This function does not return anything.
      */
     const finishOrStartLesson = async (nextLesson: Date, onFinish?: () => void): Promise<void> => {
-        if (!wifi.hasConnection) {
-            setNetworkError();
-            return;
-        }
+        const wifiConnectionAvailable = hasWifiConnection();
+        if (!wifiConnectionAvailable) return;
 
-        if (!isAuthenticated) {
-            setUnauthenticatedError(() => onFinish && onFinish());
-            return;
-        }
+        const isAuth = isAuthenticated(onFinish);
+        if (!isAuth) return;
 
-        /* Should not update if selectedLesson.id is an empty string */
-        if (state.selectedLesson.id === '') {
-            onFinish && onFinish();
-            setStatus({ code: 400, msg: lessonsMessages.UNSELECTED });
+        const canAlterate = canAlterateLesson(lessonsMessages.UNSELECTED, onFinish);
+        if (!canAlterate) return;
 
-            return;
-        }
-
-        /* If the selectedCourse is suspended or finished it should not be updated */
-        if (selectedCourse.suspended || selectedCourse.finished) {
-            onFinish && onFinish();
-            setStatus({ code: 400, msg: lessonsMessages.SUSPENDED_OR_FINISHED });
-
-            return;
-        }
+        const courseSelectedSuspendedOrFinished = isSelectedCourseSuspendedOrFinished(onFinish);
+        if (courseSelectedSuspendedOrFinished) return;
 
         setIsLessonLoading(true);
 
-        const finishOrStartDto = FinishOrStartLessonDto.create({ done: !state.selectedLesson.done, nextLesson });
-        const result = await LessonsService.finishOrStart(state.selectedLesson.id, selectedCourse.id, finishOrStartDto);
+        try {
+            const finishOrStartDto = FinishOrStartLessonDto.create({ done: !state.selectedLesson.done, nextLesson });
+            const lesson = await LessonsService.finishOrStart(state.selectedLesson.id, selectedCourse.id, finishOrStartDto);
 
-        if (result instanceof RequestError) {
+            updateLessonActionState(lesson);
+            updateLastLessonInCourse(lesson);
+            if (user.precursor !== 'ninguno') await loadLastLesson();
+
+            onFinish && onFinish();
+            const msg = (lesson.done) ? lessonsMessages.FINISHED_SUCCESS : lessonsMessages.RESTARTED_SUCCESS;
+            setStatus({ code: 200, msg });
+        }
+        catch (error) {
             setIsLessonLoading(false);
             onFinish && onFinish();
-            setTranslatedError(result.status, result.message);
 
-            return;
+            setError(error);
         }
-
-        updateLessonActionState(result);
-        updateLastLessonInCourse(result);
-        if (user.precursor !== 'ninguno') await loadLastLesson();
-
-        onFinish && onFinish();
-        setIsLessonLoading(false);
-
-        const msg = (result.done) ? lessonsMessages.FINISHED_SUCCESS : lessonsMessages.RESTARTED_SUCCESS;
-        setStatus({ code: 200, msg });
     }
 
     /**
@@ -209,35 +247,24 @@ const useLessons = () => {
      * @return {Promise<void>} Promise that resolves when the last lesson is loaded.
      */
     const loadLastLesson = async (): Promise<void> => {
-        if (!wifi.hasConnection) {
-            setNetworkError();
-            return;
+        const wifiConnectionAvailable = hasWifiConnection();
+        if (!wifiConnectionAvailable) return;
+
+        const isAuth = isAuthenticated();
+        if (!isAuth) return;
+
+        try {
+            const courseIds = await CoursesService.getCourseIdsByUserId(selectedCourse.userId);
+            const lastLesson = await LessonsService.getLastLessonByCoursesId(courseIds);
+
+            addLastLesson(lastLesson);
         }
-
-        setIsLastLessonLoading(true);
-
-        if (!isAuthenticated) {
-            setUnauthenticatedError(() => setIsLastLessonLoading(false));
-            return;
+        catch (error) {
+            setError(error);
         }
-
-        const resultCourses = await CoursesService.getCourseIdsByUserId(selectedCourse.userId);
-
-        if (resultCourses instanceof RequestError) {
+        finally {
             setIsLastLessonLoading(false);
-            setTranslatedError(resultCourses.status, resultCourses.message);
-            return;
         }
-
-        const result = await LessonsService.getLastLessonByCoursesId(resultCourses);
-
-        if (result instanceof RequestError) {
-            setIsLastLessonLoading(false);
-            setTranslatedError(result.status, result.message);
-            return;
-        }
-
-        addLastLesson(result);
     }
 
     /**
@@ -251,47 +278,42 @@ const useLessons = () => {
      * @return {Promise<void>} This function does not return anything.
      */
     const loadLessons = async ({ loadMore = false, refresh = false, search = '' }: LoadResourcesOptions): Promise<void> => {
-        if (!wifi.hasConnection) {
-            setNetworkError();
-            return;
-        }
+        const wifiConnectionAvailable = hasWifiConnection();
+        if (!wifiConnectionAvailable) return;
 
-        if (!isAuthenticated) {
-            setUnauthenticatedError();
-            return;
-        }
+        const isAuth = isAuthenticated();
+        if (!isAuth) return;
 
-         /* Should not update if selectedCourse .id is an empty string */
-        if (selectedCourse.id === '') {
-            setStatus({ code: 400, msg: coursesMessages.UNSELECTED });
-            return;
-        }
+        const isCourseEmpty = isSelectedCourseEmpty();
+        if (isCourseEmpty) return;
 
         setIsLessonsLoading(true);
 
-        const result = await LessonsService.getAllByCourseId(selectedCourse.id, {
-            search,
-            pagination: {
-                from: (refresh) ? 0 : state.lessonsPagination.from,
-                to: (refresh) ? 9 : state.lessonsPagination.to
-            }
-        });
-
-        if (result instanceof RequestError) {
-            setIsLessonsLoading(false);
-            setTranslatedError(result.status, result.message);
-            return;
-        }
-
-        if (result.length >= 10) {
-            setLessonsPagination({
-                from: (refresh) ? 10 : state.lessonsPagination.from + 10,
-                to: (refresh) ? 19 : state.lessonsPagination.to + 10
+        try {
+            const lessons = await LessonsService.getAllByCourseId(selectedCourse.id, {
+                search,
+                pagination: {
+                    from: (refresh) ? 0 : state.lessonsPagination.from,
+                    to: (refresh) ? 9 : state.lessonsPagination.to
+                }
             });
-        }
 
-        setHasMoreLessons(result.length >= 10);
-        (loadMore) ? addLessons(result) : setLessons(result);
+            if (lessons.length >= 10) {
+                setLessonsPagination({
+                    from: (refresh) ? 10 : state.lessonsPagination.from + 10,
+                    to: (refresh) ? 19 : state.lessonsPagination.to + 10
+                });
+            }
+
+            setHasMoreLessons(lessons.length >= 10);
+            (loadMore) ? addLessons(lessons) : setLessons(lessons);
+        }
+        catch (error) {
+            setError(error);
+        }
+        finally {
+            setIsLessonsLoading(false);
+        }
     }
 
     /**
@@ -301,36 +323,32 @@ const useLessons = () => {
      * @return {Promise<void>} This function does not return anything.
      */
     const saveLesson = async (lessonValues: LessonFormValues): Promise<void> => {
-        if (!wifi.hasConnection) {
-            setNetworkError();
-            return;
-        }
+        const wifiConnectionAvailable = hasWifiConnection();
+        if (!wifiConnectionAvailable) return;
 
-        if (!isAuthenticated) {
-            setUnauthenticatedError();
-            return;
-        }
+        const isAuth = isAuthenticated();
+        if (!isAuth) return;
 
         setIsLessonLoading(true);
 
-        const createDto = CreateLessonDto.create({ ...lessonValues, courseId: selectedCourse.id });
-        const result = await LessonsService.create(createDto);
+        try {
+            const createDto = CreateLessonDto.create({ ...lessonValues, courseId: selectedCourse.id });
+            const lesson = await LessonsService.create(createDto);
 
-        if (result instanceof RequestError) {
-            setIsLessonLoading(false);
-            setTranslatedError(result.status, result.message);
-            return;
+            addLastLessonInCourse(selectedCourse.id, lesson);
+
+            if (state.lessons.length > 0) addLesson(lesson);
+            else setIsLessonLoading(false);
+
+            if (user.precursor === 'ninguno') await loadLastLesson();
+
+            setStatus({ code: 201, msg: lessonsMessages.ADDED_SUCCESS });
+            navigation.navigate('LessonsScreen' as never);
         }
-
-        addLastLessonInCourse(selectedCourse.id, result);
-
-        if (state.lessons.length > 0) addLesson(result);
-        else setIsLessonLoading(false);
-
-        if (user.precursor === 'ninguno') await loadLastLesson();
-
-        setStatus({ code: 201, msg: lessonsMessages.ADDED_SUCCESS });
-        navigation.navigate('LessonsScreen' as never);
+        catch (error) {
+            setIsLessonLoading(false);
+            setError(error);
+        }
     }
 
     /**
@@ -340,39 +358,33 @@ const useLessons = () => {
      * @return {Promise<void>} This function does not return anything.
      */
     const updateLesson = async (lessonValues: LessonFormValues): Promise<void> => {
-        if (!wifi.hasConnection) {
-            setNetworkError();
-            return;
-        }
+        const wifiConnectionAvailable = hasWifiConnection();
+        if (!wifiConnectionAvailable) return;
 
-        if (!isAuthenticated) {
-            setUnauthenticatedError();
-            return;
-        }
+        const isAuth = isAuthenticated();
+        if (!isAuth) return;
 
-        if (state.selectedLesson.id === '') {
-            setStatus({ code: 400, msg: lessonsMessages.UNSELECTED_UPDATE });
-            return;
-        }
+        const canAlterate = canAlterateLesson(lessonsMessages.UNSELECTED_UPDATE);
+        if (canAlterate) return;
 
         setIsLessonLoading(true);
 
-        const updateDto = UpdateLessonDto.create(lessonValues);
-        const result = await LessonsService.update(state.selectedLesson.id, selectedCourse.id, updateDto);
+        try {
+            const updateDto = UpdateLessonDto.create(lessonValues);
+            const lesson = await LessonsService.update(state.selectedLesson.id, selectedCourse.id, updateDto);
 
-        if (result instanceof RequestError) {
-            setIsLessonLoading(false);
-            setTranslatedError(result.status, result.message);
-            return;
+            updateLastLessonInCourse(lesson);
+            updateLessonActionState(lesson);
+
+            setStatus({ code: 200, msg: lessonsMessages.UPDATED_SUCCESS });
+            navigation.goBack();
         }
-
-        updateLastLessonInCourse(result);
-        updateLessonActionState(result);
-
-        setIsLessonLoading(false);
-        setStatus({ code: 200, msg: lessonsMessages.UPDATED_SUCCESS });
-
-        navigation.goBack();
+        catch (error) {
+            setError(error);
+        }
+        finally {
+            setIsLessonLoading(false);
+        }
     }
 
     return {

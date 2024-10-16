@@ -35,7 +35,7 @@ export class ImageService {
             .from(bucket)
             .remove([ `${ folder }/${ imageId }` ]);
 
-        if (result.error) return new ImageError(result.error.message);
+        if (result.error) throw new ImageError(result.error.message);
         return null;
     }
 
@@ -45,9 +45,9 @@ export class ImageService {
      * @param {string} options.bucket - The bucket where the image will be uploaded
      * @param {string} options.folder - The folder where the image will be uploaded
      * @param {Image} options.image - The image to be uploaded
-     * @returns {Promise<string | ImageError>} - The URL of the uploaded image if successful, otherwise an error
+     * @returns {Promise<string>} - The URL of the uploaded image if successful
      */
-    public static async uploadImage({ bucket, folder, image }: UploadImageOptions): Promise<string | ImageError> {
+    public static async uploadImage({ bucket, folder, image }: UploadImageOptions): Promise<string> {
         const file = image.path.split('/')[image.path.split('/').length - 1];
         const [ fileName, fileExt ] = file.split('.');
         const id = Math.floor(Math.random()).toString(16);
@@ -58,7 +58,7 @@ export class ImageService {
                 contentType: image.mime
             });
 
-        if (result.error) return new ImageError(result.error.message);
+        if (result.error) throw new ImageError(result.error.message);
 
         const { data } = supabase.storage
             .from(bucket)

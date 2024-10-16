@@ -1,5 +1,3 @@
-import { AuthResponse } from '@supabase/supabase-js';
-
 /* Features */
 import { useAppDispatch, useAppSelector } from '@application/store';
 import {
@@ -14,16 +12,18 @@ import {
 } from '@application/features';
 
 /* DTOs */
-import { SignUpDto, UpdateProfileDto } from '@domain/dtos';
+import { SignUpDto, UpdateEmailDto, UpdateProfileDto } from '@domain/dtos';
 
 /* Entities */
 import { UserEntity } from '@domain/entities';
+
+/* Errors */
+import { DtoError, RequestError } from '@domain/errors';
 
 /* Hooks */
 import { useNetwork, useStatus } from '@shared';
 
 /* Interfaces */
-import { UserEndpoint } from '@infrasturcture/interfaces';
 import { SignInData, ProfileData, SignUpData, EmailData, UpdatePasswordData } from '../interfaces';
 
 /* Services */
@@ -39,43 +39,29 @@ import { authMessages } from '../utils';
 const useAuth = () => {
     const dispatch = useAppDispatch();
 
-    const { setStatus, setSupabaseError, setNetworkError } = useStatus();
-    const { wifi } = useNetwork();
+    const { setStatus, setError, setUnauthenticatedError } = useStatus();
+    const { hasWifiConnection, wifi } = useNetwork();
 
     const state = useAppSelector(store => store.auth);
 
     const clearAuth = () => dispatch(clearAuthAction());
+    const setUser = (token: string, user: UserEntity) => dispatch(setUserAction({ token, user }));
     const setIsAuthLoading = (isLoading: boolean) => dispatch(setIsAuthLoadingAction({ isLoading }));
 
-    /**
-     * If the response is an error, set the error and return, otherwise
-     * set the user.
-     * @param {AuthResponse} AuthResponse - this is the response from the API call.
-     *
-     * @return {void} This function does not return any value.
-     */
-    const setUser = ({ data: { user, session }, error }: AuthResponse): void => {
-        const next = setSupabaseError(error, 400, () => {
-            dispatch(clearCourses());
-            dispatch(clearLessons());
-            dispatch(clearPreaching());
-            dispatch(clearRevisits());
-            dispatch(clearAuthAction());
-            NotificationsService.close();
-        });
+    const handleFailAuth = (): void => {
+        dispatch(clearCourses());
+        dispatch(clearLessons());
+        dispatch(clearPreaching());
+        dispatch(clearRevisits());
+        dispatch(clearAuthAction());
+        NotificationsService.close();
+    }
 
-        if (next) return;
+    const isAuthenticated = (onError?: () => void): boolean => {
+        const value = state.isAuthenticated;
+        if (!value) setUnauthenticatedError(onError);
 
-        dispatch(setUserAction({
-            token: session?.access_token!,
-            user: UserEntity.fromEndpoint({
-                ...user?.user_metadata,
-                id: user?.id!,
-                createdAt: user?.created_at!,
-                updatedAt: user?.updated_at!,
-                email: user?.email!,
-            } as UserEndpoint)
-        }));
+        return value;
     }
 
     /**
@@ -86,13 +72,17 @@ const useAuth = () => {
     const getAuth = async (): Promise<void> => {
         if (!state.token) return;
 
-        if (!wifi.hasConnection) {
-            setNetworkError();
-            return;
-        }
+        const wifiConnectionAvailable = hasWifiConnection();
+        if (!wifiConnectionAvailable) return;
 
-        const result = await AuthService.getSession(state.token);
-        setUser(result);
+        try {
+            const { token, user } = await AuthService.getSession(state.token);
+            setUser(token, user);
+        }
+        catch (error) {
+            setError(error);
+            handleFailAuth();
+        }
     }
 
     /**
@@ -102,23 +92,24 @@ const useAuth = () => {
      * @return {Promise<void>} A promise that resolves when the password reset is complete.
      */
     const resetPassword = async ({ email }: EmailData): Promise<void> => {
-        if (!wifi.hasConnection) {
-            setNetworkError();
-            return;
-        }
+        const wifiConnectionAvailable = hasWifiConnection();
+        if (!wifiConnectionAvailable) return;
 
         setIsAuthLoading(true);
 
-        const { error } = await AuthService.resetPassword(email);
+        try {
+            await AuthService.resetPassword(email);
 
-        const next = setSupabaseError(error, 400, () => setIsAuthLoading(false));
-        if (next) return;
+            let msg = `Hemos enviado un correo de restablecimiento de contraseña a ${ email }. `;
+            msg += 'Por favor revísalo y sigue los pasos para recuperar tu cuenta.';
 
-        let msg = `Hemos enviado un correo de restablecimiento de contraseña a ${ email }. `;
-        msg += 'Por favor revísalo y sigue los pasos para recuperar tu cuenta.';
-
-        setIsAuthLoading(false);
-        setStatus({ code: 200, msg });
+            setIsAuthLoading(false);
+            setStatus({ code: 200, msg });
+        }
+        catch (error) {
+            setIsAuthLoading(false);
+            setError(error);
+        }
     }
 
     /**
@@ -129,15 +120,23 @@ const useAuth = () => {
      * @return {Promise<void>} A promise that resolves when the sign-in process is complete.
      */
     const signIn = async ({ email, password }: SignInData): Promise<void> => {
-        if (!wifi.hasConnection) {
-            setNetworkError('Lo sentimos pero no dispones de conexión a Internet.');
-            return;
-        }
+        const wifiConnectionAvailable = hasWifiConnection('Lo sentimos pero no dispones de conexión a Internet.');
+        if (!wifiConnectionAvailable) return;
 
         setIsAuthLoading(true);
 
-        const result = await AuthService.signIn(email, password);
-        setUser(result);
+        try {
+            const { token, user } = await AuthService.signIn(email, password);
+            setUser(token, user);
+        }
+        catch (error) {
+            setError(error);
+            handleFailAuth();
+        }
+        finally {
+            setIsAuthLoading(false);
+        }
+
     }
 
     /**
@@ -152,7 +151,7 @@ const useAuth = () => {
         if (wifi.hasConnection) {
             const { error } = await AuthService.signOut();
             NotificationsService.close();
-            setSupabaseError(error, 500);
+            if (error) setError(error);
         }
 
         dispatch(clearCourses());
@@ -173,43 +172,34 @@ const useAuth = () => {
      * @return {Promise<void>} A promise that resolves when the sign-up process is complete.
      */
     const signUp = async (data: SignUpData, onSuccess?: () => void): Promise<void> => {
-        if (!wifi.hasConnection) {
-            setNetworkError('Lo sentimos pero no dispones de conexión a Internet.');
-            return;
-        }
+        const wifiConnectionAvailable = hasWifiConnection('Lo sentimos pero no dispones de conexión a Internet.');
+        if (!wifiConnectionAvailable) return;
 
         setIsAuthLoading(true);
 
-        const signUpDto = SignUpDto.create(data);
-        const result = await AuthService.signUp(signUpDto);
+        try {
+            const signUpDto = SignUpDto.create(data);
+            const result = await AuthService.signUp(signUpDto);
 
-        if (result.emailAlreadyExists) {
-            setIsAuthLoading(false);
-            setStatus({ code: 400, msg: authMessages.EMAIL_ALREADY_REGISTERED });
-
+            if (result.emailAlreadyExists) throw new RequestError(authMessages.EMAIL_ALREADY_REGISTERED, 400);
             await AuthService.signOut();
-            return;
+
+            onSuccess && onSuccess();
+
+            let msg = `Hemos enviado un correo de confirmación a ${ data.email }. `
+                msg += 'Por favor, revíselo y siga los pasos que se le indiquen.';
+
+            setIsAuthLoading(false);
+            setStatus({ code: 200, msg });
         }
-
-        const next = setSupabaseError(result.error, 400, () => {
-            clearAuth();
+        catch (error) {
+            await AuthService.signOut();
             NotificationsService.close();
-        });
+            clearAuth();
+            setIsAuthLoading(false);
 
-        if (next) return;
-
-        const { error: errorSignOut } = await AuthService.signOut();
-
-        const nextSignOut = setSupabaseError(errorSignOut, 400, () => setIsAuthLoading(false));
-        if (nextSignOut) return;
-
-        onSuccess && onSuccess();
-
-        let msg = `Hemos enviado un correo de confirmación a ${ data.email }. `
-            msg += 'Por favor, revíselo y siga los pasos que se le indiquen.';
-
-        setIsAuthLoading(false);
-        setStatus({ code: 200, msg });
+            setError(error);
+        }
     }
 
     /**
@@ -220,46 +210,39 @@ const useAuth = () => {
      * @return {Promise<void>} - A promise that resolves when the update is complete.
      */
     const updateEmail = async ({ email }: EmailData, onFinish?: () => void): Promise<void> => {
-        if (!wifi.hasConnection) {
-            setNetworkError();
-            return;
-        }
+        const wifiConnectionAvailable = hasWifiConnection();
+        if (!wifiConnectionAvailable) return;
 
         setIsAuthLoading(true);
 
-        if (email.trim().length === 0) {
+        const emailDto = UpdateEmailDto.create(email, state.user.email);
+
+        if (emailDto instanceof DtoError) {
             setIsAuthLoading(false);
             onFinish && onFinish();
-            setStatus({ code: 400, msg: authMessages.EMAIL_EMPTY });
+            setStatus({ code: 400, msg: emailDto.message });
 
             return;
         }
 
-        if (state.user.email === email) {
+        try {
+            await AuthService.updateEmail(emailDto);
+
             setIsAuthLoading(false);
             onFinish && onFinish();
-            setStatus({ code: 400, msg: authMessages.EMAIL_UPDATE_UNCHANGED });
 
-            return;
+            let msg = `Hemos mandado un correo de confirmación a ${ state.user.email }. `;
+            msg += `Por favor revísalo. Una vez confirmes ese correo se enviará otro a ${ email }. `
+            msg += 'Ese también confírmalo para efectuar el cambio.'
+
+            setStatus({ code: 200, msg });
         }
-
-        const { error } = await AuthService.updateEmail(email);
-
-        const next = setSupabaseError(error, 400, () => {
+        catch (error) {
             setIsAuthLoading(false);
             onFinish && onFinish();
-        });
 
-        if (next) return;
-
-        setIsAuthLoading(false);
-        onFinish && onFinish();
-
-        let msg = `Hemos mandado un correo de confirmación a ${ state.user.email }. `;
-        msg += `Por favor revísalo. Una vez confirmes ese correo se enviará otro a ${ email }. `
-        msg += 'Ese también confírmalo para efectuar el cambio.'
-
-        setStatus({ code: 200, msg });
+            setError(error);
+        }
     }
 
     /**
@@ -270,10 +253,8 @@ const useAuth = () => {
      * @return {Promise<void>} A promise that resolves when the password update is complete.
      */
     const updatePassword = async ({ password }: UpdatePasswordData, onFinish?: () => void): Promise<void> => {
-        if (!wifi.hasConnection) {
-            setNetworkError();
-            return;
-        }
+        const wifiConnectionAvailable = hasWifiConnection();
+        if (!wifiConnectionAvailable) return;
 
         setIsAuthLoading(true);
 
@@ -285,18 +266,19 @@ const useAuth = () => {
             return;
         }
 
-        const { error } = await AuthService.updatePassword(password);
+        try {
+            await AuthService.updatePassword(password);
 
-        const next = setSupabaseError(error, 400, () => {
             setIsAuthLoading(false);
             onFinish && onFinish();
-        });
+            setStatus({ code: 200, msg: authMessages.PASSWORD_UPDATED });
+        }
+        catch (error) {
+            setIsAuthLoading(false);
+            onFinish && onFinish();
 
-        if (next) return;
-
-        setIsAuthLoading(false);
-        onFinish && onFinish();
-        setStatus({ code: 200, msg: authMessages.PASSWORD_UPDATED });
+            setError(error);
+        }
     }
 
     /**
@@ -306,21 +288,24 @@ const useAuth = () => {
      * @return {Promise<void>} This function does not return anything.
      */
     const updateProfile = async (values: ProfileData): Promise<void> => {
-        if (!wifi.hasConnection) {
-            setNetworkError();
-            return;
-        }
+        const wifiConnectionAvailable = hasWifiConnection();
+        if (!wifiConnectionAvailable) return;
 
         setIsAuthLoading(true);
 
-        const updateDto = UpdateProfileDto.create(values);
-        const { error } = await AuthService.updateProfile(updateDto);
+        try {
+            const updateDto = UpdateProfileDto.create(values);
+            const user = await AuthService.updateProfile(updateDto);
 
-        const next = setSupabaseError(error, 400, () => setIsAuthLoading(false));
-        if (next) return;
-
-        dispatch(updateUser({ user: { ...state.user, ...values } }));
-        setStatus({ code: 200, msg: authMessages.PROFILE_UPDATED });
+            dispatch(updateUser({ user: { ...state.user, ...user } }));
+            setStatus({ code: 200, msg: authMessages.PROFILE_UPDATED });
+        }
+        catch (error) {
+            setError(error);
+        }
+        finally {
+            setIsAuthLoading(false);
+        }
     }
 
     return {
@@ -331,6 +316,7 @@ const useAuth = () => {
 
         // Functions
         getAuth,
+        isAuthenticated,
         resetPassword,
         signIn,
         signOut,

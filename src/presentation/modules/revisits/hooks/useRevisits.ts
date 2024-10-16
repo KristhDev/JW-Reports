@@ -32,10 +32,8 @@ import { CompleteRevisitDto, CreateRevisitDto, UpdateRevisitDto } from '@domain/
 /* Entities */
 import { RevisitEntity } from '@domain/entities';
 
-/* Errors */
-import { ImageError, RequestError } from '@domain/errors';
-
 /* Hooks */
+import { authMessages, useAuth } from '@auth';
 import { useImage, useNetwork, useStatus } from '@shared';
 
 /* Interfaces */
@@ -43,7 +41,6 @@ import { loadRevisitsOptions, RevisitFilter, RevisitFormValues, SaveRevisitOptio
 
 /* Services */
 import { RevisitsService } from '../services';
-import { LoggerService } from '@services';
 
 /* Utils */
 import { revisitsMessages } from '../utils';
@@ -59,11 +56,12 @@ const useRevisits = () => {
     const navigation = useNavigation();
 
     const state = useAppSelector(store => store.revisits);
-    const { isAuthenticated, user } = useAppSelector(store => store.auth);
+    const { user } = useAppSelector(store => store.auth);
 
+    const { isAuthenticated } = useAuth();
     const { uploadImage, deleteImage } = useImage();
-    const { setStatus, setTranslatedError, setUnauthenticatedError, setNetworkError } = useStatus();
-    const { wifi } = useNetwork();
+    const { setStatus, setError } = useStatus();
+    const { hasWifiConnection } = useNetwork();
 
     const addRevisit = (revisit: RevisitEntity) => dispatch(addRevisitAction({ revisit }));
     const addRevisits = (revisits: RevisitEntity[]) => dispatch(addRevisitsAction({ revisits }));
@@ -85,49 +83,66 @@ const useRevisits = () => {
     const updateRevisitActionState = (revisit: RevisitEntity) => dispatch(updateRevisitAction({ revisit }));
 
     /**
+     * This function checks if the user can alterate a revisit.
+     *
+     * @param {string} unSelectedMsg - The message to display if the revisit is not selected.
+     * @param {Function} onError - The callback that will be executed if the user can't alterate the revisit.
+     * @return {boolean} This function returns `true` if the user can alterate the revisit, `false` otherwise.
+     */
+    const canAlterateRevisit = (unSelectedMsg: string, onError?: () => void): boolean => {
+        if (state.selectedRevisit.id === '') {
+            onError && onError();
+            setStatus({ code: 400, msg: unSelectedMsg });
+
+            return false;
+        }
+
+        if (state.selectedRevisit.userId !== user.id) {
+            onError && onError();
+            setStatus({ code: 400, msg: authMessages.UNAUTHORIZED });
+
+            return false;
+        }
+
+        return true;
+    }
+
+    /**
      * This function is to mark a revisit as complete.
      *
-     * @param {Function} onFail - This callback executed when the process is failed
+     * @param {Function} onError - This callback executed when the process is failed
      * @return {Promise<string | void>} This function returns a string
      */
-    const completeRevisit = async (onFail?: () => void): Promise<string> => {
-        if (!wifi.hasConnection) {
-            setNetworkError();
-            return '';
-        }
+    const completeRevisit = async (onError?: () => void): Promise<string> => {
+        const wifiConnectionAvailable = hasWifiConnection();
+        if (!wifiConnectionAvailable) return '';
 
+        const isAuth = isAuthenticated();
+        if (!isAuth) return '';
 
-        if (!isAuthenticated) {
-            setUnauthenticatedError(() => onFail && onFail());
-            return '';
-        }
-
-        /* Should not update if selectedRevisit.id is an empty string */
-        if (state.selectedRevisit.id === '') {
-            onFail && onFail();
-            setStatus({ code: 400, msg: revisitsMessages.UNSELECTED_COMPLETE });
-            return '';
-        }
+        const canAlterate = canAlterateRevisit(revisitsMessages.UNSELECTED_COMPLETE, onError);
+        if (!canAlterate) return '';
 
         setIsRevisitLoading(true);
 
-        const completeDto = CompleteRevisitDto.create(true);
-        const result = await RevisitsService.complete(state.selectedRevisit.id, user.id, completeDto);
+        try {
+            const completeDto = CompleteRevisitDto.create(true);
+            const revisit = await RevisitsService.complete(state.selectedRevisit.id, user.id, completeDto);
 
-        if (result instanceof RequestError) {
-            LoggerService.error(result);
-            onFail && onFail();
+            updateRevisitActionState(revisit);
+            setSelectedRevisit(revisit);
+
+            if (user.precursor === 'ninguno' && state.lastRevisit.id === state.selectedRevisit.id) setLastRevisit(revisit);
+
+            return revisitsMessages.COMPLETED_SUCCESS;
+        }
+        catch (error) {
             setIsRevisitLoading(false);
-            setTranslatedError(result.status, result.message);
+            onError && onError();
+
+            setError(error);
             return '';
         }
-
-        updateRevisitActionState(result);
-        setSelectedRevisit(result);
-
-        if (user.precursor === 'ninguno' && state.lastRevisit.id === state.selectedRevisit.id) setLastRevisit(result);
-
-        return revisitsMessages.COMPLETED_SUCCESS;
     }
 
     /**
@@ -138,61 +153,42 @@ const useRevisits = () => {
      * @return {Promise<void>} This function does not return anything
      */
     const deleteRevisit = async (back: boolean = false, onFinish?: () => void): Promise<void> => {
-        if (!wifi.hasConnection) {
-            setNetworkError();
-            return;
-        }
+        const wifiConnectionAvailable = hasWifiConnection();
+        if (!wifiConnectionAvailable) return;
 
+        const isAuth = isAuthenticated(onFinish);
+        if (!isAuth) return;
 
-        if (!isAuthenticated) {
-            setUnauthenticatedError(() => onFinish && onFinish());
-            return;
-        }
-
-        /* Should not delete if selectedRevisit.id is an empty string */
-        if (state.selectedRevisit.id === '') {
-            onFinish && onFinish();
-            setStatus({ code: 400, msg: revisitsMessages.UNSELECTED_DELETE });
-
-            return;
-        }
+        const canAlterate = canAlterateRevisit(revisitsMessages.UNSELECTED_DELETE, onFinish);
+        if (!canAlterate) return;
 
         setIsRevisitDeleting(true);
 
-        /* If revisit has a photo you have to delete it */
-        if (state.selectedRevisit.photo) {
-            const imageResult = await deleteImage(state.selectedRevisit.photo);
-            let hasError = false;
+        try {
+            /* If revisit has a photo you have to delete it */
+            if (state.selectedRevisit.photo) await deleteImage(state.selectedRevisit.photo);
+            await RevisitsService.delete(state.selectedRevisit.id, user.id);
 
-            if (imageResult instanceof RequestError) {
-                setIsRevisitDeleting(false);
-                onFinish && onFinish();
-                setTranslatedError(imageResult.status, imageResult.message);
-                hasError = true;
-            }
+            removeRevisit(state.selectedRevisit.id);
 
-            if (hasError) return;
-        }
-
-        const result = await RevisitsService.delete(state.selectedRevisit.id, user.id);
-
-        if (result instanceof RequestError) {
             setIsRevisitDeleting(false);
             onFinish && onFinish();
-            setTranslatedError(result.status, result.message);
+
+            back && navigation.navigate('RevisitsTopTabsNavigation' as never);
+
+            if (user.precursor === 'ninguno' && state.lastRevisit.id === state.selectedRevisit.id) {
+                await loadLastRevisit();
+            }
+
+            setSelectedRevisit(INIT_REVISIT);
+            setStatus({ code: 200, msg: revisitsMessages.DELETED_SUCCESS });
         }
+        catch (error) {
+            setIsRevisitDeleting(false);
+            onFinish && onFinish();
 
-        removeRevisit(state.selectedRevisit.id);
-        onFinish && onFinish();
-        back && navigation.navigate('RevisitsTopTabsNavigation' as never);
-
-        setSelectedRevisit(INIT_REVISIT);
-
-        if (user.precursor === 'ninguno' && state.lastRevisit.id === state.selectedRevisit.id) {
-            await loadLastRevisit();
+            setError(error);
         }
-
-        setStatus({ code: 200, msg: revisitsMessages.DELETED_SUCCESS });
     }
 
     /**
@@ -201,26 +197,24 @@ const useRevisits = () => {
      * @return {Promise<void>} - Returns a promise that resolves when the last revisit is loaded.
      */
     const loadLastRevisit = async (): Promise<void> => {
-        if (!wifi.hasConnection) {
-            setNetworkError();
-            return;
-        }
+        const wifiConnectionAvailable = hasWifiConnection();
+        if (!wifiConnectionAvailable) return;
 
-        if (!isAuthenticated) {
-            setUnauthenticatedError();
-            return;
-        }
+        const isAuth = isAuthenticated();
+        if (!isAuth) return;
 
         setIsLastRevisitLoading(true);
-        const result = await RevisitsService.getLastByUserId(user.id);
 
-        if (result instanceof RequestError) {
-            setIsLastRevisitLoading(false);
-            setTranslatedError(result.status, result.message);
-            return;
+        try {
+            const lastRevisit = await RevisitsService.getLastByUserId(user.id);
+            setLastRevisit(lastRevisit);
         }
-
-        setLastRevisit(result);
+        catch (error) {
+            setError(error);
+        }
+        finally {
+            setIsLastRevisitLoading(false);
+        }
     }
 
     /**
@@ -233,19 +227,15 @@ const useRevisits = () => {
      * - refresh: This flag is to reset the pagination of the revisits, default is `false`
      * - search: This is a search text to search revisits, default is empty `string`
      * @return {Promise<void>} This function does not return anything.
-    */
+     */
     const loadRevisits = async ({ filter, loadMore = false, refresh = false, search = '' }: loadRevisitsOptions): Promise<void> => {
         setRevisitFilter(filter);
 
-        if (!wifi.hasConnection) {
-            setNetworkError();
-            return;
-        }
+        const wifiConnectionAvailable = hasWifiConnection();
+        if (!wifiConnectionAvailable) return;
 
-        if (!isAuthenticated) {
-            setUnauthenticatedError();
-            return;
-        }
+        const isAuth = isAuthenticated();
+        if (!isAuth) return;
 
         setIsRevisitsLoading(true);
 
@@ -258,23 +248,25 @@ const useRevisits = () => {
             }
         }
 
-        const result = await RevisitsService.getAllByUserId(user.id, options);
+        try {
+            const revisits = await RevisitsService.getAllByUserId(user.id, options);
 
-        if (result instanceof RequestError) {
-            setIsRevisitsLoading(false)
-            setTranslatedError(result.status, result.message);
-            return;
+            if (revisits.length >= 10) {
+                setRevisitsPagination({
+                    from: (refresh) ? 10 : state.revisitsPagination.from + 10,
+                    to: (refresh) ? 19 : state.revisitsPagination.to + 10
+                });
+            }
+
+            setHasMoreRevisits(revisits.length >= 10);
+            (loadMore) ? addRevisits(revisits) : setRevisits(revisits);
         }
-
-        if (result.length >= 10) {
-            setRevisitsPagination({
-                from: (refresh) ? 10 : state.revisitsPagination.from + 10,
-                to: (refresh) ? 19 : state.revisitsPagination.to + 10
-            });
+        catch (error) {
+            setError(error);
         }
-
-        setHasMoreRevisits(result.length >= 10);
-        (loadMore) ? addRevisits(result) : setRevisits(result);
+        finally {
+            setIsRevisitsLoading(false);
+        }
     }
 
     /**
@@ -289,58 +281,42 @@ const useRevisits = () => {
      * @return {Promise<void>} This function does not return anything.
      */
     const saveRevisit = async ({ revisitValues, back = true, image, onFinish }: SaveRevisitOptions): Promise<void> => {
-        if (!wifi.hasConnection) {
-            setNetworkError();
-            return;
-        }
+        const wifiConnectionAvailable = hasWifiConnection();
+        if (!wifiConnectionAvailable) return;
 
-        if (!isAuthenticated) {
-            setUnauthenticatedError(() => onFinish && onFinish());
-            return;
-        }
+        const isAuth = isAuthenticated(onFinish);
+        if (!isAuth) return;
 
         setIsRevisitLoading(true);
 
-        let photo = null;
+        try {
+            let photo = null;
 
-        /* If image is other than undefined, an attempt is made to upload */
-        if (image) {
-            const uploadResult = await uploadImage(image, SUPABASE_REVISITS_FOLDER);
-            let hasError = false;
+            /* If image is other than undefined, an attempt is made to upload */
+            if (image) photo = await uploadImage(image, SUPABASE_REVISITS_FOLDER);
+            const createDto = CreateRevisitDto.create({ ...revisitValues, userId: user.id, photo });
+            const revisit = await RevisitsService.create(createDto);
 
-            if (uploadResult instanceof ImageError) {
-                setIsRevisitLoading(false);
-                onFinish && onFinish();
-                setTranslatedError(400, uploadResult.message);
-                hasError = true;
+            addRevisit(revisit);
 
-                return;
-            }
-
-            if (hasError) return;
-            photo = uploadResult;
-        }
-
-        const createDto = CreateRevisitDto.create({ ...revisitValues, userId: user.id, photo });
-        const result = await RevisitsService.create(createDto);
-
-        if (result instanceof RequestError) {
-            setTranslatedError(result.status, result.message);
             setIsRevisitLoading(false);
-            return;
+            onFinish && onFinish();
+
+            const successMsg = (back)
+                ? revisitsMessages.ADDED_SUCCESS
+                : `Has agregado correctamente a ${ revisit.personName } para volverla a visitar.`
+
+            setStatus({ code: 201, msg: successMsg });
+
+            back && navigation.navigate('RevisitsTopTabsNavigation' as never);
+            if (user.precursor === 'ninguno') await loadLastRevisit();
         }
+        catch (error) {
+            setIsRevisitLoading(false);
+            onFinish && onFinish();
 
-        addRevisit(result);
-        onFinish && onFinish();
-
-        const successMsg = (back)
-            ? revisitsMessages.ADDED_SUCCESS
-            : `Has agregado correctamente a ${ result.personName } para volverla a visitar.`
-
-        setStatus({ code: 201, msg: successMsg });
-
-        back && navigation.navigate('RevisitsTopTabsNavigation' as never);
-        if (user.precursor === 'ninguno') await loadLastRevisit();
+            setError(error);
+        }
     }
 
     /**
@@ -351,73 +327,42 @@ const useRevisits = () => {
      * @return {Promise<void>} This function does not return anything
      */
     const updateRevisit = async (revisitValues: RevisitFormValues, image: Image | null): Promise<void> => {
-        if (!wifi.hasConnection) {
-            setNetworkError();
-            return;
-        }
-        if (!isAuthenticated) {
-            setUnauthenticatedError();
-            return;
-        }
+        const wifi = hasWifiConnection();
+        if (!wifi) return;
 
-        if (state.selectedRevisit.id === '') {
-            setStatus({ code: 400, msg: revisitsMessages.UNSELECTED_UPDATE });
-            return;
-        }
+        const isAuth = isAuthenticated();
+        if (!isAuth) return;
+
+        const canAlterate = canAlterateRevisit(revisitsMessages.UNSELECTED_UPDATE);
+        if (!canAlterate) return;
 
         setIsRevisitLoading(true);
 
-        let photo = state.selectedRevisit.photo;
+        try {
+            let photo = state.selectedRevisit.photo;
 
-        /* If image is other than undefined, an attempt is made to upload */
-        if (image) {
+            /* If image is other than undefined, an attempt is made to upload */
+            if (image) {
 
-            /* If revisit has an image you have to delete it to update it with the new one */
-            if (photo && photo.trim().length > 0) {
-                const imageResult = await deleteImage(photo);
-                let hasError = false;
-
-                if (imageResult instanceof ImageError) {
-                    setIsRevisitLoading(false);
-                    setTranslatedError(400, imageResult.message);
-                    hasError = true;
-
-                    return;
-                }
-
-                if (hasError) return;
+                /* If revisit has an image you have to delete it to update it with the new one */
+                if (photo && photo.trim().length > 0) await deleteImage(photo);
+                photo = await uploadImage(image, SUPABASE_REVISITS_FOLDER);
             }
 
-            const uploadResult = await uploadImage(image, SUPABASE_REVISITS_FOLDER);
-            let hasError = false;
+            const updateDto = UpdateRevisitDto.create({ ...revisitValues, photo, updatedAt: new Date() });
+            const revisit = await RevisitsService.update(state.selectedRevisit.id, user.id, updateDto);
 
-            if (uploadResult instanceof ImageError) {
-                setIsRevisitLoading(false);
-                setTranslatedError(400, uploadResult.message);
-                hasError = true;
+            updateRevisitActionState(revisit);
+            setStatus({ code: 200, msg: revisitsMessages.UPDATED_SUCCESS });
 
-                return;
-            }
+            if (user.precursor === 'ninguno') await loadLastRevisit();
 
-            if (hasError) return;
-            photo = uploadResult;
+            navigation.goBack();
         }
-
-        const updateDto = UpdateRevisitDto.create({ ...revisitValues, photo, updatedAt: new Date() });
-        const result = await RevisitsService.update(state.selectedRevisit.id, user.id, updateDto);
-
-        if (result instanceof RequestError) {
+        catch (error) {
             setIsRevisitLoading(false);
-            setTranslatedError(result.status, result.message);
-            return;
+            setError(error);
         }
-
-        updateRevisitActionState(result);
-        setStatus({ code: 200, msg: revisitsMessages.UPDATED_SUCCESS });
-
-        if (user.precursor === 'ninguno') await loadLastRevisit();
-
-        navigation.goBack();
     }
 
     return {
