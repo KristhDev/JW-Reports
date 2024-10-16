@@ -2,7 +2,7 @@
 import { supabase } from '@config';
 
 /* Features */
-import { INIT_COURSE, INIT_LESSON, Pagination } from '@application/features';
+import { INIT_COURSE, INIT_LESSON } from '@application/features';
 
 /* DTOs */
 import { CreateLessonDto, FinishOrStartLessonDto, UpdateLessonDto } from '@domain/dtos';
@@ -14,12 +14,7 @@ import { LessonEntity, LessonWithCourseEntity } from '@domain/entities';
 import { RequestError } from '@domain/errors';
 
 /* Interfaces */
-import { LessonEndpoint, LessonWithCourseEndpoint } from '@infrasturcture/interfaces';
-
-interface GetAllOptions {
-    search: string;
-    pagination: Pagination;
-}
+import { GetAllOptions, LessonEndpoint, LessonWithCourseEndpoint } from '@infrasturcture/interfaces';
 
 export class LessonsService {
     /**

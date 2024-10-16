@@ -1,9 +1,6 @@
 /* Config */
 import { supabase } from '@config';
 
-/* Features */
-import { Pagination } from '@application/features';
-
 /* DTOs */
 import { ActiveOrSuspendCourseDto, CreateCourseDto, FinishOrStartCourseDto, UpdateCourseDto } from '@domain/dtos';
 
@@ -14,14 +11,8 @@ import { CourseEntity } from '@domain/entities';
 import { RequestError } from '@domain/errors';
 
 /* Interfaces */
-import { CourseEndpoint } from '@infrasturcture/interfaces';
+import { CourseEndpoint, GetAllOptions } from '@infrasturcture/interfaces';
 import { CourseFilter } from '@courses';
-
-interface GetAllOptions {
-    filter: CourseFilter
-    pagination: Pagination,
-    search: string
-}
 
 export class CoursesService {
     /**
@@ -128,17 +119,17 @@ export class CoursesService {
      * This function is responsible for getting all the courses of a user.
      *
      * @param {string} userId - The id of the user.
-     * @param {GetAllOptions} options - The options to filter the courses.
+     * @param {GetAllOptions<CourseFilter>} options - The options to filter the courses.
      * @returns {Promise<CourseEntity[]>} - The courses of the user if the request was successful.
      */
-    public static async getAllByUserId(userId: string, options: GetAllOptions): Promise<CourseEntity[]> {
+    public static async getAllByUserId(userId: string, options: GetAllOptions<CourseFilter>): Promise<CourseEntity[]> {
         const coursesPromise = supabase.from('courses')
             .select('*, lessons (*)')
             .eq('user_id', userId)
 
-        if (options.filter === 'active') coursesPromise.eq('suspended', false).eq('finished', false)
-        else if (options.filter === 'suspended') coursesPromise.eq('suspended', true).eq('finished', false)
-        else if (options.filter === 'finished') coursesPromise.eq('suspended', false).eq('finished', true);
+        if (options?.filter === 'active') coursesPromise.eq('suspended', false).eq('finished', false)
+        else if (options?.filter === 'suspended') coursesPromise.eq('suspended', true).eq('finished', false)
+        else if (options?.filter === 'finished') coursesPromise.eq('suspended', false).eq('finished', true);
 
         if (options.search.trim().length > 0) {
             let searchQuery = `person_name.ilike.%${ options.search }%,`;

@@ -2,7 +2,7 @@
 import { supabase } from '@config';
 
 /* Features */
-import { INIT_REVISIT, Pagination } from '@application/features';
+import { INIT_REVISIT } from '@application/features';
 
 /* DTOs */
 import { CompleteRevisitDto, CreateRevisitDto, UpdateRevisitDto } from '@domain/dtos';
@@ -14,14 +14,8 @@ import { RevisitEntity } from '@domain/entities';
 import { RequestError } from '@domain/errors';
 
 /* Interfaces */
-import { RevisitEndpoint } from '@infrasturcture/interfaces';
+import { GetAllOptions, RevisitEndpoint } from '@infrasturcture/interfaces';
 import { RevisitFilter } from '@revisits';
-
-interface GetAllOptions {
-    filter: RevisitFilter
-    pagination: Pagination,
-    search: string
-}
 
 export class RevisitsService {
     /**
@@ -102,11 +96,11 @@ export class RevisitsService {
      * Gets all the revisits of a user with the given id, using the given options.
      *
      * @param {string} userId - The id of the user whose revisits to get.
-     * @param {GetAllOptions} options - The options to use to get the revisits.
+     * @param {GetAllOptions<RevisitFilter>} options - The options to use to get the revisits.
      * @returns {Promise<RevisitEntity[]>} A promise that resolves with an array of
      * revisits or a RequestError if something goes wrong.
      */
-    public static async getAllByUserId(userId: string, options: GetAllOptions): Promise<RevisitEntity[]> {
+    public static async getAllByUserId(userId: string, options: GetAllOptions<RevisitFilter>): Promise<RevisitEntity[]> {
         const revisitsPromise = supabase.from('revisits')
             .select<'*', RevisitEndpoint>()
             .eq('user_id', userId);
