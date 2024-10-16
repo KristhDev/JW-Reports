@@ -30,7 +30,14 @@ export class PreachingService {
             .select<'*', PreachingEndpoint>()
             .single();
 
-        if (result.error) throw new RequestError(result.error.message, result.status);
+        if (result.error) {
+            throw new RequestError(
+                result.error.message,
+                result.status || 400,
+                result.error.code
+            );
+        }
+
         return PreachingEntity.fromEndpoint(result.data);
     }
 
@@ -48,7 +55,13 @@ export class PreachingService {
             .eq('id', id)
             .eq('user_id', userId);
 
-        if (result.error) throw new RequestError(result.error.message, result.status);
+        if (result.error) {
+            throw new RequestError(
+                result.error.message,
+                result.status || 400,
+                result.error.code
+            );
+        }
     }
 
     /**
@@ -71,7 +84,14 @@ export class PreachingService {
             .order('day', { ascending: true })
             .order('init_hour', { ascending: true });
 
-        if (result.error) throw new RequestError(result.error.message, result.status);
+        if (result.error) {
+            throw new RequestError(
+                result.error.message,
+                result.status || 400,
+                result.error.code
+            );
+        }
+
         return result.data.map(PreachingEntity.fromEndpoint);
     }
 
@@ -92,7 +112,14 @@ export class PreachingService {
             .select<'*', PreachingEndpoint>()
             .single();
 
-        if (result.error) throw new RequestError(result.error.message, result.status);
+        if (result.error) {
+            throw new RequestError(
+                result.error.message,
+                result.status || 400,
+                result.error.code
+            );
+        }
+
         return PreachingEntity.fromEndpoint(result.data);
     }
 }

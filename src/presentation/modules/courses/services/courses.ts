@@ -40,7 +40,14 @@ export class CoursesService {
             .select<'*', CourseEndpoint>()
             .single();
 
-        if (result.error) throw new RequestError(result.error.message, result.status);
+        if (result.error) {
+            throw new RequestError(
+                result.error.message,
+                result.status || 400,
+                result.error.code
+            );
+        }
+
         return CourseEntity.fromEndpoint(result.data);
     }
 
@@ -56,7 +63,14 @@ export class CoursesService {
             .select<'*', CourseEndpoint>()
             .single();
 
-        if (result.error) throw new RequestError(result.error.message, result.status);
+        if (result.error) {
+            throw new RequestError(
+                result.error.message,
+                result.status || 400,
+                result.error.code
+            );
+        }
+
         return CourseEntity.fromEndpoint(result.data);
     }
 
@@ -74,7 +88,13 @@ export class CoursesService {
             .eq('id', id)
             .eq('user_id', userId);
 
-        if (result.error) throw new RequestError(result.error.message, result.status);
+        if (result.error) {
+            throw new RequestError(
+                result.error.message,
+                result.status || 400,
+                result.error.code
+            );
+        }
     }
 
     /**
@@ -93,7 +113,14 @@ export class CoursesService {
             .select<'*', CourseEndpoint>()
             .single();
 
-        if (result.error) throw new RequestError(result.error.message, result.status);
+        if (result.error) {
+            throw new RequestError(
+                result.error.message,
+                result.status || 400,
+                result.error.code
+            );
+        }
+
         return CourseEntity.fromEndpoint(result.data);
     }
 
@@ -129,7 +156,14 @@ export class CoursesService {
 
         const result = await coursesPromise;
 
-        if (result.error) throw new RequestError(result.error.message, result.status);
+        if (result.error) {
+            throw new RequestError(
+                result.error.message,
+                result.status || 400,
+                result.error.code
+            );
+        }
+
         return result.data.map(CourseEntity.fromEndpoint);
     }
 
@@ -144,7 +178,14 @@ export class CoursesService {
             .select('id')
             .eq('user_id', userId);
 
-        if (result.error) throw new RequestError(result.error.message, result.status);
+        if (result.error) {
+            throw new RequestError(
+                result.error.message,
+                result.status || 400,
+                result.error.code
+            );
+        }
+
         return result.data.map(course => course.id);
     }
 
@@ -164,7 +205,14 @@ export class CoursesService {
             .select<'*', CourseEndpoint>()
             .single();
 
-        if (result.error) throw new RequestError(result.error.message, result.status);
+        if (result.error) {
+            throw new RequestError(
+                result.error.message,
+                result.status || 400,
+                result.error.code
+            );
+        }
+
         return CourseEntity.fromEndpoint(result.data);
     }
 }

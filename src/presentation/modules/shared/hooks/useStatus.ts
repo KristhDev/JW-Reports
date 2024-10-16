@@ -29,12 +29,12 @@ const useStatus = () => {
      * @return {void} This function does not return anything
      */
     const setError = (error: unknown): void => {
-        console.log(JSON.stringify(error, null, 2));
+        console.error({ ...(error as Error), message: (error as Error).message });
         let msg = 'Ocurrio un error inesperado al realizar la acción';
         let status = 400;
 
         if (error instanceof RequestError) {
-            msg = AppErrors.translateMsg(error.message);
+            msg = AppErrors.translateMsg(error.code);
             status = error.status;
         }
 

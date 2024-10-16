@@ -102,6 +102,8 @@ const PreachingStackNavigation = (): JSX.Element => {
             return;
         }
 
+        if (user.id === '') return;
+
         if (user.precursor !== 'ninguno') loadPreachings(selectedDate);
         else {
             loadLastLesson();

@@ -41,7 +41,14 @@ export class RevisitsService {
             .select<'*', RevisitEndpoint>()
             .single();
 
-        if (result.error) throw new RequestError(result.error.message, result.status);
+        if (result.error) {
+            throw new RequestError(
+                result.error.message,
+                result.status || 400,
+                result.error.code
+            );
+        }
+
         return RevisitEntity.fromEndpoint(result.data);
     }
 
@@ -57,7 +64,14 @@ export class RevisitsService {
             .select<'*', RevisitEndpoint>()
             .single();
 
-        if (result.error) throw new RequestError(result.error.message, result.status);
+        if (result.error) {
+            throw new RequestError(
+                result.error.message,
+                result.status || 400,
+                result.error.code
+            );
+        }
+
         return RevisitEntity.fromEndpoint(result.data);
     }
 
@@ -75,7 +89,13 @@ export class RevisitsService {
             .eq('id', id)
             .eq('user_id', userId);
 
-        if (result.error) throw new RequestError(result.error.message, result.status);
+        if (result.error) {
+            throw new RequestError(
+                result.error.message,
+                result.status || 400,
+                result.error.code
+            );
+        }
     }
 
     /**
@@ -108,7 +128,14 @@ export class RevisitsService {
 
         const result = await revisitsPromise;
 
-        if (result.error) throw new RequestError(result.error.message, result.status);
+        if (result.error) {
+            throw new RequestError(
+                result.error.message,
+                result.status || 400,
+                result.error.code
+            );
+        }
+
         return result.data.map(RevisitEntity.fromEndpoint);
     }
 
@@ -126,7 +153,14 @@ export class RevisitsService {
             .order('next_visit', { ascending: false })
             .limit(1);
 
-        if (result.error) throw new RequestError(result.error.message, result.status);
+        if (result.error) {
+            throw new RequestError(
+                result.error.message,
+                result.status || 400,
+                result.error.code
+            );
+        }
+
         return (result.data && result.data?.length > 0) ? RevisitEntity.fromEndpoint(result.data[0]) : INIT_REVISIT;
     }
 
@@ -146,7 +180,14 @@ export class RevisitsService {
             .select<'*', RevisitEndpoint>()
             .single();
 
-        if (result.error) throw new RequestError(result.error.message, result.status);
+        if (result.error) {
+            throw new RequestError(
+                result.error.message,
+                result.status || 400,
+                result.error.code
+            );
+        }
+
         return RevisitEntity.fromEndpoint(result.data);
     }
 }

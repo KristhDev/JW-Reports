@@ -37,7 +37,13 @@ export class AuthService {
             error: user?.error || session?.error
         } as AuthResponse;
 
-        if (response.error) throw new RequestError(response.error.message, response.error.status || 400);
+        if (response.error) {
+            throw new RequestError(
+                response.error.message,
+                response.error.status || 400,
+                response.error.code || ''
+            );
+        }
 
         const userEntity = UserEntity.fromEndpoint({
             ...response.data.user!.user_metadata,
@@ -62,7 +68,13 @@ export class AuthService {
             redirectTo: `${ SITIE_URL }/reset-password`
         });
 
-        if (result.error) throw new RequestError(result.error.message, result.error.status || 400);
+        if (result.error) {
+            throw new RequestError(
+                result.error.message,
+                result.error.status || 400,
+                result.error.code || ''
+            );
+        }
     }
 
     /**
@@ -74,7 +86,14 @@ export class AuthService {
      */
     public static async signIn(email: string, password: string): Promise<{ token: string, user: UserEntity }> {
         const result = await supabase.auth.signInWithPassword({ email, password });
-        if (result.error) throw new RequestError(result.error.message, result.error.status || 400);
+
+        if (result.error) {
+            throw new RequestError(
+                result.error.message,
+                result.error.status || 400,
+                result.error.code || ''
+            );
+        }
 
         const user = UserEntity.fromEndpoint({
             ...result.data.user!.user_metadata!,
@@ -115,7 +134,13 @@ export class AuthService {
             }
         });
 
-        if (result.error) throw new RequestError(result.error.message, result.error.status || 400);
+        if (result.error) {
+            throw new RequestError(
+                result.error.message,
+                result.error.status || 400,
+                result.error.code || ''
+            );
+        }
 
         return {
             emailAlreadyExists: (result?.data?.user?.identities?.length === 0)
@@ -130,7 +155,14 @@ export class AuthService {
      */
     public static async updateEmail(dto: UpdateEmailDto): Promise<void> {
         const result = await supabase.auth.updateUser({ email: dto.email });
-        if (result.error) throw new RequestError(result.error.message, result.error.status || 400);
+
+        if (result.error) {
+            throw new RequestError(
+                result.error.message,
+                result.error.status || 400,
+                result.error.code || ''
+            );
+        }
     }
 
     /**
@@ -141,7 +173,14 @@ export class AuthService {
      */
     public static async updatePassword(password: string): Promise<void> {
         const result = await supabase.auth.updateUser({ password });
-        if (result.error) throw new RequestError(result.error.message, result.error.status || 400);
+
+        if (result.error) {
+            throw new RequestError(
+                result.error.message,
+                result.error.status || 400,
+                result.error.code || ''
+            );
+        }
     }
 
     /**
@@ -152,7 +191,14 @@ export class AuthService {
      */
     public static async updateProfile(dto: UpdateProfileDto): Promise<UserEntity> {
         const result = await supabase.auth.updateUser({ data: dto });
-        if (result.error) throw new RequestError(result.error.message, result.error.status || 400);
+
+        if (result.error) {
+            throw new RequestError(
+                result.error.message,
+                result.error.status || 400,
+                result.error.code || ''
+            );
+        }
 
         const userEndpoint = result.data.user;
 

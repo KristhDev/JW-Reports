@@ -33,7 +33,14 @@ export class LessonsService {
             .select<'*', LessonEndpoint>()
             .single();
 
-        if (result.error) throw new RequestError(result.error.message, result.status);
+        if (result.error) {
+            throw new RequestError(
+                result.error.message,
+                result.status || 400,
+                result.error.code
+            );
+        }
+
         return LessonEntity.fromEndpoint(result.data);
     }
 
@@ -47,7 +54,13 @@ export class LessonsService {
             .delete()
             .eq('id', id);
 
-        if (result.error) throw new RequestError(result.error.message, result.status);
+        if (result.error) {
+            throw new RequestError(
+                result.error.message,
+                result.status || 400,
+                result.error.code
+            );
+        }
     }
 
     /**
@@ -60,7 +73,13 @@ export class LessonsService {
             .delete()
             .eq('course_id', courseId);
 
-        if (result.error) throw new RequestError(result.error.message, result.status);
+        if (result.error) {
+            throw new RequestError(
+                result.error.message,
+                result.status || 400,
+                result.error.code
+            );
+        }
     }
 
     /**
@@ -78,7 +97,14 @@ export class LessonsService {
             .select<'*', LessonEndpoint>()
             .single();
 
-        if (result.error) throw new RequestError(result.error.message, result.status);
+        if (result.error) {
+            throw new RequestError(
+                result.error.message,
+                result.status || 400,
+                result.error.code
+            );
+        }
+
         return LessonEntity.fromEndpoint(result.data);
     }
 
@@ -100,7 +126,14 @@ export class LessonsService {
 
         const result = await lessonsPromise;
 
-        if (result.error) throw new RequestError(result.error.message, result.status);
+        if (result.error) {
+            throw new RequestError(
+                result.error.message,
+                result.status || 400,
+                result.error.code
+            );
+        }
+
         return result.data.map(LessonEntity.fromEndpoint);
     }
 
@@ -116,7 +149,14 @@ export class LessonsService {
             .order('next_lesson', { ascending: false })
             .limit(1);
 
-        if (result.error) throw new RequestError(result.error.message, result.status);
+        if (result.error) {
+            throw new RequestError(
+                result.error.message,
+                result.status || 400,
+                result.error.code
+            );
+        }
+
         return (result.data && result.data.length > 0)
             ? LessonWithCourseEntity.fromEndpoint(result.data[0])
             : { ...INIT_LESSON, course: INIT_COURSE };
@@ -137,7 +177,14 @@ export class LessonsService {
             .select<'*', LessonEndpoint>()
             .single();
 
-        if (result.error) throw new RequestError(result.error.message, result.status);
+        if (result.error) {
+            throw new RequestError(
+                result.error.message,
+                result.status || 400,
+                result.error.code
+            );
+        }
+
         return LessonEntity.fromEndpoint(result.data);
     }
 }

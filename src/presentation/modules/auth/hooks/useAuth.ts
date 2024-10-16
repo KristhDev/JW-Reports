@@ -18,7 +18,7 @@ import { SignUpDto, UpdateEmailDto, UpdateProfileDto } from '@domain/dtos';
 import { UserEntity } from '@domain/entities';
 
 /* Errors */
-import { DtoError, RequestError } from '@domain/errors';
+import { DtoError } from '@domain/errors';
 
 /* Hooks */
 import { useNetwork, useStatus } from '@shared';
@@ -48,6 +48,12 @@ const useAuth = () => {
     const setUser = (token: string, user: UserEntity) => dispatch(setUserAction({ token, user }));
     const setIsAuthLoading = (isLoading: boolean) => dispatch(setIsAuthLoadingAction({ isLoading }));
 
+    /**
+     * Function to handle authentication failure by clearing courses, lessons, preaching, revisits,
+     * and authentication state, and closing notifications.
+     *
+     * @return {void} This function does not return anything.
+     */
     const handleFailAuth = (): void => {
         dispatch(clearCourses());
         dispatch(clearLessons());
@@ -57,6 +63,12 @@ const useAuth = () => {
         NotificationsService.close();
     }
 
+    /**
+     * Returns the state of the user authentication in the store.
+     *
+     * @param {(() => void) | undefined} onError Optional callback to call when user is not authenticated.
+     * @return {boolean} The user authentication state.
+     */
     const isAuthenticated = (onError?: () => void): boolean => {
         const value = state.isAuthenticated;
         if (!value) setUnauthenticatedError(onError);
@@ -70,7 +82,7 @@ const useAuth = () => {
      * @return {Promise<void>} This function does not return any value.
      */
     const getAuth = async (): Promise<void> => {
-        if (!state.token) return;
+        if (state.token.trim().length === 0) return;
 
         const wifiConnectionAvailable = hasWifiConnection();
         if (!wifiConnectionAvailable) return;
@@ -181,7 +193,14 @@ const useAuth = () => {
             const signUpDto = SignUpDto.create(data);
             const result = await AuthService.signUp(signUpDto);
 
-            if (result.emailAlreadyExists) throw new RequestError(authMessages.EMAIL_ALREADY_REGISTERED, 400);
+            if (result.emailAlreadyExists) {
+                setIsAuthLoading(false);
+                setStatus({ code: 400, msg: authMessages.EMAIL_ALREADY_REGISTERED });
+                await AuthService.signOut();
+
+                return;
+            }
+
             await AuthService.signOut();
 
             onSuccess && onSuccess();
