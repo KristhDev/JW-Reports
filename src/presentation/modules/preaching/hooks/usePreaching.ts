@@ -162,6 +162,7 @@ const usePreaching = () => {
             setPreachings(preachings);
         }
         catch (error) {
+            setIsPreachingsLoading(false);
             setError(error);
         }
     }
@@ -227,10 +228,8 @@ const usePreaching = () => {
             navigation.goBack();
         }
         catch (error) {
-            setError(error);
-        }
-        finally {
             setIsPreachingLoading(false);
+            setError(error);
         }
     }
 

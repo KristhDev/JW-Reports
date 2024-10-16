@@ -309,10 +309,8 @@ const useLessons = () => {
             (loadMore) ? addLessons(lessons) : setLessons(lessons);
         }
         catch (error) {
-            setError(error);
-        }
-        finally {
             setIsLessonsLoading(false);
+            setError(error);
         }
     }
 
@@ -380,10 +378,8 @@ const useLessons = () => {
             navigation.goBack();
         }
         catch (error) {
-            setError(error);
-        }
-        finally {
             setIsLessonLoading(false);
+            setError(error);
         }
     }
 

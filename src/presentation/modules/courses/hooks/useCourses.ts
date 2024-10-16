@@ -308,8 +308,8 @@ const useCourses = () => {
             (loadMore) ? addCourses(courses) : setCourses(courses);
         }
         catch (error) {
-            setError(error);
             setIsCoursesLoading(false);
+            setError(error);
         }
     }
 

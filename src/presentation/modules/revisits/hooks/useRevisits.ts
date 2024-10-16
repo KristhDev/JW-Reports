@@ -210,10 +210,8 @@ const useRevisits = () => {
             setLastRevisit(lastRevisit);
         }
         catch (error) {
-            setError(error);
-        }
-        finally {
             setIsLastRevisitLoading(false);
+            setError(error);
         }
     }
 
@@ -262,10 +260,8 @@ const useRevisits = () => {
             (loadMore) ? addRevisits(revisits) : setRevisits(revisits);
         }
         catch (error) {
-            setError(error);
-        }
-        finally {
             setIsRevisitsLoading(false);
+            setError(error);
         }
     }
 
