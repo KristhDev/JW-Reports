@@ -144,6 +144,8 @@ const lessonsSlice = createSlice({
             state.lastLesson = (state.lastLesson.id === action.payload.lesson.id)
                 ? { ...action.payload.lesson, course: state.lastLesson.course }
                 : state.lastLesson;
+
+            state.isLessonLoading = false;
         }
     }
 });
