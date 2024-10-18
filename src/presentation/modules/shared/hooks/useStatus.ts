@@ -1,5 +1,5 @@
 /* Errors */
-import { AppErrors, EmailError, ImageError, RequestError } from '@domain/errors';
+import { AppErrors, DtoError, EmailError, ImageError, RequestError } from '@domain/errors';
 
 /* Features */
 import { useAppDispatch, useAppSelector } from '@application/store';
@@ -40,6 +40,7 @@ const useStatus = () => {
 
         if (error instanceof ImageError) msg = AppErrors.translateMsg(error.message);
         if (error instanceof EmailError) msg = error.message;
+        if (error instanceof DtoError) msg = error.message;
 
         setStatus({ msg, code: status });
         LoggerService.error({ ...(error as Error), message: (error as Error).message });
