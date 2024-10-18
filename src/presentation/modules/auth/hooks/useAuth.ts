@@ -12,13 +12,10 @@ import {
 } from '@application/features';
 
 /* DTOs */
-import { SignUpDto, UpdateEmailDto, UpdateProfileDto } from '@domain/dtos';
+import { SignUpDto, UpdateEmailDto, UpdatePasswordDto, UpdateProfileDto } from '@domain/dtos';
 
 /* Entities */
 import { UserEntity } from '@domain/entities';
-
-/* Errors */
-import { DtoError } from '@domain/errors';
 
 /* Hooks */
 import { useNetwork, useStatus } from '@shared';
@@ -54,7 +51,7 @@ const useAuth = () => {
      *
      * @return {void} This function does not return anything.
      */
-    const handleFailAuth = (): void => {
+    const handleClearStore = (): void => {
         dispatch(clearCourses());
         dispatch(clearLessons());
         dispatch(clearPreaching());
@@ -93,7 +90,7 @@ const useAuth = () => {
         }
         catch (error) {
             setError(error);
-            handleFailAuth();
+            handleClearStore();
         }
     }
 
@@ -143,7 +140,7 @@ const useAuth = () => {
         }
         catch (error) {
             setError(error);
-            handleFailAuth();
+            handleClearStore();
         }
         finally {
             setIsAuthLoading(false);
@@ -160,17 +157,13 @@ const useAuth = () => {
     const signOut = async (): Promise<void> => {
         if (!state.isAuthenticated) return;
 
-        if (wifi.hasConnection) {
-            const { error } = await AuthService.signOut();
-            NotificationsService.close();
-            if (error) setError(error);
+        try {
+            if (wifi.hasConnection) await AuthService.signOut();
+            handleClearStore();
         }
-
-        dispatch(clearCourses());
-        dispatch(clearLessons());
-        dispatch(clearPreaching());
-        dispatch(clearRevisits());
-        dispatch(clearAuthAction());
+        catch (error) {
+            setError(error);
+        }
     }
 
     /**
@@ -234,18 +227,9 @@ const useAuth = () => {
 
         setIsAuthLoading(true);
 
-        const emailDto = UpdateEmailDto.create(email, state.user.email);
-
-        if (emailDto instanceof DtoError) {
-            setIsAuthLoading(false);
-            onFinish && onFinish();
-            setStatus({ code: 400, msg: emailDto.message });
-
-            return;
-        }
-
         try {
-            await AuthService.updateEmail(emailDto);
+            const updateEmailDto = UpdateEmailDto.create(email, state.user.email);
+            await AuthService.updateEmail(updateEmailDto);
 
             setIsAuthLoading(false);
             onFinish && onFinish();
@@ -277,16 +261,9 @@ const useAuth = () => {
 
         setIsAuthLoading(true);
 
-        if (password.trim().length === 0) {
-            setIsAuthLoading(false);
-            onFinish && onFinish();
-            setStatus({ code: 400, msg: authMessages.PASSWORD_EMPTY });
-
-            return;
-        }
-
         try {
-            await AuthService.updatePassword(password);
+            const updatePasswordDto = UpdatePasswordDto.create(password);
+            await AuthService.updatePassword(updatePasswordDto);
 
             setIsAuthLoading(false);
             onFinish && onFinish();
