@@ -4,7 +4,7 @@ import { AuthResponse } from '@supabase/supabase-js';
 import { supabase } from '@config';
 
 /* DTOs */
-import { SignUpDto, UpdateEmailDto, UpdateProfileDto } from '@domain/dtos';
+import { SignUpDto, UpdateEmailDto, UpdatePasswordDto, UpdateProfileDto } from '@domain/dtos';
 
 /* Entities */
 import { UserEntity } from '@domain/entities';
@@ -112,11 +112,21 @@ export class AuthService {
     }
 
     /**
-     * Signs out the current user. If the user is not authenticated, this call is a no-op.
+     * Signs out the user.
+     *
+     * @return {Promise<void>} A promise that resolves when the sign-out process is complete.
+     * @throws {RequestError} If the request fails.
      */
-    public static async signOut() {
+    public static async signOut(): Promise<void> {
         const result = await supabase.auth.signOut();
-        return result;
+
+        if (result.error) {
+            throw new RequestError(
+                result.error.message,
+                result.error?.status || 400,
+                result.error?.code || ''
+            );
+        }
     }
 
     /**
@@ -168,11 +178,11 @@ export class AuthService {
     /**
      * Updates the user's password.
      *
-     * @param {string} password - The new password of the user.
+     * @param {UpdatePasswordDto} dto - The update password data transfer object.
      * @return {Promise<void>} A promise that resolves when the password update is complete.
      */
-    public static async updatePassword(password: string): Promise<void> {
-        const result = await supabase.auth.updateUser({ password });
+    public static async updatePassword(dto: UpdatePasswordDto): Promise<void> {
+        const result = await supabase.auth.updateUser({ password: dto.password });
 
         if (result.error) {
             throw new RequestError(
