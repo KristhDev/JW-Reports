@@ -254,7 +254,7 @@ const useLessons = () => {
         if (!isAuth) return;
 
         try {
-            const courseIds = await CoursesService.getCourseIdsByUserId(selectedCourse.userId);
+            const courseIds = await CoursesService.getCourseIdsByUserId(user.id);
             const lastLesson = await LessonsService.getLastLessonByCoursesId(courseIds);
 
             addLastLesson(lastLesson);
