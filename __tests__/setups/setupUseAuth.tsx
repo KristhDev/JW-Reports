@@ -3,12 +3,22 @@ import { configureStore } from '@reduxjs/toolkit';
 import { Provider } from 'react-redux';
 import { renderHook } from '@testing-library/react-native';
 
-import { authReducer, AuthState, useAuth } from '@auth';
-import { coursesReducer, CoursesState } from '@courses';
-import { LessonsState } from '@lessons';
-import { preachingReducer, PreachingState } from '@preaching';
-import { revisitsReducer, RevisitsState } from '@revisits';
-import { statusReducer, StatusState, useStatus } from '@shared';
+import {
+    authReducer,
+    AuthState,
+    coursesReducer,
+    CoursesState,
+    LessonsState,
+    preachingReducer,
+    PreachingState,
+    revisitsReducer,
+    RevisitsState,
+    statusReducer,
+    StatusState,
+} from '@application/features';
+
+import { useAuth } from '@auth';
+import { useStatus } from '@shared';
 
 interface InitialState {
     auth: AuthState;

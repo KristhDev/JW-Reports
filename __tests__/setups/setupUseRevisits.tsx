@@ -6,10 +6,21 @@ import { renderHook } from '@testing-library/react-native';
 /* Mocks */
 import { grantedStateMock } from '@mocks';
 
+/* Features */
+import {
+    authReducer,
+    AuthState,
+    permissionsReducer,
+    revisitsReducer,
+    RevisitsState,
+    statusReducer,
+    StatusState,
+} from '@application/features';
+
 /* Modules */
-import { authReducer, AuthState, useAuth } from '@auth';
-import { revisitsReducer, RevisitsState, useRevisits } from '@revisits';
-import { permissionsReducer, statusReducer, StatusState, useStatus } from '@shared';
+import { useAuth } from '@auth';
+import { useRevisits } from '@revisits';
+import { useStatus } from '@shared';
 
 interface InitialState {
     auth: AuthState;

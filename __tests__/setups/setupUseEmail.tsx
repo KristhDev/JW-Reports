@@ -3,9 +3,19 @@ import { renderHook } from '@testing-library/react-native';
 import { Provider } from 'react-redux';
 import { configureStore } from '@reduxjs/toolkit';
 
+/* Features */
+import {
+    authReducer,
+    AuthState,
+    permissionsReducer,
+    PermissionsState,
+    statusReducer,
+    StatusState
+} from '@application/features';
+
 /* Modules */
-import { authReducer, AuthState, useAuth } from '@auth';
-import { permissionsReducer, PermissionsState, statusReducer, StatusState, useEmail, usePermissions, useStatus } from '@shared';
+import { useAuth } from '@auth';
+import { useEmail, usePermissions, useStatus } from '@shared';
 
 interface InitialState {
     auth: AuthState;

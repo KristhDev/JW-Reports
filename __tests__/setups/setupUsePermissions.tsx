@@ -3,15 +3,11 @@ import { Provider } from 'react-redux';
 import { configureStore } from '@reduxjs/toolkit';
 import { renderHook } from '@testing-library/react-native';
 
+/* Features */
+import { PermissionsState, StatusState, permissionsReducer, statusReducer } from '@application/features';
+
 /* Modules */
-import {
-    permissionsReducer,
-    PermissionsState,
-    statusReducer,
-    StatusState,
-    usePermissions,
-    useStatus
-} from '@shared';
+import { usePermissions, useStatus } from '@shared';
 
 interface InitialState {
     permissions: PermissionsState;

@@ -3,7 +3,11 @@ import { Provider } from 'react-redux';
 import { configureStore } from '@reduxjs/toolkit';
 import { renderHook } from '@testing-library/react-native';
 
-import { uiReducer, UIState, useUI } from '@ui'
+/* Features */
+import { UIState, uiReducer } from '@application/features';
+
+/* Modules */
+import { useUI } from '@ui'
 
 interface InitialState {
     ui: UIState
