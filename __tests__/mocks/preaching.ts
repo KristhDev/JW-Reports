@@ -1,11 +1,12 @@
-import { INIT_PREACHING, Preaching, PreachingState } from '@preaching';
+import { PreachingState, INIT_PREACHING } from '@application/features';
+import { PreachingEntity } from '@domain/entities';
 
 export const loadPreachingsMock = jest.fn();
 export const savePreachingMock = jest.fn();
 export const setSelectedPreachingMock = jest.fn();
 export const updatePreachingMock = jest.fn();
 
-export const preachingsMock: Preaching[] = [
+export const preachingsMock: PreachingEntity[] = [
     {
         id: 'f6b249e2-e329-4c40-96b0-b719f268a37d',
         userId: '8c840151-c4b4-4baa-9bb0-c9e50c7d6f63',

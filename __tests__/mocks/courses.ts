@@ -1,5 +1,5 @@
-import { INIT_COURSE, Course, CoursesState } from '@courses';
-import { Lesson } from '@lessons';
+import { CoursesState, INIT_COURSE } from '@application/features';
+import { LessonEntity, CourseEntity } from '@domain/entities';
 
 export const activeOrSuspendCourseMock = jest.fn();
 export const deleteCourseMock = jest.fn();
@@ -20,7 +20,7 @@ export const testCourse = {
     publication: 'dolorem ut non'
 }
 
-export const lessonMock: Lesson = {
+export const lessonMock: LessonEntity = {
     id: '0fb579e4-de87-4336-9375-76611c889f76',
     courseId: '8ea3baf8-6b47-4222-8ed1-c62d5755b9a5',
     description: 'Nemo et et non nesciunt ipsum sed rerum vero. Nostrum quae officiis qui nihil dignissimos consectetur aperiam. Vel harum ex. Ipsum ratione necessitatibus eum sint vero enim et consequatur. Ab autem rerum numquam ut. Laboriosam nihil est exercitationem unde aut reiciendis odit.',
@@ -30,7 +30,7 @@ export const lessonMock: Lesson = {
     updatedAt: '2021-01-01T00:00:00.000Z',
 }
 
-export const coursesMock: Course[] = [
+export const coursesMock: CourseEntity[] = [
     {
         id: '8ea3baf8-6b47-4222-8ed1-c62d5755b9a5',
         userId: '26ee1755-975d-4a00-9fe5-fa417eb07748',

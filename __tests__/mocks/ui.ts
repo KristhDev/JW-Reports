@@ -1,4 +1,4 @@
-import { UIState } from '@ui';
+import { UIState } from '@application/features';
 
 export const initialUIState: UIState = {
     isKeyboardVisible: false,

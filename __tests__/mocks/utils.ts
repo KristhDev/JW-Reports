@@ -1,4 +1,4 @@
-import { storage } from '@utils';
+import { storage } from '@infrasturcture/adapters';
 
 export const storageSpy = {
     getItem: jest.spyOn(storage, 'getItem'),

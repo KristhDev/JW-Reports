@@ -1,5 +1,5 @@
-import { Course, INIT_COURSE } from '@courses';
-import { INIT_LESSON, Lesson, LessonsState } from '@lessons';
+import { LessonsState, INIT_LESSON, INIT_COURSE } from '@application/features';
+import { CourseEntity, LessonEntity } from '@domain/entities';
 
 export const deleteLessonMock = jest.fn();
 export const finishOrStartLessonMock = jest.fn();
@@ -16,20 +16,21 @@ export const testLesson = {
     nextLesson: new Date('2023-03-20T00:00:00.000Z')
 }
 
-export const courseMock: Course = {
+export const courseMock: CourseEntity = {
     id: '8ea3baf8-6b47-4222-8ed1-c62d5755b9a5',
     userId: '26ee1755-975d-4a00-9fe5-fa417eb07748',
     personName: 'Fred Cremin',
     personAbout: 'Voluptatem dolorem neque quia omnis odit quos non. Sed rerum est est rem et. Ut aut repellat expedita commodi ipsum. In quisquam excepturi rerum debitis. Beatae rem saepe aut molestiae.',
     personAddress: 'Non ut fuga dolores. Laborum veniam quae minus consequuntur quisquam temporibus et. Est accusamus omnis facere facilis labore.',
     publication: 'animi voluptas omnis',
+    lastLesson: undefined,
     suspended: false,
     finished: false,
     createdAt: '2021-08-26T15:00:00.000Z',
     updatedAt: '2021-08-26T15:00:00.000Z'
 }
 
-export const lessonsMock: Lesson[] = [
+export const lessonsMock: LessonEntity[] = [
     {
         id: '0fb579e4-de87-4336-9375-76611c889f76',
         courseId: '8ea3baf8-6b47-4222-8ed1-c62d5755b9a5',

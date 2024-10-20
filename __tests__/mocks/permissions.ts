@@ -1,4 +1,4 @@
-import { PermissionsState } from '@shared';
+import { PermissionsState } from '@application/features';
 
 export const initialPermissionsStateMock: PermissionsState = {
     permissions: {

@@ -1,6 +1,7 @@
-import { AuthState, User } from '@auth';
+import { AuthState } from '@application/features';
+import { UserEntity } from '@domain/entities';
 
-export const testUser: User = {
+export const testUserEntity: UserEntity = {
     id: '05ef0d0c-0f7a-4512-b705-6da279d88503',
     name: 'Celestino',
     surname: 'Wilderman',
@@ -24,7 +25,7 @@ export const testCredentials = {
     password: 'tutuyoyo9102'
 }
 
-export const newUserData = {
+export const newUserEntityData = {
     name: 'Tester',
     surname: 'Testing',
     email: 'tester-testing@gmail.com',
@@ -53,7 +54,7 @@ export const authenticateStateMock: AuthState = {
     isAuthLoading: false,
     token: '3eb3fd2c-31ad-48c3-ab9b-587a059de40d',
     user: {
-        ...newUserData,
+        ...newUserEntityData,
         id: '3eb3fd2c-31ad-48c3-ab9b-587a059de40d',
         precursor: 'ninguno',
         hoursRequirement: 0,
@@ -68,7 +69,7 @@ export const authenticatePrecursorMock: AuthState = {
     isAuthLoading: false,
     token: '3eb3fd2c-31ad-48c3-ab9b-587a059de40d',
     user: {
-        ...newUserData,
+        ...newUserEntityData,
         id: '3eb3fd2c-31ad-48c3-ab9b-587a059de40d',
         precursor: 'regular',
         hoursRequirement: 50,
@@ -83,7 +84,7 @@ export const authenticateLDCMock: AuthState = {
     isAuthLoading: false,
     token: '3eb3fd2c-31ad-48c3-ab9b-587a059de40d',
     user: {
-        ...newUserData,
+        ...newUserEntityData,
         id: '3eb3fd2c-31ad-48c3-ab9b-587a059de40d',
         precursor: 'regular',
         hoursRequirement: 60,

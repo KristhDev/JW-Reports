@@ -1,4 +1,5 @@
-import { INIT_REVISIT, Revisit, RevisitsState } from '@revisits';
+import { RevisitsState, INIT_REVISIT } from '@application/features';
+import { RevisitEntity } from '@domain/entities';
 
 export const completeRevisitMock = jest.fn();
 export const deleteRevisitMock = jest.fn();
@@ -21,7 +22,7 @@ export const testRevisit = {
     personName: 'Karlee Senger'
 }
 
-export const revisitsMock: Revisit[] = [
+export const revisitsMock: RevisitEntity[] = [
     {
         id: '7345fc2b-b5d3-4000-ba17-a85ae1d5a85d',
         userId: '39d71118-57b7-4c4a-8643-0956e5f9350e',
