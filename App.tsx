@@ -4,6 +4,9 @@ import SplashScreen from 'react-native-splash-screen';
 
 import '@config/unistyles';
 
+/* Adapters */
+import { Time } from '@infrasturcture/adapters';
+
 /* Providers */
 import { Provider } from '@providers';
 
@@ -11,14 +14,11 @@ import { Provider } from '@providers';
 import { Navigation } from '@navigation';
 
 /* Services */
-import { email, logger, notifications } from '@services';
-
-/* Utils */
-import { date } from '@utils';
+import { EmailService, LoggerService, NotificationsService } from '@services';
 
 /* Global config of date util */
-date.extend(date.plugins.weekday);
-date.setLocale(date.locale.es);
+Time.extend(Time.plugins.weekday);
+Time.setLocale(Time.locale.es);
 
 /**
  * This is the entry point of the app that renders all the necessary
@@ -29,21 +29,21 @@ const App = () => {
    * Effect to mount service for notifications.
    */
   useEffect(() => {
-    notifications.mount();
+    NotificationsService.mount();
   }, []);
 
   /**
    * Effect to initialize logger
    */
   useEffect(() => {
-    logger.init();
+    LoggerService.init();
   }, []);
 
   /**
    * Effect to initialize email
    */
   useEffect(() => {
-    email.init();
+    EmailService.init();
   }, []);
 
   /**
