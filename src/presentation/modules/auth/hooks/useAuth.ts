@@ -139,13 +139,10 @@ const useAuth = () => {
             setUser(token, user);
         }
         catch (error) {
+            setIsAuthLoading(false);
             setError(error);
             handleClearStore();
         }
-        finally {
-            setIsAuthLoading(false);
-        }
-
     }
 
     /**
@@ -207,8 +204,8 @@ const useAuth = () => {
         catch (error) {
             await AuthService.signOut();
             NotificationsService.close();
-            clearAuth();
             setIsAuthLoading(false);
+            clearAuth();
 
             setError(error);
         }
@@ -297,10 +294,8 @@ const useAuth = () => {
             setStatus({ code: 200, msg: authMessages.PROFILE_UPDATED });
         }
         catch (error) {
-            setError(error);
-        }
-        finally {
             setIsAuthLoading(false);
+            setError(error);
         }
     }
 
