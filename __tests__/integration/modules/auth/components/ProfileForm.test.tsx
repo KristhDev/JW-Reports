@@ -63,24 +63,21 @@ describe('Test in <ProfileForm /> component', () => {
     it('should call updateProfile when the form is valid', async () => {
         renderComponent();
 
-        await act(async () => {
+        /* Get pressable to submit form */
+        const pressable = await screen.findByTestId('button-pressable');
+        await user.press(pressable);
 
-            /* Get pressable to submit form */
-            const pressable = await screen.findByTestId('button-pressable');
-            await user.press(pressable);
+        /* Check if updateProfile is called one time */
+        expect(updateProfileMock).toHaveBeenCalledTimes(1);
 
-            /* Check if updateProfile is called one time */
-            expect(updateProfileMock).toHaveBeenCalledTimes(1);
-
-            /* Check if updateProfile is called with respective args */
-            expect(updateProfileMock).toHaveBeenCalledWith({
-                name: testUser.name,
-                surname: testUser.surname,
-                precursor: testUser.precursor,
-                hoursRequirement: testUser.hoursRequirement,
-                hoursLDC: testUser.hoursLDC
-            }, expect.any(Object));
-        });
+        /* Check if updateProfile is called with respective args */
+        expect(updateProfileMock).toHaveBeenCalledWith({
+            name: testUser.name,
+            surname: testUser.surname,
+            precursor: testUser.precursor,
+            hoursRequirement: testUser.hoursRequirement,
+            hoursLDC: testUser.hoursLDC
+        }, expect.any(Object));
     });
 
     it('should not render hours requirement field when precursor is ninguno', async () => {

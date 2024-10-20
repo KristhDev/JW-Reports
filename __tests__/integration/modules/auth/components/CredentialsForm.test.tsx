@@ -76,10 +76,7 @@ describe('Test in <CredentialsForm /> component', () => {
 
         /* Get pressable submit to send request of change email */
         const pressable = (await screen.findAllByTestId('button-pressable'))[0];
-
-        await act(async () => {
-            await user.press(pressable);
-        });
+        await user.press(pressable);
 
         /* Check if updateEmail is called one time and with respective args */
         expect(updateEmailMock).toHaveBeenCalledTimes(1);
@@ -151,10 +148,7 @@ describe('Test in <CredentialsForm /> component', () => {
 
         /* Get pressable submit to send request of change password */
         const pressable = (await screen.findAllByTestId('button-pressable'))[1];
-
-        await act(async () => {
-            await user.press(pressable);
-        });
+        await user.press(pressable);
 
         /* Check if updatedPassword is called one time and with respective args */
         expect(updatePasswordMock).toHaveBeenCalledTimes(1);
