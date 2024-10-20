@@ -1,7 +1,7 @@
 import { AuthState } from '@application/features';
 import { UserEntity } from '@domain/entities';
 
-export const testUserEntity: UserEntity = {
+export const testUser: UserEntity = {
     id: '05ef0d0c-0f7a-4512-b705-6da279d88503',
     name: 'Celestino',
     surname: 'Wilderman',
