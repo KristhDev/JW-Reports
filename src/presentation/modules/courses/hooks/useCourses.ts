@@ -345,10 +345,10 @@ const useCourses = () => {
             } as never);
         }
         catch (error) {
+            setIsCourseLoading(false);
             setError(error);
         }
         finally {
-            setIsCourseLoading(true);
             onFinish && onFinish();
         }
     }
