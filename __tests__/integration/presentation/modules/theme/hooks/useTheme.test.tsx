@@ -6,8 +6,8 @@ import { renderUseTheme } from '@setups';
 /* Mocks */
 import { storageSpy, darkState, lightState } from '@mocks';
 
-/* Utils */
-import { storageKeys } from '@utils';
+/* Adapters */
+import { storageKeys } from '@infrasturcture/adapters';
 
 describe('Test in useTheme hook', () => {
     beforeEach(() => {
