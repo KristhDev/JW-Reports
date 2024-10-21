@@ -284,6 +284,9 @@ const useAuth = () => {
         const wifiConnectionAvailable = hasWifiConnection();
         if (!wifiConnectionAvailable) return;
 
+        const isAuth = isAuthenticated();
+        if (!isAuth) return;
+
         setIsAuthLoading(true);
 
         try {
