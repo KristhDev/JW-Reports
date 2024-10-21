@@ -87,7 +87,7 @@ const usePreaching = () => {
      * @returns {boolean} Returns true if the preaching can be altered, otherwise false.
      */
     const canAlteratePreaching = (unSelectMsg: string, onFinish?: () => void): boolean => {
-        if (!state.seletedPreaching) {
+        if (state.seletedPreaching.id === '') {
             onFinish && onFinish();
             setStatus({ code: 400, msg: unSelectMsg });
 
