@@ -1,51 +1,68 @@
 import { act } from '@testing-library/react-native';
 
-/* Supabase */
-import { supabase } from '@test-config';
-
 /* Setups */
 import { onFinishMock, mockUseNavigation, useNetworkSpy } from '@test-setup';
 import { getMockStoreUseCourses, renderUseCourses } from '@setups';
 
 /* Mocks */
 import {
+    authenticateStateMock,
+    CoursesServiceSpy,
+    hasWifiConnectionMock,
     initialAuthStateMock,
     initialCoursesStateMock,
     initialLessonsStateMock,
     initialStatusStateMock,
     testCourse,
-    testCredentials,
     wifiMock
 } from '@mocks';
+
+/* Errors */
+import { RequestError } from '@domain/errors';
 
 /* Modules */
 import { authMessages } from '@auth';
 import { coursesMessages } from '@courses';
 
+const intitialMockStore = () => getMockStoreUseCourses({
+    auth: initialAuthStateMock,
+    courses: initialCoursesStateMock,
+    lessons: initialLessonsStateMock,
+    status: initialStatusStateMock
+});
+
+const authMockStore = () => getMockStoreUseCourses({
+    auth: authenticateStateMock,
+    courses: initialCoursesStateMock,
+    lessons: initialLessonsStateMock,
+    status: initialStatusStateMock
+});
+
 describe('Test in useCourses hook - saveCourse', () => {
     useNetworkSpy.mockImplementation(() => ({
+        hasWifiConnection: hasWifiConnectionMock,
         wifi: wifiMock
     }));
 
-    let mockStore = {} as any;
-
     beforeEach(() => {
         jest.clearAllMocks();
-
-        mockStore = getMockStoreUseCourses({
-            auth: initialAuthStateMock,
-            courses: initialCoursesStateMock,
-            lessons: initialLessonsStateMock,
-            status: initialStatusStateMock
-        });
     });
 
     it('should save course successfully', async () => {
-        const { result } = renderUseCourses(mockStore);
+        const mockStore = authMockStore();
 
-        await act(async () => {
-            await result.current.useAuth.signIn(testCredentials);
+        CoursesServiceSpy.create.mockResolvedValue({
+            ...testCourse,
+            id: expect.any(String),
+            userId: mockStore.getState().auth.user.id,
+            finished: false,
+            suspended: false,
+            lastLesson: undefined,
+            createdAt: expect.any(String),
+            updatedAt: expect.any(String)
         });
+
+        const { result } = renderUseCourses(mockStore);
 
         await act(async () => {
             await result.current.useCourses.saveCourse(testCourse, onFinishMock);
@@ -60,6 +77,7 @@ describe('Test in useCourses hook - saveCourse', () => {
                 ...testCourse,
                 suspended: false,
                 finished: false,
+                lastLesson: undefined,
                 createdAt: expect.any(String),
                 updatedAt: expect.any(String)
             }]
@@ -80,17 +98,10 @@ describe('Test in useCourses hook - saveCourse', () => {
                 screen: 'CoursesTopTabsNavigation'
             }
         });
-
-        await supabase.from('courses')
-            .delete()
-            .eq('user_id', result.current.useAuth.state.user.id);
-
-        await act(async () => {
-            await result.current.useAuth.signOut();
-        });
     });
 
-    it('should faild when user inst autenticated', async () => {
+    it('should faild if user inst autenticated', async () => {
+        const mockStore = intitialMockStore();
         const { result } = renderUseCourses(mockStore);
 
         await act(async () => {
@@ -111,12 +122,11 @@ describe('Test in useCourses hook - saveCourse', () => {
         expect(mockUseNavigation.navigate).not.toHaveBeenCalled();
     });
 
-    it('should faild when data is invalid', async () => {
-        const { result } = renderUseCourses(mockStore);
+    it('should faild if data is invalid', async () => {
+        CoursesServiceSpy.create.mockRejectedValue(new RequestError('Invalid data', 400, 'invalid_data'));
 
-        await act(async () => {
-            await result.current.useAuth.signIn(testCredentials);
-        });
+        const mockStore = authMockStore();
+        const { result } = renderUseCourses(mockStore);
 
         await act(async () => {
             await result.current.useCourses.saveCourse({
@@ -136,9 +146,5 @@ describe('Test in useCourses hook - saveCourse', () => {
 
         expect(onFinishMock).toHaveBeenCalledTimes(1);
         expect(mockUseNavigation.navigate).not.toHaveBeenCalled();
-
-        await act(async () => {
-            await result.current.useAuth.signOut();
-        });
     });
 });

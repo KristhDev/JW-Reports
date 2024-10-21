@@ -1,58 +1,62 @@
 import { act } from '@testing-library/react-native';
 
-/* Supabase */
-import { supabase } from '@test-config';
-
 /* Setups */
 import { mockUseNavigation, useNetworkSpy } from '@test-setup';
 import { getMockStoreUseCourses, renderUseCourses } from '@setups';
 
 /* Mocks */
 import {
+    authenticateStateMock,
+    courseMock,
+    CoursesServiceSpy,
+    hasWifiConnectionMock,
     initialAuthStateMock,
     initialCoursesStateMock,
     initialLessonsStateMock,
     initialStatusStateMock,
     testCourse,
-    testCredentials,
     wifiMock
 } from '@mocks';
+
+/* Errors */
+import { RequestError } from '@domain/errors';
 
 /* Modules */
 import { authMessages } from '@auth';
 import { coursesMessages } from '@courses';
 
+const intitialMockStore = () => getMockStoreUseCourses({
+    auth: initialAuthStateMock,
+    courses: initialCoursesStateMock,
+    lessons: initialLessonsStateMock,
+    status: initialStatusStateMock
+});
+
+const authMockStore = () => getMockStoreUseCourses({
+    auth: authenticateStateMock,
+    courses: initialCoursesStateMock,
+    lessons: initialLessonsStateMock,
+    status: initialStatusStateMock
+});
+
 describe('Test in useCourses hook - updateCourse', () => {
     useNetworkSpy.mockImplementation(() => ({
+        hasWifiConnection: hasWifiConnectionMock,
         wifi: wifiMock
     }));
 
-    let mockStore = {} as any;
-
     beforeEach(() => {
         jest.clearAllMocks();
-
-        mockStore = getMockStoreUseCourses({
-            auth: initialAuthStateMock,
-            courses: initialCoursesStateMock,
-            lessons: initialLessonsStateMock,
-            status: initialStatusStateMock
-        });
     });
 
     it('should update course successfully', async () => {
+        CoursesServiceSpy.update.mockResolvedValue({ ...courseMock, ...testCourse, personName: 'Alvah Simonis' });
+
+        const mockStore = authMockStore();
         const { result } = renderUseCourses(mockStore);
 
         await act(async () => {
-            await result.current.useAuth.signIn(testCredentials);
-        });
-
-        await act(async () => {
-            await result.current.useCourses.saveCourse(testCourse);
-        });
-
-        await act(async () => {
-            result.current.useCourses.setSelectedCourse(result.current.useCourses.state.courses[0]);
+            result.current.useCourses.setSelectedCourse(courseMock);
         });
 
         await act(async () => {
@@ -66,25 +70,11 @@ describe('Test in useCourses hook - updateCourse', () => {
         expect(result.current.useCourses.state).toEqual({
             ...initialCoursesStateMock,
             selectedCourse: {
-                id: expect.any(String),
-                userId: result.current.useAuth.state.user.id,
+                ...result.current.useCourses.state.selectedCourse,
                 ...testCourse,
                 personName: 'Alvah Simonis',
-                suspended: false,
-                finished: false,
-                createdAt: expect.any(String),
-                updatedAt: expect.any(String)
-            },
-            courses: [{
-                id: expect.any(String),
-                userId: result.current.useAuth.state.user.id,
-                ...testCourse,
-                personName: 'Alvah Simonis',
-                suspended: false,
-                finished: false,
-                createdAt: expect.any(String),
-                updatedAt: expect.any(String)
-            }]
+                lastLesson: undefined,
+            }
         });
 
         /* Check if status state is equal to respective status */
@@ -95,17 +85,10 @@ describe('Test in useCourses hook - updateCourse', () => {
 
         /* Check if goBack is called one time */
         expect(mockUseNavigation.goBack).toHaveBeenCalledTimes(1);
-
-        await supabase.from('courses')
-            .delete()
-            .eq('user_id', result.current.useAuth.state.user.id);
-
-        await act(async () => {
-            await result.current.useAuth.signOut();
-        });
     });
 
-    it('should faild when user inst authenticated', async () => {
+    it('should faild if user inst authenticated', async () => {
+        const mockStore = intitialMockStore();
         const { result } = renderUseCourses(mockStore);
 
         await act(async () => {
@@ -125,16 +108,9 @@ describe('Test in useCourses hook - updateCourse', () => {
         });
     });
 
-    it('should faild when selectedCourse is empty', async () => {
+    it('should faild if selectedCourse is empty', async () => {
+        const mockStore = authMockStore();
         const { result } = renderUseCourses(mockStore);
-
-        await act(async () => {
-            await result.current.useAuth.signIn(testCredentials);
-        });
-
-        await act(async () => {
-            await result.current.useCourses.saveCourse(testCourse);
-        });
 
         await act(async () => {
             await result.current.useCourses.updateCourse({
@@ -144,47 +120,23 @@ describe('Test in useCourses hook - updateCourse', () => {
         });
 
         /* Check if courses state contain courses */
-        expect(result.current.useCourses.state).toEqual({
-            ...initialCoursesStateMock,
-            courses: [{
-                id: expect.any(String),
-                userId: result.current.useAuth.state.user.id,
-                ...testCourse,
-                suspended: false,
-                finished: false,
-                createdAt: expect.any(String),
-                updatedAt: expect.any(String)
-            }]
-        });
+        expect(result.current.useCourses.state).toEqual(initialCoursesStateMock);
 
         /* Check if status state is equal to respective status */
         expect(result.current.useStatus.state).toEqual({
             code: 400,
             msg: coursesMessages.UNSELECTED_UPDATE
         });
-
-        await supabase.from('courses')
-            .delete()
-            .eq('user_id', result.current.useAuth.state.user.id);
-
-        await act(async () => {
-            await result.current.useAuth.signOut();
-        });
     });
 
-    it('should faild when data is invalid', async () => {
+    it('should faild if data is invalid', async () => {
+        CoursesServiceSpy.update.mockRejectedValue(new RequestError('Invalid data', 400, 'invalid_data'));
+
+        const mockStore = authMockStore();
         const { result } = renderUseCourses(mockStore);
 
         await act(async () => {
-            await result.current.useAuth.signIn(testCredentials);
-        });
-
-        await act(async () => {
-            await result.current.useCourses.saveCourse(testCourse);
-        });
-
-        await act(async () => {
-            result.current.useCourses.setSelectedCourse(result.current.useCourses.state.courses[0]);
+            result.current.useCourses.setSelectedCourse(courseMock);
         });
 
         await act(async () => {
@@ -197,38 +149,13 @@ describe('Test in useCourses hook - updateCourse', () => {
         /* Check if courses state contain selectedCourse and courses */
         expect(result.current.useCourses.state).toEqual({
             ...initialCoursesStateMock,
-            selectedCourse: {
-                id: expect.any(String),
-                userId: result.current.useAuth.state.user.id,
-                ...testCourse,
-                suspended: false,
-                finished: false,
-                createdAt: expect.any(String),
-                updatedAt: expect.any(String)
-            },
-            courses: [{
-                id: expect.any(String),
-                userId: result.current.useAuth.state.user.id,
-                ...testCourse,
-                suspended: false,
-                finished: false,
-                createdAt: expect.any(String),
-                updatedAt: expect.any(String)
-            }]
+            selectedCourse: courseMock
         });
 
         /* Check if status state is equal to respective status */
         expect(result.current.useStatus.state).toEqual({
             code: expect.any(Number),
             msg: expect.any(String)
-        });
-
-        await supabase.from('courses')
-            .delete()
-            .eq('user_id', result.current.useAuth.state.user.id);
-
-        await act(async () => {
-            await result.current.useAuth.signOut();
         });
     });
 });
