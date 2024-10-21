@@ -166,7 +166,7 @@ const useRevisits = () => {
 
         try {
             /* If revisit has a photo you have to delete it */
-            if (state.selectedRevisit.photo) await deleteImage(state.selectedRevisit.photo);
+            if (state.selectedRevisit.photo) await deleteImage(state.selectedRevisit.photo, SUPABASE_REVISITS_FOLDER);
             await RevisitsService.delete(state.selectedRevisit.id, user.id);
 
             removeRevisit(state.selectedRevisit.id);
@@ -341,7 +341,7 @@ const useRevisits = () => {
             if (image) {
 
                 /* If revisit has an image you have to delete it to update it with the new one */
-                if (photo && photo.trim().length > 0) await deleteImage(photo);
+                if (photo && photo.trim().length > 0) await deleteImage(photo, SUPABASE_REVISITS_FOLDER);
                 photo = await uploadImage(image, SUPABASE_REVISITS_FOLDER);
             }
 
