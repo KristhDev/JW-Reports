@@ -5,15 +5,10 @@ import { onFinishMock, onSuccessMock, useImageSpy } from '@test-setup';
 import { getMockStoreUseEmail, renderUseEmail } from '@setups';
 
 /* Mocks */
-import { authenticateStateMock, grantedStateMock, initialStatusStateMock } from '@mocks';
-
-/* Services */
-import { email } from '@services';
+import { authenticateStateMock, EmailServiceSpy, grantedStateMock, initialStatusStateMock } from '@mocks';
 
 /* Shared */
 import { emailMessages } from '@shared';
-
-const sendSpy = jest.spyOn(email, 'send');
 
 const feedbackMsg = 'This is a feedback message';
 
@@ -27,7 +22,7 @@ describe('Test in useEmail - sendFeedbackEmail', () => {
     })
 
     it('should send feedback email', async () => {
-        sendSpy.mockImplementation(() => Promise.resolve());
+        EmailServiceSpy.send.mockImplementation(() => Promise.resolve());
 
         const mockStore = getMockStoreUseEmail({
             auth: authenticateStateMock,
@@ -41,8 +36,8 @@ describe('Test in useEmail - sendFeedbackEmail', () => {
             await result.current.useEmail.sendFeedbackEmail(feedbackMsg, { onFinish: onFinishMock, onSuccess: onSuccessMock });
         });
 
-        expect(sendSpy).toHaveBeenCalledTimes(1);
-        expect(sendSpy).toHaveBeenCalledWith({
+        expect(EmailServiceSpy.send).toHaveBeenCalledTimes(1);
+        expect(EmailServiceSpy.send).toHaveBeenCalledWith({
             email: authenticateStateMock.user.email,
             message: feedbackMsg,
             templateId: expect.any(String)
@@ -58,7 +53,7 @@ describe('Test in useEmail - sendFeedbackEmail', () => {
     });
 
     it('should faild because send throws an error', async () => {
-        sendSpy.mockImplementation(() => Promise.reject());
+        EmailServiceSpy.send.mockImplementation(() => Promise.reject());
 
         const mockStore = getMockStoreUseEmail({
             auth: authenticateStateMock,
@@ -72,8 +67,8 @@ describe('Test in useEmail - sendFeedbackEmail', () => {
             await result.current.useEmail.sendFeedbackEmail(feedbackMsg, { onFinish: onFinishMock, onSuccess: onSuccessMock });
         });
 
-        expect(sendSpy).toHaveBeenCalledTimes(1);
-        expect(sendSpy).toHaveBeenCalledWith({
+        expect(EmailServiceSpy.send).toHaveBeenCalledTimes(1);
+        expect(EmailServiceSpy.send).toHaveBeenCalledWith({
             email: authenticateStateMock.user.email,
             message: feedbackMsg,
             templateId: expect.any(String)

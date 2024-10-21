@@ -33,7 +33,7 @@ describe('Test in usePermissions hook', () => {
         });
     });
 
-    it('should getPermissions with checkPermissions', async () => {
+    it('should getPermissions - checkPermissions', async () => {
         const { result } = renderUsePermissions(mockStore);
 
         await act(async () => {
@@ -44,7 +44,7 @@ describe('Test in usePermissions hook', () => {
         expect(result.current.usePermissions.state).toEqual(grantedStateMock);
     });
 
-    it('should getPermission with askPermission', async () => {
+    it('should getPermission - askPermission', async () => {
         (request as jest.Mock).mockResolvedValue(permissionsStatus.DENIED);
 
         const { result } = renderUsePermissions(mockStore);
@@ -63,7 +63,7 @@ describe('Test in usePermissions hook', () => {
         });
     });
 
-    it('should change status when permission is unavailable', async () => {
+    it('should change status if permission is unavailable', async () => {
         (request as jest.Mock).mockResolvedValue(permissionsStatus.UNAVAILABLE);
 
         const { result } = renderUsePermissions(mockStore);

@@ -33,7 +33,7 @@ describe('Test in useImage hook - takeImageToGallery', () => {
         expect(result.current.useImage.image).toEqual(imageMock);
     });
 
-    it('should not access to gallery when permission is blocked in android below 13', async () => {
+    it('should not access to gallery if permission is blocked in android below 13', async () => {
         mockDeviceInfo.getSystemVersion.mockImplementation(() => '12');
 
         const mockStore = getMockStoreUseImage({
@@ -60,7 +60,7 @@ describe('Test in useImage hook - takeImageToGallery', () => {
         });
     });
 
-    it('should request permissions when permission is denied in android below 13', async () => {
+    it('should request permissions if permission is denied in android below 13', async () => {
         (request as jest.Mock).mockResolvedValue(permissionsStatus.GRANTED);
         mockDeviceInfo.getSystemVersion.mockImplementation(() => '12');
 
@@ -84,7 +84,7 @@ describe('Test in useImage hook - takeImageToGallery', () => {
         expect(result.current.useImage.image).toEqual(imageMock);
     });
 
-    it('should not access to gallery when permission is unavailable in android below 13', async () => {
+    it('should not access to gallery if permission is unavailable in android below 13', async () => {
         mockDeviceInfo.getSystemVersion.mockImplementation(() => '12');
 
         const mockStore = getMockStoreUseImage({ permissions: unavailableStateMock, status: initialStatusStateMock });
@@ -104,7 +104,7 @@ describe('Test in useImage hook - takeImageToGallery', () => {
         });
     });
 
-    it('should not access to gallery when permission is blocked in android above 12', async () => {
+    it('should not access to gallery if permission is blocked in android above 12', async () => {
         mockDeviceInfo.getSystemVersion.mockImplementation(() => '13');
 
         const mockStore = getMockStoreUseImage({
@@ -131,7 +131,7 @@ describe('Test in useImage hook - takeImageToGallery', () => {
         });
     });
 
-    it('should request permissions when permission is denied in android above 12', async () => {
+    it('should request permissions if permission is denied in android above 12', async () => {
         (request as jest.Mock).mockResolvedValue(permissionsStatus.GRANTED);
         mockDeviceInfo.getSystemVersion.mockImplementation(() => '13');
 
@@ -155,7 +155,7 @@ describe('Test in useImage hook - takeImageToGallery', () => {
         expect(result.current.useImage.image).toEqual(imageMock);
     });
 
-    it('should not access to gallery when permission is unavailable in android above 12', async () => {
+    it('should not access to gallery if permission is unavailable in android above 12', async () => {
         mockDeviceInfo.getSystemVersion.mockImplementation(() => '13');
 
         const mockStore = getMockStoreUseImage({

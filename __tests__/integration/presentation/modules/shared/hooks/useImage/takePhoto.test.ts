@@ -31,7 +31,7 @@ describe('Test in useImage hook - takePhoto', () => {
         expect(result.current.useImage.image).toEqual(imageMock);
     });
 
-    it('should not access to camera when permission is blocked', async () => {
+    it('should not access to camera if permission is blocked', async () => {
         const mockStore = getMockStoreUseImage({ permissions: blockedStateMock, status: initialStatusStateMock });
         const { result } = renderUseImage(mockStore);
 
@@ -48,7 +48,7 @@ describe('Test in useImage hook - takePhoto', () => {
         });
     });
 
-    it('should request camera permission when permission is denied', async () => {
+    it('should request camera permission if permission is denied', async () => {
         (request as jest.Mock).mockResolvedValue(permissionsStatus.GRANTED);
 
         const mockStore = getMockStoreUseImage({ permissions: deniedStateMock, status: initialStatusStateMock });
@@ -64,7 +64,7 @@ describe('Test in useImage hook - takePhoto', () => {
         expect(result.current.useImage.image).toEqual(imageMock);
     });
 
-    it('should not access to camera when permission is unavailable', async () => {
+    it('should not access to camera if permission is unavailable', async () => {
         const mockStore = getMockStoreUseImage({ permissions: unavailableStateMock, status: initialStatusStateMock });
         const { result } = renderUseImage(mockStore);
 
