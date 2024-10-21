@@ -5,3 +5,5 @@ export const wifiMock: Wifi = {
     hasConnection: true,
     type: NetInfoStateType.wifi
 }
+
+export const hasWifiConnectionMock = jest.fn().mockReturnValue(true);

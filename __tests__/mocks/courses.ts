@@ -1,5 +1,11 @@
+/* Features */
 import { CoursesState, INIT_COURSE } from '@application/features';
+
+/* Entities */
 import { LessonEntity, CourseEntity } from '@domain/entities';
+
+/* Modules */
+import { CoursesService } from '@courses';
 
 export const activeOrSuspendCourseMock = jest.fn();
 export const deleteCourseMock = jest.fn();
@@ -12,6 +18,16 @@ export const setCoursesScreenHistoryMock = jest.fn();
 export const setRefreshCoursesMock = jest.fn();
 export const setSelectedCourseMock = jest.fn();
 export const updateCourseMock = jest.fn();
+
+export const CoursesServiceSpy = {
+    activeOrSuspend: jest.spyOn(CoursesService, 'activeOrSuspend'),
+    create: jest.spyOn(CoursesService, 'create'),
+    delete: jest.spyOn(CoursesService, 'delete'),
+    finishOrStart: jest.spyOn(CoursesService, 'finishOrStart'),
+    getAllByUserId: jest.spyOn(CoursesService, 'getAllByUserId'),
+    getCourseIdsByUserId: jest.spyOn(CoursesService, 'getCourseIdsByUserId'),
+    update: jest.spyOn(CoursesService, 'update'),
+}
 
 export const testCourse = {
     personAbout: 'Itaque quidem enim neque laudantium ducimus nesciunt provident consequuntur.',
