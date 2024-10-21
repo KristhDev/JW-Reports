@@ -10,6 +10,7 @@ export const onChangeValueMock = jest.fn();
 export const onCleanMock = jest.fn();
 export const onCloseMock = jest.fn();
 export const onCofirmMock = jest.fn();
+export const onErrorMock = jest.fn();
 export const onFinishMock = jest.fn();
 export const onPressMock = jest.fn();
 export const onSearchMock = jest.fn();
