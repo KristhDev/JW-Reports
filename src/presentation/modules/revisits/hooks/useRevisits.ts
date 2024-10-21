@@ -117,7 +117,7 @@ const useRevisits = () => {
         const wifiConnectionAvailable = hasWifiConnection();
         if (!wifiConnectionAvailable) return '';
 
-        const isAuth = isAuthenticated();
+        const isAuth = isAuthenticated(onError);
         if (!isAuth) return '';
 
         const canAlterate = canAlterateRevisit(revisitsMessages.UNSELECTED_COMPLETE, onError);
