@@ -6,11 +6,13 @@ import { getMockStoreUseRevisits, renderUseRevisits } from '@setups';
 
 /* Mocks */
 import {
+    authenticateStateMock,
+    hasWifiConnectionMock,
     initialAuthStateMock,
     initialRevisitsStateMock,
     initialStatusStateMock,
-    testCredentials,
-    testRevisit,
+    revisitsMock,
+    RevisitsServiceSpy,
     wifiMock
 } from '@mocks';
 
@@ -18,41 +20,41 @@ import {
 import { authMessages } from '@auth';
 import { revisitsMessages } from '@revisits';
 
+const initialStoreMock = () => getMockStoreUseRevisits({
+    auth: initialAuthStateMock,
+    revisits: initialRevisitsStateMock,
+    status: initialStatusStateMock
+})
+
+const authStoreMock = () => getMockStoreUseRevisits({
+    auth: authenticateStateMock,
+    revisits: initialRevisitsStateMock,
+    status: initialStatusStateMock
+});
+
+const revisitMock = {
+    ...revisitsMock[0],
+    userId: authenticateStateMock.user.id
+}
+
 describe('Test useRevisits hook - deleteRevisit', () => {
     useNetworkSpy.mockImplementation(() => ({
+        hasWifiConnection: hasWifiConnectionMock,
         wifi: wifiMock
-    }) as any);
-
-    let mockStore = {} as any;
+    }));
 
     beforeEach(() => {
         jest.clearAllMocks();
-
-        mockStore = getMockStoreUseRevisits({
-            auth: initialAuthStateMock,
-            revisits: initialRevisitsStateMock,
-            status: initialStatusStateMock
-        });
     });
 
     it('should delete revisit successfully', async () => {
+        RevisitsServiceSpy.delete.mockImplementationOnce(() => Promise.resolve());
+
+        const mockStore = authStoreMock();
         const { result } = renderUseRevisits(mockStore);
 
         await act(async () => {
-            await result.current.useAuth.signIn(testCredentials);
-        });
-
-        await act(async () => {
-            await result.current.useRevisits.saveRevisit({
-                back: true,
-                image: null,
-                onFinish: onFinishMock,
-                revisitValues: testRevisit
-            });
-        });
-
-        await act(async () => {
-            result.current.useRevisits.setSelectedRevisit(result.current.useRevisits.state.revisits[0]);
+            result.current.useRevisits.setSelectedRevisit(revisitMock);
         });
 
         await act(async () => {
@@ -79,14 +81,13 @@ describe('Test useRevisits hook - deleteRevisit', () => {
 
         /**
          * Check if length of useRevisits.state.revisits is 0, onFinish is called
-         * two time and navigate is called one time
+         * one time
          */
         expect(result.current.useRevisits.state.revisits).toHaveLength(0);
-        expect(onFinishMock).toHaveBeenCalledTimes(2);
+        expect(onFinishMock).toHaveBeenCalledTimes(1);
 
-        /* Check if navigate is called with respective arg */
-        expect(mockUseNavigation.navigate).toHaveBeenCalledTimes(1);
-        expect(mockUseNavigation.navigate).toHaveBeenCalledWith('RevisitsTopTabsNavigation');
+        /* Check if navigate isnt called */
+        expect(mockUseNavigation.navigate).not.toHaveBeenCalled();
 
         /* Check if status state is equal to respective status */
         expect(result.current.useStatus.state).toEqual({
@@ -95,7 +96,8 @@ describe('Test useRevisits hook - deleteRevisit', () => {
         });
     });
 
-    it('should faild when user inst authenticated', async () => {
+    it('should faild if user inst authenticated', async () => {
+        const mockStore = initialStoreMock();
         const { result } = renderUseRevisits(mockStore);
 
         await act(async () => {
@@ -113,12 +115,9 @@ describe('Test useRevisits hook - deleteRevisit', () => {
         });
     });
 
-    it('should faild when selectedRevisit is empty', async () => {
+    it('should faild if selectedRevisit is empty', async () => {
+        const mockStore = authStoreMock();
         const { result } = renderUseRevisits(mockStore);
-
-        await act(async () => {
-            await result.current.useAuth.signIn(testCredentials);
-        });
 
         await act(async () => {
             await result.current.useRevisits.deleteRevisit(false, onFinishMock);

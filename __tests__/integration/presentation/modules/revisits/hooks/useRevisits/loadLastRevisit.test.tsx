@@ -1,58 +1,56 @@
 import { act } from '@testing-library/react-native';
 
 /* Setups */
-import { onFinishMock, useNetworkSpy } from '@test-setup';
+import { useNetworkSpy } from '@test-setup';
 import { getMockStoreUseRevisits, renderUseRevisits } from '@setups';
 
 /* Mocks */
 import {
+    authenticateStateMock,
+    hasWifiConnectionMock,
     initialAuthStateMock,
     initialRevisitsStateMock,
     initialStatusStateMock,
-    testCredentials,
-    testRevisit,
+    revisitsMock,
+    RevisitsServiceSpy,
     wifiMock
 } from '@mocks';
 
 /* Modules */
 import { authMessages } from '@auth';
 
+const initialStoreMock = () => getMockStoreUseRevisits({
+    auth: initialAuthStateMock,
+    revisits: initialRevisitsStateMock,
+    status: initialStatusStateMock
+});
+
+const authStoreMock = () => getMockStoreUseRevisits({
+    auth: authenticateStateMock,
+    revisits: initialRevisitsStateMock,
+    status: initialStatusStateMock
+});
+
+const revisitMock = {
+    ...revisitsMock[0],
+    userId: authenticateStateMock.user.id
+}
+
 describe('Test useRevisits hook - loadLastRevisit', () => {
     useNetworkSpy.mockImplementation(() => ({
+        hasWifiConnection: hasWifiConnectionMock,
         wifi: wifiMock
-    }) as any);
-
-    let mockStore = {} as any;
+    }));
 
     beforeEach(() => {
         jest.clearAllMocks();
-
-        mockStore = getMockStoreUseRevisits({
-            auth: initialAuthStateMock,
-            revisits: initialRevisitsStateMock,
-            status: initialStatusStateMock
-        });
     });
 
     it('should load last revisit successfully', async () => {
+        RevisitsServiceSpy.getLastByUserId.mockResolvedValueOnce(revisitMock);
+
+        const mockStore = authStoreMock();
         const { result } = renderUseRevisits(mockStore);
-
-        await act(async () => {
-            await result.current.useAuth.signIn(testCredentials);
-        });
-
-        await act(async () => {
-            await result.current.useRevisits.saveRevisit({
-                back: true,
-                onFinish: onFinishMock,
-                image: null,
-                revisitValues: testRevisit
-            });
-        });
-
-        await act(() => {
-            result.current.useRevisits.removeRevisits();
-        });
 
         await act(async () => {
             await result.current.useRevisits.loadLastRevisit();
@@ -68,32 +66,12 @@ describe('Test useRevisits hook - loadLastRevisit', () => {
                 updatedAt: expect.any(String)
             },
             revisits: [],
-            lastRevisit: {
-                id: expect.any(String),
-                userId: expect.any(String),
-                ...testRevisit,
-                photo: null,
-                nextVisit: expect.any(String),
-                done: false,
-                createdAt: expect.any(String),
-                updatedAt: expect.any(String)
-            }
-        });
-
-        await act(() => {
-            result.current.useRevisits.setSelectedRevisit(result.current.useRevisits.state.lastRevisit);
-        });
-
-        await act(async () => {
-            await result.current.useRevisits.deleteRevisit(false, onFinishMock);
-        });
-
-        await act(async () => {
-            await result.current.useAuth.signOut();
+            lastRevisit: revisitMock
         });
     });
 
-    it('should faild when user inst authenticated', async () => {
+    it('should faild if user inst authenticated', async () => {
+        const mockStore = initialStoreMock();
         const { result } = renderUseRevisits(mockStore);
 
         await act(async () => {

@@ -16,9 +16,11 @@ import {
     updateRevisitMock
 } from '@mocks';
 
+/* Features */
+import { UI_INITIAL_STATE } from '@application/features';
+
 /* Modules */
 import { RevisitForm } from '@revisits';
-import { UI_INITIAL_STATE } from '@ui';
 
 const personName = 'Clifton DAmore';
 const about = 'Possimus magnam cum quo saepe et accusamus consectetur molestiae. Eos et et nobis dolor. Enim repellat quia officia fuga qui. Cumque delectus unde possimus consequatur ducimus.';
@@ -66,7 +68,7 @@ describe('Test in <RevisitForm /> component', () => {
         });
     });
 
-    it('should call setErrorForm when form is invalid', async () => {
+    it('should call setErrorForm if form is invalid', async () => {
         renderComponent();
 
         /* Get submit pressable */
@@ -77,7 +79,7 @@ describe('Test in <RevisitForm /> component', () => {
         expect(setErrorFormMock).toHaveBeenCalledTimes(1);
     });
 
-    it('should call saveRevisit when form is valid and selectedRevisit is empty', async () => {
+    it('should call saveRevisit if form is valid and selectedRevisit is empty', async () => {
         renderComponent();
 
         const inputs = await screen.findAllByTestId('form-field-text-input');
@@ -105,7 +107,7 @@ describe('Test in <RevisitForm /> component', () => {
         });
     });
 
-    it('should call updateRevisit when form is valid and selectedRevisit isnt empty', async () => {
+    it('should call updateRevisit if form is valid and selectedRevisit isnt empty', async () => {
 
         /* Mock data of useRevisits */
         useRevisitsSpy.mockImplementation(() => ({
@@ -140,7 +142,7 @@ describe('Test in <RevisitForm /> component', () => {
         );
     });
 
-    it('should call takeImageToGallery when gallery button is pressed', async () => {
+    it('should call takeImageToGallery if gallery button is pressed', async () => {
         renderComponent();
 
         /* Get gallery pressable */
@@ -151,7 +153,7 @@ describe('Test in <RevisitForm /> component', () => {
         expect(takeImageToGalleryMock).toHaveBeenCalledTimes(1);
     });
 
-    it('should call takePhoto when photo button is pressed', async () => {
+    it('should call takePhoto if photo button is pressed', async () => {
         renderComponent();
 
         /* Get camera pressable */
@@ -162,7 +164,7 @@ describe('Test in <RevisitForm /> component', () => {
         expect(takePhotoMock).toHaveBeenCalledTimes(1);
     });
 
-    it('should render old date fields when userInterface.oldDatetimePicker is true', async () => {
+    it('should render old date fields if userInterface.oldDatetimePicker is true', async () => {
 
         /* Mock data of useUI */
         useUISpy.mockImplementation(() => ({

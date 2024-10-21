@@ -6,37 +6,42 @@ import { getMockStoreUseRevisits, renderUseRevisits } from '@setups';
 
 /* Mocks */
 import {
+    authenticateStateMock,
+    hasWifiConnectionMock,
     initialAuthStateMock,
     initialRevisitsStateMock,
     initialStatusStateMock,
-    testCredentials,
+    revisitsMock,
+    RevisitsServiceSpy,
     wifiMock
 } from '@mocks';
 
 /* Modules */
 import { authMessages } from '@auth';
 
+const initialStoreMock = () => getMockStoreUseRevisits({
+    auth: initialAuthStateMock,
+    revisits: initialRevisitsStateMock,
+    status: initialStatusStateMock
+})
+
+const authStoreMock = () => getMockStoreUseRevisits({
+    auth: authenticateStateMock,
+    revisits: initialRevisitsStateMock,
+    status: initialStatusStateMock
+});
+
 describe('Test in useRevisits hook - loadRevisits', () => {
     useNetworkSpy.mockImplementation(() => ({
+        hasWifiConnection: hasWifiConnectionMock,
         wifi: wifiMock
-    }) as any);
-
-    let mockStore = {} as any;
-
-    beforeEach(() => {
-        mockStore = getMockStoreUseRevisits({
-            auth: initialAuthStateMock,
-            revisits: initialRevisitsStateMock,
-            status: initialStatusStateMock
-        });
-    });
+    }));
 
     it('should load revisits successfully', async () => {
-        const { result } = renderUseRevisits(mockStore);
+        RevisitsServiceSpy.getAllByUserId.mockResolvedValueOnce(revisitsMock);
 
-        await act(async () => {
-            await result.current.useAuth.signIn(testCredentials);
-        });
+        const mockStore = authStoreMock();
+        const { result } = renderUseRevisits(mockStore);
 
         await act(async () => {
             await result.current.useRevisits.loadRevisits({ filter: 'all' });
@@ -45,7 +50,26 @@ describe('Test in useRevisits hook - loadRevisits', () => {
         /* Check if hasMoreRevisits is updated */
         expect(result.current.useRevisits.state).toEqual({
             ...initialRevisitsStateMock,
-            hasMoreRevisits: false
+            revisits: expect.any(Array),
+            hasMoreRevisits: revisitsMock.length >= 10,
+            revisitsPagination: {
+                from: (revisitsMock.length >= 10) ? 10 : 0,
+                to: (revisitsMock.length >= 10) ? 19 : 9
+            }
+        });
+
+        result.current.useRevisits.state.revisits.forEach((revisit) => {
+            expect(revisit).toEqual({
+                id: expect.any(String),
+                userId: expect.any(String),
+                personName: expect.any(String),
+                about: expect.any(String),
+                address: expect.any(String),
+                done: expect.any(Boolean),
+                nextVisit: expect.any(String),
+                createdAt: expect.any(String),
+                updatedAt: expect.any(String)
+            });
         });
 
         await act(async () => {
@@ -53,7 +77,8 @@ describe('Test in useRevisits hook - loadRevisits', () => {
         });
     });
 
-    it('should faild when user inst authenticated', async () => {
+    it('should faild if user inst authenticated', async () => {
+        const mockStore = initialStoreMock();
         const { result } = renderUseRevisits(mockStore);
 
         await act(async () => {

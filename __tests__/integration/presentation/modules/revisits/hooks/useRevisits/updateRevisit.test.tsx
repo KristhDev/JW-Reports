@@ -6,9 +6,13 @@ import { getMockStoreUseRevisits, renderUseRevisits } from '@setups';
 
 /* Mocks */
 import {
+    authenticateStateMock,
+    hasWifiConnectionMock,
     initialAuthStateMock,
     initialRevisitsStateMock,
     initialStatusStateMock,
+    revisitsMock,
+    RevisitsServiceSpy,
     testCredentials,
     testRevisit,
     wifiMock
@@ -17,30 +21,51 @@ import {
 /* Modules */
 import { authMessages } from '@auth';
 import { revisitsMessages } from '@revisits';
+import { RequestError } from '@domain/errors';
+
+const initialStoreMock = () => getMockStoreUseRevisits({
+    auth: initialAuthStateMock,
+    revisits: initialRevisitsStateMock,
+    status: initialStatusStateMock
+});
+
+const authStoreMock = () => getMockStoreUseRevisits({
+    auth: authenticateStateMock,
+    revisits: initialRevisitsStateMock,
+    status: initialStatusStateMock
+});
+
+const revisitMock = {
+    ...revisitsMock[0],
+    ...testRevisit,
+    userId: authenticateStateMock.user.id,
+    nextVisit: testRevisit.nextVisit.toISOString(),
+}
+
+const revisitUpdateMock = {
+    ...revisitsMock[0],
+    ...testRevisit,
+    userId: authenticateStateMock.user.id,
+    personName: 'Chris Frami',
+    nextVisit: testRevisit.nextVisit.toISOString(),
+}
 
 describe('Test useRevisits hook - updateRevisit', () => {
     useNetworkSpy.mockImplementation(() => ({
+        hasWifiConnection: hasWifiConnectionMock,
         wifi: wifiMock
-    }) as any);
-
-    let mockStore = {} as any;
+    }));
 
     beforeEach(() => {
         jest.clearAllMocks();
-
-        mockStore = getMockStoreUseRevisits({
-            auth: initialAuthStateMock,
-            revisits: initialRevisitsStateMock,
-            status: initialStatusStateMock
-        });
     });
 
     it('should update revisit successfully', async () => {
-        const { result } = renderUseRevisits(mockStore);
+        RevisitsServiceSpy.update.mockResolvedValueOnce(revisitUpdateMock);
+        RevisitsServiceSpy.getLastByUserId.mockResolvedValueOnce(revisitUpdateMock);
 
-        await act(async () => {
-            await result.current.useAuth.signIn(testCredentials);
-        });
+        const mockStore = authStoreMock();
+        const { result } = renderUseRevisits(mockStore);
 
         await act(async () => {
             await result.current.useRevisits.saveRevisit({
@@ -52,7 +77,7 @@ describe('Test useRevisits hook - updateRevisit', () => {
         });
 
         await act(async () => {
-            result.current.useRevisits.setSelectedRevisit(result.current.useRevisits.state.revisits[0]);
+            result.current.useRevisits.setSelectedRevisit(revisitMock);
         });
 
         await act(async () => {
@@ -62,39 +87,8 @@ describe('Test useRevisits hook - updateRevisit', () => {
         /* Check if revisits and selectedRevisit is updated */
         expect(result.current.useRevisits.state).toEqual({
             ...initialRevisitsStateMock,
-            revisits: [{
-                ...testRevisit,
-                id: expect.any(String),
-                userId: result.current.useAuth.state.user.id,
-                personName: 'Chris Frami',
-                nextVisit: expect.any(String),
-                photo: null,
-                done: false,
-                createdAt: expect.any(String),
-                updatedAt: expect.any(String)
-            }],
-            selectedRevisit: {
-                ...testRevisit,
-                id: expect.any(String),
-                userId: result.current.useAuth.state.user.id,
-                personName: 'Chris Frami',
-                nextVisit: expect.any(String),
-                photo: null,
-                done: false,
-                createdAt: expect.any(String),
-                updatedAt: expect.any(String)
-            },
-            lastRevisit: {
-                ...testRevisit,
-                id: expect.any(String),
-                userId: result.current.useAuth.state.user.id,
-                personName: 'Chris Frami',
-                nextVisit: expect.any(String),
-                photo: null,
-                done: false,
-                createdAt: expect.any(String),
-                updatedAt: expect.any(String)
-            }
+            selectedRevisit: revisitUpdateMock,
+            lastRevisit: revisitUpdateMock
         });
 
         /* Check if status state is equal to respective status */
@@ -105,17 +99,10 @@ describe('Test useRevisits hook - updateRevisit', () => {
 
         /* Check if goBack is called one time */
         expect(mockUseNavigation.goBack).toHaveBeenCalledTimes(1);
-
-        await act(async () => {
-            await result.current.useRevisits.deleteRevisit();
-        });
-
-        await act(async () => {
-            await result.current.useAuth.signOut();
-        });
     });
 
-    it('should faild when user inst authenticated', async () => {
+    it('should faild if user inst authenticated', async () => {
+        const mockStore = initialStoreMock();
         const { result } = renderUseRevisits(mockStore);
 
         await act(async () => {
@@ -132,7 +119,8 @@ describe('Test useRevisits hook - updateRevisit', () => {
         });
     });
 
-    it('should faild when selectedRevisit is empty', async () => {
+    it('should faild if selectedRevisit is empty', async () => {
+        const mockStore = authStoreMock();
         const { result } = renderUseRevisits(mockStore);
 
         await act(async () => {
@@ -153,24 +141,14 @@ describe('Test useRevisits hook - updateRevisit', () => {
         });
     });
 
-    it('should faild when data is invalid', async () => {
+    it('should faild if data is invalid', async () => {
+        RevisitsServiceSpy.update.mockRejectedValueOnce(new RequestError('Invalid revisit', 400, 'invalid_revisit'));
+
+        const mockStore = authStoreMock();
         const { result } = renderUseRevisits(mockStore);
 
         await act(async () => {
-            await result.current.useAuth.signIn(testCredentials);
-        });
-
-        await act(async () => {
-            await result.current.useRevisits.saveRevisit({
-                back: true,
-                onFinish: onFinishMock,
-                revisitValues: testRevisit,
-                image: null
-            });
-        });
-
-        await act(async () => {
-            result.current.useRevisits.setSelectedRevisit(result.current.useRevisits.state.revisits[0]);
+            result.current.useRevisits.setSelectedRevisit(revisitMock);
         });
 
         await act(async () => {
@@ -180,33 +158,9 @@ describe('Test useRevisits hook - updateRevisit', () => {
         /* Check if revisits and selectedRevisits inst updated */
         expect(result.current.useRevisits.state).toEqual({
             ...initialRevisitsStateMock,
-            revisits: [{
-                ...testRevisit,
-                id: expect.any(String),
-                userId: result.current.useAuth.state.user.id,
-                nextVisit: expect.any(String),
-                photo: null,
-                done: false,
-                createdAt: expect.any(String),
-                updatedAt: expect.any(String)
-            }],
-            selectedRevisit: {
-                ...testRevisit,
-                id: expect.any(String),
-                userId: result.current.useAuth.state.user.id,
-                nextVisit: expect.any(String),
-                photo: null,
-                done: false,
-                createdAt: expect.any(String),
-                updatedAt: expect.any(String)
-            },
+            selectedRevisit: revisitMock,
             lastRevisit: {
-                ...testRevisit,
-                id: expect.any(String),
-                userId: result.current.useAuth.state.user.id,
-                nextVisit: expect.any(String),
-                photo: null,
-                done: false,
+                ...initialRevisitsStateMock.lastRevisit,
                 createdAt: expect.any(String),
                 updatedAt: expect.any(String)
             }
@@ -220,13 +174,5 @@ describe('Test useRevisits hook - updateRevisit', () => {
 
         /* Check if goBack inst called */
         expect(mockUseNavigation.goBack).not.toHaveBeenCalled();
-
-        await act(async () => {
-            await result.current.useRevisits.deleteRevisit();
-        });
-
-        await act(async () => {
-            await result.current.useAuth.signOut();
-        });
     });
 });
