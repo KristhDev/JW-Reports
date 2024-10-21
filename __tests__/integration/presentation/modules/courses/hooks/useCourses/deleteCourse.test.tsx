@@ -6,12 +6,15 @@ import { getMockStoreUseCourses, renderUseCourses } from '@setups';
 
 /* Mocks */
 import {
+    authenticateStateMock,
+    courseMock,
+    CoursesServiceSpy,
+    hasWifiConnectionMock,
     initialAuthStateMock,
     initialCoursesStateMock,
     initialLessonsStateMock,
     initialStatusStateMock,
-    testCourse,
-    testCredentials,
+    LessonsServiceSpy,
     wifiMock
 } from '@mocks';
 
@@ -21,6 +24,7 @@ import { coursesMessages } from '@courses';
 
 describe('Test in useCourses hook - deleteCourse', () => {
     useNetworkSpy.mockImplementation(() => ({
+        hasWifiConnection: hasWifiConnectionMock,
         wifi: wifiMock
     }));
 
@@ -30,7 +34,7 @@ describe('Test in useCourses hook - deleteCourse', () => {
         jest.clearAllMocks();
 
         mockStore = getMockStoreUseCourses({
-            auth: initialAuthStateMock,
+            auth: authenticateStateMock,
             courses: initialCoursesStateMock,
             lessons: initialLessonsStateMock,
             status: initialStatusStateMock
@@ -38,18 +42,13 @@ describe('Test in useCourses hook - deleteCourse', () => {
     });
 
     it('should delete course successfully', async () => {
+        CoursesServiceSpy.delete.mockImplementation(() => Promise.resolve());
+        LessonsServiceSpy.deleteLessonsByCourseId.mockImplementation(() => Promise.resolve());
+
         const { result } = renderUseCourses(mockStore);
 
         await act(async () => {
-            await result.current.useAuth.signIn(testCredentials);
-        });
-
-        await act(async () => {
-            await result.current.useCourses.saveCourse(testCourse, onFinishMock);
-        });
-
-        await act(async () => {
-            result.current.useCourses.setSelectedCourse(result.current.useCourses.state.courses[0]);
+            result.current.useCourses.setSelectedCourse({ ...courseMock, userId: authenticateStateMock.user.id });
         });
 
         await act(async () => {
@@ -73,16 +72,19 @@ describe('Test in useCourses hook - deleteCourse', () => {
         });
 
         /* Check if onFinish and navigate is called with respective arg */
-        expect(onFinishMock).toHaveBeenCalledTimes(2);
-        expect(mockUseNavigation.navigate).toHaveBeenCalledTimes(2);
+        expect(onFinishMock).toHaveBeenCalledTimes(1);
+        expect(mockUseNavigation.navigate).toHaveBeenCalledTimes(1);
         expect(mockUseNavigation.navigate).toHaveBeenCalledWith('CoursesScreen');
-
-        await act(async () => {
-            await result.current.useAuth.signOut();
-        });
     });
 
-    it('should faild when user isnt authenticated', async () => {
+    it('should faild if user isnt authenticated', async () => {
+        const mockStore = getMockStoreUseCourses({
+            auth: initialAuthStateMock,
+            courses: initialCoursesStateMock,
+            lessons: initialLessonsStateMock,
+            status: initialStatusStateMock
+        });
+
         const { result } = renderUseCourses(mockStore);
 
         await act(async () => {
@@ -103,12 +105,8 @@ describe('Test in useCourses hook - deleteCourse', () => {
         });
     });
 
-    it('should faild when selectedCourse is empty', async () => {
+    it('should faild if selectedCourse is empty', async () => {
         const { result } = renderUseCourses(mockStore);
-
-        await act(async () => {
-            await result.current.useAuth.signIn(testCredentials);
-        });
 
         await act(async () => {
             await result.current.useCourses.deleteCourse(true, onFinishMock);

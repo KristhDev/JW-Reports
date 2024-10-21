@@ -7,6 +7,7 @@ import { getMockStoreUseCourses, renderUseCourses } from '@setups';
 /* Mocks */
 import {
     coursesStateMock,
+    hasWifiConnectionMock,
     initialAuthStateMock,
     initialCoursesStateMock,
     initialLessonsStateMock,
@@ -23,6 +24,7 @@ const mockStore = getMockStoreUseCourses({
 
 describe('Test in useCourses hook - clearCourses', () => {
     useNetworkSpy.mockImplementation(() => ({
+        hasWifiConnection: hasWifiConnectionMock,
         wifi: wifiMock
     }));
 

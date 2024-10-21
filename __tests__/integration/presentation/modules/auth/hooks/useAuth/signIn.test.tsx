@@ -6,6 +6,9 @@ import { getMockStoreUseAuth, renderUseAuth } from '@setups';
 
 /* Mocks */
 import {
+    authenticateStateMock,
+    AuthServiceSpy,
+    hasWifiConnectionMock,
     initialAuthStateMock,
     initialCoursesStateMock,
     initialLessonsStateMock,
@@ -16,8 +19,12 @@ import {
     wifiMock
 } from '@mocks';
 
+/* Errors */
+import { RequestError } from '@domain/errors';
+
 describe('Test in useAuth hook - signIn', () => {
     useNetworkSpy.mockImplementation(() => ({
+        hasWifiConnection: hasWifiConnectionMock,
         wifi: wifiMock
     }) as any);
 
@@ -35,6 +42,7 @@ describe('Test in useAuth hook - signIn', () => {
     });
 
     it('should authenticate user', async () => {
+        AuthServiceSpy.signIn.mockResolvedValue({ token: authenticateStateMock.token, user: authenticateStateMock.user });
         const { result } = renderUseAuth(mockStore);
 
         await act(async () => {
@@ -45,22 +53,13 @@ describe('Test in useAuth hook - signIn', () => {
         expect(result.current.useAuth.state).toEqual({
             ...initialAuthStateMock,
             isAuthenticated: true,
-            token: expect.any(String),
-            user: {
-                id: expect.any(String),
-                name: 'André',
-                surname: 'Rivera',
-                email: 'andredev@gmail.com',
-                precursor: 'ninguno',
-                hoursRequirement: 0,
-                hoursLDC: false,
-                createdAt: expect.any(String),
-                updatedAt: expect.any(String)
-            }
+            token: authenticateStateMock.token,
+            user: authenticateStateMock.user
         });
     });
 
-    it('should faild when credentials are invalid', async () => {
+    it('should faild if credentials are invalid', async () => {
+        AuthServiceSpy.signIn.mockRejectedValue(new RequestError('Invalid credentials', 400, 'invalid_credentials'));
         const { result } = renderUseAuth(mockStore);
 
         await act(async () => {
@@ -81,6 +80,26 @@ describe('Test in useAuth hook - signIn', () => {
         expect(result.current.useStatus.state).toEqual({
             code: 400,
             msg: expect.any(String)
+        });
+    });
+
+    it('should faild if hasnt wifi connection', async () => {
+        hasWifiConnectionMock.mockReturnValue(false);
+
+        const { result } = renderUseAuth(mockStore);
+
+        await act(async () => {
+            await result.current.useAuth.signIn(testCredentials);
+        });
+
+        /* Check if state is equal to initial state */
+        expect(result.current.useAuth.state).toEqual({
+            ...initialAuthStateMock,
+            user: {
+                ...initialAuthStateMock.user,
+                createdAt: expect.any(String),
+                updatedAt: expect.any(String)
+            }
         });
     });
 });

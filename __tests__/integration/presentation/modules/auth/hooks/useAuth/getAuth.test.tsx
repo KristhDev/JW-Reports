@@ -1,28 +1,35 @@
 import { act } from '@testing-library/react-native';
 
-/* Supabase admin client */
-import { supabase } from '@config';
-
 /* Setup */
 import { useNetworkSpy } from '@test-setup';
 import { getMockStoreUseAuth, renderUseAuth } from '@setups';
 
 /* Mocks */
 import {
+    AuthServiceSpy,
+    hasWifiConnectionMock,
     initialAuthStateMock,
     initialCoursesStateMock,
     initialLessonsStateMock,
     initialPreachingStateMock,
     initialRevisitsStateMock,
     initialStatusStateMock,
-    newUserData,
+    testCredentials,
+    testUser,
     wifiMock
 } from '@mocks';
 
-describe('Test in useAuth hook - signUp', () => {
+/* Errors */
+import { RequestError } from '@domain/errors';
+
+const token = 'dalsmdp32lm32kopaw';
+const newToken = ';lskad;l;k2p3s2k3dk;k;;qwdkwq';
+
+describe('Test in useAuth hook - getAuth', () => {
     useNetworkSpy.mockImplementation(() => ({
+        hasWifiConnection: hasWifiConnectionMock,
         wifi: wifiMock
-    }) as any);
+    }));
 
     let mockStore = {} as any;
 
@@ -37,37 +44,31 @@ describe('Test in useAuth hook - signUp', () => {
         });
     });
 
-    it('should create new account', async () => {
+    it('should get authentication', async () => {
+        AuthServiceSpy.signIn.mockResolvedValue({ token, user: testUser });
+        AuthServiceSpy.getSession.mockResolvedValue({ token: newToken, user: testUser });
+
         const { result } = renderUseAuth(mockStore);
 
         await act(async () => {
-            await result.current.useAuth.signUp(newUserData);
+            await result.current.useAuth.signIn(testCredentials);
+            await result.current.useAuth.getAuth();
         });
 
-        /* Check if state is equal to initial state */
+        /* Check if state is equal to authenticated state */
         expect(result.current.useAuth.state).toEqual({
             ...initialAuthStateMock,
-            user: {
-                ...initialAuthStateMock.user,
-                createdAt: expect.any(String),
-                updatedAt: expect.any(String)
-            }
+            isAuthenticated: true,
+            token: expect.any(String),
+            user: testUser
         });
-
-        /* Check if status state is equal to respective object */
-        expect(result.current.useStatus.state).toEqual({
-            code: 200,
-            msg: `Hemos enviado un correo de confirmación a ${ newUserData.email }. Por favor, revíselo y siga los pasos que se le indiquen.`
-        });
-
-        await supabase.auth.admin.deleteUser(result.current.useAuth.state.user.id);
     });
 
-    it('should faild when email is invalid', async () => {
+    it('should faild if token is empty', async () => {
         const { result } = renderUseAuth(mockStore);
 
         await act(async () => {
-            await result.current.useAuth.signUp({ ...newUserData, email: 'invalid' });
+            await result.current.useAuth.getAuth();
         });
 
         /* Check if state is equal to initial state */
@@ -80,18 +81,52 @@ describe('Test in useAuth hook - signUp', () => {
             }
         });
 
-        /* Check if status state is equal to respective object */
+        /* Check if status state is equal to initial state */
+        expect(result.current.useStatus.state).toEqual(initialStatusStateMock);
+    });
+
+    it('should faild if token is invalid', async () => {
+        AuthServiceSpy.getSession.mockRejectedValue(new RequestError('In valid token', 400, 'bad_jwt'));
+
+        const mockStore = getMockStoreUseAuth({
+            auth: { ...initialAuthStateMock, token: 'invalid-token' },
+            courses: initialCoursesStateMock,
+            lessons: initialLessonsStateMock,
+            preaching: initialPreachingStateMock,
+            revisits: initialRevisitsStateMock,
+            status: initialStatusStateMock
+        });
+
+        const { result } = renderUseAuth(mockStore);
+
+        await act(async () => {
+            await result.current.useAuth.getAuth();
+        });
+
+        /* Check if state is equal to authenticated state */
+        expect(result.current.useAuth.state).toEqual({
+            ...initialAuthStateMock,
+            user: {
+                ...initialAuthStateMock.user,
+                createdAt: expect.any(String),
+                updatedAt: expect.any(String)
+            }
+        });
+
+        /* Check if status state is updated */
         expect(result.current.useStatus.state).toEqual({
             code: 400,
             msg: expect.any(String)
         });
     });
 
-    it('should faild when email already exisits', async () => {
+    it('should faild if hasnt wifi connection', async () => {
+        hasWifiConnectionMock.mockReturnValue(false);
+
         const { result } = renderUseAuth(mockStore);
 
         await act(async () => {
-            await result.current.useAuth.signUp({ ...newUserData, email: 'andredev@gmail.com' });
+            await result.current.useAuth.getAuth();
         });
 
         /* Check if state is equal to initial state */
@@ -102,36 +137,6 @@ describe('Test in useAuth hook - signUp', () => {
                 createdAt: expect.any(String),
                 updatedAt: expect.any(String)
             }
-        });
-
-        /* Check if status state is equal to respective object */
-        expect(result.current.useStatus.state).toEqual({
-            code: 400,
-            msg: expect.any(String)
-        });
-    });
-
-    it('should faild when password is invalid', async () => {
-        const { result } = renderUseAuth(mockStore);
-
-        await act(async () => {
-            await result.current.useAuth.signUp({ ...newUserData, password: 'inv' });
-        });
-
-        /* Check if state is equal to initial state */
-        expect(result.current.useAuth.state).toEqual({
-            ...initialAuthStateMock,
-            user: {
-                ...initialAuthStateMock.user,
-                createdAt: expect.any(String),
-                updatedAt: expect.any(String)
-            }
-        });
-
-        /* Check if status state is equal to respective object */
-        expect(result.current.useStatus.state).toEqual({
-            code: 400,
-            msg: expect.any(String)
         });
     });
 });

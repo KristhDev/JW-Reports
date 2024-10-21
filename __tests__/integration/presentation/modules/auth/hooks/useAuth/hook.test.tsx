@@ -4,6 +4,7 @@ import { getMockStoreUseAuth, renderUseAuth } from '@setups';
 
 /* Mocks */
 import {
+    hasWifiConnectionMock,
     initialAuthStateMock,
     initialCoursesStateMock,
     initialLessonsStateMock,
@@ -15,8 +16,9 @@ import {
 
 describe('Test in useAuth hook', () => {
     useNetworkSpy.mockImplementation(() => ({
+        hasWifiConnection: hasWifiConnectionMock,
         wifi: wifiMock
-    }) as any);
+    }));
 
     beforeEach(() => {
         jest.clearAllMocks();
@@ -39,6 +41,7 @@ describe('Test in useAuth hook', () => {
             state: initialAuthStateMock,
             clearAuth: expect.any(Function),
             getAuth: expect.any(Function),
+            isAuthenticated: expect.any(Function),
             resetPassword: expect.any(Function),
             signIn: expect.any(Function),
             signOut: expect.any(Function),
