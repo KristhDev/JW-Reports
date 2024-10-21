@@ -1,10 +1,23 @@
+/* Features */
 import { PreachingState, INIT_PREACHING } from '@application/features';
+
+/* Entities */
 import { PreachingEntity } from '@domain/entities';
+
+/* Modules */
+import { PreachingService } from '@preaching';
 
 export const loadPreachingsMock = jest.fn();
 export const savePreachingMock = jest.fn();
 export const setSelectedPreachingMock = jest.fn();
 export const updatePreachingMock = jest.fn();
+
+export const PreachingServiceSpy = {
+    create: jest.spyOn(PreachingService, 'create'),
+    delete: jest.spyOn(PreachingService, 'delete'),
+    getByUserIdAndMonth: jest.spyOn(PreachingService, 'getByUserIdAndMonth'),
+    update: jest.spyOn(PreachingService, 'update'),
+}
 
 export const preachingsMock: PreachingEntity[] = [
     {
