@@ -4,7 +4,7 @@ import { useStyles } from 'react-native-unistyles';
 import { clean, openPicker, openCamera, Image } from 'react-native-image-crop-picker';
 
 /* Env */
-import { SUPABASE_BUCKET, SUPABASE_REVISITS_FOLDER } from '@env';
+import { SUPABASE_BUCKET } from '@env';
 
 /* Errors */
 import { ImageError } from '@domain/errors';
@@ -63,8 +63,8 @@ const useImage = () => {
      * @param {string} uri - The uri of the image you want to delete.
      * @return {Promise<void>} This function return object.
      */
-    const deleteImage = async (uri: string): Promise<void> => {
-        await ImageService.deleteImage({ bucket: SUPABASE_BUCKET, folder: SUPABASE_REVISITS_FOLDER, uri });
+    const deleteImage = async (uri: string, folder: string): Promise<void> => {
+        await ImageService.deleteImage({ bucket: SUPABASE_BUCKET, folder, uri });
     }
 
     /**

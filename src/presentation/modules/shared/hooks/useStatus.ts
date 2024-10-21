@@ -82,13 +82,14 @@ const useStatus = () => {
 
 
     return {
+        state,
+
         clearStatus,
-        setErrorForm,
         setError,
+        setErrorForm,
         setNetworkError,
         setStatus,
         setUnauthenticatedError,
-        state,
     }
 }
 
