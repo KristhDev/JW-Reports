@@ -5,13 +5,14 @@ import { useNetworkSpy } from '@test-setup';
 import { getMockStoreUsePreaching, renderUsePreaching } from '@setups';
 
 /* Mocks */
-import { initialAuthStateMock, initialPreachingStateMock, initialStatusStateMock, wifiMock } from '@mocks';
+import { hasWifiConnectionMock, initialAuthStateMock, initialPreachingStateMock, initialStatusStateMock, wifiMock } from '@mocks';
 
 
 describe('Test usePreaching hook - setSelectedDate', () => {
     useNetworkSpy.mockImplementation(() => ({
+        hasWifiConnection: hasWifiConnectionMock,
         wifi: wifiMock
-    }) as any);
+    }));
 
     let mockStore = {} as any;
 

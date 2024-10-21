@@ -14,9 +14,11 @@ import {
     updatePreachingMock
 } from '@mocks';
 
+/* Features */
+import { INIT_PREACHING, UI_INITIAL_STATE } from '@application/features';
+
 /* Modules */
-import { INIT_PREACHING, PreachingForm } from '@preaching';
-import { UI_INITIAL_STATE } from '@ui';
+import { PreachingForm } from '@preaching';
 
 const preachingDay = '2022-12-29 00:00:00';
 const initHour = '2022-12-30 09:00:00';

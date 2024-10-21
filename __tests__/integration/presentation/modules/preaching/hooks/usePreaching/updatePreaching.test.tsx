@@ -6,10 +6,13 @@ import { getMockStoreUsePreaching, renderUsePreaching } from '@setups';
 
 /* Mocks */
 import {
+    authenticatePrecursorMock,
+    hasWifiConnectionMock,
     initialAuthStateMock,
     initialPreachingStateMock,
     initialStatusStateMock,
-    testCredentials,
+    PreachingServiceSpy,
+    preachingsMock,
     wifiMock
 } from '@mocks';
 
@@ -17,43 +20,44 @@ import {
 import { authMessages } from '@auth';
 import { preachingMessages } from '@preaching';
 
+const initialMockStore = () => getMockStoreUsePreaching({
+    auth: initialAuthStateMock,
+    preaching: initialPreachingStateMock,
+    status: initialStatusStateMock
+});
+
+const authMockStore = () => getMockStoreUsePreaching({
+    auth: authenticatePrecursorMock,
+    preaching: initialPreachingStateMock,
+    status: initialStatusStateMock
+});
+
+const preachingMock = {
+    ...preachingsMock[0],
+    userId: authenticatePrecursorMock.user.id,
+    day: new Date('2023-03-17').toString(),
+    initHour: new Date('2023-03-03 13:00:00').toString(),
+    finalHour: new Date('2023-03-03 13:00:00').toString()
+}
+
 describe('Test in usePreaching hook - updatePreaching', () => {
     useNetworkSpy.mockImplementation(() => ({
+        hasWifiConnection: hasWifiConnectionMock,
         wifi: wifiMock
-    }) as any);
-
-    let mockStoreWithCurrentSelectedDate = {} as any;
+    }));
 
     beforeEach(() => {
         jest.clearAllMocks();
-
-        mockStoreWithCurrentSelectedDate = getMockStoreUsePreaching({
-            auth: initialAuthStateMock,
-            preaching: {
-                ...initialPreachingStateMock,
-                selectedDate: new Date()
-            },
-            status: initialStatusStateMock
-        });
     });
 
     it('should update preaching day successfully', async () => {
-        const { result } = renderUsePreaching(mockStoreWithCurrentSelectedDate);
+        PreachingServiceSpy.update.mockResolvedValueOnce(preachingMock);
 
-        await act(async () => {
-            await result.current.useAuth.signIn(testCredentials);
-        });
-
-        await act(async () => {
-            await result.current.usePreaching.savePreaching({
-                day: new Date(),
-                initHour: new Date(),
-                finalHour: new Date()
-            });
-        });
+        const mockStore = authMockStore();
+        const { result } = renderUsePreaching(mockStore);
 
         await act(() => {
-            result.current.usePreaching.setSelectedPreaching(result.current.usePreaching.state.preachings[0]);
+            result.current.usePreaching.setSelectedPreaching(preachingMock);
         });
 
         await act(async () => {
@@ -68,18 +72,8 @@ describe('Test in usePreaching hook - updatePreaching', () => {
         expect(result.current.usePreaching.state).toEqual({
             ...initialPreachingStateMock,
             selectedDate: expect.any(Date),
-            preachings: [{
-                id: expect.any(String),
-                userId: result.current.useAuth.state.user.id,
-                day: expect.any(String),
-                initHour: expect.any(String),
-                finalHour: expect.any(String),
-                createdAt: expect.any(String),
-                updatedAt: expect.any(String)
-            }],
             seletedPreaching: {
-                id: '',
-                userId: '',
+                ...result.current.usePreaching.state.seletedPreaching,
                 day: expect.any(String),
                 initHour: expect.any(String),
                 finalHour: expect.any(String),
@@ -88,8 +82,6 @@ describe('Test in usePreaching hook - updatePreaching', () => {
             }
         });
 
-        expect(result.current.usePreaching.state.preachings).toHaveLength(1);
-
         /* Check if status state is equal to respective object */
         expect(result.current.useStatus.state).toEqual({
             code: 200,
@@ -97,19 +89,12 @@ describe('Test in usePreaching hook - updatePreaching', () => {
         });
 
         /* Check if goBack is called two times */
-        expect(mockUseNavigation.goBack).toHaveBeenCalledTimes(2);
-
-        await act(async () => {
-            await result.current.usePreaching.deletePreaching();
-        });
-
-        await act(async () => {
-            await result.current.useAuth.signOut();
-        });
+        expect(mockUseNavigation.goBack).toHaveBeenCalledTimes(1);
     });
 
-    it('should faild when user inst authenticated', async () => {
-        const { result } = renderUsePreaching(mockStoreWithCurrentSelectedDate);
+    it('should faild id user inst authenticated', async () => {
+        const mockStore = initialMockStore();
+        const { result } = renderUsePreaching(mockStore);
 
         await act(async () => {
             await result.current.usePreaching.updatePreaching({
@@ -132,12 +117,9 @@ describe('Test in usePreaching hook - updatePreaching', () => {
         });
     });
 
-    it('should faild when selectedPreaching is empty', async () => {
-        const { result } = renderUsePreaching(mockStoreWithCurrentSelectedDate);
-
-        await act(async () => {
-            await result.current.useAuth.signIn(testCredentials);
-        });
+    it('should faild if selectedPreaching is empty', async () => {
+        const mockStore = authMockStore();
+        const { result } = renderUsePreaching(mockStore);
 
         await act(async () => {
             await result.current.usePreaching.updatePreaching({
@@ -157,10 +139,6 @@ describe('Test in usePreaching hook - updatePreaching', () => {
         expect(result.current.useStatus.state).toEqual({
             code: 400,
             msg: preachingMessages.UNSELECTED_UPDATE
-        });
-
-        await act(async () => {
-            await result.current.useAuth.signIn(testCredentials);
         });
     });
 });

@@ -6,52 +6,42 @@ import { getMockStoreUsePreaching, renderUsePreaching } from '@setups';
 
 /* Mocks */
 import {
+    authenticatePrecursorMock,
+    hasWifiConnectionMock,
     initialAuthStateMock,
     initialPreachingStateMock,
     initialStatusStateMock,
-    testCredentials,
+    PreachingServiceSpy,
+    preachingsMock,
     wifiMock
 } from '@mocks';
-
-/* Config */
-import { supabase } from '@test-config';
 
 /* Modules */
 import { authMessages } from '@auth';
 
+const initialMockStore = () => getMockStoreUsePreaching({
+    auth: initialAuthStateMock,
+    preaching: initialPreachingStateMock,
+    status: initialStatusStateMock
+});
+
+const authMockStore = () => getMockStoreUsePreaching({
+    auth: authenticatePrecursorMock,
+    preaching: initialPreachingStateMock,
+    status: initialStatusStateMock
+});
+
 describe('Test usePreaching hook - loadPreachings', () => {
     useNetworkSpy.mockImplementation(() => ({
+        hasWifiConnection: hasWifiConnectionMock,
         wifi: wifiMock
-    }) as any);
-
-    let mockStore = {} as any;
-
-    beforeEach(() => {
-        mockStore = getMockStoreUsePreaching({
-            auth: initialAuthStateMock,
-            preaching: initialPreachingStateMock,
-            status: initialStatusStateMock
-        });
-    });
+    }));
 
     it('should load preachings day successfully', async () => {
+        PreachingServiceSpy.getByUserIdAndMonth.mockResolvedValue(preachingsMock);
+
+        const mockStore = authMockStore();
         const { result } = renderUsePreaching(mockStore);
-
-        await act(async () => {
-            await result.current.useAuth.signIn(testCredentials);
-        });
-
-        await act(async () => {
-            await result.current.usePreaching.savePreaching({
-                day: new Date(),
-                initHour: new Date(),
-                finalHour: new Date()
-            });
-        });
-
-        await act(() => {
-            result.current.usePreaching.clearPreaching();
-        });
 
         await act(async () => {
             await result.current.usePreaching.loadPreachings(new Date());
@@ -84,17 +74,10 @@ describe('Test usePreaching hook - loadPreachings', () => {
                 updatedAt: expect.any(String)
             });
         });
-
-        await supabase.from('preachings')
-            .delete()
-            .eq('user_id', result.current.useAuth.state.user.id);
-
-        await act(async () => {
-            await result.current.useAuth.signOut();
-        });
     });
 
-    it('should faild when user is unauthenticated', async () => {
+    it('should faild if user is unauthenticated', async () => {
+        const mockStore = initialMockStore();
         const { result } = renderUsePreaching(mockStore);
 
         await act(async () => {

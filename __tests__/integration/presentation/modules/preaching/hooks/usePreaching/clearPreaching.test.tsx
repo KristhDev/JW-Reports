@@ -6,17 +6,19 @@ import { getMockStoreUsePreaching, renderUsePreaching } from '@setups';
 
 /* Mocks */
 import {
+    hasWifiConnectionMock,
     initialAuthStateMock,
-    initialStatusStateMock,
     initialPreachingStateMock,
+    initialStatusStateMock,
     preachingsStateMock,
-    wifiMock
+    wifiMock,
 } from '@mocks';
 
 describe('Test usePreaching hook - clearPreaching', () => {
     useNetworkSpy.mockImplementation(() => ({
-        wifi: wifiMock
-    }) as any);
+        hasWifiConnection: hasWifiConnectionMock,
+        wifi: wifiMock,
+    }));
 
     let mockStore = {} as any;
 

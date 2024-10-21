@@ -6,43 +6,56 @@ import { getMockStoreUsePreaching, renderUsePreaching } from '@setups';
 
 /* Mocks */
 import {
+    authenticatePrecursorMock,
+    hasWifiConnectionMock,
     initialAuthStateMock,
     initialPreachingStateMock,
     initialStatusStateMock,
-    testCredentials,
+    PreachingServiceSpy,
+    preachingsMock,
     wifiMock
 } from '@mocks';
 
 /* Modules */
 import { authMessages } from '@auth';
 import { preachingMessages } from '@preaching';
+import { RequestError } from '@domain/errors';
+
+const initialMockStore = () => getMockStoreUsePreaching({
+    auth: initialAuthStateMock,
+    preaching: initialPreachingStateMock,
+    status: initialStatusStateMock
+});
+
+const authMockStore = () => getMockStoreUsePreaching({
+    auth: authenticatePrecursorMock,
+    preaching: initialPreachingStateMock,
+    status: initialStatusStateMock
+});
+
+const preachingMock = {
+    ...preachingsMock[0],
+    userId: authenticatePrecursorMock.user.id,
+    day: new Date('2023-03-17').toString(),
+    initHour: new Date('2023-03-03 13:00:00').toString(),
+    finalHour: new Date('2023-03-03 13:00:00').toString()
+}
 
 describe('Test in usePreaching hook - savePreaching', () => {
     useNetworkSpy.mockImplementation(() => ({
+        hasWifiConnection: hasWifiConnectionMock,
         wifi: wifiMock
-    }) as any);
-
-    let mockStore = {} as any;
+    }));
 
     beforeEach(() => {
         jest.clearAllMocks();
-
-        mockStore = getMockStoreUsePreaching({
-            auth: initialAuthStateMock,
-            preaching: {
-                ...initialPreachingStateMock,
-                selectedDate: new Date()
-            },
-            status: initialStatusStateMock
-        });
     });
 
     it('should save preaching day successfully', async () => {
-        const { result } = renderUsePreaching(mockStore);
+        PreachingServiceSpy.create.mockResolvedValueOnce(preachingMock);
 
-        await act(async () => {
-            await result.current.useAuth.signIn(testCredentials);
-        });
+        const mockStore = authMockStore();
+        const { result } = renderUsePreaching(mockStore);
 
         await act(async () => {
             await result.current.usePreaching.savePreaching({
@@ -77,21 +90,10 @@ describe('Test in usePreaching hook - savePreaching', () => {
 
         /* Check if goBack is called one time */
         expect(mockUseNavigation.goBack).toHaveBeenCalledTimes(1);
-
-        await act(() => {
-            result.current.usePreaching.setSelectedPreaching(result.current.usePreaching.state.preachings[0]);
-        });
-
-        await act(async () => {
-            await result.current.usePreaching.deletePreaching();
-        });
-
-        await act(async () => {
-            await result.current.useAuth.signOut();
-        });
     });
 
-    it('should faild when user isnt authenticated', async () => {
+    it('should faild if user isnt authenticated', async () => {
+        const mockStore = initialMockStore();
         const { result } = renderUsePreaching(mockStore);
 
         await act(async () => {
@@ -118,16 +120,14 @@ describe('Test in usePreaching hook - savePreaching', () => {
         expect(mockUseNavigation.goBack).not.toHaveBeenCalled();
     });
 
-    it('should faild when data is invalid', async () => {
+    it('should faild if data is invalid', async () => {
+        PreachingServiceSpy.create.mockRejectedValueOnce(new RequestError('Invalid date', 400, 'invalid_date'));
+
+        const mockStore = authMockStore();
         const { result } = renderUsePreaching(mockStore);
 
         await act(async () => {
-            await result.current.useAuth.signIn(testCredentials);
-        });
-
-        await act(async () => {
             await result.current.usePreaching.savePreaching({
-                // day: new Date(),
                 day: new Date('invalid'),
                 initHour: new Date(),
                 finalHour: new Date()
@@ -148,9 +148,5 @@ describe('Test in usePreaching hook - savePreaching', () => {
 
         /* Check if goBack isnt called */
         expect(mockUseNavigation.goBack).not.toHaveBeenCalled();
-
-        await act(async () => {
-            await result.current.useAuth.signOut();
-        });
     });
 });
