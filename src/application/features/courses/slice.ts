@@ -36,8 +36,8 @@ export const INIT_COURSE: CourseEntity = {
     lastLesson: undefined,
     suspended: false,
     finished: false,
-    createdAt: new Date().toString(),
-    updatedAt: new Date().toString()
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString()
 }
 
 /* Initial state */

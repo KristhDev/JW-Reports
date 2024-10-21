@@ -29,10 +29,10 @@ export const INIT_REVISIT: RevisitEntity = {
     personName: '',
     about: '',
     address: '',
-    nextVisit: new Date().toString(),
+    nextVisit: new Date().toISOString(),
     done: false,
-    createdAt: new Date().toString(),
-    updatedAt: new Date().toString()
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString()
 }
 
 /* Initial state */

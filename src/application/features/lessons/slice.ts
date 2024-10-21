@@ -21,10 +21,10 @@ export const INIT_LESSON: LessonEntity = {
     id: '',
     courseId: '',
     description: '',
-    nextLesson: new Date().toString(),
+    nextLesson: new Date().toISOString(),
     done: false,
-    createdAt: new Date().toString(),
-    updatedAt: new Date().toString(),
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString(),
 }
 
 /* Initial state */
