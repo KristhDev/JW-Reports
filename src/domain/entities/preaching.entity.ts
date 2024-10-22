@@ -1,3 +1,4 @@
+/* Interfaces */
 import { PreachingEndpoint } from '@infrasturcture/interfaces';
 
 export class PreachingEntity {
@@ -11,6 +12,12 @@ export class PreachingEntity {
         public readonly updatedAt: string
     ) {}
 
+    /**
+     * Converts a PreachingEndpoint object to a PreachingEntity object.
+     *
+     * @param {PreachingEndpoint} preaching - The PreachingEndpoint object to convert.
+     * @returns {PreachingEntity} A new PreachingEntity object with the same data.
+     */
     public static fromEndpoint(preaching: PreachingEndpoint): PreachingEntity {
         return new PreachingEntity(
             preaching.id,

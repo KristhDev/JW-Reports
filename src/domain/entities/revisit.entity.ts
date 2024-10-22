@@ -1,3 +1,4 @@
+/* Interfaces */
 import { RevisitEndpoint } from '@infrasturcture/interfaces';
 
 export class RevisitEntity {
@@ -14,6 +15,12 @@ export class RevisitEntity {
         public readonly photo?: string,
     ) {}
 
+    /**
+     * Creates a RevisitEntity from a RevisitEndpoint object.
+     *
+     * @param {RevisitEndpoint} revisit - The revisit endpoint object.
+     * @returns {RevisitEntity} A RevisitEntity object.
+     */
     public static fromEndpoint(revisit: RevisitEndpoint): RevisitEntity {
         return new RevisitEntity(
             revisit.id,
