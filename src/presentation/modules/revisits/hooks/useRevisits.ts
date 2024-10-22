@@ -345,7 +345,7 @@ const useRevisits = () => {
                 photo = await uploadImage(image, SUPABASE_REVISITS_FOLDER);
             }
 
-            const updateDto = UpdateRevisitDto.create({ ...revisitValues, photo, updatedAt: new Date() });
+            const updateDto = UpdateRevisitDto.create({ ...revisitValues, photo });
             const revisit = await RevisitsService.update(state.selectedRevisit.id, user.id, updateDto);
 
             updateRevisitActionState(revisit);
