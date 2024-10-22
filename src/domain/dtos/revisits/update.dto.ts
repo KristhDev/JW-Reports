@@ -14,8 +14,8 @@ export class UpdateRevisitDto {
         public readonly about: string,
         public readonly address: string,
         public readonly next_visit: string,
+        public readonly photo: string | null,
         public readonly updated_at: string,
-        public readonly photo: string | null
     ) {}
 
     /**
@@ -30,8 +30,8 @@ export class UpdateRevisitDto {
             values.about,
             values.address,
             Time.format(values.nextVisit, 'YYYY-MM-DD HH:mm:ss.SSSSSS'),
+            values?.photo || null,
             Time.format(new Date(), 'YYYY-MM-DD HH:mm:ss.SSSSSS'),
-            values?.photo || null
         );
     }
 }
