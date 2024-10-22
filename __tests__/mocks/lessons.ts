@@ -3,9 +3,11 @@ import { LessonsState, INIT_LESSON, INIT_COURSE } from '@application/features';
 
 /* Entities */
 import { CourseEntity, LessonEntity } from '@domain/entities';
+import { LessonEndpoint, LessonWithCourseEndpoint } from '@infrasturcture/interfaces';
 
 /* Modules */
 import { LessonsService } from '@lessons';
+import { courseEndpointMock } from './courses';
 
 export const deleteLessonMock = jest.fn();
 export const finishOrStartLessonMock = jest.fn();
@@ -44,6 +46,27 @@ export const courseMock: CourseEntity = {
     finished: false,
     createdAt: '2021-08-26T15:00:00.000Z',
     updatedAt: '2021-08-26T15:00:00.000Z'
+}
+
+export const lessonEndpointMock: LessonEndpoint = {
+    id: '6bed9d76-3e3a-4d8b-b76a-9988f67afe6b',
+    course_id: '8ea3baf8-6b47-4222-8ed1-c62d5755b9a5',
+    description: 'Sed rerum est est rem et. Ut aut repellat expedita commodi ipsum. In quisquam excepturi rerum debitis. Beatae rem saepe aut molestiae.',
+    next_lesson: new Date().toISOString(),
+    done: false,
+    created_at: new Date().toISOString(),
+    updated_at: new Date().toISOString(),
+}
+
+export const lessonWithCourseEndpointMock: LessonWithCourseEndpoint = {
+    id: '6bed9d76-3e3a-4d8b-b76a-9988f67afe6b',
+    course_id: '8ea3baf8-6b47-4222-8ed1-c62d5755b9a5',
+    courses: courseEndpointMock,
+    description: 'Sed rerum est est rem et. Ut aut repellat expedita commodi ipsum. In quisquam excepturi rerum debitis. Beatae rem saepe aut molestiae.',
+    next_lesson: new Date().toISOString(),
+    done: false,
+    created_at: new Date().toISOString(),
+    updated_at: new Date().toISOString(),
 }
 
 export const lessonsMock: LessonEntity[] = [

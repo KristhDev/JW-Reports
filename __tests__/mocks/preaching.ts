@@ -4,6 +4,9 @@ import { PreachingState, INIT_PREACHING } from '@application/features';
 /* Entities */
 import { PreachingEntity } from '@domain/entities';
 
+/* Interfaces */
+import { PreachingEndpoint } from '@infrasturcture/interfaces';
+
 /* Modules */
 import { PreachingService } from '@preaching';
 
@@ -17,6 +20,16 @@ export const PreachingServiceSpy = {
     delete: jest.spyOn(PreachingService, 'delete'),
     getByUserIdAndMonth: jest.spyOn(PreachingService, 'getByUserIdAndMonth'),
     update: jest.spyOn(PreachingService, 'update'),
+}
+
+export const preachingEndpointMock: PreachingEndpoint = {
+    id: '30da43ce-2440-44d5-a090-466486b9e48f',
+    user_id: '01d20ba9-09d3-464d-b57b-22e6ff724739',
+    day: '2023-01-12',
+    init_hour: '2023-01-12 13:00:00',
+    final_hour: '2023-01-12 16:00:00',
+    created_at: new Date().toISOString(),
+    updated_at: new Date().toISOString()
 }
 
 export const preachingsMock: PreachingEntity[] = [

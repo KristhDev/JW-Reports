@@ -1,5 +1,6 @@
 import { RevisitsState, INIT_REVISIT } from '@application/features';
 import { RevisitEntity } from '@domain/entities';
+import { RevisitEndpoint } from '@infrasturcture/interfaces';
 import { RevisitsService } from '@revisits';
 
 export const completeRevisitMock = jest.fn();
@@ -30,6 +31,18 @@ export const testRevisit = {
     address: 'Ut non et similique aliquam quaerat consequatur iste ut quod.',
     nextVisit: new Date('2023-03-20T00:00:00.000Z'),
     personName: 'Karlee Senger'
+}
+
+export const revisitEndpointMock: RevisitEndpoint = {
+    id: '7a2b0714-7baf-4761-aebb-199a906cb21e',
+    user_id: '74b07b68-46ac-473e-8aff-99b4ec2e9400',
+    person_name: 'Karlee Senger',
+    about: 'Itaque quidem enim neque laudantium ducimus nesciunt provident consequuntur.',
+    address: 'Ut non et similique aliquam quaerat consequatur iste ut quod.',
+    done: false,
+    next_visit: new Date().toISOString(),
+    created_at: new Date().toISOString(),
+    updated_at: new Date().toISOString()
 }
 
 export const revisitsMock: RevisitEntity[] = [

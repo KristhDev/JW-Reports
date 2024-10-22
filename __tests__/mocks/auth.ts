@@ -4,6 +4,9 @@ import { AuthState } from '@application/features';
 /* Entities */
 import { UserEntity } from '@domain/entities';
 
+/* Interfaces */
+import { UserEndpoint } from '@infrasturcture/interfaces';
+
 /* Auth */
 import { AuthService } from '@auth';
 
@@ -17,6 +20,18 @@ export const testUser: UserEntity = {
     hoursLDC: false,
     createdAt: '2021-03-10T12:00:00.000Z',
     updatedAt: '2021-03-10T12:00:00.000Z',
+}
+
+export const userEndpointMock: UserEndpoint = {
+    id: 'd555e2de-b69d-4017-9d25-6bd054ed1e47',
+    name: 'Chasity',
+    surname: 'Walker',
+    email: 'Jayme74@gmail.com',
+    precursor: 'regular',
+    hours_requirement: 50,
+    hours_ldc: false,
+    created_at: new Date().toISOString(),
+    updated_at: new Date().toISOString()
 }
 
 export const AuthServiceSpy = {
