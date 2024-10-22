@@ -227,7 +227,7 @@ const useLessons = () => {
 
             updateLessonActionState(lesson);
             updateLastLessonInCourse(lesson);
-            if (user.precursor !== 'ninguno') await loadLastLesson();
+            if (user.precursor === 'ninguno') await loadLastLesson();
 
             onFinish && onFinish();
             const msg = (lesson.done) ? lessonsMessages.FINISHED_SUCCESS : lessonsMessages.RESTARTED_SUCCESS;
@@ -363,7 +363,7 @@ const useLessons = () => {
         if (!isAuth) return;
 
         const canAlterate = canAlterateLesson(lessonsMessages.UNSELECTED_UPDATE);
-        if (canAlterate) return;
+        if (!canAlterate) return;
 
         setIsLessonLoading(true);
 
@@ -371,8 +371,8 @@ const useLessons = () => {
             const updateDto = UpdateLessonDto.create(lessonValues);
             const lesson = await LessonsService.update(state.selectedLesson.id, selectedCourse.id, updateDto);
 
-            updateLastLessonInCourse(lesson);
             updateLessonActionState(lesson);
+            updateLastLessonInCourse(lesson);
 
             setStatus({ code: 200, msg: lessonsMessages.UPDATED_SUCCESS });
             navigation.goBack();
