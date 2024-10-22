@@ -11,6 +11,12 @@ export class UpdateProfileDto {
         public readonly hours_ldc: boolean
     ) {}
 
+    /**
+     * Creates an UpdateProfileDto from the given ProfileData.
+     *
+     * @param {ProfileData} values - The ProfileData to create the UpdateProfileDto from.
+     * @return {UpdateProfileDto} The created UpdateProfileDto.
+     */
     public static create(values: ProfileData): UpdateProfileDto {
         return new UpdateProfileDto(
             values.name,

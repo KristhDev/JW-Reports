@@ -1,7 +1,10 @@
-import { CourseFormValues } from '@courses';
+/* Adapters */
 import { Time } from '@infrasturcture/adapters';
 
-interface CreateValues extends CourseFormValues {}
+/* Interfaces */
+import { CourseFormValues } from '@courses';
+
+export interface UpdateCourseDtoValues extends CourseFormValues {}
 
 export class UpdateCourseDto {
     private constructor(
@@ -12,7 +15,13 @@ export class UpdateCourseDto {
         public readonly updated_at: string
     ) {}
 
-    static create(values: CreateValues): UpdateCourseDto {
+    /**
+     * Creates an UpdateCourseDto from the given UpdateCourseDtoValues.
+     *
+     * @param {UpdateCourseDtoValues} values - The UpdateCourseDtoValues to create the UpdateCourseDto from.
+     * @return {UpdateCourseDto} The created UpdateCourseDto.
+     */
+    public static create(values: UpdateCourseDtoValues): UpdateCourseDto {
         return new UpdateCourseDto(
             values.personName,
             values.personAbout,

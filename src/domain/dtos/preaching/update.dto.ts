@@ -1,7 +1,10 @@
-import { PreachingFormValues } from '@preaching';
+/* Adapters */
 import { Time } from '@infrasturcture/adapters';
 
-interface UpdateValues extends PreachingFormValues {}
+/* Interfaces */
+import { PreachingFormValues } from '@preaching';
+
+export interface UpdatePreachingDtoValues extends PreachingFormValues {}
 
 export class UpdatePreachingDto {
 
@@ -12,7 +15,13 @@ export class UpdatePreachingDto {
         public readonly updated_at: string
     ) {}
 
-    static create(values: UpdateValues): UpdatePreachingDto {
+    /**
+     * Creates an UpdatePreachingDto from the given UpdatePreachingDtoValues.
+     *
+     * @param {UpdatePreachingDtoValues} values - The values to create the UpdatePreachingDto from.
+     * @return {UpdatePreachingDto} The created UpdatePreachingDto.
+     */
+    public static create(values: UpdatePreachingDtoValues): UpdatePreachingDto {
         return new UpdatePreachingDto(
             Time.format(values.day, 'YYYY-MM-DD'),
             Time.format(values.initHour, 'YYYY-MM-DD HH:mm:ss.SSSSSS'),

@@ -1,8 +1,10 @@
-import { RevisitFormValues } from '@revisits';
+/* Adapters */
 import { Time } from '@infrasturcture/adapters';
 
-interface UpdateValues extends RevisitFormValues {
-    updatedAt: Date;
+/* Interfaces */
+import { RevisitFormValues } from '@revisits';
+
+export interface UpdateRevisitDtoValues extends RevisitFormValues {
     photo?: string;
 }
 
@@ -13,17 +15,23 @@ export class UpdateRevisitDto {
         public readonly address: string,
         public readonly next_visit: string,
         public readonly updated_at: string,
-        public readonly photo?: string
+        public readonly photo: string | null
     ) {}
 
-    public static create(values: UpdateValues): UpdateRevisitDto {
+    /**
+     * Creates an UpdateRevisitDto from the given UpdateRevisitDtoValues.
+     *
+     * @param {UpdateRevisitDtoValues} values - The values to create the UpdateRevisitDto from.
+     * @return {UpdateRevisitDto} The created UpdateRevisitDto.
+     */
+    public static create(values: UpdateRevisitDtoValues): UpdateRevisitDto {
         return new UpdateRevisitDto(
             values.personName,
             values.about,
             values.address,
             Time.format(values.nextVisit, 'YYYY-MM-DD HH:mm:ss.SSSSSS'),
-            Time.format(values.updatedAt, 'YYYY-MM-DD HH:mm:ss.SSSSSS'),
-            values.photo
+            Time.format(new Date(), 'YYYY-MM-DD HH:mm:ss.SSSSSS'),
+            values?.photo || null
         );
     }
 }

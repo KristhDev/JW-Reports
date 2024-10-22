@@ -1,7 +1,10 @@
-import { LessonFormValues } from '@lessons';
+/* Adapters */
 import { Time } from '@infrasturcture/adapters';
 
-interface UpdateValues extends LessonFormValues {}
+/* Interfaces */
+import { LessonFormValues } from '@lessons';
+
+export interface UpdateLessonDtoValues extends LessonFormValues {}
 
 export class UpdateLessonDto {
 
@@ -11,7 +14,13 @@ export class UpdateLessonDto {
         public readonly updated_at: string
     ) {}
 
-    static create(values: UpdateValues): UpdateLessonDto {
+    /**
+     * Creates an UpdateLessonDto from the given UpdateLessonDtoValues.
+     *
+     * @param {UpdateLessonDtoValues} values - The values to create the UpdateLessonDto from.
+     * @return {UpdateLessonDto} The created UpdateLessonDto.
+     */
+    public static create(values: UpdateLessonDtoValues): UpdateLessonDto {
         return new UpdateLessonDto(
             values.description,
             Time.format(values.nextLesson, 'YYYY-MM-DD HH:mm:ss.SSSSSS'),

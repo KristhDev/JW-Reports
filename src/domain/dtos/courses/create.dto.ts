@@ -1,6 +1,7 @@
+/* Interfaces */
 import { CourseFormValues } from '@courses';
 
-interface CreateValues extends CourseFormValues {
+export interface CreateCourseDtoValues extends CourseFormValues {
     userId: string;
 }
 
@@ -13,7 +14,13 @@ export class CreateCourseDto {
         public readonly publication: string
     ) {}
 
-    static create(values: CreateValues): CreateCourseDto {
+    /**
+     * Creates a CreateCourseDto from the given CreateValues.
+     *
+     * @param {CreateCourseDtoValues} values - The CreateValues to create the CreateCourseDto from.
+     * @return {CreateCourseDto} The created CreateCourseDto.
+     */
+    public static create(values: CreateCourseDtoValues): CreateCourseDto {
         return new CreateCourseDto(
             values.userId,
             values.personName,
