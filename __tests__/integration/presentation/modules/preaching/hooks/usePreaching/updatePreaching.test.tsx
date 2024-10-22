@@ -92,7 +92,7 @@ describe('Test in usePreaching hook - updatePreaching', () => {
         expect(mockUseNavigation.goBack).toHaveBeenCalledTimes(1);
     });
 
-    it('should faild id user inst authenticated', async () => {
+    it('should faild if user inst authenticated', async () => {
         const mockStore = initialMockStore();
         const { result } = renderUsePreaching(mockStore);
 

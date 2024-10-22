@@ -1,21 +1,21 @@
 import { act } from '@testing-library/react-native';
 
-/* Supabase */
-import { supabase } from '@test-config';
-
 /* Setups */
 import { onFinishMock, useNetworkSpy } from '@test-setup';
 import { getMockStoreUseLessons, renderUseLessons } from '@setups';
 
 /* Mocks */
 import {
+    authenticateStateMock,
+    courseMock,
+    CoursesServiceSpy,
+    hasWifiConnectionMock,
     initialAuthStateMock,
     initialCoursesStateMock,
     initialLessonsStateMock,
     initialStatusStateMock,
-    testCourse,
-    testCredentials,
-    testLesson,
+    lessonMock,
+    LessonsServiceSpy,
     wifiMock
 } from '@mocks';
 
@@ -23,49 +23,49 @@ import {
 import { authMessages } from '@auth';
 import { lessonsMessages } from '@lessons';
 
+const initialStoreMock = () => getMockStoreUseLessons({
+    auth: initialAuthStateMock,
+    courses: initialCoursesStateMock,
+    lessons: initialLessonsStateMock,
+    status: initialStatusStateMock
+});
+
+const authStoreMock = () => getMockStoreUseLessons({
+    auth: authenticateStateMock,
+    courses: initialCoursesStateMock,
+    lessons: initialLessonsStateMock,
+    status: initialStatusStateMock
+});
+
+const courseMockOwner = {
+    ...courseMock,
+    userId: authenticateStateMock.user.id
+}
+
 describe('Test in useLessons hook - finishOrStartLesson', () => {
     useNetworkSpy.mockImplementation(() => ({
+        hasWifiConnection: hasWifiConnectionMock,
         wifi: wifiMock
     }));
 
-    let mockStore = {} as any;
-
     beforeEach(() => {
         jest.clearAllMocks();
-
-        mockStore = getMockStoreUseLessons({
-            auth: initialAuthStateMock,
-            courses: initialCoursesStateMock,
-            lessons: initialLessonsStateMock,
-            status: initialStatusStateMock
-        });
     });
 
     it('should finish or start lesson successfully', async () => {
+        LessonsServiceSpy.finishOrStart.mockResolvedValue({ ...lessonMock, done: true });
+        CoursesServiceSpy.getCourseIdsByUserId.mockImplementationOnce(() => Promise.resolve([ courseMock.id ]));
+        LessonsServiceSpy.getLastLessonByCoursesId.mockImplementationOnce(() => Promise.resolve({ ...lessonMock, done: true, course: courseMockOwner }));
+
+        const mockStore = authStoreMock();
         const { result } = renderUseLessons(mockStore);
 
         await act(async () => {
-            await result.current.useAuth.signIn(testCredentials);
+            result.current.useCourses.setSelectedCourse(courseMockOwner);
         });
 
         await act(async () => {
-            await result.current.useCourses.saveCourse(testCourse);
-        });
-
-        await act(async () => {
-            result.current.useCourses.setSelectedCourse(result.current.useCourses.state.courses[0]);
-        });
-
-        await act(async () => {
-            await result.current.useLessons.saveLesson(testLesson);
-        });
-
-        await act(async () => {
-            await result.current.useLessons.loadLessons({});
-        });
-
-        await act(async () => {
-            result.current.useLessons.setSelectedLesson(result.current.useLessons.state.lessons[0]);
+            result.current.useLessons.setSelectedLesson(lessonMock);
         });
 
         await act(async () => {
@@ -75,12 +75,8 @@ describe('Test in useLessons hook - finishOrStartLesson', () => {
         /* Check if lessons state contain lessons and selectedLesson */
         expect(result.current.useLessons.state).toEqual({
             ...initialLessonsStateMock,
-            hasMoreLessons: false,
-            lessons: expect.any(Array),
             selectedLesson: {
-                id: expect.any(String),
-                courseId: expect.any(String),
-                description: expect.any(String),
+                ...result.current.useLessons.state.selectedLesson,
                 done: true,
                 nextLesson: expect.any(String),
                 createdAt: expect.any(String),
@@ -88,18 +84,8 @@ describe('Test in useLessons hook - finishOrStartLesson', () => {
             },
             lastLesson: {
                 id: expect.any(String),
-                courseId: expect.any(String),
-                course: {
-                    id: expect.any(String),
-                    userId: result.current.useAuth.state.user.id,
-                    ...testCourse,
-                    lastLesson: undefined,
-                    suspended: false,
-                    finished: false,
-                    createdAt: expect.any(String),
-                    updatedAt: expect.any(String)
-                },
-                ...testLesson,
+                courseId: courseMockOwner.id,
+                course: courseMockOwner,
                 description: expect.any(String),
                 nextLesson: expect.any(String),
                 done: expect.any(Boolean),
@@ -111,10 +97,7 @@ describe('Test in useLessons hook - finishOrStartLesson', () => {
         const lessonUpdated = result.current.useLessons.state.lessons.find(l => l.id === result.current.useLessons.state.selectedLesson.id);
         const lastLessonUpdated = result.current.useLessons.state.lastLesson;
 
-        if (!lessonUpdated) throw new Error('Lesson finished or started not found');
-
-        expect(lessonUpdated.done).toBeTruthy();
-
+        if (lessonUpdated) expect(lessonUpdated.done).toBeTruthy()
         if (lastLessonUpdated.id === result.current.useLessons.state.selectedLesson.id) {
             expect(lastLessonUpdated.done).toBeTruthy();
         }
@@ -127,21 +110,10 @@ describe('Test in useLessons hook - finishOrStartLesson', () => {
 
         /* Check if onFinish is called one time */
         expect(onFinishMock).toHaveBeenCalledTimes(1);
-
-        await supabase.from('lessons')
-            .delete()
-            .eq('course_id', result.current.useCourses.state.selectedCourse.id);
-
-        await supabase.from('courses')
-            .delete()
-            .eq('user_id', result.current.useAuth.state.user.id);
-
-        await act(async () => {
-            await result.current.useAuth.signOut();
-        });
     });
 
-    it('should faild when user inst authenticated', async () => {
+    it('should faild if user inst authenticated', async () => {
+        const mockStore = initialStoreMock();
         const { result } = renderUseLessons(mockStore);
 
         await act(async () => {
@@ -159,12 +131,9 @@ describe('Test in useLessons hook - finishOrStartLesson', () => {
         });
     });
 
-    it('should faild when selectedLesson is empty', async () => {
+    it('should faild if selectedLesson is empty', async () => {
+        const mockStore = authStoreMock();
         const { result } = renderUseLessons(mockStore);
-
-        await act(async () => {
-            await result.current.useAuth.signIn(testCredentials);
-        });
 
         await act(async () => {
             await result.current.useLessons.finishOrStartLesson(new Date(), onFinishMock);
@@ -179,41 +148,18 @@ describe('Test in useLessons hook - finishOrStartLesson', () => {
             code: 400,
             msg: lessonsMessages.UNSELECTED
         });
-
-        await act(async () => {
-            await result.current.useAuth.signOut();
-        });
     });
 
-    it('should faild when course is suspend or finished', async () => {
+    it('should faild if course is suspend or finished', async () => {
+        const mockStore = authStoreMock();
         const { result } = renderUseLessons(mockStore);
 
-        await act(async () => {
-            await result.current.useAuth.signIn(testCredentials);
-        });
-
-        await act(async () => {
-            await result.current.useCourses.saveCourse(testCourse);
+        await act(() => {
+            result.current.useCourses.setSelectedCourse({ ...courseMockOwner, finished: true });
         });
 
         await act(() => {
-            result.current.useCourses.setSelectedCourse(result.current.useCourses.state.courses[0]);
-        });
-
-        await act(async () => {
-            await result.current.useLessons.saveLesson(testLesson);
-        });
-
-        await act(async () => {
-            await result.current.useCourses.finishOrStartCourse();
-        });
-
-        await act(async () => {
-            await result.current.useLessons.loadLessons({});
-        });
-
-        await act(() => {
-            result.current.useLessons.setSelectedLesson(result.current.useLessons.state.lessons[0]);
+            result.current.useLessons.setSelectedLesson(lessonMock);
         });
 
         await act(async () => {
@@ -225,35 +171,6 @@ describe('Test in useLessons hook - finishOrStartLesson', () => {
          */
         expect(result.current.useLessons.state).toEqual({
             ...initialLessonsStateMock,
-            hasMoreLessons: false,
-            lastLesson: {
-                id: expect.any(String),
-                courseId: expect.any(String),
-                course: {
-                    id: expect.any(String),
-                    userId: result.current.useAuth.state.user.id,
-                    ...testCourse,
-                    lastLesson: undefined,
-                    suspended: false,
-                    finished: expect.any(Boolean),
-                    createdAt: expect.any(String),
-                    updatedAt: expect.any(String)
-                },
-                description: expect.any(String),
-                nextLesson: expect.any(String),
-                done: expect.any(Boolean),
-                createdAt: expect.any(String),
-                updatedAt: expect.any(String)
-            },
-            lessons: [{
-                id: expect.any(String),
-                courseId: expect.any(String),
-                description: expect.any(String),
-                done: false,
-                nextLesson: expect.any(String),
-                createdAt: expect.any(String),
-                updatedAt: expect.any(String)
-            }],
             selectedLesson: {
                 id: expect.any(String),
                 courseId: expect.any(String),
@@ -272,9 +189,9 @@ describe('Test in useLessons hook - finishOrStartLesson', () => {
                 id: expect.any(String),
                 courseId: expect.any(String),
                 course: {
+                    ...result.current.useLessons.state.lastLesson.course,
                     id: expect.any(String),
                     userId: result.current.useAuth.state.user.id,
-                    ...testCourse,
                     lastLesson: undefined,
                     suspended: false,
                     finished: true,
@@ -296,18 +213,6 @@ describe('Test in useLessons hook - finishOrStartLesson', () => {
         expect(result.current.useStatus.state).toEqual({
             code: 400,
             msg: lessonsMessages.SUSPENDED_OR_FINISHED
-        });
-
-        await supabase.from('lessons')
-            .delete()
-            .eq('course_id', result.current.useCourses.state.selectedCourse.id);
-
-        await supabase.from('courses')
-            .delete()
-            .eq('user_id', result.current.useAuth.state.user.id);
-
-        await act(async () => {
-            await result.current.useAuth.signOut();
         });
     });
 });

@@ -13,9 +13,11 @@ import {
     updateLessonMock
 } from '@mocks';
 
+/* Features */
+import { UI_INITIAL_STATE } from '@application/features';
+
 /* Modules */
 import { LessonForm } from '@lessons';
-import { UI_INITIAL_STATE } from '@ui';
 
 const user = userEvent.setup();
 const renderComponent = () => render(<LessonForm />);

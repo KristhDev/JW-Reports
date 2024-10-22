@@ -1,54 +1,65 @@
 import { act } from '@testing-library/react-native';
 
-/* Supabase admin client */
-import { supabase } from '@test-config';
-
 /* Setup */
 import { useNetworkSpy } from '@test-setup';
 import { getMockStoreUseLessons, renderUseLessons } from '@setups';
 
 /* Mocks */
 import {
+    authenticateStateMock,
+    courseMock,
+    hasWifiConnectionMock,
     initialAuthStateMock,
     initialCoursesStateMock,
     initialLessonsStateMock,
     initialStatusStateMock,
-    testCourse,
-    testCredentials,
+    lessonsMock,
+    LessonsServiceSpy,
     wifiMock
 } from '@mocks';
 
+/* Modules */
+import { authMessages } from '@auth';
+import { coursesMessages } from '@courses';
+
+const initialStoreMock = () => getMockStoreUseLessons({
+    auth: initialAuthStateMock,
+    courses: initialCoursesStateMock,
+    lessons: initialLessonsStateMock,
+    status: initialStatusStateMock
+});
+
+const authStoreMock = () => getMockStoreUseLessons({
+    auth: authenticateStateMock,
+    courses: initialCoursesStateMock,
+    lessons: initialLessonsStateMock,
+    status: initialStatusStateMock
+});
+
+const courseMockOwner = {
+    ...courseMock,
+    userId: authenticateStateMock.user.id
+}
+
 describe('Test in useLessons hook - loadLessons', () => {
     useNetworkSpy.mockImplementation(() => ({
+        hasWifiConnection: hasWifiConnectionMock,
         wifi: wifiMock
     }));
 
-    let mockStore = {} as any;
-
     beforeEach(() => {
         jest.clearAllMocks();
-
-        mockStore = getMockStoreUseLessons({
-            auth: initialAuthStateMock,
-            courses: initialCoursesStateMock,
-            lessons: initialLessonsStateMock,
-            status: initialStatusStateMock
-        });
     });
 
     it('should load lessons successfully', async () => {
+        const lessonsOfCourse = lessonsMock.map(lesson => ({ ...lesson, courseId: courseMockOwner.id }));
+        LessonsServiceSpy.getAllByCourseId.mockImplementationOnce(() => Promise.resolve(lessonsOfCourse));
+
+        const mockStore = authStoreMock();
         const { result } = renderUseLessons(mockStore);
 
-        await act(async () => {
-            await result.current.useAuth.signIn(testCredentials);
-        });
-
-        await act(async () => {
-            await result.current.useCourses.saveCourse(testCourse);
-        });
-
         await act(() => {
-            result.current.useCourses.setSelectedCourse(result.current.useCourses.state.courses[0]);
+            result.current.useCourses.setSelectedCourse(courseMockOwner);
         });
 
         await act(async () => {
@@ -59,7 +70,7 @@ describe('Test in useLessons hook - loadLessons', () => {
         expect(result.current.useLessons.state).toEqual({
             ...initialLessonsStateMock,
             lessons: expect.any(Array),
-            hasMoreLessons: false
+            hasMoreLessons: lessonsMock.length >= 10
         });
 
         result.current.useLessons.state.lessons.map((lesson) => {
@@ -73,17 +84,10 @@ describe('Test in useLessons hook - loadLessons', () => {
                 updatedAt: expect.any(String)
             })
         });
-
-        await supabase.from('courses')
-            .delete()
-            .eq('user_id', result.current.useAuth.state.user.id);
-
-        await act(async () => {
-            await result.current.useAuth.signOut();
-        });
     });
 
-    it('should faild when user inst authenticated', async () => {
+    it('should faild if user inst authenticated', async () => {
+        const mockStore = initialStoreMock();
         const { result } = renderUseLessons(mockStore);
 
         await act(async () => {
@@ -98,12 +102,9 @@ describe('Test in useLessons hook - loadLessons', () => {
         });
     });
 
-    it('should faild when selectedCourse is empty', async () => {
+    it('should faild if selectedCourse is empty', async () => {
+        const mockStore = authStoreMock();
         const { result } = renderUseLessons(mockStore);
-
-        await act(async () => {
-            await result.current.useAuth.signIn(testCredentials);
-        });
 
         await act(async () => {
             await result.current.useLessons.loadLessons({});
@@ -113,11 +114,7 @@ describe('Test in useLessons hook - loadLessons', () => {
         expect(result.current.useLessons.state).toEqual(initialLessonsStateMock);
         expect(result.current.useStatus.state).toEqual({
             code: 400,
-            msg: 'No hay un curso seleccionado.'
-        });
-
-        await act(async () => {
-            await result.current.useAuth.signOut();
+            msg: coursesMessages.UNSELECTED
         });
     });
 });

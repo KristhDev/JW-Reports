@@ -6,10 +6,12 @@ import { getMockStoreUseLessons, renderUseLessons } from '@setups';
 
 /* Mocks */
 import {
+    hasWifiConnectionMock,
     initialAuthStateMock,
     initialCoursesStateMock,
     initialLessonsStateMock,
     initialStatusStateMock,
+    lessonMock,
     wifiMock
 } from '@mocks';
 
@@ -22,6 +24,7 @@ const mockStore = getMockStoreUseLessons({
 
 describe('Test in useLessons hook - setSelectedLesson', () => {
     useNetworkSpy.mockImplementation(() => ({
+        hasWifiConnection: hasWifiConnectionMock,
         wifi: wifiMock
     }));
 
@@ -29,29 +32,13 @@ describe('Test in useLessons hook - setSelectedLesson', () => {
         const { result } = renderUseLessons(mockStore);
 
         await act(() => {
-            result.current.useLessons.setSelectedLesson({
-                id: 'cd5c408b-8885-4293-a094-1d675308631f',
-                courseId: '252ba403-cd0f-458b-945e-5ecade34e4db',
-                description: 'Omnis possimus beatae ab dolor necessitatibus voluptate repellendus atque nesciunt. Quae et odio quae.',
-                done: false,
-                nextLesson: '2023-03-20T00:00:00.000Z',
-                createdAt: '2023-03-20T00:00:00.000Z',
-                updatedAt: '2023-03-20T00:00:00.000Z'
-            });
+            result.current.useLessons.setSelectedLesson(lessonMock);
         });
 
         /* Check if selectedLesson is changed */
         expect(result.current.useLessons.state).toEqual({
             ...initialLessonsStateMock,
-            selectedLesson: {
-                id: 'cd5c408b-8885-4293-a094-1d675308631f',
-                courseId: '252ba403-cd0f-458b-945e-5ecade34e4db',
-                description: 'Omnis possimus beatae ab dolor necessitatibus voluptate repellendus atque nesciunt. Quae et odio quae.',
-                done: false,
-                nextLesson: '2023-03-20T00:00:00.000Z',
-                createdAt: '2023-03-20T00:00:00.000Z',
-                updatedAt: '2023-03-20T00:00:00.000Z'
-            }
+            selectedLesson: lessonMock
         });
     });
 });

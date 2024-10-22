@@ -1,71 +1,74 @@
 import { act } from '@testing-library/react-native';
 
-/* Supabase */
-import { supabase } from '@test-config';
-
 /* Setups */
 import { onFinishMock, mockUseNavigation, useNetworkSpy } from '@test-setup';
 import { getMockStoreUseLessons, renderUseLessons } from '@setups';
 
 /* Mocks */
 import {
+    authenticateStateMock,
+    courseMock,
+    CoursesServiceSpy,
+    hasWifiConnectionMock,
     initialAuthStateMock,
     initialCoursesStateMock,
     initialLessonsStateMock,
     initialStatusStateMock,
-    testCourse,
-    testCredentials,
-    testLesson,
+    lessonMock,
+    LessonsServiceSpy,
     wifiMock
 } from '@mocks';
+
+/* Features */
+import { INIT_COURSE, INIT_LESSON } from '@application/features';
 
 /* Modules */
 import { authMessages } from '@auth';
 import { lessonsMessages } from '@lessons';
 
+const initialStoreMock = () => getMockStoreUseLessons({
+    auth: initialAuthStateMock,
+    courses: initialCoursesStateMock,
+    lessons: initialLessonsStateMock,
+    status: initialStatusStateMock
+});
+
+const authStoreMock = () => getMockStoreUseLessons({
+    auth: authenticateStateMock,
+    courses: initialCoursesStateMock,
+    lessons: initialLessonsStateMock,
+    status: initialStatusStateMock
+});
+
+const courseMockOwner = {
+    ...courseMock,
+    userId: authenticateStateMock.user.id
+}
+
 describe('Test in useLessons hook - deleteLesson', () => {
     useNetworkSpy.mockImplementation(() => ({
+        hasWifiConnection: hasWifiConnectionMock,
         wifi: wifiMock
     }));
 
-    let mockStore = {} as any;
-
     beforeEach(() => {
         jest.clearAllMocks();
-
-        mockStore = getMockStoreUseLessons({
-            auth: initialAuthStateMock,
-            courses: initialCoursesStateMock,
-            lessons: initialLessonsStateMock,
-            status: initialStatusStateMock
-        });
     });
 
     it('should delete lesson successfully', async () => {
+        LessonsServiceSpy.delete.mockImplementationOnce(() => Promise.resolve());
+        CoursesServiceSpy.getCourseIdsByUserId.mockImplementationOnce(() => Promise.resolve([ courseMockOwner.id ]));
+        LessonsServiceSpy.getLastLessonByCoursesId.mockImplementationOnce(() => Promise.resolve({ ...INIT_LESSON, course: INIT_COURSE }));
+
+        const mockStore = authStoreMock();
         const { result } = renderUseLessons(mockStore);
 
-        await act(async () => {
-            await result.current.useAuth.signIn(testCredentials);
-        });
-
-        await act(async () => {
-            await result.current.useCourses.saveCourse(testCourse, onFinishMock);
+        await act(() => {
+            result.current.useCourses.setSelectedCourse(courseMockOwner);
         });
 
         await act(() => {
-            result.current.useCourses.setSelectedCourse(result.current.useCourses.state.courses[0]);
-        });
-
-        await act(async () => {
-            await result.current.useLessons.saveLesson(testLesson);
-        });
-
-        await act(async () => {
-            await result.current.useLessons.loadLessons({});
-        });
-
-        await act(() => {
-            result.current.useLessons.setSelectedLesson(result.current.useLessons.state.lessons[0]);
+            result.current.useLessons.setSelectedLesson(lessonMock);
         });
 
         await act(async () => {
@@ -75,7 +78,6 @@ describe('Test in useLessons hook - deleteLesson', () => {
         /* Check is state contain selectedCourse, selectedLesson, etc */
         expect(result.current.useLessons.state).toEqual({
             ...initialLessonsStateMock,
-            hasMoreLessons: false,
             selectedLesson: {
                 ...initialLessonsStateMock.selectedLesson,
                 nextLesson: expect.any(String),
@@ -112,25 +114,13 @@ describe('Test in useLessons hook - deleteLesson', () => {
             msg: lessonsMessages.DELETED_SUCCESS
         });
 
-        /* Check if onFinish and navigate is called with respective arg */
-        expect(onFinishMock).toHaveBeenCalledTimes(2);
-        expect(mockUseNavigation.navigate).toHaveBeenCalledTimes(2);
-        expect(mockUseNavigation.navigate).toHaveBeenCalledWith('LessonsScreen');
-
-        await supabase.from('lessons')
-            .delete()
-            .eq('course_id', result.current.useCourses.state.selectedCourse.id)
-
-        await supabase.from('courses')
-            .delete()
-            .eq('user_id', result.current.useAuth.state.user.id);
-
-        await act(async () => {
-            await result.current.useAuth.signOut();
-        });
+        /* Check if onFinish and goBack is called with respective arg */
+        expect(onFinishMock).toHaveBeenCalledTimes(1);
+        expect(mockUseNavigation.goBack).toHaveBeenCalledTimes(1);
     });
 
-    it('should faild when user isnt authenticated', async () => {
+    it('should faild if user isnt authenticated', async () => {
+        const mockStore = initialStoreMock();
         const { result } = renderUseLessons(mockStore);
 
         await act(async () => {
@@ -148,12 +138,9 @@ describe('Test in useLessons hook - deleteLesson', () => {
         });
     });
 
-    it('should faild when selectedLesson is empty', async () => {
+    it('should faild if selectedLesson is empty', async () => {
+        const mockStore = authStoreMock();
         const { result } = renderUseLessons(mockStore);
-
-        await act(async () => {
-            await result.current.useAuth.signIn(testCredentials);
-        });
 
         await act(async () => {
             await result.current.useLessons.deleteLesson(true, onFinishMock);
