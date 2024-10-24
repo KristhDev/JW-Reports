@@ -66,7 +66,7 @@ const useStatus = () => {
      */
     const setNetworkError = (msg?: string, onDispatch?: () => void): void => {
         onDispatch && onDispatch();
-        setStatus({ code: 500, msg: msg || networkMessages.WIFI_HASNT_CONNECTION });
+        setStatus({ code: 500, msg: msg || networkMessages.WIFI_HASNT_CONNEC_EXPLAIN });
     }
 
     /**
