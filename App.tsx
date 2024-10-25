@@ -14,7 +14,8 @@ import { Provider } from '@providers';
 import { Navigation } from '@navigation';
 
 /* Services */
-import { EmailService, LoggerService, NotificationsService } from '@services';
+import { EmailService, LoggerService } from '@domain/services';
+import { NotificationsService } from '@services';
 
 /* Global config of date util */
 Time.extend(Time.plugins.weekday);
