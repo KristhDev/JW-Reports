@@ -1,5 +1,7 @@
 import { ImageStyle, StyleProp, TextStyle, ViewStyle } from 'react-native';
-import { Image } from 'react-native-image-crop-picker';
+
+/* Models */
+import { ImageModel } from '@domain/models';
 
 export interface FormImageProps {
     cameraButtonText?: string;
@@ -10,7 +12,7 @@ export interface FormImageProps {
     imageUrl?: string;
     label: string;
     labelStyle?: StyleProp<TextStyle>;
-    onSelectImage: (image: Image | null) => void;
+    onSelectImage: (image: ImageModel | null) => void;
     showCameraButton?: boolean;
     showGalleryButton?: boolean;
     style?: StyleProp<ViewStyle>;

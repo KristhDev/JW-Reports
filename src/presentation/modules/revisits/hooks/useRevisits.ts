@@ -1,5 +1,4 @@
 import { useNavigation } from '@react-navigation/native';
-import { Image } from 'react-native-image-crop-picker';
 
 /* Features */
 import { useAppDispatch, useAppSelector } from '@application/store';
@@ -32,6 +31,9 @@ import { CompleteRevisitDto, CreateRevisitDto, UpdateRevisitDto } from '@domain/
 /* Entities */
 import { RevisitEntity } from '@domain/entities';
 
+/* Models */
+import { ImageModel } from '@domain/models';
+
 /* Hooks */
 import { authMessages, useAuth } from '@auth';
 import { useImage, useNetwork, useStatus } from '@shared';
@@ -40,7 +42,7 @@ import { useImage, useNetwork, useStatus } from '@shared';
 import { loadRevisitsOptions, RevisitFilter, RevisitFormValues, SaveRevisitOptions } from '../interfaces';
 
 /* Services */
-import { RevisitsService } from '../services';
+import { RevisitsService } from '@domain/services';
 
 /* Utils */
 import { revisitsMessages } from '../utils';
@@ -319,10 +321,10 @@ const useRevisits = () => {
      * This function is responsible for updating a revisit and returns to the previous screen.
      *
      * @param {RevisitFormValues} revisitValues - RevisitEntity values to update
-     * @param {Image | null} image - Image to upload, default is `undefined`
+     * @param {ImageModel | null} image - Image to upload, default is `undefined`
      * @return {Promise<void>} This function does not return anything
      */
-    const updateRevisit = async (revisitValues: RevisitFormValues, image: Image | null): Promise<void> => {
+    const updateRevisit = async (revisitValues: RevisitFormValues, image: ImageModel | null): Promise<void> => {
         const wifi = hasWifiConnection();
         if (!wifi) return;
 

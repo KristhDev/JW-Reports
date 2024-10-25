@@ -1,19 +1,18 @@
 import { useState } from 'react';
 import { PermissionStatus } from 'react-native-permissions';
 import { useStyles } from 'react-native-unistyles';
-import { clean, openPicker, openCamera, Image } from 'react-native-image-crop-picker';
 
 /* Env */
 import { SUPABASE_BUCKET } from '@env';
 
-/* Errors */
-import { ImageError } from '@domain/errors';
+/* Models */
+import { ImageModel } from '@domain/models';
+
+/* Services */
+import { CloudService, DeviceImageService } from '@domain/services';
 
 /* Adapters */
 import { DeviceInfo } from '@infrasturcture/adapters';
-
-/* Services */
-import { ImageService } from '../services';
 
 /* Hooks */
 import { usePermissions, useStatus } from './';
@@ -29,7 +28,7 @@ const useImage = () => {
     const { setStatus } = useStatus();
     const { theme: { colors } } = useStyles();
 
-    const [ image, setImage ] = useState<Image | null>(null);
+    const [ image, setImage ] = useState<ImageModel | null>(null);
 
     const androidVersion = DeviceInfo.getSystemVersion();
 
@@ -55,7 +54,7 @@ const useImage = () => {
      */
     const clearImage = async (): Promise<void> => {
         setImage(null);
-        await clean();
+        await DeviceImageService.clean();
     }
 
     /**
@@ -64,7 +63,7 @@ const useImage = () => {
      * @return {Promise<void>} This function return object.
      */
     const deleteImage = async (uri: string, folder: string): Promise<void> => {
-        await ImageService.deleteImage({ bucket: SUPABASE_BUCKET, folder, uri });
+        await CloudService.deleteImage({ bucket: SUPABASE_BUCKET, folder, uri });
     }
 
     /**
@@ -94,25 +93,17 @@ const useImage = () => {
         /* This is the code that is executed when the readExternalStorage or readMediaImages permission is granted. */
         if (isReadExternalStorageGranted || isReadMediaImagesGranted || permissionStatus === permissionsStatus.GRANTED) {
             try {
-                const result = await openPicker({
+                const image = await DeviceImageService.openPicker({
                     cropperActiveWidgetColor: colors.button,
-                    cropperStatusBarColor: '#000000',
-                    cropperToolbarColor: '#000000',
                     cropperToolbarTitle: 'Editar Imagen',
-                    cropperToolbarWidgetColor: '#FFFFFF',
                     cropping: true,
-                    freeStyleCropEnabled: true,
-                    includeBase64: true,
-                    mediaType: 'photo',
-                    multiple: false,
+                    multiple: false
                 });
 
-                setImage(result);
+                setImage(image);
             }
             catch (error) {
-                const imageError = new ImageError((error as any).message);
-                console.log(imageError);
-                throw imageError;
+                throw error;
             }
         }
     }
@@ -144,35 +135,27 @@ const useImage = () => {
         /* This is the code that is executed when the camera permission is granted. */
         if (isCameraGranted || permissionStatus === permissionsStatus.GRANTED || permissionStatus === permissionsStatus.UNAVAILABLE) {
             try {
-                const result = await openCamera({
+                const image = await DeviceImageService.openCamera({
                     cropperActiveWidgetColor: colors.button,
-                    cropperStatusBarColor: '#000000',
-                    cropperToolbarColor: '#000000',
-                    cropperToolbarTitle: 'Editar Foto',
-                    cropperToolbarWidgetColor: '#FFFFFF',
+                    cropperToolbarTitle: 'Editar Imagen',
                     cropping: true,
-                    freeStyleCropEnabled: true,
-                    includeBase64: true,
-                    mediaType: 'photo',
                 });
 
-                setImage(result);
+                setImage(image);
             }
             catch (error) {
-                const imageError = new ImageError((error as any).message);
-                console.log(imageError);
-                throw imageError;
+                throw error;
             }
         }
     }
 
     /**
      * It takes a photo, uploads it to Supabase, and returns the public URL of the photo
-     * @param {Image} photo - This is the image that is being uploaded
+     * @param {ImageModel} photo - This is the image that is being uploaded
      * @return {Promise<string | ImageError>} This function return object
      */
-    const uploadImage = async (photo: Image, folder: string): Promise<string> => {
-        const result = await ImageService.uploadImage({ bucket: SUPABASE_BUCKET, folder, image: photo });
+    const uploadImage = async (photo: ImageModel, folder: string): Promise<string> => {
+        const result = await CloudService.uploadImage({ bucket: SUPABASE_BUCKET, folder, image: photo });
         return result;
     }
 

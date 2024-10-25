@@ -32,10 +32,10 @@ import { CreateLessonDto, FinishOrStartLessonDto, UpdateLessonDto } from '@domai
 import { LessonEntity, LessonWithCourseEntity } from '@domain/entities';
 
 /* Services */
-import { LessonsService } from '../services';
+import { CoursesService, LessonsService } from '@domain/services';
 
 /* Hooks */
-import { coursesMessages, CoursesService } from '@courses';
+import { coursesMessages } from '@courses';
 import { useNetwork, useStatus } from '@shared';
 
 /* Interfaces */

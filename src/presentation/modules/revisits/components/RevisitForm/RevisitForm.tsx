@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 import { ActivityIndicator, View } from 'react-native';
-import { Image } from 'react-native-image-crop-picker';
 import { useStyles } from 'react-native-unistyles';
 import { Formik } from 'formik';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+
+/* Models */
+import { ImageModel } from '@domain/models';
 
 /* Modules */
 import { useRevisits } from '../../hooks';
@@ -28,7 +30,7 @@ const defaultRevisit = require('@assets/revisit-default.jpg');
  * @return {JSX.Element} Rendered component form to create or edit a revisit
  */
 export const RevisitForm = (): JSX.Element => {
-    const [ image, setImage ] = useState<Image | null>(null);
+    const [ image, setImage ] = useState<ImageModel | null>(null);
 
     const { styles: themeStyles, theme: { colors, fontSizes, margins } } = useStyles(themeStylesheet);
 

@@ -1,8 +1,10 @@
 import React, { useRef, useState } from 'react';
 import { ActivityIndicator, View } from 'react-native';
-import { Image } from 'react-native-image-crop-picker';
 import { Formik } from 'formik';
 import { useStyles } from 'react-native-unistyles';
+
+/* Models */
+import { ImageModel } from '@domain/models';
 
 /* Components */
 import { Button, FormField, FormImage, FormImageRef } from '@ui';
@@ -29,7 +31,7 @@ import { useTheme, themeStylesheet } from '@theme';
  */
 export const ReportErrorForm = (): JSX.Element => {
     const formImageRef = useRef<FormImageRef>(null);
-    const [ image, setImage ] = useState<Image | null>(null);
+    const [ image, setImage ] = useState<ImageModel | null>(null);
 
     const { styles: themeStyles, theme: { colors, fontSizes, margins } } = useStyles(themeStylesheet);
 

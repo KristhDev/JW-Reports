@@ -6,7 +6,7 @@ import { useAppDispatch, useAppSelector } from '@application/store';
 import { clearStatus as clearStatusAction, setStatus as setStatusAction, SetStatusPayload } from '@application/features';
 
 /* Services */
-import { LoggerService } from '@services';
+import { LoggerService } from '@domain/services';
 
 /* Utils */
 import { authMessages } from '@auth';
