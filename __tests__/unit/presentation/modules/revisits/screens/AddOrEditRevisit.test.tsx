@@ -5,7 +5,7 @@ import { act, render, screen } from '@testing-library/react-native';
 import { useImageSpy, useRevisitsSpy, useStatusSpy, useUISpy } from '@test-setup';
 
 /* Mocks */
-import { imageMock, revisitsStateMock, selectedRevisitStateMock } from '@mocks';
+import { imageModelMock, revisitsStateMock, selectedRevisitStateMock } from '@mocks';
 
 /* Features */
 import { UI_INITIAL_STATE } from '@application/features';
@@ -33,7 +33,7 @@ describe('Test in <AddOrEditRevisit /> screen', () => {
     }) as any);
 
     useImageSpy.mockImplementation(() => ({
-        image: imageMock,
+        image: imageModelMock,
         takeImageToGallery: jest.fn(),
         takePhoto: jest.fn()
     }) as any);
