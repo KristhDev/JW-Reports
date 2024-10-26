@@ -1,12 +1,11 @@
 import { act } from '@testing-library/react-native';
 import { request } from 'react-native-permissions';
-import { openCamera } from 'react-native-image-crop-picker';
 
 /* Setups */
 import { getMockStoreUseImage, renderUseImage } from '@setups';
 
 /* Mocks */
-import { blockedStateMock, deniedStateMock, grantedStateMock, imageMock, initialStatusStateMock, unavailableStateMock } from '@mocks';
+import { blockedStateMock, deniedStateMock, DeviceImageServiceSpy, grantedStateMock, imageModelMock, initialStatusStateMock, unavailableStateMock } from '@mocks';
 
 /* Shared */
 import { permissionsMessages, permissionsStatus } from '@shared';
@@ -17,7 +16,7 @@ describe('Test in useImage hook - takePhoto', () => {
     });
 
     it('should take photo', async () => {
-        (openCamera as jest.Mock).mockResolvedValue(imageMock);
+        DeviceImageServiceSpy.openCamera.mockResolvedValueOnce(imageModelMock);
 
         const mockStore = getMockStoreUseImage({ permissions: grantedStateMock, status: initialStatusStateMock });
         const { result } = renderUseImage(mockStore);
@@ -26,9 +25,9 @@ describe('Test in useImage hook - takePhoto', () => {
             await result.current.useImage.takePhoto();
         });
 
-        /* Check if openCamera is called one time and image is equal to mock */
-        expect(openCamera).toHaveBeenCalledTimes(1);
-        expect(result.current.useImage.image).toEqual(imageMock);
+        /* Check if DeviceImageServiceSpy.openCamera is called one time and image is equal to mock */
+        expect(DeviceImageServiceSpy.openCamera).toHaveBeenCalledTimes(1);
+        expect(result.current.useImage.image).toEqual(imageModelMock);
     });
 
     it('should not access to camera if permission is blocked', async () => {
@@ -39,8 +38,8 @@ describe('Test in useImage hook - takePhoto', () => {
             await result.current.useImage.takePhoto();
         });
 
-        /* Check if openCamera isnt called and image is empty */
-        expect(openCamera).not.toHaveBeenCalled();
+        /* Check if DeviceImageServiceSpy.openCamera isnt called and image is empty */
+        expect(DeviceImageServiceSpy.openCamera).not.toHaveBeenCalled();
         expect(result.current.useImage.image).toBeNull();
         expect(result.current.useStatus.state).toEqual({
             msg: permissionsMessages.REQUEST,
@@ -58,10 +57,10 @@ describe('Test in useImage hook - takePhoto', () => {
             await result.current.useImage.takePhoto();
         });
 
-        /* Check if openCamera is called one time and image is equal to mock */
+        /* Check if DeviceImageServiceSpy.openCamera is called one time and image is equal to mock */
         expect(request).toHaveBeenCalledTimes(1);
-        expect(openCamera).toHaveBeenCalledTimes(1);
-        expect(result.current.useImage.image).toEqual(imageMock);
+        expect(DeviceImageServiceSpy.openCamera).toHaveBeenCalledTimes(1);
+        expect(result.current.useImage.image).toEqual(imageModelMock);
     });
 
     it('should not access to camera if permission is unavailable', async () => {
@@ -72,8 +71,8 @@ describe('Test in useImage hook - takePhoto', () => {
             await result.current.useImage.takePhoto();
         });
 
-        /* Check if openCamera isnt called and image is empty */
-        expect(openCamera).not.toHaveBeenCalled();
+        /* Check if DeviceImageServiceSpy.openCamera isnt called and image is empty */
+        expect(DeviceImageServiceSpy.openCamera).not.toHaveBeenCalled();
         expect(result.current.useImage.image).toBeNull();
 
         expect(result.current.useStatus.state).toEqual({

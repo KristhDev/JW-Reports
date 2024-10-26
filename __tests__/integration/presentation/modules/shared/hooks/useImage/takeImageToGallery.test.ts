@@ -1,13 +1,12 @@
 import { act } from '@testing-library/react-native';
 import { request } from 'react-native-permissions';
-import { openPicker } from 'react-native-image-crop-picker';
 
 /* Setups */
 import { mockDeviceInfo } from '@test-setup';
 import { getMockStoreUseImage, renderUseImage } from '@setups';
 
 /* Mocks */
-import { blockedStateMock, deniedStateMock, grantedStateMock, imageMock, initialStatusStateMock, unavailableStateMock } from '@mocks';
+import { blockedStateMock, deniedStateMock, DeviceImageServiceSpy, grantedStateMock, imageModelMock, initialStatusStateMock, unavailableStateMock } from '@mocks';
 
 /* Shared */
 import { permissionsMessages, permissionsStatus } from '@shared';
@@ -18,7 +17,7 @@ describe('Test in useImage hook - takeImageToGallery', () => {
     });
 
     it('should take image to gallery', async () => {
-        (openPicker as jest.Mock).mockResolvedValue(imageMock);
+        DeviceImageServiceSpy.openPicker.mockResolvedValueOnce(imageModelMock);
         mockDeviceInfo.getSystemVersion.mockImplementation(() => '12');
 
         const mockStore = getMockStoreUseImage({ permissions: grantedStateMock, status: initialStatusStateMock });
@@ -28,9 +27,9 @@ describe('Test in useImage hook - takeImageToGallery', () => {
             await result.current.useImage.takeImageToGallery();
         });
 
-        /* Check if openPicker is called one time and image is equal to mock */
-        expect(openPicker).toHaveBeenCalledTimes(1);
-        expect(result.current.useImage.image).toEqual(imageMock);
+        /* Check if DeviceImageServiceSpy.openPicker is called one time and image is equal to mock */
+        expect(DeviceImageServiceSpy.openPicker).toHaveBeenCalledTimes(1);
+        expect(result.current.useImage.image).toEqual(imageModelMock);
     });
 
     it('should not access to gallery if permission is blocked in android below 13', async () => {
@@ -51,7 +50,7 @@ describe('Test in useImage hook - takeImageToGallery', () => {
         });
 
         /* Check if openPicker isnt called and image is empty */
-        expect(openPicker).not.toHaveBeenCalled();
+        expect(DeviceImageServiceSpy.openPicker).not.toHaveBeenCalled();
         expect(result.current.useImage.image).toBeNull();
 
         expect(result.current.useStatus.state).toEqual({
@@ -78,10 +77,10 @@ describe('Test in useImage hook - takeImageToGallery', () => {
             await result.current.useImage.takeImageToGallery();
         });
 
-        /* Check if openPicker is called one time and image is equal to mock */
+        /* Check if DeviceImageServiceSpy.openPicker is called one time and image is equal to mock */
         expect(request).toHaveBeenCalledTimes(1);
-        expect(openPicker).toHaveBeenCalledTimes(1);
-        expect(result.current.useImage.image).toEqual(imageMock);
+        expect(DeviceImageServiceSpy.openPicker).toHaveBeenCalledTimes(1);
+        expect(result.current.useImage.image).toEqual(imageModelMock);
     });
 
     it('should not access to gallery if permission is unavailable in android below 13', async () => {
@@ -94,8 +93,8 @@ describe('Test in useImage hook - takeImageToGallery', () => {
             await result.current.useImage.takeImageToGallery();
         });
 
-        /* Check if openPicker isnt called and image is empty */
-        expect(openPicker).not.toHaveBeenCalled();
+        /* Check if DeviceImageServiceSpy.openPicker isnt called and image is empty */
+        expect(DeviceImageServiceSpy.openPicker).not.toHaveBeenCalled();
         expect(result.current.useImage.image).toBeNull();
 
         expect(result.current.useStatus.state).toEqual({
@@ -121,8 +120,8 @@ describe('Test in useImage hook - takeImageToGallery', () => {
             await result.current.useImage.takeImageToGallery();
         });
 
-        /* Check if openPicker isnt called and image is empty */
-        expect(openPicker).not.toHaveBeenCalled();
+        /* Check if DeviceImageServiceSpy.openPicker isnt called and image is empty */
+        expect(DeviceImageServiceSpy.openPicker).not.toHaveBeenCalled();
         expect(result.current.useImage.image).toBeNull();
 
         expect(result.current.useStatus.state).toEqual({
@@ -149,10 +148,10 @@ describe('Test in useImage hook - takeImageToGallery', () => {
             await result.current.useImage.takeImageToGallery();
         });
 
-        /* Check if openPicker is called one time and image is equal to mock */
+        /* Check if DeviceImageServiceSpy.openPicker is called one time and image is equal to mock */
         expect(request).toHaveBeenCalledTimes(1);
-        expect(openPicker).toHaveBeenCalledTimes(1);
-        expect(result.current.useImage.image).toEqual(imageMock);
+        expect(DeviceImageServiceSpy.openPicker).toHaveBeenCalledTimes(1);
+        expect(result.current.useImage.image).toEqual(imageModelMock);
     });
 
     it('should not access to gallery if permission is unavailable in android above 12', async () => {
@@ -172,8 +171,8 @@ describe('Test in useImage hook - takeImageToGallery', () => {
             await result.current.useImage.takeImageToGallery();
         });
 
-        /* Check if openPicker isnt called and image is empty */
-        expect(openPicker).not.toHaveBeenCalled();
+        /* Check if DeviceImageServiceSpy.openPicker isnt called and image is empty */
+        expect(DeviceImageServiceSpy.openPicker).not.toHaveBeenCalled();
         expect(result.current.useImage.image).toBeNull();
 
         expect(result.current.useStatus.state).toEqual({

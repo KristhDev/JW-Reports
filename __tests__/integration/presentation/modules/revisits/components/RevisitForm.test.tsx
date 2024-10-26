@@ -6,7 +6,7 @@ import { useImageSpy, useRevisitsSpy, useStatusSpy, useUISpy } from '@test-setup
 
 /* Mocks */
 import {
-    imageMock,
+    imageModelMock,
     revisitsStateMock,
     saveRevisitMock,
     selectedRevisitStateMock,
@@ -31,7 +31,7 @@ const renderComponent = () => render(<RevisitForm />);
 
 describe('Test in <RevisitForm /> component', () => {
     useImageSpy.mockImplementation(() => ({
-        image: imageMock,
+        image: imageModelMock,
         takeImageToGallery: takeImageToGalleryMock,
         takePhoto: takePhotoMock
     }) as any);
@@ -103,7 +103,7 @@ describe('Test in <RevisitForm /> component', () => {
                 address: direction,
                 nextVisit: expect.any(Date)
             },
-            image: imageMock
+            image: imageModelMock
         });
     });
 
@@ -138,7 +138,7 @@ describe('Test in <RevisitForm /> component', () => {
                 address: selectedRevisitStateMock.selectedRevisit.address,
                 nextVisit: expect.any(Date)
             },
-            imageMock
+            imageModelMock
         );
     });
 

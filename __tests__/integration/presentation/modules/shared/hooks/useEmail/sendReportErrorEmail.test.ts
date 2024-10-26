@@ -5,7 +5,7 @@ import { onFinishMock, onSuccessMock, useImageSpy } from '@test-setup';
 import { getMockStoreUseEmail, renderUseEmail } from '@setups';
 
 /* Mocks */
-import { authenticateStateMock, EmailServiceSpy, grantedStateMock, imageMock, initialStatusStateMock } from '@mocks';
+import { authenticateStateMock, EmailServiceSpy, grantedStateMock, imageModelMock, initialStatusStateMock } from '@mocks';
 
 /* Errors */
 import { EmailError, ImageError } from '@domain/errors';
@@ -76,13 +76,13 @@ describe('Test in useEmail - sendReportErrorEmail', () => {
 
         await act(async () => {
             await result.current.useEmail.sendReportErrorEmail(
-                { message: reportErrorMsg, image: imageMock },
+                { message: reportErrorMsg, image: imageModelMock },
                 { onFinish: onFinishMock, onSuccess: onSuccessMock }
             );
         });
 
         expect(uploadImageMock).toHaveBeenCalledTimes(1);
-        expect(uploadImageMock).toHaveBeenCalledWith(imageMock, expect.any(String));
+        expect(uploadImageMock).toHaveBeenCalledWith(imageModelMock, expect.any(String));
 
         expect(EmailServiceSpy.send).toHaveBeenCalledTimes(1);
         expect(EmailServiceSpy.send).toHaveBeenCalledWith({
@@ -150,13 +150,13 @@ describe('Test in useEmail - sendReportErrorEmail', () => {
 
         await act(async () => {
             await result.current.useEmail.sendReportErrorEmail(
-                { message: reportErrorMsg, image: imageMock },
+                { message: reportErrorMsg, image: imageModelMock },
                 { onFinish: onFinishMock, onSuccess: onSuccessMock }
             );
         });
 
         expect(uploadImageMock).toHaveBeenCalledTimes(1);
-        expect(uploadImageMock).toHaveBeenCalledWith(imageMock, expect.any(String));
+        expect(uploadImageMock).toHaveBeenCalledWith(imageModelMock, expect.any(String));
 
         expect(EmailServiceSpy.send).not.toHaveBeenCalled();
 
