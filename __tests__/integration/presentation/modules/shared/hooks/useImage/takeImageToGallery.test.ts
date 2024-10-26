@@ -60,6 +60,7 @@ describe('Test in useImage hook - takeImageToGallery', () => {
     });
 
     it('should request permissions if permission is denied in android below 13', async () => {
+        DeviceImageServiceSpy.openPicker.mockResolvedValueOnce(imageModelMock);
         (request as jest.Mock).mockResolvedValue(permissionsStatus.GRANTED);
         mockDeviceInfo.getSystemVersion.mockImplementation(() => '12');
 
@@ -131,6 +132,7 @@ describe('Test in useImage hook - takeImageToGallery', () => {
     });
 
     it('should request permissions if permission is denied in android above 12', async () => {
+        DeviceImageServiceSpy.openPicker.mockResolvedValueOnce(imageModelMock);
         (request as jest.Mock).mockResolvedValue(permissionsStatus.GRANTED);
         mockDeviceInfo.getSystemVersion.mockImplementation(() => '13');
 

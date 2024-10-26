@@ -48,6 +48,7 @@ describe('Test in useImage hook - takePhoto', () => {
     });
 
     it('should request camera permission if permission is denied', async () => {
+        DeviceImageServiceSpy.openCamera.mockResolvedValueOnce(imageModelMock);
         (request as jest.Mock).mockResolvedValue(permissionsStatus.GRANTED);
 
         const mockStore = getMockStoreUseImage({ permissions: deniedStateMock, status: initialStatusStateMock });
