@@ -5,3 +5,10 @@ export interface GetAllOptions<F = any> {
     pagination: Pagination
     search: string
 }
+
+export interface SendEmailOptions {
+    email: string;
+    imageUrl?: string;
+    message: string;
+    templateId: string;
+}
