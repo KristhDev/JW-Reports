@@ -1,11 +1,8 @@
 import React from 'react';
 import { act, render, screen } from '@testing-library/react-native';
 
-/* Setup */
-import { useCoursesSpy, useStatusSpy, useUISpy } from '@test-setup';
-
 /* Mocks */
-import { courseSelectedStateMock, coursesStateMock } from '@mocks';
+import { courseSelectedStateMock, coursesStateMock, useCoursesSpy, useStatusSpy, useUISpy } from '@mocks';
 
 /* Features */
 import { UI_INITIAL_STATE } from '@application/features';

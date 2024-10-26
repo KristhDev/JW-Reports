@@ -2,11 +2,16 @@ import React from 'react';
 import { render, screen, userEvent } from '@testing-library/react-native';
 import { MenuProvider } from 'react-native-popup-menu';
 
-/* Setup */
-import { useCoursesSpy, useRevisitsSpy, useStatusSpy, useUISpy } from '@test-setup';
-
 /* Mocks */
-import { coursesStateMock, revisitsStateMock, setSelectedRevisitMock } from '@mocks';
+import {
+    coursesStateMock,
+    revisitsStateMock,
+    setSelectedRevisitMock,
+    useCoursesSpy,
+    useRevisitsSpy,
+    useStatusSpy,
+    useUISpy
+} from '@mocks';
 
 /* Features */
 import { INIT_REVISIT, UI_INITIAL_STATE } from '@application/features';

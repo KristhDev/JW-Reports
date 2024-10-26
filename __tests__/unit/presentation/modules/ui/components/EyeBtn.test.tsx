@@ -1,8 +1,8 @@
 import React from 'react';
 import { render, screen, userEvent } from '@testing-library/react-native';
 
-/* Setup */
-import { onToggleMock } from '@test-setup';
+/* Mocks */
+import { onToggleMock } from '@mocks';
 
 /* Modules */
 import { EyeBtn } from '@ui';

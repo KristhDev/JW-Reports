@@ -2,10 +2,10 @@ import React from 'react';
 import { render, screen, userEvent } from '@testing-library/react-native';
 
 /* Setup */
-import { mockUseNavigation, useStatusSpy, useThemeSpy, useUISpy } from '@test-setup';
+import { mockUseNavigation } from '@test-setup';
 
 /* Mocks */
-import { setStatusMock, setThemeMock } from '@mocks';
+import { setStatusMock, setThemeMock, useStatusSpy, useThemeSpy, useUISpy } from '@mocks';
 
 /* Features */
 import { UI_INITIAL_STATE } from '@application/features';

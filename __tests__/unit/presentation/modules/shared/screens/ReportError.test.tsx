@@ -1,8 +1,8 @@
 import React from 'react';
 import { act, render, screen } from '@testing-library/react-native';
 
-/* Setup */
-import { useEmailSpy, useImageSpy, useStatusSpy, useThemeSpy, useUISpy } from '@test-setup';
+/* Mocks */
+import { useEmailSpy, useImageSpy, useStatusSpy, useThemeSpy, useUISpy } from '@mocks';
 
 /* Modules */
 import { ReportErrorScreen } from '@shared';

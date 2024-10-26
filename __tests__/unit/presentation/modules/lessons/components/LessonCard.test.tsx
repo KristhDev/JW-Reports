@@ -3,10 +3,10 @@ import { render, screen, userEvent } from '@testing-library/react-native';
 import { MenuProvider } from 'react-native-popup-menu';
 
 /* Setup */
-import { mockUseNavigation, useLessonsSpy } from '@test-setup';
+import { mockUseNavigation } from '@test-setup';
 
 /* Mocks */
-import { lessonsMock, setSelectedLessonMock } from '@mocks';
+import { lessonsMock, setSelectedLessonMock, useLessonsSpy } from '@mocks';
 
 /* Adapters */
 import { Time } from '@infrasturcture/adapters';

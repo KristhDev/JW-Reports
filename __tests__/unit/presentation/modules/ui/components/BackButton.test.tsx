@@ -1,8 +1,8 @@
 import React from 'react';
 import { render, screen, userEvent } from '@testing-library/react-native';
 
-/* Setup */
-import { onPressMock } from '@test-setup';
+/* Mocks */
+import { onPressMock } from '@mocks';
 
 /* Modules */
 import { darkColors } from '@theme';

@@ -3,8 +3,8 @@ import { render, screen, userEvent } from '@testing-library/react-native';
 import { Formik } from 'formik';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
-/* Setup */
-import { useUISpy } from '@test-setup';
+/* Mocks */
+import { useUISpy } from '@mocks';
 
 /* Modules */
 import { darkColors } from '@theme';

@@ -2,10 +2,10 @@ import React from 'react';
 import { render, screen, userEvent } from '@testing-library/react-native';
 
 /* Setup */
-import { mockUseNavigation, useCoursesSpy, useLessonsSpy } from '@test-setup';
+import { mockUseNavigation } from '@test-setup';
 
 /* Mocks */
-import { courseSelectedStateMock, setSelectedCourseMock, setSelectedLessonMock } from '@mocks';
+import { courseSelectedStateMock, setSelectedCourseMock, setSelectedLessonMock, useCoursesSpy, useLessonsSpy } from '@mocks';
 
 /* Features */
 import { INIT_LESSON } from '@application/features';

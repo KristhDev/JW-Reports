@@ -1,11 +1,8 @@
 import React from 'react';
 import { render, screen, userEvent } from '@testing-library/react-native';
 
-/* Setup */
-import { onChangeValueMock, useImageSpy } from '@test-setup';
-
 /* Mocks */
-import { takeImageToGalleryMock, takePhotoMock } from '@mocks';
+import { takeImageToGalleryMock, takePhotoMock, onChangeValueMock, useImageSpy } from '@mocks';
 
 /* Modules */
 import { FormImage, FormImageProps } from '@ui';

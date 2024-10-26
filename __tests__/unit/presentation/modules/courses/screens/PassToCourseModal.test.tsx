@@ -1,11 +1,17 @@
 import React from 'react';
 import { act, render, screen, userEvent } from '@testing-library/react-native';
 
-/* Setup */
-import { onCloseMock, useCoursesSpy, useRevisitsSpy, useStatusSpy, useUISpy } from '@test-setup';
-
 /* Mocks */
-import { saveCourseMock, selectedRevisitStateMock, setStatusMock } from '@mocks';
+import {
+    saveCourseMock,
+    selectedRevisitStateMock,
+    setStatusMock,
+    onCloseMock,
+    useCoursesSpy,
+    useRevisitsSpy,
+    useStatusSpy,
+    useUISpy
+} from '@mocks';
 
 /* Features */
 import { UI_INITIAL_STATE } from '@application/features';

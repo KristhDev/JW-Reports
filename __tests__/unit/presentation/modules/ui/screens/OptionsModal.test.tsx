@@ -1,8 +1,8 @@
 import React from 'react';
 import { render, screen, userEvent } from '@testing-library/react-native';
 
-/* Setup */
-import { onCancelMock, onChangeValueMock } from '@test-setup';
+/* Mocks */
+import { onCancelMock, onChangeValueMock } from '@mocks';
 
 /* Modules */
 import { ItemOption, OptionsModal } from '@ui';

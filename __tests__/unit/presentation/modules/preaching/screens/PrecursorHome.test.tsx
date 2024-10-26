@@ -2,10 +2,20 @@ import React from 'react';
 import { render, screen, userEvent } from '@testing-library/react-native';
 
 /* Setup */
-import { mockUseNavigation, useAuthSpy, useCoursesSpy, usePreachingSpy, useThemeSpy } from '@test-setup';
+import { mockUseNavigation } from '@test-setup';
 
 /* Mocks */
-import { coursesStateMock, loadPreachingsMock, preachingsStateMock, setSelectedPreachingMock, testUser } from '@mocks';
+import {
+    coursesStateMock,
+    loadPreachingsMock,
+    preachingsStateMock,
+    setSelectedPreachingMock,
+    testUser,
+    useAuthSpy,
+    useCoursesSpy,
+    usePreachingSpy,
+    useThemeSpy
+} from '@mocks';
 
 /* Features */
 import { INIT_PREACHING } from '@application/features';

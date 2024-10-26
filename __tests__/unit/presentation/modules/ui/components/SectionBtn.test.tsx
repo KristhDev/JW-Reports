@@ -2,8 +2,8 @@ import React from 'react';
 import { View } from 'react-native';
 import { render, screen, userEvent } from '@testing-library/react-native';
 
-/* Setup */
-import { onPressMock } from '@test-setup';
+/* Mocks */
+import { onPressMock } from '@mocks';
 
 /* Modules */
 import { SectionBtn, SectionBtnProps } from '@ui';

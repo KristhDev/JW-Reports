@@ -1,8 +1,8 @@
 import React from 'react';
 import { render, screen, userEvent } from '@testing-library/react-native';
 
-/* Setup */
-import { onCleanMock, onSearchMock } from '@test-setup';
+/* Mocks */
+import { onCleanMock, onSearchMock } from '@mocks';
 
 /* Modules */
 import { SearchInput } from '@ui';

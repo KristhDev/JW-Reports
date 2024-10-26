@@ -2,11 +2,17 @@ import React from 'react';
 import { render, screen, userEvent } from '@testing-library/react-native';
 import { MenuProvider } from 'react-native-popup-menu';
 
-/* Setup */
-import { useCoursesSpy, useLessonsSpy, useNetworkSpy, useUISpy } from '@test-setup';
-
 /* Mocks */
-import { courseSelectedStateMock, lessonsStateMock, setSelectedLessonMock, wifiMock } from '@mocks';
+import {
+    courseSelectedStateMock,
+    lessonsStateMock,
+    setSelectedLessonMock,
+    useCoursesSpy,
+    useLessonsSpy,
+    useNetworkSpy,
+    useUISpy,
+    wifiMock
+} from '@mocks';
 
 /* Features */
 import { INIT_LESSON, UI_INITIAL_STATE } from '@application/features';

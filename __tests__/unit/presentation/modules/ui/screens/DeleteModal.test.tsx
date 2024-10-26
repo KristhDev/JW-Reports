@@ -1,8 +1,8 @@
 import React from 'react';
 import { render, screen, userEvent } from '@testing-library/react-native';
 
-/* Setup */
-import { onCloseMock, onCofirmMock } from '@test-setup';
+/* Mocks */
+import { onCloseMock, onCofirmMock } from '@mocks';
 
 /* Screens */
 import { DeleteModal } from '@ui';

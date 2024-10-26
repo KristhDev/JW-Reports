@@ -2,8 +2,8 @@ import React from 'react';
 import { render, screen, userEvent } from '@testing-library/react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
-/* Setup */
-import { onPressMock } from '@test-setup';
+/* Mocks */
+import { onPressMock } from '@mocks';
 
 /* Components */
 import { Button } from '@ui';

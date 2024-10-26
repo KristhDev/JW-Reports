@@ -1,11 +1,8 @@
 import React from 'react';
 import { render, screen, userEvent } from '@testing-library/react-native';
 
-/* Setup */
-import { useStatusSpy } from '@test-setup';
-
 /* Mocks */
-import { clearStatusMock, permissionsStatusStateMock, successStateMock } from '@mocks';
+import { clearStatusMock, permissionsStatusStateMock, successStateMock, useStatusSpy } from '@mocks';
 
 /* Modules */
 import { StatusModal } from '@shared';

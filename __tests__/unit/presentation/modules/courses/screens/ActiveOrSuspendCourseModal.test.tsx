@@ -1,11 +1,8 @@
 import React from 'react';
 import { render, screen, userEvent } from '@testing-library/react-native';
 
-/* Setup */
-import { onCloseMock, useCoursesSpy } from '@test-setup';
-
 /* Mocks */
-import { activeOrSuspendCourseMock, courseSelectedStateMock } from '@mocks';
+import { activeOrSuspendCourseMock, courseSelectedStateMock, onCloseMock, useCoursesSpy } from '@mocks';
 
 /* Modules */
 import { ActiveOrSuspendCourseModal } from '@courses';

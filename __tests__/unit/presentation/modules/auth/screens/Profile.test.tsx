@@ -1,11 +1,8 @@
 import React from 'react';
 import { act, render, screen } from '@testing-library/react-native';
 
-/* Setup */
-import { useAuthSpy, useStatusSpy, useUISpy } from '@test-setup';
-
 /* Mocks */
-import { setErrorFormMock, testUser, updateProfileMock } from '@mocks';
+import { setErrorFormMock, testUser, useAuthSpy, useStatusSpy, useUISpy, updateProfileMock } from '@mocks';
 
 /* Features */
 import { UI_INITIAL_STATE } from '@application/features';

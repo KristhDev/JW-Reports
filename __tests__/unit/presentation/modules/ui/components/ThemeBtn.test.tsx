@@ -1,11 +1,8 @@
 import React from 'react';
 import { render, screen, userEvent } from '@testing-library/react-native';
 
-/* Setup */
-import { useThemeSpy } from '@test-setup';
-
 /* Mocks */
-import { setThemeMock } from '@mocks';
+import { setThemeMock, useThemeSpy } from '@mocks';
 
 /* Modules */
 import { ThemeBtn } from '@ui';

@@ -2,9 +2,6 @@ import React from 'react';
 import { render, screen, userEvent } from '@testing-library/react-native';
 import { MenuProvider } from 'react-native-popup-menu';
 
-/* Setup */
-import { useCoursesSpy, useNetworkSpy, useRevisitsSpy, useStatusSpy, useUISpy } from '@test-setup';
-
 /* Mocks */
 import {
     completeRevisitMock,
@@ -19,6 +16,11 @@ import {
     setRevisitsPaginationMock,
     setSelectedRevisitMock,
     setStatusMock,
+    useCoursesSpy,
+    useNetworkSpy,
+    useRevisitsSpy,
+    useStatusSpy,
+    useUISpy,
     wifiMock
 } from '@mocks';
 

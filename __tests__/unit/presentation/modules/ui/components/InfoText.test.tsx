@@ -5,7 +5,6 @@ import { render, screen } from '@testing-library/react-native';
 import { InfoText } from '@ui';
 
 const textInfo = 'Info text test';
-
 const renderComponent = () => render(<InfoText text={ textInfo } />);
 
 describe('Test in <InfoText /> component', () => {

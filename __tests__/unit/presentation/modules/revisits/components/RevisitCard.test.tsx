@@ -3,10 +3,10 @@ import { render, screen, userEvent } from '@testing-library/react-native';
 import { MenuProvider } from 'react-native-popup-menu';
 
 /* Setup */
-import { mockUseNavigation, useRevisitsSpy } from '@test-setup';
+import { mockUseNavigation } from '@test-setup';
 
 /* Mocks */
-import { onDeleteMock, onPassMock, onRevisitMock, selectedRevisitStateMock, setSelectedRevisitMock } from '@mocks';
+import { onDeleteMock, onPassMock, onRevisitMock, selectedRevisitStateMock, setSelectedRevisitMock, useRevisitsSpy } from '@mocks';
 
 /* Entities */
 import { RevisitEntity } from '@domain/entities';

@@ -2,7 +2,7 @@ import React from 'react';
 import { render, screen, userEvent } from '@testing-library/react-native';
 
 /* Setups */
-import { onCloseMock, shareSpy, useAuthSpy, useCoursesSpy, usePreachingSpy } from '@test-setup';
+import { shareSpy } from '@test-setup';
 
 /* Mocks */
 import {
@@ -10,7 +10,11 @@ import {
     authenticatePrecursorMock,
     authenticateStateMock,
     coursesStateMock,
-    preachingsStateMock
+    onCloseMock,
+    preachingsStateMock,
+    useAuthSpy,
+    useCoursesSpy,
+    usePreachingSpy
 } from '@mocks';
 
 /* Adapters */

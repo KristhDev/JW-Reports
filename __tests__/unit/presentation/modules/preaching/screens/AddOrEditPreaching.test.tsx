@@ -1,11 +1,8 @@
 import React from 'react';
 import { act, render, screen } from '@testing-library/react-native';
 
-/* Setup */
-import { usePreachingSpy, useStatusSpy, useUISpy } from '@test-setup';
-
 /* Mocks */
-import { preachingsStateMock } from '@mocks';
+import { preachingsStateMock, usePreachingSpy, useStatusSpy, useUISpy } from '@mocks';
 
 /* Features */
 import { INIT_PREACHING, UI_INITIAL_STATE } from '@application/features';

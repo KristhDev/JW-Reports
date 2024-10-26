@@ -2,10 +2,10 @@ import React from 'react';
 import { render, screen, userEvent } from '@testing-library/react-native';
 
 /* Setup */
-import { mockUseNavigation, usePreachingSpy, useThemeSpy } from '@test-setup';
+import { mockUseNavigation } from '@test-setup';
 
 /* Mocks */
-import { preachingsStateMock, setSelectedPreachingMock } from '@mocks';
+import { preachingsStateMock, setSelectedPreachingMock, usePreachingSpy, useThemeSpy } from '@mocks';
 
 /* Modules */
 import { PreachingTable } from '@preaching';
