@@ -9,6 +9,9 @@ import { LessonEndpoint, LessonWithCourseEndpoint } from '@infrasturcture/interf
 
 /* Modules */
 import { courseEndpointMock } from './courses';
+import * as useLessons from '@lessons/hooks/useLessons';
+
+export const useLessonsSpy = jest.spyOn(useLessons, 'default');
 
 export const deleteLessonMock = jest.fn();
 export const finishOrStartLessonMock = jest.fn();

@@ -1,4 +1,7 @@
 import { ThemeState } from '@application/context';
+import * as useTheme from '@theme/hooks/useTheme';
+
+export const useThemeSpy = jest.spyOn(useTheme, 'default');
 
 export const setThemeMock = jest.fn();
 

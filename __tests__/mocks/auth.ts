@@ -7,6 +7,11 @@ import { UserEntity } from '@domain/entities';
 /* Interfaces */
 import { UserEndpoint } from '@infrasturcture/interfaces';
 
+/* Hooks */
+import * as useAuth from '@auth/hooks/useAuth';
+
+export const useAuthSpy = jest.spyOn(useAuth, 'default');
+
 export const testUser: UserEntity = {
     id: '05ef0d0c-0f7a-4512-b705-6da279d88503',
     name: 'Celestino',

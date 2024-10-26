@@ -7,6 +7,11 @@ import { PreachingEntity } from '@domain/entities';
 /* Interfaces */
 import { PreachingEndpoint } from '@infrasturcture/interfaces';
 
+/* Hooks */
+import * as usePreaching from '@preaching/hooks/usePreaching';
+
+export const usePreachingSpy = jest.spyOn(usePreaching, 'default');
+
 export const loadPreachingsMock = jest.fn();
 export const savePreachingMock = jest.fn();
 export const setSelectedPreachingMock = jest.fn();

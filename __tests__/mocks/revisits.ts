@@ -7,6 +7,11 @@ import { RevisitEntity } from '@domain/entities';
 /* Interfaces */
 import { RevisitEndpoint } from '@infrasturcture/interfaces';
 
+/* Hooks */
+import * as useRevisits from '@revisits/hooks/useRevisits';
+
+export const useRevisitsSpy = jest.spyOn(useRevisits, 'default');
+
 export const completeRevisitMock = jest.fn();
 export const deleteRevisitMock = jest.fn();
 export const loadLastRevisitMock = jest.fn();

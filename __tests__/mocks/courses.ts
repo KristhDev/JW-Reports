@@ -7,6 +7,11 @@ import { LessonEntity, CourseEntity } from '@domain/entities';
 /* Interfaces */
 import { CourseEndpoint } from '@infrasturcture/interfaces';
 
+/* Hooks */
+import * as useCourses from '@courses/hooks/useCourses';
+
+export const useCoursesSpy = jest.spyOn(useCourses, 'default');
+
 export const activeOrSuspendCourseMock = jest.fn();
 export const deleteCourseMock = jest.fn();
 export const finishOrStartCourseMock = jest.fn();
