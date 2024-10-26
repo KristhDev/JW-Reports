@@ -3,10 +3,11 @@ import { LessonsState, INIT_LESSON, INIT_COURSE } from '@application/features';
 
 /* Entities */
 import { CourseEntity, LessonEntity } from '@domain/entities';
+
+/* Interfaces */
 import { LessonEndpoint, LessonWithCourseEndpoint } from '@infrasturcture/interfaces';
 
 /* Modules */
-import { LessonsService } from '@lessons';
 import { courseEndpointMock } from './courses';
 
 export const deleteLessonMock = jest.fn();
@@ -18,16 +19,6 @@ export const saveLessonMock = jest.fn();
 export const setLessonsPaginationMock = jest.fn();
 export const setSelectedLessonMock = jest.fn();
 export const updateLessonMock = jest.fn();
-
-export const LessonsServiceSpy = {
-    create: jest.spyOn(LessonsService, 'create'),
-    delete: jest.spyOn(LessonsService, 'delete'),
-    deleteLessonsByCourseId: jest.spyOn(LessonsService, 'deleteLessonsByCourseId'),
-    finishOrStart: jest.spyOn(LessonsService, 'finishOrStart'),
-    getAllByCourseId: jest.spyOn(LessonsService, 'getAllByCourseId'),
-    getLastLessonByCoursesId: jest.spyOn(LessonsService, 'getLastLessonByCoursesId'),
-    update: jest.spyOn(LessonsService, 'update'),
-}
 
 export const testLesson = {
     description: 'Temporibus ut dignissimos aliquam dignissimos facere recusandae. Illo a provident quasi iusto quidem qui tempora vel adipisci. Quia eum ut recusandae laudantium quidem. Quisquam non fugiat dicta qui voluptatem.',

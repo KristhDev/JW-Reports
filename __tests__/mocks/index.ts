@@ -7,7 +7,7 @@ export * from './network';
 export * from './permissions';
 export * from './preaching';
 export * from './revisits';
-export * from './shared';
+export * from './services';
 export * from './status';
 export * from './theme';
 export * from './ui';

@@ -1,7 +1,11 @@
+/* Features */
 import { RevisitsState, INIT_REVISIT } from '@application/features';
+
+/* Entities */
 import { RevisitEntity } from '@domain/entities';
+
+/* Interfaces */
 import { RevisitEndpoint } from '@infrasturcture/interfaces';
-import { RevisitsService } from '@revisits';
 
 export const completeRevisitMock = jest.fn();
 export const deleteRevisitMock = jest.fn();
@@ -16,15 +20,6 @@ export const setRefreshRevisitsMock = jest.fn();
 export const setRevisitsPaginationMock = jest.fn();
 export const setSelectedRevisitMock = jest.fn();
 export const updateRevisitMock = jest.fn();
-
-export const RevisitsServiceSpy = {
-    complete: jest.spyOn(RevisitsService, 'complete'),
-    create: jest.spyOn(RevisitsService, 'create'),
-    delete: jest.spyOn(RevisitsService, 'delete'),
-    getAllByUserId: jest.spyOn(RevisitsService, 'getAllByUserId'),
-    getLastByUserId: jest.spyOn(RevisitsService, 'getLastByUserId'),
-    update: jest.spyOn(RevisitsService, 'update'),
-}
 
 export const testRevisit = {
     about: 'Itaque quidem enim neque laudantium ducimus nesciunt provident consequuntur.',

@@ -7,9 +7,6 @@ import { LessonEntity, CourseEntity } from '@domain/entities';
 /* Interfaces */
 import { CourseEndpoint } from '@infrasturcture/interfaces';
 
-/* Modules */
-import { CoursesService } from '@courses';
-
 export const activeOrSuspendCourseMock = jest.fn();
 export const deleteCourseMock = jest.fn();
 export const finishOrStartCourseMock = jest.fn();
@@ -21,16 +18,6 @@ export const setCoursesScreenHistoryMock = jest.fn();
 export const setRefreshCoursesMock = jest.fn();
 export const setSelectedCourseMock = jest.fn();
 export const updateCourseMock = jest.fn();
-
-export const CoursesServiceSpy = {
-    activeOrSuspend: jest.spyOn(CoursesService, 'activeOrSuspend'),
-    create: jest.spyOn(CoursesService, 'create'),
-    delete: jest.spyOn(CoursesService, 'delete'),
-    finishOrStart: jest.spyOn(CoursesService, 'finishOrStart'),
-    getAllByUserId: jest.spyOn(CoursesService, 'getAllByUserId'),
-    getCourseIdsByUserId: jest.spyOn(CoursesService, 'getCourseIdsByUserId'),
-    update: jest.spyOn(CoursesService, 'update'),
-}
 
 export const courseEndpointMock: CourseEndpoint = {
     id: 'e8bbdc9f-07cc-4365-8d30-c1a4a9f5ec70',

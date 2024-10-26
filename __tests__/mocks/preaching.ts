@@ -7,20 +7,10 @@ import { PreachingEntity } from '@domain/entities';
 /* Interfaces */
 import { PreachingEndpoint } from '@infrasturcture/interfaces';
 
-/* Modules */
-import { PreachingService } from '@preaching';
-
 export const loadPreachingsMock = jest.fn();
 export const savePreachingMock = jest.fn();
 export const setSelectedPreachingMock = jest.fn();
 export const updatePreachingMock = jest.fn();
-
-export const PreachingServiceSpy = {
-    create: jest.spyOn(PreachingService, 'create'),
-    delete: jest.spyOn(PreachingService, 'delete'),
-    getByUserIdAndMonth: jest.spyOn(PreachingService, 'getByUserIdAndMonth'),
-    update: jest.spyOn(PreachingService, 'update'),
-}
 
 export const preachingEndpointMock: PreachingEndpoint = {
     id: '30da43ce-2440-44d5-a090-466486b9e48f',
