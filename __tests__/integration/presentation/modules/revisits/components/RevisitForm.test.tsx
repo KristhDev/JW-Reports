@@ -1,9 +1,6 @@
 import React from 'react';
 import { act, render, screen, userEvent } from '@testing-library/react-native';
 
-/* Setup */
-import { useImageSpy, useRevisitsSpy, useStatusSpy, useUISpy } from '@test-setup';
-
 /* Mocks */
 import {
     imageModelMock,
@@ -13,7 +10,11 @@ import {
     setErrorFormMock,
     takeImageToGalleryMock,
     takePhotoMock,
-    updateRevisitMock
+    updateRevisitMock,
+    useImageSpy,
+    useRevisitsSpy,
+    useStatusSpy,
+    useUISpy
 } from '@mocks';
 
 /* Features */

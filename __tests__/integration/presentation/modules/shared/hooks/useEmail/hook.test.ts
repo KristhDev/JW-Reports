@@ -1,9 +1,8 @@
 /* Setups */
-import { useImageSpy } from '@test-setup';
 import { getMockStoreUseEmail, renderUseEmail } from '@setups';
 
 /* Mocks */
-import { authenticateStateMock, grantedStateMock, initialStatusStateMock } from '@mocks';
+import { authenticateStateMock, grantedStateMock, initialStatusStateMock, useImageSpy } from '@mocks';
 
 useImageSpy.mockImplementation(() => ({
     uploadImage: jest.fn()

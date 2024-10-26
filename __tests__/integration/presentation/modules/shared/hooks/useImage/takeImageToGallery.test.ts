@@ -2,11 +2,19 @@ import { act } from '@testing-library/react-native';
 import { request } from 'react-native-permissions';
 
 /* Setups */
-import { mockDeviceInfo } from '@test-setup';
 import { getMockStoreUseImage, renderUseImage } from '@setups';
 
 /* Mocks */
-import { blockedStateMock, deniedStateMock, DeviceImageServiceSpy, grantedStateMock, imageModelMock, initialStatusStateMock, unavailableStateMock } from '@mocks';
+import {
+    blockedStateMock,
+    deniedStateMock,
+    DeviceImageServiceSpy,
+    DeviceInfoSpy,
+    grantedStateMock,
+    imageModelMock,
+    initialStatusStateMock,
+    unavailableStateMock
+} from '@mocks';
 
 /* Shared */
 import { permissionsMessages, permissionsStatus } from '@shared';
@@ -18,7 +26,7 @@ describe('Test in useImage hook - takeImageToGallery', () => {
 
     it('should take image to gallery', async () => {
         DeviceImageServiceSpy.openPicker.mockResolvedValueOnce(imageModelMock);
-        mockDeviceInfo.getSystemVersion.mockImplementation(() => '12');
+        DeviceInfoSpy.getSystemVersion.mockImplementation(() => '12');
 
         const mockStore = getMockStoreUseImage({ permissions: grantedStateMock, status: initialStatusStateMock });
         const { result } = renderUseImage(mockStore);
@@ -33,7 +41,7 @@ describe('Test in useImage hook - takeImageToGallery', () => {
     });
 
     it('should not access to gallery if permission is blocked in android below 13', async () => {
-        mockDeviceInfo.getSystemVersion.mockImplementation(() => '12');
+        DeviceInfoSpy.getSystemVersion.mockImplementation(() => '12');
 
         const mockStore = getMockStoreUseImage({
             permissions: {
@@ -62,7 +70,7 @@ describe('Test in useImage hook - takeImageToGallery', () => {
     it('should request permissions if permission is denied in android below 13', async () => {
         DeviceImageServiceSpy.openPicker.mockResolvedValueOnce(imageModelMock);
         (request as jest.Mock).mockResolvedValue(permissionsStatus.GRANTED);
-        mockDeviceInfo.getSystemVersion.mockImplementation(() => '12');
+        DeviceInfoSpy.getSystemVersion.mockImplementation(() => '12');
 
         const mockStore = getMockStoreUseImage({
             permissions: {
@@ -85,7 +93,7 @@ describe('Test in useImage hook - takeImageToGallery', () => {
     });
 
     it('should not access to gallery if permission is unavailable in android below 13', async () => {
-        mockDeviceInfo.getSystemVersion.mockImplementation(() => '12');
+        DeviceInfoSpy.getSystemVersion.mockImplementation(() => '12');
 
         const mockStore = getMockStoreUseImage({ permissions: unavailableStateMock, status: initialStatusStateMock });
         const { result } = renderUseImage(mockStore);
@@ -105,7 +113,7 @@ describe('Test in useImage hook - takeImageToGallery', () => {
     });
 
     it('should not access to gallery if permission is blocked in android above 12', async () => {
-        mockDeviceInfo.getSystemVersion.mockImplementation(() => '13');
+        DeviceInfoSpy.getSystemVersion.mockImplementation(() => '13');
 
         const mockStore = getMockStoreUseImage({
             permissions: {
@@ -134,7 +142,7 @@ describe('Test in useImage hook - takeImageToGallery', () => {
     it('should request permissions if permission is denied in android above 12', async () => {
         DeviceImageServiceSpy.openPicker.mockResolvedValueOnce(imageModelMock);
         (request as jest.Mock).mockResolvedValue(permissionsStatus.GRANTED);
-        mockDeviceInfo.getSystemVersion.mockImplementation(() => '13');
+        DeviceInfoSpy.getSystemVersion.mockImplementation(() => '13');
 
         const mockStore = getMockStoreUseImage({
             permissions: {
@@ -157,7 +165,7 @@ describe('Test in useImage hook - takeImageToGallery', () => {
     });
 
     it('should not access to gallery if permission is unavailable in android above 12', async () => {
-        mockDeviceInfo.getSystemVersion.mockImplementation(() => '13');
+        DeviceInfoSpy.getSystemVersion.mockImplementation(() => '13');
 
         const mockStore = getMockStoreUseImage({
             permissions: {

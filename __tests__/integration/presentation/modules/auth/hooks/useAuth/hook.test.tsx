@@ -1,5 +1,4 @@
 /* Setup */
-import { useNetworkSpy } from '@test-setup';
 import { getMockStoreUseAuth, renderUseAuth } from '@setups';
 
 /* Mocks */
@@ -11,6 +10,7 @@ import {
     initialPreachingStateMock,
     initialRevisitsStateMock,
     initialStatusStateMock,
+    useNetworkSpy,
     wifiMock
 } from '@mocks';
 

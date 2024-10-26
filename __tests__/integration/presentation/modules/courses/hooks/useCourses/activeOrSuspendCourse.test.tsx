@@ -1,21 +1,22 @@
 import { act } from '@testing-library/react-native';
 
 /* Setups */
-import { onFinishMock, useNetworkSpy } from '@test-setup';
 import { getMockStoreUseCourses, renderUseCourses } from '@setups';
 
 /* Mocks */
 import {
-    hasWifiConnectionMock,
-    initialAuthStateMock,
     authenticateStateMock,
     courseMock,
+    CoursesServiceSpy,
+    hasWifiConnectionMock,
+    initialAuthStateMock,
     initialCoursesStateMock,
     initialLessonsStateMock,
     initialStatusStateMock,
+    onFinishMock,
     testCredentials,
-    wifiMock,
-    CoursesServiceSpy
+    useNetworkSpy,
+    wifiMock
 } from '@mocks';
 
 /* Modules */

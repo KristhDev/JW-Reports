@@ -1,11 +1,17 @@
 import { act } from '@testing-library/react-native';
 
 /* Setups */
-import { useNetworkSpy } from '@test-setup';
 import { getMockStoreUseRevisits, renderUseRevisits } from '@setups';
 
 /* Mocks */
-import { hasWifiConnectionMock, initialAuthStateMock, initialStatusStateMock, revisitsStateMock, wifiMock } from '@mocks';
+import {
+    hasWifiConnectionMock,
+    initialAuthStateMock,
+    initialStatusStateMock,
+    revisitsStateMock,
+    useNetworkSpy,
+    wifiMock
+} from '@mocks';
 
 describe('Test useRevisits hook - removeRevisits', () => {
     useNetworkSpy.mockImplementation(() => ({

@@ -1,9 +1,6 @@
 import React from 'react';
 import { act, render, screen, userEvent } from '@testing-library/react-native';
 
-/* Setup */
-import { usePreachingSpy, useStatusSpy, useUISpy } from '@test-setup';
-
 /* Mocks */
 import {
     initialPreachingStateMock,
@@ -11,7 +8,10 @@ import {
     preachingsStateMock,
     savePreachingMock,
     setErrorFormMock,
-    updatePreachingMock
+    updatePreachingMock,
+    usePreachingSpy,
+    useStatusSpy,
+    useUISpy
 } from '@mocks';
 
 /* Features */

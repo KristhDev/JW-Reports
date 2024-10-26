@@ -1,9 +1,15 @@
 /* Setup */
-import { useNetworkSpy } from '@test-setup';
 import { getMockStoreUsePreaching, renderUsePreaching } from '@setups';
 
 /* Mocks */
-import { hasWifiConnectionMock, initialAuthStateMock, initialPreachingStateMock, initialStatusStateMock, wifiMock } from '@mocks';
+import {
+    hasWifiConnectionMock,
+    initialAuthStateMock,
+    initialPreachingStateMock,
+    initialStatusStateMock,
+    useNetworkSpy,
+    wifiMock
+} from '@mocks';
 
 describe('Test usePreaching hook', () => {
     useNetworkSpy.mockImplementation(() => ({

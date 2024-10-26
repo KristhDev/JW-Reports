@@ -1,5 +1,4 @@
 /* Setup */
-import { useNetworkSpy } from '@test-setup';
 import { getMockStoreUseLessons, renderUseLessons } from '@setups';
 
 /* Mocks */
@@ -9,6 +8,7 @@ import {
     initialCoursesStateMock,
     initialLessonsStateMock,
     initialStatusStateMock,
+    useNetworkSpy,
     wifiMock
 } from '@mocks';
 

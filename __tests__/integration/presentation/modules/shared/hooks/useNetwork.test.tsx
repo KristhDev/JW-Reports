@@ -1,6 +1,8 @@
 /* Setup */
-import { useStatusSpy } from '@test-setup';
 import { renderUseNetwork } from '@setups';
+
+/* Mocks */
+import { useStatusSpy } from '@mocks';
 
 /* Constext */
 import { INIT_WIFI_STATE } from '@application/context';

@@ -5,7 +5,15 @@ import { request } from 'react-native-permissions';
 import { getMockStoreUseImage, renderUseImage } from '@setups';
 
 /* Mocks */
-import { blockedStateMock, deniedStateMock, DeviceImageServiceSpy, grantedStateMock, imageModelMock, initialStatusStateMock, unavailableStateMock } from '@mocks';
+import {
+    blockedStateMock,
+    deniedStateMock,
+    DeviceImageServiceSpy,
+    grantedStateMock,
+    imageModelMock,
+    initialStatusStateMock,
+    unavailableStateMock
+} from '@mocks';
 
 /* Shared */
 import { permissionsMessages, permissionsStatus } from '@shared';

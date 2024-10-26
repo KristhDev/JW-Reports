@@ -1,11 +1,17 @@
 import React from 'react';
 import { act, render, screen, userEvent } from '@testing-library/react-native';
 
-/* Setup */
-import { useCoursesSpy, useStatusSpy, useUISpy } from '@test-setup';
-
 /* Mocks */
-import { courseSelectedStateMock, coursesStateMock, saveCourseMock, setErrorFormMock, updateCourseMock } from '@mocks';
+import {
+    courseSelectedStateMock,
+    coursesStateMock,
+    saveCourseMock,
+    setErrorFormMock,
+    updateCourseMock,
+    useCoursesSpy,
+    useStatusSpy,
+    useUISpy
+} from '@mocks';
 
 /* Modules */
 import { CourseForm } from '@courses';

@@ -1,7 +1,7 @@
 import { act } from '@testing-library/react-native';
 
 /* Setups */
-import { mockUseNavigation, useNetworkSpy } from '@test-setup';
+import { mockUseNavigation } from '@test-setup';
 import { getMockStoreUsePreaching, renderUsePreaching } from '@setups';
 
 /* Mocks */
@@ -13,6 +13,7 @@ import {
     initialStatusStateMock,
     PreachingServiceSpy,
     preachingsMock,
+    useNetworkSpy,
     wifiMock
 } from '@mocks';
 

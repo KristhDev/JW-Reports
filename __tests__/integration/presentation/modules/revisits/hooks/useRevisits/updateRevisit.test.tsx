@@ -1,7 +1,7 @@
 import { act } from '@testing-library/react-native';
 
 /* Setups */
-import { onFinishMock, mockUseNavigation, useNetworkSpy } from '@test-setup';
+import { mockUseNavigation } from '@test-setup';
 import { getMockStoreUseRevisits, renderUseRevisits } from '@setups';
 
 /* Mocks */
@@ -11,17 +11,21 @@ import {
     initialAuthStateMock,
     initialRevisitsStateMock,
     initialStatusStateMock,
+    onFinishMock,
     revisitsMock,
     RevisitsServiceSpy,
     testCredentials,
     testRevisit,
+    useNetworkSpy,
     wifiMock
 } from '@mocks';
+
+/* Errors */
+import { RequestError } from '@domain/errors';
 
 /* Modules */
 import { authMessages } from '@auth';
 import { revisitsMessages } from '@revisits';
-import { RequestError } from '@domain/errors';
 
 const initialStoreMock = () => getMockStoreUseRevisits({
     auth: initialAuthStateMock,

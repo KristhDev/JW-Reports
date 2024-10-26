@@ -1,11 +1,18 @@
 import { act } from '@testing-library/react-native';
 
 /* Setups */
-import { onFinishMock, onSuccessMock, useImageSpy } from '@test-setup';
 import { getMockStoreUseEmail, renderUseEmail } from '@setups';
 
 /* Mocks */
-import { authenticateStateMock, EmailServiceSpy, grantedStateMock, initialStatusStateMock } from '@mocks';
+import {
+    authenticateStateMock,
+    EmailServiceSpy,
+    grantedStateMock,
+    initialStatusStateMock,
+    onFinishMock,
+    onSuccessMock,
+    useImageSpy
+} from '@mocks';
 
 /* Shared */
 import { emailMessages } from '@shared';

@@ -1,9 +1,15 @@
 /* Setup */
-import { useNetworkSpy } from '@test-setup';
 import { getMockStoreUseRevisits, renderUseRevisits } from '@setups';
 
 /* Mocks */
-import { hasWifiConnectionMock, initialAuthStateMock, initialRevisitsStateMock, initialStatusStateMock, wifiMock } from '@mocks';
+import {
+    hasWifiConnectionMock,
+    initialAuthStateMock,
+    initialRevisitsStateMock,
+    initialStatusStateMock,
+    useNetworkSpy,
+    wifiMock
+} from '@mocks';
 
 describe('Test useRevisits hook', () => {
     useNetworkSpy.mockImplementation(() => ({

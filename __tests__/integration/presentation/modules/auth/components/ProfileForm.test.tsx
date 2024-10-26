@@ -1,11 +1,17 @@
 import React from 'react';
 import { act, render, screen, userEvent, waitFor } from '@testing-library/react-native';
 
-/* Setup */
-import { useAuthSpy, useNetworkSpy, useStatusSpy, useUISpy } from '@test-setup';
-
 /* Mocks */
-import { setErrorFormMock, testUser, updateProfileMock, wifiMock } from '@mocks';
+import {
+    setErrorFormMock,
+    testUser,
+    updateProfileMock,
+    useAuthSpy,
+    useNetworkSpy,
+    useStatusSpy,
+    useUISpy,
+    wifiMock
+} from '@mocks';
 
 /* Modules */
 import { ProfileForm } from '@auth';

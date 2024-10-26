@@ -2,10 +2,10 @@ import React from 'react';
 import { act, render, screen, userEvent } from '@testing-library/react-native';
 
 /* Setup */
-import { mockUseNavigation, useAuthSpy, useStatusSpy, useUISpy } from '@test-setup';
+import { mockUseNavigation } from '@test-setup';
 
 /* Mocks */
-import { resetPasswordMock, setErrorFormMock } from '@mocks';
+import { resetPasswordMock, setErrorFormMock, useAuthSpy, useStatusSpy, useUISpy } from '@mocks';
 
 /* Modules */
 import { ForgotPasswordForm } from '@auth';
