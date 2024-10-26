@@ -1,47 +1,10 @@
 import { Image, Share } from 'react-native';
 import mockSafeAreaContext from 'react-native-safe-area-context/jest/mock';
+import mockRNDeviceInfo from 'react-native-device-info/jest/react-native-device-info-mock';
 
 import 'react-native-gesture-handler/jestSetup';
 import 'react-native-url-polyfill/auto';
 import '@config/unistyles';
-
-export const onCancelMock = jest.fn();
-export const onChangeValueMock = jest.fn();
-export const onCleanMock = jest.fn();
-export const onCloseMock = jest.fn();
-export const onCofirmMock = jest.fn();
-export const onErrorMock = jest.fn();
-export const onFinishMock = jest.fn();
-export const onPressMock = jest.fn();
-export const onSearchMock = jest.fn();
-export const onSuccessMock = jest.fn();
-export const onToggleMock = jest.fn();
-
-import * as useAuth from '@auth/hooks/useAuth';
-import * as useCourses from '@courses/hooks/useCourses';
-import * as useEmail from '@shared/hooks/useEmail';
-import * as useImage from '@shared/hooks/useImage';
-import * as useLessons from '@lessons/hooks/useLessons';
-import * as useNetwork from '@shared/hooks/useNetwork';
-import * as usePermissions from '@shared/hooks/usePermissions';
-import * as usePreaching from '@preaching/hooks/usePreaching';
-import * as useRevisits from '@revisits/hooks/useRevisits';
-import * as useStatus from '@shared/hooks/useStatus';
-import * as useTheme from '@theme/hooks/useTheme';
-import * as useUI from '@ui/hooks/useUI';
-
-export const useAuthSpy = jest.spyOn(useAuth, 'default');
-export const useCoursesSpy = jest.spyOn(useCourses, 'default');
-export const useEmailSpy = jest.spyOn(useEmail, 'default');
-export const useImageSpy = jest.spyOn(useImage, 'default');
-export const useLessonsSpy = jest.spyOn(useLessons, 'default');
-export const useNetworkSpy = jest.spyOn(useNetwork, 'default');
-export const usePermissionsSpy = jest.spyOn(usePermissions, 'default');
-export const usePreachingSpy = jest.spyOn(usePreaching, 'default');
-export const useRevisitsSpy = jest.spyOn(useRevisits, 'default');
-export const useStatusSpy = jest.spyOn(useStatus, 'default');
-export const useThemeSpy = jest.spyOn(useTheme, 'default');
-export const useUISpy = jest.spyOn(useUI, 'default');
 
 jest.spyOn(Image, 'resolveAssetSource').mockImplementation(() => ({
     uri: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTar_ouGael5ODlrC1kbFbKLpEPSJtTQqdaIg&s',
@@ -128,15 +91,7 @@ jest.mock('@react-navigation/native', () => {
     }
 });
 
-export const mockDeviceInfo = {
-    getBuildNumber: jest.fn().mockImplementation(() => '9102'),
-    getSystemVersion: jest.fn().mockImplementation(() => '12')
-}
-
-jest.mock('react-native-device-info', () => ({
-    getSystemVersion: () => mockDeviceInfo.getSystemVersion(),
-    getBuildNumber: () => mockDeviceInfo.getBuildNumber()
-}));
+jest.mock('react-native-device-info', () => mockRNDeviceInfo);
 
 jest.mock('react-native-system-navigation-bar', () => {
     const real = jest.requireActual<typeof import('react-native-system-navigation-bar')>('react-native-system-navigation-bar');
