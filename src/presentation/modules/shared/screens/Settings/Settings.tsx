@@ -66,6 +66,12 @@ const Settings = (): JSX.Element => {
                         subText="Cambie sus credenciales (correo y contraseña)"
                         text="Credenciales"
                     />
+
+                    <SectionBtn
+                        onPress={ () => navigation.navigate('ExportDataScreen' as never) }
+                        subText="Exporte todos sus datos de la aplicación"
+                        text="Exportar Información"
+                    />
                 </SectionContent>
 
                 {/* UI section */}
