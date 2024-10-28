@@ -14,7 +14,7 @@ import { LessonEntity, LessonWithCourseEntity } from '@domain/entities';
 import { RequestError } from '@domain/errors';
 
 /* Interfaces */
-import { GetAllOptions, LessonEndpoint, LessonWithCourseEndpoint } from '@infrasturcture/interfaces';
+import { PaginateOptions, LessonEndpoint, LessonWithCourseEndpoint } from '@infrasturcture/interfaces';
 
 export class LessonsService {
     /**
@@ -104,12 +104,14 @@ export class LessonsService {
     }
 
     /**
-     * Gets all lessons of the course with the given id and returns the lessons or a RequestError.
-     * @param {string} courseId The id of the course to get the lessons from.
-     * @param {GetAllOptions} options The options to filter the lessons.
-     * @returns {Promise<LessonEntity[]>} The lessons of the course if the request was successful.
+     * Paginates lessons by course ID and returns a list of lessons.
+     *
+     * @param {string} courseId - The ID of the course to paginate lessons for.
+     * @param {PaginateOptions} options - The options for pagination, including search and pagination range.
+     * @returns {Promise<LessonEntity[]>} - A promise that resolves to an array of LessonEntity objects.
+     * @throws {RequestError} - If there is an error in the request.
      */
-    public static async getAllByCourseId(courseId: string, options: GetAllOptions): Promise<LessonEntity[]> {
+    public static async paginateByCourseId(courseId: string, options: PaginateOptions): Promise<LessonEntity[]> {
         const lessonsPromise = supabase.from('lessons')
             .select<'*', LessonEndpoint>()
             .eq('course_id', courseId);

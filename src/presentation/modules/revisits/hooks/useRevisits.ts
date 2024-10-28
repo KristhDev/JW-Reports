@@ -249,7 +249,7 @@ const useRevisits = () => {
         }
 
         try {
-            const revisits = await RevisitsService.getAllByUserId(user.id, options);
+            const revisits = await RevisitsService.paginateByUserId(user.id, options);
 
             if (revisits.length >= 10) {
                 setRevisitsPagination({

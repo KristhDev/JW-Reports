@@ -290,7 +290,7 @@ const useLessons = () => {
         setIsLessonsLoading(true);
 
         try {
-            const lessons = await LessonsService.getAllByCourseId(selectedCourse.id, {
+            const lessons = await LessonsService.paginateByCourseId(selectedCourse.id, {
                 search,
                 pagination: {
                     from: (refresh) ? 0 : state.lessonsPagination.from,

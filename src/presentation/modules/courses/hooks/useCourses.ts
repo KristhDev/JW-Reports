@@ -288,7 +288,7 @@ const useCourses = () => {
         setIsCoursesLoading(true);
 
         try {
-            const courses = await CoursesService.getAllByUserId(user.id, {
+            const courses = await CoursesService.paginateByUserId(user.id, {
                 filter,
                 search,
                 pagination: {
