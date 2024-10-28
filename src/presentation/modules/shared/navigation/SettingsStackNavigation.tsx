@@ -4,7 +4,7 @@ import { CardStyleInterpolators, createStackNavigator } from '@react-navigation/
 
 /* Modules */
 import { Profile, Credentials } from '@auth';
-import { FeedbackScreen, ReportErrorScreen, Settings } from '../screens';
+import { ExportDataScreen, FeedbackScreen, ReportErrorScreen, Settings } from '../screens';
 import { BackButton } from '@ui';
 
 const Stack = createStackNavigator();
@@ -56,6 +56,15 @@ const SettingsStackNavigation = (): JSX.Element => {
                 options={{
                     cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
                     title: 'Credenciales'
+                }}
+            />
+
+            <Stack.Screen
+                component={ ExportDataScreen }
+                name="ExportDataScreen"
+                options={{
+                    cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
+                    title: 'Exportar Información'
                 }}
             />
 
