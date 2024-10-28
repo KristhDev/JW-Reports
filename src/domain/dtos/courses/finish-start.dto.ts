@@ -1,14 +1,22 @@
+/* Adapters */
 import { Time } from '@infrasturcture/adapters';
 
 export class FinishOrStartCourseDto {
     private constructor(
-        public readonly done: boolean,
+        public readonly finished: boolean,
         public readonly updated_at: string
     ) {}
 
-    public static create(done: boolean): FinishOrStartCourseDto {
+    /**
+     * Creates a new FinishOrStartCourseDto with the given finished value and a
+     * current timestamp as the updated_at value.
+     *
+     * @param {boolean} finished - The value to set for the finished property.
+     * @returns {FinishOrStartCourseDto} - The newly created dto.
+     */
+    public static create(finished: boolean): FinishOrStartCourseDto {
         return new FinishOrStartCourseDto(
-            done,
+            finished,
             Time.format(new Date(), 'YYYY-MM-DD HH:mm:ss.SSSSSS')
         );
     }

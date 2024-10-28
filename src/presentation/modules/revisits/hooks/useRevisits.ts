@@ -1,5 +1,4 @@
 import { useNavigation } from '@react-navigation/native';
-import { Image } from 'react-native-image-crop-picker';
 
 /* Features */
 import { useAppDispatch, useAppSelector } from '@application/store';
@@ -32,6 +31,9 @@ import { CompleteRevisitDto, CreateRevisitDto, UpdateRevisitDto } from '@domain/
 /* Entities */
 import { RevisitEntity } from '@domain/entities';
 
+/* Models */
+import { ImageModel } from '@domain/models';
+
 /* Hooks */
 import { authMessages, useAuth } from '@auth';
 import { useImage, useNetwork, useStatus } from '@shared';
@@ -40,7 +42,7 @@ import { useImage, useNetwork, useStatus } from '@shared';
 import { loadRevisitsOptions, RevisitFilter, RevisitFormValues, SaveRevisitOptions } from '../interfaces';
 
 /* Services */
-import { RevisitsService } from '../services';
+import { RevisitsService } from '@domain/services';
 
 /* Utils */
 import { revisitsMessages } from '../utils';
@@ -117,7 +119,7 @@ const useRevisits = () => {
         const wifiConnectionAvailable = hasWifiConnection();
         if (!wifiConnectionAvailable) return '';
 
-        const isAuth = isAuthenticated();
+        const isAuth = isAuthenticated(onError);
         if (!isAuth) return '';
 
         const canAlterate = canAlterateRevisit(revisitsMessages.UNSELECTED_COMPLETE, onError);
@@ -166,7 +168,7 @@ const useRevisits = () => {
 
         try {
             /* If revisit has a photo you have to delete it */
-            if (state.selectedRevisit.photo) await deleteImage(state.selectedRevisit.photo);
+            if (state.selectedRevisit.photo) await deleteImage(state.selectedRevisit.photo, SUPABASE_REVISITS_FOLDER);
             await RevisitsService.delete(state.selectedRevisit.id, user.id);
 
             removeRevisit(state.selectedRevisit.id);
@@ -319,10 +321,10 @@ const useRevisits = () => {
      * This function is responsible for updating a revisit and returns to the previous screen.
      *
      * @param {RevisitFormValues} revisitValues - RevisitEntity values to update
-     * @param {Image | null} image - Image to upload, default is `undefined`
+     * @param {ImageModel | null} image - Image to upload, default is `undefined`
      * @return {Promise<void>} This function does not return anything
      */
-    const updateRevisit = async (revisitValues: RevisitFormValues, image: Image | null): Promise<void> => {
+    const updateRevisit = async (revisitValues: RevisitFormValues, image: ImageModel | null): Promise<void> => {
         const wifi = hasWifiConnection();
         if (!wifi) return;
 
@@ -341,11 +343,11 @@ const useRevisits = () => {
             if (image) {
 
                 /* If revisit has an image you have to delete it to update it with the new one */
-                if (photo && photo.trim().length > 0) await deleteImage(photo);
+                if (photo && photo.trim().length > 0) await deleteImage(photo, SUPABASE_REVISITS_FOLDER);
                 photo = await uploadImage(image, SUPABASE_REVISITS_FOLDER);
             }
 
-            const updateDto = UpdateRevisitDto.create({ ...revisitValues, photo, updatedAt: new Date() });
+            const updateDto = UpdateRevisitDto.create({ ...revisitValues, photo });
             const revisit = await RevisitsService.update(state.selectedRevisit.id, user.id, updateDto);
 
             updateRevisitActionState(revisit);

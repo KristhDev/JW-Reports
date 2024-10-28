@@ -31,11 +31,11 @@ import { ActiveOrSuspendCourseDto, CreateCourseDto, FinishOrStartCourseDto, Upda
 import { CourseEntity, LessonWithCourseEntity } from '@domain/entities';
 
 /* Services */
-import { CoursesService } from '../services';
+import { CoursesService, LessonsService } from '@domain/services';
 
 /* Modules */
 import { useAuth } from '@auth';
-import { LessonsService, useLessons } from '@lessons';
+import { useLessons } from '@lessons';
 import { useStatus, useNetwork } from '@shared';
 
 /* Interfaces */
@@ -345,10 +345,10 @@ const useCourses = () => {
             } as never);
         }
         catch (error) {
+            setIsCourseLoading(false);
             setError(error);
         }
         finally {
-            setIsCourseLoading(true);
             onFinish && onFinish();
         }
     }

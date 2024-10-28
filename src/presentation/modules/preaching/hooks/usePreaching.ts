@@ -22,11 +22,11 @@ import { CreatePreachingDto, UpdatePreachingDto } from '@domain/dtos';
 /* Entities */
 import { PreachingEntity } from '@domain/entities';
 
+/* Services */
+import { PreachingService } from '@domain/services';
+
 /* Adapters */
 import { Time } from '@infrasturcture/adapters';
-
-/* Services */
-import { PreachingService } from '../services';
 
 /* Hooks */
 import { useNetwork, useStatus } from '@shared';
@@ -87,7 +87,7 @@ const usePreaching = () => {
      * @returns {boolean} Returns true if the preaching can be altered, otherwise false.
      */
     const canAlteratePreaching = (unSelectMsg: string, onFinish?: () => void): boolean => {
-        if (!state.seletedPreaching) {
+        if (state.seletedPreaching.id === '') {
             onFinish && onFinish();
             setStatus({ code: 400, msg: unSelectMsg });
 

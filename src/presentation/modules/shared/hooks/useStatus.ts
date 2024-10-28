@@ -6,7 +6,7 @@ import { useAppDispatch, useAppSelector } from '@application/store';
 import { clearStatus as clearStatusAction, setStatus as setStatusAction, SetStatusPayload } from '@application/features';
 
 /* Services */
-import { LoggerService } from '@services';
+import { LoggerService } from '@domain/services';
 
 /* Utils */
 import { authMessages } from '@auth';
@@ -66,7 +66,7 @@ const useStatus = () => {
      */
     const setNetworkError = (msg?: string, onDispatch?: () => void): void => {
         onDispatch && onDispatch();
-        setStatus({ code: 500, msg: msg || networkMessages.WIFI_HASNT_CONNECTION });
+        setStatus({ code: 500, msg: msg || networkMessages.WIFI_HASNT_CONNEC_EXPLAIN });
     }
 
     /**
@@ -82,13 +82,14 @@ const useStatus = () => {
 
 
     return {
+        state,
+
         clearStatus,
-        setErrorForm,
         setError,
+        setErrorForm,
         setNetworkError,
         setStatus,
         setUnauthenticatedError,
-        state,
     }
 }
 

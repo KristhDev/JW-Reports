@@ -1,13 +1,6 @@
-import { Image } from 'react-native-image-crop-picker';
-
-export interface SendEmailOptions {
-    email: string;
-    imageUrl?: string;
-    message: string;
-    templateId: string;
-}
+import { ImageModel } from '@domain/models';
 
 export interface ReportErrorOptions {
-    image: Image | null;
+    image: ImageModel | null;
     message: string;
 }

@@ -10,8 +10,8 @@ export type Precursor = 'ninguno' | 'auxiliar' | 'regular' | 'especial';
  * @property {string} precursor - The precursor of the user
  * @property {number} hours_requirement - The hours requirement of the user
  * @property {boolean} hours_ldc - The hours ldc of the user
- * @property {string} createdAt - The created at of the user
- * @property {string} updatedAt - The updated at of the user
+ * @property {string} created_at - The created at of the user
+ * @property {string} updated_at - The updated at of the user
  */
 export interface UserEndpoint {
     id: string;
@@ -21,6 +21,6 @@ export interface UserEndpoint {
     precursor: Precursor;
     hours_requirement: number;
     hours_ldc: boolean;
-    createdAt: string;
-    updatedAt: string;
+    created_at: string;
+    updated_at: string;
 }

@@ -1,4 +1,5 @@
-import { Image } from 'react-native-image-crop-picker';
+/* Models */
+import { ImageModel } from '@domain/models';
 
 /* Interfaces */
 import { LoadResourcesOptions } from '@ui';
@@ -68,7 +69,7 @@ export interface RevisitFormValues {
  */
 export interface SaveRevisitOptions {
     back?: boolean;
-    image: Image | null;
+    image: ImageModel | null;
     onFinish?: () => void;
     revisitValues: RevisitFormValues;
 }

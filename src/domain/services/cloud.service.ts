@@ -1,4 +1,3 @@
-import { Image } from 'react-native-image-crop-picker';
 import { decode } from 'base64-arraybuffer';
 
 /* Config */
@@ -7,28 +6,19 @@ import { supabase } from '@config';
 /* Errors */
 import { ImageError } from '@domain/errors';
 
-interface DeleteImageOptions {
-    bucket: string;
-    folder: string;
-    uri: string;
-}
+/* Interfaces */
+import { DeleteImageOptions, UploadImageOptions } from '@infrasturcture/interfaces';
 
-interface UploadImageOptions {
-    bucket: string;
-    folder: string;
-    image: Image;
-}
-
-export class ImageService {
+export class CloudService {
     /**
      * Deletes an image from the given bucket and folder, specified by the URI
      * @param {DeleteImageOptions} options
      * @param {string} options.bucket - The bucket where the image is located
      * @param {string} options.folder - The folder where the image is located
      * @param {string} options.uri - The URI of the image to be deleted
-     * @returns {Promise<ImageError | null>} - null if the image was successfully deleted, otherwise an error
+     * @returns {Promise<void>} - This function returns nothing.
      */
-    public static async deleteImage({ bucket, folder, uri }: DeleteImageOptions): Promise<ImageError | null> {
+    public static async deleteImage({ bucket, folder, uri }: DeleteImageOptions): Promise<void> {
         const imageId = uri.split('/')[uri.split('/').length - 1];
 
         const result = await supabase.storage
@@ -36,7 +26,6 @@ export class ImageService {
             .remove([ `${ folder }/${ imageId }` ]);
 
         if (result.error) throw new ImageError(result.error.message);
-        return null;
     }
 
     /**

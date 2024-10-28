@@ -26,5 +26,6 @@ export const emailMessages = {
 }
 
 export const networkMessages = {
-    WIFI_HASNT_CONNECTION: 'Lo sentimos pero no dispones de conexion a Internet. Los datos que hay en la aplicación no son actualizados. Hasta que recuperes la conexión no podras obtener, guardar, editar o eliminar ningún dato.',
+    WIFI_HASNT_CONNEC_EXPLAIN: 'Lo sentimos pero no dispones de conexion a Internet. Los datos que hay en la aplicación no son actualizados. Hasta que recuperes la conexión no podras obtener, guardar, editar o eliminar ningún dato.',
+    WIFI_HASNT_CONNECTION: 'Lo sentimos pero no dispones de conexión a Internet.'
 }

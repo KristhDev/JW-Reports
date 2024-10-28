@@ -49,8 +49,8 @@ export class AuthService {
             ...response.data.user!.user_metadata,
             id: response.data.user!.id,
             email: response.data.user!.email,
-            createdAt: response.data!.user!.created_at,
-            updatedAt: response.data.user!.updated_at
+            created_at: response.data!.user!.created_at,
+            updated_at: response.data.user!.updated_at
         } as UserEndpoint);
 
         const newToken = response.data.session!.access_token;
@@ -99,8 +99,8 @@ export class AuthService {
             ...result.data.user!.user_metadata!,
             id: result.data.user.id,
             email: result.data.user.email!,
-            createdAt: result.data.user.created_at!,
-            updatedAt: result.data.user.updated_at!
+            created_at: result.data.user.created_at!,
+            updated_at: result.data.user.updated_at!
         } as UserEndpoint);
 
         const token = result.data.session.access_token;
@@ -216,8 +216,8 @@ export class AuthService {
             ...userEndpoint!.user_metadata!,
             id: userEndpoint.id,
             email: userEndpoint.email!,
-            createdAt: userEndpoint.created_at!,
-            updatedAt: userEndpoint.updated_at!
+            created_at: userEndpoint.created_at!,
+            updated_at: userEndpoint.updated_at!
         } as UserEndpoint);
 
         return user;

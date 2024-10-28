@@ -15,8 +15,8 @@ export const INIT_USER: UserEntity = {
     precursor: 'ninguno',
     hoursRequirement: 0,
     hoursLDC: false,
-    createdAt: Date.now().toString(),
-    updatedAt: Date.now().toString()
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString()
 }
 
 /* Initial state */

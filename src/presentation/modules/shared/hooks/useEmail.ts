@@ -1,6 +1,9 @@
 /* Errors */
 import { EmailError } from '@domain/errors';
 
+/* Services */
+import { EmailService } from '@domain/services';
+
 /* Env */
 import { EMAILJS_FEEDBACK_TEMPLATE_ID, EMAILJS_REPORT_ERROR_TEMPLATE_ID, SUPABASE_ERRORS_FOLDER } from '@env';
 
@@ -8,9 +11,6 @@ import { EMAILJS_FEEDBACK_TEMPLATE_ID, EMAILJS_REPORT_ERROR_TEMPLATE_ID, SUPABAS
 import { useAuth } from '@auth';
 import useImage from './useImage';
 import useStatus from './useStatus';
-
-/* Services */
-import { EmailService } from '@services';
 
 /* Interfaces */
 import { ReportErrorOptions, UtilFunctions } from '../interfaces';

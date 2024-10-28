@@ -1,3 +1,4 @@
+/* Interfaces */
 import { Precursor, UserEndpoint } from '@infrasturcture/interfaces';
 
 export class UserEntity {
@@ -13,6 +14,12 @@ export class UserEntity {
         public readonly updatedAt: string
     ) {}
 
+    /**
+     * Converts a UserEndpoint object to a UserEntity object.
+     *
+     * @param {UserEndpoint} user - The user data from the endpoint
+     * @returns {UserEntity} A new UserEntity object
+     */
     public static fromEndpoint(user: UserEndpoint): UserEntity {
         return new UserEntity(
             user.id,
@@ -22,8 +29,8 @@ export class UserEntity {
             user.precursor,
             user.hours_requirement,
             user.hours_ldc,
-            user.createdAt,
-            user.updatedAt
+            user.created_at,
+            user.updated_at
         );
     }
 }

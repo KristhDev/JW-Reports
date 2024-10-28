@@ -1,6 +1,7 @@
+/* Adapters */
 import { Time } from '@infrasturcture/adapters';
 
-export interface FinishOrStartValues {
+export interface FinishOrStartDtoValues {
     done: boolean;
     nextLesson: Date;
 }
@@ -12,7 +13,13 @@ export class FinishOrStartLessonDto {
         public readonly updated_at: string
     ) {}
 
-    static create(values: FinishOrStartValues): FinishOrStartLessonDto {
+    /**
+     * Creates a FinishOrStartLessonDto from the given values.
+     *
+     * @param {FinishOrStartDtoValues} values - The values to create the FinishOrStartLessonDto from.
+     * @return {FinishOrStartLessonDto} The created FinishOrStartLessonDto.
+     */
+    public static create(values: FinishOrStartDtoValues): FinishOrStartLessonDto {
         return new FinishOrStartLessonDto(
             values.done,
             Time.format(values.nextLesson, 'YYYY-MM-DD HH:mm:ss.SSSSSS'),

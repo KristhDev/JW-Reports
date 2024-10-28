@@ -4,11 +4,11 @@ import {
     clearAuth as clearAuthAction,
     setIsAuthLoading as setIsAuthLoadingAction,
     setUser as setUserAction,
-    updateUser,
-    clearCourses,
-    clearLessons,
-    clearPreaching,
-    clearRevisits
+    updateUser as updateUserAction,
+    clearCourses as clearCoursesAction,
+    clearLessons as clearLessonsAction,
+    clearPreaching as clearPreachingAction,
+    clearRevisits as clearRevisitsAction
 } from '@application/features';
 
 /* DTOs */
@@ -18,13 +18,13 @@ import { SignUpDto, UpdateEmailDto, UpdatePasswordDto, UpdateProfileDto } from '
 import { UserEntity } from '@domain/entities';
 
 /* Hooks */
-import { useNetwork, useStatus } from '@shared';
+import { networkMessages, useNetwork, useStatus } from '@shared';
 
 /* Interfaces */
 import { SignInData, ProfileData, SignUpData, EmailData, UpdatePasswordData } from '../interfaces';
 
 /* Services */
-import { AuthService } from '../services';
+import { AuthService } from '@domain/services';
 import { NotificationsService } from '@services';
 
 /* Utils */
@@ -44,6 +44,11 @@ const useAuth = () => {
     const clearAuth = () => dispatch(clearAuthAction());
     const setUser = (token: string, user: UserEntity) => dispatch(setUserAction({ token, user }));
     const setIsAuthLoading = (isLoading: boolean) => dispatch(setIsAuthLoadingAction({ isLoading }));
+    const updateUser = (user: UserEntity) => dispatch(updateUserAction({ user }));
+    const clearCourses = () => dispatch(clearCoursesAction());
+    const clearLessons = () => dispatch(clearLessonsAction());
+    const clearPreaching = () => dispatch(clearPreachingAction());
+    const clearRevisits = () => dispatch(clearRevisitsAction());
 
     /**
      * Function to handle authentication failure by clearing courses, lessons, preaching, revisits,
@@ -52,11 +57,11 @@ const useAuth = () => {
      * @return {void} This function does not return anything.
      */
     const handleClearStore = (): void => {
-        dispatch(clearCourses());
-        dispatch(clearLessons());
-        dispatch(clearPreaching());
-        dispatch(clearRevisits());
-        dispatch(clearAuthAction());
+        clearCourses();
+        clearLessons();
+        clearPreaching();
+        clearRevisits();
+        clearAuth();
         NotificationsService.close();
     }
 
@@ -129,7 +134,7 @@ const useAuth = () => {
      * @return {Promise<void>} A promise that resolves when the sign-in process is complete.
      */
     const signIn = async ({ email, password }: SignInData): Promise<void> => {
-        const wifiConnectionAvailable = hasWifiConnection('Lo sentimos pero no dispones de conexión a Internet.');
+        const wifiConnectionAvailable = hasWifiConnection(networkMessages.WIFI_HASNT_CONNECTION);
         if (!wifiConnectionAvailable) return;
 
         setIsAuthLoading(true);
@@ -139,13 +144,10 @@ const useAuth = () => {
             setUser(token, user);
         }
         catch (error) {
+            setIsAuthLoading(false);
             setError(error);
             handleClearStore();
         }
-        finally {
-            setIsAuthLoading(false);
-        }
-
     }
 
     /**
@@ -177,7 +179,7 @@ const useAuth = () => {
      * @return {Promise<void>} A promise that resolves when the sign-up process is complete.
      */
     const signUp = async (data: SignUpData, onSuccess?: () => void): Promise<void> => {
-        const wifiConnectionAvailable = hasWifiConnection('Lo sentimos pero no dispones de conexión a Internet.');
+        const wifiConnectionAvailable = hasWifiConnection(networkMessages.WIFI_HASNT_CONNECTION);
         if (!wifiConnectionAvailable) return;
 
         setIsAuthLoading(true);
@@ -207,8 +209,8 @@ const useAuth = () => {
         catch (error) {
             await AuthService.signOut();
             NotificationsService.close();
-            clearAuth();
             setIsAuthLoading(false);
+            clearAuth();
 
             setError(error);
         }
@@ -287,20 +289,21 @@ const useAuth = () => {
         const wifiConnectionAvailable = hasWifiConnection();
         if (!wifiConnectionAvailable) return;
 
+        const isAuth = isAuthenticated();
+        if (!isAuth) return;
+
         setIsAuthLoading(true);
 
         try {
             const updateDto = UpdateProfileDto.create(values);
             const user = await AuthService.updateProfile(updateDto);
 
-            dispatch(updateUser({ user: { ...state.user, ...user } }));
+            updateUser({ ...state.user, ...user });
             setStatus({ code: 200, msg: authMessages.PROFILE_UPDATED });
         }
         catch (error) {
-            setError(error);
-        }
-        finally {
             setIsAuthLoading(false);
+            setError(error);
         }
     }
 

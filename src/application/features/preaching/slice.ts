@@ -9,11 +9,11 @@ import { PreachingPayload, PreachingState, SetPreachingsPayload, SetSelectedDate
 export const INIT_PREACHING: PreachingEntity = {
     id: '',
     userId: '',
-    day: new Date().toString(),
-    initHour: new Date().toString(),
-    finalHour: new Date().toString(),
-    createdAt: new Date().toString(),
-    updatedAt: new Date().toString()
+    day: new Date().toISOString(),
+    initHour: new Date().toISOString(),
+    finalHour: new Date().toISOString(),
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString()
 }
 
 /* Initial state */

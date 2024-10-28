@@ -4,7 +4,7 @@ import EmailJs, { EmailJSResponseStatus } from '@emailjs/react-native';
 import { EmailError } from '@domain/errors';
 
 /* Interfaces */
-import { SendEmailOptions } from '@shared';
+import { SendEmailOptions } from '@infrasturcture/interfaces';
 
 /* Env */
 import { EMAILJS_PUBLIC_KEY, EMAILJS_SERVICE_ID } from '@env';
