@@ -22,6 +22,7 @@ export interface Permissions {
     notifications: PermissionStatus;
     readExternalStorage: PermissionStatus;
     readMediaImages: PermissionStatus;
+    writeExternalStorage: PermissionStatus;
 }
 
 /**
