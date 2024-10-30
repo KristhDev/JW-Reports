@@ -31,7 +31,8 @@ const usePermissions = () => {
             camera: PERMISSIONS.ANDROID.CAMERA,
             notifications: PERMISSIONS.ANDROID.POST_NOTIFICATIONS,
             readExternalStorage: PERMISSIONS.ANDROID.READ_EXTERNAL_STORAGE,
-            readMediaImages: PERMISSIONS.ANDROID.READ_MEDIA_IMAGES
+            readMediaImages: PERMISSIONS.ANDROID.READ_MEDIA_IMAGES,
+            writeExternalStorage: PERMISSIONS.ANDROID.WRITE_EXTERNAL_STORAGE
         }
 
         const result = await request(askPermissions[permission]);
