@@ -19,6 +19,35 @@ export class DeviceImageService {
     }
 
     /**
+     * Converts an image URI to a Base64 string.
+     * This method fetches the image located at the provided URI, reads it as a Blob,
+     * and converts it to a Base64-encoded string using a FileReader.
+     *
+     * @param {string} uri - The URI of the image to convert.
+     * @returns {Promise<string>} - A promise that resolves with the Base64 string of the image.
+     * @throws {ImageError} - If an error occurs during fetching or reading the image.
+     */
+    public static async getBase64FromUri(uri: string): Promise<string> {
+        try {
+            const blob = await fetch(uri).then(res => res.blob());
+            const reader = new FileReader();
+
+            const base64 = new Promise((resolve, reject) => {
+                reader.onload = () => resolve(reader.result as string);
+                reader.onerror = reject;
+                reader.readAsDataURL(blob);
+            });
+
+            return base64 as any;
+        }
+        catch (error) {
+            const imageError = new ImageError((error as any).message);
+            console.log(imageError);
+            throw imageError;
+        }
+    }
+
+    /**
      * Opens the device's camera to take a new photo.
      *
      * The method returns a promise that resolves with an `ImageModel` object
