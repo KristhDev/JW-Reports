@@ -137,6 +137,31 @@ export class RevisitsService {
     }
 
     /**
+     * Retrieves all revisits for a specific user.
+     *
+     * @param {string} userId - The ID of the user whose revisits are to be retrieved.
+     * @returns {Promise<RevisitEntity[]>} A promise that resolves to an array of revisits for the user.
+     * @throws {RequestError} If there is an error in fetching the revisits.
+     */
+    public static async getAllByUserId(userId: string): Promise<RevisitEntity[]> {
+        const result = await supabase.from('revisits')
+            .select<'*', RevisitEndpoint>()
+            .eq('user_id', userId)
+            .order('next_visit', { ascending: false })
+            .order('created_at', { ascending: false });
+
+        if (result.error) {
+            throw new RequestError(
+                result.error.message,
+                result.status || 400,
+                result.error.code
+            );
+        }
+
+        return result.data.map(RevisitEntity.fromEndpoint);
+    }
+
+    /**
      * Gets the last revisit of a user with the given id.
      *
      * @param {string} userId - The id of the user whose last revisit to get.
