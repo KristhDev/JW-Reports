@@ -1,9 +1,9 @@
-/* Errors */
-import { AppErrors, DtoError, EmailError, ImageError, RequestError } from '@domain/errors';
-
 /* Features */
 import { useAppDispatch, useAppSelector } from '@application/store';
 import { clearStatus as clearStatusAction, setStatus as setStatusAction, SetStatusPayload } from '@application/features';
+
+/* Errors */
+import { AppErrors, DtoError, EmailError, FileSystemError, ImageError, PDFError, RequestError } from '@domain/errors';
 
 /* Services */
 import { LoggerService } from '@domain/services';
@@ -38,9 +38,11 @@ const useStatus = () => {
             status = error.status;
         }
 
-        if (error instanceof ImageError) msg = AppErrors.translateMsg(error.message);
-        if (error instanceof EmailError) msg = error.message;
         if (error instanceof DtoError) msg = error.message;
+        if (error instanceof EmailError) msg = error.message;
+        if (error instanceof FileSystemError) msg = error.message;
+        if (error instanceof ImageError) msg = AppErrors.translateMsg(error.message);
+        if (error instanceof PDFError) msg = error.message;
 
         setStatus({ msg, code: status });
         LoggerService.error({ ...(error as Error), message: (error as Error).message });
