@@ -13,6 +13,7 @@ import {
     setHasMoreRevisits as setHasMoreRevisitsAction,
     setIsLastRevisitLoading as setIsLastRevisitLoadingAction,
     setIsRevisitDeleting as setIsRevisitDeletingAction,
+    setIsRevisitExporting as setIsRevisitExportingAction,
     setIsRevisitLoading as setIsRevisitLoadingAction,
     setIsRevisitsLoading as setIsRevisitsLoadingAction,
     setLastRevisit as setLastRevisitAction,
@@ -33,6 +34,12 @@ import { RevisitEntity } from '@domain/entities';
 
 /* Models */
 import { ImageModel } from '@domain/models';
+
+/* Templates */
+import { PdfTemplates } from '@domain/templates';
+
+/* Adapters */
+import { FileSystem, PDF } from '@infrasturcture/adapters';
 
 /* Hooks */
 import { authMessages, useAuth } from '@auth';
@@ -73,6 +80,7 @@ const useRevisits = () => {
     const setHasMoreRevisits = (hasMore: boolean) => dispatch(setHasMoreRevisitsAction({ hasMore }));
     const setIsLastRevisitLoading = (isLoading: boolean) => dispatch(setIsLastRevisitLoadingAction({ isLoading }));
     const setIsRevisitDeleting = (isDeleting: boolean) => dispatch(setIsRevisitDeletingAction({ isDeleting }));
+    const setIsRevisitExporting = (isExporting: boolean) => dispatch(setIsRevisitExportingAction({ isExporting }));
     const setIsRevisitLoading = (isLoading: boolean) => dispatch(setIsRevisitLoadingAction({ isLoading }));
     const setIsRevisitsLoading = (isLoading: boolean) => dispatch(setIsRevisitsLoadingAction({ isLoading }));
     const setLastRevisit = (revisit: RevisitEntity) => dispatch(setLastRevisitAction({ revisit }));
@@ -190,6 +198,49 @@ const useRevisits = () => {
             onFinish && onFinish();
 
             setError(error);
+        }
+    }
+
+    /**
+     * This function exports all the revisits of the user to a PDF file.
+     *
+     * @return {Promise<void>} This function does not return anything
+     */
+    const exportRevisits = async (): Promise<void> => {
+        const wifiConnectionAvailable = hasWifiConnection();
+        if (!wifiConnectionAvailable) return;
+
+        const isAuth = isAuthenticated();
+        if (!isAuth) return;
+
+        setIsRevisitExporting(true);
+
+        try {
+            const allRevisits = await RevisitsService.getAllByUserId(user.id);
+
+            const revisitsTemplate = await PdfTemplates.generateRevisitsTemplate({
+                fullName: `${ user.name } ${ user.surname }`,
+                revisits: allRevisits
+            });
+
+            const fileName = `Revisitas_de_${ user.name }_${ user.surname }`;
+
+            const pdfPath = await PDF.writeFromHTML({
+                directory: 'Exports',
+                fileName,
+                html: revisitsTemplate
+            });
+
+            await FileSystem.moveFile({
+                from: pdfPath,
+                to: `${ FileSystem.downloadDir }/${ fileName }.pdf`
+            });
+        }
+        catch (error) {
+            setError(error);
+        }
+        finally {
+            setIsRevisitExporting(false);
         }
     }
 
@@ -377,6 +428,7 @@ const useRevisits = () => {
         // Functions
         completeRevisit,
         deleteRevisit,
+        exportRevisits,
         loadLastRevisit,
         loadRevisits,
         saveRevisit,
