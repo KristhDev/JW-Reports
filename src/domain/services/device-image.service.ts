@@ -42,7 +42,7 @@ export class DeviceImageService {
         }
         catch (error) {
             const imageError = new ImageError((error as any).message);
-            console.log(imageError);
+            console.error(imageError);
             throw imageError;
         }
     }
@@ -85,7 +85,7 @@ export class DeviceImageService {
         }
         catch (error) {
             const imageError = new ImageError((error as any).message);
-            console.log(imageError);
+            console.error(imageError);
             throw imageError;
         }
     }
@@ -128,7 +128,7 @@ export class DeviceImageService {
         }
         catch (error) {
             const imageError = new ImageError((error as any).message);
-            console.log(imageError);
+            console.error(imageError);
             throw imageError;
         }
     }
