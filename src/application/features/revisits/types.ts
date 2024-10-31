@@ -9,6 +9,7 @@ import { RevisitFilter } from 'src/presentation/modules/revisits';
  * @property {boolean} isLastRevisitLoading - This indicates whether the last revisit is being loaded.
  * @property {boolean} isRevisitDeleting - This indicates whether a revisits is being deleted.
  * @property {boolean} isRevisitLoading - This indicates whether a revisits is being loaded.
+ * @property {boolean} isRevisitsExporting - This indicates whether revisits are being exported.
  * @property {boolean} isRevisitsLoading - This indicates whether revisits are being loaded.
  * @property {RevisitEntity} lastRevisit - This is the last revisit.
  * @property {boolean} refreshRevisits - This indicates whether the revisits should be refreshed.
@@ -23,6 +24,7 @@ export interface RevisitsState {
     isLastRevisitLoading: boolean;
     isRevisitDeleting: boolean;
     isRevisitLoading: boolean;
+    isRevisitsExporting: boolean;
     isRevisitsLoading: boolean;
     lastRevisit: RevisitEntity;
     refreshRevisits: boolean;

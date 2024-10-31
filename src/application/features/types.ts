@@ -1,6 +1,15 @@
 import { Pagination } from './ui';
 
 /**
+ * Payload for setting the exporting state.
+ *
+ * @property {boolean} isExporting - Whether the state is exporting
+ */
+export type SetIsExportingPayload = {
+    isExporting: boolean;
+}
+
+/**
  * Payload for setting the loading state.
  *
  * @property {boolean} isLoading - Whether the state is loading
