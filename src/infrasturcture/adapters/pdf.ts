@@ -1,5 +1,8 @@
 import RNHTMLtoPDF from 'react-native-html-to-pdf';
 
+/* Errors */
+import { PDFError } from '@domain/errors';
+
 /* Interfaces */
 import { WriteFromHtmlOptions } from '@infrasturcture/interfaces';
 
@@ -16,8 +19,9 @@ export class PDF {
             return pdf.filePath!;
         }
         catch (error) {
-            console.error(error);
-            throw error;
+            const pdfError = new PDFError((error as Error).message);
+            console.error(pdfError);
+            throw pdfError;
         }
     }
 }

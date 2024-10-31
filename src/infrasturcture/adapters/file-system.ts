@@ -1,5 +1,8 @@
 import RNFS from 'react-native-fs';
 
+/* Errors */
+import { FileSystemError } from '@domain/errors';
+
 /* Interfaces */
 import { MoveFileOptions } from '@infrasturcture/interfaces';
 
@@ -18,8 +21,9 @@ export class FileSystem {
             await RNFS.moveFile(from, to);
         }
         catch (error) {
-            console.error(error);
-            throw error;
+            const fileSystemError = new FileSystemError((error as Error).message);
+            console.error(fileSystemError);
+            throw fileSystemError;
         }
     }
 }
