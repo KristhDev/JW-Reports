@@ -1,15 +1,18 @@
 import React from 'react';
-import { Text, View } from 'react-native';
+import { ActivityIndicator, Text, View } from 'react-native';
 import { useStyles } from 'react-native-unistyles';
 
 /* Modules */
+import { useRevisits } from '@revisits';
 import { Button, Title } from '@ui';
 
 /* Theme */
 import { themeStylesheet } from '@theme';
 
 const ExportDataScreen = (): JSX.Element => {
-    const { styles: themeStyles, theme: { fontSizes, margins } } = useStyles(themeStylesheet);
+    const { styles: themeStyles, theme: { colors, fontSizes, margins } } = useStyles(themeStylesheet);
+
+    const { state: { isRevisitsExporting }, exportRevisits } = useRevisits();
 
     return (
         <View style={ themeStyles.screenContainer }>
@@ -29,7 +32,14 @@ const ExportDataScreen = (): JSX.Element => {
                 />
 
                 <Button
-                    onPress={ () => {} }
+                    disabled={ isRevisitsExporting }
+                    icon={ (isRevisitsExporting) && (
+                        <ActivityIndicator
+                            color={ colors.contentHeader }
+                            size={ fontSizes.icon }
+                        />
+                    ) }
+                    onPress={ exportRevisits }
                     text="Exportar revisitas"
                 />
 
