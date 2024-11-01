@@ -50,7 +50,7 @@ export class PdfTemplates {
                         margin-bottom: 2.5rem;
                     }
 
-                    .revisits-cotainer {
+                    .revisits-container {
                         display: grid;
                         gap: 1.5rem;
                     }
@@ -113,7 +113,7 @@ export class PdfTemplates {
             <body>
                 <main>
                     <h1 class="title">Revisitas de ${ fullName }</h1>
-                    <div class="revisits-cotainer">
+                    <div class="revisits-container">
         `;
 
         revisitsWithImageBase64.forEach(revisit => {
@@ -150,7 +150,7 @@ export class PdfTemplates {
 
                     <div class="revisit-card__date">
                         <p>Fecha de próxima visita:</p>
-                        <span>${ Time.format(revisit.nextVisit, 'DD/MM/YYYY') }</spanm>
+                        <span>${ Time.format(revisit.nextVisit, 'DD/MM/YYYY') }</span>
                     </div>
                 </div>
             `;
