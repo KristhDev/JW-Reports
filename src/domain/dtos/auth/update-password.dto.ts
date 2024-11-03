@@ -1,8 +1,8 @@
+/* Constants */
+import { authMessages } from '@application/constants';
+
 /* Errors */
 import { DtoError } from '@domain/errors';
-
-/* Auth */
-import { authMessages } from '@auth';
 
 export class UpdatePasswordDto {
     private constructor(
