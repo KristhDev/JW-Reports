@@ -1,5 +1,8 @@
 import { useNavigation } from '@react-navigation/native';
 
+/* Constants */
+import { authMessages, revisitsMessages } from '@application/constants';
+
 /* Features */
 import { useAppDispatch, useAppSelector } from '@application/store';
 import {
@@ -38,21 +41,18 @@ import { ImageModel } from '@domain/models';
 /* Templates */
 import { PdfTemplates } from '@domain/templates';
 
+/* Services */
+import { RevisitsService } from '@domain/services';
+
 /* Adapters */
 import { FileSystem, PDF } from '@infrasturcture/adapters';
 
 /* Hooks */
-import { authMessages, useAuth } from '@auth';
+import { useAuth } from '@auth';
 import { useImage, useNetwork, useStatus } from '@shared';
 
 /* Interfaces */
 import { loadRevisitsOptions, RevisitFilter, RevisitFormValues, SaveRevisitOptions } from '../interfaces';
-
-/* Services */
-import { RevisitsService } from '@domain/services';
-
-/* Utils */
-import { revisitsMessages } from '../utils';
 
 /* ENV */
 import { SUPABASE_REVISITS_FOLDER } from '@env';

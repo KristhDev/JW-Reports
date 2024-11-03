@@ -3,6 +3,9 @@ import { Linking, ScrollView, Text } from 'react-native';
 import { useStyles } from 'react-native-unistyles';
 import { useNavigation } from '@react-navigation/native';
 
+/* Constants */
+import { THEME_OPTIONS } from '@application/constants';
+
 /* Adapters */
 import { DeviceInfo } from '@infrasturcture/adapters';
 
@@ -11,7 +14,7 @@ import { REPOSITORY_URL } from '@env';
 
 /* Modules */
 import { useStatus } from '../../hooks';
-import { ThemeModal, useTheme, THEME_OPTIONS } from '@theme';
+import { ThemeModal, useTheme } from '@theme';
 import { SectionBtn, SectionContent, Switch, useUI } from '@ui';
 
 /* Package */

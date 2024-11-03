@@ -1,5 +1,8 @@
 import { useNavigation } from '@react-navigation/native';
 
+/* Constants */
+import { coursesMessages } from '@application/constants';
+
 /* Features */
 import { useAppDispatch, useAppSelector } from '@application/store';
 import {
@@ -40,9 +43,6 @@ import { useStatus, useNetwork } from '@shared';
 
 /* Interfaces */
 import { CourseFilter, CourseFormValues, loadCoursesOptions } from '../interfaces';
-
-/* Utils */
-import { coursesMessages } from '../utils';
 
 /**
  * Hook to management courses of store with state and actions

@@ -1,10 +1,10 @@
 import { date, object } from 'yup';
 
+/* Constants */
+import { preachingMessages } from '@application/constants';
+
 /* Adapters */
 import { Time } from '@infrasturcture/adapters';
-
-/* Utils */
-import { preachingMessages } from '../../utils';
 
 /* Validation schema for preaching */
 export const preachingFormSchema = object().shape({

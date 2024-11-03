@@ -5,6 +5,9 @@ import { useStyles } from 'react-native-unistyles';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
+/* Constants */
+import { HOURS_REQUIREMENTS, PRECURSORS_OPTIONS } from '@application/constants';
+
 /* Components */
 import { Button, Checkbox, FormField, FormSelect } from '@ui';
 
@@ -14,10 +17,6 @@ import { useAuth } from '../../hooks';
 
 /* Schemas */
 import { profileFormSchema } from './schemas';
-
-/* Utils */
-import { PRECURSORS_OPTIONS } from '../../utils';
-import { HOURS_REQUIREMENTS } from '@preaching';
 
 /* Theme */
 import { themeStylesheet } from '@theme';

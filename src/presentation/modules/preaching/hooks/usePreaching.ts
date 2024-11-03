@@ -1,5 +1,8 @@
 import { useNavigation } from '@react-navigation/native';
 
+/* Constants */
+import { authMessages, preachingMessages } from '@application/constants';
+
 /* Features */
 import { useAppDispatch, useAppSelector } from '@application/store';
 import {
@@ -29,14 +32,11 @@ import { PreachingService } from '@domain/services';
 import { Time } from '@infrasturcture/adapters';
 
 /* Hooks */
+import { useAuth } from '@auth';
 import { useNetwork, useStatus } from '@shared';
 
 /* Interfaces */
 import { PreachingFormValues } from '../interfaces';
-
-/* Utils */
-import { authMessages, useAuth } from '@auth';
-import { preachingMessages } from '../utils';
 
 /**
  * Hook to management preaching of store with state and actions

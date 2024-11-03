@@ -1,3 +1,6 @@
+/* Constants */
+import { emailMessages } from '@application/constants';
+
 /* Errors */
 import { EmailError } from '@domain/errors';
 
@@ -14,9 +17,6 @@ import useStatus from './useStatus';
 
 /* Interfaces */
 import { ReportErrorOptions, UtilFunctions } from '../interfaces';
-
-/* Utils */
-import { emailMessages } from '../utils';
 
 const useEmail = () => {
     const { state: { user } } = useAuth();

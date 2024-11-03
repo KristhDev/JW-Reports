@@ -1,3 +1,6 @@
+/* Constants */
+import { networkMessages, authMessages } from '@application/constants';
+
 /* Features */
 import { useAppDispatch, useAppSelector } from '@application/store';
 import { clearStatus as clearStatusAction, setStatus as setStatusAction, SetStatusPayload } from '@application/features';
@@ -7,10 +10,6 @@ import { AppErrors, DtoError, EmailError, FileSystemError, ImageError, PDFError,
 
 /* Services */
 import { LoggerService } from '@domain/services';
-
-/* Utils */
-import { authMessages } from '@auth';
-import { networkMessages } from '../utils';
 
 /**
  * Hook to management status of store with state and actions
