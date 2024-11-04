@@ -11,6 +11,7 @@ import {
     RefreshPayload,
     RemoveResourcePayload,
     SetIsDeletingPayload,
+    SetIsExportingPayload,
     SetIsLoadingPayload,
 } from '../types';
 
@@ -52,6 +53,7 @@ export const COURSES_INITIAL_STATE: CoursesState = {
     hasMoreCourses: true,
     isCourseDeleting: false,
     isCourseLoading: false,
+    isCoursesExporting: false,
     isCoursesLoading: false,
     refreshCourses: false,
     selectedCourse: INIT_COURSE,
@@ -165,6 +167,10 @@ const courseSlice = createSlice({
             state.isCourseLoading = action.payload.isLoading;
         },
 
+        setIsCoursesExporting: (state, action: PayloadAction<SetIsExportingPayload>) => {
+            state.isCoursesExporting = action.payload.isExporting;
+        },
+
         setIsCoursesLoading: (state, action: PayloadAction<SetIsLoadingPayload>) => {
             state.isCoursesLoading = action.payload.isLoading;
         },
@@ -213,9 +219,9 @@ export const {
     addCourses,
     addLastLessonInCourse,
     clearCourses,
-    replaceLastLessonInCourse,
     removeCourse,
     removeCourses,
+    replaceLastLessonInCourse,
     setCourseFilter,
     setCourses,
     setCoursesPagination,
@@ -223,6 +229,7 @@ export const {
     setHasMoreCourses,
     setIsCourseDeleting,
     setIsCourseLoading,
+    setIsCoursesExporting,
     setIsCoursesLoading,
     setRefreshCourses,
     setSelectedCourse,
