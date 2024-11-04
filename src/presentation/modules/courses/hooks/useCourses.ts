@@ -20,6 +20,7 @@ import {
     setCoursesScreenHistory as setCoursesScreenHistoryAction,
     setHasMoreCourses as setHasMoreCoursesAction,
     setIsCourseDeleting as setIsCourseDeletingAction,
+    setIsCoursesExporting as setIsCoursesExportingAction,
     setIsCourseLoading as setIsCourseLoadingAction,
     setIsCoursesLoading as setIsCoursesLoadingAction,
     setRefreshCourses as setRefreshCoursesAction,
@@ -35,6 +36,12 @@ import { CourseEntity, LessonWithCourseEntity } from '@domain/entities';
 
 /* Services */
 import { CoursesService, LessonsService } from '@domain/services';
+
+/* Templates */
+import { PdfCoursesTemplate } from '@domain/templates';
+
+/* Adapters */
+import { FileSystem, PDF } from '@infrasturcture/adapters';
 
 /* Modules */
 import { useAuth } from '@auth';
@@ -72,6 +79,7 @@ const useCourses = () => {
     const setCoursesScreenHistory = (newScreen: string) => dispatch(setCoursesScreenHistoryAction({ newScreen }));
     const setHasMoreCourses = (hasMore: boolean) => dispatch(setHasMoreCoursesAction({ hasMore }));
     const setIsCourseDeleting = (isDeleting: boolean) => dispatch(setIsCourseDeletingAction({ isDeleting }));
+    const setIsCoursesExporting = (isExporting: boolean) => dispatch(setIsCoursesExportingAction({ isExporting }));
     const setIsCourseLoading = (isLoading: boolean) => dispatch(setIsCourseLoadingAction({ isLoading }));
     const setIsCoursesLoading = (isLoading: boolean) => dispatch(setIsCoursesLoadingAction({ isLoading }));
     const setRefreshCourses = (refresh: boolean) => dispatch(setRefreshCoursesAction({ refresh }));
@@ -217,6 +225,54 @@ const useCourses = () => {
             onFinish && onFinish();
 
             setError(error);
+        }
+    }
+
+    /**
+     * Export all courses in PDF format.
+     *
+     * This function will retrieve all courses of the user and create a PDF file with them.
+     * The file will be saved in the "Downloads" directory of the device.
+     *
+     * If the user is not authenticated, the function will return without doing anything.
+     *
+     * @return {Promise<void>} This function does not return anything.
+     */
+    const exportCourses = async (): Promise<void> => {
+        const wifiConnectionAvailable = hasWifiConnection();
+        if (!wifiConnectionAvailable) return;
+
+        const isAuth = isAuthenticated();
+        if (!isAuth) return;
+
+        setIsCoursesExporting(true);
+
+        try {
+            const allCourses = await CoursesService.getAllByUserId(user.id);
+
+            const coursesTemplate = PdfCoursesTemplate.generate({
+                courses: allCourses,
+                fullName: `${ user.name } ${ user.surname }`,
+            });
+
+            const fileName = `Cursos_de_${ user.name }_${ user.surname }`;
+
+            const pdfPath = await PDF.writeFromHTML({
+                directory: 'Exports',
+                fileName,
+                html: coursesTemplate
+            });
+
+            await FileSystem.moveFile({
+                from: pdfPath,
+                to: `${ FileSystem.downloadDir }/${ fileName }.pdf`
+            });
+        }
+        catch (error) {
+            setError(error);
+        }
+        finally {
+            setIsCoursesExporting(false);
         }
     }
 
@@ -407,6 +463,7 @@ const useCourses = () => {
         // Functions
         activeOrSuspendCourse,
         deleteCourse,
+        exportCourses,
         finishOrStartCourse,
         loadCourses,
         saveCourse,
