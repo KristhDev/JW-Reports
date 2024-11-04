@@ -1,4 +1,4 @@
-import React, { useState, FC } from 'react';
+import React, { useState, FC, useEffect } from 'react';
 import { View, Text, TextInput } from 'react-native';
 import { useStyles } from 'react-native-unistyles';
 import { useField } from 'formik';
@@ -112,15 +112,13 @@ export const FormTime: FC<FormTimeProps> = ({
      * @returns {void} This function does not return anything
      */
     const handleConfirm = (): void => {
-        const timeWithHour = Time.setHoursToDate(time, Number(hour));
-        const timeWithMinutes = Time.setMinutesToDate(timeWithHour, Number(minutes));
-        const timeWithSeconds = Time.setSecondsToDate(timeWithMinutes, 0);
+        const date = Time.setHoursMinutesAndSecondsToDate(time, Number(hour), Number(minutes), 0);
 
-        setTime(timeWithMinutes);
-        setHour(Time.format(timeWithSeconds, 'HH'));
-        setMinutes(Time.format(timeWithSeconds, 'mm'));
+        setTime(date);
+        setHour(Time.format(date, 'HH'));
+        setMinutes(Time.format(date, 'mm'));
 
-        helpers.setValue(timeWithSeconds);
+        helpers.setValue(date);
         setShowHourPicker(false);
     }
 
@@ -157,6 +155,12 @@ export const FormTime: FC<FormTimeProps> = ({
 
         setMinutes(minutesValue);
     }
+
+    useEffect(() => {
+        const timeWithRestedSeconds = Time.setSecondsToDate(time, 0);
+        helpers.setValue(timeWithRestedSeconds);
+        setTime(timeWithRestedSeconds);
+    }, []);
 
     return (
         <View style={[ themeStyles.formField, style ]}>
