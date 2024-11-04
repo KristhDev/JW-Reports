@@ -126,7 +126,7 @@ const revisitsSlice = createSlice({
             state.isRevisitLoading = action.payload.isLoading;
         },
 
-        setIsRevisitExporting: (state, action: PayloadAction<SetIsExportingPayload>) => {
+        setIsRevisitsExporting: (state, action: PayloadAction<SetIsExportingPayload>) => {
             state.isRevisitsExporting = action.payload.isExporting;
         },
 
@@ -192,7 +192,7 @@ export const {
     setHasMoreRevisits,
     setIsLastRevisitLoading,
     setIsRevisitDeleting,
-    setIsRevisitExporting,
+    setIsRevisitsExporting,
     setIsRevisitLoading,
     setIsRevisitsLoading,
     setLastRevisit,

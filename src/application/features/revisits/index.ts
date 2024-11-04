@@ -10,7 +10,7 @@ export {
     setHasMoreRevisits,
     setIsLastRevisitLoading,
     setIsRevisitDeleting,
-    setIsRevisitExporting,
+    setIsRevisitsExporting,
     setIsRevisitLoading,
     setIsRevisitsLoading,
     setLastRevisit,
