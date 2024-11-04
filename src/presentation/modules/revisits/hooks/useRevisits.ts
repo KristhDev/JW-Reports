@@ -7,17 +7,17 @@ import { authMessages, revisitsMessages } from '@application/constants';
 import { useAppDispatch, useAppSelector } from '@application/store';
 import {
     INIT_REVISIT,
-    Pagination,
     addRevisit as addRevisitAction,
     addRevisits as addRevisitsAction,
     clearRevisits as clearRevisitsAction,
+    Pagination,
     removeRevisit as removeRevisitAction,
     removeRevisits as removeRevisitsAction,
     setHasMoreRevisits as setHasMoreRevisitsAction,
     setIsLastRevisitLoading as setIsLastRevisitLoadingAction,
     setIsRevisitDeleting as setIsRevisitDeletingAction,
-    setIsRevisitExporting as setIsRevisitExportingAction,
     setIsRevisitLoading as setIsRevisitLoadingAction,
+    setIsRevisitsExporting as setIsRevisitsExportingAction,
     setIsRevisitsLoading as setIsRevisitsLoadingAction,
     setLastRevisit as setLastRevisitAction,
     setRefreshRevisits as setRefreshRevisitsAction,
@@ -39,7 +39,7 @@ import { RevisitEntity } from '@domain/entities';
 import { ImageModel } from '@domain/models';
 
 /* Templates */
-import { PdfTemplates } from '@domain/templates';
+import { PdfRevisitsTemplate } from '@domain/templates';
 
 /* Services */
 import { RevisitsService } from '@domain/services';
@@ -80,8 +80,8 @@ const useRevisits = () => {
     const setHasMoreRevisits = (hasMore: boolean) => dispatch(setHasMoreRevisitsAction({ hasMore }));
     const setIsLastRevisitLoading = (isLoading: boolean) => dispatch(setIsLastRevisitLoadingAction({ isLoading }));
     const setIsRevisitDeleting = (isDeleting: boolean) => dispatch(setIsRevisitDeletingAction({ isDeleting }));
-    const setIsRevisitExporting = (isExporting: boolean) => dispatch(setIsRevisitExportingAction({ isExporting }));
     const setIsRevisitLoading = (isLoading: boolean) => dispatch(setIsRevisitLoadingAction({ isLoading }));
+    const setIsRevisitsExporting = (isExporting: boolean) => dispatch(setIsRevisitsExportingAction({ isExporting }));
     const setIsRevisitsLoading = (isLoading: boolean) => dispatch(setIsRevisitsLoadingAction({ isLoading }));
     const setLastRevisit = (revisit: RevisitEntity) => dispatch(setLastRevisitAction({ revisit }));
     const setRefreshRevisits = (refresh: boolean) => dispatch(setRefreshRevisitsAction({ refresh }));
@@ -213,12 +213,12 @@ const useRevisits = () => {
         const isAuth = isAuthenticated();
         if (!isAuth) return;
 
-        setIsRevisitExporting(true);
+        setIsRevisitsExporting(true);
 
         try {
             const allRevisits = await RevisitsService.getAllByUserId(user.id);
 
-            const revisitsTemplate = await PdfTemplates.generateRevisitsTemplate({
+            const revisitsTemplate = await PdfRevisitsTemplate.generate({
                 fullName: `${ user.name } ${ user.surname }`,
                 revisits: allRevisits
             });
@@ -240,7 +240,7 @@ const useRevisits = () => {
             setError(error);
         }
         finally {
-            setIsRevisitExporting(false);
+            setIsRevisitsExporting(false);
         }
     }
 
