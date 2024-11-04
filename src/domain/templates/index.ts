@@ -1,1 +1,2 @@
-export * from './pdf.template';
+export * from './pdf-courses.template';
+export * from './pdf-revisits.template';

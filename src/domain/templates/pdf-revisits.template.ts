@@ -7,7 +7,8 @@ import { RevisitsTemplateOptions } from '@infrasturcture/interfaces';
 /* Services */
 import { DeviceImageService } from '../services';
 
-export class PdfTemplates {
+export class PdfRevisitsTemplate {
+
     /**
      * Generates a template for a PDF file that contains the list of revisits.
      * The template is based on a HTML structure and uses CSS styles to make it look good.
@@ -15,7 +16,7 @@ export class PdfTemplates {
      * @param {{ fullName: string, revisits: RevisitEntity[] }} options - The options for the template.
      * @returns {Promise<string>} - The template as a string.
      */
-    public static async generateRevisitsTemplate({ fullName, revisits }: RevisitsTemplateOptions): Promise<string> {
+    public static async generate({ fullName, revisits }: RevisitsTemplateOptions): Promise<string> {
         const revisitsWithImageBase64Promise = revisits.map(async (revisit) => ({
             ...revisit,
             photo: revisit?.photo ? await DeviceImageService.getBase64FromUri(revisit.photo) : undefined
