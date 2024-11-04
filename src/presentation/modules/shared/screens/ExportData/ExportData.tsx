@@ -3,6 +3,7 @@ import { ActivityIndicator, Text, View } from 'react-native';
 import { useStyles } from 'react-native-unistyles';
 
 /* Modules */
+import { useCourses } from '@courses';
 import { useRevisits } from '@revisits';
 import { Button, Title } from '@ui';
 
@@ -12,6 +13,7 @@ import { themeStylesheet } from '@theme';
 const ExportDataScreen = (): JSX.Element => {
     const { styles: themeStyles, theme: { colors, fontSizes, margins } } = useStyles(themeStylesheet);
 
+    const { state: { isCoursesExporting }, exportCourses } = useCourses();
     const { state: { isRevisitsExporting }, exportRevisits } = useRevisits();
 
     return (
@@ -32,7 +34,7 @@ const ExportDataScreen = (): JSX.Element => {
                 />
 
                 <Button
-                    disabled={ isRevisitsExporting }
+                    disabled={ isCoursesExporting || isRevisitsExporting }
                     icon={ (isRevisitsExporting) && (
                         <ActivityIndicator
                             color={ colors.contentHeader }
@@ -44,7 +46,14 @@ const ExportDataScreen = (): JSX.Element => {
                 />
 
                 <Button
-                    onPress={ () => {} }
+                    disabled={ isCoursesExporting || isRevisitsExporting }
+                    icon={ (isCoursesExporting) && (
+                        <ActivityIndicator
+                            color={ colors.contentHeader }
+                            size={ fontSizes.icon }
+                        />
+                    ) }
+                    onPress={ exportCourses }
                     text="Exportar cursos biblícos"
                 />
 
