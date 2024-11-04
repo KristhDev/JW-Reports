@@ -2,6 +2,15 @@ import React, { FC } from 'react';
 import { Text, View } from 'react-native';
 import { useStyles } from 'react-native-unistyles';
 
+/* Constants */
+import { preachingMessages } from '@application/constants';
+
+/* Entities */
+import { PreachingEntity } from '@domain/entities';
+
+/* Services */
+import { PreachingReportService } from '@domain/services';
+
 /* Adapters */
 import { Time } from '@infrasturcture/adapters';
 
@@ -11,9 +20,6 @@ import { Button, Modal, ModalProps } from '@ui';
 /* Hooks */
 import { useAuth } from '@auth';
 import { usePreaching } from '../../hooks';
-
-/* Utils */
-import { report } from '../../utils';
 
 /* Styles */
 import { stylesheet } from './styles';
@@ -33,12 +39,13 @@ const PreachingInfoModal: FC<ModalProps> = ({ isOpen, onClose }): JSX.Element =>
     const { state: { user } } = useAuth();
     const { state: { preachings } } = usePreaching();
 
-    const preachingsOfWeek = Time.getArrayValuesOfWeek(preachings);
+    const preachingsOfWeek = Time.getArrayValuesOfWeek<PreachingEntity>(preachings);
 
-    const hoursRequirementByWeek = report.getHoursRequirementByWeek(user.hoursRequirement);
-    const hoursDoneByWeek = report.getHoursDoneByWeek(preachingsOfWeek);
-    const { isNegative: isNegativeHWR, remainingHoursOfWeeklyRequirement } = report.getRemainingHoursOfWeeklyRequirement(hoursRequirementByWeek, hoursDoneByWeek);
-    const { isNegative: isNegativeHR, reamainingOfHoursRequirement } = report.getReamainingOfHoursRequirement(preachings, user.hoursRequirement);
+    const hoursRequirementByWeek = PreachingReportService.getHoursRequirementByWeek(user.hoursRequirement);
+    const hoursDoneByWeek = PreachingReportService.getHoursDoneByWeek(preachingsOfWeek);
+
+    const { isNegative: isNegativeHWR, remainingHoursOfWeeklyRequirement } = PreachingReportService.getRemainingHoursOfWeeklyRequirement(hoursRequirementByWeek, hoursDoneByWeek);
+    const { isNegative: isNegativeHR, reamainingOfHoursRequirement } = PreachingReportService.getReamainingOfHoursRequirement(preachings, user.hoursRequirement);
 
     return (
         <Modal isOpen={ isOpen }>
@@ -61,7 +68,7 @@ const PreachingInfoModal: FC<ModalProps> = ({ isOpen, onClose }): JSX.Element =>
                     <Text style={{ ...styles.modalSectionText, color: colors.text }}>Horas faltantes por semana:</Text>
                     <Text style={{ ...styles.modalSectionText, color: colors.modalText }}>
                         { (remainingHoursOfWeeklyRequirement === '0:00' || isNegativeHWR)
-                            ? '¡Excelente! has cumplido con tu requerimiento de horas por semana.'
+                            ? preachingMessages.WEEKLY_HOURS_REQUIRED_DONE
                             : remainingHoursOfWeeklyRequirement
                         }
                     </Text>
@@ -80,7 +87,7 @@ const PreachingInfoModal: FC<ModalProps> = ({ isOpen, onClose }): JSX.Element =>
                     <Text style={{ ...styles.modalSectionText, color: colors.text }}>Horas faltantes por mes:</Text>
                     <Text style={{ ...styles.modalSectionText, color: colors.modalText }}>
                         { (reamainingOfHoursRequirement === '0:00' || isNegativeHR)
-                            ? '¡Excelente! has cumplido con tu requerimiento de horas por mes.'
+                            ? preachingMessages.MONTHLY_HOURS_REQUIRED_DONE
                             : reamainingOfHoursRequirement
                         }
                     </Text>

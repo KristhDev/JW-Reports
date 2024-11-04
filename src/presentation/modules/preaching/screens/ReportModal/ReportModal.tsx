@@ -2,8 +2,18 @@ import React, { Children, FC, useState } from 'react';
 import { View, Text, Share, TextInput } from 'react-native';
 import { useStyles } from 'react-native-unistyles';
 
+/* Constants */
+import { MINISTRY_PARTICIPATIONS } from '@application/constants';
+
+/* Services */
+import { PreachingReportService } from '@domain/services';
+
 /* Adapters */
 import { Time } from '@infrasturcture/adapters';
+
+/* Interfaces */
+import { ParticipateInMinistry } from '@infrasturcture/interfaces';
+import { ReportModalProps } from './interfaces';
 
 /* Screens */
 import { Modal, RadioBtn, ModalActions } from '@ui';
@@ -13,20 +23,12 @@ import { useAuth } from '@auth';
 import { usePreaching } from '../../hooks';
 import { useCourses } from '@courses';
 
-/* Interfaces */
-import { ReportModalProps } from './interfaces';
-
 /* Utils */
 import { Characters } from '@utils';
 
 /* Styles */
 import { themeStylesheet } from '@theme';
 import { stylesheet } from './styles';
-
-const particitions = [
-    { label: 'Si', value: 'si' },
-    { label: 'No', value: 'no' }
-];
 
 /**
  * This modal is responsible for grouping all the components to display and deliver
@@ -38,7 +40,7 @@ const particitions = [
 const ReportModal: FC<ReportModalProps> = ({ isOpen, month, onClose }): JSX.Element => {
     const [ comment, setComment ] = useState<string>('');
     const [ hoursLDC, setHoursLDC ] = useState<string>('');
-    const [ participated, setParticipated ] = useState<string>('si');
+    const [ participated, setParticipated ] = useState<ParticipateInMinistry>('si');
 
     const [ isFocusedComment, setIsFocusedComment ] = useState<boolean>(false);
     const [ selectionComment, setSelectionComment ] = useState({
@@ -70,21 +72,19 @@ const ReportModal: FC<ReportModalProps> = ({ isOpen, month, onClose }): JSX.Elem
      *
      * @return {Promise<void>} This function does not return anything
      */
-    const handleDeliver = async (): Promise<void> => {
+    const handleDeliverReport = async (): Promise<void> => {
         onClose();
 
-        let report = '*Informe De Predicación* \n \n';
-        report += `Nombre: ${ username }\n`;
-        report += `Mes: ${ Characters.capitalize(month) }\n`;
-
-        if (user.precursor !== 'ninguno') report += `Horas: ${ totalHours }\n`;
-        else report += `Participo en el ministerio: ${ participated }`;
-
-        if (user.precursor !== 'ninguno' && hoursLDC.trim().length > 0) report += `Horas LDC: ${ hoursLDC }\n`;
-
-        report += `Cursos: ${ totalCourses } \n`;
-        report += 'Comentarios: \n';
-        report += `${ (comment.trim().length > 0) ? comment : 'Ninguno' }`;
+        const report = PreachingReportService.generatePrechingReportString({
+            comment,
+            courses: totalCourses,
+            hours: totalHours,
+            hoursLDC: Number(hoursLDC),
+            month,
+            participated,
+            precursor: user.precursor,
+            username
+        });
 
         const { action } = await Share.share({ message: report });
         if (action === 'sharedAction') setComment('');
@@ -159,7 +159,7 @@ const ReportModal: FC<ReportModalProps> = ({ isOpen, month, onClose }): JSX.Elem
                             <Text style={ styles.reportText(colors.text) }>Participo en el ministerio: </Text>
 
                             <View style={{ flexDirection: 'row', gap: margins.lg, paddingVertical: margins.xs }}>
-                                { Children.toArray(particitions.map(particition => (
+                                { Children.toArray(MINISTRY_PARTICIPATIONS.map(particition => (
                                     <RadioBtn
                                         isSelected={ (participated === particition.value) }
                                         label={ particition.label }
@@ -251,7 +251,7 @@ const ReportModal: FC<ReportModalProps> = ({ isOpen, month, onClose }): JSX.Elem
                     cancelButtonText="CANCELAR"
                     confirmTextButton="ENTREGAR"
                     onCancel={ handleClose }
-                    onConfirm={ handleDeliver }
+                    onConfirm={ handleDeliverReport }
                     showCancelButton
                     showConfirmButton
                 />
