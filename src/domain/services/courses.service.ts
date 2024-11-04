@@ -5,7 +5,7 @@ import { supabase } from '@config';
 import { ActiveOrSuspendCourseDto, CreateCourseDto, FinishOrStartCourseDto, UpdateCourseDto } from '@domain/dtos';
 
 /* Entities */
-import { CourseEntity } from '@domain/entities';
+import { CourseEntity, CourseWithLessonsEntity } from '@domain/entities';
 
 /* Errors */
 import { RequestError } from '@domain/errors';
@@ -157,6 +157,31 @@ export class CoursesService {
         }
 
         return result.data.map(CourseEntity.fromEndpoint);
+    }
+
+    /**
+     * Retrieves all courses for a specific user along with their lessons.
+     *
+     * @param {string} userId - The ID of the user whose courses are to be retrieved.
+     * @returns {Promise<CourseWithLessonsEntity[]>} - A promise that resolves to an array of CourseWithLessonsEntity objects.
+     * @throws {RequestError} - If there is an error in fetching the courses.
+     */
+    public static async getAllByUserId(userId: string): Promise<CourseWithLessonsEntity[]> {
+        const result = await supabase.from('courses')
+            .select('*, lessons (*)')
+            .eq('user_id', userId)
+            .order('next_lesson', { ascending: false, referencedTable: 'lessons' })
+            .order('created_at', { ascending: false });
+
+        if (result.error) {
+            throw new RequestError(
+                result.error.message,
+                result.status || 400,
+                result.error.code
+            );
+        }
+
+        return result.data.map(CourseWithLessonsEntity.fromEndpoint);
     }
 
     /**
