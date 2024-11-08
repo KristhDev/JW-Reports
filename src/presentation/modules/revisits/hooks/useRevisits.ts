@@ -204,9 +204,10 @@ const useRevisits = () => {
     /**
      * This function exports all the revisits of the user to a PDF file.
      *
+     * @param {boolean} showStatusMessage - This is a flag to indicate whether to show the status message or not, default is `true`
      * @return {Promise<void>} This function does not return anything
      */
-    const exportRevisits = async (): Promise<void> => {
+    const exportRevisits = async (showStatusMessage: boolean = true): Promise<void> => {
         const wifiConnectionAvailable = hasWifiConnection();
         if (!wifiConnectionAvailable) return;
 
@@ -235,6 +236,8 @@ const useRevisits = () => {
                 from: pdfPath,
                 to: `${ FileSystem.downloadDir }/${ fileName }.pdf`
             });
+
+            if (showStatusMessage) setStatus({ code: 200, msg: revisitsMessages.EXPORTED_SUCCESS });
         }
         catch (error) {
             setError(error);
