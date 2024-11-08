@@ -21,12 +21,12 @@ export const authMessages = {
     PASSWORD_EMPTY: 'La contraseña no puede estar vacía.',
     PASSWORD_MIN_LENGTH: 'La contraseña debe tener al menos 6 caracteres.',
     PASSWORD_NOT_MATCH: 'Las contraseñas no coinciden.',
-    PASSWORD_UPDATED: 'Has actualizado tu contraseña correctamente.',
-    PROFILE_UPDATED: 'Has actualizado tu perfil correctamente.',
+    PASSWORD_UPDATED: 'Ha actualizado su contraseña correctamente.',
+    PROFILE_UPDATED: 'Ha actualizado su perfil correctamente.',
     SURNAME_EMPTY: 'Los apellidos no pueden estar vacíos.',
     SURNAME_MIN_LENGTH: 'Los apellidos deben tener al menos 2 caracteres.',
     UNATHENTICATED: 'Para realizar está acción debe iniciar sesión.',
-    UNAUTHORIZED: 'No tienes permisos para realizar está acción.',
+    UNAUTHORIZED: 'No tiene permiso para realizar está acción.',
 }
 
 export const precursorMessages = {
