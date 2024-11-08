@@ -3,6 +3,7 @@ import { EmitterSubscription, Keyboard } from 'react-native';
 /* Features */
 import { useAppDispatch, useAppSelector } from '@application/store';
 import {
+    setIsDataExporting as setIsDataExportingAction,
     setIsKeyboardVisible as setIsKeyboardVisibleAction,
     setOldDatetimePicker as setOldDatetimePickerAction
 } from '@application/features';
@@ -14,6 +15,7 @@ const useUI = () => {
     const dispatch = useAppDispatch();
     const state = useAppSelector(store => store.ui);
 
+    const setIsDataExporting = (isExporting: boolean) => dispatch(setIsDataExportingAction({ isExporting }));
     const setIsKeyboardVisible = (isVisible: boolean) => dispatch(setIsKeyboardVisibleAction({ isVisible }));
 
     /**
@@ -60,6 +62,7 @@ const useUI = () => {
 
         listenHideKeyboard,
         listenShowKeyboard,
+        setIsDataExporting,
         setOldDatetimePicker
     }
 }
