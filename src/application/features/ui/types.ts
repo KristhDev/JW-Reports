@@ -3,6 +3,7 @@ export type UserInterface = {
 }
 
 export interface UIState {
+    isDataExporting: boolean;
     isKeyboardVisible: boolean;
     userInterface: UserInterface;
 }
