@@ -1,5 +1,6 @@
 /* Entities */
 import { PreachingEntity } from '@domain/entities';
+import { GroupedPreachingsModel, PreachingReportModel } from '@domain/models';
 
 /* Adapters */
 import { Time } from '@infrasturcture/adapters';
@@ -32,6 +33,24 @@ export class PreachingReportService {
         report += `${ (comment.trim().length > 0) ? comment : 'Ninguno' }`;
 
         return report;
+    }
+
+    /**
+     * Generates a preaching report for export given the preachings grouped by month and year.
+     *
+     * @param {GroupedPreachingsModel} options - An object with the required properties to generate the report.
+     * @return {PreachingReportModel} The preaching report.
+     */
+    public static generatePreachingReportForExport({ month, year, preachings }: GroupedPreachingsModel): PreachingReportModel {
+        const hours = Time.sumHours(preachings.map(p => ({ init: p.initHour, finish: p.finalHour })));
+        const restMins = Time.getRestMins(preachings.map(p => ({ init: p.initHour, finish: p.finalHour })));
+
+        return {
+            hours,
+            restMins,
+            month,
+            year
+        }
     }
 
     /**
@@ -119,5 +138,30 @@ export class PreachingReportService {
             reamainingOfHoursRequirement: `${ hoursToReturn }:${ (minsToReturn === 0) ? '00' : (minsToReturn.toString().length > 1) ? minsToReturn : `0${ minsToReturn }` }`,
             isNegative: (hoursDiff < 0 || minsDiff < 0)
         }
+    }
+
+    /**
+     * Groups an array of PreachingEntity objects by month and year.
+     *
+     * @param {PreachingEntity[]} preachings - The array of PreachingEntity objects to group.
+     * @returns {GroupedPreachingsModel[]} An array of GroupedPreachingsModel objects, where each object contains the month, year and an array of preachings for that month and year.
+     */
+    public static groupByMonthAndYear(preachings: PreachingEntity[]): GroupedPreachingsModel[] {
+        return preachings.reduce((acc: GroupedPreachingsModel[], preaching) => {
+            const month = Time.getMonthOfDate(preaching.day);
+            const monthName = Time.getMonthName(month);
+
+            const year = Time.getYearOfDate(preaching.day);
+
+            let group = acc.find(g => g.month === monthName && g.year === year);
+
+            if (!group) {
+                group = { month: monthName, year, preachings: [] }
+                acc.push(group);
+            }
+
+            group.preachings.push(preaching);
+            return acc;
+        }, []);
     }
 }
