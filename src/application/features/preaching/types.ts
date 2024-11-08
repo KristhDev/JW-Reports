@@ -5,6 +5,7 @@ import { PreachingEntity } from '@domain/entities';
  *
  * @property {boolean} isPreachingDeleting - This indicates if the preaching is being deleted.
  * @property {boolean} isPreachingLoading - This indicates if the preaching is being loaded.
+ * @property {boolean} isPreachingsExporting - This indicates if the preachings are being exported.
  * @property {boolean} isPreachingsLoading - This indicates if the preachings are being loaded.
  * @property {PreachingEntity[]} preachings - This is an array of preachings.
  * @property {Date} selectedDate - This is the selected date.
@@ -13,6 +14,7 @@ import { PreachingEntity } from '@domain/entities';
 export interface PreachingState {
     isPreachingDeleting: boolean;
     isPreachingLoading: boolean;
+    isPreachingsExporting: boolean;
     isPreachingsLoading: boolean;
     preachings: PreachingEntity[];
     selectedDate: Date;
