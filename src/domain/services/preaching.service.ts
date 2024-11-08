@@ -96,6 +96,31 @@ export class PreachingService {
     }
 
     /**
+     * Retrieves all preachings for a specific user.
+     *
+     * @param {string} userId - The ID of the user whose preachings are to be retrieved.
+     * @returns {Promise<PreachingEntity[]>} A promise that resolves with an array of preachings for the specified user.
+     * @throws {RequestError} If there is an error in fetching the preachings.
+     */
+    public static async getAllByUserId(userId: string): Promise<PreachingEntity[]> {
+        const result = await supabase.from('preachings')
+            .select<'*', PreachingEndpoint>()
+            .eq('user_id', userId)
+            .order('day', { ascending: true })
+            .order('init_hour', { ascending: true });
+
+        if (result.error) {
+            throw new RequestError(
+                result.error.message,
+                result.status || 400,
+                result.error.code
+            );
+        }
+
+        return result.data.map(PreachingEntity.fromEndpoint);
+    }
+
+    /**
      * Updates a preaching with the given id and user id.
      *
      * @param {string} id - The id of the preaching to update.
