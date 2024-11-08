@@ -3,18 +3,32 @@ import { ActivityIndicator, Text, View } from 'react-native';
 import { useStyles } from 'react-native-unistyles';
 
 /* Modules */
-import { useCourses } from '@courses';
-import { useRevisits } from '@revisits';
 import { Button, Title } from '@ui';
+
+/* Hooks */
+import { useExportData } from '../../hooks';
 
 /* Theme */
 import { themeStylesheet } from '@theme';
 
+/**
+ * Screen to export app data.
+ *
+ * @returns {JSX.Element} - An jsx element to render the screen.
+ */
 const ExportDataScreen = (): JSX.Element => {
     const { styles: themeStyles, theme: { colors, fontSizes, margins } } = useStyles(themeStylesheet);
 
-    const { state: { isCoursesExporting }, exportCourses } = useCourses();
-    const { state: { isRevisitsExporting }, exportRevisits } = useRevisits();
+    const {
+        exportAllData,
+        exportCourses,
+        exportPreachings,
+        exportRevisits,
+        isCoursesExporting,
+        isDataExporting,
+        isPreachingsExporting,
+        isRevisitsExporting
+    } = useExportData();
 
     return (
         <View style={ themeStyles.screenContainer }>
@@ -24,18 +38,25 @@ const ExportDataScreen = (): JSX.Element => {
             />
 
             <Text style={ themeStyles.detailText }>
-                Aquí puede exportar su información de la aplicación en pdf, tanto informes de predicación, revisitas y cursos biblícos.
+                Aquí puede exportar su información de la aplicación en pdf, tanto informes de predicación, revisitas y cursos bíblicos.
             </Text>
 
             <View style={{ gap: margins.md, flex: 1, justifyContent: 'flex-end' }}>
                 <Button
-                    onPress={ () => {} }
-                    text="Exportar informes de predicación"
+                    disabled={ isDataExporting || isCoursesExporting || isPreachingsExporting || isRevisitsExporting }
+                    icon={ (isPreachingsExporting && !isDataExporting) && (
+                        <ActivityIndicator
+                            color={ colors.contentHeader }
+                            size={ fontSizes.icon }
+                        />
+                    ) }
+                    onPress={ exportPreachings }
+                    text="Exportar info de predicación"
                 />
 
                 <Button
-                    disabled={ isCoursesExporting || isRevisitsExporting }
-                    icon={ (isRevisitsExporting) && (
+                    disabled={ isDataExporting || isCoursesExporting || isPreachingsExporting || isRevisitsExporting }
+                    icon={ (isRevisitsExporting && !isDataExporting) && (
                         <ActivityIndicator
                             color={ colors.contentHeader }
                             size={ fontSizes.icon }
@@ -46,19 +67,26 @@ const ExportDataScreen = (): JSX.Element => {
                 />
 
                 <Button
-                    disabled={ isCoursesExporting || isRevisitsExporting }
-                    icon={ (isCoursesExporting) && (
+                    disabled={ isDataExporting || isCoursesExporting || isPreachingsExporting || isRevisitsExporting }
+                    icon={ (isCoursesExporting && !isDataExporting) && (
                         <ActivityIndicator
                             color={ colors.contentHeader }
                             size={ fontSizes.icon }
                         />
                     ) }
                     onPress={ exportCourses }
-                    text="Exportar cursos biblícos"
+                    text="Exportar cursos bíblicos"
                 />
 
                 <Button
-                    onPress={ () => {} }
+                    disabled={ isDataExporting || isCoursesExporting || isPreachingsExporting || isRevisitsExporting }
+                    icon={ (isDataExporting) && (
+                        <ActivityIndicator
+                            color={ colors.contentHeader }
+                            size={ fontSizes.icon }
+                        />
+                    ) }
+                    onPress={ exportAllData }
                     text="Exportar todo"
                 />
             </View>
