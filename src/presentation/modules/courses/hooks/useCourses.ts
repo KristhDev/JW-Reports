@@ -229,16 +229,13 @@ const useCourses = () => {
     }
 
     /**
-     * Export all courses in PDF format.
+     * This function exports all the courses of the current user to a PDF file that is saved in the device's downloads folder.
+     * The file name is in the form "Cursos_de_<name>_<surname>.pdf".
      *
-     * This function will retrieve all courses of the user and create a PDF file with them.
-     * The file will be saved in the "Downloads" directory of the device.
-     *
-     * If the user is not authenticated, the function will return without doing anything.
-     *
+     * @param {boolean} showStatusMessage - Whether to show a status message when the export is finished.
      * @return {Promise<void>} This function does not return anything.
      */
-    const exportCourses = async (): Promise<void> => {
+    const exportCourses = async (showStatusMessage: boolean = true): Promise<void> => {
         const wifiConnectionAvailable = hasWifiConnection();
         if (!wifiConnectionAvailable) return;
 
@@ -267,6 +264,8 @@ const useCourses = () => {
                 from: pdfPath,
                 to: `${ FileSystem.downloadDir }/${ fileName }.pdf`
             });
+
+            if (showStatusMessage) setStatus({ code: 200, msg: coursesMessages.EXPORTED_SUCCESS });
         }
         catch (error) {
             setError(error);
