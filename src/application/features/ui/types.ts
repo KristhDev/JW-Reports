@@ -2,20 +2,25 @@ export type UserInterface = {
     oldDatetimePicker: boolean;
 }
 
+export type Keyboard = {
+    height: number;
+    isVisible: boolean;
+}
+
 export interface UIState {
     activeFormField: string;
     isDataExporting: boolean;
-    isKeyboardVisible: boolean;
+    keyboard: Keyboard;
     recordedAudio: string;
     userInterface: UserInterface;
 }
 
-export type SetIsVisiblePayload = {
-    isVisible: boolean;
-}
-
 export type SetOldDatetimePickerPayload = {
     oldDatetimePicker: boolean;
+}
+
+export type SetKeyboardPayload = {
+    keyboard: Keyboard;
 }
 
 /**

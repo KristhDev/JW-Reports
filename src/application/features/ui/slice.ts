@@ -1,16 +1,21 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 /* Interfaces */
-import { SetIsVisiblePayload, SetOldDatetimePickerPayload, UIState } from './types';
+import { Keyboard, SetKeyboardPayload, SetOldDatetimePickerPayload, UIState } from './types';
 import { SetIsExportingPayload } from '../types';
 
 /* Functions */
 import { getUIStored } from '../functions';
 
+export const INITIAL_KEYBOARD: Keyboard = {
+    height: 0,
+    isVisible: false
+}
+
 export const UI_INITIAL_STATE: UIState = {
     activeFormField: '',
     isDataExporting: false,
-    isKeyboardVisible: false,
+    keyboard: INITIAL_KEYBOARD,
     recordedAudio: '',
     userInterface: getUIStored()
 }
@@ -23,24 +28,24 @@ const uiSlice = createSlice({
             state.activeFormField = action.payload.activeFormField;
         },
 
-        setRecordedAudio: (state, action: PayloadAction<{ recordedAudio: string }>) => {
-            state.recordedAudio = action.payload.recordedAudio;
-        },
-
         setIsDataExporting: (state, action: PayloadAction<SetIsExportingPayload>) => {
             state.isDataExporting = action.payload.isExporting;
         },
 
-        setIsKeyboardVisible: (state, action: PayloadAction<SetIsVisiblePayload>) => {
-            state.isKeyboardVisible = action.payload.isVisible;
+        setKeyboard: (state, action: PayloadAction<SetKeyboardPayload>) => {
+            state.keyboard = action.payload.keyboard;
         },
 
         setOldDatetimePicker: (state, action: PayloadAction<SetOldDatetimePickerPayload>) => {
             state.userInterface.oldDatetimePicker = action.payload.oldDatetimePicker;
-        }
+        },
+
+        setRecordedAudio: (state, action: PayloadAction<{ recordedAudio: string }>) => {
+            state.recordedAudio = action.payload.recordedAudio;
+        },
     }
 });
 
-export const { setIsDataExporting, setActiveFormField, setRecordedAudio, setIsKeyboardVisible, setOldDatetimePicker } = uiSlice.actions;
+export const { setActiveFormField, setIsDataExporting, setKeyboard, setOldDatetimePicker, setRecordedAudio } = uiSlice.actions;
 export default uiSlice.reducer;
 
