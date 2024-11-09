@@ -192,7 +192,7 @@ export const FormTime: FC<FormTimeProps> = ({
                 {/* Field button */}
                 <Button
                     disabled={ !editable }
-                    containerStyle={{ minWidth: 0, paddingHorizontal: (margins.xs + 1) }}
+                    containerStyle={ themeStyles.formInputBtn }
                     icon={ icon }
                     onPress={ handleShowHourPicker }
                     pressableStyle={{ marginLeft: margins.sm }}

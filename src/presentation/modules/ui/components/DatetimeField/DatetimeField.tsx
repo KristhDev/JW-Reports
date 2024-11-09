@@ -116,7 +116,7 @@ export const DatetimeField: FC<DatetimeFieldProps> = ({
                 {/* Field button */}
                 <Button
                     disabled={ disabled }
-                    containerStyle={{ minWidth: 0, paddingHorizontal: (margins.xs + 1) }}
+                    containerStyle={ themeStyles.formInputBtn }
                     icon={ icon }
                     onPress={ () => setOpen(true) }
                     pressableStyle={{ marginLeft: margins.sm }}
