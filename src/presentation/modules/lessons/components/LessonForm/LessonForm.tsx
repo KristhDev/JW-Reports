@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import { ActivityIndicator, View } from 'react-native';
 import { useStyles } from 'react-native-unistyles';
-import { Formik } from 'formik';
+import { Formik, FormikProps } from 'formik';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
 /* Modules */
@@ -25,11 +25,12 @@ import { themeStylesheet } from '@theme';
  * @returns {JSX.Element} The lesson form component.
  */
 export const LessonForm = (): JSX.Element => {
+    const formRef = useRef<FormikProps<LessonFormValues>>(null);
     const { styles: themeStyles, theme: { colors, fontSizes, margins } } = useStyles(themeStylesheet);
 
     const { state: { isLessonLoading, selectedLesson }, saveLesson, updateLesson } = useLessons();
     const { setErrorForm } = useStatus();
-    const { state: { userInterface } } = useUI();
+    const { state: { activeFormField, recordedAudio, userInterface }, setActiveFormField } = useUI();
 
     /**
      * If the selectedLesson.id is an empty string, then saveLesson, otherwise updateLesson.
@@ -46,12 +47,18 @@ export const LessonForm = (): JSX.Element => {
         else updateLesson(formValues);
     }
 
+    useEffect(() => {
+        if (recordedAudio.trim().length === 0 || activeFormField.length === 0) return;
+        formRef?.current?.setFieldValue(activeFormField, recordedAudio, true);
+    }, [ recordedAudio ]);
+
     return (
         <Formik
             initialValues={{
                 description: selectedLesson.description,
                 nextLesson: new Date(selectedLesson.nextLesson)
             }}
+            innerRef={ formRef }
             onSubmit={ (values, { resetForm }) => handleSaveOrUpdate(values, resetForm) }
             validateOnMount
             validationSchema={ lessonFormSchema }
@@ -65,7 +72,9 @@ export const LessonForm = (): JSX.Element => {
                         label="¿Qué verán la próxima clase?"
                         multiline
                         name="description"
-                        numberOfLines={ 10 }
+                        numberOfLines={ 9 }
+                        onBlur={ () => setActiveFormField('') }
+                        onFocus={ () => setActiveFormField('description') }
                         placeholder="Ingrese el tema que se estudiará en la siguiente clase"
                     />
 
@@ -105,8 +114,6 @@ export const LessonForm = (): JSX.Element => {
                         />
                     ) }
 
-                    <View style={{ flex: 1 }} />
-
                     {/* Submit button */}
                     <Button
                         disabled={ isLessonLoading }
@@ -121,6 +128,8 @@ export const LessonForm = (): JSX.Element => {
                         onPress={ (isValid) ? handleSubmit : () => setErrorForm(errors) }
                         text={ (selectedLesson.id !== '') ? 'Actualizar' : 'Guardar' }
                     />
+
+                    <View style={{ flex: 1 }} />
                 </View>
             ) }
         </Formik>
