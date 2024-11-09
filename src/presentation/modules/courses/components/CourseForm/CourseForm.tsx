@@ -1,11 +1,11 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import { ActivityIndicator, View } from 'react-native';
-import { Formik } from 'formik';
+import { Formik, FormikProps } from 'formik';
 import { useStyles } from 'react-native-unistyles';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
 /* Components */
-import { Button, FormField } from '@ui';
+import { Button, FormField, useUI } from '@ui';
 
 /* Hooks */
 import { useCourses } from '../../hooks';
@@ -27,10 +27,12 @@ import { themeStylesheet } from '@theme';
  * @return {JSX.Element} The course form component.
  */
 export const CourseForm = (): JSX.Element => {
+    const formRef = useRef<FormikProps<CourseFormValues>>(null);
     const { styles: themeStyles, theme: { colors, fontSizes, margins } } = useStyles(themeStylesheet);
 
     const { state: { isCourseLoading, selectedCourse }, saveCourse, updateCourse } = useCourses();
     const { setErrorForm } = useStatus();
+    const { state: { activeFormField, recordedAudio }, setActiveFormField } = useUI();
 
     /**
      * If the selectedCourse.id is an empty string, then save the formValues, otherwise update the
@@ -45,6 +47,11 @@ export const CourseForm = (): JSX.Element => {
             : updateCourse(formValues);
     }
 
+    useEffect(() => {
+        if (recordedAudio.trim().length === 0 || activeFormField.length === 0) return;
+        formRef?.current?.setFieldValue(activeFormField, recordedAudio, true);
+    }, [ recordedAudio ]);
+
     return (
         <Formik
             initialValues={{
@@ -53,6 +60,7 @@ export const CourseForm = (): JSX.Element => {
                 personAddress: selectedCourse.personAddress,
                 publication: selectedCourse.publication
             }}
+            innerRef={ formRef }
             onSubmit={ handleSaveOrUpdate }
             validateOnMount
             validationSchema={ courseFormSchema }
@@ -71,6 +79,8 @@ export const CourseForm = (): JSX.Element => {
                         }
                         label="Nombre del estudiante:"
                         name="personName"
+                        onBlur={ () => setActiveFormField('') }
+                        onFocus={ () => setActiveFormField('personName') }
                         placeholder="Ingrese el nombre"
                     />
 
@@ -80,6 +90,8 @@ export const CourseForm = (): JSX.Element => {
                         multiline
                         name="personAbout"
                         numberOfLines={ 10 }
+                        onBlur={ () => setActiveFormField('') }
+                        onFocus={ () => setActiveFormField('personAbout') }
                         placeholder="Ingrese datos sobre la persona, temas de interés, preferencias, aspectos importantes, etc..."
                     />
 
@@ -89,6 +101,8 @@ export const CourseForm = (): JSX.Element => {
                         multiline
                         name="personAddress"
                         numberOfLines={ 4 }
+                        onBlur={ () => setActiveFormField('') }
+                        onFocus={ () => setActiveFormField('personAddress') }
                         placeholder="Ingrese la dirección"
                     />
 
@@ -103,6 +117,8 @@ export const CourseForm = (): JSX.Element => {
                         }
                         label="Publicación de estudio:"
                         name="publication"
+                        onBlur={ () => setActiveFormField('') }
+                        onFocus={ () => setActiveFormField('publication') }
                         placeholder="Ingrese la publicación"
                         style={{ marginBottom: margins.xl }}
                     />
