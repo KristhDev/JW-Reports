@@ -13,6 +13,7 @@ export const PERMISSIONS_INITIAL_STATE: PermissionsState = {
         notifications: 'unavailable',
         readExternalStorage: 'unavailable',
         readMediaImages: 'unavailable',
+        recordAudio: 'unavailable',
         writeExternalStorage: 'unavailable',
     }
 }
