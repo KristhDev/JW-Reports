@@ -5,7 +5,8 @@ import { useStyles } from 'react-native-unistyles';
 
 /* Components */
 import { RevisitForm } from '../../components';
-import { Title } from '@ui';
+import { MicrophoneBtn, useStatus } from '@shared';
+import { Title, useUI } from '@ui';
 
 /* Hooks */
 import { useRevisits } from '../../hooks';
@@ -21,24 +22,38 @@ import { themeStylesheet } from '@theme';
  */
 const AddOrEditRevisit = (): JSX.Element => {
     const { styles: themeStyles, theme: { fontSizes, margins } } = useStyles(themeStylesheet);
+
     const { state: { selectedRevisit } } = useRevisits();
+    const { setStatus } = useStatus();
+    const { state: { activeFormField }, setRecordedAudio } = useUI();
+
+    const conditionForNotRecording = (activeFormField.trim().length === 0);
+    const handleNotRecording = () => setStatus({ code: 400, msg: 'Por favor seleccione un campo para grabar el audio.' });
 
     return (
-        <KeyboardAwareScrollView
-            bottomOffset={ margins.xl }
-            contentContainerStyle={{ flexGrow: 1 }}
-            overScrollMode="never"
-        >
-            <View style={ themeStyles.screenContainer }>
-                <Title
-                    containerStyle={ themeStyles.titleContainer }
-                    text={ `${ (selectedRevisit.id === '') ? 'AGREGAR' : 'EDITAR' } REVISITA` }
-                    textStyle={{ fontSize: fontSizes.md }}
-                />
+        <>
+            <KeyboardAwareScrollView
+                bottomOffset={ margins.xl }
+                contentContainerStyle={{ flexGrow: 1 }}
+                overScrollMode="never"
+            >
+                <View style={[ themeStyles.screenContainer, { paddingBottom: margins.xxl } ]}>
+                    <Title
+                        containerStyle={ themeStyles.titleContainer }
+                        text={ `${ (selectedRevisit.id === '') ? 'AGREGAR' : 'EDITAR' } REVISITA` }
+                        textStyle={{ fontSize: fontSizes.md }}
+                    />
 
-                <RevisitForm />
-            </View>
-        </KeyboardAwareScrollView>
+                    <RevisitForm />
+                </View>
+            </KeyboardAwareScrollView>
+
+            <MicrophoneBtn
+                conditionForNotRecording={ conditionForNotRecording }
+                onNotRecording={ handleNotRecording }
+                onRecord={ setRecordedAudio }
+            />
+        </>
     );
 }
 
