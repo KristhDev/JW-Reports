@@ -35,6 +35,7 @@ const usePermissions = () => {
             notifications: PERMISSIONS.ANDROID.POST_NOTIFICATIONS,
             readExternalStorage: PERMISSIONS.ANDROID.READ_EXTERNAL_STORAGE,
             readMediaImages: PERMISSIONS.ANDROID.READ_MEDIA_IMAGES,
+            recordAudio: PERMISSIONS.ANDROID.RECORD_AUDIO,
             writeExternalStorage: PERMISSIONS.ANDROID.WRITE_EXTERNAL_STORAGE
         }
 
