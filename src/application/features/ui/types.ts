@@ -3,8 +3,10 @@ export type UserInterface = {
 }
 
 export interface UIState {
+    activeFormField: string;
     isDataExporting: boolean;
     isKeyboardVisible: boolean;
+    recordedAudio: string;
     userInterface: UserInterface;
 }
 

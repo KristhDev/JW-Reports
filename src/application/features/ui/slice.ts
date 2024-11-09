@@ -8,8 +8,10 @@ import { SetIsExportingPayload } from '../types';
 import { getUIStored } from '../functions';
 
 export const UI_INITIAL_STATE: UIState = {
+    activeFormField: '',
     isDataExporting: false,
     isKeyboardVisible: false,
+    recordedAudio: '',
     userInterface: getUIStored()
 }
 
@@ -17,6 +19,14 @@ const uiSlice = createSlice({
     name: 'ui',
     initialState: UI_INITIAL_STATE,
     reducers: {
+        setActiveFormField: (state, action: PayloadAction<{ activeFormField: string }>) => {
+            state.activeFormField = action.payload.activeFormField;
+        },
+
+        setRecordedAudio: (state, action: PayloadAction<{ recordedAudio: string }>) => {
+            state.recordedAudio = action.payload.recordedAudio;
+        },
+
         setIsDataExporting: (state, action: PayloadAction<SetIsExportingPayload>) => {
             state.isDataExporting = action.payload.isExporting;
         },
@@ -31,6 +41,6 @@ const uiSlice = createSlice({
     }
 });
 
-export const { setIsDataExporting, setIsKeyboardVisible, setOldDatetimePicker } = uiSlice.actions;
+export const { setIsDataExporting, setActiveFormField, setRecordedAudio, setIsKeyboardVisible, setOldDatetimePicker } = uiSlice.actions;
 export default uiSlice.reducer;
 
