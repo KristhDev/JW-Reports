@@ -3,6 +3,8 @@ import { EmitterSubscription, Keyboard } from 'react-native';
 /* Features */
 import { useAppDispatch, useAppSelector } from '@application/store';
 import {
+    setActiveFormField as setActiveFormFieldAction,
+    setRecordedAudio as setRecordedAudioAction,
     setIsDataExporting as setIsDataExportingAction,
     setIsKeyboardVisible as setIsKeyboardVisibleAction,
     setOldDatetimePicker as setOldDatetimePickerAction
@@ -15,6 +17,8 @@ const useUI = () => {
     const dispatch = useAppDispatch();
     const state = useAppSelector(store => store.ui);
 
+    const setActiveFormField = (activeFormField: string) => dispatch(setActiveFormFieldAction({ activeFormField }));
+    const setRecordedAudio = (recordedAudio: string) => dispatch(setRecordedAudioAction({ recordedAudio }));
     const setIsDataExporting = (isExporting: boolean) => dispatch(setIsDataExportingAction({ isExporting }));
     const setIsKeyboardVisible = (isVisible: boolean) => dispatch(setIsKeyboardVisibleAction({ isVisible }));
 
@@ -60,6 +64,8 @@ const useUI = () => {
     return {
         state,
 
+        setActiveFormField,
+        setRecordedAudio,
         listenHideKeyboard,
         listenShowKeyboard,
         setIsDataExporting,
