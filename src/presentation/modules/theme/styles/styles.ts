@@ -90,6 +90,14 @@ export const themeStylesheet = createStyleSheet(({ borderRadius, colors, fontSiz
         fontSize: (fontSizes.sm + 1),
     },
 
+    formInputBtn: {
+        height: 50,
+        minWidth: 0,
+        paddingHorizontal: 0,
+        paddingVertical: 0,
+        width: 50
+    },
+
     formInputText: {
         color: colors.inputText,
         flex: 1,
