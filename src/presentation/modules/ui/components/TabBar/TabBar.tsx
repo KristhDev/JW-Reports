@@ -25,7 +25,7 @@ export const TabBar: FC<BottomTabBarProps> = ({ state, descriptors }): JSX.Eleme
     const navigation = useNavigation();
     const { styles } = useStyles(stylesheet);
 
-    const { state: { isKeyboardVisible } } = useUI();
+    const { state: { keyboard } } = useUI();
 
     const icons = [ 'home-outline', 'briefcase-outline', 'book-outline' ];
     const firstScreens = {
@@ -48,7 +48,7 @@ export const TabBar: FC<BottomTabBarProps> = ({ state, descriptors }): JSX.Eleme
             : descriptors[state.routes[index].key]?.options.tabBarInactiveTintColor;
     }
 
-    if (isKeyboardVisible) return (<></>);
+    if (keyboard.isVisible) return (<></>);
 
     return (
         <View style={ styles.container }>
