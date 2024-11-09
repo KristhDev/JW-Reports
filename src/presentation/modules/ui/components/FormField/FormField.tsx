@@ -56,7 +56,7 @@ export const FormField: FC<FormFieldProps> = ({
 
     const textInputRef = useRef<TextInput>(null);
 
-    const { state: { isKeyboardVisible } } = useUI();
+    const { state: { keyboard } } = useUI();
     const { styles: themeStyles, theme: { colors } } = useStyles(themeStylesheet);
 
     /**
@@ -90,8 +90,8 @@ export const FormField: FC<FormFieldProps> = ({
     }
 
     useEffect(() => {
-        if (!isKeyboardVisible) handleBlur();
-    }, [ isKeyboardVisible ]);
+        if (!keyboard.isVisible) handleBlur();
+    }, [ keyboard.isVisible ]);
 
     return (
         <View style={[ themeStyles.formField, style ]}>
