@@ -3,7 +3,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import { useStyles } from 'react-native-unistyles';
 
 /* Components */
-import { Fab } from '@ui';
+import { Fab, useUI } from '@ui';
 
 /* Hooks */
 import { useVoiceRecorder } from '../../hooks';
@@ -27,8 +27,10 @@ import { themeStylesheet } from '@theme';
  * @returns {JSX.Element} A button to record audio from the device's microphone.
  */
 export const MicrophoneBtn: FC<MicrophoneBtnProps> = ({ conditionForNotRecording = false, onNotRecording, onRecord, style }): JSX.Element => {
-    const { styles: themeStyles, theme: { colors, fontSizes } } = useStyles(themeStylesheet);
+    const { styles: themeStyles, theme: { colors, fontSizes, margins } } = useStyles(themeStylesheet);
+
     const { isRecording, record, startRecording, stopRecording } = useVoiceRecorder();
+    const { state: { keyboard } } = useUI();
 
     /**
      * Handles the record button's onPress event.
@@ -64,7 +66,7 @@ export const MicrophoneBtn: FC<MicrophoneBtnProps> = ({ conditionForNotRecording
                 />
             }
             onPress={ handleRecord }
-            style={[ themeStyles.fabBottomRight, style ]}
+            style={[ themeStyles.fabBottomRight, { bottom: keyboard.height + margins.sm }, style ]}
             touchColor="rgba(0, 0, 0, 0.15)"
         />
     );
