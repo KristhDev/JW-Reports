@@ -10,6 +10,10 @@ import { ImageModel } from '@domain/models';
 import { OpenCameraOptions, OpenPickerOptions } from '@infrasturcture/interfaces';
 
 export class DeviceImageService {
+    private static readonly cropperStatusBarColor: string = '#000000';
+    private static readonly cropperToolbarColor: string = '#000000';
+    private static readonly cropperWidgetColor: string = '#FFFFFF';
+
     /**
      * Cleans the temporary files created by the library.
      * @returns A promise that resolves when the cleaning is done.
@@ -65,10 +69,10 @@ export class DeviceImageService {
         try {
             const result = await ImageCropPicker.openCamera({
                 cropperActiveWidgetColor: options.cropperActiveWidgetColor,
-                cropperStatusBarColor: '#000000',
-                cropperToolbarColor: '#000000',
+                cropperStatusBarColor: this.cropperStatusBarColor,
+                cropperToolbarColor: this.cropperToolbarColor,
                 cropperToolbarTitle: options.cropperToolbarTitle,
-                cropperToolbarWidgetColor: '#FFFFFF',
+                cropperToolbarWidgetColor: this.cropperWidgetColor,
                 cropping: options.cropping,
                 freeStyleCropEnabled: true,
                 includeBase64: true,
@@ -84,7 +88,7 @@ export class DeviceImageService {
             }
         }
         catch (error) {
-            const imageError = new ImageError((error as any).message);
+            const imageError = new ImageError((error as any).message, (error as any).code);
             console.error(imageError);
             throw imageError;
         }
@@ -107,10 +111,10 @@ export class DeviceImageService {
         try {
             const result = await ImageCropPicker.openPicker({
                 cropperActiveWidgetColor: options.cropperActiveWidgetColor,
-                cropperStatusBarColor: '#000000',
-                cropperToolbarColor: '#000000',
+                cropperStatusBarColor: this.cropperStatusBarColor,
+                cropperToolbarColor: this.cropperToolbarColor,
                 cropperToolbarTitle: options.cropperToolbarTitle,
-                cropperToolbarWidgetColor: '#FFFFFF',
+                cropperToolbarWidgetColor: this.cropperWidgetColor,
                 cropping: options.cropping,
                 freeStyleCropEnabled: true,
                 includeBase64: true,
@@ -127,7 +131,7 @@ export class DeviceImageService {
             }
         }
         catch (error) {
-            const imageError = new ImageError((error as any).message);
+            const imageError = new ImageError((error as any).message, (error as any).code);
             console.error(imageError);
             throw imageError;
         }
