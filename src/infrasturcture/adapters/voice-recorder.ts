@@ -38,11 +38,12 @@ export class VoiceRecorder {
     /**
      * Sets a callback to be called when an error occurs in the speech recognition session.
      *
-     * @param {VoiceRecorderError} error - The error that occurred in the speech recognition session.
+     * @param {(error: VoiceRecorderError) => void} callback - The callback to be called when an error occurs in the speech recognition session.
      * @returns {void} - This function does not return anything.
      */
     public static onSpeechError(callback: (error: VoiceRecorderError) => void): void {
         Voice.onSpeechError = (e) => {
+            console.error(e.error);
             const error = new VoiceRecorderError(e.error?.message || appMessages.UNEXPECTED_ERROR);
             callback(error);
         }
