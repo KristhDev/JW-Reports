@@ -1,4 +1,5 @@
 export * from './app.error';
+export * from './cloud.error';
 export * from './dto.error';
 export * from './email.error';
 export * from './file-system.error';
