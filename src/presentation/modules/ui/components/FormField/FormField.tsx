@@ -1,5 +1,5 @@
 import React, { useState, FC, useRef, useEffect } from 'react';
-import { View, Text, TextInput } from 'react-native';
+import { View, Text, TextInput, NativeSyntheticEvent, TextInputFocusEventData } from 'react-native';
 import { useStyles } from 'react-native-unistyles';
 import { useField } from 'formik';
 
@@ -56,23 +56,42 @@ export const FormField: FC<FormFieldProps> = ({
 
     const textInputRef = useRef<TextInput>(null);
 
-    const { state: { isKeyboardVisible } } = useUI();
+    const { state: { keyboard } } = useUI();
     const { styles: themeStyles, theme: { colors } } = useStyles(themeStylesheet);
 
     /**
-     * Handles the blur event for the input field.
+     * Handles the focus event of the form field by setting the `isFocused` state
+     * to `true`, calling the `onFocus` prop if it exists, and setting the focus
+     * to the text input field if it has been assigned to the `textInputRef` ref.
+     * @param {NativeSyntheticEvent<TextInputFocusEventData>} e - The focus event
+     * @return {void} - Returns nothing
+     */
+    const handleFocus = (e: NativeSyntheticEvent<TextInputFocusEventData>): void => {
+        setIsFocused(true);
+        rest.onFocus && rest.onFocus(e);
+        textInputRef.current?.focus();
+    }
+
+    /**
+     * Sets the `isFocused` state to `false`, removes focus from the text
+     * input field, and calls the `onBlur` prop if it exists. Also, it
+     * sets the `touched` state to `true` if the field has not been touched
+     * before.
      *
+     * @param {NativeSyntheticEvent<TextInputFocusEventData>} e - The event
+     *  that triggered the blur
      * @return {void} This function does not return anything.
      */
-    const handleBlur = (): void => {
+    const handleBlur = (e?: NativeSyntheticEvent<TextInputFocusEventData>): void => {
         setIsFocused(false);
         textInputRef.current?.blur();
+        rest.onBlur && e && rest.onBlur(e);
         helpers.setTouched(!meta.touched);
     }
 
     useEffect(() => {
-        if (!isKeyboardVisible) handleBlur();
-    }, [ isKeyboardVisible ]);
+        if (!keyboard.isVisible) handleBlur();
+    }, [ keyboard.isVisible ]);
 
     return (
         <View style={[ themeStyles.formField, style ]}>
@@ -116,7 +135,7 @@ export const FormField: FC<FormFieldProps> = ({
                             ref={ textInputRef }
                             { ...rest }
                             onBlur={ handleBlur }
-                            onFocus={ () => setIsFocused(true) }
+                            onFocus={ handleFocus }
                             testID="form-field-text-input"
                         />
 

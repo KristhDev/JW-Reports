@@ -10,6 +10,7 @@ import {
     PaginationPayload,
     RemoveResourcePayload,
     SetIsDeletingPayload,
+    SetIsExportingPayload,
     SetIsLoadingPayload
 } from '../types';
 
@@ -41,6 +42,7 @@ export const REVISITS_INITIAL_STATE: RevisitsState = {
     isLastRevisitLoading: false,
     isRevisitDeleting: false,
     isRevisitLoading: false,
+    isRevisitsExporting: false,
     isRevisitsLoading: false,
     lastRevisit: INIT_REVISIT,
     refreshRevisits: false,
@@ -124,6 +126,10 @@ const revisitsSlice = createSlice({
             state.isRevisitLoading = action.payload.isLoading;
         },
 
+        setIsRevisitsExporting: (state, action: PayloadAction<SetIsExportingPayload>) => {
+            state.isRevisitsExporting = action.payload.isExporting;
+        },
+
         setIsRevisitsLoading: (state, action: PayloadAction<SetIsLoadingPayload>) => {
             state.isRevisitsLoading = action.payload.isLoading;
         },
@@ -186,6 +192,7 @@ export const {
     setHasMoreRevisits,
     setIsLastRevisitLoading,
     setIsRevisitDeleting,
+    setIsRevisitsExporting,
     setIsRevisitLoading,
     setIsRevisitsLoading,
     setLastRevisit,

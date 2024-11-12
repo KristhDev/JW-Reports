@@ -4,7 +4,7 @@ import { decode } from 'base64-arraybuffer';
 import { supabase } from '@config';
 
 /* Errors */
-import { ImageError } from '@domain/errors';
+import { CloudError } from '@domain/errors';
 
 /* Interfaces */
 import { DeleteImageOptions, UploadImageOptions } from '@infrasturcture/interfaces';
@@ -25,7 +25,12 @@ export class CloudService {
             .from(bucket)
             .remove([ `${ folder }/${ imageId }` ]);
 
-        if (result.error) throw new ImageError(result.error.message);
+        if (result.error) {
+            throw new CloudError(
+                result.error.message,
+                ('statusCode' in (result.error as any)) ? +(result.error as any).statusCode : 500
+            );
+        }
     }
 
     /**
@@ -47,7 +52,12 @@ export class CloudService {
                 contentType: image.mime
             });
 
-        if (result.error) throw new ImageError(result.error.message);
+        if (result.error) {
+            throw new CloudError(
+                result.error.message,
+                ('statusCode' in (result.error as any)) ? +(result.error as any).statusCode : 500
+            );
+        }
 
         const { data } = supabase.storage
             .from(bucket)

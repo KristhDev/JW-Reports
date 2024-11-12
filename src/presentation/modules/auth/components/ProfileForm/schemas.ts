@@ -1,6 +1,6 @@
 import { object, string } from 'yup';
 
-import { authMessages, precursorMessages, PRECURSORS_OPTIONS } from '../../utils';
+import { authMessages, precursorMessages, PRECURSORS_OPTIONS } from '@application/constants';
 
 /* Validation schema for profile values */
 export const profileFormSchema = object().shape({

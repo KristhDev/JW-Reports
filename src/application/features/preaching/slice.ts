@@ -2,7 +2,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 /* Interfaces */
 import { PreachingEntity } from '@domain/entities';
-import { RemoveResourcePayload, SetIsDeletingPayload, SetIsLoadingPayload } from '../types';
+import { RemoveResourcePayload, SetIsDeletingPayload, SetIsExportingPayload, SetIsLoadingPayload } from '../types';
 import { PreachingPayload, PreachingState, SetPreachingsPayload, SetSelectedDatePayload } from './types';
 
 /* Initial preaching */
@@ -19,8 +19,9 @@ export const INIT_PREACHING: PreachingEntity = {
 /* Initial state */
 export const PREACHING_INITIAL_STATE: PreachingState = {
     isPreachingDeleting: false,
-    isPreachingsLoading: false,
     isPreachingLoading: false,
+    isPreachingsExporting: false,
+    isPreachingsLoading: false,
     preachings: [],
     selectedDate: new Date(),
     seletedPreaching: INIT_PREACHING
@@ -59,6 +60,10 @@ const preachingSlice = createSlice({
             state.isPreachingLoading = action.payload.isLoading;
         },
 
+        setIsPreachingsExporting: (state, action: PayloadAction<SetIsExportingPayload>) => {
+            state.isPreachingsExporting = action.payload.isExporting;
+        },
+
         setIsPreachingsLoading: (state, action: PayloadAction<SetIsLoadingPayload>) => {
             state.isPreachingsLoading = action.payload.isLoading;
         },
@@ -95,6 +100,7 @@ export const {
     removePreaching,
     setIsPreachingDeleting,
     setIsPreachingLoading,
+    setIsPreachingsExporting,
     setIsPreachingsLoading,
     setPreachings,
     setSelectedDate,

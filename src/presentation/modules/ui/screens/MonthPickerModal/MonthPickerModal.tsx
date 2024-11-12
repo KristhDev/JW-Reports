@@ -62,10 +62,8 @@ const MonthPickerModal: FC<MonthPickerModalProps> = ({ isOpen, monthDate, onClos
      * @return {void} Nothing is returned, the onConfirm callback is called internally.
      */
     const handleSelectMonthYear = (): void => {
-        const selectedDateWithMonth = Time.setMonthToDate(monthDate, monthNumber);
-        const selectedDateWithYear = Time.setYearToDate(selectedDateWithMonth, year);
-
-        onConfirm(selectedDateWithYear);
+        const selectedDateWithMonthAndYear = Time.setMonthAndYearToDate(monthDate, monthNumber, year);
+        onConfirm(selectedDateWithMonthAndYear);
     }
 
     /**

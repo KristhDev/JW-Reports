@@ -1,6 +1,6 @@
 import { object, string } from 'yup';
 
-import { authMessages } from '../../utils';
+import { authMessages } from '@application/constants';
 
 /* Validation schema to forgot password */
 export const forgotPasswordFormSchema = object().shape({

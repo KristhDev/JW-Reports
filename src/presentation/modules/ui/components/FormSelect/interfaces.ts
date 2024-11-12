@@ -1,8 +1,8 @@
 import { ReactNode } from 'react';
 import { StyleProp, ViewStyle, TextStyle } from 'react-native';
 
-/* Hooks */
-import { ItemOption } from '../../interfaces';
+/* Interfaces */
+import { ItemOption } from '@infrasturcture/interfaces';
 
 /* Defining the props that the component will receive. */
 export interface FormSelectProps {

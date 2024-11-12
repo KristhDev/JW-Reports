@@ -1,5 +1,8 @@
 import { useNavigation } from '@react-navigation/native';
 
+/* Constants */
+import { authMessages, coursesMessages, lessonsMessages } from '@application/constants';
+
 /* Features */
 import { useAppDispatch, useAppSelector } from '@application/store';
 import {
@@ -35,16 +38,12 @@ import { LessonEntity, LessonWithCourseEntity } from '@domain/entities';
 import { CoursesService, LessonsService } from '@domain/services';
 
 /* Hooks */
-import { coursesMessages } from '@courses';
+import { useAuth } from '@auth';
 import { useNetwork, useStatus } from '@shared';
 
 /* Interfaces */
 import { LessonFormValues } from '../interfaces';
 import { LoadResourcesOptions } from '@ui';
-
-/* Utils */
-import { authMessages, useAuth } from '@auth';
-import { lessonsMessages } from '../utils';
 
 /**
  * Hook to management lessons of store with state and actions
@@ -290,7 +289,7 @@ const useLessons = () => {
         setIsLessonsLoading(true);
 
         try {
-            const lessons = await LessonsService.getAllByCourseId(selectedCourse.id, {
+            const lessons = await LessonsService.paginateByCourseId(selectedCourse.id, {
                 search,
                 pagination: {
                     from: (refresh) ? 0 : state.lessonsPagination.from,

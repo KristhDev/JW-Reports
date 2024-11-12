@@ -1,16 +1,16 @@
 import React, { FC } from 'react';
 
+/* Constants */
+import { THEME_OPTIONS } from '@application/constants';
+
+/* Context */
+import { Theme } from '@application/context';
+
 /* Screens */
 import { OptionsModal, ModalProps } from '@ui';
 
 /* Hooks */
 import { useTheme } from '../../hooks';
-
-/* Interfaces */
-import { Theme } from '@application/context';
-
-/* Utils */
-import { THEME_OPTIONS } from '../../utils';
 
 /**
  * This is a modal that allows the user to change the theme.

@@ -1,5 +1,8 @@
 import { request, PERMISSIONS, PermissionStatus } from 'react-native-permissions';
 
+/* Constants */
+import { permissionsMessages } from '@application/constants';
+
 /* Features */
 import { useAppDispatch, useAppSelector } from '@application/store';
 import { checkPermissions as checkPermissionsThunk, setPermission, Permissions } from '@application/features';
@@ -8,7 +11,7 @@ import { checkPermissions as checkPermissionsThunk, setPermission, Permissions }
 import useStatus from './useStatus';
 
 /* Utils */
-import { permissionsMessages, permissionsStatus } from '../utils';
+import { permissionsStatus } from '../utils';
 
 /**
  * Hook to management permissions of store
@@ -31,7 +34,9 @@ const usePermissions = () => {
             camera: PERMISSIONS.ANDROID.CAMERA,
             notifications: PERMISSIONS.ANDROID.POST_NOTIFICATIONS,
             readExternalStorage: PERMISSIONS.ANDROID.READ_EXTERNAL_STORAGE,
-            readMediaImages: PERMISSIONS.ANDROID.READ_MEDIA_IMAGES
+            readMediaImages: PERMISSIONS.ANDROID.READ_MEDIA_IMAGES,
+            recordAudio: PERMISSIONS.ANDROID.RECORD_AUDIO,
+            writeExternalStorage: PERMISSIONS.ANDROID.WRITE_EXTERNAL_STORAGE
         }
 
         const result = await request(askPermissions[permission]);

@@ -1,5 +1,8 @@
 import { useNavigation } from '@react-navigation/native';
 
+/* Constants */
+import { authMessages, preachingMessages } from '@application/constants';
+
 /* Features */
 import { useAppDispatch, useAppSelector } from '@application/store';
 import {
@@ -9,6 +12,7 @@ import {
     removePreaching as removePreachingAction,
     setIsPreachingDeleting as setIsPreachingDeletingAction,
     setIsPreachingLoading as setIsPreachingLoadingAction,
+    setIsPreachingsExporting as setIsPreachingsExportingAction,
     setIsPreachingsLoading as setIsPreachingsLoadingAction,
     setPreachings as setPreachingsAction,
     setSelectedDate as setSelectedDateAction,
@@ -23,20 +27,18 @@ import { CreatePreachingDto, UpdatePreachingDto } from '@domain/dtos';
 import { PreachingEntity } from '@domain/entities';
 
 /* Services */
-import { PreachingService } from '@domain/services';
+import { PreachingReportService, PreachingService } from '@domain/services';
 
 /* Adapters */
-import { Time } from '@infrasturcture/adapters';
+import { FileSystem, PDF, Time } from '@infrasturcture/adapters';
 
 /* Hooks */
+import { useAuth } from '@auth';
 import { useNetwork, useStatus } from '@shared';
 
 /* Interfaces */
 import { PreachingFormValues } from '../interfaces';
-
-/* Utils */
-import { authMessages, useAuth } from '@auth';
-import { preachingMessages } from '../utils';
+import { PdfPreachingsTemplate } from '@domain/templates';
 
 /**
  * Hook to management preaching of store with state and actions
@@ -56,6 +58,7 @@ const usePreaching = () => {
     const removePreaching = (id: string) => dispatch(removePreachingAction({ id }));
     const clearPreaching = () => dispatch(clearPreachingAction());
     const setIsPreachingsLoading = (isLoading: boolean) => dispatch(setIsPreachingsLoadingAction({ isLoading }));
+    const setIsPreachingsExporting = (isExporting: boolean) => dispatch(setIsPreachingsExportingAction({ isExporting }));
     const setIsPreachingLoading = (isLoading: boolean) => dispatch(setIsPreachingLoadingAction({ isLoading }));
     const setSelectedDate = (date: Date) => dispatch(setSelectedDateAction({ selectedDate: date }));
     const setPreachings = (preachings: PreachingEntity[]) => dispatch(setPreachingsAction({ preachings }));
@@ -139,6 +142,51 @@ const usePreaching = () => {
             onFinish && onFinish();
 
             setError(error);
+        }
+    }
+
+    /**
+     * Export all preachings to a PDF file and save it to the user's download directory.
+     *
+     * @param {boolean} showStatusMessage - If true, it will show a status message to the user.
+     * @return {Promise<void>} This function does not return anything.
+     */
+    const exportPreachings = async (showStatusMessage: boolean = true): Promise<void> => {
+        const wifiConnectionAvailable = hasWifiConnection();
+        if (!wifiConnectionAvailable) return;
+
+        const isAuth = isAuthenticated();
+        if (!isAuth) return;
+
+        setIsPreachingsExporting(true);
+
+        try {
+            const allPreachings = await PreachingService.getAllByUserId(user.id);
+
+            const preachingsGrouped = PreachingReportService.groupByMonthAndYear(allPreachings);
+            const reportsPreaching = preachingsGrouped.map(PreachingReportService.generatePreachingReportForExport);
+
+            const fileName = `Informes_de_Predicación_de_${ user.name }_${ user.surname }`;
+            const preachingsTemplate = PdfPreachingsTemplate.generate({ fullName: `${ user.name } ${ user.surname }`, reports: reportsPreaching });
+
+            const pdfPath = await PDF.writeFromHTML({
+                directory: 'Exports',
+                fileName,
+                html: preachingsTemplate
+            });
+
+            await FileSystem.moveFile({
+                from: pdfPath,
+                to: `${ FileSystem.downloadDir }/${ fileName }.pdf`
+            });
+
+            if (showStatusMessage) setStatus({ code: 200, msg: preachingMessages.EXPORTED_SUCCESS });
+        }
+        catch (error) {
+            setError(error);
+        }
+        finally {
+            setIsPreachingsExporting(false);
         }
     }
 
@@ -244,6 +292,7 @@ const usePreaching = () => {
 
         // Functions
         deletePreaching,
+        exportPreachings,
         loadPreachings,
         savePreaching,
         updatePreaching

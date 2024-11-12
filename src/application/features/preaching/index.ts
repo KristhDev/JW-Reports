@@ -7,6 +7,7 @@ export {
     removePreaching,
     setIsPreachingDeleting,
     setIsPreachingLoading,
+    setIsPreachingsExporting,
     setIsPreachingsLoading,
     setPreachings,
     setSelectedDate,

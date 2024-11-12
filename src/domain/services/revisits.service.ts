@@ -14,7 +14,7 @@ import { RevisitEntity } from '@domain/entities';
 import { RequestError } from '@domain/errors';
 
 /* Interfaces */
-import { GetAllOptions, RevisitEndpoint } from '@infrasturcture/interfaces';
+import { PaginateOptions, RevisitEndpoint } from '@infrasturcture/interfaces';
 import { RevisitFilter } from '@revisits';
 
 export class RevisitsService {
@@ -93,14 +93,17 @@ export class RevisitsService {
     }
 
     /**
-     * Gets all the revisits of a user with the given id, using the given options.
+     * Paginates revisits for a specific user based on the given options.
      *
-     * @param {string} userId - The id of the user whose revisits to get.
-     * @param {GetAllOptions<RevisitFilter>} options - The options to use to get the revisits.
-     * @returns {Promise<RevisitEntity[]>} A promise that resolves with an array of
-     * revisits or a RequestError if something goes wrong.
+     * @param {string} userId - The ID of the user whose revisits are to be paginated.
+     * @param {PaginateOptions<RevisitFilter>} options - The options to filter and paginate revisits.
+     * - filter: Specifies the revisit filter - 'visited' or 'unvisited'.
+     * - search: A search string to filter revisits by name, about, or address.
+     * - pagination: Contains 'from' and 'to' indices for pagination.
+     * @returns {Promise<RevisitEntity[]>} A promise that resolves to an array of revisits for the user.
+     * @throws {RequestError} If there is an error in fetching the revisits.
      */
-    public static async getAllByUserId(userId: string, options: GetAllOptions<RevisitFilter>): Promise<RevisitEntity[]> {
+    public static async paginateByUserId(userId: string, options: PaginateOptions<RevisitFilter>): Promise<RevisitEntity[]> {
         const revisitsPromise = supabase.from('revisits')
             .select<'*', RevisitEndpoint>()
             .eq('user_id', userId);
@@ -121,6 +124,31 @@ export class RevisitsService {
             .range(options.pagination.from, options.pagination.to);
 
         const result = await revisitsPromise;
+
+        if (result.error) {
+            throw new RequestError(
+                result.error.message,
+                result.status || 400,
+                result.error.code
+            );
+        }
+
+        return result.data.map(RevisitEntity.fromEndpoint);
+    }
+
+    /**
+     * Retrieves all revisits for a specific user.
+     *
+     * @param {string} userId - The ID of the user whose revisits are to be retrieved.
+     * @returns {Promise<RevisitEntity[]>} A promise that resolves to an array of revisits for the user.
+     * @throws {RequestError} If there is an error in fetching the revisits.
+     */
+    public static async getAllByUserId(userId: string): Promise<RevisitEntity[]> {
+        const result = await supabase.from('revisits')
+            .select<'*', RevisitEndpoint>()
+            .eq('user_id', userId)
+            .order('next_visit', { ascending: false })
+            .order('created_at', { ascending: false });
 
         if (result.error) {
             throw new RequestError(

@@ -9,7 +9,9 @@ export const checkPermissions = createAsyncThunk(
             PERMISSIONS.ANDROID.CAMERA,
             PERMISSIONS.ANDROID.POST_NOTIFICATIONS,
             PERMISSIONS.ANDROID.READ_EXTERNAL_STORAGE,
-            PERMISSIONS.ANDROID.READ_MEDIA_IMAGES
+            PERMISSIONS.ANDROID.READ_MEDIA_IMAGES,
+            PERMISSIONS.ANDROID.RECORD_AUDIO,
+            PERMISSIONS.ANDROID.WRITE_EXTERNAL_STORAGE,
         ]);
 
         return {
@@ -17,7 +19,9 @@ export const checkPermissions = createAsyncThunk(
                 camera: permissions['android.permission.CAMERA'],
                 notifications: permissions['android.permission.POST_NOTIFICATIONS'],
                 readExternalStorage: permissions['android.permission.READ_EXTERNAL_STORAGE'],
-                readMediaImages: permissions['android.permission.READ_MEDIA_IMAGES']
+                readMediaImages: permissions['android.permission.READ_MEDIA_IMAGES'],
+                recordAudio: permissions['android.permission.RECORD_AUDIO'],
+                writeExternalStorage: permissions['android.permission.WRITE_EXTERNAL_STORAGE'],
             }
         }
     }

@@ -10,12 +10,45 @@ import { ImageModel } from '@domain/models';
 import { OpenCameraOptions, OpenPickerOptions } from '@infrasturcture/interfaces';
 
 export class DeviceImageService {
+    private static readonly cropperStatusBarColor: string = '#000000';
+    private static readonly cropperToolbarColor: string = '#000000';
+    private static readonly cropperWidgetColor: string = '#FFFFFF';
+
     /**
      * Cleans the temporary files created by the library.
      * @returns A promise that resolves when the cleaning is done.
      */
     public static async clean(): Promise<void> {
         await ImageCropPicker.clean();
+    }
+
+    /**
+     * Converts an image URI to a Base64 string.
+     * This method fetches the image located at the provided URI, reads it as a Blob,
+     * and converts it to a Base64-encoded string using a FileReader.
+     *
+     * @param {string} uri - The URI of the image to convert.
+     * @returns {Promise<string>} - A promise that resolves with the Base64 string of the image.
+     * @throws {ImageError} - If an error occurs during fetching or reading the image.
+     */
+    public static async getBase64FromUri(uri: string): Promise<string> {
+        try {
+            const blob = await fetch(uri).then(res => res.blob());
+            const reader = new FileReader();
+
+            const base64 = new Promise((resolve, reject) => {
+                reader.onload = () => resolve(reader.result as string);
+                reader.onerror = reject;
+                reader.readAsDataURL(blob);
+            });
+
+            return base64 as any;
+        }
+        catch (error) {
+            const imageError = new ImageError((error as any).message);
+            console.error(imageError);
+            throw imageError;
+        }
     }
 
     /**
@@ -36,10 +69,10 @@ export class DeviceImageService {
         try {
             const result = await ImageCropPicker.openCamera({
                 cropperActiveWidgetColor: options.cropperActiveWidgetColor,
-                cropperStatusBarColor: '#000000',
-                cropperToolbarColor: '#000000',
+                cropperStatusBarColor: this.cropperStatusBarColor,
+                cropperToolbarColor: this.cropperToolbarColor,
                 cropperToolbarTitle: options.cropperToolbarTitle,
-                cropperToolbarWidgetColor: '#FFFFFF',
+                cropperToolbarWidgetColor: this.cropperWidgetColor,
                 cropping: options.cropping,
                 freeStyleCropEnabled: true,
                 includeBase64: true,
@@ -55,8 +88,8 @@ export class DeviceImageService {
             }
         }
         catch (error) {
-            const imageError = new ImageError((error as any).message);
-            console.log(imageError);
+            const imageError = new ImageError((error as any).message, (error as any).code);
+            console.error(imageError);
             throw imageError;
         }
     }
@@ -78,10 +111,10 @@ export class DeviceImageService {
         try {
             const result = await ImageCropPicker.openPicker({
                 cropperActiveWidgetColor: options.cropperActiveWidgetColor,
-                cropperStatusBarColor: '#000000',
-                cropperToolbarColor: '#000000',
+                cropperStatusBarColor: this.cropperStatusBarColor,
+                cropperToolbarColor: this.cropperToolbarColor,
                 cropperToolbarTitle: options.cropperToolbarTitle,
-                cropperToolbarWidgetColor: '#FFFFFF',
+                cropperToolbarWidgetColor: this.cropperWidgetColor,
                 cropping: options.cropping,
                 freeStyleCropEnabled: true,
                 includeBase64: true,
@@ -98,8 +131,8 @@ export class DeviceImageService {
             }
         }
         catch (error) {
-            const imageError = new ImageError((error as any).message);
-            console.log(imageError);
+            const imageError = new ImageError((error as any).message, (error as any).code);
+            console.error(imageError);
             throw imageError;
         }
     }

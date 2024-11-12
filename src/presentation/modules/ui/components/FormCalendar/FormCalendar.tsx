@@ -119,7 +119,7 @@ export const FormCalendar: FC<FormCalendarProps> = ({
                 {/* Field button */}
                 <Button
                     disabled={ !editable }
-                    containerStyle={{ minWidth: 0, paddingHorizontal: (margins.xs + 1) }}
+                    containerStyle={ themeStyles.formInputBtn }
                     icon={ icon }
                     onPress={ () => setShowCalendarModal(true) }
                     pressableStyle={{ marginLeft: margins.sm }}

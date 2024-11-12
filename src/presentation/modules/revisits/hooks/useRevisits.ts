@@ -1,19 +1,23 @@
 import { useNavigation } from '@react-navigation/native';
 
+/* Constants */
+import { authMessages, revisitsMessages } from '@application/constants';
+
 /* Features */
 import { useAppDispatch, useAppSelector } from '@application/store';
 import {
     INIT_REVISIT,
-    Pagination,
     addRevisit as addRevisitAction,
     addRevisits as addRevisitsAction,
     clearRevisits as clearRevisitsAction,
+    Pagination,
     removeRevisit as removeRevisitAction,
     removeRevisits as removeRevisitsAction,
     setHasMoreRevisits as setHasMoreRevisitsAction,
     setIsLastRevisitLoading as setIsLastRevisitLoadingAction,
     setIsRevisitDeleting as setIsRevisitDeletingAction,
     setIsRevisitLoading as setIsRevisitLoadingAction,
+    setIsRevisitsExporting as setIsRevisitsExportingAction,
     setIsRevisitsLoading as setIsRevisitsLoadingAction,
     setLastRevisit as setLastRevisitAction,
     setRefreshRevisits as setRefreshRevisitsAction,
@@ -34,18 +38,21 @@ import { RevisitEntity } from '@domain/entities';
 /* Models */
 import { ImageModel } from '@domain/models';
 
-/* Hooks */
-import { authMessages, useAuth } from '@auth';
-import { useImage, useNetwork, useStatus } from '@shared';
-
-/* Interfaces */
-import { loadRevisitsOptions, RevisitFilter, RevisitFormValues, SaveRevisitOptions } from '../interfaces';
+/* Templates */
+import { PdfRevisitsTemplate } from '@domain/templates';
 
 /* Services */
 import { RevisitsService } from '@domain/services';
 
-/* Utils */
-import { revisitsMessages } from '../utils';
+/* Adapters */
+import { FileSystem, PDF } from '@infrasturcture/adapters';
+
+/* Hooks */
+import { useAuth } from '@auth';
+import { useImage, useNetwork, useStatus } from '@shared';
+
+/* Interfaces */
+import { loadRevisitsOptions, RevisitFilter, RevisitFormValues, SaveRevisitOptions } from '../interfaces';
 
 /* ENV */
 import { SUPABASE_REVISITS_FOLDER } from '@env';
@@ -74,6 +81,7 @@ const useRevisits = () => {
     const setIsLastRevisitLoading = (isLoading: boolean) => dispatch(setIsLastRevisitLoadingAction({ isLoading }));
     const setIsRevisitDeleting = (isDeleting: boolean) => dispatch(setIsRevisitDeletingAction({ isDeleting }));
     const setIsRevisitLoading = (isLoading: boolean) => dispatch(setIsRevisitLoadingAction({ isLoading }));
+    const setIsRevisitsExporting = (isExporting: boolean) => dispatch(setIsRevisitsExportingAction({ isExporting }));
     const setIsRevisitsLoading = (isLoading: boolean) => dispatch(setIsRevisitsLoadingAction({ isLoading }));
     const setLastRevisit = (revisit: RevisitEntity) => dispatch(setLastRevisitAction({ revisit }));
     const setRefreshRevisits = (refresh: boolean) => dispatch(setRefreshRevisitsAction({ refresh }));
@@ -194,6 +202,52 @@ const useRevisits = () => {
     }
 
     /**
+     * This function exports all the revisits of the user to a PDF file.
+     *
+     * @param {boolean} showStatusMessage - This is a flag to indicate whether to show the status message or not, default is `true`
+     * @return {Promise<void>} This function does not return anything
+     */
+    const exportRevisits = async (showStatusMessage: boolean = true): Promise<void> => {
+        const wifiConnectionAvailable = hasWifiConnection();
+        if (!wifiConnectionAvailable) return;
+
+        const isAuth = isAuthenticated();
+        if (!isAuth) return;
+
+        setIsRevisitsExporting(true);
+
+        try {
+            const allRevisits = await RevisitsService.getAllByUserId(user.id);
+
+            const revisitsTemplate = await PdfRevisitsTemplate.generate({
+                fullName: `${ user.name } ${ user.surname }`,
+                revisits: allRevisits
+            });
+
+            const fileName = `Revisitas_de_${ user.name }_${ user.surname }`;
+
+            const pdfPath = await PDF.writeFromHTML({
+                directory: 'Exports',
+                fileName,
+                html: revisitsTemplate
+            });
+
+            await FileSystem.moveFile({
+                from: pdfPath,
+                to: `${ FileSystem.downloadDir }/${ fileName }.pdf`
+            });
+
+            if (showStatusMessage) setStatus({ code: 200, msg: revisitsMessages.EXPORTED_SUCCESS });
+        }
+        catch (error) {
+            setError(error);
+        }
+        finally {
+            setIsRevisitsExporting(false);
+        }
+    }
+
+    /**
      * Loads the last revisit from the database.
      *
      * @return {Promise<void>} - Returns a promise that resolves when the last revisit is loaded.
@@ -249,7 +303,7 @@ const useRevisits = () => {
         }
 
         try {
-            const revisits = await RevisitsService.getAllByUserId(user.id, options);
+            const revisits = await RevisitsService.paginateByUserId(user.id, options);
 
             if (revisits.length >= 10) {
                 setRevisitsPagination({
@@ -377,6 +431,7 @@ const useRevisits = () => {
         // Functions
         completeRevisit,
         deleteRevisit,
+        exportRevisits,
         loadLastRevisit,
         loadRevisits,
         saveRevisit,

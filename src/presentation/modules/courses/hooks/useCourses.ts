@@ -1,5 +1,8 @@
 import { useNavigation } from '@react-navigation/native';
 
+/* Constants */
+import { coursesMessages } from '@application/constants';
+
 /* Features */
 import { useAppDispatch, useAppSelector } from '@application/store';
 import {
@@ -17,6 +20,7 @@ import {
     setCoursesScreenHistory as setCoursesScreenHistoryAction,
     setHasMoreCourses as setHasMoreCoursesAction,
     setIsCourseDeleting as setIsCourseDeletingAction,
+    setIsCoursesExporting as setIsCoursesExportingAction,
     setIsCourseLoading as setIsCourseLoadingAction,
     setIsCoursesLoading as setIsCoursesLoadingAction,
     setRefreshCourses as setRefreshCoursesAction,
@@ -33,6 +37,12 @@ import { CourseEntity, LessonWithCourseEntity } from '@domain/entities';
 /* Services */
 import { CoursesService, LessonsService } from '@domain/services';
 
+/* Templates */
+import { PdfCoursesTemplate } from '@domain/templates';
+
+/* Adapters */
+import { FileSystem, PDF } from '@infrasturcture/adapters';
+
 /* Modules */
 import { useAuth } from '@auth';
 import { useLessons } from '@lessons';
@@ -40,9 +50,6 @@ import { useStatus, useNetwork } from '@shared';
 
 /* Interfaces */
 import { CourseFilter, CourseFormValues, loadCoursesOptions } from '../interfaces';
-
-/* Utils */
-import { coursesMessages } from '../utils';
 
 /**
  * Hook to management courses of store with state and actions
@@ -72,6 +79,7 @@ const useCourses = () => {
     const setCoursesScreenHistory = (newScreen: string) => dispatch(setCoursesScreenHistoryAction({ newScreen }));
     const setHasMoreCourses = (hasMore: boolean) => dispatch(setHasMoreCoursesAction({ hasMore }));
     const setIsCourseDeleting = (isDeleting: boolean) => dispatch(setIsCourseDeletingAction({ isDeleting }));
+    const setIsCoursesExporting = (isExporting: boolean) => dispatch(setIsCoursesExportingAction({ isExporting }));
     const setIsCourseLoading = (isLoading: boolean) => dispatch(setIsCourseLoadingAction({ isLoading }));
     const setIsCoursesLoading = (isLoading: boolean) => dispatch(setIsCoursesLoadingAction({ isLoading }));
     const setRefreshCourses = (refresh: boolean) => dispatch(setRefreshCoursesAction({ refresh }));
@@ -221,6 +229,53 @@ const useCourses = () => {
     }
 
     /**
+     * This function exports all the courses of the current user to a PDF file that is saved in the device's downloads folder.
+     * The file name is in the form "Cursos_de_<name>_<surname>.pdf".
+     *
+     * @param {boolean} showStatusMessage - Whether to show a status message when the export is finished.
+     * @return {Promise<void>} This function does not return anything.
+     */
+    const exportCourses = async (showStatusMessage: boolean = true): Promise<void> => {
+        const wifiConnectionAvailable = hasWifiConnection();
+        if (!wifiConnectionAvailable) return;
+
+        const isAuth = isAuthenticated();
+        if (!isAuth) return;
+
+        setIsCoursesExporting(true);
+
+        try {
+            const allCourses = await CoursesService.getAllByUserId(user.id);
+
+            const coursesTemplate = PdfCoursesTemplate.generate({
+                courses: allCourses,
+                fullName: `${ user.name } ${ user.surname }`,
+            });
+
+            const fileName = `Cursos_de_${ user.name }_${ user.surname }`;
+
+            const pdfPath = await PDF.writeFromHTML({
+                directory: 'Exports',
+                fileName,
+                html: coursesTemplate
+            });
+
+            await FileSystem.moveFile({
+                from: pdfPath,
+                to: `${ FileSystem.downloadDir }/${ fileName }.pdf`
+            });
+
+            if (showStatusMessage) setStatus({ code: 200, msg: coursesMessages.EXPORTED_SUCCESS });
+        }
+        catch (error) {
+            setError(error);
+        }
+        finally {
+            setIsCoursesExporting(false);
+        }
+    }
+
+    /**
      * This function is to finish or start a course again.
      *
      * @param {Function} onFinish - This callback executed when the process is finished (success or failure)
@@ -288,7 +343,7 @@ const useCourses = () => {
         setIsCoursesLoading(true);
 
         try {
-            const courses = await CoursesService.getAllByUserId(user.id, {
+            const courses = await CoursesService.paginateByUserId(user.id, {
                 filter,
                 search,
                 pagination: {
@@ -407,6 +462,7 @@ const useCourses = () => {
         // Functions
         activeOrSuspendCourse,
         deleteCourse,
+        exportCourses,
         finishOrStartCourse,
         loadCourses,
         saveCourse,

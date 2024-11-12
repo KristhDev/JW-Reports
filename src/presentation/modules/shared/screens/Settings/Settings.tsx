@@ -3,6 +3,9 @@ import { Linking, ScrollView, Text } from 'react-native';
 import { useStyles } from 'react-native-unistyles';
 import { useNavigation } from '@react-navigation/native';
 
+/* Constants */
+import { THEME_OPTIONS } from '@application/constants';
+
 /* Adapters */
 import { DeviceInfo } from '@infrasturcture/adapters';
 
@@ -11,7 +14,7 @@ import { REPOSITORY_URL } from '@env';
 
 /* Modules */
 import { useStatus } from '../../hooks';
-import { ThemeModal, useTheme, THEME_OPTIONS } from '@theme';
+import { ThemeModal, useTheme } from '@theme';
 import { SectionBtn, SectionContent, Switch, useUI } from '@ui';
 
 /* Package */
@@ -65,6 +68,12 @@ const Settings = (): JSX.Element => {
                         onPress={ () => navigation.navigate('CredentialsScreen' as never) }
                         subText="Cambie sus credenciales (correo y contraseña)"
                         text="Credenciales"
+                    />
+
+                    <SectionBtn
+                        onPress={ () => navigation.navigate('ExportDataScreen' as never) }
+                        subText="Exporte todos sus datos de la aplicación"
+                        text="Exportar Información"
                     />
                 </SectionContent>
 

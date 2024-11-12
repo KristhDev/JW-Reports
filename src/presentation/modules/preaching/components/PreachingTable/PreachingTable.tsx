@@ -3,6 +3,9 @@ import { TouchableHighlight, View, useWindowDimensions } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { useStyles } from 'react-native-unistyles';
 
+/* Constants */
+import { TABLE_PREACHING_HEADERS } from '@application/constants';
+
 /* Entities */
 import { PreachingEntity } from '@domain/entities';
 
@@ -15,9 +18,6 @@ import { TableCell } from '@ui';
 /* Hooks */
 import { usePreaching } from '../../hooks';
 import { useTheme } from '@theme';
-
-/* Utils */
-import { TABLE_PREACHING_HEADERS } from '../../utils';
 
 /* Styles */
 import { stylesheet } from './styles';

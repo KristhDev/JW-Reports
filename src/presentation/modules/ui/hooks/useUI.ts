@@ -3,8 +3,12 @@ import { EmitterSubscription, Keyboard } from 'react-native';
 /* Features */
 import { useAppDispatch, useAppSelector } from '@application/store';
 import {
-    setIsKeyboardVisible as setIsKeyboardVisibleAction,
-    setOldDatetimePicker as setOldDatetimePickerAction
+    setActiveFormField as setActiveFormFieldAction,
+    setRecordedAudio as setRecordedAudioAction,
+    setIsDataExporting as setIsDataExportingAction,
+    setKeyboard as setIsKeyboardVisibleAction,
+    setOldDatetimePicker as setOldDatetimePickerAction,
+    Keyboard as KeyboardType
 } from '@application/features';
 
 /* Adapters */
@@ -14,7 +18,10 @@ const useUI = () => {
     const dispatch = useAppDispatch();
     const state = useAppSelector(store => store.ui);
 
-    const setIsKeyboardVisible = (isVisible: boolean) => dispatch(setIsKeyboardVisibleAction({ isVisible }));
+    const setActiveFormField = (activeFormField: string) => dispatch(setActiveFormFieldAction({ activeFormField }));
+    const setIsDataExporting = (isExporting: boolean) => dispatch(setIsDataExportingAction({ isExporting }));
+    const setKeyboard = (keyboard: KeyboardType) => dispatch(setIsKeyboardVisibleAction({ keyboard }));
+    const setRecordedAudio = (recordedAudio: string) => dispatch(setRecordedAudioAction({ recordedAudio }));
 
     /**
      * Sets the oldDatetimePicker state to the provided boolean value,
@@ -40,7 +47,10 @@ const useUI = () => {
      */
     const listenHideKeyboard = (): EmitterSubscription => {
         return Keyboard.addListener('keyboardDidHide', () => {
-            setIsKeyboardVisible(false);
+            setKeyboard({
+                height: 0,
+                isVisible: false
+            });
         });
     }
 
@@ -50,16 +60,22 @@ const useUI = () => {
      * @return {EmitterSubscription} The subscription object for the event listener.
      */
     const listenShowKeyboard = (): EmitterSubscription => {
-        return Keyboard.addListener('keyboardDidShow', () => {
-            setIsKeyboardVisible(true);
+        return Keyboard.addListener('keyboardDidShow', (e) => {
+            setKeyboard({
+                height: e.endCoordinates.height,
+                isVisible: true
+            });
         });
     }
 
     return {
         state,
 
+        setActiveFormField,
+        setRecordedAudio,
         listenHideKeyboard,
         listenShowKeyboard,
+        setIsDataExporting,
         setOldDatetimePicker
     }
 }

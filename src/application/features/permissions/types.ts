@@ -16,12 +16,16 @@ export interface PermissionsState {
  * @property {PermissionStatus} notifications - This is the notifications permission status.
  * @property {PermissionStatus} readExternalStorage - This is the media library permission status.
  * @property {PermissionStatus} readMediaImages - This is the media library permission status.
+ * @property {PermissionStatus} recordAudio - This is the media library permission status.
+ * @property {PermissionStatus} writeExternalStorage - This is the media library permission status.
  */
 export interface Permissions {
     camera: PermissionStatus;
     notifications: PermissionStatus;
     readExternalStorage: PermissionStatus;
     readMediaImages: PermissionStatus;
+    recordAudio: PermissionStatus;
+    writeExternalStorage: PermissionStatus;
 }
 
 /**

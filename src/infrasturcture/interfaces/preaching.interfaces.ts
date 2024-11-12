@@ -1,3 +1,7 @@
+import { Precursor } from './auth.interfaces';
+
+export type ParticipateInMinistry = 'si' | 'no';
+
 /**
  * Defining the structure of the Preaching object in the endpoint.
  *
@@ -17,4 +21,39 @@ export interface PreachingEndpoint {
     final_hour: string;
     created_at: string;
     updated_at: string;
+}
+
+/**
+ * RemainingHoursOfWeeklyRequirement is an object with a remainingHoursOfWeeklyRequirement property that is a string
+ * representing the remaining hours requirement.
+ *
+ * @property {string} remainingHoursOfWeeklyRequirement
+ * @property {boolean} isNegative
+ */
+export type RemainingHoursOfWeeklyRequirement = {
+    remainingHoursOfWeeklyRequirement: string;
+    isNegative: boolean;
+}
+
+/**
+ * ReamainingOfHoursRequirement is an object with a reamainingOfHoursRequirement property that is a string
+ * representing the remaining hours requirement.
+ *
+ * @property {string} reamainingOfHoursRequirement
+ * @property {boolean} isNegative
+ */
+export type ReamainingOfHoursRequirement = {
+    reamainingOfHoursRequirement: string;
+    isNegative: boolean;
+}
+
+export interface PreachingReportOptions {
+    username: string;
+    precursor: Precursor;
+    month: string;
+    hours: number;
+    hoursLDC: number;
+    participated: ParticipateInMinistry;
+    courses: number;
+    comment: string;
 }

@@ -1,3 +1,6 @@
+/* Constants */
+import { networkMessages, authMessages } from '@application/constants';
+
 /* Features */
 import { useAppDispatch, useAppSelector } from '@application/store';
 import {
@@ -18,7 +21,7 @@ import { SignUpDto, UpdateEmailDto, UpdatePasswordDto, UpdateProfileDto } from '
 import { UserEntity } from '@domain/entities';
 
 /* Hooks */
-import { networkMessages, useNetwork, useStatus } from '@shared';
+import { useNetwork, useStatus } from '@shared';
 
 /* Interfaces */
 import { SignInData, ProfileData, SignUpData, EmailData, UpdatePasswordData } from '../interfaces';
@@ -26,9 +29,6 @@ import { SignInData, ProfileData, SignUpData, EmailData, UpdatePasswordData } fr
 /* Services */
 import { AuthService } from '@domain/services';
 import { NotificationsService } from '@services';
-
-/* Utils */
-import { authMessages } from '../utils';
 
 /**
  * Hook to management authentication of store with state and actions

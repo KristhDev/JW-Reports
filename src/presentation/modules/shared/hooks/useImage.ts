@@ -5,6 +5,9 @@ import { useStyles } from 'react-native-unistyles';
 /* Env */
 import { SUPABASE_BUCKET } from '@env';
 
+/* Constants */
+import { permissionsMessages } from '@application/constants';
+
 /* Models */
 import { ImageModel } from '@domain/models';
 
@@ -18,7 +21,7 @@ import { DeviceInfo } from '@infrasturcture/adapters';
 import { usePermissions, useStatus } from './';
 
 /* Utils */
-import { permissionsMessages, permissionsStatus } from '../utils';
+import { permissionsStatus } from '../utils';
 
 /**
  * This hook allows to group the functions and states in relation to the images.

@@ -1,16 +1,15 @@
-/* Errors */
-import { AppErrors, DtoError, EmailError, ImageError, RequestError } from '@domain/errors';
+/* Constants */
+import { networkMessages, authMessages, appMessages } from '@application/constants';
 
 /* Features */
 import { useAppDispatch, useAppSelector } from '@application/store';
 import { clearStatus as clearStatusAction, setStatus as setStatusAction, SetStatusPayload } from '@application/features';
 
+/* Errors */
+import { AppErrors, CloudError, DtoError, EmailError, FileSystemError, ImageError, PDFError, RequestError, VoiceRecorderError } from '@domain/errors';
+
 /* Services */
 import { LoggerService } from '@domain/services';
-
-/* Utils */
-import { authMessages } from '@auth';
-import { networkMessages } from '../utils';
 
 /**
  * Hook to management status of store with state and actions
@@ -29,21 +28,34 @@ const useStatus = () => {
      * @return {void} This function does not return anything
      */
     const setError = (error: unknown): void => {
-        console.error({ ...(error as Error), message: (error as Error).message });
-        let msg = 'Ocurrio un error inesperado al realizar la acción';
+        let msg = appMessages.UNEXPECTED_ERROR;
         let status = 400;
 
         if (error instanceof RequestError) {
-            msg = AppErrors.translateMsg(error.code);
+            msg = AppErrors.getMessageFromCode(error.code);
             status = error.status;
         }
 
-        if (error instanceof ImageError) msg = AppErrors.translateMsg(error.message);
-        if (error instanceof EmailError) msg = error.message;
+        if (error instanceof CloudError) {
+            msg = AppErrors.getMessageFromCode(error.message);
+            status = error.status;
+        }
+
         if (error instanceof DtoError) msg = error.message;
+        if (error instanceof EmailError) msg = error.message;
+        if (error instanceof FileSystemError) msg = error.message;
+        if (error instanceof ImageError) msg = AppErrors.getMessageFromCode(error?.code || 'NO_CODE');
+        if (error instanceof PDFError) msg = error.message;
+        if (error instanceof VoiceRecorderError) msg = AppErrors.translateMessage(error.message);
 
         setStatus({ msg, code: status });
-        LoggerService.error({ ...(error as Error), message: (error as Error).message });
+
+        const errorData = ('toJson' in (error as any) && typeof (error as any).toJson === 'function')
+            ? (error as any).toJson()
+            : { ...(error as Error), message: (error as Error).message }
+
+        console.error(JSON.stringify(errorData, null, 2));
+        LoggerService.error(errorData);
     }
 
     /**

@@ -5,5 +5,6 @@ export * from './device-image.service';
 export * from './email.service';
 export * from './lessons.service';
 export * from './logger.service';
+export * from './preaching-report.service';
 export * from './preaching.service';
 export * from './revisits.service';

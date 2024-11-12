@@ -15,6 +15,7 @@ import { Pagination } from '../ui/types';
  * @property {boolean} hasMoreCourses - Whether there are more courses to load
  * @property {boolean} isCourseDeleting - Whether a course is being deleted
  * @property {boolean} isCourseLoading - Whether the courses are being loaded
+ * @property {boolean} isCoursesExporting - Whether the courses are being exported
  * @property {boolean} isCoursesLoading - Whether the courses are being loaded
  * @property {boolean} refreshCourses - Whether the courses should be refreshed
  * @property {CourseEntity} selectedCourse - The selected course
@@ -27,6 +28,7 @@ export interface CoursesState {
     hasMoreCourses: boolean;
     isCourseDeleting: boolean;
     isCourseLoading: boolean;
+    isCoursesExporting: boolean;
     isCoursesLoading: boolean;
     refreshCourses: boolean;
     selectedCourse: CourseEntity;

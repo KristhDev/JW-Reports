@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React, { FC, useEffect, useRef, useState } from 'react';
 import { ActivityIndicator, View } from 'react-native';
 import { useStyles } from 'react-native-unistyles';
-import { Formik } from 'formik';
+import { Formik, FormikProps } from 'formik';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
 /* Models */
@@ -29,14 +29,15 @@ const defaultRevisit = require('@assets/revisit-default.jpg');
  *
  * @return {JSX.Element} Rendered component form to create or edit a revisit
  */
-export const RevisitForm = (): JSX.Element => {
+export const RevisitForm: FC = (): JSX.Element => {
+    const formRef = useRef<FormikProps<RevisitFormValues>>(null);
     const [ image, setImage ] = useState<ImageModel | null>(null);
 
     const { styles: themeStyles, theme: { colors, fontSizes, margins } } = useStyles(themeStylesheet);
 
     const { state: { selectedRevisit, isRevisitLoading }, saveRevisit, updateRevisit } = useRevisits();
     const { setErrorForm } = useStatus();
-    const { state: { userInterface } } = useUI();
+    const { state: { activeFormField, recordedAudio, userInterface }, setActiveFormField } = useUI();
 
     /**
      * Handles the save or update of a revisit based on the selected revisit ID.
@@ -50,6 +51,11 @@ export const RevisitForm = (): JSX.Element => {
             : updateRevisit(revisitValues, image);
     }
 
+    useEffect(() => {
+        if (recordedAudio.trim().length === 0 || activeFormField.length === 0) return;
+        formRef?.current?.setFieldValue(activeFormField, recordedAudio, true);
+    }, [ recordedAudio ]);
+
     return (
         <Formik
             initialValues={{
@@ -58,6 +64,7 @@ export const RevisitForm = (): JSX.Element => {
                 address: selectedRevisit.address,
                 nextVisit: new Date(selectedRevisit.nextVisit)
             }}
+            innerRef={ formRef }
             onSubmit={ handleSaveOrUpdate }
             validateOnMount
             validationSchema={ revisitFormSchema }
@@ -77,6 +84,8 @@ export const RevisitForm = (): JSX.Element => {
                         }
                         label="Nombre de la persona:"
                         name="personName"
+                        onBlur={ () => setActiveFormField('') }
+                        onFocus={ () => setActiveFormField('personName') }
                         placeholder="Ingrese el nombre"
                     />
 
@@ -86,7 +95,9 @@ export const RevisitForm = (): JSX.Element => {
                         label="Información de la persona:"
                         multiline
                         name="about"
-                        numberOfLines={ 10 }
+                        numberOfLines={ 9 }
+                        onBlur={ () => setActiveFormField('') }
+                        onFocus={ () => setActiveFormField('about') }
                         placeholder="Ingrese datos sobre la persona, tema de conversación, aspectos importantes, etc..."
                     />
 
@@ -96,7 +107,9 @@ export const RevisitForm = (): JSX.Element => {
                         label="Dirección:"
                         multiline
                         name="address"
-                        numberOfLines={ 4 }
+                        numberOfLines={ 3 }
+                        onBlur={ () => setActiveFormField('') }
+                        onFocus={ () => setActiveFormField('address') }
                         placeholder="Ingrese la dirección"
                     />
 
