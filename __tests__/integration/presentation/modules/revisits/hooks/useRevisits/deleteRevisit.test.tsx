@@ -18,9 +18,8 @@ import {
     wifiMock
 } from '@mocks';
 
-/* Modules */
-import { authMessages } from '@auth';
-import { revisitsMessages } from '@revisits';
+/* Constants */
+import { authMessages, revisitsMessages } from '@application/constants';
 
 const initialStoreMock = () => getMockStoreUseRevisits({
     auth: initialAuthStateMock,

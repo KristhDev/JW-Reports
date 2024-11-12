@@ -14,8 +14,8 @@ import {
     useImageSpy
 } from '@mocks';
 
-/* Shared */
-import { emailMessages } from '@shared';
+/* Constants */
+import { emailMessages } from '@application/constants';
 
 const feedbackMsg = 'This is a feedback message';
 

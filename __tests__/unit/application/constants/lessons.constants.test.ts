@@ -1,6 +1,6 @@
-import { lessonsMessages } from '@lessons';
+import { lessonsMessages } from '@application/constants';
 
-describe('Test in constants util', () => {
+describe('Test in lessons constants', () => {
     it('should to match snapshot', () => {
         expect(lessonsMessages).toMatchSnapshot();
     })

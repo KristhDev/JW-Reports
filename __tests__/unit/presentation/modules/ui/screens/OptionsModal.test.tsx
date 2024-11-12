@@ -4,8 +4,11 @@ import { render, screen, userEvent } from '@testing-library/react-native';
 /* Mocks */
 import { onCancelMock, onChangeValueMock } from '@mocks';
 
+/* Interfaces */
+import { ItemOption } from '@infrasturcture/interfaces';
+
 /* Modules */
-import { ItemOption, OptionsModal } from '@ui';
+import { OptionsModal } from '@ui';
 
 const modalTitle = 'Select an option';
 

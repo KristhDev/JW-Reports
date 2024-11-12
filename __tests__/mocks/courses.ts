@@ -133,6 +133,7 @@ export const initialCoursesStateMock: CoursesState = {
     hasMoreCourses: true,
     isCourseDeleting: false,
     isCourseLoading: false,
+    isCoursesExporting: false,
     isCoursesLoading: false,
     refreshCourses: false,
     selectedCourse: {
@@ -153,6 +154,7 @@ export const coursesStateMock: CoursesState = {
     hasMoreCourses: false,
     isCourseDeleting: false,
     isCourseLoading: false,
+    isCoursesExporting: false,
     isCoursesLoading: false,
     refreshCourses: false,
     selectedCourse: INIT_COURSE,
@@ -169,6 +171,7 @@ export const courseSelectedInitStateMock: CoursesState = {
     hasMoreCourses: false,
     isCourseDeleting: false,
     isCourseLoading: false,
+    isCoursesExporting: false,
     isCoursesLoading: false,
     refreshCourses: false,
     selectedCourse: INIT_COURSE
@@ -185,6 +188,7 @@ export const courseSelectedStateMock: CoursesState = {
     hasMoreCourses: false,
     isCourseDeleting: false,
     isCourseLoading: false,
+    isCoursesExporting: false,
     isCoursesLoading: false,
     refreshCourses: false,
     selectedCourse: coursesMock[0]

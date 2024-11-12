@@ -1,22 +1,27 @@
+/* Constants */
+import { appMessages } from '@application/constants';
+
+/* Errors */
 import { AppErrors } from '@domain/errors';
 
 describe('Test in AppErrors', () => {
     it('should have respective methods and properties - AppErrors', () => {
-        expect(AppErrors).toHaveProperty('supabaseAuthCodeErrors');
-        expect(typeof AppErrors.supabaseAuthCodeErrors).toBe('object');
-        expect(AppErrors).toHaveProperty('translateMsg');
-        expect(typeof AppErrors.translateMsg).toBe('function');
+        expect(AppErrors).toHaveProperty('getMessageFromCode');
+        expect(typeof AppErrors.getMessageFromCode).toBe('function');
+
+        expect(AppErrors).toHaveProperty('translateMessage');
+        expect(typeof AppErrors.translateMessage).toBe('function');
     });
 
-    it('should translate message - AppErrors', () => {
+    it('should get message from code - AppErrors', () => {
         const code = 'invalid_credentials';
-        const translatedMsg = AppErrors.translateMsg(code);
+        const message = AppErrors.getMessageFromCode(code);
 
-        expect(translatedMsg).toBe(AppErrors.supabaseAuthCodeErrors[code]);
+        expect(message).toBe('Las credenciales son inválidas.');
     });
 
     it('should return default error when message not found - AppErrors', () => {
-        const translatedMsg = AppErrors.translateMsg('code_not_found');
-        expect(translatedMsg).toBe('Ocurrió un error al realizar está acción, por favor vuelvalo a intentar.');
+        const translatedMsg = AppErrors.getMessageFromCode('code_not_found');
+        expect(translatedMsg).toBe(appMessages.UNEXPECTED_ERROR);
     });
 });

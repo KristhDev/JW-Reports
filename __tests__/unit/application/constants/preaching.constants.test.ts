@@ -1,6 +1,6 @@
-import { HOURS_REQUIREMENTS, preachingMessages, TABLE_PREACHING_HEADERS } from '@preaching';
+import { HOURS_REQUIREMENTS, preachingMessages, TABLE_PREACHING_HEADERS } from '@application/constants';
 
-describe('Test in constants of preaching module', () => {
+describe('Test in constants of preaching', () => {
     it('should to match snapshot - TABLE_PREACHING_HEADERS', () => {
         expect(TABLE_PREACHING_HEADERS).toMatchSnapshot();
     });

@@ -2,8 +2,11 @@ import React from 'react';
 import { Formik } from 'formik';
 import { render, screen, userEvent } from '@testing-library/react-native';
 
+/* Interfaces */
+import { ItemOption } from '@infrasturcture/interfaces';
+
 /* Modules */
-import { FormSelect, ItemOption } from '@ui';
+import { FormSelect } from '@ui';
 
 const itemsOptions: ItemOption[] = [
     { label: 'Test option 1', value: 'test-option-1' },

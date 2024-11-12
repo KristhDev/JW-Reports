@@ -1,6 +1,6 @@
-import { THEME_OPTIONS } from '@theme';
+import { THEME_OPTIONS } from '@application/constants';
 
-describe('Test in constants of theme module', () => {
+describe('Test in constants of theme', () => {
     it('should to match snapshot - THEME_OPTIONS', () => {
         expect(THEME_OPTIONS).toMatchSnapshot();
     });

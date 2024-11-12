@@ -18,11 +18,11 @@ import {
     wifiMock
 } from '@mocks';
 
+/* Constants */
+import { authMessages } from '@application/constants';
+
 /* Errors */
 import { RequestError } from '@domain/errors';
-
-/* Modules */
-import { authMessages } from '@auth';
 
 AuthServiceSpy.updatePassword.mockImplementation(() => Promise.resolve());
 

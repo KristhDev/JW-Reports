@@ -20,9 +20,8 @@ import {
     wifiMock
 } from '@mocks';
 
-/* Modules */
-import { authMessages } from '@auth';
-import { coursesMessages } from '@courses';
+/* Constants */
+import { authMessages, coursesMessages } from '@application/constants';
 
 describe('Test in useCourses hook - deleteCourse', () => {
     useNetworkSpy.mockImplementation(() => ({

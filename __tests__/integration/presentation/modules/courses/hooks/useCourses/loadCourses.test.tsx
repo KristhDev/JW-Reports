@@ -17,8 +17,8 @@ import {
     wifiMock
 } from '@mocks';
 
-/* Modules */
-import { authMessages } from '@auth';
+/* Constants */
+import { authMessages } from '@application/constants';
 
 const intitialMockStore = () => getMockStoreUseCourses({
     auth: initialAuthStateMock,
@@ -45,7 +45,7 @@ describe('Test in useCourses hook - loadCourses', () => {
     });
 
     it('should load courses successfully', async () => {
-        CoursesServiceSpy.getAllByUserId.mockResolvedValue(coursesMock);
+        CoursesServiceSpy.paginateByUserId.mockResolvedValue(coursesMock);
 
         const mockStore = authMockStore();
         const { result } = renderUseCourses(mockStore);

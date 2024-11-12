@@ -132,6 +132,7 @@ export const preachingsMock: PreachingEntity[] = [
 export const initialPreachingStateMock: PreachingState = {
     isPreachingDeleting: false,
     isPreachingLoading: false,
+    isPreachingsExporting: false,
     isPreachingsLoading: false,
     preachings: [],
     selectedDate: new Date('2023-03-17'),
@@ -148,6 +149,7 @@ export const initialPreachingStateMock: PreachingState = {
 export const preachingSelectedStateMock: PreachingState = {
     isPreachingDeleting: false,
     isPreachingLoading: false,
+    isPreachingsExporting: false,
     isPreachingsLoading: false,
     preachings: preachingsMock,
     selectedDate: new Date('2023-01-12 00:00:00'),
@@ -157,6 +159,7 @@ export const preachingSelectedStateMock: PreachingState = {
 export const preachingsStateMock: PreachingState = {
     isPreachingDeleting: false,
     isPreachingLoading: false,
+    isPreachingsExporting: false,
     isPreachingsLoading: false,
     preachings: preachingsMock,
     selectedDate: new Date('2023-01-12 00:00:00'),

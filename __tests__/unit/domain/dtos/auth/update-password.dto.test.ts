@@ -1,11 +1,11 @@
+/* Constants */
+import { authMessages } from '@application/constants';
+
 /* DTOs */
 import { UpdatePasswordDto } from '@domain/dtos';
 
 /* Errors */
 import { DtoError } from '@domain/errors';
-
-/* Auth */
-import { authMessages } from '@auth';
 
 describe('Test in UpdatePasswordDto', () => {
     it('should convert data to UpdatePasswordDto', () => {

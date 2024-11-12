@@ -7,8 +7,11 @@ import { getMockStoreUsePermissions, renderUsePermissions } from '@setups';
 /* Mocks */
 import { grantedStateMock, initialPermissionsStateMock, initialStatusStateMock } from '@mocks';
 
+/* Constants */
+import { permissionsMessages } from '@application/constants';
+
 /* Shared */
-import { permissionsMessages, permissionsStatus } from '@shared';
+import { permissionsStatus } from '@shared';
 
 describe('Test in usePermissions hook', () => {
     let mockStore = {} as any;

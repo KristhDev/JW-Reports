@@ -21,12 +21,11 @@ import {
     wifiMock
 } from '@mocks';
 
+/* Constants */
+import { authMessages, lessonsMessages } from '@application/constants';
+
 /* Features */
 import { INIT_COURSE, INIT_LESSON } from '@application/features';
-
-/* Modules */
-import { authMessages } from '@auth';
-import { lessonsMessages } from '@lessons';
 
 const initialStoreMock = () => getMockStoreUseLessons({
     auth: initialAuthStateMock,

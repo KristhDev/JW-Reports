@@ -17,9 +17,10 @@ import {
     wifiMock
 } from '@mocks';
 
-/* Modules */
-import { authMessages } from '@auth';
-import { preachingMessages } from '@preaching';
+/* Constants */
+import { authMessages, preachingMessages } from '@application/constants';
+
+/* Errors */
 import { RequestError } from '@domain/errors';
 
 const initialMockStore = () => getMockStoreUsePreaching({

@@ -15,8 +15,8 @@ describe('Test in LessonsService', () => {
         expect(LessonsService).toHaveProperty('finishOrStart');
         expect(typeof LessonsService.finishOrStart).toBe('function');
 
-        expect(LessonsService).toHaveProperty('getAllByCourseId');
-        expect(typeof LessonsService.getAllByCourseId).toBe('function');
+        expect(LessonsService).toHaveProperty('paginateByCourseId');
+        expect(typeof LessonsService.paginateByCourseId).toBe('function');
 
         expect(LessonsService).toHaveProperty('getLastLessonByCoursesId');
         expect(typeof LessonsService.getLastLessonByCoursesId).toBe('function');

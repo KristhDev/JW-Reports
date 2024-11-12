@@ -4,8 +4,11 @@ import { render, screen, userEvent } from '@testing-library/react-native';
 /* Mocks */
 import { setThemeMock, onCloseMock, useThemeSpy } from '@mocks';
 
+/* Constants */
+import { THEME_OPTIONS } from '@application/constants';
+
 /* Modules */
-import { THEME_OPTIONS, ThemeModal } from '@theme';
+import { ThemeModal } from '@theme';
 
 const user = userEvent.setup();
 const renderScreen = () => render(

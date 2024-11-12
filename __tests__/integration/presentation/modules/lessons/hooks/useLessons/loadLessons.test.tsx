@@ -18,9 +18,8 @@ import {
     wifiMock
 } from '@mocks';
 
-/* Modules */
-import { authMessages } from '@auth';
-import { coursesMessages } from '@courses';
+/* Constants */
+import { authMessages, coursesMessages } from '@application/constants';
 
 const initialStoreMock = () => getMockStoreUseLessons({
     auth: initialAuthStateMock,
@@ -53,7 +52,7 @@ describe('Test in useLessons hook - loadLessons', () => {
 
     it('should load lessons successfully', async () => {
         const lessonsOfCourse = lessonsMock.map(lesson => ({ ...lesson, courseId: courseMockOwner.id }));
-        LessonsServiceSpy.getAllByCourseId.mockImplementationOnce(() => Promise.resolve(lessonsOfCourse));
+        LessonsServiceSpy.paginateByCourseId.mockImplementationOnce(() => Promise.resolve(lessonsOfCourse));
 
         const mockStore = authStoreMock();
         const { result } = renderUseLessons(mockStore);

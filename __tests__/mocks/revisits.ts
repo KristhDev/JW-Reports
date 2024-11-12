@@ -171,10 +171,11 @@ export const revisitsMock: RevisitEntity[] = [
 
 export const initialRevisitsStateMock: RevisitsState = {
     hasMoreRevisits: true,
+    isLastRevisitLoading: false,
     isRevisitDeleting: false,
     isRevisitLoading: false,
+    isRevisitsExporting: false,
     isRevisitsLoading: false,
-    isLastRevisitLoading: false,
     refreshRevisits: false,
     revisitFilter: 'all',
     revisits: [],
@@ -201,6 +202,7 @@ export const lastRevisitStateMock: RevisitsState = {
     hasMoreRevisits: true,
     isLastRevisitLoading: false,
     isRevisitDeleting: false,
+    isRevisitsExporting: false,
     isRevisitLoading: false,
     isRevisitsLoading: false,
     refreshRevisits: false,
@@ -220,6 +222,7 @@ export const revisitsStateMock: RevisitsState = {
     isLastRevisitLoading: false,
     isRevisitDeleting: false,
     isRevisitLoading: false,
+    isRevisitsExporting: false,
     isRevisitsLoading: false,
     refreshRevisits: false,
     revisitFilter: 'all',
@@ -235,9 +238,10 @@ export const revisitsStateMock: RevisitsState = {
 
 export const selectedRevisitStateMock: RevisitsState = {
     hasMoreRevisits: true,
+    isLastRevisitLoading: false,
     isRevisitDeleting: false,
     isRevisitLoading: false,
-    isLastRevisitLoading: false,
+    isRevisitsExporting: false,
     isRevisitsLoading: false,
     refreshRevisits: false,
     revisitFilter: 'all',

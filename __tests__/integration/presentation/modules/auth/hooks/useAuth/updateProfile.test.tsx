@@ -18,8 +18,8 @@ import {
     wifiMock
 } from '@mocks';
 
-/* Modules */
-import { authMessages } from '@auth';
+/* Constants */
+import { authMessages } from '@application/constants';
 
 describe('Test in useAuth hook - updateProfile', () => {
     useNetworkSpy.mockImplementation(() => ({

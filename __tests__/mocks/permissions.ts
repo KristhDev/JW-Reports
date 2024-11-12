@@ -5,7 +5,9 @@ export const initialPermissionsStateMock: PermissionsState = {
         camera: 'unavailable',
         notifications: 'unavailable',
         readExternalStorage: 'unavailable',
-        readMediaImages: 'unavailable'
+        readMediaImages: 'unavailable',
+        recordAudio: 'unavailable',
+        writeExternalStorage: 'unavailable'
     }
 }
 
@@ -14,7 +16,9 @@ export const blockedStateMock: PermissionsState = {
         camera: 'blocked',
         notifications: 'blocked',
         readExternalStorage: 'blocked',
-        readMediaImages: 'blocked'
+        readMediaImages: 'blocked',
+        recordAudio: 'blocked',
+        writeExternalStorage: 'blocked'
     }
 }
 
@@ -23,7 +27,9 @@ export const deniedStateMock: PermissionsState = {
         camera: 'denied',
         notifications: 'denied',
         readExternalStorage: 'denied',
-        readMediaImages: 'denied'
+        readMediaImages: 'denied',
+        recordAudio: 'denied',
+        writeExternalStorage: 'denied'
     }
 }
 
@@ -32,7 +38,9 @@ export const grantedStateMock: PermissionsState = {
         camera: 'granted',
         notifications: 'granted',
         readExternalStorage: 'granted',
-        readMediaImages: 'granted'
+        readMediaImages: 'granted',
+        recordAudio: 'granted',
+        writeExternalStorage: 'granted'
     }
 }
 
@@ -41,6 +49,8 @@ export const unavailableStateMock: PermissionsState = {
         camera: 'unavailable',
         notifications: 'unavailable',
         readExternalStorage: 'unavailable',
-        readMediaImages: 'unavailable'
+        readMediaImages: 'unavailable',
+        recordAudio: 'unavailable',
+        writeExternalStorage: 'unavailable'
     }
 }

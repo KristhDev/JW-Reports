@@ -23,6 +23,12 @@ describe('Test in Time adapter', () => {
         expect(Time).toHaveProperty('getArrayValuesOfWeek');
         expect(typeof Time.getArrayValuesOfWeek).toBe('function');
 
+        expect(Time).toHaveProperty('getDiffBetweenDatesInHours');
+        expect(typeof Time.getDiffBetweenDatesInHours).toBe('function');
+
+        expect(Time).toHaveProperty('getDiffBetweenDatesInMinutes');
+        expect(typeof Time.getDiffBetweenDatesInMinutes).toBe('function');
+
         expect(Time).toHaveProperty('getFirstDateOfMonth');
         expect(typeof Time.getFirstDateOfMonth).toBe('function');
 
@@ -50,23 +56,17 @@ describe('Test in Time adapter', () => {
         expect(Time).toHaveProperty('isBefore');
         expect(typeof Time.isBefore).toBe('function');
 
-        expect(Time).toHaveProperty('setHoursToDate');
-        expect(typeof Time.setHoursToDate).toBe('function');
+        expect(Time).toHaveProperty('setHoursMinutesAndSecondsToDate');
+        expect(typeof Time.setHoursMinutesAndSecondsToDate).toBe('function');
 
         expect(Time).toHaveProperty('setLocale');
         expect(typeof Time.setLocale).toBe('function');
 
-        expect(Time).toHaveProperty('setMinutesToDate');
-        expect(typeof Time.setMinutesToDate).toBe('function');
-
-        expect(Time).toHaveProperty('setMonthToDate');
-        expect(typeof Time.setMonthToDate).toBe('function');
-
         expect(Time).toHaveProperty('setSecondsToDate');
         expect(typeof Time.setSecondsToDate).toBe('function');
 
-        expect(Time).toHaveProperty('setYearToDate');
-        expect(typeof Time.setYearToDate).toBe('function');
+        expect(Time).toHaveProperty('setMonthAndYearToDate');
+        expect(typeof Time.setMonthAndYearToDate).toBe('function');
 
         expect(Time).toHaveProperty('sumHours');
         expect(typeof Time.sumHours).toBe('function');

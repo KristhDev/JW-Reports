@@ -20,12 +20,11 @@ import {
     wifiMock
 } from '@mocks';
 
+/* Constants */
+import { authMessages, lessonsMessages } from '@application/constants';
+
 /* Errors */
 import { RequestError } from '@domain/errors';
-
-/* Modules */
-import { authMessages } from '@auth';
-import { lessonsMessages } from '@lessons';
 
 const initialStoreMock = () => getMockStoreUseLessons({
     auth: initialAuthStateMock,
@@ -75,7 +74,7 @@ describe('Test in useLessons hook - updateLesson', () => {
     });
 
     it('should update lesson successfully', async () => {
-        LessonsServiceSpy.getAllByCourseId.mockResolvedValueOnce([ lessonMock ]);
+        LessonsServiceSpy.paginateByCourseId.mockResolvedValueOnce([ lessonMock ]);
         LessonsServiceSpy.update.mockResolvedValueOnce(lessonUpdatedMock);
 
         const mockStore = authStoreMock();

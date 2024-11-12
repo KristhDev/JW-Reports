@@ -15,8 +15,11 @@ import {
     unavailableStateMock
 } from '@mocks';
 
+/* Constants */
+import { permissionsMessages } from '@application/constants';
+
 /* Shared */
-import { permissionsMessages, permissionsStatus } from '@shared';
+import { permissionsStatus } from '@shared';
 
 describe('Test in useImage hook - takePhoto', () => {
     beforeEach(() => {

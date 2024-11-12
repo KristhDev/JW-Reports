@@ -1,4 +1,4 @@
-import { authMessages, precursorMessages, PRECURSORS_OPTIONS } from '@auth';
+import { authMessages, precursorMessages, PRECURSORS_OPTIONS } from '@application/constants';
 
 describe('Test in constants of auth module', () => {
     it('should to match snapshot - PRECURSORS_OPTIONS', () => {

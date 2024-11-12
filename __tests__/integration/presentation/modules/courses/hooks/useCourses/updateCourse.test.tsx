@@ -19,12 +19,11 @@ import {
     wifiMock
 } from '@mocks';
 
+/* Constants */
+import { authMessages, coursesMessages } from '@application/constants';
+
 /* Errors */
 import { RequestError } from '@domain/errors';
-
-/* Modules */
-import { authMessages } from '@auth';
-import { coursesMessages } from '@courses';
 
 const intitialMockStore = () => getMockStoreUseCourses({
     auth: initialAuthStateMock,

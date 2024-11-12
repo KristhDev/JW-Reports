@@ -24,7 +24,7 @@ export const CoursesServiceSpy = {
     create: jest.spyOn(CoursesService, 'create'),
     delete: jest.spyOn(CoursesService, 'delete'),
     finishOrStart: jest.spyOn(CoursesService, 'finishOrStart'),
-    getAllByUserId: jest.spyOn(CoursesService, 'getAllByUserId'),
+    paginateByUserId: jest.spyOn(CoursesService, 'paginateByUserId'),
     getCourseIdsByUserId: jest.spyOn(CoursesService, 'getCourseIdsByUserId'),
     update: jest.spyOn(CoursesService, 'update'),
 }
@@ -39,8 +39,8 @@ export const LessonsServiceSpy = {
     delete: jest.spyOn(LessonsService, 'delete'),
     deleteLessonsByCourseId: jest.spyOn(LessonsService, 'deleteLessonsByCourseId'),
     finishOrStart: jest.spyOn(LessonsService, 'finishOrStart'),
-    getAllByCourseId: jest.spyOn(LessonsService, 'getAllByCourseId'),
     getLastLessonByCoursesId: jest.spyOn(LessonsService, 'getLastLessonByCoursesId'),
+    paginateByCourseId: jest.spyOn(LessonsService, 'paginateByCourseId'),
     update: jest.spyOn(LessonsService, 'update'),
 }
 
