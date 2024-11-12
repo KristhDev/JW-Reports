@@ -58,6 +58,19 @@ jest.mock('@react-native-community/netinfo', () =>
     require('@react-native-community/netinfo/jest/netinfo-mock.js')
 );
 
+export const mockRNVoice = {
+    destroy: jest.fn(),
+    onSpeechEnd: jest.fn(),
+    onSpeechError: jest.fn(),
+    onSpeechResults: jest.fn(),
+    onSpeechStart: jest.fn(),
+    removeAllListeners: jest.fn(),
+    start: jest.fn(),
+    stop: jest.fn(),
+}
+
+jest.mock('@react-native-voice/voice', () => mockRNVoice);
+
 jest.mock('reduxjs-toolkit-persist', () => {
     const real = jest.requireActual('reduxjs-toolkit-persist');
 
@@ -93,12 +106,22 @@ jest.mock('@react-navigation/native', () => {
 
 jest.mock('react-native-device-info', () => mockRNDeviceInfo);
 
+jest.mock('react-native-fs', () => ({
+    moveFile: jest.fn(),
+}));
+
 jest.mock('react-native-system-navigation-bar', () => {
     const real = jest.requireActual<typeof import('react-native-system-navigation-bar')>('react-native-system-navigation-bar');
     real.default.setNavigationColor = jest.fn();
 
     return real;
 });
+
+export const mockRNHtmlToPdf = {
+    convert: jest.fn()
+}
+
+jest.mock('react-native-html-to-pdf', () => mockRNHtmlToPdf);
 
 jest.mock('react-native-image-crop-picker', () => ({
     clean: jest.fn(),
