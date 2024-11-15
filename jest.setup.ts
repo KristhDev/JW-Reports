@@ -107,7 +107,8 @@ jest.mock('@react-navigation/native', () => {
 jest.mock('react-native-device-info', () => mockRNDeviceInfo);
 
 jest.mock('react-native-fs', () => ({
-    moveFile: jest.fn(),
+    DownloadDirectoryPath: '/storage/emulated/0/Download',
+    moveFile: jest.fn()
 }));
 
 jest.mock('react-native-system-navigation-bar', () => {
@@ -117,11 +118,9 @@ jest.mock('react-native-system-navigation-bar', () => {
     return real;
 });
 
-export const mockRNHtmlToPdf = {
+jest.mock('react-native-html-to-pdf', () => ({
     convert: jest.fn()
-}
-
-jest.mock('react-native-html-to-pdf', () => mockRNHtmlToPdf);
+}));
 
 jest.mock('react-native-image-crop-picker', () => ({
     clean: jest.fn(),
