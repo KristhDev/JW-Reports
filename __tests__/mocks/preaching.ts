@@ -3,6 +3,7 @@ import { PreachingState, INIT_PREACHING } from '@application/features';
 
 /* Entities */
 import { PreachingEntity } from '@domain/entities';
+import { PreachingReportModel } from '@domain/models';
 
 /* Interfaces */
 import { PreachingEndpoint } from '@infrasturcture/interfaces';
@@ -126,6 +127,45 @@ export const preachingsMock: PreachingEntity[] = [
         finalHour: '2023-01-12 16:00:00',
         createdAt: '2023-01-12 22:21:10.01713',
         updatedAt: '2023-01-12 22:21:10.01713'
+    }
+];
+
+export const preachingReportsMock: PreachingReportModel[] = [
+    {
+        hours: 54,
+        restMins: 0,
+        month: 'Enero',
+        year: 2024
+    },
+    {
+        hours: 52,
+        restMins: 0,
+        month: 'Febrero',
+        year: 2024
+    },
+    {
+        hours: 55,
+        restMins: 30,
+        month: 'Marzo',
+        year: 2024
+    },
+    {
+        hours: 51,
+        restMins: 20,
+        month: 'Abril',
+        year: 2024
+    },
+    {
+        hours: 50,
+        restMins: 0,
+        month: 'Mayo',
+        year: 2024
+    },
+    {
+        hours: 54,
+        restMins: 0,
+        month: 'Junio',
+        year: 2024
     }
 ];
 
