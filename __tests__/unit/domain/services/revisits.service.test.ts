@@ -18,6 +18,9 @@ describe('Test in RevisitsService', () => {
         expect(RevisitsService).toHaveProperty('getLastByUserId');
         expect(typeof RevisitsService.getLastByUserId).toBe('function');
 
+        expect(RevisitsService).toHaveProperty('paginateByUserId');
+        expect(typeof RevisitsService.paginateByUserId).toBe('function');
+
         expect(RevisitsService).toHaveProperty('update');
         expect(typeof RevisitsService.update).toBe('function');
     });

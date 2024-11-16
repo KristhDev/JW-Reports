@@ -12,6 +12,9 @@ describe('Test in PreachingService', () => {
         expect(PreachingService).toHaveProperty('getByUserIdAndMonth');
         expect(typeof PreachingService.getByUserIdAndMonth).toBe('function');
 
+        expect(PreachingService).toHaveProperty('getAllByUserId');
+        expect(typeof PreachingService.getAllByUserId).toBe('function');
+
         expect(PreachingService).toHaveProperty('update');
         expect(typeof PreachingService.update).toBe('function');
     });

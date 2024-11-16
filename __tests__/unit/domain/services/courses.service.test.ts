@@ -21,6 +21,9 @@ describe('Test in CoursesService', () => {
         expect(CoursesService).toHaveProperty('getCourseIdsByUserId');
         expect(typeof CoursesService.getCourseIdsByUserId).toBe('function');
 
+        expect(CoursesService).toHaveProperty('paginateByUserId');
+        expect(typeof CoursesService.paginateByUserId).toBe('function');
+
         expect(CoursesService).toHaveProperty('update');
         expect(typeof CoursesService.update).toBe('function');
     });
