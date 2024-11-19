@@ -5,12 +5,14 @@ import { act, render, screen, userEvent } from '@testing-library/react-native';
 import {
     courseSelectedStateMock,
     coursesStateMock,
+    initialUIState,
     saveCourseMock,
+    setActiveFormFieldMock,
     setErrorFormMock,
     updateCourseMock,
     useCoursesSpy,
     useStatusSpy,
-    useUISpy
+    useUISpy,
 } from '@mocks';
 
 /* Modules */
@@ -30,10 +32,10 @@ describe('Test in <CourseForm /> component', () => {
         setErrorForm: setErrorFormMock
     }) as any);
 
+
     useUISpy.mockImplementation(() => ({
-        state: {
-            isKeyboardVisible: false
-        }
+        state: initialUIState,
+        setActiveFormField: setActiveFormFieldMock
     }) as any);
 
     beforeEach(() => {

@@ -41,6 +41,7 @@ describe('Test useCourses hook', () => {
 
             activeOrSuspendCourse: expect.any(Function),
             deleteCourse: expect.any(Function),
+            exportCourses: expect.any(Function),
             finishOrStartCourse: expect.any(Function),
             loadCourses: expect.any(Function),
             saveCourse: expect.any(Function),
