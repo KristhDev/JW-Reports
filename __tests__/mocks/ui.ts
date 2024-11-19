@@ -16,3 +16,5 @@ export const initialUIState: UIState = {
         oldDatetimePicker: false
     }
 }
+
+export const setActiveFormFieldMock = jest.fn();
