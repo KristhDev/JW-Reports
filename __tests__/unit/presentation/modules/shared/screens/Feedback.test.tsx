@@ -2,7 +2,7 @@ import React from 'react';
 import { act, render, screen } from '@testing-library/react-native';
 
 /* Mocks */
-import { useEmailSpy, useStatusSpy, useUISpy } from '@mocks';
+import { initialUIState, useEmailSpy, useStatusSpy, useUISpy } from '@mocks';
 
 /* Modules */
 import { FeedbackScreen } from '@shared';
@@ -17,11 +17,7 @@ useStatusSpy.mockImplementation(() => ({
     setErrorForm: jest.fn()
 }) as any);
 
-useUISpy.mockImplementation(() => ({
-    state: {
-        isKeyboardVisible: false
-    }
-}) as any);
+useUISpy.mockImplementation(() => ({ state: initialUIState }) as any);
 
 describe('Test in <FeedbackScreen /> screen', () => {
     it('should to match snapshot', async () => {

@@ -2,7 +2,7 @@ import React from 'react';
 import { act, render, screen } from '@testing-library/react-native';
 
 /* Mocks */
-import { useEmailSpy, useImageSpy, useStatusSpy, useThemeSpy, useUISpy } from '@mocks';
+import { initialUIState, useEmailSpy, useImageSpy, useStatusSpy, useThemeSpy, useUISpy } from '@mocks';
 
 /* Modules */
 import { ReportErrorScreen } from '@shared';
@@ -27,11 +27,7 @@ useThemeSpy.mockImplementation(() => ({
     state: { theme: 'dark' }
 }) as any);
 
-useUISpy.mockImplementation(() => ({
-    state: {
-        isKeyboardVisible: false
-    }
-}) as any);
+useUISpy.mockImplementation(() => ({ state: initialUIState }) as any);
 
 describe('Test in <ReportErrorScreen /> screen', () => {
     it('should to match snapshot', async () => {

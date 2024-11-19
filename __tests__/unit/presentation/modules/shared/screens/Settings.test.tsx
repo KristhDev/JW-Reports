@@ -5,10 +5,7 @@ import { render, screen, userEvent } from '@testing-library/react-native';
 import { mockUseNavigation } from '@test-setup';
 
 /* Mocks */
-import { setStatusMock, setThemeMock, useStatusSpy, useThemeSpy, useUISpy } from '@mocks';
-
-/* Features */
-import { UI_INITIAL_STATE } from '@application/features';
+import { initialUIState, setStatusMock, setThemeMock, useStatusSpy, useThemeSpy, useUISpy } from '@mocks';
 
 /* Modules */
 import { Settings } from '@shared';
@@ -26,9 +23,7 @@ describe('Test in <Settings /> screen', () => {
         setTheme: setThemeMock
     }) as any);
 
-    useUISpy.mockImplementation(() => ({
-        state: UI_INITIAL_STATE
-    }) as any);
+    useUISpy.mockImplementation(() => ({ state: initialUIState }) as any);
 
     beforeEach(() => {
         jest.clearAllMocks();
@@ -62,7 +57,7 @@ describe('Test in <Settings /> screen', () => {
 
         /* Get pressables */
         const pressables = screen.getAllByTestId('section-btn-pressable');
-        await user.press(pressables[9]);
+        await user.press(pressables[10]);
 
         /* Check if setStatus is called one time with respective value */
         expect(setStatusMock).toHaveBeenCalledTimes(1);
