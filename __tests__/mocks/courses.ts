@@ -1,3 +1,6 @@
+/* Mocks */
+import { lessonEndpointMock } from './lessons';
+
 /* Features */
 import { CoursesState, INIT_COURSE } from '@application/features';
 
@@ -5,7 +8,7 @@ import { CoursesState, INIT_COURSE } from '@application/features';
 import { LessonEntity, CourseEntity, CourseWithLessonsEntity } from '@domain/entities';
 
 /* Interfaces */
-import { CourseEndpoint } from '@infrasturcture/interfaces';
+import { CourseEndpoint, CourseWithLessonsEndpoint } from '@infrasturcture/interfaces';
 
 /* Hooks */
 import * as useCourses from '@courses/hooks/useCourses';
@@ -23,6 +26,20 @@ export const setCoursesScreenHistoryMock = jest.fn();
 export const setRefreshCoursesMock = jest.fn();
 export const setSelectedCourseMock = jest.fn();
 export const updateCourseMock = jest.fn();
+
+export const courseWithLessonsEndpointMock: CourseWithLessonsEndpoint = {
+    id: 'e8bbdc9f-07cc-4365-8d30-c1a4a9f5ec70',
+    user_id: 'f1d2c3b4-a5f6-7d8e-9c0b-a1b2c3d4e5f6',
+    person_name: 'Karlee Senger',
+    person_about: 'Itaque quidem enim neque laudantium ducimus nesciunt provident consequuntur.',
+    person_address: 'Ut non et similique aliquam quaerat consequatur iste ut quod.',
+    publication: 'dolorem ut non',
+    lessons: [ lessonEndpointMock ],
+    suspended: false,
+    finished: false,
+    created_at: new Date().toISOString(),
+    updated_at: new Date().toISOString()
+}
 
 export const courseEndpointMock: CourseEndpoint = {
     id: 'e8bbdc9f-07cc-4365-8d30-c1a4a9f5ec70',

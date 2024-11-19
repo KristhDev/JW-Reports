@@ -8,7 +8,6 @@ import { CourseEntity, LessonEntity } from '@domain/entities';
 import { LessonEndpoint, LessonWithCourseEndpoint } from '@infrasturcture/interfaces';
 
 /* Modules */
-import { courseEndpointMock } from './courses';
 import * as useLessons from '@lessons/hooks/useLessons';
 
 export const useLessonsSpy = jest.spyOn(useLessons, 'default');
@@ -55,7 +54,19 @@ export const lessonEndpointMock: LessonEndpoint = {
 export const lessonWithCourseEndpointMock: LessonWithCourseEndpoint = {
     id: '6bed9d76-3e3a-4d8b-b76a-9988f67afe6b',
     course_id: '8ea3baf8-6b47-4222-8ed1-c62d5755b9a5',
-    courses: courseEndpointMock,
+    courses: {
+        id: 'e8bbdc9f-07cc-4365-8d30-c1a4a9f5ec70',
+        user_id: 'f1d2c3b4-a5f6-7d8e-9c0b-a1b2c3d4e5f6',
+        person_name: 'Karlee Senger',
+        person_about: 'Itaque quidem enim neque laudantium ducimus nesciunt provident consequuntur.',
+        person_address: 'Ut non et similique aliquam quaerat consequatur iste ut quod.',
+        publication: 'dolorem ut non',
+        lessons: [],
+        suspended: false,
+        finished: false,
+        created_at: new Date().toISOString(),
+        updated_at: new Date().toISOString()
+    },
     description: 'Sed rerum est est rem et. Ut aut repellat expedita commodi ipsum. In quisquam excepturi rerum debitis. Beatae rem saepe aut molestiae.',
     next_lesson: new Date().toISOString(),
     done: false,
