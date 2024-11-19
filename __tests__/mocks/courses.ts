@@ -2,7 +2,7 @@
 import { CoursesState, INIT_COURSE } from '@application/features';
 
 /* Entities */
-import { LessonEntity, CourseEntity } from '@domain/entities';
+import { LessonEntity, CourseEntity, CourseWithLessonsEntity } from '@domain/entities';
 
 /* Interfaces */
 import { CourseEndpoint } from '@infrasturcture/interfaces';
@@ -121,6 +121,11 @@ export const coursesMock: CourseEntity[] = [
         updatedAt: '2021-08-26T15:00:00.000Z'
     }
 ];
+
+export const coursesWithLessonsMock: CourseWithLessonsEntity[] = coursesMock.map(({ lastLesson, ...rest }) => ({
+    ...rest,
+    lessons: [ lastLesson! ]
+}));
 
 export const initialCoursesStateMock: CoursesState = {
     courseFilter: 'all',
