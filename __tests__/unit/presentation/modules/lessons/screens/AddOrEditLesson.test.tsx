@@ -2,10 +2,15 @@ import React from 'react';
 import { act, render, screen } from '@testing-library/react-native';
 
 /* Mocks */
-import { initialLessonsStateMock, lessonSelectedStateMock, useLessonsSpy, useStatusSpy, useUISpy } from '@mocks';
-
-/* Features */
-import { UI_INITIAL_STATE } from '@application/features';
+import {
+    initialLessonsStateMock,
+    initialUIState,
+    lessonSelectedStateMock,
+    useLessonsSpy,
+    useStatusSpy,
+    useUISpy,
+    useVoiceRecorderSpy
+} from '@mocks';
 
 /* Modules */
 import { AddOrEditLesson } from '@lessons';
@@ -30,8 +35,15 @@ describe('Test in <AddOrEditLesson /> screen', () => {
     }) as any);
 
     useUISpy.mockImplementation(() => ({
-        state: UI_INITIAL_STATE
+        state: initialUIState
     }) as any);
+
+    useVoiceRecorderSpy.mockImplementation(() => ({
+        isRecording: false,
+        record: '',
+        startRecording: jest.fn(),
+        stopRecording: jest.fn()
+    }));
 
     it('should to match snapshot', async () => {
         renderScreen();

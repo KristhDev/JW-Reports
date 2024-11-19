@@ -5,6 +5,7 @@ import { MenuProvider } from 'react-native-popup-menu';
 /* Mocks */
 import {
     courseSelectedStateMock,
+    initialUIState,
     lessonsStateMock,
     setSelectedLessonMock,
     useCoursesSpy,
@@ -15,7 +16,7 @@ import {
 } from '@mocks';
 
 /* Features */
-import { INIT_LESSON, UI_INITIAL_STATE } from '@application/features';
+import { INIT_LESSON } from '@application/features';
 
 /* Modules */
 import { Lessons } from '@lessons';
@@ -42,13 +43,8 @@ describe('Test in <Lessons /> screen', () => {
         finishOrStartLesson: jest.fn(),
     }) as any);
 
-    useNetworkSpy.mockImplementation(() => ({
-        wifi: wifiMock
-    }) as any);
-
-    useUISpy.mockImplementation(() => ({
-        state: UI_INITIAL_STATE
-    }) as any);
+    useNetworkSpy.mockImplementation(() => ({ wifi: wifiMock }) as any);
+    useUISpy.mockImplementation(() => ({ state: initialUIState }) as any);
 
     beforeEach(() => {
         jest.clearAllMocks();
