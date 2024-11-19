@@ -23,17 +23,9 @@ import { Time } from '@infrasturcture/adapters';
 /* Modules */
 import { ReportModal, ReportModalProps } from '@preaching';
 
-useAuthSpy.mockImplementation(() => ({
-    state: authenticateStateMock
-}) as any);
-
-usePreachingSpy.mockImplementation(() => ({
-    state: preachingsStateMock
-}) as any);
-
-useCoursesSpy.mockImplementation(() => ({
-    state: coursesStateMock
-}) as any);
+useAuthSpy.mockImplementation(() => ({ state: authenticateStateMock }) as any);
+usePreachingSpy.mockImplementation(() => ({ state: preachingsStateMock }) as any);
+useCoursesSpy.mockImplementation(() => ({ state: coursesStateMock }) as any);
 
 const renderModal = (props: ReportModalProps) => render(<ReportModal { ...props } />);
 
