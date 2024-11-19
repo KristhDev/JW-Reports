@@ -10,11 +10,9 @@ import {
     useCoursesSpy,
     useRevisitsSpy,
     useStatusSpy,
-    useUISpy
+    useUISpy,
+    initialUIState
 } from '@mocks';
-
-/* Features */
-import { UI_INITIAL_STATE } from '@application/features';
 
 /* Modules */
 import { PassToCourseModal } from '@courses';
@@ -33,17 +31,9 @@ describe('Test in <PassToCourseModal /> screen', () => {
         saveCourse: saveCourseMock
     }) as any);
 
-    useRevisitsSpy.mockImplementation(() => ({
-        state: selectedRevisitStateMock
-    }) as any);
-
-    useStatusSpy.mockImplementation(() => ({
-        setStatus: setStatusMock
-    }) as any);
-
-    useUISpy.mockImplementation(() => ({
-        state: UI_INITIAL_STATE
-    }) as any);
+    useRevisitsSpy.mockImplementation(() => ({ state: selectedRevisitStateMock }) as any);
+    useStatusSpy.mockImplementation(() => ({ setStatus: setStatusMock }) as any);
+    useUISpy.mockImplementation(() => ({ state: initialUIState }) as any);
 
     it('should to match snapshot', async () => {
         renderScreen();
