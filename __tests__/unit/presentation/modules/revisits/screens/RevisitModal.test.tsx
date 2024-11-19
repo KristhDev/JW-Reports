@@ -3,6 +3,7 @@ import { act, render, screen, userEvent } from '@testing-library/react-native';
 
 /* Mocks */
 import {
+    initialUIState,
     onCloseMock,
     saveRevisitMock,
     selectedRevisitStateMock,
@@ -11,9 +12,6 @@ import {
     useStatusSpy,
     useUISpy
 } from '@mocks';
-
-/* Features */
-import { UI_INITIAL_STATE } from '@application/features';
 
 /* Modules */
 import { RevisitModal } from '@revisits';
@@ -36,13 +34,8 @@ describe('Test in <RevisitModal /> screen', () => {
         saveRevisit: saveRevisitMock
     }) as any);
 
-    useStatusSpy.mockImplementation(() => ({
-        setErrorForm: setErrorFormMock
-    }) as any);
-
-    useUISpy.mockImplementation(() => ({
-        state: UI_INITIAL_STATE
-    }) as any);
+    useStatusSpy.mockImplementation(() => ({ setErrorForm: setErrorFormMock }) as any);
+    useUISpy.mockImplementation(() => ({ state: initialUIState }) as any);
 
     it('should to match snapshot', async () => {
         renderScreen();

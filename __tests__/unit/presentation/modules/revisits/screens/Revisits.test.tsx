@@ -5,6 +5,7 @@ import { MenuProvider } from 'react-native-popup-menu';
 /* Mocks */
 import {
     coursesStateMock,
+    initialUIState,
     revisitsStateMock,
     setSelectedRevisitMock,
     useCoursesSpy,
@@ -14,7 +15,7 @@ import {
 } from '@mocks';
 
 /* Features */
-import { INIT_REVISIT, UI_INITIAL_STATE } from '@application/features';
+import { INIT_REVISIT } from '@application/features';
 
 /* Modules */
 import { Revisits } from '@revisits';
@@ -75,7 +76,7 @@ describe('Test in <Revisits /> screen', () => {
     }) as any);
 
     useUISpy.mockImplementation(() => ({
-        state: UI_INITIAL_STATE
+        state: initialUIState
     }) as any);
 
     beforeEach(() => {

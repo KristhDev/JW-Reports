@@ -2,17 +2,13 @@ import React from 'react';
 import { render, screen } from '@testing-library/react-native';
 
 /* Mocks */
-import { selectedRevisitStateMock, setSelectedRevisitMock, useRevisitsSpy, useStatusSpy, useUISpy } from '@mocks';
-
-/* Features */
-import { UI_INITIAL_STATE } from '@application/features';
+import { initialUIState, selectedRevisitStateMock, setSelectedRevisitMock, useRevisitsSpy, useStatusSpy, useUISpy } from '@mocks';
 
 /* Adapters */
 import { Time } from '@infrasturcture/adapters';
 
 /* Modules */
 import { RevisitDetail } from '@revisits';
-
 
 const revisitPhoto = 'https://img.freepik.com/free-vector/nature-scene-with-river-hills-forest-mountain-landscape-flat-cartoon-style-illustration_1150-37326.jpg';
 const renderScreen = () => render(<RevisitDetail />);
@@ -25,13 +21,8 @@ describe('Test in <RevisitDetail /> screen', () => {
         setSelectedRevisit: setSelectedRevisitMock,
     }) as any);
 
-    useStatusSpy.mockImplementation(() => ({
-        setErrorForm: jest.fn()
-    }) as any);
-
-    useUISpy.mockImplementation(() => ({
-        state: UI_INITIAL_STATE
-    }) as any);
+    useStatusSpy.mockImplementation(() => ({ setErrorForm: jest.fn() }) as any);
+    useUISpy.mockImplementation(() => ({ state: initialUIState }) as any);
 
     beforeEach(() => {
         jest.clearAllMocks();

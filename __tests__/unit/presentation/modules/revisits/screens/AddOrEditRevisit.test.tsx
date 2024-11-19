@@ -4,16 +4,15 @@ import { act, render, screen } from '@testing-library/react-native';
 /* Mocks */
 import {
     imageModelMock,
+    initialUIState,
     revisitsStateMock,
     selectedRevisitStateMock,
     useImageSpy,
     useRevisitsSpy,
     useStatusSpy,
-    useUISpy
+    useUISpy,
+    useVoiceRecorderSpy
 } from '@mocks';
-
-/* Features */
-import { UI_INITIAL_STATE } from '@application/features';
 
 /* Modules */
 import { AddOrEditRevisit } from '@revisits';
@@ -43,9 +42,14 @@ describe('Test in <AddOrEditRevisit /> screen', () => {
         takePhoto: jest.fn()
     }) as any);
 
-    useUISpy.mockImplementation(() => ({
-        state: UI_INITIAL_STATE
-    }) as any);
+    useUISpy.mockImplementation(() => ({ state: initialUIState }) as any);
+
+    useVoiceRecorderSpy.mockImplementation(() => ({
+        isRecording: false,
+        record: '',
+        startRecording: jest.fn(),
+        stopRecording: jest.fn()
+    }));
 
     it('should to match snapshot', async () => {
         renderScreen();
