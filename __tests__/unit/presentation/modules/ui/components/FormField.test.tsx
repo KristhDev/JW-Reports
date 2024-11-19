@@ -4,7 +4,7 @@ import { Formik } from 'formik';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
 /* Mocks */
-import { useUISpy } from '@mocks';
+import { initialUIState, useUISpy } from '@mocks';
 
 /* Modules */
 import { darkColors } from '@theme';
@@ -41,11 +41,7 @@ const renderComponent = () => render(
 );
 
 describe('Test in <FormField /> component', () => {
-    useUISpy.mockImplementation(() => ({
-        state: {
-            isKeyboardVisible: false
-        }
-    }) as any);
+    useUISpy.mockImplementation(() => ({ state: initialUIState }) as any);
 
     it('should to match snapshot', () => {
         renderComponent();
