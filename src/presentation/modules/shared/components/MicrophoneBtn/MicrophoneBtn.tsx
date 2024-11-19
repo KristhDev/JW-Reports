@@ -60,9 +60,10 @@ export const MicrophoneBtn: FC<MicrophoneBtnProps> = ({ conditionForNotRecording
             color={ colors.button }
             icon={
                 <Ionicons
-                color={ colors.contentHeader }
-                name={ (isRecording) ? 'mic-off-outline' : 'mic-outline' }
-                size={ fontSizes.xl }
+                    color={ colors.contentHeader }
+                    name={ (isRecording) ? 'mic-off-outline' : 'mic-outline' }
+                    size={ fontSizes.xl }
+                    testID="microphone-btn-icon"
                 />
             }
             onPress={ handleRecord }
