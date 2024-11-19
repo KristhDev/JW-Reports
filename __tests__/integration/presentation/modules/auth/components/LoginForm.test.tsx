@@ -5,7 +5,7 @@ import { act, render, screen, userEvent } from '@testing-library/react-native';
 import { mockUseNavigation } from '@test-setup';
 
 /* Mocks */
-import { setErrorFormMock, signInMock, useAuthSpy, useStatusSpy, useUISpy } from '@mocks';
+import { initialUIState, setErrorFormMock, signInMock, useAuthSpy, useStatusSpy, useUISpy } from '@mocks';
 
 /* Modules */
 import { LoginForm } from '@auth';
@@ -23,15 +23,8 @@ describe('Test in <LoginForm /> component', () => {
         signIn: signInMock
     }) as any);
 
-    useStatusSpy.mockImplementation(() => ({
-        setErrorForm: setErrorFormMock
-    }) as any);
-
-    useUISpy.mockImplementation(() => ({
-        state: {
-            isKeyboardVisible: false
-        }
-    }) as any);
+    useStatusSpy.mockImplementation(() => ({ setErrorForm: setErrorFormMock }) as any);
+    useUISpy.mockImplementation(() => ({ state: initialUIState }) as any);
 
     it('should to match snapshot', async () => {
         renderComponent();

@@ -2,7 +2,16 @@ import React from 'react';
 import { act, render, screen, userEvent } from '@testing-library/react-native';
 
 /* Mocks */
-import { setErrorFormMock, testUser, updateEmailMock, updatePasswordMock, useAuthSpy, useStatusSpy, useUISpy } from '@mocks';
+import {
+    initialUIState,
+    setErrorFormMock,
+    testUser,
+    updateEmailMock,
+    updatePasswordMock,
+    useAuthSpy,
+    useStatusSpy,
+    useUISpy
+} from '@mocks';
 
 /* Modules */
 import { CredentialsForm } from '@auth';
@@ -17,15 +26,8 @@ describe('Test in <CredentialsForm /> component', () => {
         updatePassword: updatePasswordMock
     }) as any);
 
-    useStatusSpy.mockImplementation(() => ({
-        setErrorForm: setErrorFormMock
-    }) as any);
-
-    useUISpy.mockImplementation(() => ({
-        state: {
-            isKeyboardVisible: false
-        }
-    }) as any);
+    useStatusSpy.mockImplementation(() => ({ setErrorForm: setErrorFormMock }) as any);
+    useUISpy.mockImplementation(() => ({ state: initialUIState }) as any);
 
     beforeEach(() => {
         jest.clearAllMocks();

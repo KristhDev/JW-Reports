@@ -5,7 +5,7 @@ import { act, render, screen, userEvent } from '@testing-library/react-native';
 import { mockUseNavigation } from '@test-setup';
 
 /* Mocks */
-import { resetPasswordMock, setErrorFormMock, useAuthSpy, useStatusSpy, useUISpy } from '@mocks';
+import { initialUIState, resetPasswordMock, setErrorFormMock, useAuthSpy, useStatusSpy, useUISpy } from '@mocks';
 
 /* Modules */
 import { ForgotPasswordForm } from '@auth';
@@ -23,15 +23,8 @@ describe('Test in <ForgotPasswordForm /> component', () => {
         resetPassword: resetPasswordMock
     }) as any);
 
-    useStatusSpy.mockImplementation(() => ({
-        setErrorForm: setErrorFormMock
-    }) as any);
-
-    useUISpy.mockImplementation(() => ({
-        state: {
-            isKeyboardVisible: false
-        }
-    }) as any);
+    useStatusSpy.mockImplementation(() => ({ setErrorForm: setErrorFormMock }) as any);
+    useUISpy.mockImplementation(() => ({ state: initialUIState }) as any);
 
     it('should to match snapshot', async () => {
         renderComponent();

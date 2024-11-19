@@ -3,6 +3,7 @@ import { act, render, screen, userEvent, waitFor } from '@testing-library/react-
 
 /* Mocks */
 import {
+    initialUIState,
     setErrorFormMock,
     testUser,
     updateProfileMock,
@@ -25,19 +26,9 @@ describe('Test in <ProfileForm /> component', () => {
         updateProfile: updateProfileMock
     }) as any);
 
-    useStatusSpy.mockImplementation(() => ({
-        setErrorForm: setErrorFormMock
-    }) as any);
-
-    useNetworkSpy.mockImplementation(() => ({
-        wifi: wifiMock
-    }) as any);
-
-    useUISpy.mockImplementation(() => ({
-        state: {
-            isKeyboardVisible: false
-        }
-    }) as any);
+    useStatusSpy.mockImplementation(() => ({ setErrorForm: setErrorFormMock }) as any);
+    useNetworkSpy.mockImplementation(() => ({ wifi: wifiMock }) as any);
+    useUISpy.mockImplementation(() => ({ state: initialUIState }) as any);
 
     beforeEach(() => {
         jest.clearAllMocks();
