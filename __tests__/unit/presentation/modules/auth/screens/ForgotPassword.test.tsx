@@ -2,10 +2,7 @@ import React from 'react';
 import { act, render, screen } from '@testing-library/react-native';
 
 /* Mocks */
-import { resetPasswordMock, setErrorFormMock, useAuthSpy, useStatusSpy, useUISpy } from '@mocks';
-
-/* Features */
-import { UI_INITIAL_STATE } from '@application/features';
+import { initialUIState, resetPasswordMock, setErrorFormMock, useAuthSpy, useStatusSpy, useUISpy } from '@mocks';
 
 /* Modules */
 import { ForgotPassword } from '@auth';
@@ -23,7 +20,7 @@ describe('Test in <ForgotPassword /> screen', () => {
     }) as any);
 
     useUISpy.mockImplementation(() => ({
-        state: UI_INITIAL_STATE
+        state: initialUIState
     }) as any);
 
     it('should to match snapshot', async () => {

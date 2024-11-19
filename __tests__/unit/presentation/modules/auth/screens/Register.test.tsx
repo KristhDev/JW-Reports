@@ -2,10 +2,7 @@ import React from 'react';
 import { act, render, screen } from '@testing-library/react-native';
 
 /* Mocks */
-import { setErrorFormMock, setThemeMock, signUpMock, useAuthSpy, useStatusSpy, useThemeSpy, useUISpy } from '@mocks';
-
-/* Features */
-import { UI_INITIAL_STATE } from '@application/features';
+import { initialUIState, setErrorFormMock, setThemeMock, signUpMock, useAuthSpy, useStatusSpy, useThemeSpy, useUISpy } from '@mocks';
 
 /* Modules */
 import { Register } from '@auth';
@@ -28,7 +25,7 @@ describe('Test in <Register /> screen', () => {
     }));
 
     useUISpy.mockImplementation(() => ({
-        state: UI_INITIAL_STATE
+        state: initialUIState
     }) as any);
 
     it('should to match snapshot', async () => {
