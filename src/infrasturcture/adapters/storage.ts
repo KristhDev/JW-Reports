@@ -3,9 +3,10 @@ import { Storage } from 'reduxjs-toolkit-persist/lib/types';
 
 export const storageKeys = {
     AUTH: 'jwreports-auth',
+    STORE_PERMISSIONS: 'jwreports-store-permissions',
+    STORE_UI: 'jwreports-store-ui',
     STORE: 'jwreports-store',
-    THEME: 'jwreports-theme',
-    USER_INTERFACE: 'jwreports-ui',
+    THEME: 'jwreports-theme'
 }
 
 export const mmkvStorage = new MMKV();
