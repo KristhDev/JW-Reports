@@ -10,5 +10,6 @@ export * from './revisits';
 export * from './services';
 export * from './shared';
 export * from './status';
+export * from './templates';
 export * from './theme';
 export * from './ui';
