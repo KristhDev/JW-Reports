@@ -3,9 +3,11 @@ import { PermissionStatus } from 'react-native-permissions';
 /**
  * Defining the shape of the state object.
  *
+ * @property {boolean} isPermissionsRequested - This is a boolean that indicates if the permissions have been requested.
  * @property {Permissions} permissions - The permissions object.
  */
 export interface PermissionsState {
+    isPermissionsRequested: boolean;
     permissions: Permissions;
 }
 
@@ -38,4 +40,13 @@ export interface Permissions {
 export type SetPermissionPayload = {
     key: keyof Permissions;
     value: PermissionStatus;
+}
+
+export interface RequestPermissionsOptions {
+    camera?: boolean;
+    notifications?: boolean;
+    readExternalStorage?: boolean;
+    readMediaImages?: boolean;
+    recordAudio?: boolean;
+    writeExternalStorage?: boolean;
 }
