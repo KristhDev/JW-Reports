@@ -24,8 +24,9 @@ export const CoursesServiceSpy = {
     create: jest.spyOn(CoursesService, 'create'),
     delete: jest.spyOn(CoursesService, 'delete'),
     finishOrStart: jest.spyOn(CoursesService, 'finishOrStart'),
-    paginateByUserId: jest.spyOn(CoursesService, 'paginateByUserId'),
+    getAllByUserId: jest.spyOn(CoursesService, 'getAllByUserId'),
     getCourseIdsByUserId: jest.spyOn(CoursesService, 'getCourseIdsByUserId'),
+    paginateByUserId: jest.spyOn(CoursesService, 'paginateByUserId'),
     update: jest.spyOn(CoursesService, 'update'),
 }
 
