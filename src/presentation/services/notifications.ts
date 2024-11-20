@@ -32,13 +32,4 @@ export class NotificationsService {
     public static close(): void {
         OneSignal.logout();
     }
-
-    /**
-     * Requests permission for notifications from the OneSignal SDK.
-     *
-     * @return {void} This function does not return anything.
-     */
-    public static requestPermission(): void {
-        OneSignal.Notifications.requestPermission(true);
-    }
 }
