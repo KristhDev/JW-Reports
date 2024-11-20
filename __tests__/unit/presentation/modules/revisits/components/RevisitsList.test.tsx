@@ -8,7 +8,7 @@ import {
     coursesStateMock,
     deleteRevisitMock,
     initialRevisitsStateMock,
-    initialUIState,
+    initialUIStateMock,
     loadRevisitsMock,
     removeRevisitsMock,
     revisitsStateMock,
@@ -62,7 +62,7 @@ describe('Test in <RevisitsList /> component', () => {
 
     useStatusSpy.mockImplementation(() => ({ setStatus: setStatusMock }) as any);
     useNetworkSpy.mockImplementation(() => ({ wifi: wifiMock }) as any);
-    useUISpy.mockImplementation(() => ({ state: initialUIState }) as any);
+    useUISpy.mockImplementation(() => ({ state: initialUIStateMock }) as any);
 
     beforeEach(() => {
         jest.clearAllMocks();

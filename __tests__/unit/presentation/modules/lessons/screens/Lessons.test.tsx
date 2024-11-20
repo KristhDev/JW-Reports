@@ -5,7 +5,7 @@ import { MenuProvider } from 'react-native-popup-menu';
 /* Mocks */
 import {
     courseSelectedStateMock,
-    initialUIState,
+    initialUIStateMock,
     lessonsStateMock,
     setSelectedLessonMock,
     useCoursesSpy,
@@ -44,7 +44,7 @@ describe('Test in <Lessons /> screen', () => {
     }) as any);
 
     useNetworkSpy.mockImplementation(() => ({ wifi: wifiMock }) as any);
-    useUISpy.mockImplementation(() => ({ state: initialUIState }) as any);
+    useUISpy.mockImplementation(() => ({ state: initialUIStateMock }) as any);
 
     beforeEach(() => {
         jest.clearAllMocks();

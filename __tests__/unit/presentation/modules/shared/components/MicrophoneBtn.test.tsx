@@ -2,7 +2,7 @@ import React from 'react';
 import { render, screen, userEvent } from '@testing-library/react-native';
 
 /* Mocks */
-import { initialUIState, onRecordMock, startRecordingMock, stopRecordingMock, useUISpy, useVoiceRecorderSpy } from '@mocks';
+import { initialUIStateMock, onRecordMock, startRecordingMock, stopRecordingMock, useUISpy, useVoiceRecorderSpy } from '@mocks';
 
 /* Modules */
 import { MicrophoneBtn, MicrophoneBtnProps } from '@shared';
@@ -14,7 +14,7 @@ useVoiceRecorderSpy.mockImplementation(() => ({
     stopRecording: stopRecordingMock
 }));
 
-useUISpy.mockImplementation(() => ({ state: initialUIState }) as any);
+useUISpy.mockImplementation(() => ({ state: initialUIStateMock }) as any);
 
 const user = userEvent.setup();
 const renderComponent = (props: MicrophoneBtnProps) => render(<MicrophoneBtn { ...props } />);

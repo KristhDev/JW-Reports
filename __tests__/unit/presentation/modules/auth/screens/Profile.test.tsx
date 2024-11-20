@@ -2,7 +2,15 @@ import React from 'react';
 import { act, render, screen } from '@testing-library/react-native';
 
 /* Mocks */
-import { setErrorFormMock, testUser, useAuthSpy, useStatusSpy, useUISpy, updateProfileMock, initialUIState } from '@mocks';
+import {
+    setErrorFormMock,
+    testUser,
+    useAuthSpy,
+    useStatusSpy,
+    useUISpy,
+    updateProfileMock,
+    initialUIStateMock
+} from '@mocks';
 
 /* Modules */
 import { Profile } from '@auth';
@@ -20,7 +28,7 @@ describe('Test in <Profile /> screen', () => {
     }) as any);
 
     useUISpy.mockImplementation(() => ({
-        state: initialUIState
+        state: initialUIStateMock
     }) as any);
 
     it('should to match snapshot', async () => {

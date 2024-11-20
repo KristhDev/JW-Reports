@@ -2,7 +2,16 @@ import React from 'react';
 import { act, render, screen } from '@testing-library/react-native';
 
 /* Mocks */
-import { initialUIState, setErrorFormMock, setThemeMock, signInMock, useAuthSpy, useStatusSpy, useThemeSpy, useUISpy } from '@mocks';
+import {
+    initialUIStateMock,
+    setErrorFormMock,
+    setThemeMock,
+    signInMock,
+    useAuthSpy,
+    useStatusSpy,
+    useThemeSpy,
+    useUISpy
+} from '@mocks';
 
 /* Modules */
 import { Login } from '@auth';
@@ -25,7 +34,7 @@ describe('Test in <Login /> screen', () => {
     }));
 
     useUISpy.mockImplementation(() => ({
-        state: initialUIState
+        state: initialUIStateMock
     }) as any);
 
     it('should to match snapshot', async () => {

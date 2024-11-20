@@ -2,7 +2,7 @@ import React from 'react';
 import { render, screen } from '@testing-library/react-native';
 
 /* Mocks */
-import { initialUIState, selectedRevisitStateMock, setSelectedRevisitMock, useRevisitsSpy, useStatusSpy, useUISpy } from '@mocks';
+import { initialUIStateMock, selectedRevisitStateMock, setSelectedRevisitMock, useRevisitsSpy, useStatusSpy, useUISpy } from '@mocks';
 
 /* Adapters */
 import { Time } from '@infrasturcture/adapters';
@@ -22,7 +22,7 @@ describe('Test in <RevisitDetail /> screen', () => {
     }) as any);
 
     useStatusSpy.mockImplementation(() => ({ setErrorForm: jest.fn() }) as any);
-    useUISpy.mockImplementation(() => ({ state: initialUIState }) as any);
+    useUISpy.mockImplementation(() => ({ state: initialUIStateMock }) as any);
 
     beforeEach(() => {
         jest.clearAllMocks();

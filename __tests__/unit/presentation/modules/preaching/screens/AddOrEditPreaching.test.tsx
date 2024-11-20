@@ -2,7 +2,7 @@ import React from 'react';
 import { act, render, screen } from '@testing-library/react-native';
 
 /* Mocks */
-import { initialUIState, preachingsStateMock, usePreachingSpy, useStatusSpy, useUISpy } from '@mocks';
+import { initialUIStateMock, preachingsStateMock, usePreachingSpy, useStatusSpy, useUISpy } from '@mocks';
 
 /* Features */
 import { INIT_PREACHING } from '@application/features';
@@ -28,7 +28,7 @@ describe('Test in <AddOrEditPreaching /> screen', () => {
     }) as any);
 
     useStatusSpy.mockImplementation(() => ({ setErrorForm: jest.fn() }) as any);
-    useUISpy.mockImplementation(() => ({ state: initialUIState }) as any);
+    useUISpy.mockImplementation(() => ({ state: initialUIStateMock }) as any);
 
     it('should to match snapshot', async () => {
         renderScreen();

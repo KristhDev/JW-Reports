@@ -4,7 +4,7 @@ import { Formik } from 'formik';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
 /* Mocks */
-import { initialUIState, useUISpy } from '@mocks';
+import { initialUIStateMock, useUISpy } from '@mocks';
 
 /* Modules */
 import { darkColors } from '@theme';
@@ -41,7 +41,7 @@ const renderComponent = () => render(
 );
 
 describe('Test in <FormField /> component', () => {
-    useUISpy.mockImplementation(() => ({ state: initialUIState }) as any);
+    useUISpy.mockImplementation(() => ({ state: initialUIStateMock }) as any);
 
     it('should to match snapshot', () => {
         renderComponent();

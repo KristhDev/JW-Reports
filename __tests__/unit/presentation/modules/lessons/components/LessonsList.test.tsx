@@ -8,7 +8,7 @@ import {
     deleteLessonMock,
     finishOrStartLessonMock,
     initialLessonsStateMock,
-    initialUIState,
+    initialUIStateMock,
     lessonsStateMock,
     loadLessonsMock,
     removeLessonsMock,
@@ -54,7 +54,7 @@ describe('Test in <LessonsList /> component', () => {
     }) as any);
 
     useUISpy.mockImplementation(() => ({
-        state: initialUIState
+        state: initialUIStateMock
     }) as any);
 
     beforeEach(() => {

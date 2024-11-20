@@ -11,7 +11,7 @@ import {
     useRevisitsSpy,
     useStatusSpy,
     useUISpy,
-    initialUIState
+    initialUIStateMock
 } from '@mocks';
 
 /* Modules */
@@ -33,7 +33,7 @@ describe('Test in <PassToCourseModal /> screen', () => {
 
     useRevisitsSpy.mockImplementation(() => ({ state: selectedRevisitStateMock }) as any);
     useStatusSpy.mockImplementation(() => ({ setStatus: setStatusMock }) as any);
-    useUISpy.mockImplementation(() => ({ state: initialUIState }) as any);
+    useUISpy.mockImplementation(() => ({ state: initialUIStateMock }) as any);
 
     it('should to match snapshot', async () => {
         renderScreen();

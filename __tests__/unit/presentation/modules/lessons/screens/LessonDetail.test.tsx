@@ -4,7 +4,7 @@ import { render, screen } from '@testing-library/react-native';
 /* Mocks */
 import {
     courseSelectedStateMock,
-    initialUIState,
+    initialUIStateMock,
     lessonSelectedStateMock,
     setSelectedLessonMock,
     useCoursesSpy,
@@ -31,7 +31,7 @@ describe('Test in <LessonDetail /> screen', () => {
         setSelectedLesson: setSelectedLessonMock
     }) as any);
 
-    useUISpy.mockImplementation(() => ({ state: initialUIState }) as any);
+    useUISpy.mockImplementation(() => ({ state: initialUIStateMock }) as any);
 
     beforeEach(() => {
         jest.clearAllMocks();

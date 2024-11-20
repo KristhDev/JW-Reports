@@ -2,7 +2,7 @@ import React from 'react';
 import { render, screen, userEvent } from '@testing-library/react-native';
 
 /* Mock */
-import { finishOrStartLessonMock, initialUIState, lessonSelectedStateMock, onCloseMock, useLessonsSpy, useUISpy } from '@mocks';
+import { finishOrStartLessonMock, initialUIStateMock, lessonSelectedStateMock, onCloseMock, useLessonsSpy, useUISpy } from '@mocks';
 
 /* Modules */
 import { FinishOrStartLessonModal } from '@lessons';
@@ -21,7 +21,7 @@ describe('Test in <FinishOrStartLessonModal /> screen', () => {
         finishOrStartLesson: finishOrStartLessonMock
     }) as any);
 
-    useUISpy.mockImplementation(() => ({ state: initialUIState }) as any);
+    useUISpy.mockImplementation(() => ({ state: initialUIStateMock }) as any);
 
     it('should to match snapshot', () => {
         renderScreen();

@@ -5,7 +5,7 @@ import { act, render, screen } from '@testing-library/react-native';
 import {
     courseSelectedStateMock,
     coursesStateMock,
-    initialUIState,
+    initialUIStateMock,
     useCoursesSpy,
     useStatusSpy,
     useUISpy,
@@ -25,7 +25,7 @@ describe('Test in <AddOrEditCourse /> screen', () => {
     }) as any);
 
     useStatusSpy.mockImplementation(() => ({ setErrorForm: jest.fn() }) as any);
-    useUISpy.mockImplementation(() => ({ state: initialUIState }) as any);
+    useUISpy.mockImplementation(() => ({ state: initialUIStateMock }) as any);
 
     useVoiceRecorderSpy.mockImplementation(() => ({
         isRecording: false,

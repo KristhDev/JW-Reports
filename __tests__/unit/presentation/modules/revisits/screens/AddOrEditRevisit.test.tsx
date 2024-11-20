@@ -4,7 +4,7 @@ import { act, render, screen } from '@testing-library/react-native';
 /* Mocks */
 import {
     imageModelMock,
-    initialUIState,
+    initialUIStateMock,
     revisitsStateMock,
     selectedRevisitStateMock,
     useImageSpy,
@@ -42,7 +42,7 @@ describe('Test in <AddOrEditRevisit /> screen', () => {
         takePhoto: jest.fn()
     }) as any);
 
-    useUISpy.mockImplementation(() => ({ state: initialUIState }) as any);
+    useUISpy.mockImplementation(() => ({ state: initialUIStateMock }) as any);
 
     useVoiceRecorderSpy.mockImplementation(() => ({
         isRecording: false,

@@ -8,7 +8,7 @@ import {
     coursesStateMock,
     deleteLessonMock,
     finishOrStartLessonMock,
-    initialUIState,
+    initialUIStateMock,
     lastLessonStateMock,
     lastRevisitStateMock,
     loadLastLessonMock,
@@ -77,7 +77,7 @@ describe('Test in <PublisherHome /> screen', () => {
         setErrorForm: setErrorFormMock
     }) as any);
 
-    useUISpy.mockImplementation(() => ({ state: initialUIState }) as any);
+    useUISpy.mockImplementation(() => ({ state: initialUIStateMock }) as any);
 
     it('should to match snapshot', () => {
         renderScreen();

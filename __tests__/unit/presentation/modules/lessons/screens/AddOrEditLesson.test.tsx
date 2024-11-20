@@ -4,7 +4,7 @@ import { act, render, screen } from '@testing-library/react-native';
 /* Mocks */
 import {
     initialLessonsStateMock,
-    initialUIState,
+    initialUIStateMock,
     lessonSelectedStateMock,
     useLessonsSpy,
     useStatusSpy,
@@ -35,7 +35,7 @@ describe('Test in <AddOrEditLesson /> screen', () => {
     }) as any);
 
     useUISpy.mockImplementation(() => ({
-        state: initialUIState
+        state: initialUIStateMock
     }) as any);
 
     useVoiceRecorderSpy.mockImplementation(() => ({

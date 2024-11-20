@@ -5,7 +5,7 @@ import { render, screen, userEvent } from '@testing-library/react-native';
 import { mockUseNavigation } from '@test-setup';
 
 /* Mocks */
-import { initialUIState, setStatusMock, setThemeMock, useStatusSpy, useThemeSpy, useUISpy } from '@mocks';
+import { initialUIStateMock, setStatusMock, setThemeMock, useStatusSpy, useThemeSpy, useUISpy } from '@mocks';
 
 /* Modules */
 import { Settings } from '@shared';
@@ -23,7 +23,7 @@ describe('Test in <Settings /> screen', () => {
         setTheme: setThemeMock
     }) as any);
 
-    useUISpy.mockImplementation(() => ({ state: initialUIState }) as any);
+    useUISpy.mockImplementation(() => ({ state: initialUIStateMock }) as any);
 
     beforeEach(() => {
         jest.clearAllMocks();
