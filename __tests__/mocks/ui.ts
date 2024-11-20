@@ -4,7 +4,7 @@ import * as useUI from '@ui/hooks/useUI';
 
 export const useUISpy = jest.spyOn(useUI, 'default');
 
-export const initialUIState: UIState = {
+export const initialUIStateMock: UIState = {
     activeFormField: '',
     isDataExporting: false,
     keyboard: {

@@ -1,6 +1,7 @@
 import { PermissionsState } from '@application/features';
 
 export const initialPermissionsStateMock: PermissionsState = {
+    isPermissionsRequested: false,
     permissions: {
         camera: 'unavailable',
         notifications: 'unavailable',
@@ -12,6 +13,7 @@ export const initialPermissionsStateMock: PermissionsState = {
 }
 
 export const blockedStateMock: PermissionsState = {
+    isPermissionsRequested: true,
     permissions: {
         camera: 'blocked',
         notifications: 'blocked',
@@ -23,6 +25,7 @@ export const blockedStateMock: PermissionsState = {
 }
 
 export const deniedStateMock: PermissionsState = {
+    isPermissionsRequested: true,
     permissions: {
         camera: 'denied',
         notifications: 'denied',
@@ -34,6 +37,7 @@ export const deniedStateMock: PermissionsState = {
 }
 
 export const grantedStateMock: PermissionsState = {
+    isPermissionsRequested: true,
     permissions: {
         camera: 'granted',
         notifications: 'granted',
@@ -45,6 +49,7 @@ export const grantedStateMock: PermissionsState = {
 }
 
 export const unavailableStateMock: PermissionsState = {
+    isPermissionsRequested: true,
     permissions: {
         camera: 'unavailable',
         notifications: 'unavailable',
