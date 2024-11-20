@@ -4,9 +4,6 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { Keyboard, SetKeyboardPayload, SetOldDatetimePickerPayload, UIState } from './types';
 import { SetIsExportingPayload } from '../types';
 
-/* Functions */
-import { getUIStored } from '../functions';
-
 export const INITIAL_KEYBOARD: Keyboard = {
     height: 0,
     isVisible: false
@@ -17,7 +14,9 @@ export const UI_INITIAL_STATE: UIState = {
     isDataExporting: false,
     keyboard: INITIAL_KEYBOARD,
     recordedAudio: '',
-    userInterface: getUIStored()
+    userInterface: {
+        oldDatetimePicker: false
+    }
 }
 
 const uiSlice = createSlice({
