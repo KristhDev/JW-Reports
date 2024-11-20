@@ -4,6 +4,7 @@ import { act, render, screen, userEvent } from '@testing-library/react-native';
 /* Mocks */
 import {
     initialLessonsStateMock,
+    initialUIStateMock,
     lessonSelectedStateMock,
     saveLessonMock,
     setErrorFormMock,
@@ -12,9 +13,6 @@ import {
     useStatusSpy,
     useUISpy
 } from '@mocks';
-
-/* Features */
-import { UI_INITIAL_STATE } from '@application/features';
 
 /* Modules */
 import { LessonForm } from '@lessons';
@@ -40,7 +38,7 @@ describe('Test in <LessonForm /> component', () => {
     }) as any);
 
     useUISpy.mockImplementation(() => ({
-        state: UI_INITIAL_STATE
+        state: initialUIStateMock
     }) as any);
 
     beforeEach(() => {
@@ -124,9 +122,9 @@ describe('Test in <LessonForm /> component', () => {
         /* Mock data of useUI */
         useUISpy.mockImplementation(() => ({
             state: {
-                ...UI_INITIAL_STATE,
+                ...initialUIStateMock,
                 userInterface: {
-                    ...UI_INITIAL_STATE.userInterface,
+                    ...initialUIStateMock.userInterface,
                     oldDatetimePicker: true
                 }
             }

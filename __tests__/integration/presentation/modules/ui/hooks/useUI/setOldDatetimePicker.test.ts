@@ -4,20 +4,20 @@ import { act } from '@testing-library/react-native';
 import { getMockStoreUseUI, renderUseUI } from '@setups';
 
 /* Mocks */
-import { initialUIState, storageSpy } from '@mocks';
+import { initialUIStateMock, storageSpy } from '@mocks';
 
 describe('Test in setOldDatetimePicker', () => {
     it('should change property oldDatetimePicker', async () => {
         storageSpy.getItem.mockImplementation();
 
         const mockStore = getMockStoreUseUI({
-            ui: initialUIState
+            ui: initialUIStateMock
         });
 
         const { result } = renderUseUI(mockStore);
 
         expect(result.current.useUI.state.userInterface).toEqual({
-            ...initialUIState.userInterface,
+            ...initialUIStateMock.userInterface,
             oldDatetimePicker: false
         });
 

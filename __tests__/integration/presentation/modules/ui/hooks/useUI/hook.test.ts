@@ -2,7 +2,7 @@
 import { getMockStoreUseUI, renderUseUI } from '@setups';
 
 /* Mocks */
-import { initialUIState } from '@mocks';
+import { initialUIStateMock } from '@mocks';
 
 describe('Test in useUI hook', () => {
     let mockStore = {} as any;
@@ -11,7 +11,7 @@ describe('Test in useUI hook', () => {
         jest.clearAllMocks();
 
         mockStore = getMockStoreUseUI({
-            ui: initialUIState
+            ui: initialUIStateMock
         });
     });
 
@@ -19,7 +19,7 @@ describe('Test in useUI hook', () => {
         const { result } = renderUseUI(mockStore);
 
         expect(result.current.useUI).toEqual({
-            state: initialUIState,
+            state: initialUIStateMock,
 
             listenHideKeyboard: expect.any(Function),
             listenShowKeyboard: expect.any(Function),

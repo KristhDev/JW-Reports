@@ -5,7 +5,7 @@ import { act, render, screen, userEvent } from '@testing-library/react-native';
 import {
     courseSelectedStateMock,
     coursesStateMock,
-    initialUIState,
+    initialUIStateMock,
     saveCourseMock,
     setActiveFormFieldMock,
     setErrorFormMock,
@@ -34,7 +34,7 @@ describe('Test in <CourseForm /> component', () => {
 
 
     useUISpy.mockImplementation(() => ({
-        state: initialUIState,
+        state: initialUIStateMock,
         setActiveFormField: setActiveFormFieldMock
     }) as any);
 

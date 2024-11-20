@@ -3,7 +3,7 @@ import { act, render, screen, userEvent } from '@testing-library/react-native';
 
 /* Mocks */
 import {
-    initialUIState,
+    initialUIStateMock,
     setErrorFormMock,
     testUser,
     updateEmailMock,
@@ -27,7 +27,7 @@ describe('Test in <CredentialsForm /> component', () => {
     }) as any);
 
     useStatusSpy.mockImplementation(() => ({ setErrorForm: setErrorFormMock }) as any);
-    useUISpy.mockImplementation(() => ({ state: initialUIState }) as any);
+    useUISpy.mockImplementation(() => ({ state: initialUIStateMock }) as any);
 
     beforeEach(() => {
         jest.clearAllMocks();
