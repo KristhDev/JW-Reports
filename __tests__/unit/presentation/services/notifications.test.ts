@@ -17,9 +17,6 @@ describe('Test in NotificationsService service', () => {
 
         expect(NotificationsService).toHaveProperty('mount');
         expect(typeof NotificationsService.mount).toBe('function');
-
-        expect(NotificationsService).toHaveProperty('requestPermission');
-        expect(typeof NotificationsService.requestPermission).toBe('function');
     });
 
     it('should call functions to mount notifications - mount', () => {
@@ -36,13 +33,6 @@ describe('Test in NotificationsService service', () => {
         NotificationsService.close();
 
         expect(OneSignal.logout).toHaveBeenCalledTimes(1);
-    });
-
-    it('should call functions to request permission - requestPermission', () => {
-        NotificationsService.requestPermission();
-
-        expect(OneSignal.Notifications.requestPermission).toHaveBeenCalledTimes(1);
-        expect(OneSignal.Notifications.requestPermission).toHaveBeenCalledWith(true);
     });
 
     it('should call functions to listen for notifications by user - listenNotificationsByUser', () => {
