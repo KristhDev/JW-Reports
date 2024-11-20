@@ -1,4 +1,4 @@
-import { DeviceInfo, PDF, storage, VoiceRecorder } from '@infrasturcture/adapters';
+import { DeviceInfo, FileSystem, PDF, storage, VoiceRecorder } from '@infrasturcture/adapters';
 
 export const storageSpy = {
     getItem: jest.spyOn(storage, 'getItem'),
@@ -8,6 +8,10 @@ export const storageSpy = {
 export const DeviceInfoSpy = {
     getBuildVersion: jest.spyOn(DeviceInfo, 'getBuildVersion').mockImplementation(() => '9102'),
     getSystemVersion: jest.spyOn(DeviceInfo, 'getSystemVersion').mockImplementation(() => '12')
+}
+
+export const FileSystemSpy = {
+    moveFile: jest.spyOn(FileSystem, 'moveFile')
 }
 
 export const PDFSpy = {
