@@ -11,9 +11,6 @@ import {
     Keyboard as KeyboardType
 } from '@application/features';
 
-/* Adapters */
-import { storage, storageKeys } from '@infrasturcture/adapters';
-
 const useUI = () => {
     const dispatch = useAppDispatch();
     const state = useAppSelector(store => store.ui);
@@ -33,11 +30,6 @@ const useUI = () => {
      */
     const setOldDatetimePicker = (show: boolean): void => {
         dispatch(setOldDatetimePickerAction({ oldDatetimePicker: show }));
-
-        storage.setItem(
-            storageKeys.USER_INTERFACE,
-            JSON.stringify({ ...state.userInterface, oldDatetimePicker: show }
-        ));
     }
 
     /**
