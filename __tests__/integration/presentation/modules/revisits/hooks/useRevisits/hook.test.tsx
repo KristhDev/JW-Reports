@@ -39,6 +39,7 @@ describe('Test useRevisits hook', () => {
 
             completeRevisit: expect.any(Function),
             deleteRevisit: expect.any(Function),
+            exportRevisits: expect.any(Function),
             loadLastRevisit: expect.any(Function),
             loadRevisits: expect.any(Function),
             saveRevisit: expect.any(Function),
