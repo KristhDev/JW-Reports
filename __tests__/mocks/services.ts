@@ -57,6 +57,7 @@ export const RevisitsServiceSpy = {
 export const PreachingServiceSpy = {
     create: jest.spyOn(PreachingService, 'create'),
     delete: jest.spyOn(PreachingService, 'delete'),
+    getAllByUserId: jest.spyOn(PreachingService, 'getAllByUserId'),
     getByUserIdAndMonth: jest.spyOn(PreachingService, 'getByUserIdAndMonth'),
     update: jest.spyOn(PreachingService, 'update'),
 }
