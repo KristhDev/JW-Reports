@@ -36,6 +36,7 @@ describe('Test usePreaching hook', () => {
             setSelectedPreaching: expect.any(Function),
 
             deletePreaching: expect.any(Function),
+            exportPreachings: expect.any(Function),
             loadPreachings: expect.any(Function),
             savePreaching: expect.any(Function),
             updatePreaching: expect.any(Function)
