@@ -69,7 +69,7 @@ export const store = configureStore({
     enhancers: (getDefaultEnhancers) => {
         const enhancers = getDefaultEnhancers();
 
-        if (__DEV__) enhancers.push(reactotron.createEnhancer!());
+        if (__DEV__ && !process.env.JEST_WORKER_ID) enhancers.push(reactotron.createEnhancer!());
         return enhancers;
     },
     middleware: (getDefaultMiddleware) => getDefaultMiddleware({ serializableCheck: false })
