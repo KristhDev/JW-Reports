@@ -23,7 +23,10 @@ describe('Test in useUI hook', () => {
 
             listenHideKeyboard: expect.any(Function),
             listenShowKeyboard: expect.any(Function),
-            setOldDatetimePicker: expect.any(Function)
+            setActiveFormField: expect.any(Function),
+            setIsDataExporting : expect.any(Function),
+            setOldDatetimePicker: expect.any(Function),
+            setRecordedAudio: expect.any(Function)
         });
     });
 });
