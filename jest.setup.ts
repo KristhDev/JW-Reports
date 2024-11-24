@@ -58,7 +58,7 @@ jest.mock('@react-native-community/netinfo', () =>
     require('@react-native-community/netinfo/jest/netinfo-mock.js')
 );
 
-export const mockRNVoice = {
+jest.mock('@react-native-voice/voice', () => ({
     destroy: jest.fn(),
     onSpeechEnd: jest.fn(),
     onSpeechError: jest.fn(),
@@ -67,9 +67,7 @@ export const mockRNVoice = {
     removeAllListeners: jest.fn(),
     start: jest.fn(),
     stop: jest.fn(),
-}
-
-jest.mock('@react-native-voice/voice', () => mockRNVoice);
+}));
 
 jest.mock('reduxjs-toolkit-persist', () => {
     const real = jest.requireActual('reduxjs-toolkit-persist');
