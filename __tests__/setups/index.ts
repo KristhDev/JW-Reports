@@ -10,3 +10,4 @@ export * from './setupUseRevisits';
 export * from './setupUseStatus';
 export * from './setupUseTheme';
 export * from './setupUseUI';
+export * from './setupUseVoiceRecorder';
