@@ -17,6 +17,7 @@ export const useCoursesSpy = jest.spyOn(useCourses, 'default');
 
 export const activeOrSuspendCourseMock = jest.fn();
 export const deleteCourseMock = jest.fn();
+export const exportCoursesMock = jest.fn();
 export const finishOrStartCourseMock = jest.fn();
 export const loadCoursesMock = jest.fn();
 export const removeCoursesMock = jest.fn();

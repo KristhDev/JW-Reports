@@ -13,6 +13,7 @@ import * as usePreaching from '@preaching/hooks/usePreaching';
 
 export const usePreachingSpy = jest.spyOn(usePreaching, 'default');
 
+export const exportPreachingsMock = jest.fn();
 export const loadPreachingsMock = jest.fn();
 export const savePreachingMock = jest.fn();
 export const setSelectedPreachingMock = jest.fn();

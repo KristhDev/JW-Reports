@@ -14,6 +14,7 @@ export const useRevisitsSpy = jest.spyOn(useRevisits, 'default');
 
 export const completeRevisitMock = jest.fn();
 export const deleteRevisitMock = jest.fn();
+export const exportRevisitsMock = jest.fn();
 export const loadLastRevisitMock = jest.fn();
 export const loadRevisitsMock = jest.fn();
 export const onDeleteMock = jest.fn();
