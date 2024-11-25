@@ -2,7 +2,6 @@ import React, { useState, FC } from 'react';
 import { View, Text, TextInput } from 'react-native';
 import { useStyles } from 'react-native-unistyles';
 import DateTimePicker, { DateType } from 'react-native-ui-datepicker';
-import { useField } from 'formik';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
 /* Config */
@@ -44,15 +43,14 @@ export const FormCalendar: FC<FormCalendarProps> = ({
     label,
     labelStyle,
     minDate,
-    name,
     onChangeDate,
-    style
+    style,
+    value
 }): JSX.Element => {
     const [ showCalendarModal, setShowCalendarModal ] = useState<boolean>(false);
 
     const { styles: themeStyles, theme: { borderRadius, colors, fontSizes, margins } } = useStyles(themeStylesheet);
-    const [ field, meta, helpers ] = useField({ name });
-    const [ dateValue, setDateValue ] = useState<string>(field.value);
+    const [ dateValue, setDateValue ] = useState<string>(value);
 
     /**
      * Handles the cancel action for the form calendar.
@@ -65,7 +63,6 @@ export const FormCalendar: FC<FormCalendarProps> = ({
      */
     const handleCancel = (): void => {
         setShowCalendarModal(false);
-        helpers.setTouched(!meta.touched);
     }
 
     /**
@@ -84,7 +81,6 @@ export const FormCalendar: FC<FormCalendarProps> = ({
      * @return {void} This function does not return anything.
      */
     const handleConfirm = (): void => {
-        helpers.setValue(Time.toISOString(dateValue));
         onChangeDate && onChangeDate(Time.toISOString(dateValue));
         setShowCalendarModal(false);
     }

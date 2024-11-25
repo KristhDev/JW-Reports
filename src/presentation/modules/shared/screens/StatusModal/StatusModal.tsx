@@ -17,7 +17,7 @@ const StatusModal = (): JSX.Element => {
     const { state: { msg }, clearStatus } = useStatus();
     const { styles: themeStyles } = useStyles(themeStylesheet);
 
-    const configMsg = 'Para realizar está acción necesitas permisos del dispositivo, por favor abra la configuración de su dispositivo y active los permisos de la aplicación.';
+    const configMsg = 'Para realizar está acción necesita permisos del dispositivo, por favor abra la configuración de su dispositivo y active los permisos de la aplicación.';
 
     const btnText = (msg === configMsg)
         ? 'CONFIGURACIÓN'

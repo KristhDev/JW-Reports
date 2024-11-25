@@ -12,6 +12,7 @@ export interface DatetimeFieldProps extends TextInputProps {
     labelStyle?: StyleProp<TextStyle>;
     modalTitle: string;
     mode?: 'date' | 'time' | 'datetime';
-    name: string;
+    onChangeDate: (date: string) => void;
     style?: StyleProp<ViewStyle>;
+    value: string;
 }

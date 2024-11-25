@@ -2,7 +2,6 @@ import React, { useState, FC } from 'react';
 import { View, Text, TextInput } from 'react-native';
 import { useStyles } from 'react-native-unistyles';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
-import { useField } from 'formik';
 
 /* Adapters */
 import { Time } from '@infrasturcture/adapters';
@@ -53,12 +52,12 @@ export const DatetimeField: FC<DatetimeFieldProps> = ({
     label,
     labelStyle,
     mode,
-    name,
+    onChangeDate,
     style,
+    value,
     ...rest
 }): JSX.Element => {
     const [ open, setOpen ] = useState<boolean>(false);
-    const [ field, meta, helpers ] = useField({ name });
     const { styles: themeStyles, theme: { colors, margins } } = useStyles(themeStylesheet);
 
     /**
@@ -67,17 +66,16 @@ export const DatetimeField: FC<DatetimeFieldProps> = ({
      * @param {Date} date - The date that was selected
      */
     const handleConfirm = (date: Date) => {
+        onChangeDate(Time.toISOString(date));
         setOpen(false);
-        helpers.setValue(date);
     }
 
     /**
      * When the user clicks the cancel button, the modal closes and the form field is no longer
      * touched.
      */
-    const handleCancel = () => {
+    const handleCancel = (): void => {
         setOpen(false);
-        helpers.setTouched(!meta.touched);
     }
 
     return (
@@ -107,7 +105,7 @@ export const DatetimeField: FC<DatetimeFieldProps> = ({
                         selectionColor={ colors.linkText }
                         style={[ themeStyles.formInput, inputStyle ]}
                         testID="datetimefield-text-input"
-                        value={ Time.format(field.value, inputDateFormat) }
+                        value={ Time.format(value, inputDateFormat) }
                         { ...rest }
                         editable={ false }
                     />
@@ -126,7 +124,7 @@ export const DatetimeField: FC<DatetimeFieldProps> = ({
             {/* Modal to pick datetime */}
             <DateTimePickerModal
                 accentColor={ colors.button }
-                date={ field.value }
+                date={ Time.toDate(value) }
                 isVisible={ open }
                 mode={ mode }
                 negativeButton={{ textColor: colors.button, label: 'Cancelar' }}

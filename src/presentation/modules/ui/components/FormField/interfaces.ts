@@ -8,7 +8,8 @@ export interface FormFieldProps extends TextInputProps {
     label: string;
     labelStyle?: StyleProp<TextStyle>;
     leftIcon?: ReactNode;
-    name: string;
+    onChangeText: (text: string) => void;
     rightIcon?: ReactNode;
     style?: StyleProp<ViewStyle>;
+    value: string;
 }

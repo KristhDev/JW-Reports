@@ -1,7 +1,6 @@
 import React, { useState, FC, useRef, useEffect } from 'react';
 import { View, Text, TextInput, NativeSyntheticEvent, TextInputFocusEventData } from 'react-native';
 import { useStyles } from 'react-native-unistyles';
-import { useField } from 'formik';
 
 /* Hooks */
 import { useUI } from '../../hooks';
@@ -41,17 +40,16 @@ export const FormField: FC<FormFieldProps> = ({
     label,
     labelStyle,
     leftIcon,
-    name,
+    onChangeText,
     rightIcon,
     style,
+    value,
     ...rest
 }): JSX.Element => {
-    const [ field, meta, helpers ] = useField({ name });
-
     const [ isFocused, setIsFocused ] = useState<boolean>(false);
     const [ selection, setSelection ] = useState({
-        start: String(field.value)?.length || 0,
-        end: String(field.value)?.length || 0
+        start: value.length,
+        end: value.length
     });
 
     const textInputRef = useRef<TextInput>(null);
@@ -86,7 +84,6 @@ export const FormField: FC<FormFieldProps> = ({
         setIsFocused(false);
         textInputRef.current?.blur();
         rest.onBlur && e && rest.onBlur(e);
-        helpers.setTouched(!meta.touched);
     }
 
     useEffect(() => {
@@ -121,7 +118,7 @@ export const FormField: FC<FormFieldProps> = ({
                         <TextInput
                             autoCorrect={ false }
                             cursorColor={ colors.button }
-                            onChangeText={ helpers.setValue }
+                            onChangeText={ onChangeText }
                             onSelectionChange={ ({ nativeEvent }) => setSelection(nativeEvent.selection) }
                             placeholderTextColor={ colors.icon }
                             selection={ selection }
@@ -131,7 +128,7 @@ export const FormField: FC<FormFieldProps> = ({
                                 { textAlignVertical: (rest.multiline) ? 'top' : 'center' },
                                 inputStyle
                             ]}
-                            value={ String(field.value) }
+                            value={ value }
                             ref={ textInputRef }
                             { ...rest }
                             onBlur={ handleBlur }

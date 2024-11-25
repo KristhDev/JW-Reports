@@ -1,8 +1,11 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect } from 'react';
 import { ActivityIndicator, View } from 'react-native';
 import { useStyles } from 'react-native-unistyles';
-import { Formik, FormikProps } from 'formik';
+import { useFormik } from 'formik';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+
+/* Adapters */
+import { Time } from '@infrasturcture/adapters';
 
 /* Modules */
 import { useLessons } from '@lessons';
@@ -25,7 +28,6 @@ import { themeStylesheet } from '@theme';
  * @returns {JSX.Element} The lesson form component.
  */
 export const LessonForm = (): JSX.Element => {
-    const formRef = useRef<FormikProps<LessonFormValues>>(null);
     const { styles: themeStyles, theme: { colors, fontSizes, margins } } = useStyles(themeStylesheet);
 
     const { state: { isLessonLoading, selectedLesson }, saveLesson, updateLesson } = useLessons();
@@ -47,91 +49,102 @@ export const LessonForm = (): JSX.Element => {
         else updateLesson(formValues);
     }
 
+    const { errors, handleChange, handleSubmit, setFieldValue, isValid, values } = useFormik({
+        initialValues: {
+            description: selectedLesson.description,
+            nextLesson: new Date(selectedLesson.nextLesson)
+        },
+        onSubmit: (values, { resetForm }) => handleSaveOrUpdate(values, resetForm),
+        validateOnMount: true,
+        validationSchema: lessonFormSchema
+    });
+
+    /**
+     * Handles the press event of the save button by submitting the form
+     * if it is valid or showing the errors if it is not.
+     *
+     * @return {void} This function does not return anything.
+     */
+    const handlePress = (): void => {
+        if (isValid) handleSubmit();
+        else setErrorForm(errors);
+    }
+
     useEffect(() => {
         if (recordedAudio.trim().length === 0 || activeFormField.length === 0) return;
-        formRef?.current?.setFieldValue(activeFormField, recordedAudio, true);
+        setFieldValue(activeFormField, recordedAudio, true);
     }, [ recordedAudio ]);
 
     return (
-        <Formik
-            initialValues={{
-                description: selectedLesson.description,
-                nextLesson: new Date(selectedLesson.nextLesson)
-            }}
-            innerRef={ formRef }
-            onSubmit={ (values, { resetForm }) => handleSaveOrUpdate(values, resetForm) }
-            validateOnMount
-            validationSchema={ lessonFormSchema }
-        >
-            { ({ handleSubmit, errors, isValid }) => (
-                <View style={{ ...themeStyles.formContainer, paddingBottom: margins.xl }}>
+        <View style={{ ...themeStyles.formContainer, paddingBottom: margins.xl }}>
 
-                    {/* Description field */}
-                    <FormField
-                        editable={ !isLessonLoading }
-                        label="¿Qué verán la próxima clase?"
-                        multiline
-                        name="description"
-                        numberOfLines={ 9 }
-                        onBlur={ () => setActiveFormField('') }
-                        onFocus={ () => setActiveFormField('description') }
-                        placeholder="Ingrese el tema que se estudiará en la siguiente clase"
-                    />
+            {/* Description field */}
+            <FormField
+                editable={ !isLessonLoading }
+                label="¿Qué verán la próxima clase?"
+                multiline
+                numberOfLines={ 9 }
+                onBlur={ () => setActiveFormField('') }
+                onFocus={ () => setActiveFormField('description') }
+                placeholder="Ingrese el tema que se estudiará en la siguiente clase"
+                onChangeText={ handleChange('description') }
+                value={ values.description }
+            />
 
-                    {/* Next lesson field */}
-                    { (userInterface.oldDatetimePicker) ? (
-                        <DatetimeField
-                            disabled={ isLessonLoading }
-                            icon={
-                                <Ionicons
-                                    color={ colors.contentHeader }
-                                    name="calendar-outline"
-                                    size={ fontSizes.icon }
-                                />
-                            }
-                            inputDateFormat="DD/MM/YYYY"
-                            label="Próxima clase:"
-                            modalTitle="Próxima clase"
-                            mode="date"
-                            name="nextLesson"
-                            placeholder="Seleccione el día"
-                            style={{ marginBottom: margins.xl }}
+            {/* Next lesson field */}
+            { (userInterface.oldDatetimePicker) ? (
+                <DatetimeField
+                    disabled={ isLessonLoading }
+                    icon={
+                        <Ionicons
+                            color={ colors.contentHeader }
+                            name="calendar-outline"
+                            size={ fontSizes.icon }
                         />
-                    ) : (
-                        <FormCalendar
-                            editable={ !isLessonLoading }
-                            icon={
-                                <Ionicons
-                                    color={ colors.contentHeader }
-                                    name="calendar-outline"
-                                    size={ fontSizes.icon }
-                                />
-                            }
-                            inputDateFormat="DD/MM/YYYY"
-                            label="Próxima clase:"
-                            name="nextLesson"
-                            style={{ marginBottom: margins.xl }}
+                    }
+                    inputDateFormat="DD/MM/YYYY"
+                    label="Próxima clase:"
+                    modalTitle="Próxima clase"
+                    mode="date"
+                    placeholder="Seleccione el día"
+                    style={{ marginBottom: margins.xl }}
+                    onChangeDate={ (date) => setFieldValue('nextLesson', Time.toDate(date)) }
+                    value={ values.nextLesson.toISOString() }
+                />
+            ) : (
+                <FormCalendar
+                    editable={ !isLessonLoading }
+                    icon={
+                        <Ionicons
+                            color={ colors.contentHeader }
+                            name="calendar-outline"
+                            size={ fontSizes.icon }
                         />
-                    ) }
-
-                    {/* Submit button */}
-                    <Button
-                        disabled={ isLessonLoading }
-                        icon={
-                            (isLessonLoading) && (
-                                <ActivityIndicator
-                                    color={ colors.contentHeader }
-                                    size={ fontSizes.icon }
-                                />
-                            )
-                        }
-                        onPress={ (isValid) ? handleSubmit : () => setErrorForm(errors) }
-                        text={ (selectedLesson.id !== '') ? 'Actualizar' : 'Guardar' }
-                    />
-
-                    <View style={{ flex: 1 }} />
-                </View>
+                    }
+                    inputDateFormat="DD/MM/YYYY"
+                    label="Próxima clase:"
+                    onChangeDate={ (date) => setFieldValue('nextLesson', Time.toDate(date)) }
+                    style={{ marginBottom: margins.xl }}
+                    value={ values.nextLesson.toISOString() }
+                />
             ) }
-        </Formik>
+
+            {/* Submit button */}
+            <Button
+                disabled={ isLessonLoading }
+                icon={
+                    (isLessonLoading) && (
+                        <ActivityIndicator
+                            color={ colors.contentHeader }
+                            size={ fontSizes.icon }
+                        />
+                    )
+                }
+                onPress={ handlePress }
+                text={ (selectedLesson.id !== '') ? 'Actualizar' : 'Guardar' }
+            />
+
+            <View style={{ flex: 1 }} />
+        </View>
     );
 }

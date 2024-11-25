@@ -1,11 +1,14 @@
-import React, { FC, useEffect, useRef, useState } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import { ActivityIndicator, View } from 'react-native';
 import { useStyles } from 'react-native-unistyles';
-import { Formik, FormikProps } from 'formik';
+import { useFormik } from 'formik';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
 /* Models */
 import { ImageModel } from '@domain/models';
+
+/* Adapters */
+import { Time } from '@infrasturcture/adapters';
 
 /* Modules */
 import { useRevisits } from '../../hooks';
@@ -30,7 +33,6 @@ const defaultRevisit = require('@assets/revisit-default.jpg');
  * @return {JSX.Element} Rendered component form to create or edit a revisit
  */
 export const RevisitForm: FC = (): JSX.Element => {
-    const formRef = useRef<FormikProps<RevisitFormValues>>(null);
     const [ image, setImage ] = useState<ImageModel | null>(null);
 
     const { styles: themeStyles, theme: { colors, fontSizes, margins } } = useStyles(themeStylesheet);
@@ -51,129 +53,142 @@ export const RevisitForm: FC = (): JSX.Element => {
             : updateRevisit(revisitValues, image);
     }
 
+    const { errors, handleChange, handleSubmit, setFieldValue, isValid, values } = useFormik({
+        initialValues: {
+            personName: selectedRevisit.personName,
+            about: selectedRevisit.about,
+            address: selectedRevisit.address,
+            nextVisit: new Date(selectedRevisit.nextVisit)
+        },
+        onSubmit: handleSaveOrUpdate,
+        validateOnMount: true,
+        validationSchema: revisitFormSchema
+    });
+
+    /**
+     * Handles the press event of the save button by submitting the form
+     * if it is valid or showing the errors if it is not.
+     *
+     * @return {void} This function does not return anything.
+     */
+    const handlePress = (): void => {
+        if (isValid) handleSubmit();
+        else setErrorForm(errors);
+    }
+
     useEffect(() => {
         if (recordedAudio.trim().length === 0 || activeFormField.length === 0) return;
-        formRef?.current?.setFieldValue(activeFormField, recordedAudio, true);
+        setFieldValue(activeFormField, recordedAudio, true);
     }, [ recordedAudio ]);
 
     return (
-        <Formik
-            initialValues={{
-                personName: selectedRevisit.personName,
-                about: selectedRevisit.about,
-                address: selectedRevisit.address,
-                nextVisit: new Date(selectedRevisit.nextVisit)
-            }}
-            innerRef={ formRef }
-            onSubmit={ handleSaveOrUpdate }
-            validateOnMount
-            validationSchema={ revisitFormSchema }
-        >
-            { ({ handleSubmit, errors, isValid }) => (
-                <View style={{ ...themeStyles.formContainer, paddingBottom: margins.xl }}>
+        <View style={{ ...themeStyles.formContainer, paddingBottom: margins.xl }}>
 
-                    {/* Person name field */}
-                    <FormField
-                        editable={ !isRevisitLoading }
-                        leftIcon={
-                            <Ionicons
-                                color={ colors.icon }
-                                name="person-outline"
-                                size={ fontSizes.icon }
-                            />
-                        }
-                        label="Nombre de la persona:"
-                        name="personName"
-                        onBlur={ () => setActiveFormField('') }
-                        onFocus={ () => setActiveFormField('personName') }
-                        placeholder="Ingrese el nombre"
+            {/* Person name field */}
+            <FormField
+                editable={ !isRevisitLoading }
+                leftIcon={
+                    <Ionicons
+                        color={ colors.icon }
+                        name="person-outline"
+                        size={ fontSizes.icon }
                     />
+                }
+                label="Nombre de la persona:"
+                onBlur={ () => setActiveFormField('') }
+                onChangeText={ handleChange('personName') }
+                onFocus={ () => setActiveFormField('personName') }
+                placeholder="Ingrese el nombre"
+                value={ values.personName }
+            />
 
-                    {/* About field */}
-                    <FormField
-                        editable={ !isRevisitLoading }
-                        label="Información de la persona:"
-                        multiline
-                        name="about"
-                        numberOfLines={ 9 }
-                        onBlur={ () => setActiveFormField('') }
-                        onFocus={ () => setActiveFormField('about') }
-                        placeholder="Ingrese datos sobre la persona, tema de conversación, aspectos importantes, etc..."
-                    />
+            {/* About field */}
+            <FormField
+                editable={ !isRevisitLoading }
+                label="Información de la persona:"
+                multiline
+                numberOfLines={ 9 }
+                onBlur={ () => setActiveFormField('') }
+                onChangeText={ handleChange('about') }
+                onFocus={ () => setActiveFormField('about') }
+                placeholder="Ingrese datos sobre la persona, tema de conversación, aspectos importantes, etc..."
+                value={ values.about }
+            />
 
-                    {/* Address field */}
-                    <FormField
-                        editable={ !isRevisitLoading }
-                        label="Dirección:"
-                        multiline
-                        name="address"
-                        numberOfLines={ 3 }
-                        onBlur={ () => setActiveFormField('') }
-                        onFocus={ () => setActiveFormField('address') }
-                        placeholder="Ingrese la dirección"
-                    />
+            {/* Address field */}
+            <FormField
+                editable={ !isRevisitLoading }
+                label="Dirección:"
+                multiline
+                numberOfLines={ 3 }
+                onBlur={ () => setActiveFormField('') }
+                onChangeText={ handleChange('address') }
+                onFocus={ () => setActiveFormField('address') }
+                placeholder="Ingrese la dirección"
+                value={ values.address }
+            />
 
-                    {/* Photo field */}
-                    <FormImage
-                        defaultImage={ defaultRevisit }
-                        disabled={ isRevisitLoading }
-                        imageUrl={ selectedRevisit.photo }
-                        label="Foto:"
-                        onSelectImage={ setImage }
-                        showCameraButton
-                        showGalleryButton
-                    />
+            {/* Photo field */}
+            <FormImage
+                defaultImage={ defaultRevisit }
+                disabled={ isRevisitLoading }
+                imageUrl={ selectedRevisit.photo }
+                label="Foto:"
+                onSelectImage={ setImage }
+                showCameraButton
+                showGalleryButton
+            />
 
-                    {/* Next visit field */}
-                    { (userInterface.oldDatetimePicker) ? (
-                        <DatetimeField
-                            disabled={ isRevisitLoading }
-                            icon={
-                                <Ionicons
-                                    color={ colors.contentHeader }
-                                    name="calendar-outline"
-                                    size={ fontSizes.icon }
-                                />
-                            }
-                            inputDateFormat="DD/MM/YYYY"
-                            label="Próxima visita:"
-                            modalTitle="Próxima visita"
-                            mode="date"
-                            name="nextVisit"
-                            placeholder="Seleccione el día"
-                            style={{ marginBottom: margins.xl }}
+            {/* Next visit field */}
+            { (userInterface.oldDatetimePicker) ? (
+                <DatetimeField
+                    disabled={ isRevisitLoading }
+                    icon={
+                        <Ionicons
+                            color={ colors.contentHeader }
+                            name="calendar-outline"
+                            size={ fontSizes.icon }
                         />
-                    ) : (
-                        <FormCalendar
-                            editable={ !isRevisitLoading }
-                            icon={
-                                <Ionicons
-                                    color={ colors.contentHeader }
-                                    name="calendar-outline"
-                                    size={ fontSizes.icon }
-                                />
-                            }
-                            inputDateFormat="DD/MM/YYYY"
-                            label="Próxima visita:"
-                            name="nextVisit"
-                            style={{ marginBottom: margins.xl }}
+                    }
+                    inputDateFormat="DD/MM/YYYY"
+                    label="Próxima visita:"
+                    modalTitle="Próxima visita"
+                    mode="date"
+                    onChangeDate={ (date: string) => setFieldValue('nextVisit', Time.toDate(date)) }
+                    placeholder="Seleccione el día"
+                    style={{ marginBottom: margins.xl }}
+                    value={ values.nextVisit.toString() }
+                />
+            ) : (
+                <FormCalendar
+                    editable={ !isRevisitLoading }
+                    icon={
+                        <Ionicons
+                            color={ colors.contentHeader }
+                            name="calendar-outline"
+                            size={ fontSizes.icon }
                         />
-                    ) }
-
-                    {/* Submit button */}
-                    <Button
-                        disabled={ isRevisitLoading }
-                        icon={ (isRevisitLoading) && (
-                            <ActivityIndicator
-                                color={ colors.contentHeader }
-                                size={ fontSizes.icon }
-                            />
-                        ) }
-                        onPress={ (isValid) ? handleSubmit : () => setErrorForm(errors) }
-                        text={ (selectedRevisit.id !== '') ? 'Actualizar' : 'Guardar' }
-                    />
-                </View>
+                    }
+                    inputDateFormat="DD/MM/YYYY"
+                    label="Próxima visita:"
+                    onChangeDate={ (date: string) => setFieldValue('nextVisit', Time.toDate(date)) }
+                    style={{ marginBottom: margins.xl }}
+                    value={ values.nextVisit.toString() }
+                />
             ) }
-        </Formik>
+
+            {/* Submit button */}
+            <Button
+                disabled={ isRevisitLoading }
+                icon={ (isRevisitLoading) && (
+                    <ActivityIndicator
+                        color={ colors.contentHeader }
+                        size={ fontSizes.icon }
+                    />
+                ) }
+                onPress={ handlePress }
+                text={ (selectedRevisit.id !== '') ? 'Actualizar' : 'Guardar' }
+            />
+        </View>
     );
 }

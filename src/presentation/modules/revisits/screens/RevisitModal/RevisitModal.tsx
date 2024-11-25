@@ -1,8 +1,11 @@
 import React, { useState, FC } from 'react';
 import { ActivityIndicator, Text, View } from 'react-native';
 import { useStyles } from 'react-native-unistyles';
-import { Formik } from 'formik';
+import { useFormik } from 'formik';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+
+/* Adapters */
+import { Time } from '@infrasturcture/adapters';
 
 /* Modules */
 import { themeStylesheet } from '@theme';
@@ -18,9 +21,11 @@ import { newRevisitFormSchema } from './schemas';
 /**
  * This modal is responsible for grouping the components to
  * reschedule a revisit.
+ *
  * @param {ModalProps} { isOpen: boolean, onClose: () => void }
+ * @returns {JSX.Element} Rendered component to show modal
  */
-const RevisitModal: FC<ModalProps> = ({ isOpen, onClose }) => {
+const RevisitModal: FC<ModalProps> = ({ isOpen, onClose }): JSX.Element => {
     const [ completeMsg, setCompleteMsg ] = useState<string>('');
     const [ revisitPerson, setRevisitPerson ] = useState<boolean>(false);
 
@@ -69,6 +74,16 @@ const RevisitModal: FC<ModalProps> = ({ isOpen, onClose }) => {
         }
     }
 
+    const { errors, handleChange, handleSubmit, setFieldValue, isValid, values } = useFormik({
+        initialValues: {
+            about: selectedRevisit.about,
+            nextVisit: new Date()
+        },
+        onSubmit: handleConfirm,
+        validateOnMount: true,
+        validationSchema: newRevisitFormSchema
+    });
+
     /**
      * When the user clicks the close button, the modal will close and the revisitPerson state will be
      * set to false.
@@ -76,6 +91,17 @@ const RevisitModal: FC<ModalProps> = ({ isOpen, onClose }) => {
     const handleClose = () => {
         setRevisitPerson(false);
         onClose();
+    }
+
+    /**
+     * Handles the press event of the save button by submitting the form
+     * if it is valid or showing the errors if it is not.
+     *
+     * @return {void} This function does not return anything.
+     */
+    const handlePress = (): void => {
+        if (isValid) handleSubmit();
+        else setErrorForm(errors);
     }
 
     return (
@@ -123,76 +149,67 @@ const RevisitModal: FC<ModalProps> = ({ isOpen, onClose }) => {
                                 Por favor verifica los siguientes datos.
                             </Text>
 
-                            <Formik
-                                initialValues={{
-                                    about: selectedRevisit.about,
-                                    nextVisit: new Date()
-                                }}
-                                onSubmit={ handleConfirm }
-                                validateOnMount
-                                validationSchema={ newRevisitFormSchema }
-                            >
-                                { ({ handleSubmit, isValid, errors }) => (
-                                    <View style={{ alignItems: 'center' }}>
+                            <View style={{ alignItems: 'center' }}>
 
-                                        {/* About field */}
-                                        <FormField
-                                            editable={ !isRevisitLoading }
-                                            label="Información actual:"
-                                            multiline
-                                            name="about"
-                                            numberOfLines={ 10 }
-                                            placeholder="Ingrese datos sobre la persona, tema de conversación, aspectos importantes, etc..."
-                                        />
+                                {/* About field */}
+                                <FormField
+                                    editable={ !isRevisitLoading }
+                                    label="Información actual:"
+                                    multiline
+                                    numberOfLines={ 10 }
+                                    placeholder="Ingrese datos sobre la persona, tema de conversación, aspectos importantes, etc..."
+                                    onChangeText={ handleChange('about') }
+                                    value={ values.about }
+                                />
 
-                                        {/* Next visit field */}
-                                        { (userInterface.oldDatetimePicker) ? (
-                                            <DatetimeField
-                                                disabled={ isRevisitLoading }
-                                                icon={
-                                                    <Ionicons
-                                                        color={ colors.contentHeader }
-                                                        name="calendar-outline"
-                                                        size={ fontSizes.icon }
-                                                    />
-                                                }
-                                                inputDateFormat="DD/MM/YYYY"
-                                                label="Próxima visita:"
-                                                modalTitle="Próxima visita"
-                                                mode="date"
-                                                name="nextVisit"
-                                                placeholder="Seleccione el día"
-                                                style={{ marginBottom: 0 }}
+                                {/* Next visit field */}
+                                { (userInterface.oldDatetimePicker) ? (
+                                    <DatetimeField
+                                        disabled={ isRevisitLoading }
+                                        icon={
+                                            <Ionicons
+                                                color={ colors.contentHeader }
+                                                name="calendar-outline"
+                                                size={ fontSizes.icon }
                                             />
-                                        ) : (
-                                            <FormCalendar
-                                                editable={ !isRevisitLoading }
-                                                icon={
-                                                    <Ionicons
-                                                        color={ colors.contentHeader }
-                                                        name="calendar-outline"
-                                                        size={ fontSizes.icon }
-                                                    />
-                                                }
-                                                inputDateFormat="DD/MM/YYYY"
-                                                label="Próxima visita:"
-                                                name="nextVisit"
-                                                style={{ marginBottom: 0 }}
+                                        }
+                                        inputDateFormat="DD/MM/YYYY"
+                                        label="Próxima visita:"
+                                        modalTitle="Próxima visita"
+                                        mode="date"
+                                        onChangeDate={ (date: string) => setFieldValue('nextVisit', Time.toDate(date)) }
+                                        placeholder="Seleccione el día"
+                                        style={{ marginBottom: 0 }}
+                                        value={ values.nextVisit.toString() }
+                                    />
+                                ) : (
+                                    <FormCalendar
+                                        editable={ !isRevisitLoading }
+                                        icon={
+                                            <Ionicons
+                                                color={ colors.contentHeader }
+                                                name="calendar-outline"
+                                                size={ fontSizes.icon }
                                             />
-                                        ) }
-
-                                        {/* Modal actions */}
-                                        <ModalActions
-                                            cancelButtonText="CANCELAR"
-                                            confirmTextButton={ confirmTextButton }
-                                            onCancel={ handleClose }
-                                            onConfirm={ (isValid) ? handleSubmit : () => setErrorForm(errors) }
-                                            showCancelButton
-                                            showConfirmButton
-                                        />
-                                    </View>
+                                        }
+                                        inputDateFormat="DD/MM/YYYY"
+                                        label="Próxima visita:"
+                                        onChangeDate={ (date: string) => setFieldValue('nextVisit', Time.toDate(date)) }
+                                        style={{ marginBottom: 0 }}
+                                        value={ values.nextVisit.toString() }
+                                    />
                                 ) }
-                            </Formik>
+
+                                {/* Modal actions */}
+                                <ModalActions
+                                    cancelButtonText="CANCELAR"
+                                    confirmTextButton={ confirmTextButton }
+                                    onCancel={ handleClose }
+                                    onConfirm={ handlePress }
+                                    showCancelButton
+                                    showConfirmButton
+                                />
+                            </View>
                         </>
                     ) }
                 </View>

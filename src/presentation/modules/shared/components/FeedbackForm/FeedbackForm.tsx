@@ -1,6 +1,6 @@
 import React from 'react';
 import { ActivityIndicator, View } from 'react-native';
-import { Formik } from 'formik';
+import { useFormik } from 'formik';
 import { useStyles } from 'react-native-unistyles';
 
 /* Components */
@@ -37,44 +37,54 @@ export const FeedbackForm = (): JSX.Element => {
      * @param {{ resetForm: () => void, setSubmitting: (isSubmitting: boolean) => void }} formActions - The actions to call when the email is sent.
      * @return {void} This function does not return any value.
      */
-    const handleSubmit = (message: string, { resetForm, setSubmitting }: FormActions): void => {
+    const handleSendMessage = (message: string, { resetForm, setSubmitting }: FormActions): void => {
         sendFeedbackEmail(message, {
             onFinish: resetForm,
             onSuccess: () => setSubmitting && setSubmitting(false)
         });
     }
 
-    return (
-        <Formik
-            initialValues={{ message: '' }}
-            onSubmit={ ({ message }, { resetForm, setSubmitting }) => handleSubmit(message, { resetForm, setSubmitting }) }
-            validateOnMount
-            validationSchema={ feedbackFormSchema }
-        >
-            { ({ errors, handleSubmit, isSubmitting, isValid }) => (
-                <View style={{ ...themeStyles.formContainer, flex: 0 }}>
-                    <FormField
-                        editable={ !isSubmitting }
-                        label="Escriba su mensaje:"
-                        multiline
-                        name="message"
-                        numberOfLines={ 10 }
-                        style={{ marginBottom: margins.xl }}
-                    />
+    const { errors, handleChange, handleSubmit, isSubmitting, isValid, values } = useFormik({
+        initialValues: { message: '' },
+        onSubmit: ({ message }, { resetForm, setSubmitting }) => handleSendMessage(message, { resetForm, setSubmitting }),
+        validateOnMount: true,
+        validationSchema: feedbackFormSchema
+    });
 
-                    <Button
-                        disabled={ isSubmitting }
-                        icon={ (isSubmitting) && (
-                            <ActivityIndicator
-                                color={ colors.contentHeader }
-                                size={ fontSizes.icon }
-                            />
-                        ) }
-                        onPress={ (isValid) ? handleSubmit : () => setErrorForm(errors) }
-                        text="Enviar"
+    /**
+     * Handles the press event of the send button by submitting the form
+     * if it is valid or showing the errors if it is not.
+     *
+     * @return {void} This function does not return anything.
+     */
+    const handlePress = (): void => {
+        if (isValid) handleSubmit();
+        else setErrorForm(errors);
+    }
+
+    return (
+        <View style={{ ...themeStyles.formContainer, flex: 0 }}>
+            <FormField
+                editable={ !isSubmitting }
+                label="Escriba su mensaje:"
+                multiline
+                numberOfLines={ 10 }
+                onChangeText={ handleChange('message') }
+                style={{ marginBottom: margins.xl }}
+                value={ values.message }
+            />
+
+            <Button
+                disabled={ isSubmitting }
+                icon={ (isSubmitting) && (
+                    <ActivityIndicator
+                        color={ colors.contentHeader }
+                        size={ fontSizes.icon }
                     />
-                </View>
-            ) }
-        </Formik>
+                ) }
+                onPress={ handlePress }
+                text="Enviar"
+            />
+        </View>
     );
 }

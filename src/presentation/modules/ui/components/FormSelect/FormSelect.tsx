@@ -1,7 +1,6 @@
 import React, { useState, FC  } from 'react';
 import { View, Text, Pressable, TextInput } from 'react-native';
 import { useStyles } from 'react-native-unistyles';
-import { useField } from 'formik';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
 /* Screens */
@@ -49,14 +48,12 @@ export const FormSelect: FC<FormSelectProps> = ({
     items,
     label,
     labelStyle,
-    name,
     onChange,
     placeholder,
     style,
-    title
+    title,
+    value
 }): JSX.Element => {
-    const [ field, meta, helpers ] = useField({ name });
-
     const [ isFocused, setIsFocused ] = useState<boolean>(false);
     const [ showModal, setShowModal ] = useState<boolean>(false);
 
@@ -78,7 +75,6 @@ export const FormSelect: FC<FormSelectProps> = ({
      * @return {void} This function returns nothing
      */
     const handleHideModal = (): void => {
-        helpers.setTouched(!meta.touched);
         setIsFocused(false);
         setShowModal(false);
     }
@@ -91,7 +87,6 @@ export const FormSelect: FC<FormSelectProps> = ({
      * @return {void} This function returns nothing
      */
     const handleChangeValue = (value: string): void => {
-        helpers.setValue(value);
         onChange && onChange(value);
         handleHideModal();
     }
@@ -134,7 +129,7 @@ export const FormSelect: FC<FormSelectProps> = ({
                                         placeholderTextColor={ colors.icon }
                                         style={[ themeStyles.formInput, inputTextStyle ]}
                                         testID="form-select-input"
-                                        value={ String(items.find(i => i.value === field?.value)?.label || '') }
+                                        value={ String(items.find(i => i.value === value)?.label || '') }
                                     />
 
                                     <Ionicons
@@ -156,7 +151,7 @@ export const FormSelect: FC<FormSelectProps> = ({
                 onCancel={ handleHideModal }
                 onChangeValue={ handleChangeValue }
                 title={ title }
-                value={ field.value }
+                value={ value }
             />
         </>
     );

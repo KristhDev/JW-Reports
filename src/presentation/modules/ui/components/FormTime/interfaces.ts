@@ -8,6 +8,7 @@ export interface FormTimeProps {
     inputDateFormat: string;
     label: string;
     labelStyle?: StyleProp<TextStyle>;
-    name: string;
+    onChangeTime: (time: string) => void;
     style?: StyleProp<ViewStyle>;
+    value: string;
 }

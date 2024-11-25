@@ -1,8 +1,11 @@
 import React from 'react';
 import { ActivityIndicator, View } from 'react-native';
-import { Formik } from 'formik';
+import { useFormik } from 'formik';
 import { useStyles } from 'react-native-unistyles';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+
+/* Adapters */
+import { Time } from '@infrasturcture/adapters';
 
 /* Components */
 import { Button, DatetimeField, FormCalendar, FormTime, useUI } from '@ui';
@@ -45,138 +48,153 @@ export const PreachingForm = (): JSX.Element => {
             : updatePreaching(formValues);
     }
 
+    const { errors, handleSubmit, isValid, setFieldValue, values } = useFormik({
+        initialValues: {
+            day: new Date(seletedPreaching.day),
+            initHour: new Date(seletedPreaching.initHour),
+            finalHour: new Date(seletedPreaching.finalHour)
+        },
+        onSubmit: handleSaveOrUpdate,
+        validateOnMount: true,
+        validationSchema: preachingFormSchema
+    });
+
+    /**
+     * Handles the press event of the save button by submitting the form
+     * if it is valid or showing the errors if it is not.
+     *
+     * @return {void} This function does not return anything.
+     */
+    const handlePress = (): void => {
+        if (isValid) handleSubmit();
+        else setErrorForm(errors);
+    }
+
     return (
-        <Formik
-            initialValues={{
-                day: new Date(seletedPreaching.day),
-                initHour: new Date(seletedPreaching.initHour),
-                finalHour: new Date(seletedPreaching.finalHour)
-            }}
-            onSubmit={ handleSaveOrUpdate }
-            validationSchema={ preachingFormSchema }
-            validateOnMount
-        >
-            { ({ handleSubmit, errors, isValid }) => (
-                <View style={{ ...themeStyles.formContainer, justifyContent: 'flex-start', paddingBottom: margins.xl }}>
+        <View style={{ ...themeStyles.formContainer, justifyContent: 'flex-start', paddingBottom: margins.xl }}>
 
-                    {/* Day field */}
-                    { userInterface.oldDatetimePicker ? (
-                        <DatetimeField
-                            disabled={ isPreachingLoading }
-                            icon={
-                                <Ionicons
-                                    color={ colors.contentHeader }
-                                    name="calendar-outline"
-                                    size={ fontSizes.icon }
-                                />
-                            }
-                            inputDateFormat="DD"
-                            label="Día de predicación:"
-                            modalTitle="Día de predicación"
-                            mode="date"
-                            name="day"
-                            placeholder="Seleccione el día"
+            {/* Day field */}
+            { userInterface.oldDatetimePicker ? (
+                <DatetimeField
+                    disabled={ isPreachingLoading }
+                    icon={
+                        <Ionicons
+                            color={ colors.contentHeader }
+                            name="calendar-outline"
+                            size={ fontSizes.icon }
                         />
-                    ) : (
-                        <FormCalendar
-                            editable={ !isPreachingLoading }
-                            icon={
-                                <Ionicons
-                                    color={ colors.contentHeader }
-                                    name="calendar-outline"
-                                    size={ fontSizes.icon }
-                                />
-                            }
-                            inputDateFormat="DD"
-                            label="Día de predicación:"
-                            name="day"
+                    }
+                    inputDateFormat="DD"
+                    label="Día de predicación:"
+                    modalTitle="Día de predicación"
+                    mode="date"
+                    onChangeDate={ (date) => setFieldValue('day', Time.toDate(date)) }
+                    placeholder="Seleccione el día"
+                    value={ values.day.toString() }
+                />
+            ) : (
+                <FormCalendar
+                    editable={ !isPreachingLoading }
+                    icon={
+                        <Ionicons
+                            color={ colors.contentHeader }
+                            name="calendar-outline"
+                            size={ fontSizes.icon }
                         />
-                    ) }
-
-                    {/* Init hour field */}
-                    { (userInterface.oldDatetimePicker) ? (
-                        <DatetimeField
-                            disabled={ isPreachingLoading }
-                            icon={
-                                <Ionicons
-                                    color={ colors.contentHeader }
-                                    name="time-outline"
-                                    size={ fontSizes.icon }
-                                />
-                            }
-                            inputDateFormat="HH:mm"
-                            label="Hora de inicio:"
-                            modalTitle="Hora de inicio"
-                            mode="time"
-                            name="initHour"
-                            placeholder="Seleccione la hora"
-                        />
-                    ) : (
-                        <FormTime
-                            editable={ !isPreachingLoading }
-                            icon={
-                                <Ionicons
-                                    color={ colors.contentHeader }
-                                    name="time-outline"
-                                    size={ fontSizes.icon }
-                                />
-                            }
-                            inputDateFormat="HH:mm"
-                            label="Hora de inicio:"
-                            name="initHour"
-                        />
-                    ) }
-
-                    {/* Final hour field */}
-                    { userInterface.oldDatetimePicker ? (
-                        <DatetimeField
-                            disabled={ isPreachingLoading }
-                            icon={
-                                <Ionicons
-                                    color={ colors.contentHeader }
-                                    name="time-outline"
-                                    size={ fontSizes.icon }
-                                />
-                            }
-                            inputDateFormat="HH:mm"
-                            label="Hora de fin:"
-                            modalTitle="Hora de fin"
-                            mode="time"
-                            name="finalHour"
-                            placeholder="Seleccione la hora"
-                            style={{ marginBottom: margins.xl }}
-                        />
-                    ) : (
-                        <FormTime
-                            editable={ !isPreachingLoading }
-                            icon={
-                                <Ionicons
-                                    color={ colors.contentHeader }
-                                    name="time-outline"
-                                    size={ fontSizes.icon }
-                                />
-                            }
-                            inputDateFormat="HH:mm"
-                            label="Hora de fin:"
-                            name="finalHour"
-                            style={{ marginBottom: margins.xl }}
-                        />
-                    ) }
-
-                    {/* Submit button */}
-                    <Button
-                        disabled={ isPreachingLoading }
-                        icon={ (isPreachingLoading) && (
-                            <ActivityIndicator
-                                color={ colors.contentHeader }
-                                size={ fontSizes.icon }
-                            />
-                        ) }
-                        onPress={ (isValid) ? handleSubmit : () => setErrorForm(errors) }
-                        text={ (seletedPreaching.id !== '') ? 'Actualizar' : 'Guardar' }
-                    />
-                </View>
+                    }
+                    inputDateFormat="DD"
+                    label="Día de predicación:"
+                    onChangeDate={ (date) => setFieldValue('day', Time.toDate(date)) }
+                    value={ values.day.toString() }
+                />
             ) }
-        </Formik>
+
+            {/* Init hour field */}
+            { (userInterface.oldDatetimePicker) ? (
+                <DatetimeField
+                    disabled={ isPreachingLoading }
+                    icon={
+                        <Ionicons
+                            color={ colors.contentHeader }
+                            name="time-outline"
+                            size={ fontSizes.icon }
+                        />
+                    }
+                    inputDateFormat="HH:mm"
+                    label="Hora de inicio:"
+                    modalTitle="Hora de inicio"
+                    mode="time"
+                    onChangeDate={ (date) => setFieldValue('initHour', Time.toDate(date)) }
+                    placeholder="Seleccione la hora"
+                    value={ values.initHour.toString() }
+                />
+            ) : (
+                <FormTime
+                    editable={ !isPreachingLoading }
+                    icon={
+                        <Ionicons
+                            color={ colors.contentHeader }
+                            name="time-outline"
+                            size={ fontSizes.icon }
+                        />
+                    }
+                    inputDateFormat="HH:mm"
+                    label="Hora de inicio:"
+                    onChangeTime={ (date) => setFieldValue('initHour', Time.toDate(date)) }
+                    value={ values.initHour.toString() }
+                />
+            ) }
+
+            {/* Final hour field */}
+            { userInterface.oldDatetimePicker ? (
+                <DatetimeField
+                    disabled={ isPreachingLoading }
+                    icon={
+                        <Ionicons
+                            color={ colors.contentHeader }
+                            name="time-outline"
+                            size={ fontSizes.icon }
+                        />
+                    }
+                    inputDateFormat="HH:mm"
+                    label="Hora de fin:"
+                    modalTitle="Hora de fin"
+                    mode="time"
+                    onChangeDate={ (date) => setFieldValue('finalHour', Time.toDate(date)) }
+                    placeholder="Seleccione la hora"
+                    style={{ marginBottom: margins.xl }}
+                    value={ values.finalHour.toString() }
+                />
+            ) : (
+                <FormTime
+                    editable={ !isPreachingLoading }
+                    icon={
+                        <Ionicons
+                            color={ colors.contentHeader }
+                            name="time-outline"
+                            size={ fontSizes.icon }
+                        />
+                    }
+                    inputDateFormat="HH:mm"
+                    label="Hora de fin:"
+                    onChangeTime={ (date) => setFieldValue('finalHour', Time.toDate(date)) }
+                    style={{ marginBottom: margins.xl }}
+                    value={ values.finalHour.toString() }
+                />
+            ) }
+
+            {/* Submit button */}
+            <Button
+                disabled={ isPreachingLoading }
+                icon={ (isPreachingLoading) && (
+                    <ActivityIndicator
+                        color={ colors.contentHeader }
+                        size={ fontSizes.icon }
+                    />
+                ) }
+                onPress={ handlePress }
+                text={ (seletedPreaching.id !== '') ? 'Actualizar' : 'Guardar' }
+            />
+        </View>
     );
 }

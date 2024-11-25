@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { View, ActivityIndicator } from 'react-native';
 import { useStyles } from 'react-native-unistyles';
-import { Formik } from 'formik';
+import { useFormik } from 'formik';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
 /* Components */
@@ -56,124 +56,149 @@ export const CredentialsForm = (): JSX.Element => {
             .then(resetForm);
     }
 
+    const formikUpdateEmail = useFormik({
+        initialValues: { email: user.email },
+        onSubmit: handleUpdateEmail,
+        validateOnMount: true,
+        validationSchema: emailFormSchema(user.email)
+    });
+
+    const formikUpdatePassword = useFormik({
+        initialValues: {
+            password: '',
+            confirmPassword: ''
+        },
+        onSubmit: (values, { resetForm }) => handleUpdatePassword(values, resetForm),
+        validateOnMount: true,
+        validationSchema: passwordFormSchema
+    });
+
+    /**
+     * Handles submitting the form for updating the user's email.
+     *
+     * If the form is valid, calls the handleSubmit function from the formik
+     * object. Otherwise, sets the error form from the formik object.
+     *
+     * @return {void} This function does not return anything.
+     */
+    const handleSubmitUpdateEmail = (): void => {
+        if (formikUpdateEmail.isValid) formikUpdateEmail.handleSubmit();
+        else setErrorForm(formikUpdateEmail.errors);
+    }
+
+    /**
+     * Handles submitting the form for updating the user's password.
+     *
+     * If the form is valid, calls the handleSubmit function from the formik
+     * object. Otherwise, sets the error form from the formik object.
+     *
+     * @return {void} This function does not return anything.
+     */
+    const handleSubmitUpdatePassword = (): void => {
+        if (formikUpdatePassword.isValid) formikUpdatePassword.handleSubmit();
+        else setErrorForm(formikUpdatePassword.errors);
+    }
+
     return (
         <View>
-            <Formik
-                initialValues={{ email: user.email }}
-                onSubmit={ handleUpdateEmail }
-                validateOnMount
-                validationSchema={ emailFormSchema(user.email) }
-            >
-                { ({ errors, handleSubmit, isValid }) => (
-                    <View style={{ alignItems: 'center', justifyContent: 'flex-start' }}>
+            <View style={{ alignItems: 'center', justifyContent: 'flex-start' }}>
 
-                        {/* Email field */}
-                        <FormField
-                            autoCapitalize="none"
-                            leftIcon={
-                                <Ionicons
-                                    color={ colors.icon }
-                                    name="mail-outline"
-                                    size={ fontSizes.icon }
-                                />
-                            }
-                            keyboardType="email-address"
-                            label="Correo:"
-                            name="email"
-                            placeholder="Ingrese su correo"
-                            style={{ marginBottom: margins.xl }}
+                {/* Email field */}
+                <FormField
+                    autoCapitalize="none"
+                    leftIcon={
+                        <Ionicons
+                            color={ colors.icon }
+                            name="mail-outline"
+                            size={ fontSizes.icon }
                         />
+                    }
+                    keyboardType="email-address"
+                    label="Correo:"
+                    onChangeText={ formikUpdateEmail.handleChange('email') }
+                    placeholder="Ingrese su correo"
+                    style={{ marginBottom: margins.xl }}
+                    value={ formikUpdateEmail.values.email }
+                />
 
-                        {/* Submit button */}
-                        <Button
-                            disabled={ isAuthLoading && loadingEmail }
-                            icon={ (isAuthLoading && loadingEmail) && (
-                                <ActivityIndicator
-                                    color={ colors.contentHeader }
-                                    size={ fontSizes.icon }
-                                />
-                            ) }
-                            onPress={ (isValid) ? handleSubmit : () => setErrorForm(errors)  }
-                            pressableStyle={{ marginBottom: margins.xl }}
-                            text="Cambiar correo"
+                {/* Submit button */}
+                <Button
+                    disabled={ isAuthLoading && loadingEmail }
+                    icon={ (isAuthLoading && loadingEmail) && (
+                        <ActivityIndicator
+                            color={ colors.contentHeader }
+                            size={ fontSizes.icon }
                         />
-                    </View>
-                ) }
-            </Formik>
+                    ) }
+                    onPress={ handleSubmitUpdateEmail }
+                    pressableStyle={{ marginBottom: margins.xl }}
+                    text="Cambiar correo"
+                />
+            </View>
 
-            <Formik
-                initialValues={{
-                    password: '',
-                    confirmPassword: ''
-                }}
-                onSubmit={ (values, { resetForm }) => handleUpdatePassword(values, resetForm) }
-                validateOnMount
-                validationSchema={ passwordFormSchema }
-            >
-                { ({ errors, handleSubmit, isValid }) => (
-                    <View style={{ alignItems: 'center', justifyContent: 'flex-start' }}>
+            <View style={{ alignItems: 'center', justifyContent: 'flex-start' }}>
 
-                        {/* New password field */}
-                        <FormField
-                            autoCapitalize="none"
-                            leftIcon={
-                                <Ionicons
-                                    color={ colors.icon }
-                                    name="key-outline"
-                                    size={ fontSizes.icon }
-                                />
-                            }
-                            rightIcon={
-                                <EyeBtn
-                                    onToggle={ setShowPassword }
-                                    value={ showPassword }
-                                />
-                            }
-                            label="Nueva contraseña:"
-                            name="password"
-                            placeholder="Ingrese su contraseña"
-                            secureTextEntry={ !showPassword }
+                {/* New password field */}
+                <FormField
+                    autoCapitalize="none"
+                    leftIcon={
+                        <Ionicons
+                            color={ colors.icon }
+                            name="key-outline"
+                            size={ fontSizes.icon }
                         />
-
-                        {/* Confirm password field */}
-                        <FormField
-                            autoCapitalize="none"
-                            leftIcon={
-                                <Ionicons
-                                    color={ colors.icon }
-                                    name="key-outline"
-                                    size={ fontSizes.icon }
-                                />
-                            }
-                            rightIcon={
-                                <EyeBtn
-                                    onToggle={ setShowConfirmPassword }
-                                    value={ showConfirmPassword }
-                                />
-                            }
-                            label="Confirmar contraseña:"
-                            name="confirmPassword"
-                            placeholder="Confirme su contraseña"
-                            secureTextEntry={ !showConfirmPassword }
-                            style={{ marginBottom: margins.xl }}
+                    }
+                    rightIcon={
+                        <EyeBtn
+                            onToggle={ setShowPassword }
+                            value={ showPassword }
                         />
+                    }
+                    label="Nueva contraseña:"
+                    onChangeText={ formikUpdatePassword.handleChange('password') }
+                    placeholder="Ingrese su contraseña"
+                    secureTextEntry={ !showPassword }
+                    value={ formikUpdatePassword.values.password }
+                />
 
-                        {/* Submit button */}
-                        <Button
-                            disabled={ isAuthLoading && loadingPassword }
-                            icon={ (isAuthLoading && loadingPassword) && (
-                                <ActivityIndicator
-                                    color={ colors.contentHeader }
-                                    size={ fontSizes.icon }
-                                />
-                            ) }
-                            onPress={ (isValid) ? handleSubmit : () => setErrorForm(errors)  }
-                            pressableStyle={{ marginBottom: margins.xl }}
-                            text="Cambiar contraseña"
+                {/* Confirm password field */}
+                <FormField
+                    autoCapitalize="none"
+                    leftIcon={
+                        <Ionicons
+                            color={ colors.icon }
+                            name="key-outline"
+                            size={ fontSizes.icon }
                         />
-                    </View>
-                ) }
-            </Formik>
+                    }
+                    rightIcon={
+                        <EyeBtn
+                            onToggle={ setShowConfirmPassword }
+                            value={ showConfirmPassword }
+                        />
+                    }
+                    label="Confirmar contraseña:"
+                    onChangeText={ formikUpdatePassword.handleChange('confirmPassword') }
+                    placeholder="Confirme su contraseña"
+                    secureTextEntry={ !showConfirmPassword }
+                    style={{ marginBottom: margins.xl }}
+                    value={ formikUpdatePassword.values.confirmPassword }
+                />
+
+                {/* Submit button */}
+                <Button
+                    disabled={ isAuthLoading && loadingPassword }
+                    icon={ (isAuthLoading && loadingPassword) && (
+                        <ActivityIndicator
+                            color={ colors.contentHeader }
+                            size={ fontSizes.icon }
+                        />
+                    ) }
+                    onPress={ handleSubmitUpdatePassword }
+                    pressableStyle={{ marginBottom: margins.xl }}
+                    text="Cambiar contraseña"
+                />
+            </View>
         </View>
     );
 }
