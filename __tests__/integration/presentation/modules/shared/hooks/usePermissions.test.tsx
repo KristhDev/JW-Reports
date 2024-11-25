@@ -32,6 +32,7 @@ describe('Test in usePermissions hook', () => {
         expect(result.current.usePermissions).toEqual({
             state: initialPermissionsStateMock,
             checkPermissions: expect.any(Function),
+            requestPermissions: expect.any(Function),
             askPermission: expect.any(Function),
         });
     });
@@ -44,7 +45,10 @@ describe('Test in usePermissions hook', () => {
         });
 
         /* Check if permissions are updated */
-        expect(result.current.usePermissions.state).toEqual(grantedStateMock);
+        expect(result.current.usePermissions.state).toEqual({
+            ...grantedStateMock,
+            isPermissionsRequested: false
+        });
     });
 
     it('should getPermission - askPermission', async () => {
@@ -59,6 +63,7 @@ describe('Test in usePermissions hook', () => {
 
         /* Check if permissions are updated in property mediaLibrary */
         expect(result.current.usePermissions.state).toEqual({
+            isPermissionsRequested: false,
             permissions: {
                 ...initialPermissionsStateMock.permissions,
                 readExternalStorage: 'denied'

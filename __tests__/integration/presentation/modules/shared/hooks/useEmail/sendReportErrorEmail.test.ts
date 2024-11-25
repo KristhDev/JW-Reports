@@ -16,7 +16,7 @@ import {
 } from '@mocks';
 
 /* Constants */
-import { emailMessages } from '@application/constants';
+import { appMessages, emailMessages } from '@application/constants';
 
 /* Errors */
 import { EmailError, ImageError } from '@domain/errors';
@@ -173,7 +173,7 @@ describe('Test in useEmail - sendReportErrorEmail', () => {
 
         expect(result.current.useStatus.state).toEqual({
             code: 400,
-            msg: 'Ocurrió un error al realizar está acción, por favor vuelvalo a intentar.'
+            msg: appMessages.UNEXPECTED_ERROR
         });
     });
 });

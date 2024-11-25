@@ -38,7 +38,7 @@ describe('Test in useRevisits hook - loadRevisits', () => {
     }));
 
     it('should load revisits successfully', async () => {
-        RevisitsServiceSpy.getAllByUserId.mockResolvedValueOnce(revisitsMock);
+        RevisitsServiceSpy.paginateByUserId.mockResolvedValueOnce(revisitsMock);
 
         const mockStore = authStoreMock();
         const { result } = renderUseRevisits(mockStore);

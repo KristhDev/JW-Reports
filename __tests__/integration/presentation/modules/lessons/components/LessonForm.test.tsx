@@ -38,7 +38,8 @@ describe('Test in <LessonForm /> component', () => {
     }) as any);
 
     useUISpy.mockImplementation(() => ({
-        state: initialUIStateMock
+        state: initialUIStateMock,
+        setActiveFormField: jest.fn()
     }) as any);
 
     beforeEach(() => {

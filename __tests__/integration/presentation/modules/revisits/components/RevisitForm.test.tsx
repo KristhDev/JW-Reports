@@ -4,6 +4,7 @@ import { act, render, screen, userEvent } from '@testing-library/react-native';
 /* Mocks */
 import {
     imageModelMock,
+    initialUIStateMock,
     revisitsStateMock,
     saveRevisitMock,
     selectedRevisitStateMock,
@@ -54,7 +55,8 @@ describe('Test in <RevisitForm /> component', () => {
     }) as any);
 
     useUISpy.mockImplementation(() => ({
-        state: UI_INITIAL_STATE
+        state: initialUIStateMock,
+        setActiveFormField: jest.fn()
     }) as any);
 
     beforeEach(() => {
