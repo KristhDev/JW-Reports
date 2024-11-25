@@ -4,7 +4,7 @@ import { act } from '@testing-library/react-native';
 import { getMockStoreUseVoiceRecorder, renderUseVoiceRecorder } from '@setups';
 
 /* Mocks */
-import { initialStatusStateMock, VoiceRecorderSpy } from '@mocks';
+import { grantedStateMock, initialStatusStateMock, VoiceRecorderSpy } from '@mocks';
 
 /* Errors */
 import { VoiceRecorderError } from '@domain/errors';
@@ -15,7 +15,7 @@ describe('Test in useVoiceRecorder hook', () => {
     });
 
     it('should return respective properties and functions', () => {
-        const mockStore = getMockStoreUseVoiceRecorder({ status: initialStatusStateMock });
+        const mockStore = getMockStoreUseVoiceRecorder({ status: initialStatusStateMock, permissions: grantedStateMock });
         const { result } = renderUseVoiceRecorder(mockStore);
 
         expect(result.current.useVoiceRecorder).toEqual({
@@ -28,7 +28,7 @@ describe('Test in useVoiceRecorder hook', () => {
     });
 
     it('should start recording - startRecording', async () => {
-        const mockStore = getMockStoreUseVoiceRecorder({ status: initialStatusStateMock });
+        const mockStore = getMockStoreUseVoiceRecorder({ status: initialStatusStateMock, permissions: grantedStateMock });
         const { result } = renderUseVoiceRecorder(mockStore);
 
         const lang = 'es-ES';
@@ -44,7 +44,7 @@ describe('Test in useVoiceRecorder hook', () => {
     it('should start recording faild if throws an error - startRecording', async () => {
         VoiceRecorderSpy.startRecording.mockRejectedValueOnce(new VoiceRecorderError('7/No match'));
 
-        const mockStore = getMockStoreUseVoiceRecorder({ status: initialStatusStateMock });
+        const mockStore = getMockStoreUseVoiceRecorder({ status: initialStatusStateMock, permissions: grantedStateMock });
         const { result } = renderUseVoiceRecorder(mockStore);
 
         const lang = 'es-ES';
@@ -63,7 +63,7 @@ describe('Test in useVoiceRecorder hook', () => {
     });
 
     it('should stop recording - stopRecording', async () => {
-        const mockStore = getMockStoreUseVoiceRecorder({ status: initialStatusStateMock });
+        const mockStore = getMockStoreUseVoiceRecorder({ status: initialStatusStateMock, permissions: grantedStateMock });
         const { result } = renderUseVoiceRecorder(mockStore);
 
         await act(async () => {
@@ -76,7 +76,7 @@ describe('Test in useVoiceRecorder hook', () => {
     it('should stop recording faild if throws an error - stopRecording', async () => {
         VoiceRecorderSpy.stopRecording.mockRejectedValueOnce(new VoiceRecorderError('Stop recording error'));
 
-        const mockStore = getMockStoreUseVoiceRecorder({ status: initialStatusStateMock });
+        const mockStore = getMockStoreUseVoiceRecorder({ status: initialStatusStateMock, permissions: grantedStateMock });
         const { result } = renderUseVoiceRecorder(mockStore);
 
         await act(async () => {
@@ -95,7 +95,7 @@ describe('Test in useVoiceRecorder hook', () => {
         const recordValue = 'This a record value';
         VoiceRecorderSpy.onSpeechResults.mockImplementation(callback => callback(recordValue));
 
-        const mockStore = getMockStoreUseVoiceRecorder({ status: initialStatusStateMock });
+        const mockStore = getMockStoreUseVoiceRecorder({ status: initialStatusStateMock, permissions: grantedStateMock });
         const { result } = renderUseVoiceRecorder(mockStore);
 
         expect(result.current.useVoiceRecorder.record).toEqual(recordValue);
@@ -105,7 +105,7 @@ describe('Test in useVoiceRecorder hook', () => {
         const voiceRecorderError = new VoiceRecorderError('Voice not reconized');
         VoiceRecorderSpy.onSpeechError.mockImplementation(callback => callback(voiceRecorderError));
 
-        const mockStore = getMockStoreUseVoiceRecorder({ status: initialStatusStateMock });
+        const mockStore = getMockStoreUseVoiceRecorder({ status: initialStatusStateMock, permissions: grantedStateMock });
         const { result } = renderUseVoiceRecorder(mockStore);
 
         expect(result.current.useStatus.state).toEqual({
@@ -115,7 +115,7 @@ describe('Test in useVoiceRecorder hook', () => {
     });
 
     it('should call destroyListeners if hook is unmounted', () => {
-        const mockStore = getMockStoreUseVoiceRecorder({ status: initialStatusStateMock });
+        const mockStore = getMockStoreUseVoiceRecorder({ status: initialStatusStateMock, permissions: grantedStateMock });
         const { unmount } = renderUseVoiceRecorder(mockStore);
 
         unmount();
