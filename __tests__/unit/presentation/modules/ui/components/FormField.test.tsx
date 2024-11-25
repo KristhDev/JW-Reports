@@ -21,7 +21,7 @@ const renderComponent = () => render(
         initialValues={{ name: '' }}
         onSubmit={ () => {} }
     >
-        { () => (
+        { ({ handleChange, values }) => (
             <FormField
                 autoCapitalize="none"
                 leftIcon={
@@ -33,8 +33,9 @@ const renderComponent = () => render(
                     />
                 }
                 label={ fieldLabel }
-                name="name"
+                onChangeText={  handleChange('name') }
                 placeholder={ fieldPlaceholder }
+                value={ values.name }
             />
         ) }
     </Formik>

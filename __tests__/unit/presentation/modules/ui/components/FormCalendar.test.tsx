@@ -15,11 +15,10 @@ export const renderComponent = () => render(
         initialValues={{ date: new Date('2022-12-29 00:00:00') }}
         onSubmit={ () => {} }
     >
-        { () => (
+        { ({ setFieldValue, values }) => (
             <FormCalendar
                 inputDateFormat="DD"
                 label="Fecha:"
-                name="date"
                 icon={
                     <Ionicons
                         color={ darkColors.icon }
@@ -28,6 +27,8 @@ export const renderComponent = () => render(
                         testID="form-calendar-icon"
                     />
                 }
+                onChangeDate={ (date) => setFieldValue('date', Time.toDate(date)) }
+                value={ values.date.toString() }
             />
         ) }
     </Formik>

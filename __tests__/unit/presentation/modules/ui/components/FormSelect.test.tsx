@@ -16,7 +16,6 @@ const itemsOptions: ItemOption[] = [
 ];
 
 const labelOption = 'Opciones:';
-const nameOption = 'option';
 const placeholderOption = 'Seleccione una opción';
 const titleOption = 'Seleccione una opción';
 
@@ -27,13 +26,14 @@ const renderComponent = () => render(
         initialValues={{ option: itemsOptions[0].value }}
         onSubmit={ () => {} }
     >
-        { () => (
+        { ({ setFieldValue, values }) => (
             <FormSelect
                 items={ itemsOptions }
                 label={ labelOption }
-                name={ nameOption }
+                onChange={ (value) => setFieldValue('option', value) }
                 placeholder={ placeholderOption }
                 title={ titleOption }
+                value={ values.option }
             />
         ) }
     </Formik>

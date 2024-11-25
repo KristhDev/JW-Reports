@@ -15,7 +15,7 @@ const renderComponent = () => render(
         initialValues={{ time: new Date('2022-12-29 00:00:00') }}
         onSubmit={ () => {} }
     >
-        { () => (
+        { ({ setFieldValue, values }) => (
             <FormTime
                 editable={ true }
                 icon={
@@ -25,9 +25,10 @@ const renderComponent = () => render(
                         size={ fontSizes.icon }
                     />
                 }
-                name="time"
                 inputDateFormat="HH:mm"
                 label="Hora:"
+                onChangeTime={ (time) => setFieldValue('time', Time.toDate(time)) }
+                value={ values.time.toString() }
             />
         ) }
     </Formik>

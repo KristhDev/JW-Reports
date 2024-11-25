@@ -3,6 +3,9 @@ import { Formik } from 'formik';
 import { render, screen } from '@testing-library/react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
+/* Adapters */
+import { Time } from '@infrasturcture/adapters';
+
 /* Modules */
 import { darkColors } from '@theme';
 import { DatetimeField } from '@ui';
@@ -12,7 +15,7 @@ const renderComponent = () => render(
         initialValues={{ day: new Date('2022-12-29 00:00:00') }}
         onSubmit={ () => {} }
     >
-        { () => (
+        { ({ setFieldValue, values }) => (
             <DatetimeField
                 icon={
                     <Ionicons
@@ -25,8 +28,9 @@ const renderComponent = () => render(
                 label="Día de predicación:"
                 modalTitle="Día de predicación"
                 mode="date"
-                name="day"
+                onChangeDate={ (date) => setFieldValue('day', Time.toDate(date)) }
                 placeholder="Seleccione el día"
+                value={ values.day.toString() }
             />
         ) }
     </Formik>
