@@ -4,19 +4,26 @@ import { configureStore } from '@reduxjs/toolkit';
 import { Provider } from 'react-redux';
 
 /* Application */
-import { statusReducer, StatusState } from '@application/features';
+import { permissionsReducer, PermissionsState, statusReducer, StatusState } from '@application/features';
 
 /* Shared */
 import { useStatus, useVoiceRecorder } from '@shared';
 
 interface InitialState {
-    status: StatusState
+    status: StatusState;
+    permissions: PermissionsState;
 }
 
-export const getMockStoreUseVoiceRecorder = ({ status }: InitialState) => {
+export const getMockStoreUseVoiceRecorder = ({ status, permissions }: InitialState) => {
     return configureStore({
-        reducer: { status: statusReducer },
-        preloadedState: { status: { ...status } },
+        reducer: {
+            status: statusReducer,
+            permissions: permissionsReducer
+        },
+        preloadedState: {
+            status: { ...status },
+            permissions: { ...permissions }
+        },
         middleware: (getDefaultMiddleware) => getDefaultMiddleware({
             serializableCheck: false
         })
