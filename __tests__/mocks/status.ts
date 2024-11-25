@@ -1,3 +1,4 @@
+import { networkMessages } from '@application/constants';
 import { StatusState } from '@application/features';
 
 export const clearStatusMock = jest.fn();
@@ -21,10 +22,10 @@ export const errorStateMock: StatusState = {
 
 export const networkStateMock: StatusState = {
     code: 500,
-    msg: 'Lo sentimos pero no dispones de conexion a Internet. Los datos que hay en la aplicación no son actualizados. Hasta que recuperes la conexión no podras obtener, guardar, editar o eliminar ningún dato.',
+    msg: networkMessages.WIFI_HASNT_CONNEC_EXPLAIN,
 }
 
 export const permissionsStatusStateMock: StatusState = {
     code: 400,
-    msg: 'Para realizar está acción necesitas permisos del dispositivo, por favor abra la configuración de su dispositivo y active los permisos de la aplicación.'
+    msg: 'Para realizar está acción necesita permisos del dispositivo, por favor abra la configuración de su dispositivo y active los permisos de la aplicación.'
 }

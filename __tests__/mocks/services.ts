@@ -51,6 +51,7 @@ export const RevisitsServiceSpy = {
     delete: jest.spyOn(RevisitsService, 'delete'),
     getAllByUserId: jest.spyOn(RevisitsService, 'getAllByUserId'),
     getLastByUserId: jest.spyOn(RevisitsService, 'getLastByUserId'),
+    paginateByUserId: jest.spyOn(RevisitsService, 'paginateByUserId'),
     update: jest.spyOn(RevisitsService, 'update'),
 }
 
