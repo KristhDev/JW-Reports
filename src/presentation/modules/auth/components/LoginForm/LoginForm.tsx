@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { View, Text, useWindowDimensions, ActivityIndicator } from 'react-native';
 import { useStyles } from 'react-native-unistyles';
 import { useNavigation } from '@react-navigation/native';
-import { Formik } from 'formik';
+import { useFormik } from 'formik';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
 /* Components */
@@ -33,98 +33,109 @@ export const LoginForm = (): JSX.Element => {
     const { state: { isAuthLoading }, signIn } = useAuth();
     const { setErrorForm } = useStatus();
 
+    const { errors, handleChange, handleSubmit, isValid, values } = useFormik({
+        initialValues: {
+            email: '',
+            password: ''
+        },
+        onSubmit: signIn,
+        validateOnMount: true,
+        validationSchema: loginFormSchema
+    });
+
+    /**
+     * Handles the press event of the login button by submitting the form
+     * if it is valid or showing the errors if it is not.
+     *
+     * @return {void} This function does not return anything.
+     */
+    const handlePress = (): void => {
+        if (isValid) handleSubmit();
+        else setErrorForm(errors);
+    }
+
     return (
-        <Formik
-            initialValues={{
-                email: '',
-                password: ''
-            }}
-            onSubmit={ signIn }
-            validationSchema={ loginFormSchema }
-            validateOnMount
-        >
-            { ({ handleSubmit, isValid, errors }) => (
-                <View style={{ ...themeStyles.formContainer, flex: 0, marginBottom: margins.xl }}>
+        <View style={{ ...themeStyles.formContainer, flex: 0, marginBottom: margins.xl }}>
 
-                    <View style={{ height: width / 4 }} />
+            <View style={{ height: width / 4 }} />
 
-                    {/* Email field */}
-                    <FormField
-                        autoCapitalize="none"
-                        leftIcon={
-                            <Ionicons
-                                color={ colors.icon }
-                                name="mail-outline"
-                                size={ fontSizes.icon }
-                            />
-                        }
-                        keyboardType="email-address"
-                        label="Correo:"
-                        name="email"
-                        placeholder="Ingrese su correo"
+            {/* Email field */}
+            <FormField
+                autoCapitalize="none"
+                leftIcon={
+                    <Ionicons
+                        color={ colors.icon }
+                        name="mail-outline"
+                        size={ fontSizes.icon }
                     />
+                }
+                keyboardType="email-address"
+                label="Correo:"
+                onChangeText={ handleChange('email') }
+                placeholder="Ingrese su correo"
+                value={ values.email }
+            />
 
-                    {/* Password field */}
-                    <FormField
-                        autoCapitalize="none"
-                        leftIcon={
-                            <Ionicons
-                                color={ colors.icon }
-                                name="key-outline"
-                                size={ fontSizes.icon }
-                            />
-                        }
-                        rightIcon={
-                            <EyeBtn
-                                onToggle={ setShowPassword }
-                                value={ showPassword }
-                            />
-                        }
-                        label="Contraseña:"
-                        name="password"
-                        placeholder="Ingrese su contraseña"
-                        secureTextEntry={ !showPassword }
-                        style={{ marginBottom: margins.xl }}
+            {/* Password field */}
+            <FormField
+                autoCapitalize="none"
+                leftIcon={
+                    <Ionicons
+                        color={ colors.icon }
+                        name="key-outline"
+                        size={ fontSizes.icon }
                     />
-
-                    {/* Submit button */}
-                    <Button
-                        disabled={ isAuthLoading }
-                        icon={ (isAuthLoading) && (
-                            <ActivityIndicator
-                                color={ colors.contentHeader }
-                                size={ fontSizes.icon }
-                            />
-                        ) }
-                        onPress={ (isValid) ? handleSubmit : () => setErrorForm(errors)  }
-                        text="Ingresar"
+                }
+                rightIcon={
+                    <EyeBtn
+                        onToggle={ setShowPassword }
+                        value={ showPassword }
                     />
+                }
+                label="Contraseña:"
+                onChangeText={ handleChange('password') }
+                placeholder="Ingrese su contraseña"
+                secureTextEntry={ !showPassword }
+                style={{ marginBottom: margins.xl }}
+                value={ values.password }
+            />
 
-                    {/* Sign up link */}
-                    <View style={ themeStyles.btnLink }>
-                        <Text style={ themeStyles.formText }>
-                            ¿No tienes cuenta?
-                        </Text>
+            {/* Submit button */}
+            <Button
+                disabled={ isAuthLoading }
+                icon={ (isAuthLoading) && (
+                    <ActivityIndicator
+                        color={ colors.contentHeader }
+                        size={ fontSizes.icon }
+                    />
+                ) }
+                onPress={ handlePress }
+                text="Ingresar"
+            />
 
-                        <Link
-                            onPress={ () => navigation.navigate('RegisterScreen' as never) }
-                            testID="login-form-sign-up"
-                        >
-                            Crea una aquí
-                        </Link>
-                    </View>
+            {/* Sign up link */}
+            <View style={ themeStyles.btnLink }>
+                <Text style={ themeStyles.formText }>
+                    ¿No tienes cuenta?
+                </Text>
 
-                    {/* Forgot password link */}
-                    <View style={{ ...themeStyles.btnLink, marginTop: margins.sm }}>
-                        <Link
-                            onPress={ () => navigation.navigate('ForgotPasswordScreen' as never) }
-                            testID="login-form-forgor-pass"
-                        >
-                            Olvide mi contraseña
-                        </Link>
-                    </View>
-                </View>
-            ) }
-        </Formik>
+                <Link
+                    onPress={ () => navigation.navigate('RegisterScreen' as never) }
+                    testID="login-form-sign-up"
+                >
+                    Crea una aquí
+                </Link>
+            </View>
+
+            {/* Forgot password link */}
+            <View style={{ ...themeStyles.btnLink, marginTop: margins.sm }}>
+                <Link
+                    onPress={ () => navigation.navigate('ForgotPasswordScreen' as never) }
+                    testID="login-form-forgor-pass"
+                >
+                    Olvide mi contraseña
+                </Link>
+            </View>
+        </View>
     );
 }

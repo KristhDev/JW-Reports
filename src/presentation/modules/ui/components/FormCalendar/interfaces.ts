@@ -9,7 +9,7 @@ export interface FormCalendarProps {
     label: string;
     labelStyle?: StyleProp<TextStyle>;
     minDate?: string;
-    name: string;
     onChangeDate?: (date: string) => void;
     style?: StyleProp<ViewStyle>;
+    value: string;
 }

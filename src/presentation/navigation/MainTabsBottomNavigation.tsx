@@ -7,6 +7,7 @@ import { useAuth } from '@auth';
 import { CoursesStackNavigation } from '@courses';
 import { PreachingStackNavigation } from '@preaching';
 import { RevisitsStackNavigation } from '@revisits';
+import { permissionsStatus, usePermissions } from '@shared';
 import { MainTabsBottomParamsList, TabBar } from '@ui';
 
 /* Services */
@@ -21,13 +22,14 @@ const Tabs = createBottomTabNavigator<MainTabsBottomParamsList>();
  */
 const MainTabsBottomNavigation = (): JSX.Element => {
     const { state: { user } } = useAuth();
+    const { state } = usePermissions();
     const { theme: { colors } } = useStyles();
 
     /**
      * Effect to listen notifications by user.
      */
     useEffect(() => {
-        if (!user.id) return;
+        if (!user.id || state.permissions.notifications !== permissionsStatus.GRANTED) return;
         NotificationsService.listenNotificationsByUser(user.id);
     }, [ user.id ]);
 

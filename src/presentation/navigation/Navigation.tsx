@@ -15,9 +15,6 @@ import { NavigationParamsList, useUI } from '@ui';
 /* Navigation */
 import MainTabsBottomNavigation from './MainTabsBottomNavigation';
 
-/* Services */
-import { NotificationsService } from '@services';
-
 const Stack = createStackNavigator<NavigationParamsList>();
 
 /**
@@ -29,7 +26,7 @@ const Navigation = (): JSX.Element => {
     const { state: { isAuthenticated }, getAuth } = useAuth();
     const { clearCourses } = useCourses();
     const { clearLessons } = useLessons();
-    const { state: { permissions }, checkPermissions } = usePermissions();
+    const { state, checkPermissions, requestPermissions } = usePermissions();
     const { clearPreaching } = usePreaching();
     const { clearRevisits } = useRevisits();
     const { state: { theme } } = useTheme();
@@ -40,8 +37,6 @@ const Navigation = (): JSX.Element => {
      * Effect to clear store when mount component.
      */
     useEffect(() => {
-        checkPermissions();
-
         if (wifi.hasConnection) {
             clearCourses();
             clearLessons();
@@ -50,6 +45,14 @@ const Navigation = (): JSX.Element => {
 
             getAuth();
         }
+    }, []);
+
+    /**
+     * Effect to check or request permissions.
+     */
+    useEffect(() => {
+        if (state.isPermissionsRequested) checkPermissions();
+        else requestPermissions({ notifications: true });
     }, []);
 
     /**
@@ -63,14 +66,6 @@ const Navigation = (): JSX.Element => {
             showListener.remove();
             hideListener.remove();
         }
-    }, []);
-
-    /**
-     * Effect to request permission for notifications.
-     */
-    useEffect(() => {
-        if (permissions.notifications === 'denied') return;
-        NotificationsService.requestPermission();
     }, []);
 
     /**

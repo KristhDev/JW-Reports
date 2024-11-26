@@ -1,11 +1,17 @@
-import { request, PERMISSIONS, PermissionStatus } from 'react-native-permissions';
+import { request, requestNotifications, PERMISSIONS, PermissionStatus } from 'react-native-permissions';
 
 /* Constants */
 import { permissionsMessages } from '@application/constants';
 
 /* Features */
 import { useAppDispatch, useAppSelector } from '@application/store';
-import { checkPermissions as checkPermissionsThunk, setPermission, Permissions } from '@application/features';
+import {
+    checkPermissions as checkPermissionsThunk,
+    requestPermissions as requestPermissionsThunk,
+    setPermission,
+    Permissions,
+    RequestPermissionsOptions
+} from '@application/features';
 
 /* Hooks */
 import useStatus from './useStatus';
@@ -24,6 +30,25 @@ const usePermissions = () => {
     const { setStatus } = useStatus();
 
     /**
+     * Checks the permissions of the app.
+     *
+     * @return {void} This function does not return any value.
+     */
+    const checkPermissions = (): void => {
+        dispatch(checkPermissionsThunk());
+    }
+
+    /**
+     * Requests the permissions of the app.
+     *
+     * @param {RequestPermissionsOptions} options - RequestPermissionsOptions
+     * @return {void} This function does not return any value.
+     */
+    const requestPermissions = (options: RequestPermissionsOptions): void => {
+        dispatch(requestPermissionsThunk(options));
+    }
+
+    /**
      * It asks for a permission and if the permission is not available it sets a status message.
      *
      * @param {keyof Permissions} permission - keyof Permissions
@@ -32,32 +57,31 @@ const usePermissions = () => {
     const askPermission = async (permission: keyof Permissions): Promise<PermissionStatus> => {
         const askPermissions = {
             camera: PERMISSIONS.ANDROID.CAMERA,
-            notifications: PERMISSIONS.ANDROID.POST_NOTIFICATIONS,
             readExternalStorage: PERMISSIONS.ANDROID.READ_EXTERNAL_STORAGE,
             readMediaImages: PERMISSIONS.ANDROID.READ_MEDIA_IMAGES,
             recordAudio: PERMISSIONS.ANDROID.RECORD_AUDIO,
             writeExternalStorage: PERMISSIONS.ANDROID.WRITE_EXTERNAL_STORAGE
         }
 
-        const result = await request(askPermissions[permission]);
+        let status: PermissionStatus = permissionsStatus.UNAVAILABLE;
 
-        if (result === permissionsStatus.UNAVAILABLE) {
-            setStatus({ msg: permissionsMessages.UNSUPPORTED, code: 418 });
+        if (permission === 'notifications') {
+            const result = await requestNotifications([ 'alert', 'badge', 'sound' ]);
+            status = result.status;
         }
+        else status = await request(askPermissions[permission]);
 
-        dispatch(setPermission({ key: permission, value: result }));
-        return result;
+        if (status === permissionsStatus.UNAVAILABLE) setStatus({ msg: permissionsMessages.UNSUPPORTED, code: 418 });
+
+        dispatch(setPermission({ key: permission, value: status }));
+        return status;
     }
-
-    /**
-     * It's a function that returns a function that dispatches a function
-     */
-    const checkPermissions = () => dispatch(checkPermissionsThunk());
 
     return {
         state,
+        askPermission,
         checkPermissions,
-        askPermission
+        requestPermissions
     }
 }
 

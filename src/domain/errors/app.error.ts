@@ -87,6 +87,7 @@ export class AppErrors {
 
     private static readonly voiceRecorderErrorMessages = {
         '7/No match': 'Por favor hable de forma clara y sin ruido para copiar el texto.',
+        "11/Didn't understand, please try again.": 'Por favor hable de forma clara y sin ruido para copiar el texto.'
     }
 
     /**

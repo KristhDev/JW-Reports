@@ -1,7 +1,7 @@
 import React, { FC, useState } from 'react';
 import { View, ActivityIndicator, Text } from 'react-native';
 import { useStyles } from 'react-native-unistyles';
-import { Formik } from 'formik';
+import { useFormik } from 'formik';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
 /* UI */
@@ -64,6 +64,11 @@ const PassToCourseModal: FC<ModalProps> = ({ isOpen, onClose }): JSX.Element => 
         }
     }
 
+    const { handleChange, handleSubmit, values } = useFormik({
+        initialValues: { publication: '' },
+        onSubmit: handleConfirm
+    });
+
     /**
      * When the user clicks the close button, the modal closes and the startCourse state is set to
      * false.
@@ -101,45 +106,39 @@ const PassToCourseModal: FC<ModalProps> = ({ isOpen, onClose }): JSX.Element => 
                             />
                         </>
                     ) : (
-                        <Formik
-                            initialValues={{ publication: '' }}
-                            onSubmit={ handleConfirm }
-                        >
-                            { ({ handleSubmit }) => (
-                                <View>
+                        <View>
 
-                                    {/* Modal title in form */}
-                                    <Text style={{ ...themeStyles.modalText, marginBottom: margins.md }}>
-                                        Por favor ingrese el nombre de la publicación de estudio
-                                    </Text>
+                            {/* Modal title in form */}
+                            <Text style={{ ...themeStyles.modalText, marginBottom: margins.md }}>
+                                Por favor ingrese el nombre de la publicación de estudio
+                            </Text>
 
-                                    {/* Publication field */}
-                                    <FormField
-                                        leftIcon={
-                                            <Ionicons
-                                                color={ colors.icon }
-                                                name="book-outline"
-                                                size={ fontSizes.icon }
-                                            />
-                                        }
-                                        label="Publicación de estudio:"
-                                        name="publication"
-                                        placeholder="Ingrese la publicación"
-                                        style={{ marginBottom: 0 }}
+                            {/* Publication field */}
+                            <FormField
+                                leftIcon={
+                                    <Ionicons
+                                        color={ colors.icon }
+                                        name="book-outline"
+                                        size={ fontSizes.icon }
                                     />
+                                }
+                                label="Publicación de estudio:"
+                                onChangeText={ handleChange('publication') }
+                                placeholder="Ingrese la publicación"
+                                style={{ marginBottom: 0 }}
+                                value={ values.publication }
+                            />
 
-                                    {/* Modal actions in form */}
-                                    <ModalActions
-                                        cancelButtonText="CANCELAR"
-                                        confirmTextButton="ACEPTAR"
-                                        onCancel={ handleClose }
-                                        onConfirm={ handleSubmit }
-                                        showCancelButton
-                                        showConfirmButton
-                                    />
-                                </View>
-                            ) }
-                        </Formik>
+                            {/* Modal actions in form */}
+                            <ModalActions
+                                cancelButtonText="CANCELAR"
+                                confirmTextButton="ACEPTAR"
+                                onCancel={ handleClose }
+                                onConfirm={ handleSubmit }
+                                showCancelButton
+                                showConfirmButton
+                            />
+                        </View>
                     ) }
                 </View>
             ) : (

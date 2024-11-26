@@ -1,6 +1,6 @@
 import React, { useRef, useState } from 'react';
 import { ActivityIndicator, View } from 'react-native';
-import { Formik } from 'formik';
+import { useFormik } from 'formik';
 import { useStyles } from 'react-native-unistyles';
 
 /* Models */
@@ -57,47 +57,57 @@ export const ReportErrorForm = (): JSX.Element => {
         });
     }
 
+    const { errors, handleChange, handleSubmit, isSubmitting, isValid, values } = useFormik({
+        initialValues: { message: '' },
+        onSubmit: ({ message }, { resetForm, setSubmitting }) => handleSendReportErrorEmail(message, { resetForm, setSubmitting }),
+        validateOnMount: true,
+        validationSchema: reportErrorFormSchema
+    });
+
+    /**
+     * Handles the press event by submitting the form if it is valid,
+     * otherwise sets the form errors.
+     *
+     * @return {void} This function does not return anything.
+     */
+    const handlePress = (): void => {
+        if (isValid) handleSubmit();
+        else setErrorForm(errors);
+    }
+
     return (
-        <Formik
-            initialValues={{ message: '' }}
-            onSubmit={ ({ message }, { resetForm, setSubmitting }) => handleSendReportErrorEmail(message, { resetForm, setSubmitting }) }
-            validateOnMount
-            validationSchema={ reportErrorFormSchema }
-        >
-            { ({ errors, handleSubmit, isSubmitting, isValid }) => (
-                <View style={{ ...themeStyles.formContainer, flex: 0 }}>
-                    <FormField
-                        editable={ !isSubmitting }
-                        label="Describa el error:"
-                        multiline
-                        name="message"
-                        numberOfLines={ 8 }
-                    />
+        <View style={{ ...themeStyles.formContainer, flex: 0 }}>
+            <FormField
+                editable={ !isSubmitting }
+                label="Describa el error:"
+                multiline
+                numberOfLines={ 8 }
+                onChangeText={ handleChange('message') }
+                value={ values.message }
+            />
 
-                    <FormImage
-                        defaultImage={ reportErrorDefaultImgs[theme] }
-                        disabled={ isSubmitting }
-                        galleryButtonText="Añadir imagen"
-                        label="Adjunte una imagen (opcional):"
-                        onSelectImage={ setImage }
-                        ref={ formImageRef }
-                        showGalleryButton
-                        style={{ marginBottom: margins.xl }}
-                    />
+            <FormImage
+                defaultImage={ reportErrorDefaultImgs[theme] }
+                disabled={ isSubmitting }
+                galleryButtonText="Añadir imagen"
+                label="Adjunte una imagen (opcional):"
+                onSelectImage={ setImage }
+                ref={ formImageRef }
+                showGalleryButton
+                style={{ marginBottom: margins.xl }}
+            />
 
-                    <Button
-                        disabled={ isSubmitting }
-                        icon={ (isSubmitting) && (
-                            <ActivityIndicator
-                                color={ colors.contentHeader }
-                                size={ fontSizes.icon }
-                            />
-                        ) }
-                        onPress={ (isValid) ? handleSubmit : () => setErrorForm(errors) }
-                        text="Enviar"
+            <Button
+                disabled={ isSubmitting }
+                icon={ (isSubmitting) && (
+                    <ActivityIndicator
+                        color={ colors.contentHeader }
+                        size={ fontSizes.icon }
                     />
-                </View>
-            ) }
-        </Formik>
+                ) }
+                onPress={ handlePress }
+                text="Enviar"
+            />
+        </View>
     );
 }

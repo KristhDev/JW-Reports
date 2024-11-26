@@ -1,13 +1,14 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 /* Thunks */
-import { checkPermissions } from './thunks';
+import { checkPermissions, requestPermissions } from './thunks';
 
 /* Interfaces */
 import { PermissionsState, SetPermissionPayload } from './types';
 
 /* Initial state */
 export const PERMISSIONS_INITIAL_STATE: PermissionsState = {
+    isPermissionsRequested: false,
     permissions: {
         camera: 'unavailable',
         notifications: 'unavailable',
@@ -30,6 +31,11 @@ const permissionsSlice = createSlice({
     extraReducers: (builder) => {
         builder.addCase(checkPermissions.fulfilled, (state, action) => {
             state.permissions = action.payload.permissions;
+        })
+
+        .addCase(requestPermissions.fulfilled, (state, action) => {
+            state.permissions = action.payload.permissions;
+            state.isPermissionsRequested = true;
         })
     }
 });

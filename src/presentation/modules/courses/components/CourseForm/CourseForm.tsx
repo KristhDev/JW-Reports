@@ -1,6 +1,6 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect } from 'react';
 import { ActivityIndicator, View } from 'react-native';
-import { Formik, FormikProps } from 'formik';
+import { useFormik } from 'formik';
 import { useStyles } from 'react-native-unistyles';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
@@ -27,7 +27,6 @@ import { themeStylesheet } from '@theme';
  * @return {JSX.Element} The course form component.
  */
 export const CourseForm = (): JSX.Element => {
-    const formRef = useRef<FormikProps<CourseFormValues>>(null);
     const { styles: themeStyles, theme: { colors, fontSizes, margins } } = useStyles(themeStylesheet);
 
     const { state: { isCourseLoading, selectedCourse }, saveCourse, updateCourse } = useCourses();
@@ -47,96 +46,108 @@ export const CourseForm = (): JSX.Element => {
             : updateCourse(formValues);
     }
 
+    const { errors, handleChange, handleSubmit, isValid, setFieldValue, values } = useFormik({
+        initialValues: {
+            personName: selectedCourse.personName,
+            personAbout: selectedCourse.personAbout,
+            personAddress: selectedCourse.personAddress,
+            publication: selectedCourse.publication
+        },
+        onSubmit: handleSaveOrUpdate,
+        validateOnMount: true,
+        validationSchema: courseFormSchema
+    });
+
+    /**
+     * Handles the press event by submitting the form if it is valid,
+     * otherwise sets the form errors.
+     *
+     * @return {void} This function does not return anything.
+     */
+    const handlePress = (): void => {
+        if (isValid) handleSubmit();
+        else setErrorForm(errors);
+    }
+
     useEffect(() => {
         if (recordedAudio.trim().length === 0 || activeFormField.length === 0) return;
-        formRef?.current?.setFieldValue(activeFormField, recordedAudio, true);
+        setFieldValue(activeFormField, recordedAudio, true);
     }, [ recordedAudio ]);
 
     return (
-        <Formik
-            initialValues={{
-                personName: selectedCourse.personName,
-                personAbout: selectedCourse.personAbout,
-                personAddress: selectedCourse.personAddress,
-                publication: selectedCourse.publication
-            }}
-            innerRef={ formRef }
-            onSubmit={ handleSaveOrUpdate }
-            validateOnMount
-            validationSchema={ courseFormSchema }
-        >
-            { ({ handleSubmit, errors, isValid }) => (
-                <View style={{ ...themeStyles.formContainer, paddingBottom: margins.xl }}>
+        <View style={{ ...themeStyles.formContainer, paddingBottom: margins.xl }}>
 
-                    {/* Person name field */}
-                    <FormField
-                        leftIcon={
-                            <Ionicons
-                                color={ colors.icon }
-                                name="person-outline"
-                                size={ fontSizes.icon }
-                            />
-                        }
-                        label="Nombre del estudiante:"
-                        name="personName"
-                        onBlur={ () => setActiveFormField('') }
-                        onFocus={ () => setActiveFormField('personName') }
-                        placeholder="Ingrese el nombre"
+            {/* Person name field */}
+            <FormField
+                leftIcon={
+                    <Ionicons
+                        color={ colors.icon }
+                        name="person-outline"
+                        size={ fontSizes.icon }
                     />
+                }
+                label="Nombre del estudiante:"
+                onBlur={ () => setActiveFormField('') }
+                onChangeText={ handleChange('personName') }
+                onFocus={ () => setActiveFormField('personName') }
+                placeholder="Ingrese el nombre"
+                value={ values.personName }
+            />
 
-                    {/* Person about field */}
-                    <FormField
-                        label="Información del estudiante:"
-                        multiline
-                        name="personAbout"
-                        numberOfLines={ 10 }
-                        onBlur={ () => setActiveFormField('') }
-                        onFocus={ () => setActiveFormField('personAbout') }
-                        placeholder="Ingrese datos sobre la persona, temas de interés, preferencias, aspectos importantes, etc..."
-                    />
+            {/* Person about field */}
+            <FormField
+                label="Información del estudiante:"
+                multiline
+                numberOfLines={ 10 }
+                onBlur={ () => setActiveFormField('') }
+                onChangeText={ handleChange('personAbout') }
+                onFocus={ () => setActiveFormField('personAbout') }
+                placeholder="Ingrese datos sobre la persona, temas de interés, preferencias, aspectos importantes, etc..."
+                value={ values.personAbout }
+            />
 
-                    {/* Person address field */}
-                    <FormField
-                        label="Dirección:"
-                        multiline
-                        name="personAddress"
-                        numberOfLines={ 4 }
-                        onBlur={ () => setActiveFormField('') }
-                        onFocus={ () => setActiveFormField('personAddress') }
-                        placeholder="Ingrese la dirección"
-                    />
+            {/* Person address field */}
+            <FormField
+                label="Dirección:"
+                multiline
+                numberOfLines={ 4 }
+                onBlur={ () => setActiveFormField('') }
+                onChangeText={ handleChange('personAddress') }
+                onFocus={ () => setActiveFormField('personAddress') }
+                placeholder="Ingrese la dirección"
+                value={ values.personAddress }
+            />
 
-                    {/* Publication field */}
-                    <FormField
-                        leftIcon={
-                            <Ionicons
-                                color={ colors.icon }
-                                name="book-outline"
-                                size={ fontSizes.icon }
-                            />
-                        }
-                        label="Publicación de estudio:"
-                        name="publication"
-                        onBlur={ () => setActiveFormField('') }
-                        onFocus={ () => setActiveFormField('publication') }
-                        placeholder="Ingrese la publicación"
-                        style={{ marginBottom: margins.xl }}
+            {/* Publication field */}
+            <FormField
+                leftIcon={
+                    <Ionicons
+                        color={ colors.icon }
+                        name="book-outline"
+                        size={ fontSizes.icon }
                     />
+                }
+                label="Publicación de estudio:"
+                onBlur={ () => setActiveFormField('') }
+                onChangeText={ handleChange('publication') }
+                onFocus={ () => setActiveFormField('publication') }
+                placeholder="Ingrese la publicación"
+                style={{ marginBottom: margins.xl }}
+                value={ values.publication }
+            />
 
-                    {/* Submit button */}
-                    <Button
-                        disabled={ isCourseLoading }
-                        icon={ (isCourseLoading) && (
-                            <ActivityIndicator
-                                color={ colors.contentHeader }
-                                size={ fontSizes.icon }
-                            />
-                        ) }
-                        onPress={ (isValid) ? handleSubmit : () => setErrorForm(errors) }
-                        text={ (selectedCourse.id !== '') ? 'Actualizar' : 'Guardar' }
+            {/* Submit button */}
+            <Button
+                disabled={ isCourseLoading }
+                icon={ (isCourseLoading) && (
+                    <ActivityIndicator
+                        color={ colors.contentHeader }
+                        size={ fontSizes.icon }
                     />
-                </View>
-            ) }
-        </Formik>
+                ) }
+                onPress={ handlePress }
+                text={ (selectedCourse.id !== '') ? 'Actualizar' : 'Guardar' }
+            />
+        </View>
     );
 }
