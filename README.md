@@ -540,18 +540,35 @@ Esas **policies** quedan a su criterio personal siguiendo la documentación ofic
 ### 5.5. Bucket
 Supabase tiene una nueva opción para crear **buckets**, que permiten almacenar archivos en distintos directorios. Para crear uno
 vaya a la pestaña de **Storage** y presione el botón "New bucket" y pongale el nombre de **jw-reports**, lo deja como public y lo
-crea, después de esto, cree una carpeta dentro del **bucket** que se llame **revisits**.
+crea, después de esto, cree dos carpetas dentro del **bucket** que se llame **revisits** y otro **errors** o cómo desee llamarlos, 
+al final esos nombres los debe poner en el archivo **.env**.
 
-Para más información vaya a la documentación oficial [aquí](https://supabase.com/docs/guides/storage). 
+Para más información vaya a la documentación oficial [aquí](https://supabase.com/docs/guides/storage).
 
-### 5.6. Clonar repositorio
+### 5.6. EmailJS
+Para realizar el envío de recomendaciones y reporte de errores se usa el servicio de EmailJS. Luego de crear su cuenta, se 
+necesita crear un servicio de correo. Para ello, presione el botón "Add New Service", seleccione un proveedor de correo y 
+vincúlelo con la cuenta que tiene con ese proveedor. Al final tendrá unas credenciales para usar el servicio, esas se deben 
+escribir en el archivo .env.
+
+Ahora se necesitan unas plantillas para los correos, una para las recomendaciones y otra para el reporte de errores. Para crear 
+plantilla, diríjase a la pestaña Email Templates y presioné el botón "Create New Template". Cuando termine de crear el diseño de su 
+plantilla, tendrá que definir algunas variables que usará la plantilla. Esas variables se envían desde la aplicación móvil.
+
+La plantilla de recomendaciones espera las variables email y message, y la plantilla de reporte de errores espera las variables 
+email, imageUrl y message. Para este caso, imageUrl es opcional.
+
+Cuando ya haya terminado de crear sus plantillas, copie los ids y los coloca en el archivo .env. Le dejo la documentación oficial 
+[aquí](https://www.emailjs.com/docs/).
+
+### 5.7. Clonar repositorio
 Ahora el siguiente paso es clonar el repositorio de la aplicación móvil, copie el siguiente comando en una terminal:
 
 ```bash
 git clone https://github.com/KristhDev/JW-Reports.git
 ```
 
-### 5.7. Instalar dependencias
+### 5.8. Instalar dependencias
 Lo siguiente para que la aplicación funcione de la forma correcta es **instalar sus dependencias**, lo puedee hacer con el
 siguiente comando:
 
@@ -562,7 +579,7 @@ yarn install
 Como se mencionó en la parte de entorno de desarrollo, yarn es opcional. Puede usar cualquier **gestor de dependencias** para
 Node.js que este disponible y se pueda usar con React Native.
 
-### 5.8. Sitio web y Servidor de notificaciones
+### 5.9. Sitio web y Servidor de notificaciones
 Ahora el siguiente paso es poner en funcionamiento el **sitio web y el servidor de notificaciones**. En el caso del servidor es
 opcional, el sitio web es parte de las funcionalidades de autenticación, por lo que es necesario, así que debe ser desplegado
 en algún servicio.
@@ -585,7 +602,7 @@ Igualmente, le dejo ambos links de los repositorios de estas partes para más in
  * [Sitio web](https://github.com/KristhDev/JW-Reports-auth-web)
  * [Servidor de notificaciones](https://github.com/KristhDev/JW-Reports-notifications-server)
 
-### 5.9. One Signal
+### 5.10. One Signal
 Para el envío de notificaciones se usa el **servicio OneSignal**, que es el más utilizado para este tipo de funcionalidad. Para
 usarlo **cree una cuenta** y luego presione el botón que dice "New App/Website". Luego llene los campos que le diga y seleccione
 la opción de **Google Android (FCM)**.
@@ -601,14 +618,14 @@ aceptar se descargará el archivo JSON que se necesita.
 Ahora solo importe ese archivo, siga los pasos que le diga y **cree la aplicación de OneSignal**. Una vez creada y estando el 
 Dashboard vaya a la pestaña de **Keys & IDs** y copie el valor OneSignal App ID, este nos servirá para recibir las notificaciones.
 
-### 5.10. Bugfender
+### 5.11. Bugfender
 Como se vio, se usa bugfender para el registro de logs de la aplicación. Para usarlo hay que **crear una cuenta** en Bugfender y 
 luego un aplicación, solamente llene los campos que se le soliciten, cuando ya se haya creado la aplicación dirijase a la pestaña 
 de **configuración** y copie el valor de su API Key. Le dejo el link de Bugfender [aquí](https://bugfender.com).
 
 Cuando este corriendo la aplicación y surja algún error interno puede ver los logs en el **dashboard de Bugfender**.
 
-### 5.11. Variables de entorno
+### 5.12. Variables de entorno
 En la raíz del proyecto encontrará un archivo ```.env.example``` que contiene todas las variables de entorno necesarias para el 
 proyecto, la única que tiene un valor es **REPOSITORY_URL** que es este mismo repositorio, renombre el archivo a ```.env.``` Si 
 ha seguido todos los pasos ya tiene todos los valores, simplemente **escribalos en el archivo .env**. A continuación le dejo una 
@@ -631,7 +648,7 @@ tabla con la explicación de cada una de las variables:
 | SUPABASE_SERVICE_ROLE_KEY        | Clave de rol para el servicio de Supabase (solo para testing) |
 | ONESIGNAL_APP_ID                 | ID de la aplicación de OneSignal                              |
 
-### 5.12. Correr aplicación
+### 5.13. Correr aplicación
 Para esto necesita tener una **máquina virtual de Android Studio** ejecutándose, use la versión del **SDK de Android** más
 reciente y estable disponible, en la documentación oficial de Reacts Native le dice los pasos para este entorno, 
 clic [aquí](https://reactnative.dev/docs/set-up-your-environment).
