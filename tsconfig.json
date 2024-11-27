@@ -2,10 +2,37 @@
   "extends": "expo/tsconfig.base",
   "compilerOptions": {
     "strict": true,
+    "baseUrl": "./",
     "paths": {
-      "@/*": [
-        "./*"
-      ]
+      "@application/*": [ "src/application/*" ],
+      "@assets/*": [ "src/presentation/assets/*" ],
+      "@auth": [ "src/presentation/modules/auth" ],
+      "@auth/*": [ "src/presentation/modules/auth/*" ],
+      "@config": [ "src/config" ],
+      "@config/*": [ "src/config/*" ],
+      "@courses": [ "src/presentation/modules/courses" ],
+      "@courses/*": [ "src/presentation/modules/courses/*" ],
+      "@domain/*": [ "src/domain/*" ],
+      "@infrasturcture/*": [ "src/infrasturcture/*" ],
+      "@lessons": [ "src/presentation/modules/lessons" ],
+      "@lessons/*": [ "src/presentation/modules/lessons/*" ],
+      "@navigation": [ "src/presentation/navigation" ],
+      "@package": [ "./package.json" ],
+      "@preaching": [ "src/presentation/modules/preaching" ],
+      "@preaching/*": [ "src/presentation/modules/preaching/*" ],
+      "@providers": [ "src/presentation/providers" ],
+      "@revisits": [ "src/presentation/modules/revisits" ],
+      "@revisits/*": [ "src/presentation/modules/revisits/*" ],
+      "@services": [ "src/presentation/services" ],
+      "@services/*": [ "src/presentation/services/*" ],
+      "@shared": [ "src/presentation/modules/shared" ],
+      "@shared/*": [ "src/presentation/modules/shared/*" ],
+      "@theme": [ "src/presentation/modules/theme" ],
+      "@theme/*": [ "src/presentation/modules/theme/*" ],
+      "@ui": [ "src/presentation/modules/ui" ],
+      "@ui/*": [ "src/presentation/modules/ui/*" ],
+      "@utils": [ "src/presentation/utils" ],
+      "@utils/*": [ "src/presentation/utils/*" ]
     }
   },
   "include": [
