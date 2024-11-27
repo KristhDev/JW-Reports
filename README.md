@@ -627,26 +627,26 @@ Cuando este corriendo la aplicación y surja algún error interno puede ver los 
 
 ### 5.12. Variables de entorno
 En la raíz del proyecto encontrará un archivo ```.env.example``` que contiene todas las variables de entorno necesarias para el 
-proyecto, la única que tiene un valor es **REPOSITORY_URL** que es este mismo repositorio, renombre el archivo a ```.env.``` Si 
+proyecto, la única que tiene un valor es **EXPO_PUBLIC_REPOSITORY_URL** que es este mismo repositorio, renombre el archivo a ```.env.``` Si 
 ha seguido todos los pasos ya tiene todos los valores, simplemente **escribalos en el archivo .env**. A continuación le dejo una 
 tabla con la explicación de cada una de las variables:
 
 | Variable                         | Explicación                                                   |
 |----------------------------------|---------------------------------------------------------------|
-| BUGFENDER_API_KEY                | Clave de API de Bugfender                                     |
-| EMAILJS_FEEDBACK_TEMPLATE_ID     | ID de la plantilla de correo de feedback en EmailJS           |
-| EMAILJS_PUBLIC_KEY               | Clave publica de EmailJS                                      |
-| EMAILJS_REPORT_ERROR_TEMPLATE_ID | ID de la plantilla de correo de error en EmailJS              |
-| EMAILJS_SERVICE_ID               | ID de servicio de EmailJS                                     |
-| REPOSITORY_URL                   | https://github.com/KristhDev/JW-Reports                       |
-| SITIE_URL                        | Sitio de Internet para la autenticación de los usuarios       |
-| SUPABASE_APY_KEY                 | Clave de aplicación de Supabase                               |
-| SUPABASE_BUCKET                  | Nombre del bucket para la subida de archivos                  |
-| SUPABASE_ERRORS_FOLDER           | Nombre del directorio de errores                              |
-| SUPABASE_REVISITS_FOLDER         | Nombre del directorio de revisits                             |
-| SUPABASE_URL                     | URL del proyecto de Supabase                                  |
-| SUPABASE_SERVICE_ROLE_KEY        | Clave de rol para el servicio de Supabase (solo para testing) |
-| ONESIGNAL_APP_ID                 | ID de la aplicación de OneSignal                              |
+| EXPO_PUBLIC_BUGFENDER_API_KEY                | Clave de API de Bugfender                                     |
+| EXPO_PUBLIC_EMAILJS_FEEDBACK_TEMPLATE_ID     | ID de la plantilla de correo de feedback en EmailJS           |
+| EXPO_PUBLIC_EMAILJS_PUBLIC_KEY               | Clave publica de EmailJS                                      |
+| EXPO_PUBLIC_EMAILJS_REPORT_ERROR_TEMPLATE_ID | ID de la plantilla de correo de error en EmailJS              |
+| EXPO_PUBLIC_EMAILJS_SERVICE_IDD               | ID de servicio de EmailJS                                     |
+| EXPO_PUBLIC_REPOSITORY_URL                   | https://github.com/KristhDev/JW-Reports                       |
+| EXPO_PUBLIC_SITIE_URL                        | Sitio de Internet para la autenticación de los usuarios       |
+| EXPO_PUBLIC_SUPABASE_APY_KEY                 | Clave de aplicación de Supabase                               |
+| EXPO_PUBLIC_SUPABASE_BUCKET                  | Nombre del bucket para la subida de archivos                  |
+| EXPO_PUBLIC_SUPABASE_ERRORS_FOLDER           | Nombre del directorio de errores                              |
+| EXPO_PUBLIC_SUPABASE_REVISITS_FOLDER         | Nombre del directorio de revisits                             |
+| EXPO_PUBLIC_SUPABASE_URL                     | URL del proyecto de Supabase                                  |
+| EXPO_PUBLIC_SUPABASE_SERVICE_ROLE_KEY        | Clave de rol para el servicio de Supabase (solo para testing) |
+| EXPO_PUBLIC_ONESIGNAL_APP_ID                 | ID de la aplicación de OneSignal                              |
 
 ### 5.13. Correr aplicación
 Para esto necesita tener una **máquina virtual de Android Studio** ejecutándose, use la versión del **SDK de Android** más
@@ -741,7 +741,7 @@ yarn install
 
 ### 7.3. Variables de entorno
 Recuerde nuevamente que debe renombrar el archivo ```.env.example a .env``` y poner los valores respectivos. En esta rama hay una
-variable más, esa es ```SUPABASE_SERVICE_ROLE_KEY```. Es una key que permite hacer **cualquier interacción con la base de datos**,
+variable más, esa es ```EXPO_PUBLIC_SUPABASE_SERVICE_ROLE_KEY```. Es una key que permite hacer **cualquier interacción con la base de datos**,
 vaya a su proyecto de Supabase, busque ese valor, cópielo y pégelo en sus variables de entorno.
 
 ### 7.4. Correr test
