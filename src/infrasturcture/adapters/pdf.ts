@@ -1,4 +1,4 @@
-import RNHTMLtoPDF from 'react-native-html-to-pdf';
+// import RNHTMLtoPDF from 'react-native-html-to-pdf';
 
 /* Errors */
 import { PDFError } from '@domain/errors';
@@ -15,8 +15,9 @@ export class PDF {
      */
     public static async writeFromHTML({ directory, fileName, html, width = 480 }: WriteFromHtmlOptions): Promise<string> {
         try {
-            const pdf = await RNHTMLtoPDF.convert({ directory, fileName, html, width });
-            return pdf.filePath!;
+            // const pdf = await RNHTMLtoPDF.convert({ directory, fileName, html, width });
+            // return pdf.filePath!;
+            return '';
         }
         catch (error) {
             const pdfError = new PDFError((error as Error).message);

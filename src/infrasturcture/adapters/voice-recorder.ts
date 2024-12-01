@@ -1,4 +1,4 @@
-import Voice from '@react-native-voice/voice';
+// import Voice from '@react-native-voice/voice';
 
 /* Constants */
 import { appMessages } from '@application/constants';
@@ -15,8 +15,8 @@ export class VoiceRecorder {
      */
     public static async destroyListeners(): Promise<void> {
         try {
-            await Voice.destroy();
-            Voice.removeAllListeners();
+            // await Voice.destroy();
+            // Voice.removeAllListeners();
         }
         catch (error) {
             console.error(error);
@@ -32,7 +32,7 @@ export class VoiceRecorder {
      * @returns {void} - This function does not return anything.
      */
     public static onSpeechEnd(callback: () => void): void {
-        Voice.onSpeechEnd = callback;
+        // Voice.onSpeechEnd = callback;
     }
 
     /**
@@ -42,11 +42,11 @@ export class VoiceRecorder {
      * @returns {void} - This function does not return anything.
      */
     public static onSpeechError(callback: (error: VoiceRecorderError) => void): void {
-        Voice.onSpeechError = (e) => {
-            console.error(e.error);
-            const error = new VoiceRecorderError(e.error?.message || appMessages.UNEXPECTED_ERROR);
-            callback(error);
-        }
+        // Voice.onSpeechError = (e) => {
+        //     console.error(e.error);
+        //     const error = new VoiceRecorderError(e.error?.message || appMessages.UNEXPECTED_ERROR);
+        //     callback(error);
+        // }
     }
 
     /**
@@ -56,9 +56,9 @@ export class VoiceRecorder {
      * @returns {void} - This function does not return anything.
      */
     public static onSpeechResults(callback: (value?: string) => void): void {
-        Voice.onSpeechResults = (e) => {
-            callback(e.value && e.value[0]);
-        }
+        // Voice.onSpeechResults = (e) => {
+        //     callback(e.value && e.value[0]);
+        // }
     }
 
     /**
@@ -68,7 +68,7 @@ export class VoiceRecorder {
      * @returns {void} - This function does not return anything.
      */
     public static onSpeechStart(callback: () => void): void {
-        Voice.onSpeechStart = callback;
+        // Voice.onSpeechStart = callback;
     }
 
     /**
@@ -80,7 +80,7 @@ export class VoiceRecorder {
      */
     public static async startRecording(lang: string): Promise<void> {
         try {
-            await Voice.start(lang);
+            // await Voice.start(lang);
         }
         catch (error) {
             console.error(error);
@@ -97,7 +97,7 @@ export class VoiceRecorder {
      */
     public static async stopRecording(): Promise<void> {
         try {
-            await Voice.stop();
+            // await Voice.stop();
         }
         catch (error) {
             console.error(error);
