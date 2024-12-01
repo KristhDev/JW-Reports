@@ -1,8 +1,7 @@
 import React, { FC, useCallback } from 'react';
-import { useFocusEffect, useNavigation } from '@react-navigation/native';
+import { useFocusEffect, useNavigation, useRouter } from 'expo-router';
 import { useStyles } from 'react-native-unistyles';
-import { MaterialTopTabScreenProps } from '@react-navigation/material-top-tabs';
-import Ionicons from 'react-native-vector-icons/Ionicons';
+import Ionicons from '@expo/vector-icons/Ionicons';
 
 /* Features */
 import { INIT_REVISIT } from '@application/features';
@@ -15,12 +14,10 @@ import { Fab } from '@ui';
 import { useRevisits } from '../../hooks';
 
 /* Interfaces */
-import { RevisitsTopTabsParamsList } from '../../interfaces';
+import { RevisitsProps } from './interfaces';
 
 /* Theme */
 import { themeStylesheet } from '@theme';
-
-type RevisitsProps = MaterialTopTabScreenProps<RevisitsTopTabsParamsList>;
 
 /**
  * This screen is responsible for grouping the components to show a list
@@ -29,7 +26,8 @@ type RevisitsProps = MaterialTopTabScreenProps<RevisitsTopTabsParamsList>;
  * @param {RevisitsProps} { route: RouteProp } - This is a params of TopTabNavigation
  * @return {JSX.Element} rendered component to show list of revisits
  */
-const Revisits: FC<RevisitsProps> = ({ route }): JSX.Element => {
+const Revisits: FC<RevisitsProps> = ({ emptyMessage, filter, segment, title }): JSX.Element => {
+    const router = useRouter();
     const navigation = useNavigation();
     const { styles: themeStyles, theme: { colors, fontSizes } } = useStyles(themeStylesheet);
 
@@ -47,7 +45,7 @@ const Revisits: FC<RevisitsProps> = ({ route }): JSX.Element => {
             nextVisit: new Date().toString()
         });
 
-        navigation.navigate('AddOrEditRevisitScreen' as never);
+        router.navigate('/(app)/(tabs)/revisits/add-or-edit');
     }
 
     /**
@@ -65,12 +63,12 @@ const Revisits: FC<RevisitsProps> = ({ route }): JSX.Element => {
     return (
         <>
             <RevisitsList
-                filter={ route.params.filter }
-                title={ route.params.title }
-                emptyMessage={ route.params.emptyMessage }
+                filter={ filter }
+                title={ title }
+                emptyMessage={ emptyMessage }
             />
 
-            { (route.name === 'RevisitsScreen') && (
+            { (segment === 'index') && (
                 <Fab
                     color={ colors.button }
                     icon={

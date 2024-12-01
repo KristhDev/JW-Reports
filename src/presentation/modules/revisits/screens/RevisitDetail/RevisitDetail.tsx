@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Image, ScrollView, Text, View, useWindowDimensions } from 'react-native';
 import { useStyles } from 'react-native-unistyles';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation } from 'expo-router';
 
 /* Features */
 import { INIT_REVISIT } from '@application/features';

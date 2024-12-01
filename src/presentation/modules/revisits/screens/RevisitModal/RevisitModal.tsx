@@ -2,7 +2,7 @@ import React, { useState, FC } from 'react';
 import { ActivityIndicator, Text, View } from 'react-native';
 import { useStyles } from 'react-native-unistyles';
 import { useFormik } from 'formik';
-import Ionicons from 'react-native-vector-icons/Ionicons';
+import Ionicons from '@expo/vector-icons/Ionicons';
 
 /* Adapters */
 import { Time } from '@infrasturcture/adapters';
@@ -153,12 +153,14 @@ const RevisitModal: FC<ModalProps> = ({ isOpen, onClose }): JSX.Element => {
 
                                 {/* About field */}
                                 <FormField
+                                    controlStyle={{ paddingVertical: margins.xs + 2 }}
                                     editable={ !isRevisitLoading }
+                                    inputStyle={{ minHeight: margins.sm * 10 }}
                                     label="Información actual:"
                                     multiline
                                     numberOfLines={ 10 }
-                                    placeholder="Ingrese datos sobre la persona, tema de conversación, aspectos importantes, etc..."
                                     onChangeText={ handleChange('about') }
+                                    placeholder="Ingrese datos sobre la persona, tema de conversación, aspectos importantes, etc..."
                                     value={ values.about }
                                 />
 
