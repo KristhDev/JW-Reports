@@ -6340,6 +6340,11 @@ react-native-onesignal@^5.2.7:
   dependencies:
     invariant "^2.2.2"
 
+react-native-pager-view@6.5.1:
+  version "6.5.1"
+  resolved "https://registry.yarnpkg.com/react-native-pager-view/-/react-native-pager-view-6.5.1.tgz#e639e8c975f4c749aae1c3120dc4208265fce4cc"
+  integrity sha512-YdX7bP+rPYvATMU7HzlMq9JaG3ui/+cVRbFZFGW+QshDULANFg9ECR1BA7H7JTIcO/ZgWCwF+1aVmYG5yBA9Og==
+
 react-native-permissions@^5.2.0:
   version "5.2.0"
   resolved "https://registry.yarnpkg.com/react-native-permissions/-/react-native-permissions-5.2.0.tgz#2394a584e90c5aa63d121bd70deee086272cf377"
@@ -6384,6 +6389,13 @@ react-native-tab-view@^4.0.4:
   version "4.0.4"
   resolved "https://registry.yarnpkg.com/react-native-tab-view/-/react-native-tab-view-4.0.4.tgz#c6879b14715f4f81e6cec6595c464584caec6a63"
   integrity sha512-5yvTJsxASrUc4k1eKYaHbkK/EGiI8BoRv//XnlgesopjU5y720D1c7UEZ6CVbglYZL8olROwBrXbJE14OfZfkg==
+  dependencies:
+    use-latest-callback "^0.2.1"
+
+react-native-tab-view@^4.0.5:
+  version "4.0.5"
+  resolved "https://registry.yarnpkg.com/react-native-tab-view/-/react-native-tab-view-4.0.5.tgz#d12ec7dfd260c6acb247a401b3fc4abe6a3d466c"
+  integrity sha512-Xn3TpYo4yvKRC/f4+cOcvsXlitdnSaYkacshckrEI3JiDmFKNFIRVNxtZFggm4MwbJafq2RzuzR6xrgKoxgkTw==
   dependencies:
     use-latest-callback "^0.2.1"
 
