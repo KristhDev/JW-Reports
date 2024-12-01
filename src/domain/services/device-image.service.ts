@@ -1,4 +1,4 @@
-import ImageCropPicker from 'react-native-image-crop-picker';
+import ImagePicker, { CameraType } from 'expo-image-picker';
 
 /* Errors */
 import { ImageError } from '@domain/errors';
@@ -10,16 +10,12 @@ import { ImageModel } from '@domain/models';
 import { OpenCameraOptions, OpenPickerOptions } from '@infrasturcture/interfaces';
 
 export class DeviceImageService {
-    private static readonly cropperStatusBarColor: string = '#000000';
-    private static readonly cropperToolbarColor: string = '#000000';
-    private static readonly cropperWidgetColor: string = '#FFFFFF';
-
     /**
      * Cleans the temporary files created by the library.
      * @returns A promise that resolves when the cleaning is done.
      */
     public static async clean(): Promise<void> {
-        await ImageCropPicker.clean();
+        // await ImagePicker.clean();
     }
 
     /**
@@ -61,30 +57,26 @@ export class DeviceImageService {
      * `ImageError` object containing the message "User cancelled image selection".
      *
      * @param options Options to customize the camera.
-     * @returns A promise that resolves with an `ImageModel` object containing
-     * the selected image.
+     * @returns {Promise<ImageModel | undefined>} A promise that resolves with an `ImageModel` object.
      * @throws {ImageError} If the user cancels the operation.
      */
-    public static async openCamera(options: OpenCameraOptions): Promise<ImageModel> {
+    public static async openCamera(options: OpenCameraOptions): Promise<ImageModel | undefined> {
         try {
-            const result = await ImageCropPicker.openCamera({
-                cropperActiveWidgetColor: options.cropperActiveWidgetColor,
-                cropperStatusBarColor: this.cropperStatusBarColor,
-                cropperToolbarColor: this.cropperToolbarColor,
-                cropperToolbarTitle: options.cropperToolbarTitle,
-                cropperToolbarWidgetColor: this.cropperWidgetColor,
-                cropping: options.cropping,
-                freeStyleCropEnabled: true,
-                includeBase64: true,
-                mediaType: 'photo',
+            const result = await ImagePicker.launchCameraAsync({
+                allowsEditing: true,
+                base64: true,
+                cameraType: CameraType.back,
+                mediaTypes: [ 'images' ]
             });
 
+            if (result.canceled) return;
+
             return {
-                data: result?.data!,
-                mime: result.mime,
-                path: result.path,
-                height: result.height,
-                width: result.width
+                data: result.assets[0].base64!,
+                mime: result.assets[0].mimeType!,
+                path: result.assets[0].uri!,
+                height: result.assets[0].height,
+                width: result.assets[0].width
             }
         }
         catch (error) {
@@ -104,30 +96,26 @@ export class DeviceImageService {
      * `ImageError` object containing the message "User cancelled image selection).
      *
      * @param options Options to customize the picker.
-     * @returns A promise that resolves with an array of `ImageModel` objects.
+     * @returns {Promise<ImageModel | undefined>} A promise that resolves with an array of `ImageModel` objects.
      * @throws {ImageError} If the user cancels the operation.
      */
-    public static async openPicker(options: OpenPickerOptions): Promise<ImageModel> {
+    public static async openPicker(options: OpenPickerOptions): Promise<ImageModel | undefined> {
         try {
-            const result = await ImageCropPicker.openPicker({
-                cropperActiveWidgetColor: options.cropperActiveWidgetColor,
-                cropperStatusBarColor: this.cropperStatusBarColor,
-                cropperToolbarColor: this.cropperToolbarColor,
-                cropperToolbarTitle: options.cropperToolbarTitle,
-                cropperToolbarWidgetColor: this.cropperWidgetColor,
-                cropping: options.cropping,
-                freeStyleCropEnabled: true,
-                includeBase64: true,
-                mediaType: 'photo',
-                multiple: options.multiple
+            const result = await ImagePicker.launchImageLibraryAsync({
+                allowsEditing: true,
+                allowsMultipleSelection: false,
+                base64: true,
+                mediaTypes: [ 'images' ],
             });
 
+            if (result.canceled) return;
+
             return {
-                data: result?.data!,
-                mime: result.mime,
-                path: result.path,
-                height: result.height,
-                width: result.width
+                data: result.assets[0].base64!,
+                mime: result.assets[0].mimeType!,
+                path: result.assets[0].uri!,
+                height: result.assets[0].height,
+                width: result.assets[0].width
             }
         }
         catch (error) {
