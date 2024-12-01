@@ -1,13 +1,12 @@
 import React, { FC, PropsWithChildren, useEffect, useMemo, useState } from 'react';
 import { Appearance } from 'react-native';
 import { UnistylesRuntime, useStyles } from 'react-native-unistyles';
-import SystemNavigationBar from 'react-native-system-navigation-bar';
 
 /* Adapters */
 import { storage, storageKeys } from '@infrasturcture/adapters';
 
 /* Context */
-import { ThemeContext } from './';
+import { ThemeContext } from '.';
 
 /* Interfaces */
 import { Theme } from './types';
@@ -62,14 +61,6 @@ const ThemeProvider: FC<PropsWithChildren> = ({ children }) => {
         const theme = storage.getItem(storageKeys.THEME);
         setTheme(theme as Theme || 'default');
     }, []);
-
-    useEffect(() => {
-        SystemNavigationBar.setNavigationColor(
-            theme.colors.navbar,
-            (themeState === 'dark') ? 'light' : 'dark',
-            'navigation'
-        );
-    }, [ theme ]);
 
     return (
         <ThemeContext.Provider value={ store }>
