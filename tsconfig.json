@@ -16,7 +16,6 @@
       "@infrasturcture/*": [ "src/infrasturcture/*" ],
       "@lessons": [ "src/presentation/modules/lessons" ],
       "@lessons/*": [ "src/presentation/modules/lessons/*" ],
-      "@navigation": [ "src/presentation/navigation" ],
       "@package": [ "./package.json" ],
       "@preaching": [ "src/presentation/modules/preaching" ],
       "@preaching/*": [ "src/presentation/modules/preaching/*" ],
