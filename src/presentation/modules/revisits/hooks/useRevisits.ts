@@ -181,7 +181,7 @@ const useRevisits = () => {
             setIsRevisitDeleting(false);
             onFinish && onFinish();
 
-            back && router.navigate('/(app)/(tabs)/revisits');
+            back && router.back();
 
             if (user.precursor === 'ninguno' && state.lastRevisit.id === state.selectedRevisit.id) {
                 await loadLastRevisit();
@@ -357,7 +357,7 @@ const useRevisits = () => {
 
             setStatus({ code: 201, msg: successMsg });
 
-            back && router.navigate('/(app)/(tabs)/revisits');
+            back && router.back();
             if (user.precursor === 'ninguno') await loadLastRevisit();
         }
         catch (error) {
