@@ -1,8 +1,5 @@
 import { Bugfender, LogLevel } from '@bugfender/rn-bugfender';
 
-/* Env */
-import { BUGFENDER_API_KEY } from '@env';
-
 /* Version */
 import { version as appVersion } from '@package';
 
@@ -14,7 +11,7 @@ export class LoggerService {
      */
     public static init(): void {
         Bugfender.init({
-            appKey: BUGFENDER_API_KEY,
+            appKey: process.env.EXPO_PUBLIC_BUGFENDER_API_KEY!,
             version: appVersion
         });
     }

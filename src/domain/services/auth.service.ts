@@ -15,9 +15,6 @@ import { RequestError } from '@domain/errors';
 /* Interfaces */
 import { UserEndpoint } from '@infrasturcture/interfaces';
 
-/* Env */
-import { SITIE_URL } from '@env';
-
 export class AuthService {
     /**
      * Get the session and the user from the given token.
@@ -65,7 +62,7 @@ export class AuthService {
      */
     public static async resetPassword(email: string): Promise<void> {
         const result = await supabase.auth.resetPasswordForEmail(email, {
-            redirectTo: `${ SITIE_URL }/reset-password`
+            redirectTo: `${ process.env.EXPO_PUBLIC_SITIE_URL }/reset-password`
         });
 
         if (result.error) {

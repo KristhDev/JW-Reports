@@ -6,9 +6,6 @@ import { EmailError } from '@domain/errors';
 /* Interfaces */
 import { SendEmailOptions } from '@infrasturcture/interfaces';
 
-/* Env */
-import { EMAILJS_PUBLIC_KEY, EMAILJS_SERVICE_ID } from '@env';
-
 export class EmailService {
     /**
      * Initializes the email service
@@ -16,7 +13,7 @@ export class EmailService {
      * @returns {void} - This function does not return anything
      */
     public static init(): void {
-        EmailJs.init({ publicKey: EMAILJS_PUBLIC_KEY });
+        EmailJs.init({ publicKey: process.env.EXPO_PUBLIC_EMAILJS_PUBLIC_KEY! });
     }
 
     /**
@@ -28,7 +25,7 @@ export class EmailService {
     public static async send({ email, imageUrl, message, templateId }: SendEmailOptions): Promise<void> {
         try {
             await EmailJs.send(
-                EMAILJS_SERVICE_ID,
+                process.env.EXPO_PUBLIC_EMAILJS_SERVICE_IDD!,
                 templateId,
                 { email, imageUrl, message }
             );
