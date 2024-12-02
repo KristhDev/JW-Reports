@@ -50,11 +50,10 @@ const useImage = () => {
     /**
      * Clear the current image and delete it from the device
      *
-     * @return {Promise<void>} This function does not return anything.
+     * @return {void} This function does not return anything.
      */
-    const clearImage = async (): Promise<void> => {
+    const clearImage = (): void => {
         setImage(null);
-        await DeviceImageService.clean();
     }
 
     /**
