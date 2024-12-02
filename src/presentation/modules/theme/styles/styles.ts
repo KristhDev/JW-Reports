@@ -124,10 +124,8 @@ export const themeStylesheet = createStyleSheet(({ borderRadius, colors, fontSiz
         marginRight: (margins.xs + 2)
     },
 
-    flatListContainer: {
-        alignItems: 'center',
-        flexGrow: 1,
-        padding: margins.md,
+    listContainer: {
+        padding: margins.xs,
         paddingBottom: 100
     },
 
