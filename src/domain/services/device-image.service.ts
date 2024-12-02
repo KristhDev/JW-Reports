@@ -1,4 +1,5 @@
-import ImagePicker, { CameraType } from 'expo-image-picker';
+import * as ImagePicker from 'expo-image-picker';
+import { CameraType } from 'expo-image-picker';
 
 /* Errors */
 import { ImageError } from '@domain/errors';
@@ -10,14 +11,6 @@ import { ImageModel } from '@domain/models';
 import { OpenCameraOptions, OpenPickerOptions } from '@infrasturcture/interfaces';
 
 export class DeviceImageService {
-    /**
-     * Cleans the temporary files created by the library.
-     * @returns A promise that resolves when the cleaning is done.
-     */
-    public static async clean(): Promise<void> {
-        // await ImagePicker.clean();
-    }
-
     /**
      * Converts an image URI to a Base64 string.
      * This method fetches the image located at the provided URI, reads it as a Blob,
