@@ -1,5 +1,5 @@
 import React, { FC, useState } from 'react';
-import { Pressable, Text, View, useWindowDimensions } from 'react-native';
+import { Pressable, Text, View } from 'react-native';
 import { Menu, MenuOption, MenuOptions, MenuTrigger } from 'react-native-popup-menu';
 import { useRouter } from 'expo-router';
 import { useStyles } from 'react-native-unistyles';
@@ -35,7 +35,6 @@ import { themeStylesheet } from '@theme';
  */
 export const CourseCard: FC<CourseCardProps> = ({ course, onActiveOrSuspend, onDelete, onFinishOrStart }): JSX.Element => {
     const [ isOpen, setIsOpen ] = useState<boolean>(false);
-    const { width } = useWindowDimensions();
 
     const router = useRouter();
     const { styles: themeStyles } = useStyles(themeStylesheet);
@@ -116,7 +115,7 @@ export const CourseCard: FC<CourseCardProps> = ({ course, onActiveOrSuspend, onD
                 foreground: true
             }}
             onPress={ handleCourseDetail }
-            style={{ ...styles.pressable, width: width - margins.sm }}
+            style={ styles.pressable }
             testID="course-card-pressable"
         >
             <View style={ styles.cardContainer }>
