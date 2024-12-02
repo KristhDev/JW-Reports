@@ -1,7 +1,8 @@
 import React, { FC, useCallback, useEffect, useState } from 'react';
-import { FlatList, RefreshControl } from 'react-native';
-import { useStyles } from 'react-native-unistyles';
+import { RefreshControl, View } from 'react-native';
 import { useFocusEffect, useNavigation } from 'expo-router';
+import { FlashList } from '@shopify/flash-list';
+import { useStyles } from 'react-native-unistyles';
 
 /* Features */
 import { INIT_COURSE } from '@application/features';
@@ -198,9 +199,11 @@ export const CoursesList: FC<CoursesListProps> = ({ emptyMessage, filter, title 
 
     return (
         <>
-            <FlatList
-                contentContainerStyle={ themeStyles.flatListContainer }
+            <FlashList
+                centerContent
+                contentContainerStyle={ themeStyles.listContainer }
                 data={ courses }
+                estimatedItemSize={ 256 }
                 keyExtractor={ (item) => item.id }
                 ListFooterComponent={
                     <ListFooterComponent
@@ -209,9 +212,9 @@ export const CoursesList: FC<CoursesListProps> = ({ emptyMessage, filter, title 
                     />
                 }
                 ListHeaderComponent={
-                    <>
+                    <View style={{ paddingHorizontal: margins.sm, width: '100%' }}>
                         <Title
-                            containerStyle={{ marginVertical: margins.xs }}
+                            containerStyle={{ marginTop: margins.md, marginBottom: margins.xl }}
                             text={ title }
                             textStyle={{ fontSize: fontSizes.md }}
                         />
@@ -222,7 +225,7 @@ export const CoursesList: FC<CoursesListProps> = ({ emptyMessage, filter, title 
                             refreshing={ isRefreshing }
                             searchTerm={ searchTerm }
                         />
-                    </>
+                    </View>
                 }
                 ListEmptyComponent={
                     <ListEmptyComponent
