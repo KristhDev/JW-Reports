@@ -41,7 +41,7 @@ import { CoursesService, LessonsService } from '@domain/services';
 import { PdfCoursesTemplate } from '@domain/templates';
 
 /* Adapters */
-import { FileSystem, PDF } from '@infrasturcture/adapters';
+import { ExternalStorage, PDF } from '@infrasturcture/adapters';
 
 /* Modules */
 import { useAuth } from '@auth';
@@ -215,7 +215,7 @@ const useCourses = () => {
             removeCourse(state.selectedCourse.id);
 
             onFinish && onFinish();
-            back && router.navigate('/(app)/(tabs)/courses');
+            back && router.navigate('/(app)/(tabs)/courses/(tabs)');
 
             setSelectedCourse(INIT_COURSE);
             setStatus({ code: 200, msg: coursesMessages.DELETED_SUCCESS });
@@ -253,16 +253,11 @@ const useCourses = () => {
             });
 
             const fileName = `Cursos_de_${ user.name }_${ user.surname }`;
+            const pdfPath = await PDF.writeFromHTML({ fileName, html: coursesTemplate });
 
-            const pdfPath = await PDF.writeFromHTML({
-                directory: 'Exports',
-                fileName,
-                html: coursesTemplate
-            });
-
-            await FileSystem.moveFile({
-                from: pdfPath,
-                to: `${ FileSystem.downloadDir }/${ fileName }.pdf`
+            await ExternalStorage.moveFileOfInternalExtorage({
+                filePath: pdfPath,
+                mimeType: 'application/pdf'
             });
 
             if (showStatusMessage) setStatus({ code: 200, msg: coursesMessages.EXPORTED_SUCCESS });
