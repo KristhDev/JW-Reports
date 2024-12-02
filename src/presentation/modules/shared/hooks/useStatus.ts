@@ -6,7 +6,18 @@ import { useAppDispatch, useAppSelector } from '@application/store';
 import { clearStatus as clearStatusAction, setStatus as setStatusAction, SetStatusPayload } from '@application/features';
 
 /* Errors */
-import { AppErrors, CloudError, DtoError, EmailError, FileSystemError, ImageError, PDFError, RequestError, VoiceRecorderError } from '@domain/errors';
+import {
+    AppErrors,
+    CloudError,
+    DtoError,
+    EmailError,
+    ExternalStorageError,
+    InternalStorageError,
+    ImageError,
+    PDFError,
+    RequestError,
+    VoiceRecorderError
+} from '@domain/errors';
 
 /* Services */
 import { LoggerService } from '@domain/services';
@@ -43,8 +54,9 @@ const useStatus = () => {
 
         if (error instanceof DtoError) msg = error.message;
         if (error instanceof EmailError) msg = error.message;
-        if (error instanceof FileSystemError) msg = error.message;
+        if (error instanceof ExternalStorageError) msg = error.message;
         if (error instanceof ImageError) msg = AppErrors.getMessageFromCode(error?.code || 'NO_CODE');
+        if (error instanceof InternalStorageError) msg = error.message;
         if (error instanceof PDFError) msg = error.message;
         if (error instanceof VoiceRecorderError) msg = AppErrors.translateMessage(error.message);
 
