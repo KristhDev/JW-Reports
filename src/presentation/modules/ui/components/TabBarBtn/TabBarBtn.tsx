@@ -29,7 +29,7 @@ import { stylesheet } from './styles';
  * - title: This is the title of the button
  * @return {JSX.Element} Return jsx element to render tab bar btn of navigation
  */
-export const TabBarBtn: FC<TabBarBtnProps> = ({ active, color, iconName, onPress, title, totalTabs }): JSX.Element => {
+export const TabBarBtn: FC<TabBarBtnProps> = ({ active, color, iconName, onLongPress, onPress, title, totalTabs }): JSX.Element => {
     const { styles, theme: { colors, fontSizes } } = useStyles(stylesheet);
     const [ pressColor, setPressColor ] = useState((active) ? colors.buttonTranslucent : colors.buttonTransparent);
 
@@ -56,6 +56,7 @@ export const TabBarBtn: FC<TabBarBtnProps> = ({ active, color, iconName, onPress
                 radius: width / (totalTabs * 2)
             }}
             onPress={ onPress }
+            onLongPress={ onLongPress }
             style={ styles.pressable }
         >
             <>

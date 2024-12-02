@@ -3,6 +3,7 @@ export interface TabBarBtnProps {
     active: boolean;
     color?: string;
     iconName?: string;
+    onLongPress: () => void;
     onPress: () => void;
     title: string;
     totalTabs: number;
