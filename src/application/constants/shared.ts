@@ -1,5 +1,5 @@
 export const appMessages = {
-    DATA_EXPORTED_SUCCESS: 'Todos sus datos han sido exportados correctamente. Los archivos se encuentran en la carpeta de descargas.',
+    DATA_EXPORTED_SUCCESS: 'Todos sus datos han sido exportados correctamente. Los archivos se encuentran en la carpeta que ha seleccionado.',
     UNEXPECTED_ERROR: 'Ocurrio un error inesperado, por favor intentelo de nuevo.',
 }
 

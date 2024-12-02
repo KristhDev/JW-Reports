@@ -21,7 +21,7 @@ export const preachingMessages = {
     ADDED_SUCCESS: 'Ha agregado el día de predicación correctamente.',
     DAY_REQUIRED: 'El día no puede estar vacío.',
     DELETED_SUCCESS: 'Ha eliminado el día de predicación correctamente.',
-    EXPORTED_SUCCESS: 'Ha exportado sus informaciones de predicación correctamente. El archivo se encuentra en la carpeta de descargas de su dispositivo.',
+    EXPORTED_SUCCESS: 'Ha exportado sus informaciones de predicación correctamente. El archivo se encuentra en la carpeta que ha seleccionado.',
     FINAL_HOUR_REQUIRED: 'La hora final no puede estar vacía.',
     INIT_HOUR_GREATER_THAN_FINAL: 'La hora inicial no puede ser mayor que la hora final.',
     INIT_HOUR_REQUIRED: 'La hora inicial no puede estar vacía.',

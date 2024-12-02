@@ -1,5 +1,5 @@
 export const coursesMessages = {
-    EXPORTED_SUCCESS: 'Has exportado tus cursos correctamente. El archivo se encuentra en su carpeta de descargas.',
+    EXPORTED_SUCCESS: 'Has exportado tus cursos correctamente. El archivo se encuentra en la carpeta que ha seleccionado.',
     PERSON_NAME_REQUIRED: 'El nombre de la persona es requerido.',
     PERSON_NAME_MIN_LENGTH: 'El nombre de la persona debe tener al menos 2 caracteres.',
     PERSON_ABOUT_REQUIRED: 'La información de la persona es requerida.',

@@ -6,7 +6,7 @@ export const revisitsMessages = {
     ADDRESS_REQUIRED: 'La dirección es requerida.',
     COMPLETED_SUCCESS: 'Ha marcado como completa su revisita correctamente.',
     DELETED_SUCCESS: 'Ha eliminado la revisita correctamente.',
-    EXPORTED_SUCCESS: 'Ha exportado sus revisitas correctamente. El archivo se encuentra en la carpeta de descargas de su dispositivo.',
+    EXPORTED_SUCCESS: 'Ha exportado sus revisitas correctamente. El archivo se encuentra en la carpeta que ha seleccionado.',
     NEXT_VISIT_REQUIRED: 'La fecha de la último visita no puede estar vacía.',
     PERSON_MIN_LENGTH: 'El nombre de la persona debe tener al menos 2 caracteres.',
     PERSON_NAME_REQUIRED: 'El nombre de la persona es requerido.',
