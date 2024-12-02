@@ -19,5 +19,5 @@ export interface FormImageProps {
 }
 
 export interface FormImageRef {
-    clearImage: () => Promise<void>;
+    clearImage: () => void;
 }
