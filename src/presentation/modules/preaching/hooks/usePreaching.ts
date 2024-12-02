@@ -30,7 +30,7 @@ import { PreachingEntity } from '@domain/entities';
 import { PreachingReportService, PreachingService } from '@domain/services';
 
 /* Adapters */
-import { FileSystem, PDF, Time } from '@infrasturcture/adapters';
+import { ExternalStorage, PDF, Time } from '@infrasturcture/adapters';
 
 /* Hooks */
 import { useAuth } from '@auth';
@@ -169,16 +169,8 @@ const usePreaching = () => {
             const fileName = `Informes_de_Predicación_de_${ user.name }_${ user.surname }`;
             const preachingsTemplate = PdfPreachingsTemplate.generate({ fullName: `${ user.name } ${ user.surname }`, reports: reportsPreaching });
 
-            const pdfPath = await PDF.writeFromHTML({
-                directory: 'Exports',
-                fileName,
-                html: preachingsTemplate
-            });
-
-            await FileSystem.moveFile({
-                from: pdfPath,
-                to: `${ FileSystem.downloadDir }/${ fileName }.pdf`
-            });
+            const pdfPath = await PDF.writeFromHTML({ fileName, html: preachingsTemplate });
+            await ExternalStorage.moveFileOfInternalExtorage({ filePath: pdfPath, mimeType: 'application/pdf' });
 
             if (showStatusMessage) setStatus({ code: 200, msg: preachingMessages.EXPORTED_SUCCESS });
         }
