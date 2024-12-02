@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { FlatList, RefreshControl } from 'react-native';
+import { RefreshControl, View } from 'react-native';
+import { FlashList } from '@shopify/flash-list';
 import { useStyles } from 'react-native-unistyles';
+import { useRouter } from 'expo-router';
 
 /* Features */
 import { INIT_LESSON } from '@application/features';
@@ -32,6 +34,7 @@ export const LessonsList = (): JSX.Element => {
     const [ showDeleteModal, setShowDeleteModal ] = useState<boolean>(false);
     const [ showFSModal, setShowFSModal ] = useState<boolean>(false);
 
+    const router = useRouter();
     const { styles: themeStyles, theme: { fontSizes, margins } } = useStyles(themeStylesheet);
 
     const { state: { selectedCourse } } = useCourses();
@@ -151,9 +154,11 @@ export const LessonsList = (): JSX.Element => {
 
     return (
         <>
-            <FlatList
-                contentContainerStyle={ themeStyles.flatListContainer }
+            <FlashList
+                centerContent
+                contentContainerStyle={ themeStyles.listContainer }
                 data={ lessons }
+                estimatedItemSize={ 256 }
                 keyExtractor={ (item) => item.id }
                 ListFooterComponent={
                     <ListFooterComponent
@@ -162,9 +167,9 @@ export const LessonsList = (): JSX.Element => {
                     />
                 }
                 ListHeaderComponent={
-                    <>
+                    <View style={{ paddingHorizontal: margins.sm, width: '100%' }}>
                         <Title
-                            containerStyle={{ marginVertical: margins.xs }}
+                            containerStyle={{ marginTop: margins.md, marginBottom: margins.xl }}
                             text={ `CLASES DEL CURSO CON ${ selectedCourse.personName.toUpperCase() }` }
                             textStyle={{ fontSize: fontSizes.md }}
                         />
@@ -175,7 +180,7 @@ export const LessonsList = (): JSX.Element => {
                             refreshing={ isRefreshing }
                             searchTerm={ searchTerm }
                         />
-                    </>
+                    </View>
                 }
                 ListEmptyComponent={
                     <ListEmptyComponent
@@ -198,7 +203,8 @@ export const LessonsList = (): JSX.Element => {
                         lesson={ item }
                         onDelete={ () => handleShowModal(item, setShowDeleteModal) }
                         onFinish={ () => handleShowModal(item, setShowFSModal) }
-                        screenToNavigate="LessonDetailScreen"
+                        onNavigateDetail={ () => router.navigate('/(app)/(tabs)/courses/lesson-detail') }
+                        onNavigateEdit={ () => router.navigate('/(app)/(tabs)/courses/add-or-edit-lesson') }
                     />
                 ) }
             />
