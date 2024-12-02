@@ -1,11 +1,11 @@
-export class FileSystemError extends Error {
+export class InternalStorageError extends Error {
     constructor(message: string) {
         super(message);
-        this.name = 'FileSystemError';
+        this.name = 'InternalExtorageError';
     }
 
     /**
-     * Returns a JSON representation of the file system error.
+     * Returns a JSON representation of the internal storage error.
      *
      * @returns An object with the following properties:
      * - `name`: The name of the error.
