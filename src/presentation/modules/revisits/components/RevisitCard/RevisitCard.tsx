@@ -1,7 +1,6 @@
 import React, { FC, useState } from 'react';
-import { Pressable, Text, View, useWindowDimensions } from 'react-native';
+import { Pressable, Text, View } from 'react-native';
 import { useStyles } from 'react-native-unistyles';
-import { useRouter } from 'expo-router';
 import { Menu, MenuOption, MenuOptions, MenuTrigger } from 'react-native-popup-menu';
 import Ionicons from '@expo/vector-icons/Ionicons';
 
@@ -25,22 +24,23 @@ import { stylesheet } from './styles';
 import { themeStylesheet } from '@theme';
 
 /**
- * This component is responsible for rendering part of the information of a
- * revisit in the form of a card.
+ * This component is responsible for displaying a card with the person's name and some information
+ * about the revisit. It also shows a context menu with options to edit, mark as visited, pass to
+ * course, or delete the revisit.
  *
- * @param {RevisitCardProps} props { onDelete: () => void, onPass: () => void, onRevisit: () => void, revisit: Revisit } - This a props
- * to functionality of the component
- * - onDelete: This is a function to delete the revisit
- * - onPass: This is a function to pass the revisit to course
- * - onRevisit: This is a function to mark as complete and revisit again
- * - revisit: This is a revisit object that render in the card
- * @return {JSX.Element} Rendered component to show the revisit
+ * @param {RevisitCardProps} props - The props that the component will receive.
+ * @returns {JSX.Element} The rendered component.
  */
-export const RevisitCard: FC<RevisitCardProps> = ({ onDelete, onPass, onRevisit, revisit, screenToDetailNavigate, screenToEditNavigate }): JSX.Element => {
+export const RevisitCard: FC<RevisitCardProps> = ({
+    onDelete,
+    onNavigateDetail,
+    onNavigateEdit,
+    onPass,
+    onRevisit,
+    revisit
+}): JSX.Element => {
     const [ isOpen, setIsOpen ] = useState<boolean>(false);
-    const { width } = useWindowDimensions();
 
-    const router = useRouter();
     const { styles: themeStyles } = useStyles(themeStylesheet);
     const { styles, theme: { colors, fontSizes, margins } } = useStyles(stylesheet);
 
@@ -56,7 +56,7 @@ export const RevisitCard: FC<RevisitCardProps> = ({ onDelete, onPass, onRevisit,
      */
     const handleRevisitDetail = (): void => {
         setSelectedRevisit(revisit);
-        router.navigate(screenToDetailNavigate as any);
+        onNavigateDetail();
     }
 
     /**
@@ -68,7 +68,7 @@ export const RevisitCard: FC<RevisitCardProps> = ({ onDelete, onPass, onRevisit,
     const handleEdit = (): void => {
         setIsOpen(false);
         setSelectedRevisit(revisit);
-        router.navigate(screenToEditNavigate as any);
+        onNavigateEdit();
     }
 
     /**
@@ -90,7 +90,7 @@ export const RevisitCard: FC<RevisitCardProps> = ({ onDelete, onPass, onRevisit,
                 foreground: true
             }}
             onPress={ handleRevisitDetail }
-            style={{ ...styles.pressable, width: width - margins.sm }}
+            style={ styles.pressable }
             testID="revisit-card-pressable"
         >
             <View style={ styles.cardContainer }>
