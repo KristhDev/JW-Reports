@@ -1,8 +1,7 @@
 import React, { FC, useState } from 'react';
-import { Pressable, Text, View, useWindowDimensions } from 'react-native';
+import { Pressable, Text, View } from 'react-native';
 import { useStyles } from 'react-native-unistyles';
 import { Menu, MenuOption, MenuOptions, MenuTrigger } from 'react-native-popup-menu';
-import { useNavigation } from 'expo-router';
 import Ionicons from '@expo/vector-icons/Ionicons';
 
 /* Adapters */
@@ -35,11 +34,9 @@ import { stylesheet } from './styles';
  * - onFinish: This is a function to finish the lesson
  * @return {JSX.Element} rendered component to show the lesson
  */
-export const LessonCard: FC<LessonCardProps> = ({ lesson, screenToNavigate, onClick, onDelete, onFinish }): JSX.Element => {
+export const LessonCard: FC<LessonCardProps> = ({ lesson, onNavigateDetail, onNavigateEdit, onClick, onDelete, onFinish }): JSX.Element => {
     const [ isOpen, setIsOpen ] = useState<boolean>(false);
-    const { width } = useWindowDimensions();
 
-    const navigation = useNavigation();
     const { styles, theme: { colors, fontSizes, margins } } = useStyles(stylesheet);
     const { styles: themeStyles, } = useStyles(themeStylesheet);
 
@@ -56,7 +53,7 @@ export const LessonCard: FC<LessonCardProps> = ({ lesson, screenToNavigate, onCl
     const handleLessonDetail = (): void => {
         setSelectedLesson(lesson);
         onClick && onClick();
-        navigation.navigate(screenToNavigate as never);
+        onNavigateDetail();
     }
 
     /**
@@ -68,7 +65,7 @@ export const LessonCard: FC<LessonCardProps> = ({ lesson, screenToNavigate, onCl
     const handleEdit = (): void => {
         setIsOpen(false);
         setSelectedLesson(lesson);
-        navigation.navigate('AddOrEditLessonScreen' as never);
+        onNavigateEdit();
     }
 
     /**
@@ -89,7 +86,7 @@ export const LessonCard: FC<LessonCardProps> = ({ lesson, screenToNavigate, onCl
                 foreground: true
             }}
             onPress={ handleLessonDetail }
-            style={{ ...styles.pressable, width: width - margins.sm }}
+            style={ styles.pressable }
             testID="lesson-card-pressable"
         >
             <View style={ styles.cardContainer }>
