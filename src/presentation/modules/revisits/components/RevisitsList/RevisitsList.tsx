@@ -1,6 +1,7 @@
 import React, { FC, useCallback, useEffect, useState } from 'react';
-import { FlatList, RefreshControl } from 'react-native';
-import { useFocusEffect, useNavigation } from 'expo-router';
+import { RefreshControl, View } from 'react-native';
+import { FlashList } from '@shopify/flash-list';
+import { useFocusEffect, useNavigation, useRouter } from 'expo-router';
 import { useStyles } from 'react-native-unistyles';
 
 /* Features */
@@ -43,6 +44,7 @@ export const RevisitsList: FC<RevisitsListProps> = ({ emptyMessage, filter, titl
     const [ showPassModal, setShowPassModal ] = useState<boolean>(false);
     const [ showDeleteModal, setShowDeleteModal ] = useState<boolean>(false);
 
+    const router = useRouter();
     const { styles: themeStyles, theme: { fontSizes, margins } } = useStyles(themeStylesheet);
 
     const navigation = useNavigation();
@@ -186,9 +188,11 @@ export const RevisitsList: FC<RevisitsListProps> = ({ emptyMessage, filter, titl
 
     return (
         <>
-            <FlatList
-                contentContainerStyle={ themeStyles.flatListContainer }
+            <FlashList
+                centerContent
+                contentContainerStyle={ themeStyles.listContainer }
                 data={ revisits }
+                estimatedItemSize={ 256 }
                 keyExtractor={ (item) => item.id }
                 ListFooterComponent={
                     <ListFooterComponent
@@ -197,9 +201,9 @@ export const RevisitsList: FC<RevisitsListProps> = ({ emptyMessage, filter, titl
                     />
                 }
                 ListHeaderComponent={
-                    <>
+                    <View style={{ paddingHorizontal: margins.sm, width: '100%' }}>
                         <Title
-                            containerStyle={{ marginVertical: margins.xs }}
+                            containerStyle={{ marginTop: margins.md, marginBottom: margins.xl  }}
                             text={ title }
                             textStyle={{ fontSize: fontSizes.md }}
                         />
@@ -210,7 +214,7 @@ export const RevisitsList: FC<RevisitsListProps> = ({ emptyMessage, filter, titl
                             searchTerm={ searchTerm }
                             refreshing={ isRefreshing }
                         />
-                    </>
+                    </View>
                 }
                 ListEmptyComponent={
                     <ListEmptyComponent
@@ -231,11 +235,11 @@ export const RevisitsList: FC<RevisitsListProps> = ({ emptyMessage, filter, titl
                 renderItem={ ({ item }) => (
                     <RevisitCard
                         onDelete={ () => handleShowModal(item, setShowDeleteModal) }
+                        onNavigateDetail={ () => router.navigate('/(app)/(tabs)/revisits/detail') }
+                        onNavigateEdit={ () => router.navigate('/(app)/(tabs)/revisits/add-or-edit') }
                         onPass={ () => handleShowModal(item, setShowPassModal) }
                         onRevisit={ () => handleShowModal(item, setShowRevisitModal) }
                         revisit={ item }
-                        screenToDetailNavigate="/(app)/(tabs)/revisits/detail"
-                        screenToEditNavigate="/(app)/(tabs)/revisits/add-or-edit"
                     />
                 ) }
             />
