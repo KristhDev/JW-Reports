@@ -45,7 +45,7 @@ import { PdfRevisitsTemplate } from '@domain/templates';
 import { RevisitsService } from '@domain/services';
 
 /* Adapters */
-import { FileSystem, PDF } from '@infrasturcture/adapters';
+import { ExternalStorage, InternalStorage, PDF } from '@infrasturcture/adapters';
 
 /* Hooks */
 import { useAuth } from '@auth';
@@ -222,16 +222,11 @@ const useRevisits = () => {
             });
 
             const fileName = `Revisitas_de_${ user.name }_${ user.surname }`;
+            const pdfPath = await PDF.writeFromHTML({ fileName, html: revisitsTemplate });
 
-            const pdfPath = await PDF.writeFromHTML({
-                directory: 'Exports',
-                fileName,
-                html: revisitsTemplate
-            });
-
-            await FileSystem.moveFile({
-                from: pdfPath,
-                to: `${ FileSystem.downloadDir }/${ fileName }.pdf`
+            await ExternalStorage.moveFileOfInternalExtorage({
+                filePath: pdfPath,
+                mimeType: 'application/pdf',
             });
 
             if (showStatusMessage) setStatus({ code: 200, msg: revisitsMessages.EXPORTED_SUCCESS });
