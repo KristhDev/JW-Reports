@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { ActivityIndicator, ScrollView, RefreshControl } from 'react-native';
+import { useRouter } from 'expo-router';
 import { useStyles } from 'react-native-unistyles';
 import Ionicons from '@expo/vector-icons/Ionicons';
 
@@ -36,13 +37,17 @@ import { themeStylesheet } from '@theme';
  */
 const PublisherHome = (): JSX.Element => {
     const [ isRefreshing, setIsRefreshing ] = useState<boolean>(false);
+
     const [ showDeleteLessonModal, setShowDeleteLessonModal ] = useState<boolean>(false);
     const [ showDeleteRevisitModal, setShowDeleteRevisitModal ] = useState<boolean>(false);
+
     const [ showFSModal, setShowFSModal ] = useState<boolean>(false);
     const [ showPassModal, setShowPassModal ] = useState<boolean>(false);
+
     const [ showReportModal, setShowReportModal ] = useState<boolean>(false);
     const [ showRevisitModal, setShowRevisitModal ] = useState<boolean>(false);
 
+    const router = useRouter();
     const { styles: themeStyles, theme: { colors, fontSizes, margins } } = useStyles(themeStylesheet);
 
     const { state: { selectedDate } } = usePreaching();
@@ -151,7 +156,7 @@ const PublisherHome = (): JSX.Element => {
     return (
         <>
             <ScrollView
-                contentContainerStyle={{ alignItems: 'center', padding: margins.md, paddingBottom: 100 }}
+                contentContainerStyle={[ themeStyles.screenContainer, { flex: 0, paddingHorizontal: margins.xs, paddingBottom: 100 } ]}
                 overScrollMode="never"
                 refreshControl={
                     <RefreshControl
@@ -163,7 +168,7 @@ const PublisherHome = (): JSX.Element => {
                 style={{ flex: 1 }}
             >
                 <Title
-                    containerStyle={{ ...themeStyles.titleContainer, marginBottom: margins.sm }}
+                    containerStyle={{ ...themeStyles.titleContainer, marginBottom: margins.sm, paddingHorizontal: margins.sm }}
                     text="ÚLTIMA LECCIÓN"
                     textStyle={{ fontSize: fontSizes.md }}
                 />
@@ -188,16 +193,17 @@ const PublisherHome = (): JSX.Element => {
 
                 { (!isLastLessonLoading && lastLesson?.id) && (
                     <LessonCard
-                        screenToNavigate="HomeLessonDetailScreen"
                         lesson={ lastLesson }
+                        onClick={ () => setSelectedCourse(lastLesson.course) }
                         onDelete={ () => handleShowLessonsModals(lastLesson, setShowDeleteLessonModal) }
                         onFinish={ () => handleShowLessonsModals(lastLesson, setShowFSModal) }
-                        onClick={ () => setSelectedCourse(lastLesson.course) }
+                        onNavigateDetail={ () => router.navigate('/(app)/(tabs)/preaching/publisher/lesson-detail') }
+                        onNavigateEdit={ () => router.navigate('/(app)/(tabs)/preaching/publisher/add-or-edit-lesson') }
                     />
                 ) }
 
                 <Title
-                    containerStyle={{ ...themeStyles.titleContainer, paddingTop: margins.lg, marginBottom: margins.sm }}
+                    containerStyle={{ ...themeStyles.titleContainer, paddingTop: margins.lg, marginBottom: margins.sm, paddingHorizontal: margins.sm }}
                     text="ÚLTIMA REVISITA"
                     textStyle={{ fontSize: fontSizes.md }}
                 />
@@ -223,11 +229,11 @@ const PublisherHome = (): JSX.Element => {
                 { (!isLastRevisitLoading && lastRevisit?.id) && (
                     <RevisitCard
                         onDelete={ () => handleShowRevisitsModal(lastRevisit, setShowDeleteRevisitModal) }
+                        onNavigateDetail={ () => router.navigate('/(app)/(tabs)/preaching/publisher/revisit-detail') }
+                        onNavigateEdit={ () => router.navigate('/(app)/(tabs)/preaching/publisher/add-or-edit-revisit') }
                         onPass={ () => handleShowRevisitsModal(lastRevisit, setShowPassModal) }
                         onRevisit={ () => handleShowRevisitsModal(lastRevisit, setShowRevisitModal) }
                         revisit={ lastRevisit }
-                        screenToDetailNavigate="/(app)/(tabs)/preaching/publisher/revisit-detail"
-                        screenToEditNavigate="/(app)/(tabs)/preaching/publisher/add-or-edit-revisit"
                     />
                 ) }
             </ScrollView>
