@@ -1,5 +1,5 @@
 export class VoiceRecorderError extends Error {
-    constructor(message: string) {
+    constructor(message: string, public readonly code: string) {
         super(message);
         this.name = 'VoiceRecorderError';
     }
@@ -14,6 +14,7 @@ export class VoiceRecorderError extends Error {
     public toJson(): Record<string, any> {
         return {
             name: this.name,
+            code: this.code,
             message: this.message
         }
     }
