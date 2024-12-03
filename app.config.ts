@@ -50,7 +50,6 @@ const config = ({ config }: ConfigContext): ExpoConfig => ({
                 backgroundColor: lightColors.contentHeader,
                 image: './assets/images/splash-icon.png',
                 imageWidth: 200,
-                resizeMode: 'contain',
                 dark: {
                     backgroundColor: darkColors.contentHeader
                 }
