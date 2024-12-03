@@ -85,9 +85,16 @@ export class AppErrors {
         'SlowDown': 'Su tiempo de sesión ha expirado.',
     }
 
-    private static readonly voiceRecorderErrorMessages = {
-        '7/No match': 'Por favor hable de forma clara y sin ruido para copiar el texto.',
-        "11/Didn't understand, please try again.": 'Por favor hable de forma clara y sin ruido para copiar el texto.'
+    private static readonly voiceRecorderCodeErrors = {
+        'aborted': 'La grabación ha sido abortada.',
+        'audio-capture': 'Ocurrio un error al capturar el audio.',
+        'bad-grammar': 'Por favor hable de forma clara y sin ruido para copiar el texto.',
+        'busy': 'El microfono del dispositivo se encuentra ocupado.',
+        'language-not-supported': 'El idioma en el cuál se encuentra hablando no es soportado.',
+        'network': 'Ocurrio un error de red.',
+        'no-speech': 'No se ha detectado ninguna voz.',
+        'not-allowed': 'La grabación de audio no está soportada por el dispositivo.',
+        'speech-timeout': 'El tiempo de grabación se ha agotado.',
     }
 
     /**
@@ -101,17 +108,7 @@ export class AppErrors {
         (this.supabaseStorageCodeErrors as any)[code] ||
         (this.postgrestCodeErrors as any)[code] ||
         (this.pickerCodeErrors as any)[code] ||
-        appMessages.UNEXPECTED_ERROR;
-    }
-
-    /**
-     * Translates a given error message to a user-friendly message.
-     *
-     * @param {string} message - The error message to translate.
-     * @returns {string} A user-friendly error message or a default unexpected error message.
-     */
-    public static translateMessage(message: string): string {
-        return (this.voiceRecorderErrorMessages as any)[message] ||
+        (this.voiceRecorderCodeErrors as any)[code] ||
         appMessages.UNEXPECTED_ERROR;
     }
 }
