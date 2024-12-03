@@ -59,8 +59,8 @@ const config = ({ config }: ConfigContext): ExpoConfig => ({
             'onesignal-expo-plugin',
             {
                 mode: 'development',
-                smallIcons: [ './assets/images/ic_stat_onesignal_default.png' ],
-                largeIcons: [ './assets/images/ic_onesignal_large_icon_default.png' ],
+                smallIcons: [ './assets/notifications/ic_stat_onesignal_default.png' ],
+                largeIcons: [ './assets/notifications/ic_onesignal_large_icon_default.png' ],
             }
         ],
         [
