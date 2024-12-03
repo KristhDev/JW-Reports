@@ -96,6 +96,7 @@ const Navigation = (): JSX.Element => {
   return (
     <Stack
       screenOptions={{
+        animation: 'fade_from_bottom',
         headerShown: false,
         statusBarAnimation: 'fade',
         statusBarBackgroundColor: colors.contentHeader,
@@ -113,8 +114,6 @@ const Navigation = (): JSX.Element => {
           statusBarBackgroundColor: (isAuthenticated) ? colors.header : colors.contentHeader
         }}
       />
-
-      <Stack.Screen name="index" />
     </Stack>
   );
 }
