@@ -87,7 +87,6 @@ export const CourseForm = (): JSX.Element => {
                     />
                 }
                 label="Nombre del estudiante:"
-                onBlur={ () => setActiveFormField('') }
                 onChangeText={ handleChange('personName') }
                 onFocus={ () => setActiveFormField('personName') }
                 placeholder="Ingrese el nombre"
@@ -99,7 +98,6 @@ export const CourseForm = (): JSX.Element => {
                 label="Información del estudiante:"
                 multiline
                 numberOfLines={ 10 }
-                onBlur={ () => setActiveFormField('') }
                 onChangeText={ handleChange('personAbout') }
                 onFocus={ () => setActiveFormField('personAbout') }
                 placeholder="Ingrese datos sobre la persona, temas de interés, preferencias, aspectos importantes, etc..."
@@ -111,7 +109,6 @@ export const CourseForm = (): JSX.Element => {
                 label="Dirección:"
                 multiline
                 numberOfLines={ 4 }
-                onBlur={ () => setActiveFormField('') }
                 onChangeText={ handleChange('personAddress') }
                 onFocus={ () => setActiveFormField('personAddress') }
                 placeholder="Ingrese la dirección"
@@ -128,7 +125,6 @@ export const CourseForm = (): JSX.Element => {
                     />
                 }
                 label="Publicación de estudio:"
-                onBlur={ () => setActiveFormField('') }
                 onChangeText={ handleChange('publication') }
                 onFocus={ () => setActiveFormField('publication') }
                 placeholder="Ingrese la publicación"
