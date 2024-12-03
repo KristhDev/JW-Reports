@@ -20,7 +20,7 @@ import { useTheme } from '@theme';
 import { useAuth } from '@auth';
 import { useCourses } from '@courses';
 import { useLessons } from '@lessons';
-import { StatusModal, useNetwork, usePermissions } from '@shared';
+import { useNetwork, usePermissions } from '@shared';
 import { usePreaching } from '@preaching';
 import { useRevisits } from '@revisits';
 import { useUI } from '@ui';
@@ -34,7 +34,7 @@ if (__DEV__) require('../../ReactotronConfig');
 const Navigation = (): JSX.Element => {
   const { theme: { colors }  } = useStyles();
 
-  const { getAuth } = useAuth();
+  const { state: { isAuthenticated }, getAuth } = useAuth();
   const { clearCourses } = useCourses();
   const { clearLessons } = useLessons();
   const { state, checkPermissions, requestPermissions } = usePermissions();
@@ -98,12 +98,22 @@ const Navigation = (): JSX.Element => {
       screenOptions={{
         headerShown: false,
         statusBarAnimation: 'fade',
-          statusBarBackgroundColor: colors.contentHeader,
-          statusBarStyle: (theme === 'dark') ? 'light' : 'dark',
+        statusBarBackgroundColor: colors.contentHeader,
+        statusBarStyle: (theme === 'dark') ? 'light' : 'dark',
       }}
     >
       <Stack.Screen name="(app)" options={{ headerShown: false }} />
       <Stack.Screen name="auth" />
+
+      <Stack.Screen
+        name="modal"
+        options={{
+          animation: 'fade',
+          presentation: 'transparentModal',
+          statusBarBackgroundColor: (isAuthenticated) ? colors.header : colors.contentHeader
+        }}
+      />
+
       <Stack.Screen name="index" />
     </Stack>
   );
@@ -133,7 +143,6 @@ export default function RootLayout(): JSX.Element {
 
   return (
     <Provider>
-      <StatusModal />
       <Navigation />
     </Provider>
   );
