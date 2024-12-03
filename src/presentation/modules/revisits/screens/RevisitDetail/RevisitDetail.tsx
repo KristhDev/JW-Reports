@@ -1,10 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Image, ScrollView, Text, View, useWindowDimensions } from 'react-native';
 import { useStyles } from 'react-native-unistyles';
-import { useNavigation } from 'expo-router';
-
-/* Features */
-import { INIT_REVISIT } from '@application/features';
 
 /* Adapters */
 import { Time } from '@infrasturcture/adapters';
@@ -28,11 +24,10 @@ const RevisitDetail = (): JSX.Element => {
     const [ showModal, setShowModal ] = useState<boolean>(false);
     const { width: windowWidth } = useWindowDimensions();
 
-    const navigation = useNavigation();
     const { styles: themeStyles, theme: { fontSizes, margins } } = useStyles(themeStylesheet);
     const { styles } = useStyles(stylesheet);
 
-    const { state: { selectedRevisit }, setSelectedRevisit } = useRevisits();
+    const { state: { selectedRevisit } } = useRevisits();
 
     const nextVisit = Time.format(selectedRevisit.nextVisit, 'DD [de] MMMM [del] YYYY');
 
@@ -47,28 +42,6 @@ const RevisitDetail = (): JSX.Element => {
             });
         }
     }, [ selectedRevisit.photo ]);
-
-    /**
-     * Effect to reset selectedRevisit when change index in
-     * navigation and then is zero.
-     */
-    useEffect(() => {
-        navigation.addListener('blur', () => {
-            const navigationState = navigation.getState();
-            if (!navigationState) return;
-
-            if (navigationState.index === 0) {
-                setSelectedRevisit({
-                    ...INIT_REVISIT,
-                    nextVisit: new Date().toString()
-                });
-            }
-        });
-
-        return () => {
-            navigation.removeListener('blur', () => {});
-        }
-    }, [ selectedRevisit ]);
 
     return (
         <>
