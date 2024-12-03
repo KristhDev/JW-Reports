@@ -70,6 +70,7 @@ const PublisherHome = (): JSX.Element => {
             isRevisitDeleting,
             lastRevisit
         },
+        deleteRevisit,
         setSelectedRevisit,
         loadLastRevisit
     } = useRevisits();
@@ -77,15 +78,15 @@ const PublisherHome = (): JSX.Element => {
     const month = Time.format(selectedDate, 'MMMM').toUpperCase();
 
     /**
-     * When the user swipes down to refresh, load the preachings for the selected date and set the
-     * refreshing state to false.
+     * Refreshes the state by loading the most recent lesson and revisit data.
+     * Sets the refreshing state to false before and after the load operations.
      *
-     * @return {void} This function does not return anything
+     * @return {Promise<void>} A promise that resolves when the refresh is complete.
      */
-    const handleRefreshing = (): void => {
+    const handleRefreshing = async (): Promise<void> => {
         setIsRefreshing(false);
-        loadLastLesson();
-        loadLastRevisit();
+        await Promise.all([ loadLastLesson(), loadLastRevisit() ]);
+        setIsRefreshing(false);
     }
 
     /**
@@ -101,14 +102,14 @@ const PublisherHome = (): JSX.Element => {
     }
 
     /**
-     * handleShowLessonsModals is a function that takes a lesson and a setShowModal function as parameters and
+     * handleShowLessonsModal is a function that takes a lesson and a setShowModal function as parameters and
      * returns nothing.
      *
      * @param {Lesson} lesson - Lesson - this is the lesson that was clicked on
      * @param {(setShowModal: (value: boolean) => void)} setShowModal The function to set the modal visibility.
      * @return {void} This function does not return any value.
      */
-    const handleShowLessonsModals = (lesson: LessonWithCourseEntity, setShowModal: (value: boolean) => void): void => {
+    const handleShowLessonsModal = (lesson: LessonWithCourseEntity, setShowModal: (value: boolean) => void): void => {
         const { course, ...rest } = lesson;
         setSelectedLesson(rest);
         setShowModal(true);
@@ -135,7 +136,7 @@ const PublisherHome = (): JSX.Element => {
      * @param {(setShowModal: (value: boolean) => void)} setShowModal The function to set the modal visibility.
      * @return {void} This function does not return any value.
      */
-    const handleHideLessonsModals = (setShowModal: (value: boolean) => void): void => {
+    const handleHideLessonsModal = (setShowModal: (value: boolean) => void): void => {
         setShowModal(false);
         setSelectedLesson({
             ...INIT_LESSON,
@@ -149,8 +150,18 @@ const PublisherHome = (): JSX.Element => {
      *
      * @return {void} - This function does not return any value.
      */
-    const handleDeleteConfirm = (): void => {
+    const handleDeleteLessonConfirm = (): void => {
         deleteLesson(false, () => setShowDeleteLessonModal(false));
+    }
+
+    /**
+     * Handles the delete confirmation by calling the deleteRevisit function with a boolean value of false,
+     * and then hides the delete modal by calling setShowDeleteRevisitModal with a boolean value of false.
+     *
+     * @return {void} - This function does not return any value.
+     */
+    const handleDeleteRevisitConfirm = (): void => {
+        deleteRevisit(false, () => setShowDeleteRevisitModal(false));
     }
 
     return (
@@ -195,8 +206,8 @@ const PublisherHome = (): JSX.Element => {
                     <LessonCard
                         lesson={ lastLesson }
                         onClick={ () => setSelectedCourse(lastLesson.course) }
-                        onDelete={ () => handleShowLessonsModals(lastLesson, setShowDeleteLessonModal) }
-                        onFinish={ () => handleShowLessonsModals(lastLesson, setShowFSModal) }
+                        onDelete={ () => handleShowLessonsModal(lastLesson, setShowDeleteLessonModal) }
+                        onFinish={ () => handleShowLessonsModal(lastLesson, setShowFSModal) }
                         onNavigateDetail={ () => router.navigate('/(app)/(tabs)/preaching/publisher/lesson-detail') }
                         onNavigateEdit={ () => router.navigate('/(app)/(tabs)/preaching/publisher/add-or-edit-lesson') }
                     />
@@ -262,15 +273,15 @@ const PublisherHome = (): JSX.Element => {
             {/* Modal to finish or start again lesson */}
             <FinishOrStartLessonModal
                 isOpen={ showFSModal }
-                onClose={ () => handleHideLessonsModals(setShowFSModal) }
+                onClose={ () => handleHideLessonsModal(setShowFSModal) }
             />
 
             {/* Modal to delete lesson */}
             <DeleteModal
                 isLoading={ isLessonDeleting }
                 isOpen={ showDeleteLessonModal }
-                onClose={ () => handleHideLessonsModals(setShowDeleteLessonModal) }
-                onConfirm={ handleDeleteConfirm }
+                onClose={ () => handleHideLessonsModal(setShowDeleteLessonModal) }
+                onConfirm={ handleDeleteLessonConfirm }
                 text="¿Está seguro de eliminar esta clase?"
             />
 
@@ -291,7 +302,7 @@ const PublisherHome = (): JSX.Element => {
                 isLoading={ isRevisitDeleting }
                 isOpen={ showDeleteRevisitModal }
                 onClose={ () => handleHideRevisitsModal(setShowDeleteRevisitModal) }
-                onConfirm={ handleDeleteConfirm }
+                onConfirm={ handleDeleteRevisitConfirm }
                 text="¿Está seguro de eliminar esta revisita?"
             />
         </>
