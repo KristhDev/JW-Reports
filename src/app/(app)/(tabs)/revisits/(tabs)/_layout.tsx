@@ -1,7 +1,12 @@
+import { useCallback } from 'react';
 import { createMaterialTopTabNavigator, MaterialTopTabNavigationEventMap, MaterialTopTabNavigationOptions } from '@react-navigation/material-top-tabs';
 import { ParamListBase, TabNavigationState } from '@react-navigation/native';
-import { withLayoutContext } from 'expo-router';
+import { useFocusEffect, withLayoutContext } from 'expo-router';
 import { useStyles } from 'react-native-unistyles';
+
+import { INIT_REVISIT } from '@application/features';
+
+import { useRevisits } from '@revisits';
 
 const { Navigator } = createMaterialTopTabNavigator();
 
@@ -14,6 +19,19 @@ export const TopTabs = withLayoutContext<
 
 export default function RevisitsTopTabsLauyout(): JSX.Element {
     const { theme: { colors } } = useStyles();
+
+    const { state: { selectedRevisit }, setSelectedRevisit } = useRevisits();
+
+    useFocusEffect(
+        useCallback(() => {
+            if (selectedRevisit.id === '') return;
+
+            setSelectedRevisit({
+                ...INIT_REVISIT,
+                nextVisit: new Date().toString(),
+            });
+        }, [ selectedRevisit ])
+    );
 
     return (
         <TopTabs

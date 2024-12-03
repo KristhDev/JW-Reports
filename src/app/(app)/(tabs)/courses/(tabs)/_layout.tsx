@@ -1,8 +1,12 @@
 import { useWindowDimensions } from 'react-native';
+import { useCallback } from 'react';
 import { createMaterialTopTabNavigator, MaterialTopTabNavigationEventMap, MaterialTopTabNavigationOptions } from '@react-navigation/material-top-tabs';
 import { ParamListBase, TabNavigationState } from '@react-navigation/native';
-import { withLayoutContext } from 'expo-router';
+import { useFocusEffect, withLayoutContext } from 'expo-router';
 import { useStyles } from 'react-native-unistyles';
+
+/* Hooks */
+import { useCourses } from '@courses';
 
 const { Navigator } = createMaterialTopTabNavigator();
 
@@ -16,6 +20,15 @@ export const TopTabs = withLayoutContext<
 export default function CoursesTopTabsLauyout(): JSX.Element {
     const { width } = useWindowDimensions();
     const { theme: { colors } } = useStyles();
+
+    const { state: { selectedCourse }, setSelectedCourse } = useCourses();
+
+    useFocusEffect(
+        useCallback(() => {
+            if (selectedCourse.id === '') return;
+            setSelectedCourse(selectedCourse);
+        }, [ selectedCourse ])
+    );
 
     return (
         <TopTabs
