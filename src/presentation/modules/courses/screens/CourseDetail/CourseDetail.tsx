@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { ScrollView, Text, View } from 'react-native';
 import { useStyles } from 'react-native-unistyles';
-import { useNavigation, useRouter } from 'expo-router';
+import { useRouter } from 'expo-router';
 
 /* Features */
-import { INIT_COURSE, INIT_LESSON } from '@application/features';
+import { INIT_LESSON } from '@application/features';
 
 /* Adapters */
 import { Time } from '@infrasturcture/adapters';
@@ -35,7 +35,6 @@ const CourseDetail = (): JSX.Element => {
     const [ showASModal, setShowASModal ] = useState<boolean>(false);
     const [ showFSModal, setShowFSModal ] = useState<boolean>(false);
 
-    const navigation = useNavigation();
     const router = useRouter();
 
     const { styles: themeStyles, theme: { colors, fontSizes, margins } } = useStyles(themeStylesheet);
@@ -73,23 +72,6 @@ const CourseDetail = (): JSX.Element => {
     const handleLessonsList = (): void => {
         router.navigate('/(app)/(tabs)/courses/lessons');
     }
-
-    /**
-     * Effect to reset selectedCourse when index of navigation
-     * is zero.
-     */
-    useEffect(() => {
-        navigation.addListener('blur', () => {
-            const navigationState = navigation.getState();
-            if (!navigationState) return;
-
-            if (navigationState.index === 0) setSelectedCourse(INIT_COURSE);
-        });
-
-        return () => {
-            navigation.removeListener('blur', () => {});
-        }
-    }, [ selectedCourse ]);
 
     return (
         <>
