@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { Stack, useRouter } from 'expo-router';
+import { Redirect, Stack } from 'expo-router';
 import { useStyles } from 'react-native-unistyles';
 
 /* Services */
@@ -11,7 +11,6 @@ import { permissionsStatus, usePermissions } from '@shared';
 import { useTheme } from '@theme';
 
 export default function AppLayout(): JSX.Element {
-    const router = useRouter();
     const { theme: { colors } } = useStyles();
 
     const { state: { isAuthenticated, user } } = useAuth();
@@ -26,7 +25,7 @@ export default function AppLayout(): JSX.Element {
         NotificationsService.listenNotificationsByUser(user.id);
     }, [ user.id ]);
 
-    if (!isAuthenticated) router.navigate('/auth/login');
+    if (!isAuthenticated) return (<Redirect href="/auth/login" />);
 
     return (
         <Stack
