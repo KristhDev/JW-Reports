@@ -6,7 +6,7 @@ import { UnistylesRuntime, useStyles } from 'react-native-unistyles';
 import { storage, storageKeys } from '@infrasturcture/adapters';
 
 /* Context */
-import { ThemeContext } from '.';
+import ThemeContext from './ThemeContext';
 
 /* Interfaces */
 import { Theme } from './types';
