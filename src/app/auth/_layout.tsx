@@ -1,5 +1,5 @@
 import React from 'react';
-import { Stack, useRouter } from 'expo-router';
+import { Redirect, Stack } from 'expo-router';
 import { useStyles } from 'react-native-unistyles';
 
 /* Modules */
@@ -7,13 +7,12 @@ import { useAuth } from '@auth';
 import { useTheme } from '@theme';
 
 export default function AuthLayout(): JSX.Element {
-    const router = useRouter();
     const { theme: { colors } } = useStyles();
 
     const { state: { isAuthenticated } } = useAuth();
     const { state: { theme } } = useTheme();
 
-    if (isAuthenticated) router.navigate('/(app)/(tabs)/preaching');
+    if (isAuthenticated) return (<Redirect href="/(app)/(tabs)/preaching" />)
 
     return (
         <Stack
