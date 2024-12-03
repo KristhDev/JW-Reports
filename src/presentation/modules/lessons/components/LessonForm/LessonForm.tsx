@@ -86,7 +86,6 @@ export const LessonForm = (): JSX.Element => {
                 label="¿Qué verán la próxima clase?"
                 multiline
                 numberOfLines={ 9 }
-                onBlur={ () => setActiveFormField('') }
                 onChangeText={ handleChange('description') }
                 onFocus={ () => setActiveFormField('description') }
                 placeholder="Ingrese el tema que se estudiará en la siguiente clase"
