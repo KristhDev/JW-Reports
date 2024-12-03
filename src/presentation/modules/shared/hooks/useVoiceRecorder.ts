@@ -47,7 +47,7 @@ const useVoiceRecorder = () => {
         if (status !== permissionsStatus.GRANTED) return;
 
         try {
-            await VoiceRecorder.startRecording(lang);
+            VoiceRecorder.startRecording(lang);
         }
         catch (error) {
             setError(error);
@@ -57,11 +57,11 @@ const useVoiceRecorder = () => {
     /**
      * Stops the current speech recognition session.
      *
-     * @returns {Promise<void>} A promise that resolves when the speech recognition session is stopped.
+     * @returns {void} This function does not return anything.
      */
-    const stopRecording = async (): Promise<void> => {
+    const stopRecording = (): void => {
         try {
-            await VoiceRecorder.stopRecording();
+            VoiceRecorder.stopRecording();
         }
         catch (error) {
             setError(error);
