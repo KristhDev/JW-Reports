@@ -38,16 +38,16 @@ export const MicrophoneBtn: FC<MicrophoneBtnProps> = ({ conditionForNotRecording
      * If the recording is in progress, stops the recording.
      * Otherwise, starts the recording in Spanish language.
      *
-     * @returns {Promise<void>}
+     * @returns {void} This function does not return anything.
      */
-    const handleRecord = async (): Promise<void> => {
+    const handleRecord = (): void => {
         if (conditionForNotRecording) {
             onNotRecording && onNotRecording();
             return;
         }
 
-        if (isRecording) await stopRecording();
-        else await startRecording('es-ES');
+        if (isRecording) stopRecording();
+        else startRecording('es-ES');
     }
 
     useEffect(() => {
