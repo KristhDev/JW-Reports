@@ -1,4 +1,4 @@
-// import Voice from '@react-native-voice/voice';
+import { ExpoSpeechRecognitionModule } from 'expo-speech-recognition';
 
 /* Constants */
 import { appMessages } from '@application/constants';
@@ -8,21 +8,15 @@ import { VoiceRecorderError } from '@domain/errors';
 
 export class VoiceRecorder {
     /**
-     * Destroys the current speech recognition session and removes all event listeners.
+     * Destroys all listeners for speech recognition events.
      *
-     * @returns {Promise<void>} A promise that resolves when the speech recognition session is destroyed.
-     * @throws {VoiceRecorderError} An error occurred while trying to destroy the speech recognition session.
+     * @returns {void} - This function does not return anything.
      */
-    public static async destroyListeners(): Promise<void> {
-        try {
-            // await Voice.destroy();
-            // Voice.removeAllListeners();
-        }
-        catch (error) {
-            console.error(error);
-            const voiceRecorderError = new VoiceRecorderError((error as Error).message || appMessages.UNEXPECTED_ERROR);
-            throw voiceRecorderError;
-        }
+    public static destroyListeners(): void {
+        ExpoSpeechRecognitionModule.removeAllListeners('start');
+        ExpoSpeechRecognitionModule.removeAllListeners('end');
+        ExpoSpeechRecognitionModule.removeAllListeners('result');
+        ExpoSpeechRecognitionModule.removeAllListeners('error');
     }
 
     /**
@@ -32,7 +26,7 @@ export class VoiceRecorder {
      * @returns {void} - This function does not return anything.
      */
     public static onSpeechEnd(callback: () => void): void {
-        // Voice.onSpeechEnd = callback;
+        ExpoSpeechRecognitionModule.addListener('end', callback);
     }
 
     /**
@@ -42,11 +36,14 @@ export class VoiceRecorder {
      * @returns {void} - This function does not return anything.
      */
     public static onSpeechError(callback: (error: VoiceRecorderError) => void): void {
-        // Voice.onSpeechError = (e) => {
-        //     console.error(e.error);
-        //     const error = new VoiceRecorderError(e.error?.message || appMessages.UNEXPECTED_ERROR);
-        //     callback(error);
-        // }
+        ExpoSpeechRecognitionModule.addListener('error', (error) => {
+            const voiceRecorderError = new VoiceRecorderError(
+                error.message || appMessages.UNEXPECTED_ERROR,
+                error.error
+            );
+
+            callback(voiceRecorderError);
+        });
     }
 
     /**
@@ -56,9 +53,9 @@ export class VoiceRecorder {
      * @returns {void} - This function does not return anything.
      */
     public static onSpeechResults(callback: (value?: string) => void): void {
-        // Voice.onSpeechResults = (e) => {
-        //     callback(e.value && e.value[0]);
-        // }
+        ExpoSpeechRecognitionModule.addListener('result', (e) => {
+            callback(e.results[0].transcript);
+        });
     }
 
     /**
@@ -68,23 +65,27 @@ export class VoiceRecorder {
      * @returns {void} - This function does not return anything.
      */
     public static onSpeechStart(callback: () => void): void {
-        // Voice.onSpeechStart = callback;
+        ExpoSpeechRecognitionModule.addListener('start', callback);
     }
 
     /**
-     * Starts a speech recognition session in the given language.
+     * Starts a speech recognition session in the specified language.
      *
-     * @param {string} lang - The language code to use for the speech recognition session.
-     * @returns {Promise<void>} A promise that resolves when the speech recognition session is started.
-     * @throws {VoiceRecorderError} An error occurred while trying to start the speech recognition session.
+     * @param {string} lang - The language code for the speech recognition session.
+     * @throws {VoiceRecorderError} If an error occurs while starting the session.
      */
-    public static async startRecording(lang: string): Promise<void> {
+    public static startRecording(lang: string): void {
         try {
-            // await Voice.start(lang);
+            ExpoSpeechRecognitionModule.start({ lang });
         }
         catch (error) {
             console.error(error);
-            const voiceRecorderError = new VoiceRecorderError((error as Error).message || appMessages.UNEXPECTED_ERROR);
+
+            const voiceRecorderError = new VoiceRecorderError(
+                (error as any).message || appMessages.UNEXPECTED_ERROR,
+                (error as any).error
+            );
+
             throw voiceRecorderError;
         }
     }
@@ -92,16 +93,20 @@ export class VoiceRecorder {
     /**
      * Stops the current speech recognition session.
      *
-     * @returns {Promise<void>} A promise that resolves when the speech recognition session is stopped.
-     * @throws {VoiceRecorderError} An error occurred while trying to stop the speech recognition session.
+     * @throws {VoiceRecorderError} If an error occurs while stopping the session.
      */
-    public static async stopRecording(): Promise<void> {
+    public static stopRecording(): void {
         try {
-            // await Voice.stop();
+            ExpoSpeechRecognitionModule.stop();
         }
         catch (error) {
             console.error(error);
-            const voiceRecorderError = new VoiceRecorderError((error as Error).message || appMessages.UNEXPECTED_ERROR);
+
+            const voiceRecorderError = new VoiceRecorderError(
+                (error as any).message || appMessages.UNEXPECTED_ERROR,
+                (error as any).error
+            );
+
             throw voiceRecorderError;
         }
     }
