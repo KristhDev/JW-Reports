@@ -95,6 +95,8 @@ export const CourseForm = (): JSX.Element => {
 
             {/* Person about field */}
             <FormField
+                controlStyle={{ paddingVertical: margins.xs + 2 }}
+                inputStyle={{ minHeight: margins.sm * 10  }}
                 label="Información del estudiante:"
                 multiline
                 numberOfLines={ 10 }
@@ -106,6 +108,8 @@ export const CourseForm = (): JSX.Element => {
 
             {/* Person address field */}
             <FormField
+                controlStyle={{ paddingVertical: margins.xs + 2 }}
+                inputStyle={{ minHeight: margins.sm * 5  }}
                 label="Dirección:"
                 multiline
                 numberOfLines={ 4 }
