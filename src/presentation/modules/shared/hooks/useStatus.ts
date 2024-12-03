@@ -1,3 +1,5 @@
+import { useRouter } from 'expo-router';
+
 /* Constants */
 import { networkMessages, authMessages, appMessages } from '@application/constants';
 
@@ -29,8 +31,28 @@ const useStatus = () => {
     const dispatch = useAppDispatch();
     const state = useAppSelector(store => store.status);
 
-    const setStatus = (status: SetStatusPayload) => dispatch(setStatusAction(status));
-    const clearStatus = () => dispatch(clearStatusAction());
+    const router = useRouter();
+
+    /**
+     * Sets the status of the store and navigates to the modal page.
+     *
+     * @param {SetStatusPayload} status - The status to set.
+     * @return {void} This function does not return anything
+     */
+    const setStatus = (status: SetStatusPayload): void => {
+        dispatch(setStatusAction(status));
+        router.navigate('/modal');
+    }
+
+    /**
+     * Clears the current status by dismissing the modal and dispatching the clear action.
+     *
+     * @return {void} This function does not return anything.
+     */
+    const clearStatus = (): void => {
+        router.dismiss();
+        dispatch(clearStatusAction());
+    }
 
     /**
      * This function is to set errors in status of store
@@ -58,7 +80,7 @@ const useStatus = () => {
         if (error instanceof ImageError) msg = AppErrors.getMessageFromCode(error?.code || 'NO_CODE');
         if (error instanceof InternalStorageError) msg = error.message;
         if (error instanceof PDFError) msg = error.message;
-        if (error instanceof VoiceRecorderError) msg = AppErrors.translateMessage(error.message);
+        if (error instanceof VoiceRecorderError) msg = AppErrors.getMessageFromCode(error.code);
 
         setStatus({ msg, code: status });
 
@@ -103,7 +125,6 @@ const useStatus = () => {
         onDispatch && onDispatch();
         setStatus({ code: 401, msg: authMessages.UNATHENTICATED });
     }
-
 
     return {
         state,
