@@ -23,15 +23,15 @@ const Provider: FC<PropsWithChildren> = ({ children }): JSX.Element => {
         <KeyboardProvider>
             <UnistylesProvider>
                 <NetworkProvider>
-                    <MenuProvider>
-                        <ThemeProvider>
+                    <ThemeProvider>
+                        <MenuProvider>
                             <ReduxProvider store={ store }>
                                 <PersistGate loading={ null } persistor={ persistor }>
                                     { children }
                                 </PersistGate>
                             </ReduxProvider>
-                        </ThemeProvider>
-                    </MenuProvider>
+                        </MenuProvider>
+                    </ThemeProvider>
                 </NetworkProvider>
             </UnistylesProvider>
         </KeyboardProvider>
