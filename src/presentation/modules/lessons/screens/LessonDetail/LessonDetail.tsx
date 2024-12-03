@@ -1,10 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { ScrollView, Text, View } from 'react-native';
-import { useNavigation, usePathname } from 'expo-router';
 import { useStyles } from 'react-native-unistyles';
-
-/* Features */
-import { INIT_LESSON } from '@application/features';
 
 /* Adapters */
 import { Time } from '@infrasturcture/adapters';
@@ -31,39 +27,13 @@ import { themeStylesheet } from '@theme';
 const LessonDetail = (): JSX.Element => {
     const [ showFSModal, setShowFSModal ] = useState<boolean>(false);
 
-    const navigation = useNavigation();
-    const pathname = usePathname();
-
     const { styles: themeStyles, theme: { fontSizes } } = useStyles(themeStylesheet);
 
     const { state: { selectedCourse } } = useCourses();
-    const { state: { selectedLesson }, setSelectedLesson } = useLessons();
+    const { state: { selectedLesson } } = useLessons();
 
     const statusLessonText = (selectedLesson.done) ? 'Impartida' : 'Por impartir';
     const nextVisit = Time.format(selectedLesson.nextLesson, 'DD [de] MMMM [del] YYYY');
-
-    /**
-     * Effect to reset selectedLesson when index in navigation
-     * is different from 4.
-     */
-    useEffect(() => {
-        navigation.addListener('blur', () => {
-            const navigationState = navigation.getState();
-            if (!navigationState) return;
-
-            // TODO: Check this login with new navigation
-            if ((pathname === 'lesson-detail' && navigationState.index !== 4) || (pathname === 'lesson-detail' && navigationState.index !== 2)) {
-                setSelectedLesson({
-                    ...INIT_LESSON,
-                    nextLesson: new Date().toString()
-                });
-            }
-        });
-
-        return () => {
-            navigation.removeListener('blur', () => {});
-        }
-    }, []);
 
     return (
         <>

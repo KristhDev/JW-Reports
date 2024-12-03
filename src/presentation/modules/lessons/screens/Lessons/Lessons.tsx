@@ -1,5 +1,5 @@
-import React from 'react';
-import { useRouter } from 'expo-router';
+import React, { useCallback } from 'react';
+import { useFocusEffect, useRouter } from 'expo-router';
 import { useStyles } from 'react-native-unistyles';
 import Ionicons from '@expo/vector-icons/Ionicons';
 
@@ -26,7 +26,7 @@ const Lessons = (): JSX.Element => {
     const { styles: themeStyles, theme: { colors, fontSizes } } = useStyles(themeStylesheet);
     const router = useRouter();
 
-    const { setSelectedLesson } = useLessons();
+    const { state: { selectedLesson }, setSelectedLesson } = useLessons();
 
     /**
      * I want to set the selectedLesson to the INIT_LESSON, but I want to change the next_lesson
@@ -35,13 +35,19 @@ const Lessons = (): JSX.Element => {
      * @return {void} This function does not return anything
      */
     const handleNavigate = (): void => {
-        setSelectedLesson({
-            ...INIT_LESSON,
-            nextLesson: new Date().toString(),
-        });
-
         router.navigate('/(app)/(tabs)/courses/add-or-edit-lesson');
     }
+
+    useFocusEffect(
+        useCallback(() => {
+            if (selectedLesson.id === '') return;
+
+            setSelectedLesson({
+                ...INIT_LESSON,
+                nextLesson: new Date().toString(),
+            });
+        }, [ selectedLesson ])
+    );
 
     return (
         <>
