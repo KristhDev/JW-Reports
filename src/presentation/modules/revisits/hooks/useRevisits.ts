@@ -1,7 +1,7 @@
 import { useRouter } from 'expo-router';
 
 /* Constants */
-import { authMessages, revisitsMessages } from '@application/constants';
+import { authMessages, precursors, revisitsMessages } from '@application/constants';
 
 /* Features */
 import { useAppDispatch, useAppSelector } from '@application/store';
@@ -139,7 +139,7 @@ const useRevisits = () => {
             updateRevisitActionState(revisit);
             setSelectedRevisit(revisit);
 
-            if (user.precursor === 'ninguno' && state.lastRevisit.id === state.selectedRevisit.id) setLastRevisit(revisit);
+            if (user.precursor === precursors.NINGUNO && state.lastRevisit.id === state.selectedRevisit.id) setLastRevisit(revisit);
 
             return revisitsMessages.COMPLETED_SUCCESS;
         }
@@ -183,7 +183,7 @@ const useRevisits = () => {
 
             back && router.back();
 
-            if (user.precursor === 'ninguno' && state.lastRevisit.id === state.selectedRevisit.id) {
+            if (user.precursor === precursors.NINGUNO && state.lastRevisit.id === state.selectedRevisit.id) {
                 await loadLastRevisit();
             }
 
@@ -353,7 +353,7 @@ const useRevisits = () => {
             setStatus({ code: 201, msg: successMsg });
 
             back && router.back();
-            if (user.precursor === 'ninguno') await loadLastRevisit();
+            if (user.precursor === precursors.NINGUNO) await loadLastRevisit();
         }
         catch (error) {
             setIsRevisitLoading(false);
@@ -399,7 +399,7 @@ const useRevisits = () => {
             updateRevisitActionState(revisit);
             setStatus({ code: 200, msg: revisitsMessages.UPDATED_SUCCESS });
 
-            if (user.precursor === 'ninguno') await loadLastRevisit();
+            if (user.precursor === precursors.NINGUNO) await loadLastRevisit();
 
             router.back();
         }
