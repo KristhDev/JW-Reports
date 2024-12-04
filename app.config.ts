@@ -71,6 +71,11 @@ const config = ({ config }: ConfigContext): ExpoConfig => ({
         ],
         'expo-speech-recognition'
     ],
+    extra: {
+        eas: {
+            projectId: '049c5d88-5f8d-4a05-8254-d87dfb408f25'
+        }
+    },
     experiments: {
         typedRoutes: true
     }
