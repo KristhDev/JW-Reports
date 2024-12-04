@@ -386,9 +386,9 @@ const useCourses = () => {
             const course = await CoursesService.create(createDto);
 
             addCourse(course);
-            setStatus({ code: 201, msg: coursesMessages.ADDED_SUCCESS });
 
             goBack && router.back();
+            setStatus({ code: 201, msg: coursesMessages.ADDED_SUCCESS });
         }
         catch (error) {
             setIsCourseLoading(false);
@@ -430,8 +430,8 @@ const useCourses = () => {
                 addLastLesson({ ...lastLesson, course });
             }
 
-            setStatus({ code: 200, msg: coursesMessages.UPDATED_SUCCESS });
             router.back();
+            setStatus({ code: 200, msg: coursesMessages.UPDATED_SUCCESS });
         }
         catch (error) {
             setIsCourseLoading(false);
