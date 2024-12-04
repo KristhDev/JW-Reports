@@ -1,4 +1,5 @@
 import { ImageModel } from '@domain/models';
+import { CameraType } from './services.interfaces';
 
 export interface DeleteImageOptions {
     bucket: string;
@@ -13,10 +14,9 @@ export interface UploadImageOptions {
 }
 
 export interface OpenPickerOptions {
-    cropperActiveWidgetColor: string;
-    cropperToolbarTitle: string;
     cropping?: boolean;
-    multiple?: boolean;
 }
 
-export type OpenCameraOptions = Omit<OpenPickerOptions, 'multiple'>;
+export type OpenCameraOptions = OpenPickerOptions & {
+    cameraType: CameraType;
+}
