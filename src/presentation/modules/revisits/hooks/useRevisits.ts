@@ -178,14 +178,13 @@ const useRevisits = () => {
 
             removeRevisit(state.selectedRevisit.id);
 
-            setIsRevisitDeleting(false);
-            onFinish && onFinish();
-
-            back && router.back();
-
             if (user.precursor === precursors.NINGUNO && state.lastRevisit.id === state.selectedRevisit.id) {
                 await loadLastRevisit();
             }
+
+            setIsRevisitDeleting(false);
+            onFinish && onFinish();
+            back && router.back();
 
             setSelectedRevisit(INIT_REVISIT);
             setStatus({ code: 200, msg: revisitsMessages.DELETED_SUCCESS });
@@ -350,9 +349,9 @@ const useRevisits = () => {
                 ? revisitsMessages.ADDED_SUCCESS
                 : `Has agregado correctamente a ${ revisit.personName } para volverla a visitar.`
 
+            back && router.back();
             setStatus({ code: 201, msg: successMsg });
 
-            back && router.back();
             if (user.precursor === precursors.NINGUNO) await loadLastRevisit();
         }
         catch (error) {
@@ -396,12 +395,11 @@ const useRevisits = () => {
             const updateDto = UpdateRevisitDto.create({ ...revisitValues, photo });
             const revisit = await RevisitsService.update(state.selectedRevisit.id, user.id, updateDto);
 
-            updateRevisitActionState(revisit);
-            setStatus({ code: 200, msg: revisitsMessages.UPDATED_SUCCESS });
-
             if (user.precursor === precursors.NINGUNO) await loadLastRevisit();
+            updateRevisitActionState(revisit);
 
             router.back();
+            setStatus({ code: 200, msg: revisitsMessages.UPDATED_SUCCESS });
         }
         catch (error) {
             setIsRevisitLoading(false);
