@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { PermissionStatus } from 'react-native-permissions';
-import { useStyles } from 'react-native-unistyles';
 
 /* Constants */
 import { permissionsMessages } from '@application/constants';
@@ -26,7 +25,6 @@ import { permissionsStatus } from '../utils';
 const useImage = () => {
     const { state: { permissions }, askPermission } = usePermissions();
     const { setStatus } = useStatus();
-    const { theme: { colors } } = useStyles();
 
     const [ image, setImage ] = useState<ImageModel | null>(null);
 
@@ -92,12 +90,7 @@ const useImage = () => {
         /* This is the code that is executed when the readExternalStorage or readMediaImages permission is granted. */
         if (isReadExternalStorageGranted || isReadMediaImagesGranted || permissionStatus === permissionsStatus.GRANTED) {
             try {
-                const image = await DeviceImageService.openPicker({
-                    cropperActiveWidgetColor: colors.button,
-                    cropperToolbarTitle: 'Editar Imagen',
-                    cropping: true,
-                    multiple: false
-                });
+                const image = await DeviceImageService.openPicker({ cropping: true });
 
                 if (!image) return;
                 setImage(image);
@@ -136,9 +129,8 @@ const useImage = () => {
         if (isCameraGranted || permissionStatus === permissionsStatus.GRANTED || permissionStatus === permissionsStatus.UNAVAILABLE) {
             try {
                 const image = await DeviceImageService.openCamera({
-                    cropperActiveWidgetColor: colors.button,
-                    cropperToolbarTitle: 'Editar Imagen',
-                    cropping: true,
+                    cameraType: DeviceImageService.cameras.BACK,
+                    cropping: true
                 });
 
                 if (!image) return;
