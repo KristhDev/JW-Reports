@@ -1,4 +1,4 @@
-import DeviceInfoRN from 'react-native-device-info';
+import * as Application from 'expo-application';
 
 export class DeviceInfo {
     /**
@@ -7,7 +7,7 @@ export class DeviceInfo {
      * @return {string} The build version.
      */
     public static getBuildVersion(): string {
-        return DeviceInfoRN.getBuildNumber();
+        return Application.nativeBuildVersion || '1';
     }
 
     /**
@@ -16,6 +16,6 @@ export class DeviceInfo {
      * @return {string} The system version of the device.
      */
     public static getSystemVersion(): string {
-        return DeviceInfoRN.getSystemVersion();
+        return Application.nativeApplicationVersion || '1.0.0';
     }
 }
