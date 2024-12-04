@@ -2,6 +2,10 @@ import { useEffect, useState } from 'react';
 import { Redirect, Stack, useRouter } from 'expo-router';
 import { useStyles } from 'react-native-unistyles';
 
+/* Constants */
+import { precursors } from '@application/constants';
+
+/* Modules */
 import { useAuth } from '@auth';
 import { useCourses } from '@courses';
 import { useLessons } from '@lessons';
@@ -9,6 +13,7 @@ import { useRevisits } from '@revisits';
 import { useNetwork, useStatus } from '@shared';
 import { Header, HeaderButtons } from '@ui';
 
+/* Utils */
 import { Characters } from '@utils';
 
 export default function PublisherLayout(): JSX.Element {
@@ -55,7 +60,7 @@ export default function PublisherLayout(): JSX.Element {
         loadLastRevisit();
     }, []);
 
-    if (user.precursor !== 'ninguno') return (<Redirect href="/(app)/(tabs)/preaching/precursor" />);
+    if (user.precursor !== precursors.NINGUNO) return (<Redirect href="/(app)/(tabs)/preaching/precursor" />);
 
     return (
         <Stack

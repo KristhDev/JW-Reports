@@ -2,6 +2,9 @@ import { useEffect, useState } from 'react';
 import { Redirect, Stack } from 'expo-router';
 import { useStyles } from 'react-native-unistyles';
 
+/* Constants */
+import { precursors } from '@application/constants';
+
 /* Modules */
 import { useAuth } from '@auth';
 import { usePreaching } from '@preaching';
@@ -44,7 +47,7 @@ export default function PrecursorLayout(): JSX.Element {
         loadPreachings(selectedDate);
     } ,[ selectedDate ]);
 
-    if (user.precursor === 'ninguno') return (<Redirect href="/(app)/(tabs)/preaching/publisher" />);
+    if (user.precursor === precursors.NINGUNO) return (<Redirect href="/(app)/(tabs)/preaching/publisher" />);
 
     return (
         <Stack
