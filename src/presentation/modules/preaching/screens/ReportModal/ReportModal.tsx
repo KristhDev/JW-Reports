@@ -3,7 +3,7 @@ import { View, Text, Share, TextInput } from 'react-native';
 import { useStyles } from 'react-native-unistyles';
 
 /* Constants */
-import { MINISTRY_PARTICIPATIONS } from '@application/constants';
+import { MINISTRY_PARTICIPATIONS, precursors } from '@application/constants';
 
 /* Services */
 import { PreachingReportService } from '@domain/services';
@@ -130,7 +130,7 @@ const ReportModal: FC<ReportModalProps> = ({ isOpen, month, onClose }): JSX.Elem
                         </Text>
                     </View>
 
-                    { (user.precursor !== 'ninguno') && (
+                    { (user.precursor !== precursors.NINGUNO) && (
                         <View style={{ flexDirection: 'row' }}>
                             <Text style={ styles.reportText(colors.text) }>Horas: </Text>
 
@@ -154,7 +154,7 @@ const ReportModal: FC<ReportModalProps> = ({ isOpen, month, onClose }): JSX.Elem
                         </Text>
                     </View>
 
-                    { (user.precursor === 'ninguno') && (
+                    { (user.precursor === precursors.NINGUNO) && (
                         <View style={{ flexDirection: 'column' }}>
                             <Text style={ styles.reportText(colors.text) }>Participo en el ministerio: </Text>
 
@@ -206,7 +206,7 @@ const ReportModal: FC<ReportModalProps> = ({ isOpen, month, onClose }): JSX.Elem
                         </View>
                     </View>
 
-                    { (user.hoursLDC && user.precursor !== 'ninguno') && (
+                    { (user.hoursLDC && user.precursor !== precursors.NINGUNO) && (
                         <View style={{ flexDirection: 'column', marginTop: margins.sm - 4 }}>
                             <Text style={{ ...styles.reportText(colors.text), marginBottom: margins.sm - 4 }}>
                                 Horas LDC:
