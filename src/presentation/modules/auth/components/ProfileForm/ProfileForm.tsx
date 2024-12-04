@@ -6,7 +6,7 @@ import { useStyles } from 'react-native-unistyles';
 import Ionicons from '@expo/vector-icons/Ionicons';
 
 /* Constants */
-import { HOURS_REQUIREMENTS, PRECURSORS_OPTIONS } from '@application/constants';
+import { HOURS_REQUIREMENTS, precursors, PRECURSORS_OPTIONS } from '@application/constants';
 
 /* Components */
 import { Button, Checkbox, FormField, FormSelect } from '@ui';
@@ -129,7 +129,7 @@ export const ProfileForm = (): JSX.Element => {
                 value={ values.precursor }
             />
 
-            { (values.precursor !== 'ninguno') && (
+            { (values.precursor !== precursors.NINGUNO) && (
                 <>
                     {/* Hours requirement field */}
                     <FormField
