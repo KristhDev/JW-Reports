@@ -3561,6 +3561,11 @@ expect@^29.0.0, expect@^29.7.0:
     jest-message-util "^29.7.0"
     jest-util "^29.7.0"
 
+expo-application@~6.0.1:
+  version "6.0.1"
+  resolved "https://registry.yarnpkg.com/expo-application/-/expo-application-6.0.1.tgz#bb5e1f15636c51c571a0062e8f9d4e504da967e4"
+  integrity sha512-w+1quSmKp8SYKT+GAFHSN5c6u+PqoVRIfpsLyRQrQdOnBA9dA8Hw6JT9sHNFmA30A2v1b/sdYZE3qKuRJFNSWQ==
+
 expo-asset@~11.0.1:
   version "11.0.1"
   resolved "https://registry.yarnpkg.com/expo-asset/-/expo-asset-11.0.1.tgz#8608f5ea4639698553725b6690dd621f6f70f206"
@@ -6348,11 +6353,6 @@ react-is@^16.13.1, react-is@^16.7.0:
   version "16.13.1"
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-16.13.1.tgz#789729a4dc36de2999dc156dd6c1d9c18cea56a4"
   integrity sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ==
-
-react-native-device-info@^14.0.1:
-  version "14.0.1"
-  resolved "https://registry.yarnpkg.com/react-native-device-info/-/react-native-device-info-14.0.1.tgz#88b0246be7b5eec00f16843306ac95244b23ceb9"
-  integrity sha512-/ygggNdYgddjEnWxaNOwrL8bT9u8iJXCdz/CKpQi61SptIMmlCXmn125ey4rr0CTK/YIVpL6kZhVFInnNo+Q3w==
 
 react-native-gesture-handler@~2.20.2:
   version "2.20.2"
