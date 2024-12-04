@@ -40,13 +40,11 @@ const Lessons = (): JSX.Element => {
 
     useFocusEffect(
         useCallback(() => {
-            if (selectedLesson.id === '') return;
-
             setSelectedLesson({
                 ...INIT_LESSON,
                 nextLesson: new Date().toString(),
             });
-        }, [ selectedLesson ])
+        }, [])
     );
 
     return (
