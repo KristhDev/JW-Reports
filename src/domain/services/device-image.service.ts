@@ -1,5 +1,4 @@
 import * as ImagePicker from 'expo-image-picker';
-import { CameraType } from 'expo-image-picker';
 
 /* Errors */
 import { ImageError } from '@domain/errors';
@@ -8,9 +7,14 @@ import { ImageError } from '@domain/errors';
 import { ImageModel } from '@domain/models';
 
 /* Interfaces */
-import { OpenCameraOptions, OpenPickerOptions } from '@infrasturcture/interfaces';
+import { CameraType, OpenCameraOptions, OpenPickerOptions } from '@infrasturcture/interfaces';
 
 export class DeviceImageService {
+    public static cameras: Record<Uppercase<CameraType>, CameraType> = {
+        BACK: 'back',
+        FRONT: 'front'
+    }
+
     /**
      * Converts an image URI to a Base64 string.
      * This method fetches the image located at the provided URI, reads it as a Blob,
@@ -56,9 +60,10 @@ export class DeviceImageService {
     public static async openCamera(options: OpenCameraOptions): Promise<ImageModel | undefined> {
         try {
             const result = await ImagePicker.launchCameraAsync({
-                allowsEditing: true,
+                allowsEditing: options.cropping,
+                allowsMultipleSelection: false,
                 base64: true,
-                cameraType: CameraType.back,
+                cameraType: options.cameraType as any,
                 mediaTypes: [ 'images' ]
             });
 
@@ -95,7 +100,7 @@ export class DeviceImageService {
     public static async openPicker(options: OpenPickerOptions): Promise<ImageModel | undefined> {
         try {
             const result = await ImagePicker.launchImageLibraryAsync({
-                allowsEditing: true,
+                allowsEditing: options.cropping,
                 allowsMultipleSelection: false,
                 base64: true,
                 mediaTypes: [ 'images' ],
