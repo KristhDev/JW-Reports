@@ -42,7 +42,12 @@ múltiples plataformas.** Además, utiliza un **enfoque de renderizado nativo,**
 de manera más eficiente y tienen un mejor rendimiento que las aplicaciones web empaquetadas en una vista web dentro de 
 una aplicación nativa.
 
-### 1.2. Typescript
+### 1.2. Expo
+Una **plataforma de desarrollo** que simplifica la creación de aplicaciones móviles con React Native. Proporciona **herramientas, 
+bibliotecas y servicios preconfigurados** para que los desarrolladores puedan crear, probar y desplegar aplicaciones móviles sin 
+preocuparse por la configuración compleja del entorno o la gestión de dependencias nativas.
+
+### 1.3. Typescript
 Lenguaje de programación de **código abierto** desarrollado por Microsoft que **amplía la sintaxis de JavaScript** con la adición de 
 tipos estáticos opcionales. Se puede considerar como una **capa de abstracción sobre JavaScript** que proporciona una mayor 
 seguridad y escalabilidad al código.
@@ -52,7 +57,7 @@ Los desarrolladores pueden **especificar tipos de datos para variables, funcione
 **aprovechar las características avanzadas de ECMAScript, como clases, interfaces y decoradores,** mientras proporciona una 
 compatibilidad con versiones anteriores de JavaScript.
 
-### 1.3. Supabase
+### 1.4. Supabase
 Es una **alternativa de Firebase de código abierto.** Una **plataforma de bases de datos en la nube** que combina la
 simplicidad y la accesibilidad de una **herramienta de gestión de bases de datos** no relacionales con la potencia y
 la escalabilidad de una base de datos relacional.
@@ -60,28 +65,29 @@ la escalabilidad de una base de datos relacional.
 Supabase es una opción popular para desarrolladores y empresas que buscan una solución de bases de datos en la nube para
 sus aplicaciones y proyectos.
 
-### 1.4. EmailJS
+### 1.5. EmailJS
 Un servicio que permite enviar correos electrónicos directamente desde aplicaciones web sin necesidad de configurar un servidor 
 backend. Utiliza servicios como Gmail, Outlook o servicios personalizados de SMTP para enviar correos electrónicos a través de una 
 API.
 
-### 1.5. OneSignal
+### 1.6. OneSignal
 Es una **plataforma de mensajería y automatización de notificaciones push** para sitios web y aplicaciones móviles. Permite a
 los desarrolladores y propietarios de sitios web **enviar notificaciones push personalizadas y automatizadas** a los usuarios en
 tiempo real.
 
-### 1.6. Jest
+### 1.7. Jest
 Es la **herramienta de Test más popular** y recomendada para React. Es creado por Facebook. Jest no es solo una biblioteca, es
 un marco de prueba. Significa que **viene con una biblioteca de afirmaciones, un corredor de pruebas y soporte** para cosas.
 Como ha sido diseñado específicamente para probar las aplicaciones React, también se puede utilizar en otros marcos de JavaScript.
 
-### 1.7. React Native Testing Library
+### 1.8. React Native Testing Library
 Nos ofrece un nuevo enfoque a más alto nivel sobre los tests, válido tanto para **unitarios como para integración** y al combinarlos
 podemos conseguir una cobertura de tests con la que podemos confirmar que estamos desarrollando sobre seguro en proyectos de
 cualquier tamaño.
 
-### 1.8. Enlaces
+### 1.9. Enlaces
  * [React Native](https://reactnative.dev)  
+ * [Expo](https://expo.dev)
  * [TypeScript](https://www.typescriptlang.org)  
  * [Supabase](https://supabase.com)  
  * [EmailJS](https://emailjs.com)
@@ -653,7 +659,15 @@ Para esto necesita tener una **máquina virtual de Android Studio** ejecutándo
 reciente y estable disponible, en la documentación oficial de Reacts Native le dice los pasos para este entorno, 
 clic [aquí](https://reactnative.dev/docs/set-up-your-environment).
 
-Luego de tener su **máquina virtual** ejecutándose, escriba el siguiente comando en la raíz del proyecto:
+Luego de tener su **máquina virtual** ejecutándose, se debe generar la carpeta ```android```, este proyecto requiere
+de los modulos nativos para ejecutarse, se necesita hacer una pre-construcción(prebuild) para funcionar, eso se logra 
+con el siguiente comando:
+
+```bash
+yarn prebuild
+```
+
+Cuando termine solo hay que levantar la aplicación:
 
 ```bash
 yarn android
@@ -669,51 +683,59 @@ anterior. Para más información le dejo la documentación [aquí](https://react
 <br>
 
 ## 6. Generar APK
-Ya habiendo seguido todos los pasos para correr la aplicación en su dispositivo, continúa esta sección para generar el APK.
-Cabe mencionar que esto solo está configurado para la rama ```main```.
+Como se está usando Expo la forma de generar el APK es diferente a la anterior, que era más manual. El proyecto ya está 
+configurado para generar el archivo APK,  solo hay que seguir los siguientes pasos; en este caso, la construcción está en 
+todas las ramas.
 
-### 6.1. Keystore
-La keystore es un **archivo de almacén de claves** utilizado para **firmar digitalmente aplicaciones móviles de Android**. Cuando
-un desarrollador crea una aplicación móvil de Android, debe **firmarla digitalmente** para garantizar que la aplicación no ha sido
-manipulada y que proviene del desarrollador legítimo. 
-
-El certificado es un archivo que contiene información sobre el desarrollador de la aplicación, como su nombre y su empresa. Es 
-importante guardar el archivo .keystore de manera segura, ya que si se pierde o se daña, no será posible actualizar o publicar
-la aplicación en Google Play Store. 
-
-En la documentación oficial de React Native da el siguiente comando para generar la keystore, ejecútelo en la raíz del proyecto:
+### 6.1. EAS
+Antes de empezar, se necesita tener una cuenta en EAS. Puedes crear una [aquí](https://expo.dev/signup), además de tener el 
+cli de EAS instalado en su máquina.
 
 ```bash
-keytool -genkeypair -v -storetype PKCS12 -keystore my-upload-key.keystore -alias my-key-alias -keyalg RSA -keysize 2048 -validity 10000
+npm i -g eas-cli
 ```
 
-Solo reemplacé ```my-upload-key``` por el nombre que le vas a dar y ```my-key-alias``` por el alias que tendrá la keystore.
-Cuando le de a enter le pedirá una serie de datos, los provee y al final generará la keystore en la raíz del proyecto.
+Luego debe iniciar sesión con el comando:
+```bash
+eas login
+```
 
-### 6.2. Configuración
-Ahora hay que decirle a nuestra aplicación que **vamos a usar la keystore que se generó** anteriormente. Primero mueva el archivo
-.keystore a la carpeta ```android/app```.
-
-Luego de eso hay que agregar los valores respectivos en el archivo **gradle.properties**, se encontrará en la carpeta android.
-Le dejo una tabla con la explicación de cada una de las variables:
-
-| Variable                    | Explicación                                        |
-|-----------------------------|----------------------------------------------------|
-| MYAPP_UPLOAD_STORE_FILE     | Nombre del archivo .keystore                       |
-| MYAPP_UPLOAD_KEY_ALIAS      | Alias de la key                                    |
-| MYAPP_UPLOAD_STORE_PASSWORD | Contraseña que se escribió cuando se generó la key |
-| MYAPP_UPLOAD_KEY_PASSWORD   | Contraseña que se escribió cuando se generó la key |
-
-### 6.3. Generar archivo .apk
-Si ha seguido los pasos correctamente ya está listo para generar el apk, solo abra una terminal y ejecuté el siguiente comando:
+### 6.2. Proyecto de EAS
+En el menú lateral de su Dashboard de EAS busqué la opción **Projects**, presiónela y de clic en el botón de **Create Project**.
+Llene los campos que le pidan y, cuando se cree el proyecto, copie el ID que está en el último comando que se le muestra, 
+ese debe ser:
 
 ```bash
-yarn build:android:apk
+eas init --id PROJECT_ID
 ```
 
-Cuando el proceso termine y se realice con éxito **habrá generado su apk**, se encotrara en ```android/app/build/outputs/apk/release/app-release.apk```. Solo instálela en su dispositivo y podrá usarla.
+### 6.3. Configuración
+Reemplace el valor de la propiedad ```projectId``` en el archivo ```app.config.ts``` con el ID de su proyecto de EAS.
+También cambié la propiedad ```owner``` por el nombre de usuario de su cuenta de EAS, ahora ejecute el siguiente comando:
 
-Para más información le dejo la documentación oficial acerca de este punto [aquí](https://reactnative.dev/docs/signed-apk-android).
+```bash
+eas init
+```
+
+Cuando termine el proyecto de su máquina, ya estará vinculado con EAS.
+
+### 6.4. Variables de entorno
+Cuando entre en su Dashboard de EAS encontrará el proyecto de la aplicación, seleccione el proyecto y diríjase a la pestaña 
+```configuration```, luego a ```Environment Variables``` y presione el botón que dice ```Add Variables```. Ahora suba el 
+archivo ```.env``` a la plataforma, ya aquí puede configurar esas variables a su gusto, haciendo que estén disponibles en 
+diferentes entornos.
+
+### 6.5. Generar archivo APK
+Si ha seguido los pasos correctamente, ya está listo para generar el apk. Solo abra una terminal y ejecuté el siguiente comando:
+
+```bash
+yarn build:android:preview
+```
+
+Podrá darle seguimiento a la construcción y ver los logs desde su Dashboard de EAS. Cuando termine, podrá descargar el apk,
+solo instálela en su dispositivo y podrá usarla.
+
+Para más información, le dejo la documentación oficial acerca de este punto [aquí](https://docs.expo.dev/tutorial/eas/introduction).
 
 <br>
 
