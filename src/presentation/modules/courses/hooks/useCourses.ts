@@ -1,7 +1,7 @@
 import { useRouter } from 'expo-router';
 
 /* Constants */
-import { coursesMessages } from '@application/constants';
+import { coursesMessages, precursors } from '@application/constants';
 
 /* Features */
 import { useAppDispatch, useAppSelector } from '@application/store';
@@ -170,7 +170,7 @@ const useCourses = () => {
             const msg = (course.suspended) ? coursesMessages.SUSPENDED_SUCCESS : coursesMessages.RENEW_SUCCESS;
             updateCourseActionState(course);
 
-            if (user.precursor === 'ninguno' && lastLesson.courseId === state.selectedCourse.id) {
+            if (user.precursor === precursors.NINGUNO && lastLesson.courseId === state.selectedCourse.id) {
                 addLastLesson({ ...lastLesson, course })
             }
 
@@ -208,14 +208,14 @@ const useCourses = () => {
             await LessonsService.deleteLessonsByCourseId(state.selectedCourse.id);
             await CoursesService.delete(state.selectedCourse.id, user.id);
 
-            if (user.precursor === 'ninguno' && lastLesson.courseId === state.selectedCourse.id) {
+            if (user.precursor === precursors.NINGUNO && lastLesson.courseId === state.selectedCourse.id) {
                 await loadLastLesson();
             }
 
             removeCourse(state.selectedCourse.id);
 
             onFinish && onFinish();
-            back && router.navigate('/(app)/(tabs)/courses/(tabs)');
+            back && router.back();
 
             setSelectedCourse(INIT_COURSE);
             setStatus({ code: 200, msg: coursesMessages.DELETED_SUCCESS });
@@ -300,7 +300,7 @@ const useCourses = () => {
             const msg = (course.finished) ? coursesMessages.FINISHED_SUCCESS : coursesMessages.RESTARTED_SUCCESS;
             updateCourseActionState(course);
 
-            if (user.precursor === 'ninguno' && lastLesson.courseId === state.selectedCourse.id) {
+            if (user.precursor === precursors.NINGUNO && lastLesson.courseId === state.selectedCourse.id) {
                 addLastLesson({ ...lastLesson, course });
             }
 
@@ -368,10 +368,11 @@ const useCourses = () => {
      * screen.
      *
      * @param {CourseFormValues} courseValues - This is a values for save course
+     * @param {boolean} goBack - This parameter allows you to return to the previous screen, by default it is `false`
      * @param {Function} onFinish - This callback executed when the process is finished (success or failure)
      * @return {Promise<void>} This function does not return anything.
      */
-    const saveCourse = async (courseValues: CourseFormValues, onFinish?: () => void): Promise<void> => {
+    const saveCourse = async (courseValues: CourseFormValues, goBack: boolean = false, onFinish?: () => void): Promise<void> => {
         const wifiConnectionAvailable = hasWifiConnection();
         if (!wifiConnectionAvailable) return;
 
@@ -387,12 +388,7 @@ const useCourses = () => {
             addCourse(course);
             setStatus({ code: 201, msg: coursesMessages.ADDED_SUCCESS });
 
-            router.navigate({
-                name: 'CoursesStackNavigation',
-                params: {
-                    screen: 'CoursesTopTabsNavigation'
-                }
-            } as never);
+            goBack && router.back();
         }
         catch (error) {
             setIsCourseLoading(false);
@@ -430,7 +426,7 @@ const useCourses = () => {
 
             updateCourseActionState(course);
 
-            if (user.precursor === 'ninguno' && lastLesson.courseId === state.selectedCourse.id) {
+            if (user.precursor === precursors.NINGUNO && lastLesson.courseId === state.selectedCourse.id) {
                 addLastLesson({ ...lastLesson, course });
             }
 
