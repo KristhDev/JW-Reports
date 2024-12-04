@@ -13,6 +13,7 @@ const config = ({ config }: ConfigContext): ExpoConfig => ({
     ...config,
     name: 'JW Reports',
     slug: 'jw-reports',
+    owner: 'kristhdev',
     version,
     orientation: 'portrait',
     icon: './assets/images/icon.png',
