@@ -42,7 +42,7 @@ export const CourseForm = (): JSX.Element => {
      */
     const handleSaveOrUpdate = (formValues: CourseFormValues): void => {
         (selectedCourse.id === '')
-            ? saveCourse(formValues)
+            ? saveCourse(formValues, true)
             : updateCourse(formValues);
     }
 

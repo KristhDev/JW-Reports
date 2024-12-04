@@ -46,7 +46,7 @@ const PassToCourseModal: FC<ModalProps> = ({ isOpen, onClose }): JSX.Element => 
                     personAbout: selectedRevisit.about,
                     personAddress: selectedRevisit.address,
                     publication: values?.publication!
-                }, onClose);
+                }, false, onClose);
             }
             else {
                 setStatus({
