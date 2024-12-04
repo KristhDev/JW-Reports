@@ -20,17 +20,15 @@ export const TopTabs = withLayoutContext<
 export default function RevisitsTopTabsLauyout(): JSX.Element {
     const { theme: { colors } } = useStyles();
 
-    const { state: { selectedRevisit }, setSelectedRevisit } = useRevisits();
+    const { setSelectedRevisit } = useRevisits();
 
     useFocusEffect(
         useCallback(() => {
-            if (selectedRevisit.id === '') return;
-
             setSelectedRevisit({
                 ...INIT_REVISIT,
                 nextVisit: new Date().toString(),
             });
-        }, [ selectedRevisit ])
+        }, [])
     );
 
     return (

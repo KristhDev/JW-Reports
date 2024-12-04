@@ -25,9 +25,8 @@ export default function CoursesTopTabsLauyout(): JSX.Element {
 
     useFocusEffect(
         useCallback(() => {
-            if (selectedCourse.id === '') return;
             setSelectedCourse(selectedCourse);
-        }, [ selectedCourse ])
+        }, [])
     );
 
     return (
