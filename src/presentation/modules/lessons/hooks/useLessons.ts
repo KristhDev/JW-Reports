@@ -1,7 +1,7 @@
 import { useRouter } from 'expo-router';
 
 /* Constants */
-import { authMessages, coursesMessages, lessonsMessages } from '@application/constants';
+import { authMessages, coursesMessages, lessonsMessages, precursors } from '@application/constants';
 
 /* Features */
 import { useAppDispatch, useAppSelector } from '@application/store';
@@ -178,7 +178,7 @@ const useLessons = () => {
             await LessonsService.delete(state.selectedLesson.id);
             removeLesson(state.selectedLesson.id);
 
-            if (user.precursor === 'ninguno' && state.selectedLesson.id === state.lastLesson.id) {
+            if (user.precursor === precursors.NINGUNO && state.selectedLesson.id === state.lastLesson.id) {
                 await loadLastLesson();
             }
 
@@ -226,7 +226,7 @@ const useLessons = () => {
 
             updateLessonActionState(lesson);
             updateLastLessonInCourse(lesson);
-            if (user.precursor === 'ninguno') await loadLastLesson();
+            if (user.precursor === precursors.NINGUNO) await loadLastLesson();
 
             onFinish && onFinish();
             const msg = (lesson.done) ? lessonsMessages.FINISHED_SUCCESS : lessonsMessages.RESTARTED_SUCCESS;
@@ -339,10 +339,10 @@ const useLessons = () => {
             if (state.lessons.length > 0) addLesson(lesson);
             else setIsLessonLoading(false);
 
-            if (user.precursor === 'ninguno') await loadLastLesson();
+            if (user.precursor === precursors.NINGUNO) await loadLastLesson();
 
             setStatus({ code: 201, msg: lessonsMessages.ADDED_SUCCESS });
-            router.navigate('LessonsScreen' as never);
+            router.back();
         }
         catch (error) {
             setIsLessonLoading(false);
