@@ -1,4 +1,4 @@
-import { ItemOption, Precursor, UppercaseKeys } from '@infrasturcture/interfaces';
+import { ItemOption, Precursor } from '@infrasturcture/interfaces';
 
 /**
  * The precursors options to select
