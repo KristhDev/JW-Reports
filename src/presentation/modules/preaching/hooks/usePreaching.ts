@@ -129,12 +129,12 @@ const usePreaching = () => {
             await PreachingService.delete(state.seletedPreaching.id, user.id);
             removePreaching(state.seletedPreaching.id);
 
+            resetSelectedPreaching();
             setIsPreachingDeleting(false);
-            onFinish && onFinish();
 
+            onFinish && onFinish();
             router.back();
 
-            resetSelectedPreaching();
             setStatus({ code: 200, msg: preachingMessages.DELETED_SUCCESS });
         }
         catch (error) {
@@ -228,8 +228,8 @@ const usePreaching = () => {
 
             if (Time.format(result.day, 'MMMM') === Time.format(state.selectedDate, 'MMMM')) addPreaching(result);
 
-            setStatus({ code: 201, msg: preachingMessages.ADDED_SUCCESS });
             router.back();
+            setStatus({ code: 201, msg: preachingMessages.ADDED_SUCCESS });
         }
         catch (error) {
             setError(error);
@@ -262,10 +262,10 @@ const usePreaching = () => {
             const preaching = await PreachingService.update(state.seletedPreaching.id, user.id, updateDto);
 
             updatePreachingState(preaching);
-            setStatus({ code: 200, msg: preachingMessages.UPDATED_SUCCESS });
-
             resetSelectedPreaching();
+
             router.back();
+            setStatus({ code: 200, msg: preachingMessages.UPDATED_SUCCESS });
         }
         catch (error) {
             setIsPreachingLoading(false);
