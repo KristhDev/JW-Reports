@@ -102,6 +102,8 @@ const useLessons = () => {
      * @return {boolean} True if the user can alterate the lesson, false otherwise
      */
     const canAlterateLesson = (unSelectedMsg: string, onError?: () => void): boolean => {
+        console.log(JSON.stringify(state.selectedLesson, null, 2));
+
         if (state.selectedLesson.id === '') {
             onError && onError();
             setStatus({ code: 400, msg: unSelectedMsg });
@@ -184,11 +186,10 @@ const useLessons = () => {
 
             replaceLastLessonInCourse(state.selectedLesson.id, state.lessons[0]);
             onFinish && onFinish();
-            setStatus({ code: 200, msg: lessonsMessages.DELETED_SUCCESS });
-
-            resetSelectedLesson();
             back && router.back();
 
+            resetSelectedLesson();
+            setStatus({ code: 200, msg: lessonsMessages.DELETED_SUCCESS });
         }
         catch (error) {
             setIsLessonDeleting(false);
@@ -335,14 +336,13 @@ const useLessons = () => {
             const lesson = await LessonsService.create(createDto);
 
             addLastLessonInCourse(selectedCourse.id, lesson);
+            if (user.precursor === precursors.NINGUNO) await loadLastLesson();
 
             if (state.lessons.length > 0) addLesson(lesson);
             else setIsLessonLoading(false);
 
-            if (user.precursor === precursors.NINGUNO) await loadLastLesson();
-
-            setStatus({ code: 201, msg: lessonsMessages.ADDED_SUCCESS });
             router.back();
+            setStatus({ code: 201, msg: lessonsMessages.ADDED_SUCCESS });
         }
         catch (error) {
             setIsLessonLoading(false);
@@ -375,8 +375,8 @@ const useLessons = () => {
             updateLessonActionState(lesson);
             updateLastLessonInCourse(lesson);
 
-            setStatus({ code: 200, msg: lessonsMessages.UPDATED_SUCCESS });
             router.back();
+            setStatus({ code: 200, msg: lessonsMessages.UPDATED_SUCCESS });
         }
         catch (error) {
             setIsLessonLoading(false);
