@@ -12,3 +12,5 @@ export interface SendEmailOptions {
     message: string;
     templateId: string;
 }
+
+export type CameraType = 'back' | 'front';
