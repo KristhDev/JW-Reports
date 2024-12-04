@@ -8,7 +8,3 @@ export type ItemOption = {
     label: string;
     value: any;
 }
-
-export type UppercaseKeys<T extends string> = {
-    [K in T as Uppercase<K>]: K;
-}
