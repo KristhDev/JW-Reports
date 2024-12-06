@@ -38,6 +38,7 @@ export default function AppLayout(): JSX.Element {
     return (
         <Stack
             screenOptions={{
+                contentStyle: { backgroundColor: colors.background },
                 headerShown: false,
                 statusBarAnimation: 'fade',
                 statusBarBackgroundColor: colors.header,
