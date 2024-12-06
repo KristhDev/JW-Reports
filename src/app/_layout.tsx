@@ -37,7 +37,7 @@ const Navigation = (): JSX.Element => {
   const { state: { isAuthenticated }, getAuth } = useAuth();
   const { clearCourses } = useCourses();
   const { clearLessons } = useLessons();
-  const { state, checkPermissions, requestPermissions } = usePermissions();
+  const { checkPermissions } = usePermissions();
   const { clearPreaching } = usePreaching();
   const { clearRevisits } = useRevisits();
   const { state: { theme } } = useTheme();
@@ -56,14 +56,6 @@ const Navigation = (): JSX.Element => {
 
       getAuth();
     }
-  }, []);
-
-  /**
-   * Effect to check or request permissions.
-   */
-  useEffect(() => {
-    if (state.isPermissionsRequested) checkPermissions();
-    else requestPermissions({ notifications: true });
   }, []);
 
   /**

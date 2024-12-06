@@ -14,14 +14,22 @@ export default function AppLayout(): JSX.Element {
     const { theme: { colors } } = useStyles();
 
     const { state: { isAuthenticated, user } } = useAuth();
-    const { state } = usePermissions();
+    const { state: { isPermissionsRequested, permissions }, checkPermissions, requestPermissions } = usePermissions();
     const { state: { theme } } = useTheme();
+
+    /**
+     * Effect to check or request permissions.
+     */
+    useEffect(() => {
+        if (isPermissionsRequested) checkPermissions();
+        else requestPermissions({ notifications: true });
+    }, []);
 
     /**
      * Effect to listen notifications by user.
      */
     useEffect(() => {
-        if (!user.id || state.permissions.notifications !== permissionsStatus.GRANTED) return;
+        if (!user.id || permissions.notifications !== permissionsStatus.GRANTED) return;
         NotificationsService.listenNotificationsByUser(user.id);
     }, [ user.id ]);
 
