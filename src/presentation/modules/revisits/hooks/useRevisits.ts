@@ -221,7 +221,7 @@ const useRevisits = () => {
             });
 
             const fileName = `Revisitas_de_${ user.name }_${ user.surname }`;
-            const pdfPath = await PDF.writeFromHTML({ fileName, html: revisitsTemplate });
+            const pdfPath = await PDF.writeFromHTML({ fileName, html: revisitsTemplate, width: 480 });
 
             await ExternalStorage.moveFileOfInternalExtorage({
                 filePath: pdfPath,
