@@ -141,14 +141,13 @@ export class PdfRevisitsTemplate {
                         <img
                             alt="Imagen que aporta más información de ${ revisit.personName }"
                             class="revisit-card__section-img"
-                            src="https://placehold.co/600x400"
+                            src="${ revisit.photo }"
                         >
                     </div>
                 `;
             }
 
             template += `
-
                     <div class="revisit-card__date">
                         <p>Fecha de próxima visita:</p>
                         <span>${ Time.format(revisit.nextVisit, 'DD/MM/YYYY') }</span>
