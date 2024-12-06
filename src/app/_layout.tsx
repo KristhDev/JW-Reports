@@ -16,13 +16,13 @@ import { EmailService, LoggerService } from '@domain/services';
 import { NotificationsService } from '@services';
 
 /* Modules */
-import { useTheme } from '@theme';
 import { useAuth } from '@auth';
 import { useCourses } from '@courses';
 import { useLessons } from '@lessons';
-import { useNetwork, usePermissions } from '@shared';
 import { usePreaching } from '@preaching';
 import { useRevisits } from '@revisits';
+import { useNetwork, usePermissions } from '@shared';
+import { useTheme } from '@theme';
 import { useUI } from '@ui';
 
 /* Global config of date util */
@@ -89,6 +89,7 @@ const Navigation = (): JSX.Element => {
     <Stack
       screenOptions={{
         animation: 'fade_from_bottom',
+        contentStyle: { backgroundColor: colors.background },
         headerShown: false,
         statusBarAnimation: 'fade',
         statusBarBackgroundColor: colors.contentHeader,
@@ -102,6 +103,7 @@ const Navigation = (): JSX.Element => {
         name="modal"
         options={{
           animation: 'fade',
+          contentStyle: { backgroundColor: 'transparent' },
           presentation: 'transparentModal',
           statusBarBackgroundColor: (isAuthenticated) ? colors.header : colors.contentHeader
         }}
