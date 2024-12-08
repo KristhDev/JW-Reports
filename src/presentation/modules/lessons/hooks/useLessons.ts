@@ -44,6 +44,7 @@ import { useNetwork, useStatus } from '@shared';
 /* Interfaces */
 import { LessonFormValues } from '../interfaces';
 import { LoadResourcesOptions } from '@ui';
+import { deleteOptions } from '@infrasturcture/interfaces';
 
 /**
  * Hook to management lessons of store with state and actions
@@ -102,8 +103,6 @@ const useLessons = () => {
      * @return {boolean} True if the user can alterate the lesson, false otherwise
      */
     const canAlterateLesson = (unSelectedMsg: string, onError?: () => void): boolean => {
-        console.log(JSON.stringify(state.selectedLesson, null, 2));
-
         if (state.selectedLesson.id === '') {
             onError && onError();
             setStatus({ code: 400, msg: unSelectedMsg });
@@ -158,13 +157,14 @@ const useLessons = () => {
     }
 
     /**
-     * It deletes a lesson from the database and updates the state of the app.
+     * Deletes the selected lesson and updates the state accordingly.
      *
-     * @param {boolean} back - This parameter allows you to return to the previous screen, by default it is `false`
-     * @param {Function} onFinish - This callback executed when the process is finished (success or failure)
+     * @param {Object} options - Options for the delete operation.
+     * @param {Function} options.onFinish - Callback executed when the process is finished (success or failure).
+     * @param {Function} options.onSuccess - Callback executed on successful deletion.
      * @return {Promise<void>} This function does not return anything.
      */
-    const deleteLesson = async (back: boolean = false, onFinish?: () => void): Promise<void> => {
+    const deleteLesson = async ({ onFinish, onSuccess }: deleteOptions): Promise<void> => {
         const wifiConnectionAvailable = hasWifiConnection();
         if (!wifiConnectionAvailable) return;
 
@@ -178,15 +178,15 @@ const useLessons = () => {
 
         try {
             await LessonsService.delete(state.selectedLesson.id);
-            removeLesson(state.selectedLesson.id);
 
             if (user.precursor === precursors.NINGUNO && state.selectedLesson.id === state.lastLesson.id) {
                 await loadLastLesson();
             }
 
-            replaceLastLessonInCourse(state.selectedLesson.id, state.lessons[0]);
             onFinish && onFinish();
-            back && router.back();
+            removeLesson(state.selectedLesson.id);
+            replaceLastLessonInCourse(state.selectedLesson.id, state.lessons[0]);
+            onSuccess && onSuccess();
 
             resetSelectedLesson();
             setStatus({ code: 200, msg: lessonsMessages.DELETED_SUCCESS });
