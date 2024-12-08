@@ -50,6 +50,7 @@ import { useStatus, useNetwork } from '@shared';
 
 /* Interfaces */
 import { CourseFilter, CourseFormValues, loadCoursesOptions } from '../interfaces';
+import { deleteOptions } from '@infrasturcture/interfaces';
 
 /**
  * Hook to management courses of store with state and actions
@@ -192,7 +193,7 @@ const useCourses = () => {
      * @param {Function} onFinish - This callback executed when the process is finished (success or failure)
      * @return {Promise<void>} This function does not return anything.
      */
-    const deleteCourse = async (back: boolean = false, onFinish?: () => void): Promise<void> => {
+    const deleteCourse = async ({ onFinish, onSuccess }: deleteOptions): Promise<void> => {
         const wifi = hasWifiConnection();
         if (!wifi) return;
 
@@ -215,7 +216,7 @@ const useCourses = () => {
             removeCourse(state.selectedCourse.id);
 
             onFinish && onFinish();
-            back && router.back();
+            onSuccess && onSuccess();
 
             setSelectedCourse(INIT_COURSE);
             setStatus({ code: 200, msg: coursesMessages.DELETED_SUCCESS });
