@@ -53,6 +53,7 @@ import { useImage, useNetwork, useStatus } from '@shared';
 
 /* Interfaces */
 import { loadRevisitsOptions, RevisitFilter, RevisitFormValues, SaveRevisitOptions } from '../interfaces';
+import { deleteOptions } from '@infrasturcture/interfaces';
 
 /**
  * Hook to management revisits of store with state and actions
@@ -155,11 +156,12 @@ const useRevisits = () => {
     /**
      * This function is to delete a revisit.
      *
-     * @param {boolean} back - This is a flag to indicate whether to navigate to the previous screen or not, default is `false`
-     * @param {Function} onFinish - This callback executed when the process is finished (success or failure), default is `undefined`
-     * @return {Promise<void>} This function does not return anything
+     * @param {{ onFinish: Function, onSuccess: Function }} options - This is an options for delete revisit.
+     * - onFinish: This callback executed when the process is finished (success or failure), default is `undefined`
+     * - onSuccess: This callback executed when the process is success, default is `undefined`
+     * @return {Promise<void>} This function does not return anything.
      */
-    const deleteRevisit = async (back: boolean = false, onFinish?: () => void): Promise<void> => {
+    const deleteRevisit = async ({ onFinish, onSuccess }: deleteOptions): Promise<void> => {
         const wifiConnectionAvailable = hasWifiConnection();
         if (!wifiConnectionAvailable) return;
 
@@ -176,15 +178,14 @@ const useRevisits = () => {
             if (state.selectedRevisit.photo) await deleteImage(state.selectedRevisit.photo, process.env.EXPO_PUBLIC_SUPABASE_REVISITS_FOLDER!);
             await RevisitsService.delete(state.selectedRevisit.id, user.id);
 
-            removeRevisit(state.selectedRevisit.id);
-
             if (user.precursor === precursors.NINGUNO && state.lastRevisit.id === state.selectedRevisit.id) {
                 await loadLastRevisit();
             }
 
-            setIsRevisitDeleting(false);
             onFinish && onFinish();
-            back && router.back();
+            removeRevisit(state.selectedRevisit.id);
+            setIsRevisitDeleting(false);
+            onSuccess && onSuccess();
 
             setSelectedRevisit(INIT_REVISIT);
             setStatus({ code: 200, msg: revisitsMessages.DELETED_SUCCESS });
