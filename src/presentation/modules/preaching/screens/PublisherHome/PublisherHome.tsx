@@ -151,7 +151,9 @@ const PublisherHome = (): JSX.Element => {
      * @return {void} - This function does not return any value.
      */
     const handleDeleteLessonConfirm = (): void => {
-        deleteLesson(false, () => setShowDeleteLessonModal(false));
+        deleteLesson({
+            onFinish: () => setShowDeleteLessonModal(false)
+        });
     }
 
     /**
@@ -161,7 +163,9 @@ const PublisherHome = (): JSX.Element => {
      * @return {void} - This function does not return any value.
      */
     const handleDeleteRevisitConfirm = (): void => {
-        deleteRevisit(false, () => setShowDeleteRevisitModal(false));
+        deleteRevisit({
+            onFinish: () => setShowDeleteRevisitModal(false)
+        });
     }
 
     return (
