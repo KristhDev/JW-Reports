@@ -31,7 +31,7 @@ const useExportData = () => {
             setStatus({ code: 200, msg: appMessages.DATA_EXPORTED_SUCCESS });
         }
         catch (error) {
-            console.log(error);
+            console.error(error);
         }
         finally {
             setIsDataExporting(false);

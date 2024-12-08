@@ -39,7 +39,7 @@ const useEmail = () => {
             onSuccess && onSuccess();
         }
         catch (error) {
-            console.log(error);
+            console.error(error);
             setStatus({ code: 400, msg: emailMessages.FEEDBACK_FAILED });
         }
         finally {
