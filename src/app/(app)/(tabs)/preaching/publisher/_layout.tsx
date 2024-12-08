@@ -36,8 +36,11 @@ export default function PublisherLayout(): JSX.Element {
      *
      * @return {void} This function does not return anything
      */
-    const handleDeleteLesson = (): void => {
-        deleteLesson(true, () => setShowDeleteLessonModal(false));
+    const handleDeleteLesson = (onSuccess?: () => void): void => {
+        deleteLesson({
+            onFinish: () => setShowDeleteLessonModal(false),
+            onSuccess,
+        });
     }
 
     /**
@@ -46,8 +49,11 @@ export default function PublisherLayout(): JSX.Element {
      *
      * @return {void} This function does not return anything
      */
-    const handleDeleteRevisit = (): void => {
-        deleteRevisit(true, () => setShowDeleteRevisitModal(false));
+    const handleDeleteRevisit = (onSuccess?: () => void): void => {
+        deleteRevisit({
+            onFinish: () => setShowDeleteRevisitModal(false),
+            onSuccess
+        });
     }
 
     useEffect(() => {
@@ -97,6 +103,7 @@ export default function PublisherLayout(): JSX.Element {
                 options={{
                     header: ({ options }) => (
                         <Header
+                            showBackButton
                             showTitle
                             style={{ justifyContent: 'space-between' }}
                             title={ options.title }
@@ -106,7 +113,7 @@ export default function PublisherLayout(): JSX.Element {
                                 deleteModalText="¿Está seguro de eliminar esta clase?"
                                 isDeleteModalLoading={ isLessonDeleting }
                                 onCloseDeleteModal={ () => setShowDeleteLessonModal(false) }
-                                onConfirmDeleteModal={ handleDeleteLesson }
+                                onConfirmDeleteModal={ () => handleDeleteLesson(() => router.dismissTo('/(app)/(tabs)/preaching/publisher')) }
                                 onShowDeleteModal={ () => setShowDeleteLessonModal(true) }
                                 showDeleteModal={ showDeleteLessonModal }
                             />
@@ -121,6 +128,7 @@ export default function PublisherLayout(): JSX.Element {
                 options={{
                     header: ({ options }) => (
                         <Header
+                            showBackButton
                             showTitle
                             style={{ justifyContent: 'space-between' }}
                             title={ options.title }
@@ -130,7 +138,7 @@ export default function PublisherLayout(): JSX.Element {
                                 deleteModalText="¿Está seguro de eliminar esta clase?"
                                 isDeleteModalLoading={ isLessonDeleting }
                                 onCloseDeleteModal={ () => setShowDeleteLessonModal(false) }
-                                onConfirmDeleteModal={ handleDeleteLesson }
+                                onConfirmDeleteModal={ () => handleDeleteLesson(router.back) }
                                 onShowDeleteModal={ () => setShowDeleteLessonModal(true) }
                                 showDeleteModal={ showDeleteLessonModal }
 
@@ -148,6 +156,7 @@ export default function PublisherLayout(): JSX.Element {
                 options={{
                     header: ({ options }) => (
                         <Header
+                            showBackButton
                             showTitle
                             style={{ justifyContent: 'space-between' }}
                             title={ options.title }
@@ -158,7 +167,7 @@ export default function PublisherLayout(): JSX.Element {
                                 editButton={ false }
                                 isDeleteModalLoading={ isRevisitDeleting }
                                 onCloseDeleteModal={ () => setShowDeleteRevisitModal(false) }
-                                onConfirmDeleteModal={ handleDeleteRevisit }
+                                onConfirmDeleteModal={ () => handleDeleteRevisit(() => router.dismissTo('/(app)/(tabs)/preaching/publisher')) }
                                 onShowDeleteModal={ () => setShowDeleteRevisitModal(true) }
                                 showDeleteModal={ showDeleteRevisitModal }
                             />
@@ -173,6 +182,7 @@ export default function PublisherLayout(): JSX.Element {
                 options={{
                     header: ({ options }) => (
                         <Header
+                            showBackButton
                             showTitle
                             style={{ justifyContent: 'space-between' }}
                             title={ options.title }
@@ -182,7 +192,7 @@ export default function PublisherLayout(): JSX.Element {
                                 deleteModalText="¿Está seguro de eliminar esta revisita?"
                                 isDeleteModalLoading={ isRevisitDeleting }
                                 onCloseDeleteModal={ () => setShowDeleteRevisitModal(false) }
-                                onConfirmDeleteModal={ handleDeleteRevisit }
+                                onConfirmDeleteModal={ () =>handleDeleteRevisit(router.back) }
                                 onShowDeleteModal={ () => setShowDeleteRevisitModal(true) }
                                 showDeleteModal={ showDeleteRevisitModal }
 

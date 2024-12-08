@@ -22,8 +22,11 @@ export default function RevisitsLayout(): JSX.Element {
      *
      * @return {void} This function does not return anything
      */
-    const handleDeleteConfirm = (): void => {
-        deleteRevisit(true, () => setShowDeleteModal(false));
+    const handleDeleteConfirm = (onSuccess?: () => void): void => {
+        deleteRevisit({
+            onFinish: () => setShowDeleteModal(false),
+            onSuccess
+        });
     }
 
     return (
@@ -56,7 +59,7 @@ export default function RevisitsLayout(): JSX.Element {
                                 deleteModalText="¿Está seguro de eliminar esta revisita?"
                                 isDeleteModalLoading={ isRevisitDeleting }
                                 onCloseDeleteModal={ () => setShowDeleteModal(false) }
-                                onConfirmDeleteModal={ handleDeleteConfirm }
+                                onConfirmDeleteModal={ () => handleDeleteConfirm(router.back) }
                                 onShowDeleteModal={ () => setShowDeleteModal(true) }
                                 showDeleteModal={ showDeleteModal }
 
@@ -84,7 +87,7 @@ export default function RevisitsLayout(): JSX.Element {
                                 deleteModalText="¿Está seguro de eliminar esta revisita?"
                                 isDeleteModalLoading={ isRevisitDeleting }
                                 onCloseDeleteModal={ () => setShowDeleteModal(false) }
-                                onConfirmDeleteModal={ handleDeleteConfirm }
+                                onConfirmDeleteModal={ () => handleDeleteConfirm(() => router.dismissTo('/(app)/(tabs)/revisits/(tabs)')) }
                                 onShowDeleteModal={ () => setShowDeleteModal(true) }
                                 showDeleteModal={ showDeleteModal }
     

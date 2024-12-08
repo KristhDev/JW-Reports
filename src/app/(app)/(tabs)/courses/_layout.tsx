@@ -28,8 +28,11 @@ export default function CoursesLayout(): JSX.Element {
      *
      * @return {void} This function does not return anything
      */
-    const handleDeleteCourse = (): void => {
-        deleteCourse(true, () => setShowDeleteCourseModal(false));
+    const handleDeleteCourse = (onSuccess?: () => void): void => {
+        deleteCourse({
+            onFinish: () => setShowDeleteCourseModal(false),
+            onSuccess
+        });
     }
 
     /**
@@ -38,8 +41,11 @@ export default function CoursesLayout(): JSX.Element {
      *
      * @return {void} This function does not return anything
      */
-    const handleDeleteLesson = (): void => {
-        deleteLesson(true, () => setShowDeleteLessonModal(false));
+    const handleDeleteLesson = (onSuccess?: () => void): void => {
+        deleteLesson({
+            onFinish: () => setShowDeleteLessonModal(false),
+            onSuccess
+        });
     }
 
     return (
@@ -72,7 +78,7 @@ export default function CoursesLayout(): JSX.Element {
                                 deleteModalText="¿Está seguro de eliminar este curso?"
                                 isDeleteModalLoading={ isCourseDeleting }
                                 onCloseDeleteModal={ () => setShowDeleteCourseModal(false) }
-                                onConfirmDeleteModal={ handleDeleteCourse }
+                                onConfirmDeleteModal={ () => handleDeleteCourse(router.back) }
                                 onShowDeleteModal={ () => setShowDeleteCourseModal(true) }
                                 showDeleteModal={ showDeleteCourseModal }
 
@@ -100,7 +106,7 @@ export default function CoursesLayout(): JSX.Element {
                                 deleteModalText="¿Está seguro de eliminar este curso?"
                                 isDeleteModalLoading={ isCourseDeleting }
                                 onCloseDeleteModal={ () => setShowDeleteCourseModal(false) }
-                                onConfirmDeleteModal={ handleDeleteCourse }
+                                onConfirmDeleteModal={ () => handleDeleteCourse(() => router.dismissTo('/(app)/(tabs)/courses/(tabs)')) }
                                 onShowDeleteModal={ () => setShowDeleteCourseModal(true) }
                                 showDeleteModal={ showDeleteCourseModal }
                             />
@@ -125,7 +131,7 @@ export default function CoursesLayout(): JSX.Element {
                                 deleteModalText="¿Está seguro de eliminar esta clase?"
                                 isDeleteModalLoading={ isLessonDeleting }
                                 onCloseDeleteModal={ () => setShowDeleteLessonModal(false) }
-                                onConfirmDeleteModal={ handleDeleteLesson }
+                                onConfirmDeleteModal={ () => handleDeleteLesson(() => router.dismissTo('/(app)/(tabs)/courses/lessons')) }
                                 onShowDeleteModal={ () => setShowDeleteLessonModal(true) }
                                 showDeleteModal={ showDeleteLessonModal }
                             />
@@ -164,7 +170,7 @@ export default function CoursesLayout(): JSX.Element {
                                 deleteModalText="¿Está seguro de eliminar esta clase?"
                                 isDeleteModalLoading={ isLessonDeleting }
                                 onCloseDeleteModal={ () => setShowDeleteLessonModal(false) }
-                                onConfirmDeleteModal={ handleDeleteLesson }
+                                onConfirmDeleteModal={ () => handleDeleteLesson(router.back) }
                                 onShowDeleteModal={ () => setShowDeleteLessonModal(true) }
                                 showDeleteModal={ showDeleteLessonModal }
     
