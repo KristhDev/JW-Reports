@@ -1,5 +1,8 @@
 import EmailJs, { EmailJSResponseStatus } from '@emailjs/react-native';
 
+/* Config */
+import { env } from '@config';
+
 /* Errors */
 import { EmailError } from '@domain/errors';
 
@@ -13,7 +16,7 @@ export class EmailService {
      * @returns {void} - This function does not return anything
      */
     public static init(): void {
-        EmailJs.init({ publicKey: process.env.EXPO_PUBLIC_EMAILJS_PUBLIC_KEY! });
+        EmailJs.init({ publicKey: env.EMAILJS_PUBLIC_KEY! });
     }
 
     /**
@@ -25,7 +28,7 @@ export class EmailService {
     public static async send({ email, imageUrl, message, templateId }: SendEmailOptions): Promise<void> {
         try {
             await EmailJs.send(
-                process.env.EXPO_PUBLIC_EMAILJS_SERVICE_IDD!,
+                env.EMAILJS_SERVICE_ID!,
                 templateId,
                 { email, imageUrl, message }
             );

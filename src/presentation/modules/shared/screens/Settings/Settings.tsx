@@ -3,6 +3,9 @@ import { Linking, ScrollView, Text } from 'react-native';
 import { useStyles } from 'react-native-unistyles';
 import { useRouter } from 'expo-router';
 
+/* Config */
+import { env } from '@config';
+
 /* Constants */
 import { THEME_OPTIONS } from '@application/constants';
 
@@ -129,7 +132,7 @@ const Settings = (): JSX.Element => {
                     />
 
                     <SectionBtn
-                        onPress={ () => Linking.openURL(process.env.EXPO_PUBLIC_REPOSITORY_URL!) }
+                        onPress={ () => Linking.openURL(env.REPOSITORY_URL!) }
                         subText="Código fuente de la aplicación"
                         text="Repositorio"
                     />

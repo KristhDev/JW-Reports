@@ -1,5 +1,8 @@
 import { LogLevel, OneSignal } from 'react-native-onesignal';
 
+/* Config */
+import { env } from '@config';
+
 export class NotificationsService {
     /**
      * Mounts the OneSignal SDK and requests permission for notifications.
@@ -8,7 +11,7 @@ export class NotificationsService {
      */
     public static mount(): void {
         OneSignal.Debug.setLogLevel(LogLevel.Verbose);
-        OneSignal.initialize(process.env.EXPO_PUBLIC_ONESIGNAL_APP_ID!);
+        OneSignal.initialize(env.ONESIGNAL_APP_ID!);
     }
 
     /**
