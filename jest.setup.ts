@@ -1,6 +1,3 @@
-// import env from '@expo/env';
-// env.load(process.cwd());
-
 import { Image, Share } from 'react-native';
 import mockSafeAreaContext from 'react-native-safe-area-context/jest/mock';
 
@@ -12,8 +9,6 @@ import '@config/unistyles';
 
 // jest.mock('react-native/Libraries/Animated/NativeAnimatedHelper');
 jest.mock('react-native/Libraries/EventEmitter/NativeEventEmitter');
-jest.mock('react-native/js-polyfills');
-
 
 jest.spyOn(Image, 'resolveAssetSource').mockImplementation(() => ({
     uri: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTar_ouGael5ODlrC1kbFbKLpEPSJtTQqdaIg&s',
