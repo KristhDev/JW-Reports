@@ -33,7 +33,6 @@ const jestConfig: Config = {
     },
     transformIgnorePatterns: [
         'node_modules/(?!((jest-)?react-native|@react-native(-community)?)|expo(nent)?|@expo(nent)?/.*|@expo-google-fonts/.*|react-navigation|@react-navigation/.*|@sentry/react-native|native-base|react-native-svg)',
-        'node_modules/(?!(react-native|@react-native/js-polyfills)/)',
     ],
     verbose: true
 }
