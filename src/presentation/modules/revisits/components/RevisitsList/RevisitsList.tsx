@@ -156,7 +156,9 @@ export const RevisitsList: FC<RevisitsListProps> = ({ emptyMessage, filter, titl
      * @return {void} - This function does not return any value
      */
     const handleDeleteConfirm = (): void => {
-        deleteRevisit(false, () => setShowDeleteModal(false));
+        deleteRevisit({
+            onFinish: () => setShowDeleteModal(false)
+        });
     }
 
     /**
