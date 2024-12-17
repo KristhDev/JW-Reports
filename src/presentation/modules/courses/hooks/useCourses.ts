@@ -50,6 +50,7 @@ import { useStatus, useNetwork } from '@shared';
 
 /* Interfaces */
 import { CourseFilter, CourseFormValues, loadCoursesOptions } from '../interfaces';
+import { DeleteOptions } from '@infrasturcture/interfaces';
 
 /**
  * Hook to management courses of store with state and actions
@@ -186,13 +187,14 @@ const useCourses = () => {
     }
 
     /**
-     * It deletes a course and all its lessons from the database.
+     * Deletes the selected course and its associated lessons. It checks for network
+     * connection, authentication, and course alteration permissions before proceeding.
      *
-     * @param {boolean} back - This parameter allows you to return to the previous screen, by default it is `false`
-     * @param {Function} onFinish - This callback executed when the process is finished (success or failure)
-     * @return {Promise<void>} This function does not return anything.
+     * @param {DeleteOptions} options - An object containing onFinish and onSuccess callbacks.
+     * onFinish is called after the process ends, while onSuccess is called upon successful deletion.
+     * @return {Promise<void>} - This function does not return anything.
      */
-    const deleteCourse = async (back: boolean = false, onFinish?: () => void): Promise<void> => {
+    const deleteCourse = async ({ onFinish, onSuccess }: DeleteOptions): Promise<void> => {
         const wifi = hasWifiConnection();
         if (!wifi) return;
 
@@ -215,7 +217,7 @@ const useCourses = () => {
             removeCourse(state.selectedCourse.id);
 
             onFinish && onFinish();
-            back && navigation.navigate('CoursesScreen' as never);
+            onSuccess && onSuccess();
 
             setSelectedCourse(INIT_COURSE);
             setStatus({ code: 200, msg: coursesMessages.DELETED_SUCCESS });
