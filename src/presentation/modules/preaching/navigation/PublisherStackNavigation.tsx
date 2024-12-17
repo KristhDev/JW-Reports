@@ -45,8 +45,11 @@ const PublisherStackNavigation = (): JSX.Element => {
      *
      * @return {void} This function does not return anything
      */
-    const handleDeleteRevisit = (): void => {
-        deleteRevisit(true, () => setShowDeleteRevisitModal(false));
+    const handleDeleteRevisit = (onSuccess?: () => void): void => {
+        deleteRevisit({
+            onFinish: () => setShowDeleteRevisitModal(false),
+            onSuccess
+        });
     }
 
     useEffect(() => {
@@ -145,7 +148,7 @@ const PublisherStackNavigation = (): JSX.Element => {
                             deleteModalText="¿Está seguro de eliminar esta revisita?"
                             isDeleteModalLoading={ isRevisitDeleting }
                             onCloseDeleteModal={ () => setShowDeleteRevisitModal(false) }
-                            onConfirmDeleteModal={ handleDeleteRevisit }
+                            onConfirmDeleteModal={ () => handleDeleteRevisit(() => navigation.navigate({ name: 'PublisherStackNavigation', params: { screen: 'HomeScreen' } } as never)) }
                             onShowDeleteModal={ () => setShowDeleteRevisitModal(true) }
                             showDeleteModal={ showDeleteRevisitModal }
 
@@ -168,7 +171,7 @@ const PublisherStackNavigation = (): JSX.Element => {
                             deleteModalText="¿Está seguro de eliminar esta revisita?"
                             isDeleteModalLoading={ isRevisitDeleting }
                             onCloseDeleteModal={ () => setShowDeleteRevisitModal(false) }
-                            onConfirmDeleteModal={ handleDeleteRevisit }
+                            onConfirmDeleteModal={ () => handleDeleteRevisit(navigation.goBack) }
                             onShowDeleteModal={ () => setShowDeleteRevisitModal(true) }
                             showDeleteModal={ showDeleteRevisitModal }
 

@@ -104,7 +104,7 @@ const PublisherHome = (): JSX.Element => {
      * @param {(setShowModal: (value: boolean) => void)} setShowModal The function to set the modal visibility.
      * @return {void} This function does not return any value.
      */
-    const handleShowLessonsModals = (lesson: LessonWithCourseEntity, setShowModal: (value: boolean) => void): void => {
+    const handleShowLessonsModal = (lesson: LessonWithCourseEntity, setShowModal: (value: boolean) => void): void => {
         const { course, ...rest } = lesson;
         setSelectedLesson(rest);
         setShowModal(true);
@@ -144,7 +144,9 @@ const PublisherHome = (): JSX.Element => {
     }
 
     const handleDeleteRevisitConfirm = (): void => {
-        deleteRevisit(false, () => setShowDeleteRevisitModal(false));
+        deleteRevisit({
+            onFinish: () => setShowDeleteRevisitModal(false)
+        });
     }
 
     return (
@@ -189,8 +191,8 @@ const PublisherHome = (): JSX.Element => {
                     <LessonCard
                         screenToNavigate="LessonDetailScreen"
                         lesson={ lastLesson }
-                        onDelete={ () => handleShowLessonsModals(lastLesson, setShowDeleteLessonModal) }
-                        onFinish={ () => handleShowLessonsModals(lastLesson, setShowFSModal) }
+                        onDelete={ () => handleShowLessonsModal(lastLesson, setShowDeleteLessonModal) }
+                        onFinish={ () => handleShowLessonsModal(lastLesson, setShowFSModal) }
                         onClick={ () => setSelectedCourse(lastLesson.course) }
                     />
                 ) }
