@@ -32,12 +32,12 @@ const Stack = createStackNavigator<CoursesStackParamsList>();
 const CoursesStackNavigation = (): JSX.Element => {
     const [ showDeleteCourseModal, setShowDeleteCourseModal ] = useState<boolean>(false);
     const [ showDeleteLessonModal, setShowDeleteLessonModal ] = useState<boolean>(false);
-    const { navigate } = useNavigation();
+
+    const navigation = useNavigation();
+    const { theme: { colors, margins } } = useStyles();
 
     const { state: { isCourseDeleting, selectedCourse }, deleteCourse } = useCourses();
     const { state: { selectedLesson, isLessonDeleting }, deleteLesson } = useLessons();
-
-    const { theme: { colors, margins } } = useStyles();
 
     const courseDetailTitle = `Curso a ${ selectedCourse.personName }`;
 
@@ -57,8 +57,25 @@ const CoursesStackNavigation = (): JSX.Element => {
      *
      * @return {void} This function does not return anything
      */
-    const handleDeleteLesson = (): void => {
-        deleteLesson(true, () => setShowDeleteLessonModal(false));
+    const handleDeleteLesson = (onSuccess?: () => void): void => {
+        deleteLesson({
+            onFinish: () => setShowDeleteLessonModal(false),
+            onSuccess
+        });
+    }
+
+    /**
+     * Navigates to the LessonsScreen, which shows the list of lessons for the selected course.
+     *
+     * @return {void} This function does not return anything
+     */
+    const handleGoToLessons = (): void => {
+        navigation.navigate({
+            name: 'CoursesStackNavigation',
+            params: {
+                screen: 'LessonsScreen'
+            }
+        } as never);
     }
 
     return (
@@ -98,7 +115,7 @@ const CoursesStackNavigation = (): JSX.Element => {
                             showDeleteModal={ showDeleteCourseModal }
 
                             editButton={ !selectedCourse.finished }
-                            onPressEditButton={ () => navigate('AddOrEditCourseScreen' as never) }
+                            onPressEditButton={ () => navigation.navigate('AddOrEditCourseScreen' as never) }
                         />
                     ),
                     title: Characters.truncate(courseDetailTitle, 22)
@@ -138,7 +155,7 @@ const CoursesStackNavigation = (): JSX.Element => {
                             deleteModalText="¿Está seguro de eliminar esta clase?"
                             isDeleteModalLoading={ isLessonDeleting }
                             onCloseDeleteModal={ () => setShowDeleteLessonModal(false) }
-                            onConfirmDeleteModal={ handleDeleteLesson }
+                            onConfirmDeleteModal={ () => handleDeleteLesson(handleGoToLessons) }
                             onShowDeleteModal={ () => setShowDeleteLessonModal(true) }
                             showDeleteModal={ showDeleteLessonModal }
                         />
@@ -169,12 +186,12 @@ const CoursesStackNavigation = (): JSX.Element => {
                             deleteModalText="¿Está seguro de eliminar esta clase?"
                             isDeleteModalLoading={ isLessonDeleting }
                             onCloseDeleteModal={ () => setShowDeleteLessonModal(false) }
-                            onConfirmDeleteModal={ handleDeleteLesson }
+                            onConfirmDeleteModal={ () => handleDeleteLesson(handleGoToLessons) }
                             onShowDeleteModal={ () => setShowDeleteLessonModal(true) }
                             showDeleteModal={ showDeleteLessonModal }
 
                             editButton={ !selectedCourse.finished || !selectedCourse.suspended }
-                            onPressEditButton={ () => navigate('AddOrEditLessonScreen' as never) }
+                            onPressEditButton={ () => navigation.navigate('AddOrEditLessonScreen' as never) }
                         />
                     ),
                     title: `Clase con ${ selectedCourse.personName }`
