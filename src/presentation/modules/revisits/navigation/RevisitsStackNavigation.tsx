@@ -30,6 +30,19 @@ const RevisitsStackNavigation = (): JSX.Element => {
     const revisitDetailTitle = `Revisita ${ selectedRevisit.personName }`;
 
     /**
+     * Navigates to the given screen inside the RevisitsStackNavigation stack.
+     *
+     * @param {string} screen - The name of the screen to navigate to.
+     * @return {void} This function does not return any value.
+     */
+    const handleGoTo = (screen: string): void => {
+        navigation.navigate({
+            name: 'RevisitsStackNavigation',
+            params: { screen }
+        } as never);
+    }
+
+    /**
      * If the user confirms the delete, then delete the revisit and close the modal.
      *
      * @return {void} This function does not return anything
@@ -73,12 +86,12 @@ const RevisitsStackNavigation = (): JSX.Element => {
                             deleteModalText="¿Está seguro de eliminar esta revisita?"
                             isDeleteModalLoading={ isRevisitDeleting }
                             onCloseDeleteModal={ () => setShowDeleteModal(false) }
-                            onConfirmDeleteModal={ () => handleDeleteConfirm(() => navigation.navigate('RevisitsTopTabsNavigation' as never)) }
+                            onConfirmDeleteModal={ () => handleDeleteConfirm(() => handleGoTo('RevisitsTopTabsNavigation')) }
                             onShowDeleteModal={ () => setShowDeleteModal(true) }
                             showDeleteModal={ showDeleteModal }
 
                             editButton={ true }
-                            onPressEditButton={ () => navigation.navigate('AddOrEditRevisitScreen' as never) }
+                            onPressEditButton={ () => handleGoTo('AddOrEditRevisitScreen') }
                         />
                     ),
                     title: Characters.truncate(revisitDetailTitle, 22)
@@ -97,7 +110,7 @@ const RevisitsStackNavigation = (): JSX.Element => {
                             deleteModalText="¿Está seguro de eliminar esta revisita?"
                             isDeleteModalLoading={ isRevisitDeleting }
                             onCloseDeleteModal={ () => setShowDeleteModal(false) }
-                            onConfirmDeleteModal={ () => handleDeleteConfirm(() => navigation.navigate('RevisitsTopTabsNavigation' as never)) }
+                            onConfirmDeleteModal={ () => handleDeleteConfirm(() => handleGoTo('RevisitsTopTabsNavigation')) }
                             onShowDeleteModal={ () => setShowDeleteModal(true) }
                             showDeleteModal={ showDeleteModal }
 
