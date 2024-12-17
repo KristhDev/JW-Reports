@@ -65,6 +65,7 @@ const PublisherHome = (): JSX.Element => {
             isRevisitDeleting,
             lastRevisit
         },
+        deleteRevisit,
         setSelectedRevisit,
         loadLastRevisit
     } = useRevisits();
@@ -138,14 +139,12 @@ const PublisherHome = (): JSX.Element => {
         });
     }
 
-    /**
-     * Handles the delete confirmation by calling the deleteLesson function with a boolean value of false,
-     * and then hides the delete modal by calling setShowDeleteModal with a boolean value of false.
-     *
-     * @return {void} - This function does not return any value.
-     */
-    const handleDeleteConfirm = (): void => {
+    const handleDeleteLessonConfirm = (): void => {
         deleteLesson(false, () => setShowDeleteLessonModal(false));
+    }
+
+    const handleDeleteRevisitConfirm = (): void => {
+        deleteRevisit(false, () => setShowDeleteRevisitModal(false));
     }
 
     return (
@@ -188,7 +187,7 @@ const PublisherHome = (): JSX.Element => {
 
                 { (!isLastLessonLoading && lastLesson?.id) && (
                     <LessonCard
-                        screenToNavigate="HomeLessonDetailScreen"
+                        screenToNavigate="LessonDetailScreen"
                         lesson={ lastLesson }
                         onDelete={ () => handleShowLessonsModals(lastLesson, setShowDeleteLessonModal) }
                         onFinish={ () => handleShowLessonsModals(lastLesson, setShowFSModal) }
@@ -226,7 +225,7 @@ const PublisherHome = (): JSX.Element => {
                         onPass={ () => handleShowRevisitsModal(lastRevisit, setShowPassModal) }
                         onRevisit={ () => handleShowRevisitsModal(lastRevisit, setShowRevisitModal) }
                         revisit={ lastRevisit }
-                        screenToNavigate="HomeRevisitDetailScreen"
+                        screenToNavigate="RevisitDetailScreen"
                     />
                 ) }
             </ScrollView>
@@ -263,7 +262,7 @@ const PublisherHome = (): JSX.Element => {
                 isLoading={ isLessonDeleting }
                 isOpen={ showDeleteLessonModal }
                 onClose={ () => handleHideLessonsModals(setShowDeleteLessonModal) }
-                onConfirm={ handleDeleteConfirm }
+                onConfirm={ handleDeleteLessonConfirm }
                 text="¿Está seguro de eliminar esta clase?"
             />
 
@@ -284,7 +283,7 @@ const PublisherHome = (): JSX.Element => {
                 isLoading={ isRevisitDeleting }
                 isOpen={ showDeleteRevisitModal }
                 onClose={ () => handleHideRevisitsModal(setShowDeleteRevisitModal) }
-                onConfirm={ handleDeleteConfirm }
+                onConfirm={ handleDeleteRevisitConfirm }
                 text="¿Está seguro de eliminar esta revisita?"
             />
         </>
