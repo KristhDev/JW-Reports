@@ -156,7 +156,9 @@ export const CoursesList: FC<CoursesListProps> = ({ emptyMessage, filter, title 
      * @return {void} This function does not return any value.
      */
     const handleDeleteConfirm = (): void => {
-        deleteCourse(false, () => setShowDeleteModal(false));
+        deleteCourse({
+            onFinish: () => setShowDeleteModal(false)
+        });
     }
 
     /**
