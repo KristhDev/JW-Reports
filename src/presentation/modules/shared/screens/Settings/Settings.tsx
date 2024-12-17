@@ -3,14 +3,14 @@ import { Linking, ScrollView, Text } from 'react-native';
 import { useStyles } from 'react-native-unistyles';
 import { useNavigation } from '@react-navigation/native';
 
+/* Config */
+import { env } from '@config';
+
 /* Constants */
 import { THEME_OPTIONS } from '@application/constants';
 
 /* Adapters */
 import { DeviceInfo } from '@infrasturcture/adapters';
-
-/* Env */
-import { REPOSITORY_URL } from '@env';
 
 /* Modules */
 import { useStatus } from '../../hooks';
@@ -132,7 +132,7 @@ const Settings = (): JSX.Element => {
                     />
 
                     <SectionBtn
-                        onPress={ () => Linking.openURL(REPOSITORY_URL) }
+                        onPress={ () => Linking.openURL(env.REPOSITORY_URL) }
                         subText="Código fuente de la aplicación"
                         text="Repositorio"
                     />

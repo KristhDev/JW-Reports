@@ -1,7 +1,7 @@
 import { AuthResponse } from '@supabase/supabase-js';
 
 /* Config */
-import { supabase } from '@config';
+import { env, supabase } from '@config';
 
 /* DTOs */
 import { SignUpDto, UpdateEmailDto, UpdatePasswordDto, UpdateProfileDto } from '@domain/dtos';
@@ -14,9 +14,6 @@ import { RequestError } from '@domain/errors';
 
 /* Interfaces */
 import { UserEndpoint } from '@infrasturcture/interfaces';
-
-/* Env */
-import { SITIE_URL } from '@env';
 
 export class AuthService {
     /**
@@ -65,7 +62,7 @@ export class AuthService {
      */
     public static async resetPassword(email: string): Promise<void> {
         const result = await supabase.auth.resetPasswordForEmail(email, {
-            redirectTo: `${ SITIE_URL }/reset-password`
+            redirectTo: `${ env.SITE_URL }/reset-password`
         });
 
         if (result.error) {

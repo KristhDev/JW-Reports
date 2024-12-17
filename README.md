@@ -639,7 +639,7 @@ tabla con la explicación de cada una de las variables:
 | EMAILJS_REPORT_ERROR_TEMPLATE_ID | ID de la plantilla de correo de error en EmailJS              |
 | EMAILJS_SERVICE_ID               | ID de servicio de EmailJS                                     |
 | REPOSITORY_URL                   | https://github.com/KristhDev/JW-Reports                       |
-| SITIE_URL                        | Sitio de Internet para la autenticación de los usuarios       |
+| SITE_URL                        | Sitio de Internet para la autenticación de los usuarios       |
 | SUPABASE_APY_KEY                 | Clave de aplicación de Supabase                               |
 | SUPABASE_BUCKET                  | Nombre del bucket para la subida de archivos                  |
 | SUPABASE_ERRORS_FOLDER           | Nombre del directorio de errores                              |

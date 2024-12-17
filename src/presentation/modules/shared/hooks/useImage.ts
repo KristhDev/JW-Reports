@@ -2,8 +2,8 @@ import { useState } from 'react';
 import { PermissionStatus } from 'react-native-permissions';
 import { useStyles } from 'react-native-unistyles';
 
-/* Env */
-import { SUPABASE_BUCKET } from '@env';
+/* Config */
+import { env } from '@config';
 
 /* Constants */
 import { permissionsMessages } from '@application/constants';
@@ -66,7 +66,7 @@ const useImage = () => {
      * @return {Promise<void>} This function return object.
      */
     const deleteImage = async (uri: string, folder: string): Promise<void> => {
-        await CloudService.deleteImage({ bucket: SUPABASE_BUCKET, folder, uri });
+        await CloudService.deleteImage({ bucket: env.SUPABASE_BUCKET, folder, uri });
     }
 
     /**
@@ -158,7 +158,7 @@ const useImage = () => {
      * @return {Promise<string | ImageError>} This function return object
      */
     const uploadImage = async (photo: ImageModel, folder: string): Promise<string> => {
-        const result = await CloudService.uploadImage({ bucket: SUPABASE_BUCKET, folder, image: photo });
+        const result = await CloudService.uploadImage({ bucket: env.SUPABASE_BUCKET, folder, image: photo });
         return result;
     }
 

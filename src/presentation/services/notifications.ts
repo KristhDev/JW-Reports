@@ -1,7 +1,7 @@
 import { LogLevel, OneSignal } from 'react-native-onesignal';
 
-/* Env */
-import { ONESIGNAL_APP_ID } from '@env';
+/* Config */
+import { env } from '@config';
 
 export class NotificationsService {
     /**
@@ -11,7 +11,7 @@ export class NotificationsService {
      */
     public static mount(): void {
         OneSignal.Debug.setLogLevel(LogLevel.Verbose);
-        OneSignal.initialize(ONESIGNAL_APP_ID);
+        OneSignal.initialize(env.ONESIGNAL_APP_ID);
     }
 
     /**

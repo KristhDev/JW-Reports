@@ -1,3 +1,6 @@
+/* Config */
+import { env } from '@config';
+
 /* Constants */
 import { emailMessages } from '@application/constants';
 
@@ -6,9 +9,6 @@ import { EmailError } from '@domain/errors';
 
 /* Services */
 import { EmailService } from '@domain/services';
-
-/* Env */
-import { EMAILJS_FEEDBACK_TEMPLATE_ID, EMAILJS_REPORT_ERROR_TEMPLATE_ID, SUPABASE_ERRORS_FOLDER } from '@env';
 
 /* Hooks */
 import { useAuth } from '@auth';
@@ -35,7 +35,7 @@ const useEmail = () => {
             await EmailService.send({
                 email: user.email,
                 message,
-                templateId: EMAILJS_FEEDBACK_TEMPLATE_ID
+                templateId: env.EMAILJS_FEEDBACK_TEMPLATE_ID
             });
 
             setStatus({ code: 200, msg: emailMessages.FEEDBACK_SUCCESS });
@@ -60,12 +60,12 @@ const useEmail = () => {
     const sendReportErrorEmail = async ({ message, image }: ReportErrorOptions, { onFinish, onSuccess }: UtilFunctions): Promise<void> => {
         try {
             let imageUrl = 'https://t4.ftcdn.net/jpg/04/73/25/49/360_F_473254957_bxG9yf4ly7OBO5I0O5KABlN930GwaMQz.jpg';
-            if (image) imageUrl = await uploadImage(image, SUPABASE_ERRORS_FOLDER);
+            if (image) imageUrl = await uploadImage(image, env.SUPABASE_ERRORS_FOLDER);
 
             await EmailService.send({
                 email: user.email,
                 message,
-                templateId: EMAILJS_REPORT_ERROR_TEMPLATE_ID,
+                templateId: env.EMAILJS_REPORT_ERROR_TEMPLATE_ID,
                 imageUrl
             });
 
