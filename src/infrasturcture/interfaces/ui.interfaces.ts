@@ -8,3 +8,8 @@ export type ItemOption = {
     label: string;
     value: any;
 }
+
+export interface DeleteOptions {
+    onFinish?: () => void;
+    onSuccess?: () => void;
+}
