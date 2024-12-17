@@ -56,6 +56,7 @@ import { useImage, useNetwork, useStatus } from '@shared';
 
 /* Interfaces */
 import { loadRevisitsOptions, RevisitFilter, RevisitFormValues, SaveRevisitOptions } from '../interfaces';
+import { DeleteOptions } from '@infrasturcture/interfaces';
 
 /**
  * Hook to management revisits of store with state and actions
@@ -156,13 +157,14 @@ const useRevisits = () => {
     }
 
     /**
-     * This function is to delete a revisit.
+     * This function deletes a revisit.
      *
-     * @param {boolean} back - This is a flag to indicate whether to navigate to the previous screen or not, default is `false`
-     * @param {Function} onFinish - This callback executed when the process is finished (success or failure), default is `undefined`
-     * @return {Promise<void>} This function does not return anything
+     * @param {{ onFinish: Function, onSuccess: Function }} options - The options of the function.
+     * @param {Function} options.onFinish - This callback is executed when the function finish.
+     * @param {Function} options.onSuccess - This callback is executed when the function success.
+     * @return {Promise<void>} This function returns a promise that resolves when the function finish.
      */
-    const deleteRevisit = async (back: boolean = false, onFinish?: () => void): Promise<void> => {
+    const deleteRevisit = async ({ onFinish, onSuccess }: DeleteOptions): Promise<void> => {
         const wifiConnectionAvailable = hasWifiConnection();
         if (!wifiConnectionAvailable) return;
 
@@ -181,16 +183,16 @@ const useRevisits = () => {
 
             removeRevisit(state.selectedRevisit.id);
 
-            setIsRevisitDeleting(false);
-            onFinish && onFinish();
-
-            back && navigation.navigate('RevisitsTopTabsNavigation' as never);
-
             if (user.precursor === precursors.NINGUNO && state.lastRevisit.id === state.selectedRevisit.id) {
                 await loadLastRevisit();
             }
 
+            setIsRevisitDeleting(false);
             setSelectedRevisit(INIT_REVISIT);
+
+            onFinish && onFinish();
+            onSuccess && onSuccess();
+
             setStatus({ code: 200, msg: revisitsMessages.DELETED_SUCCESS });
         }
         catch (error) {
