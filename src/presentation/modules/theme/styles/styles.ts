@@ -130,6 +130,12 @@ export const themeStylesheet = createStyleSheet(({ borderRadius, colors, fontSiz
         paddingBottom: 100
     },
 
+    listContainer: {
+        paddingBottom: 100,
+        paddingHorizontal: margins.xs,
+        paddingTop: margins.md
+    },
+
     menuButton: {
         position: 'absolute',
         right: margins.xs,
