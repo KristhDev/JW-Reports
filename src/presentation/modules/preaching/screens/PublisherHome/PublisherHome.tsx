@@ -139,10 +139,24 @@ const PublisherHome = (): JSX.Element => {
         });
     }
 
+    /**
+     * Handles the deletion of a lesson by calling the deleteLesson function with a callback to
+     * hide the delete modal after the deletion is complete.
+     *
+     * @return {void} This function does not return anything.
+     */
     const handleDeleteLessonConfirm = (): void => {
-        deleteLesson(false, () => setShowDeleteLessonModal(false));
+        deleteLesson({
+            onFinish: () => setShowDeleteLessonModal(false)
+        });
     }
 
+    /**
+     * Handles the deletion of a revisit by calling the deleteRevisit function with a callback to
+     * hide the delete modal after the deletion is complete.
+     *
+     * @return {void} This function does not return anything.
+     */
     const handleDeleteRevisitConfirm = (): void => {
         deleteRevisit({
             onFinish: () => setShowDeleteRevisitModal(false)
