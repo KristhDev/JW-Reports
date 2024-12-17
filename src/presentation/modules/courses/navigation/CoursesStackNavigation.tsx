@@ -42,13 +42,18 @@ const CoursesStackNavigation = (): JSX.Element => {
     const courseDetailTitle = `Curso a ${ selectedCourse.personName }`;
 
     /**
-     * When the user clicks the delete button, the deleteCourse function is called, which sets the
-     * showDeleteCourseModal state to false.
+     * Handles the deletion of a course by calling the deleteCourse function with a boolean value of
+     * false, and then hides the delete modal by calling setShowDeleteCourseModal with a boolean value
+     * of false.
      *
-     * @return {void} This function does not return anything
+     * @param {Function} [onSuccess] - Optional callback to execute upon successful deletion.
+     * @return {void} This function does not return anything.
      */
-    const handleDeleteCourse = (): void => {
-        deleteCourse(true, () => setShowDeleteCourseModal(false));
+    const handleDeleteCourse = (onSuccess?: () => void): void => {
+        deleteCourse({
+            onFinish: () => setShowDeleteCourseModal(false),
+            onSuccess
+        });
     }
 
     /**
@@ -65,16 +70,15 @@ const CoursesStackNavigation = (): JSX.Element => {
     }
 
     /**
-     * Navigates to the LessonsScreen, which shows the list of lessons for the selected course.
+     * Navigates to the given screen inside the CoursesStackNavigation stack.
      *
-     * @return {void} This function does not return anything
+     * @param {string} screen - The name of the screen to navigate to.
+     * @return {void} This function does not return anything.
      */
-    const handleGoToLessons = (): void => {
+    const handleGoTo = (screen: string): void => {
         navigation.navigate({
             name: 'CoursesStackNavigation',
-            params: {
-                screen: 'LessonsScreen'
-            }
+            params: { screen }
         } as never);
     }
 
@@ -110,12 +114,12 @@ const CoursesStackNavigation = (): JSX.Element => {
                             deleteModalText="¿Está seguro de eliminar este curso?"
                             isDeleteModalLoading={ isCourseDeleting }
                             onCloseDeleteModal={ () => setShowDeleteCourseModal(false) }
-                            onConfirmDeleteModal={ handleDeleteCourse }
+                            onConfirmDeleteModal={ () => handleDeleteCourse(() => handleGoTo('CoursesTopTabsNavigation')) }
                             onShowDeleteModal={ () => setShowDeleteCourseModal(true) }
                             showDeleteModal={ showDeleteCourseModal }
 
                             editButton={ !selectedCourse.finished }
-                            onPressEditButton={ () => navigation.navigate('AddOrEditCourseScreen' as never) }
+                            onPressEditButton={ () => handleGoTo('AddOrEditCourseScreen') }
                         />
                     ),
                     title: Characters.truncate(courseDetailTitle, 22)
@@ -134,7 +138,7 @@ const CoursesStackNavigation = (): JSX.Element => {
                             deleteModalText="¿Está seguro de eliminar este curso?"
                             isDeleteModalLoading={ isCourseDeleting }
                             onCloseDeleteModal={ () => setShowDeleteCourseModal(false) }
-                            onConfirmDeleteModal={ handleDeleteCourse }
+                            onConfirmDeleteModal={ () => handleDeleteCourse(() => handleGoTo('CoursesTopTabsNavigation')) }
                             onShowDeleteModal={ () => setShowDeleteCourseModal(true) }
                             showDeleteModal={ showDeleteCourseModal }
                         />
@@ -155,7 +159,7 @@ const CoursesStackNavigation = (): JSX.Element => {
                             deleteModalText="¿Está seguro de eliminar esta clase?"
                             isDeleteModalLoading={ isLessonDeleting }
                             onCloseDeleteModal={ () => setShowDeleteLessonModal(false) }
-                            onConfirmDeleteModal={ () => handleDeleteLesson(handleGoToLessons) }
+                            onConfirmDeleteModal={ () => handleDeleteLesson(() => handleGoTo('LessonsScreen')) }
                             onShowDeleteModal={ () => setShowDeleteLessonModal(true) }
                             showDeleteModal={ showDeleteLessonModal }
                         />
@@ -186,12 +190,12 @@ const CoursesStackNavigation = (): JSX.Element => {
                             deleteModalText="¿Está seguro de eliminar esta clase?"
                             isDeleteModalLoading={ isLessonDeleting }
                             onCloseDeleteModal={ () => setShowDeleteLessonModal(false) }
-                            onConfirmDeleteModal={ () => handleDeleteLesson(handleGoToLessons) }
+                            onConfirmDeleteModal={ () => handleDeleteLesson(() => handleGoTo('LessonsScreen')) }
                             onShowDeleteModal={ () => setShowDeleteLessonModal(true) }
                             showDeleteModal={ showDeleteLessonModal }
 
                             editButton={ !selectedCourse.finished || !selectedCourse.suspended }
-                            onPressEditButton={ () => navigation.navigate('AddOrEditLessonScreen' as never) }
+                            onPressEditButton={ () => handleGoTo('AddOrEditLessonScreen') }
                         />
                     ),
                     title: `Clase con ${ selectedCourse.personName }`
