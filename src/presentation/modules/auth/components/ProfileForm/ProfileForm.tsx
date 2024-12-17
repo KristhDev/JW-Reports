@@ -61,6 +61,7 @@ export const ProfileForm = (): JSX.Element => {
      */
     const handleSelect = (value: string): void => {
         setFieldValue('hoursRequirement', HOURS_REQUIREMENTS[value as keyof typeof HOURS_REQUIREMENTS] || 0);
+        setFieldValue('precursor', value);
         setEditHoursRequirement(false);
     }
 
