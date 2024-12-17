@@ -1,9 +1,13 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { useStyles } from 'react-native-unistyles';
+import { useFocusEffect } from '@react-navigation/native';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 
+/* Features */
+import { INIT_REVISIT } from '@application/features';
+
 /* Modules */
-import { Revisits, RevisitsTopTabsParamsList } from '..';
+import { Revisits, RevisitsTopTabsParamsList, useRevisits } from '..';
 
 const Tabs = createMaterialTopTabNavigator<RevisitsTopTabsParamsList>();
 
@@ -14,6 +18,17 @@ const Tabs = createMaterialTopTabNavigator<RevisitsTopTabsParamsList>();
  */
 const RevisitsTopTabsNavigation = (): JSX.Element => {
     const { theme: { colors } } = useStyles();
+
+    const { setSelectedRevisit } = useRevisits();
+
+    useFocusEffect(
+        useCallback(() => {
+            setSelectedRevisit({
+                ...INIT_REVISIT,
+                nextVisit: new Date().toString()
+            });
+        }, [])
+    );
 
     return (
         <Tabs.Navigator

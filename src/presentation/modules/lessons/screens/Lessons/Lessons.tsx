@@ -1,5 +1,5 @@
-import React from 'react';
-import { useNavigation } from '@react-navigation/native';
+import React, { useCallback } from 'react';
+import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import { useStyles } from 'react-native-unistyles';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
@@ -42,6 +42,15 @@ const Lessons = (): JSX.Element => {
 
         navigation.navigate('AddOrEditLessonScreen' as never);
     }
+
+    useFocusEffect(
+        useCallback(() => {
+            setSelectedLesson({
+            ...INIT_LESSON,
+            nextLesson: new Date().toString(),
+        });
+        }, [])
+    );
 
     return (
         <>
