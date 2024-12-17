@@ -252,6 +252,8 @@ const useLessons = () => {
         const isAuth = isAuthenticated();
         if (!isAuth) return;
 
+        setIsLastLessonLoading(true);
+
         try {
             const courseIds = await CoursesService.getCourseIdsByUserId(user.id);
             const lastLesson = await LessonsService.getLastLessonByCoursesId(courseIds);
