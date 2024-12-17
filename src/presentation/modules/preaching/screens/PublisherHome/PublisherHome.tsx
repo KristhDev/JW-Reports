@@ -72,15 +72,15 @@ const PublisherHome = (): JSX.Element => {
     const month = Time.format(selectedDate, 'MMMM').toUpperCase();
 
     /**
-     * When the user swipes down to refresh, load the preachings for the selected date and set the
-     * refreshing state to false.
+     * Refreshes the state by loading the most recent lesson and revisit data.
+     * Sets the refreshing state to false before and after the load operations.
      *
-     * @return {void} This function does not return anything
+     * @return {Promise<void>} A promise that resolves when the refresh is complete.
      */
-    const handleRefreshing = (): void => {
+    const handleRefreshing = async (): Promise<void> => {
         setIsRefreshing(false);
-        loadLastLesson();
-        loadLastRevisit();
+        await Promise.all([ loadLastLesson(), loadLastRevisit() ]);
+        setIsRefreshing(false);
     }
 
     /**
