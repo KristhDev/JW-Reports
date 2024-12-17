@@ -138,7 +138,9 @@ export const LessonsList = (): JSX.Element => {
      * @return {void} - This function does not return any value.
      */
     const handleDeleteConfirm = (): void => {
-        deleteLesson(false, () => setShowDeleteModal(false));
+        deleteLesson({
+            onFinish: () => setShowDeleteModal(false)
+        });
     }
 
     /**
