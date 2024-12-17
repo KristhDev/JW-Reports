@@ -1,7 +1,7 @@
 import { useNavigation } from '@react-navigation/native';
 
 /* Constants */
-import { coursesMessages } from '@application/constants';
+import { coursesMessages, precursors } from '@application/constants';
 
 /* Features */
 import { useAppDispatch, useAppSelector } from '@application/store';
@@ -170,7 +170,7 @@ const useCourses = () => {
             const msg = (course.suspended) ? coursesMessages.SUSPENDED_SUCCESS : coursesMessages.RENEW_SUCCESS;
             updateCourseActionState(course);
 
-            if (user.precursor === 'ninguno' && lastLesson.courseId === state.selectedCourse.id) {
+            if (user.precursor === precursors.NINGUNO && lastLesson.courseId === state.selectedCourse.id) {
                 addLastLesson({ ...lastLesson, course })
             }
 
@@ -208,7 +208,7 @@ const useCourses = () => {
             await LessonsService.deleteLessonsByCourseId(state.selectedCourse.id);
             await CoursesService.delete(state.selectedCourse.id, user.id);
 
-            if (user.precursor === 'ninguno' && lastLesson.courseId === state.selectedCourse.id) {
+            if (user.precursor === precursors.NINGUNO && lastLesson.courseId === state.selectedCourse.id) {
                 await loadLastLesson();
             }
 
@@ -305,7 +305,7 @@ const useCourses = () => {
             const msg = (course.finished) ? coursesMessages.FINISHED_SUCCESS : coursesMessages.RESTARTED_SUCCESS;
             updateCourseActionState(course);
 
-            if (user.precursor === 'ninguno' && lastLesson.courseId === state.selectedCourse.id) {
+            if (user.precursor === precursors.NINGUNO && lastLesson.courseId === state.selectedCourse.id) {
                 addLastLesson({ ...lastLesson, course });
             }
 
@@ -435,7 +435,7 @@ const useCourses = () => {
 
             updateCourseActionState(course);
 
-            if (user.precursor === 'ninguno' && lastLesson.courseId === state.selectedCourse.id) {
+            if (user.precursor === precursors.NINGUNO && lastLesson.courseId === state.selectedCourse.id) {
                 addLastLesson({ ...lastLesson, course });
             }
 
