@@ -26,6 +26,7 @@
     "@react-navigation/native": "^6.1.18",
     "@react-navigation/stack": "^6.4.1",
     "@reduxjs/toolkit": "^2.3.0",
+    "@shopify/flash-list": "^1.7.2",
     "@supabase/supabase-js": "^2.46.1",
     "base64-arraybuffer": "^1.0.2",
     "dayjs": "^1.11.13",

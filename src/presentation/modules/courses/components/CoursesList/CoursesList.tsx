@@ -1,7 +1,8 @@
 import React, { FC, useCallback, useEffect, useState } from 'react';
-import { FlatList, RefreshControl } from 'react-native';
+import { RefreshControl } from 'react-native';
 import { useStyles } from 'react-native-unistyles';
 import { useFocusEffect, useNavigation } from '@react-navigation/native';
+import { FlashList } from '@shopify/flash-list';
 
 /* Features */
 import { INIT_COURSE } from '@application/features';
@@ -26,6 +27,7 @@ import { CoursesListProps } from './interfaces';
 
 /* Theme */
 import { themeStylesheet } from '@theme';
+import { View } from 'react-native';
 
 /**
  * This component is responsible for rendering a list of courses based
@@ -200,9 +202,10 @@ export const CoursesList: FC<CoursesListProps> = ({ emptyMessage, filter, title 
 
     return (
         <>
-            <FlatList
-                contentContainerStyle={ themeStyles.flatListContainer }
+            <FlashList
+                contentContainerStyle={ themeStyles.listContainer }
                 data={ courses }
+                estimatedItemSize={ 256 }
                 keyExtractor={ (item) => item.id }
                 ListFooterComponent={
                     <ListFooterComponent
@@ -211,7 +214,7 @@ export const CoursesList: FC<CoursesListProps> = ({ emptyMessage, filter, title 
                     />
                 }
                 ListHeaderComponent={
-                    <>
+                    <View style={{ paddingHorizontal: margins.xs, width: '100%' }}>
                         <Title
                             containerStyle={{ marginVertical: margins.xs }}
                             text={ title }
@@ -224,7 +227,7 @@ export const CoursesList: FC<CoursesListProps> = ({ emptyMessage, filter, title 
                             refreshing={ isRefreshing }
                             searchTerm={ searchTerm }
                         />
-                    </>
+                    </View>
                 }
                 ListEmptyComponent={
                     <ListEmptyComponent
@@ -232,7 +235,6 @@ export const CoursesList: FC<CoursesListProps> = ({ emptyMessage, filter, title 
                         showMsg={ !isCoursesLoading && courses.length === 0 }
                     />
                 }
-                ListHeaderComponentStyle={{ alignSelf: 'flex-start' }}
                 onEndReached={ handleEndReach }
                 onEndReachedThreshold={ 0.5 }
                 overScrollMode="never"

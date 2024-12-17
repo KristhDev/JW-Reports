@@ -1,5 +1,5 @@
 import React, { FC, useState } from 'react';
-import { Pressable, Text, View, useWindowDimensions } from 'react-native';
+import { Pressable, Text, View } from 'react-native';
 import { useStyles } from 'react-native-unistyles';
 import { useNavigation } from '@react-navigation/native';
 import { Menu, MenuOption, MenuOptions, MenuTrigger } from 'react-native-popup-menu';
@@ -38,11 +38,10 @@ import { themeStylesheet } from '@theme';
  */
 export const RevisitCard: FC<RevisitCardProps> = ({ onDelete, onPass, onRevisit, revisit, screenToNavigate }): JSX.Element => {
     const [ isOpen, setIsOpen ] = useState<boolean>(false);
-    const { width } = useWindowDimensions();
 
     const navigation = useNavigation();
     const { styles: themeStyles } = useStyles(themeStylesheet);
-    const { styles, theme: { colors, fontSizes, margins } } = useStyles(stylesheet);
+    const { styles, theme: { colors, fontSizes } } = useStyles(stylesheet);
 
     const { setSelectedRevisit } = useRevisits();
 
@@ -90,7 +89,7 @@ export const RevisitCard: FC<RevisitCardProps> = ({ onDelete, onPass, onRevisit,
                 foreground: true
             }}
             onPress={ handleRevisitDetail }
-            style={{ ...styles.pressable, width: width - margins.sm }}
+            style={ styles.pressable }
             testID="revisit-card-pressable"
         >
             <View style={ styles.cardContainer }>

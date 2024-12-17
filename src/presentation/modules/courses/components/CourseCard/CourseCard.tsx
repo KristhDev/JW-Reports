@@ -1,5 +1,5 @@
 import React, { FC, useState } from 'react';
-import { Pressable, Text, View, useWindowDimensions } from 'react-native';
+import { Pressable, Text, View } from 'react-native';
 import { Menu, MenuOption, MenuOptions, MenuTrigger } from 'react-native-popup-menu';
 import { useNavigation } from '@react-navigation/native';
 import { useStyles } from 'react-native-unistyles';
@@ -35,11 +35,10 @@ import { themeStylesheet } from '@theme';
  */
 export const CourseCard: FC<CourseCardProps> = ({ course, onActiveOrSuspend, onDelete, onFinishOrStart }): JSX.Element => {
     const [ isOpen, setIsOpen ] = useState<boolean>(false);
-    const { width } = useWindowDimensions();
 
     const navigation = useNavigation();
     const { styles: themeStyles } = useStyles(themeStylesheet);
-    const { styles, theme: { colors, fontSizes, margins } } = useStyles(stylesheet);
+    const { styles, theme: { colors, fontSizes } } = useStyles(stylesheet);
 
     const { setSelectedCourse } = useCourses();
     const { state: { selectedLesson }, setSelectedLesson } = useLessons();
@@ -116,7 +115,7 @@ export const CourseCard: FC<CourseCardProps> = ({ course, onActiveOrSuspend, onD
                 foreground: true
             }}
             onPress={ handleCourseDetail }
-            style={{ ...styles.pressable, width: width - margins.sm }}
+            style={ styles.pressable }
             testID="course-card-pressable"
         >
             <View style={ styles.cardContainer }>

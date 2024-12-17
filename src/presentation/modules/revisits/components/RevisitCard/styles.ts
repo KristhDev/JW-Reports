@@ -2,7 +2,8 @@ import { createStyleSheet } from 'react-native-unistyles';
 
 export const stylesheet = createStyleSheet(({ colors, fontSizes, margins }) => ({
     pressable: {
-        marginVertical: margins.xs
+        marginVertical: margins.xs,
+        width: '100%'
     },
 
     cardContainer: {

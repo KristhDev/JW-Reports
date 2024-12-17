@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { FlatList, RefreshControl } from 'react-native';
+import { RefreshControl, View } from 'react-native';
+import { FlashList } from '@shopify/flash-list';
 import { useStyles } from 'react-native-unistyles';
 
 /* Features */
@@ -153,9 +154,10 @@ export const LessonsList = (): JSX.Element => {
 
     return (
         <>
-            <FlatList
-                contentContainerStyle={ themeStyles.flatListContainer }
+            <FlashList
+                contentContainerStyle={ themeStyles.listContainer }
                 data={ lessons }
+                estimatedItemSize={ 256 }
                 keyExtractor={ (item) => item.id }
                 ListFooterComponent={
                     <ListFooterComponent
@@ -164,7 +166,7 @@ export const LessonsList = (): JSX.Element => {
                     />
                 }
                 ListHeaderComponent={
-                    <>
+                    <View style={{ paddingHorizontal: margins.xs, width: '100%' }}>
                         <Title
                             containerStyle={{ marginVertical: margins.xs }}
                             text={ `CLASES DEL CURSO CON ${ selectedCourse.personName.toUpperCase() }` }
@@ -177,7 +179,7 @@ export const LessonsList = (): JSX.Element => {
                             refreshing={ isRefreshing }
                             searchTerm={ searchTerm }
                         />
-                    </>
+                    </View>
                 }
                 ListEmptyComponent={
                     <ListEmptyComponent

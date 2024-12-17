@@ -1,7 +1,8 @@
 import React, { FC, useCallback, useEffect, useState } from 'react';
-import { FlatList, RefreshControl } from 'react-native';
-import { useStyles } from 'react-native-unistyles';
+import { RefreshControl, View } from 'react-native';
 import { useFocusEffect, useNavigation } from '@react-navigation/native';
+import { useStyles } from 'react-native-unistyles';
+import { FlashList } from '@shopify/flash-list';
 
 /* Features */
 import { INIT_REVISIT } from '@application/features';
@@ -188,9 +189,10 @@ export const RevisitsList: FC<RevisitsListProps> = ({ emptyMessage, filter, titl
 
     return (
         <>
-            <FlatList
-                contentContainerStyle={ themeStyles.flatListContainer }
+            <FlashList
+                contentContainerStyle={ themeStyles.listContainer }
                 data={ revisits }
+                estimatedItemSize={ 256 }
                 keyExtractor={ (item) => item.id }
                 ListFooterComponent={
                     <ListFooterComponent
@@ -199,7 +201,7 @@ export const RevisitsList: FC<RevisitsListProps> = ({ emptyMessage, filter, titl
                     />
                 }
                 ListHeaderComponent={
-                    <>
+                    <View style={{ paddingHorizontal: margins.xs, width: '100%' }}>
                         <Title
                             containerStyle={{ marginVertical: margins.xs }}
                             text={ title }
@@ -212,7 +214,7 @@ export const RevisitsList: FC<RevisitsListProps> = ({ emptyMessage, filter, titl
                             searchTerm={ searchTerm }
                             refreshing={ isRefreshing }
                         />
-                    </>
+                    </View>
                 }
                 ListEmptyComponent={
                     <ListEmptyComponent
@@ -220,7 +222,6 @@ export const RevisitsList: FC<RevisitsListProps> = ({ emptyMessage, filter, titl
                         showMsg={ !isRevisitsLoading && revisits.length === 0 }
                     />
                 }
-                ListHeaderComponentStyle={{ alignSelf: 'flex-start' }}
                 onEndReached={ handleEndReach }
                 onEndReachedThreshold={ 0.5 }
                 overScrollMode="never"
