@@ -51,13 +51,14 @@ import { useStatus, useNetwork } from '@shared';
 /* Interfaces */
 import { CourseFilter, CourseFormValues, loadCoursesOptions } from '../interfaces';
 import { DeleteOptions } from '@infrasturcture/interfaces';
+import { CoursesStackNavigationType } from '@ui';
 
 /**
  * Hook to management courses of store with state and actions
  */
 const useCourses = () => {
     const dispatch = useAppDispatch();
-    const navigation = useNavigation();
+    const navigation = useNavigation<CoursesStackNavigationType>();
     const { hasWifiConnection } = useNetwork();
 
     const state = useAppSelector(store => store.courses);
@@ -394,12 +395,7 @@ const useCourses = () => {
             addCourse(course);
             setStatus({ code: 201, msg: coursesMessages.ADDED_SUCCESS });
 
-            navigation.navigate({
-                name: 'CoursesStackNavigation',
-                params: {
-                    screen: 'CoursesTopTabsNavigation'
-                }
-            } as never);
+            navigation.popTo('CoursesTopTabsNavigation');
         }
         catch (error) {
             setIsCourseLoading(false);

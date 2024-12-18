@@ -14,7 +14,7 @@ import { ActiveOrSuspendCourseModal } from '../ActiveOrSuspendCourseModal';
 import { FinishOrStartCourseModal }  from '../FinishOrStartCourseModal';
 
 /* Components */
-import { InfoText, Link, Title } from '@ui';
+import { CoursesStackNavigationType, InfoText, Link, Title } from '@ui';
 
 /* Hooks */
 import { useCourses } from '../../hooks';
@@ -35,7 +35,7 @@ const CourseDetail = (): JSX.Element => {
     const [ showASModal, setShowASModal ] = useState<boolean>(false);
     const [ showFSModal, setShowFSModal ] = useState<boolean>(false);
 
-    const navigation = useNavigation();
+    const navigation = useNavigation<CoursesStackNavigationType>();
     const { styles: themeStyles, theme: { colors, fontSizes, margins } } = useStyles(themeStylesheet);
     const { styles } = useStyles(stylesheet);
 
@@ -60,7 +60,7 @@ const CourseDetail = (): JSX.Element => {
             nextLesson: new Date().toString()
         });
 
-        navigation.navigate('AddOrEditLessonScreen' as never);
+        navigation.navigate('AddOrEditLessonScreen');
     }
 
     /**
@@ -69,7 +69,7 @@ const CourseDetail = (): JSX.Element => {
      * @return {void} This function does not return anything.
      */
     const handleLessonsList = (): void => {
-        navigation.navigate('LessonsScreen' as never);
+        navigation.navigate('LessonsScreen');
     }
 
     return (

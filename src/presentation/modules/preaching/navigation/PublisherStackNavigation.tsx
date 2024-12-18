@@ -8,7 +8,7 @@ import { AddOrEditLesson, LessonDetail, useLessons } from '@lessons';
 import { AddOrEditRevisit, RevisitDetail, useRevisits } from '@revisits';
 import { PublisherHome, PublisherStackParamsList } from '@preaching';
 import { useNetwork, useStatus } from '@shared';
-import { BackButton, HeaderButtons } from '@ui';
+import { BackButton, HeaderButtons, PreachingStackNavigationType } from '@ui';
 
 import { Characters } from '@utils';
 
@@ -18,7 +18,7 @@ const PublisherStackNavigation = (): JSX.Element => {
     const [ showDeleteLessonModal, setShowDeleteLessonModal ] = useState<boolean>(false);
     const [ showDeleteRevisitModal, setShowDeleteRevisitModal ] = useState<boolean>(false);
 
-    const navigation = useNavigation();
+    const navigation = useNavigation<PreachingStackNavigationType>();
     const { theme: { colors, margins } } = useStyles();
 
     const { state: { selectedCourse } } = useCourses();
@@ -32,14 +32,22 @@ const PublisherStackNavigation = (): JSX.Element => {
     /**
      * Navigates to the given screen inside the PublisherStackNavigation stack.
      *
-     * @param {string} screen - The name of the screen to navigate to.
+     * @param {keyof PublisherStackParamsList} screen - The name of the screen to navigate to.
      * @return {void} This function does not return any value.
      */
-    const handleGoTo = (screen: string): void => {
-        navigation.navigate({
-            name: 'PublisherStackNavigation',
-            params: { screen }
-        } as never);
+    const handleGoTo = (screen: keyof PublisherStackParamsList): void => {
+        navigation.navigate('PublisherStackNavigation', { screen } as any);
+    }
+
+    /**
+     * Navigates to the given screen inside the PublisherStackNavigation stack, and discards all the
+     * screens that are above the given screen.
+     *
+     * @param {keyof PublisherStackParamsList} screen - The name of the screen to navigate to.
+     * @return {void} This function does not return anything.
+     */
+    const handlePopTo = (screen: keyof PublisherStackParamsList): void => {
+        navigation.popTo('PublisherStackNavigation', { screen } as any);
     }
 
     /**
@@ -120,7 +128,7 @@ const PublisherStackNavigation = (): JSX.Element => {
                             deleteModalText="¿Está seguro de eliminar esta clase?"
                             isDeleteModalLoading={ isLessonDeleting }
                             onCloseDeleteModal={ () => setShowDeleteLessonModal(false) }
-                            onConfirmDeleteModal={ () => handleDeleteLesson(() => handleGoTo('HomeScreen')) }
+                            onConfirmDeleteModal={ () => handleDeleteLesson(() => handlePopTo('HomeScreen')) }
                             onShowDeleteModal={ () => setShowDeleteLessonModal(true) }
                             showDeleteModal={ showDeleteLessonModal }
                         />
@@ -141,7 +149,7 @@ const PublisherStackNavigation = (): JSX.Element => {
                             deleteModalText="¿Está seguro de eliminar esta clase?"
                             isDeleteModalLoading={ isLessonDeleting }
                             onCloseDeleteModal={ () => setShowDeleteLessonModal(false) }
-                            onConfirmDeleteModal={ () => handleDeleteLesson(() => handleGoTo('HomeScreen')) }
+                            onConfirmDeleteModal={ () => handleDeleteLesson(() => handlePopTo('HomeScreen')) }
                             onShowDeleteModal={ () => setShowDeleteLessonModal(true) }
                             showDeleteModal={ showDeleteLessonModal }
 
@@ -165,7 +173,7 @@ const PublisherStackNavigation = (): JSX.Element => {
                             deleteModalText="¿Está seguro de eliminar esta revisita?"
                             isDeleteModalLoading={ isRevisitDeleting }
                             onCloseDeleteModal={ () => setShowDeleteRevisitModal(false) }
-                            onConfirmDeleteModal={ () => handleDeleteRevisit(() => handleGoTo('HomeScreen')) }
+                            onConfirmDeleteModal={ () => handleDeleteRevisit(() => handlePopTo('HomeScreen')) }
                             onShowDeleteModal={ () => setShowDeleteRevisitModal(true) }
                             showDeleteModal={ showDeleteRevisitModal }
 
@@ -188,7 +196,7 @@ const PublisherStackNavigation = (): JSX.Element => {
                             deleteModalText="¿Está seguro de eliminar esta revisita?"
                             isDeleteModalLoading={ isRevisitDeleting }
                             onCloseDeleteModal={ () => setShowDeleteRevisitModal(false) }
-                            onConfirmDeleteModal={ () => handleDeleteRevisit(() => handleGoTo('HomeScreen')) }
+                            onConfirmDeleteModal={ () => handleDeleteRevisit(() => handlePopTo('HomeScreen')) }
                             onShowDeleteModal={ () => setShowDeleteRevisitModal(true) }
                             showDeleteModal={ showDeleteRevisitModal }
 

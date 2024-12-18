@@ -39,7 +39,7 @@ const PrecursorStackNavigation = (): JSX.Element => {
         loadPreachings
     } = usePreaching();
 
-    const { theme: { colors, margins } } = useStyles();
+    const { theme: { colors } } = useStyles();
     const { setNetworkError } = useStatus();
     const { wifi } = useNetwork();
 
@@ -106,7 +106,6 @@ const PrecursorStackNavigation = (): JSX.Element => {
                 component={ AddOrEditPreaching }
                 name="AddOrEditPreachingScreen"
                 options={{
-                    headerTitleStyle: { marginLeft: -margins.xs },
                     headerLeft: ({ onPress }) => <BackButton onPress={ onPress } />,
                     headerRight: () => (
                         <HeaderButtons

@@ -57,13 +57,14 @@ import { useImage, useNetwork, useStatus } from '@shared';
 /* Interfaces */
 import { loadRevisitsOptions, RevisitFilter, RevisitFormValues, SaveRevisitOptions } from '../interfaces';
 import { DeleteOptions } from '@infrasturcture/interfaces';
+import { RevisitsStackNavigationType } from '@ui';
 
 /**
  * Hook to management revisits of store with state and actions
  */
 const useRevisits = () => {
     const dispatch = useAppDispatch();
-    const navigation = useNavigation();
+    const navigation = useNavigation<RevisitsStackNavigationType>();
 
     const state = useAppSelector(store => store.revisits);
     const { user } = useAppSelector(store => store.auth);
@@ -362,7 +363,7 @@ const useRevisits = () => {
 
             setStatus({ code: 201, msg: successMsg });
 
-            back && navigation.navigate('RevisitsTopTabsNavigation' as never);
+            back && navigation.popTo('RevisitsTopTabsNavigation');
             if (user.precursor === precursors.NINGUNO) await loadLastRevisit();
         }
         catch (error) {

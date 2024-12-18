@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { RefreshControl, View } from 'react-native';
 import { FlashList } from '@shopify/flash-list';
+import { useNavigation } from '@react-navigation/native';
 import { useStyles } from 'react-native-unistyles';
 
 /* Features */
@@ -11,7 +12,7 @@ import { LessonEntity } from '@domain/entities';
 
 /* Modules */
 import { FinishOrStartLessonModal } from '../../screens';
-import { DeleteModal, ListEmptyComponent, ListFooterComponent, SearchInput, Title } from '@ui';
+import { CoursesStackNavigationType, DeleteModal, ListEmptyComponent, ListFooterComponent, SearchInput, Title } from '@ui';
 import { LessonCard } from '../LessonCard';
 
 /* Hooks */
@@ -30,9 +31,11 @@ import { themeStylesheet } from '@theme';
 export const LessonsList = (): JSX.Element => {
     const [ searchTerm, setSearchTerm ] = useState<string>('');
     const [ isRefreshing, setIsRefreshing ] = useState<boolean>(false);
+
     const [ showDeleteModal, setShowDeleteModal ] = useState<boolean>(false);
     const [ showFSModal, setShowFSModal ] = useState<boolean>(false);
 
+    const navigation = useNavigation<CoursesStackNavigationType>();
     const { styles: themeStyles, theme: { fontSizes, margins } } = useStyles(themeStylesheet);
 
     const { state: { selectedCourse } } = useCourses();
@@ -200,9 +203,10 @@ export const LessonsList = (): JSX.Element => {
                 renderItem={ ({ item }) => (
                     <LessonCard
                         lesson={ item }
+                        navigateToDetail={ () => navigation.navigate('LessonDetailScreen') }
+                        navigateToEdit={ () => navigation.navigate('AddOrEditLessonScreen') }
                         onDelete={ () => handleShowModal(item, setShowDeleteModal) }
                         onFinish={ () => handleShowModal(item, setShowFSModal) }
-                        screenToNavigate="LessonDetailScreen"
                     />
                 ) }
             />

@@ -33,14 +33,14 @@ const RevisitsTopTabsNavigation = (): JSX.Element => {
     return (
         <Tabs.Navigator
             overScrollMode="never"
-            sceneContainerStyle={{
-                backgroundColor: colors.contentHeader,
-            }}
             screenOptions={ ({ navigation }) => {
                 const { isFocused } = navigation;
                 const pressColor = (isFocused()) ? colors.buttonTranslucent : colors.buttonTransparent;
 
                 return {
+                    sceneStyle: {
+                        backgroundColor: colors.contentHeader
+                    },
                     tabBarActiveTintColor: colors.button,
                     tabBarPressColor: pressColor,
                     tabBarStyle: {

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { ActivityIndicator, ScrollView, RefreshControl } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 import { useStyles } from 'react-native-unistyles';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
@@ -19,7 +20,7 @@ import { RevisitCard, RevisitModal, useRevisits } from '@revisits';
 
 /* Components */
 import { ReportModal } from '../ReportModal';
-import { DeleteModal, Fab, InfoText, Title } from '@ui';
+import { DeleteModal, Fab, InfoText, PublisherStackNavigationType, Title } from '@ui';
 
 /* Hooks */
 import { usePreaching } from '../../hooks';
@@ -36,13 +37,16 @@ import { themeStylesheet } from '@theme';
  */
 const PublisherHome = (): JSX.Element => {
     const [ isRefreshing, setIsRefreshing ] = useState<boolean>(false);
+
     const [ showDeleteLessonModal, setShowDeleteLessonModal ] = useState<boolean>(false);
     const [ showDeleteRevisitModal, setShowDeleteRevisitModal ] = useState<boolean>(false);
+
     const [ showFSModal, setShowFSModal ] = useState<boolean>(false);
     const [ showPassModal, setShowPassModal ] = useState<boolean>(false);
     const [ showReportModal, setShowReportModal ] = useState<boolean>(false);
     const [ showRevisitModal, setShowRevisitModal ] = useState<boolean>(false);
 
+    const navigation = useNavigation<PublisherStackNavigationType>();
     const { styles: themeStyles, theme: { colors, fontSizes, margins } } = useStyles(themeStylesheet);
 
     const { state: { selectedDate } } = usePreaching();
@@ -203,11 +207,12 @@ const PublisherHome = (): JSX.Element => {
 
                 { (!isLastLessonLoading && lastLesson?.id) && (
                     <LessonCard
-                        screenToNavigate="LessonDetailScreen"
                         lesson={ lastLesson }
+                        navigateToDetail={ () => navigation.navigate('LessonDetailScreen') }
+                        navigateToEdit={ () => navigation.navigate('AddOrEditLessonScreen') }
+                        onClick={ () => setSelectedCourse(lastLesson.course) }
                         onDelete={ () => handleShowLessonsModal(lastLesson, setShowDeleteLessonModal) }
                         onFinish={ () => handleShowLessonsModal(lastLesson, setShowFSModal) }
-                        onClick={ () => setSelectedCourse(lastLesson.course) }
                     />
                 ) }
 
@@ -237,11 +242,12 @@ const PublisherHome = (): JSX.Element => {
 
                 { (!isLastRevisitLoading && lastRevisit?.id) && (
                     <RevisitCard
+                        navigateToDetail={ () => navigation.navigate('RevisitDetailScreen') }
+                        navigateToEdit={ () => navigation.navigate('AddOrEditRevisitScreen') }
                         onDelete={ () => handleShowRevisitsModal(lastRevisit, setShowDeleteRevisitModal) }
                         onPass={ () => handleShowRevisitsModal(lastRevisit, setShowPassModal) }
                         onRevisit={ () => handleShowRevisitsModal(lastRevisit, setShowRevisitModal) }
                         revisit={ lastRevisit }
-                        screenToNavigate="RevisitDetailScreen"
                     />
                 ) }
             </ScrollView>

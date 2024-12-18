@@ -6,7 +6,7 @@ import { useFormik } from 'formik';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
 /* Components */
-import { Button, EyeBtn, FormField, Link } from '@ui';
+import { AuthStackNavigationType, Button, EyeBtn, FormField, Link } from '@ui';
 
 /* Hooks */
 import { useAuth } from '../../hooks';
@@ -27,7 +27,7 @@ export const LoginForm = (): JSX.Element => {
     const [ showPassword, setShowPassword ] = useState<boolean>(false);
     const { width } = useWindowDimensions();
 
-    const navigation = useNavigation();
+    const navigation = useNavigation<AuthStackNavigationType>();
     const { styles: themeStyles, theme: { colors, fontSizes, margins } } = useStyles(themeStylesheet);
 
     const { state: { isAuthLoading }, signIn } = useAuth();
@@ -120,7 +120,7 @@ export const LoginForm = (): JSX.Element => {
                 </Text>
 
                 <Link
-                    onPress={ () => navigation.navigate('RegisterScreen' as never) }
+                    onPress={ () => navigation.navigate('RegisterScreen') }
                     testID="login-form-sign-up"
                 >
                     Crea una aquí
@@ -130,7 +130,7 @@ export const LoginForm = (): JSX.Element => {
             {/* Forgot password link */}
             <View style={{ ...themeStyles.btnLink, marginTop: margins.sm }}>
                 <Link
-                    onPress={ () => navigation.navigate('ForgotPasswordScreen' as never) }
+                    onPress={ () => navigation.navigate('ForgotPasswordScreen') }
                     testID="login-form-forgor-pass"
                 >
                     Olvide mi contraseña

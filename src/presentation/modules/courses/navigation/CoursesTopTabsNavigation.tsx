@@ -38,10 +38,10 @@ const CoursesTopTabsNavigation = (): JSX.Element => {
     return (
         <Tabs.Navigator
             overScrollMode="never"
-            sceneContainerStyle={{
-                backgroundColor: colors.contentHeader,
-            }}
             screenOptions={ ({ navigation }) => ({
+                sceneStyle: {
+                    backgroundColor: colors.contentHeader
+                },
                 tabBarActiveTintColor: colors.button,
                 tabBarInactiveTintColor: colors.headerText,
                 tabBarIndicatorStyle: {

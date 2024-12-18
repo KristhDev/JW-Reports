@@ -16,7 +16,7 @@ import { PreachingInfoModal } from '../PreachingInfoModal';
 
 /* Components */
 import { PreachingTable } from '../../components';
-import { Fab, InfoText, Title } from '@ui';
+import { Fab, InfoText, PrecursorStackNavigationType, Title } from '@ui';
 
 /* Hooks */
 import { useAuth } from '@auth';
@@ -38,7 +38,7 @@ const Home = (): JSX.Element => {
     const [ showPreachingInfoModal, setShowPreachingInfoModal ] = useState<boolean>(false);
     const { height } = useWindowDimensions();
 
-    const navigation = useNavigation();
+    const navigation = useNavigation<PrecursorStackNavigationType>();
     const { styles: themeStyles, theme: { colors, fontSizes, margins } } = useStyles(themeStylesheet);
 
     const { state: { user } } = useAuth();
@@ -62,7 +62,7 @@ const Home = (): JSX.Element => {
             finalHour: new Date().toString()
         });
 
-        navigation.navigate('AddOrEditPreachingScreen' as never);
+        navigation.navigate('AddOrEditPreachingScreen');
     }
 
     /**

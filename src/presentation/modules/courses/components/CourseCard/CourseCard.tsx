@@ -6,7 +6,7 @@ import { useStyles } from 'react-native-unistyles';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
 /* Components */
-import { Fab } from '@ui';
+import { CoursesStackNavigationType, Fab } from '@ui';
 
 /* Hooks */
 import { useCourses } from '../../hooks';
@@ -36,7 +36,7 @@ import { themeStylesheet } from '@theme';
 export const CourseCard: FC<CourseCardProps> = ({ course, onActiveOrSuspend, onDelete, onFinishOrStart }): JSX.Element => {
     const [ isOpen, setIsOpen ] = useState<boolean>(false);
 
-    const navigation = useNavigation();
+    const navigation = useNavigation<CoursesStackNavigationType>();
     const { styles: themeStyles } = useStyles(themeStylesheet);
     const { styles, theme: { colors, fontSizes } } = useStyles(stylesheet);
 
@@ -51,7 +51,7 @@ export const CourseCard: FC<CourseCardProps> = ({ course, onActiveOrSuspend, onD
      */
     const handleCourseDetail = (): void => {
         setSelectedCourse(course);
-        navigation.navigate('CourseDetailScreen' as never);
+        navigation.navigate('CourseDetailScreen');
     }
 
     /**
@@ -63,7 +63,7 @@ export const CourseCard: FC<CourseCardProps> = ({ course, onActiveOrSuspend, onD
     const handleEdit = (): void => {
         setIsOpen(false);
         setSelectedCourse(course);
-        navigation.navigate('AddOrEditCourseScreen' as never);
+        navigation.navigate('AddOrEditCourseScreen');
     }
 
     /**
@@ -82,7 +82,7 @@ export const CourseCard: FC<CourseCardProps> = ({ course, onActiveOrSuspend, onD
             nextLesson: new Date().toString()
         });
 
-        navigation.navigate('AddOrEditLessonScreen' as never);
+        navigation.navigate('AddOrEditLessonScreen');
     }
 
     /**
@@ -94,7 +94,7 @@ export const CourseCard: FC<CourseCardProps> = ({ course, onActiveOrSuspend, onD
     const handleLessonList = (): void => {
         setIsOpen(false);
         setSelectedCourse(course);
-        navigation.navigate('LessonsScreen' as never);
+        navigation.navigate('LessonsScreen');
     }
 
     /**

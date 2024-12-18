@@ -13,7 +13,7 @@ import { PreachingEntity } from '@domain/entities';
 import { Time } from '@infrasturcture/adapters';
 
 /* Components */
-import { TableCell } from '@ui';
+import { PrecursorStackNavigationType, TableCell } from '@ui';
 
 /* Hooks */
 import { usePreaching } from '../../hooks';
@@ -32,7 +32,7 @@ export const PreachingTable = (): JSX.Element => {
     const { width } = useWindowDimensions();
 
     const { styles } = useStyles(stylesheet);
-    const navigation = useNavigation();
+    const navigation = useNavigation<PrecursorStackNavigationType>();
 
     const { state: { preachings }, setSelectedPreaching } = usePreaching();
     const { state: { theme } } = useTheme();
@@ -49,7 +49,7 @@ export const PreachingTable = (): JSX.Element => {
      */
     const handleGoToEditPreaching = (preaching: PreachingEntity): void => {
         setSelectedPreaching(preaching);
-        navigation.navigate('AddOrEditPreachingScreen' as never);
+        navigation.navigate('AddOrEditPreachingScreen');
     }
 
     return (

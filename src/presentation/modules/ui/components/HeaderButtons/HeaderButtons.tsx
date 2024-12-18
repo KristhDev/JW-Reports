@@ -20,6 +20,7 @@ import { usePreaching } from '@preaching';
 import { useUI } from '../../hooks';
 
 /* Interfaces */
+import { NavigationType } from '@ui';
 import { HeaderButtonsProps } from './interfaces';
 
 /**
@@ -61,7 +62,7 @@ export const HeaderButtons: FC<HeaderButtonsProps> = ({
 }): JSX.Element => {
     const [ showMonthPicker, setShowMonthPicker ] = useState<boolean>(false);
 
-    const navigation = useNavigation();
+    const navigation = useNavigation<NavigationType>();
     const { theme: { colors, fontSizes, margins } } = useStyles();
 
     const { signOut } = useAuth();
@@ -140,7 +141,7 @@ export const HeaderButtons: FC<HeaderButtonsProps> = ({
                             />
                         }
                         style={{ marginRight: (margins.xs - 2) }}
-                        onPress={ () => navigation.navigate('SettingsStackNavigation' as never) }
+                        onPress={ () => navigation.navigate('SettingsStackNavigation') }
                         touchColor={ colors.buttonTransparent }
                     />
                 ) }

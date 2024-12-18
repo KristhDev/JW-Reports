@@ -8,7 +8,7 @@ import { INIT_LESSON } from '@application/features';
 
 /* Components */
 import { LessonsList } from '../../components';
-import { Fab } from '@ui';
+import { CoursesStackNavigationType, Fab } from '@ui';
 
 /* Hooks */
 import { useLessons } from '../../hooks';
@@ -24,7 +24,7 @@ import { themeStylesheet } from '@theme';
  */
 const Lessons = (): JSX.Element => {
     const { styles: themeStyles, theme: { colors, fontSizes } } = useStyles(themeStylesheet);
-    const navigation = useNavigation();
+    const navigation = useNavigation<CoursesStackNavigationType>();
 
     const { setSelectedLesson } = useLessons();
 
@@ -40,7 +40,7 @@ const Lessons = (): JSX.Element => {
             nextLesson: new Date().toString(),
         });
 
-        navigation.navigate('AddOrEditLessonScreen' as never);
+        navigation.navigate('AddOrEditLessonScreen');
     }
 
     useFocusEffect(

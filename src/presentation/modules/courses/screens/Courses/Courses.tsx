@@ -9,7 +9,7 @@ import { INIT_COURSE } from '@application/features';
 
 /* Components */
 import { CoursesList } from '../../components';
-import { Fab } from '@ui';
+import { CoursesStackNavigationType, Fab } from '@ui';
 
 /* Hooks */
 import { useCourses } from '../../hooks';
@@ -30,7 +30,7 @@ type CoursesProps = MaterialTopTabScreenProps<CoursesTopTabsParamsList>;
  * @return {JSX.Element} rendered component to show list of courses
  */
 const Courses: FC<CoursesProps> = ({ route }): JSX.Element => {
-    const navigation = useNavigation();
+    const navigation = useNavigation<CoursesStackNavigationType>();
     const { styles: themeStyles, theme: { colors, fontSizes } } = useStyles(themeStylesheet);
 
     const { setCoursesScreenHistory, setSelectedCourse } = useCourses();
@@ -44,7 +44,7 @@ const Courses: FC<CoursesProps> = ({ route }): JSX.Element => {
      */
     const handleNavigate = (): void => {
         setSelectedCourse(INIT_COURSE);
-        navigation.navigate('AddOrEditCourseScreen' as never);
+        navigation.navigate('AddOrEditCourseScreen');
     }
 
     /**

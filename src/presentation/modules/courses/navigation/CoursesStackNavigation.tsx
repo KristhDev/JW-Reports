@@ -11,7 +11,7 @@ import { AddOrEditCourse, CourseDetail } from '../screens';
 import { AddOrEditLesson, LessonDetail, Lessons, useLessons } from '@lessons';
 
 /* Components */
-import { BackButton, HeaderButtons } from '@ui';
+import { BackButton, HeaderButtons, MainTabsBottomNavigationType } from '@ui';
 
 /* Hooks */
 import { useCourses } from '../hooks';
@@ -33,8 +33,8 @@ const CoursesStackNavigation = (): JSX.Element => {
     const [ showDeleteCourseModal, setShowDeleteCourseModal ] = useState<boolean>(false);
     const [ showDeleteLessonModal, setShowDeleteLessonModal ] = useState<boolean>(false);
 
-    const navigation = useNavigation();
-    const { theme: { colors, margins } } = useStyles();
+    const navigation = useNavigation<MainTabsBottomNavigationType>();
+    const { theme: { colors } } = useStyles();
 
     const { state: { isCourseDeleting, selectedCourse }, deleteCourse } = useCourses();
     const { state: { selectedLesson, isLessonDeleting }, deleteLesson } = useLessons();
@@ -75,11 +75,19 @@ const CoursesStackNavigation = (): JSX.Element => {
      * @param {string} screen - The name of the screen to navigate to.
      * @return {void} This function does not return anything.
      */
-    const handleGoTo = (screen: string): void => {
-        navigation.navigate({
-            name: 'CoursesStackNavigation',
-            params: { screen }
-        } as never);
+    const handleGoTo = (screen: keyof CoursesStackParamsList): void => {
+        navigation.navigate('CoursesStackNavigation', { screen } as any);
+    }
+
+    /**
+     * Navigates to the given screen inside the CoursesStackNavigation stack, and discards all the
+     * screens that are above the given screen.
+     *
+     * @param {keyof CoursesStackParamsList} screen - The name of the screen to navigate to.
+     * @return {void} This function does not return anything.
+     */
+    const handlePopTo = (screen: keyof CoursesStackParamsList): void => {
+        navigation.popTo('CoursesStackNavigation', { screen } as any);
     }
 
     return (
@@ -106,7 +114,6 @@ const CoursesStackNavigation = (): JSX.Element => {
                 component={ CourseDetail }
                 name="CourseDetailScreen"
                 options={{
-                    headerTitleStyle: { marginLeft: -margins.xs },
                     headerLeft: ({ onPress }) => <BackButton onPress={ onPress } />,
                     headerRight: () => (
                         <HeaderButtons
@@ -114,7 +121,7 @@ const CoursesStackNavigation = (): JSX.Element => {
                             deleteModalText="¿Está seguro de eliminar este curso?"
                             isDeleteModalLoading={ isCourseDeleting }
                             onCloseDeleteModal={ () => setShowDeleteCourseModal(false) }
-                            onConfirmDeleteModal={ () => handleDeleteCourse(() => handleGoTo('CoursesTopTabsNavigation')) }
+                            onConfirmDeleteModal={ () => handleDeleteCourse(() => handlePopTo('CoursesTopTabsNavigation')) }
                             onShowDeleteModal={ () => setShowDeleteCourseModal(true) }
                             showDeleteModal={ showDeleteCourseModal }
 
@@ -130,7 +137,6 @@ const CoursesStackNavigation = (): JSX.Element => {
                 component={ AddOrEditCourse }
                 name="AddOrEditCourseScreen"
                 options={{
-                    headerTitleStyle: { marginLeft: -margins.xs },
                     headerLeft: ({ onPress }) => <BackButton onPress={ onPress } />,
                     headerRight: () => (
                         <HeaderButtons
@@ -138,7 +144,7 @@ const CoursesStackNavigation = (): JSX.Element => {
                             deleteModalText="¿Está seguro de eliminar este curso?"
                             isDeleteModalLoading={ isCourseDeleting }
                             onCloseDeleteModal={ () => setShowDeleteCourseModal(false) }
-                            onConfirmDeleteModal={ () => handleDeleteCourse(() => handleGoTo('CoursesTopTabsNavigation')) }
+                            onConfirmDeleteModal={ () => handleDeleteCourse(() => handlePopTo('CoursesTopTabsNavigation')) }
                             onShowDeleteModal={ () => setShowDeleteCourseModal(true) }
                             showDeleteModal={ showDeleteCourseModal }
                         />
@@ -151,7 +157,6 @@ const CoursesStackNavigation = (): JSX.Element => {
                 component={ AddOrEditLesson }
                 name="AddOrEditLessonScreen"
                 options={{
-                    headerTitleStyle: { marginLeft: -margins.xs },
                     headerLeft: ({ onPress }) => <BackButton onPress={ onPress } />,
                     headerRight: () => (
                         <HeaderButtons
@@ -159,7 +164,7 @@ const CoursesStackNavigation = (): JSX.Element => {
                             deleteModalText="¿Está seguro de eliminar esta clase?"
                             isDeleteModalLoading={ isLessonDeleting }
                             onCloseDeleteModal={ () => setShowDeleteLessonModal(false) }
-                            onConfirmDeleteModal={ () => handleDeleteLesson(() => handleGoTo('LessonsScreen')) }
+                            onConfirmDeleteModal={ () => handleDeleteLesson(() => handlePopTo('LessonsScreen')) }
                             onShowDeleteModal={ () => setShowDeleteLessonModal(true) }
                             showDeleteModal={ showDeleteLessonModal }
                         />
@@ -172,7 +177,6 @@ const CoursesStackNavigation = (): JSX.Element => {
                 component={ Lessons }
                 name="LessonsScreen"
                 options={{
-                    headerTitleStyle: { marginLeft: -margins.xs },
                     headerLeft: ({ onPress }) => <BackButton onPress={ onPress } />,
                     title: 'Clases'
                 }}
@@ -182,7 +186,6 @@ const CoursesStackNavigation = (): JSX.Element => {
                 component={ LessonDetail }
                 name="LessonDetailScreen"
                 options={{
-                    headerTitleStyle: { marginLeft: -margins.xs },
                     headerLeft: ({ onPress }) => <BackButton onPress={ onPress } />,
                     headerRight: () => (
                         <HeaderButtons
@@ -190,7 +193,7 @@ const CoursesStackNavigation = (): JSX.Element => {
                             deleteModalText="¿Está seguro de eliminar esta clase?"
                             isDeleteModalLoading={ isLessonDeleting }
                             onCloseDeleteModal={ () => setShowDeleteLessonModal(false) }
-                            onConfirmDeleteModal={ () => handleDeleteLesson(() => handleGoTo('LessonsScreen')) }
+                            onConfirmDeleteModal={ () => handleDeleteLesson(() => handlePopTo('LessonsScreen')) }
                             onShowDeleteModal={ () => setShowDeleteLessonModal(true) }
                             showDeleteModal={ showDeleteLessonModal }
 

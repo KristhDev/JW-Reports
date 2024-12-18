@@ -43,7 +43,7 @@ import { useNetwork, useStatus } from '@shared';
 
 /* Interfaces */
 import { LessonFormValues } from '../interfaces';
-import { LoadResourcesOptions } from '@ui';
+import { CoursesStackNavigationType, LoadResourcesOptions } from '@ui';
 import { DeleteOptions } from '@infrasturcture/interfaces';
 
 /**
@@ -51,7 +51,7 @@ import { DeleteOptions } from '@infrasturcture/interfaces';
  */
 const useLessons = () => {
     const dispatch = useAppDispatch();
-    const navigation = useNavigation();
+    const navigation = useNavigation<CoursesStackNavigationType>();
     const { hasWifiConnection } = useNetwork();
 
     const state = useAppSelector(store => store.lessons);
@@ -347,7 +347,7 @@ const useLessons = () => {
             setIsLessonLoading(false);
 
             setStatus({ code: 201, msg: lessonsMessages.ADDED_SUCCESS });
-            navigation.navigate('LessonsScreen' as never);
+            navigation.navigate('LessonsScreen');
         }
         catch (error) {
             setIsLessonLoading(false);

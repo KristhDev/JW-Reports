@@ -44,11 +44,11 @@ const MainTabsBottomNavigation = (): JSX.Element => {
 
     return (
         <Tabs.Navigator
-            sceneContainerStyle={{
-                backgroundColor: colors.background
-            }}
             screenOptions={{
                 headerShown: false,
+                sceneStyle: {
+                    backgroundColor: colors.background
+                },
                 tabBarActiveTintColor: colors.button,
                 tabBarInactiveTintColor: colors.icon
             }}

@@ -15,7 +15,7 @@ import { DeviceInfo } from '@infrasturcture/adapters';
 /* Modules */
 import { useStatus } from '../../hooks';
 import { ThemeModal, useTheme } from '@theme';
-import { SectionBtn, SectionContent, Switch, useUI } from '@ui';
+import { SectionBtn, SectionContent, SettingsStackNavigationType, Switch, useUI } from '@ui';
 
 /* Package */
 import { version as appVersion } from '@package';
@@ -29,7 +29,7 @@ import { version as appVersion } from '@package';
 const Settings = (): JSX.Element => {
     const [ showThemeModal, setShowThemeModal ] = useState<boolean>(false);
 
-    const navigation = useNavigation();
+    const navigation = useNavigation<SettingsStackNavigationType>();
     const { theme: { colors, fontSizes, margins } } = useStyles();
 
     const { setStatus } = useStatus();
@@ -59,19 +59,19 @@ const Settings = (): JSX.Element => {
                 {/* Acount secction */}
                 <SectionContent title="MI CUENTA">
                     <SectionBtn
-                        onPress={ () => navigation.navigate('ProfileScreen' as never) }
+                        onPress={ () => navigation.navigate('ProfileScreen') }
                         subText="Actualice sus datos personales"
                         text="Perfil"
                     />
 
                     <SectionBtn
-                        onPress={ () => navigation.navigate('CredentialsScreen' as never) }
+                        onPress={ () => navigation.navigate('CredentialsScreen') }
                         subText="Cambie sus credenciales (correo y contraseña)"
                         text="Credenciales"
                     />
 
                     <SectionBtn
-                        onPress={ () => navigation.navigate('ExportDataScreen' as never) }
+                        onPress={ () => navigation.navigate('ExportDataScreen') }
                         subText="Exporte todos sus datos de la aplicación"
                         text="Exportar Información"
                     />
@@ -108,13 +108,13 @@ const Settings = (): JSX.Element => {
 
                 <SectionContent title="COMENTARIOS">
                     <SectionBtn
-                        onPress={ () => navigation.navigate('FeedbackScreen' as never) }
+                        onPress={ () => navigation.navigate('FeedbackScreen') }
                         subText="Comparta sus sugerencias para mejorar la aplicación."
                         text="Sugerencias"
                     />
 
                     <SectionBtn
-                        onPress={ () => navigation.navigate('ReportErrorScreen' as never) }
+                        onPress={ () => navigation.navigate('ReportErrorScreen') }
                         subText="Reporte los errores que se presenten en la aplicación."
                         text="Reportar un error"
                     />

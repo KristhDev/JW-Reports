@@ -13,7 +13,7 @@ import { RevisitEntity } from '@domain/entities';
 /* Modules */
 import { PassToCourseModal } from '@courses';
 import { RevisitCard, RevisitModal, useRevisits } from '@revisits';
-import { DeleteModal, ListEmptyComponent, ListFooterComponent, SearchInput, Title } from '@ui';
+import { DeleteModal, ListEmptyComponent, ListFooterComponent, RevisitsStackNavigationType, SearchInput, Title } from '@ui';
 
 /* Hooks */
 import { useNetwork } from '@shared';
@@ -46,7 +46,7 @@ export const RevisitsList: FC<RevisitsListProps> = ({ emptyMessage, filter, titl
 
     const { styles: themeStyles, theme: { fontSizes, margins } } = useStyles(themeStylesheet);
 
-    const navigation = useNavigation();
+    const navigation = useNavigation<RevisitsStackNavigationType>();
     const navigationState = navigation.getState();
 
     const emptyMsg = (searchTerm.trim().length > 0)
@@ -233,11 +233,12 @@ export const RevisitsList: FC<RevisitsListProps> = ({ emptyMessage, filter, titl
                 }
                 renderItem={ ({ item }) => (
                     <RevisitCard
+                        navigateToDetail={ () => navigation.navigate('RevisitDetailScreen') }
+                        navigateToEdit={ () => navigation.navigate('AddOrEditRevisitScreen') }
                         onDelete={ () => handleShowModal(item, setShowDeleteModal) }
                         onPass={ () => handleShowModal(item, setShowPassModal) }
                         onRevisit={ () => handleShowModal(item, setShowRevisitModal) }
                         revisit={ item }
-                        screenToNavigate="RevisitDetailScreen"
                     />
                 ) }
             />
