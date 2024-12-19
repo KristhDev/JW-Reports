@@ -8,7 +8,7 @@ import RevisitsTopTabsNavigation from './RevisitsTopTabsNavigation';
 
 /* Modules */
 import { AddOrEditRevisit, RevisitDetail, RevisitsStackParamsList, useRevisits } from '@revisits';
-import { BackButton, HeaderButtons } from '@ui';
+import { BackButton, HeaderButtons, MainTabsBottomNavigationType } from '@ui';
 
 /* Utils */
 import { Characters } from '@utils';
@@ -22,20 +22,44 @@ const Stack = createStackNavigator<RevisitsStackParamsList>();
  */
 const RevisitsStackNavigation = (): JSX.Element => {
     const [ showDeleteModal, setShowDeleteModal ] = useState<boolean>(false);
-    const { navigate } = useNavigation();
+    const navigation = useNavigation<MainTabsBottomNavigationType>();
 
     const { state: { isRevisitDeleting, selectedRevisit }, deleteRevisit } = useRevisits();
-    const { theme: { colors, margins } } = useStyles();
+    const { theme: { colors } } = useStyles();
 
     const revisitDetailTitle = `Revisita ${ selectedRevisit.personName }`;
+
+    /**
+     * Navigates to the given screen inside the RevisitsStackNavigation stack.
+     *
+     * @param {keyof RevisitsStackParamsList} screen - The name of the screen to navigate to.
+     * @return {void} This function does not return any value.
+     */
+    const handleGoTo = (screen: keyof RevisitsStackParamsList): void => {
+        navigation.navigate('RevisitsStackNavigation', { screen } as any);
+    }
+
+    /**
+     * Navigates to the given screen inside the RevisitsStackNavigation stack, and discards all the
+     * screens that are above the given screen.
+     *
+     * @param {keyof RevisitsStackParamsList} screen - The name of the screen to navigate to.
+     * @return {void} This function does not return anything.
+     */
+    const handlePopTo = (screen: keyof RevisitsStackParamsList): void => {
+        navigation.popTo('RevisitsStackNavigation', { screen } as any);
+    }
 
     /**
      * If the user confirms the delete, then delete the revisit and close the modal.
      *
      * @return {void} This function does not return anything
      */
-    const handleDeleteConfirm = () => {
-        deleteRevisit(true, () => setShowDeleteModal(false));
+    const handleDeleteConfirm = (onSuccess?: () => void): void => {
+        deleteRevisit({
+            onFinish: () => setShowDeleteModal(false),
+            onSuccess
+        });
     }
 
     return (
@@ -62,7 +86,6 @@ const RevisitsStackNavigation = (): JSX.Element => {
                 component={ RevisitDetail }
                 name="RevisitDetailScreen"
                 options={{
-                    headerTitleStyle: { marginLeft: -margins.xs },
                     headerLeft: ({ onPress }) => <BackButton onPress={ onPress } />,
                     headerRight: () => (
                         <HeaderButtons
@@ -70,12 +93,12 @@ const RevisitsStackNavigation = (): JSX.Element => {
                             deleteModalText="¿Está seguro de eliminar esta revisita?"
                             isDeleteModalLoading={ isRevisitDeleting }
                             onCloseDeleteModal={ () => setShowDeleteModal(false) }
-                            onConfirmDeleteModal={ handleDeleteConfirm }
+                            onConfirmDeleteModal={ () => handleDeleteConfirm(() => handlePopTo('RevisitsTopTabsNavigation')) }
                             onShowDeleteModal={ () => setShowDeleteModal(true) }
                             showDeleteModal={ showDeleteModal }
 
                             editButton={ true }
-                            onPressEditButton={ () => navigate('AddOrEditRevisitScreen' as never) }
+                            onPressEditButton={ () => handleGoTo('AddOrEditRevisitScreen') }
                         />
                     ),
                     title: Characters.truncate(revisitDetailTitle, 22)
@@ -86,7 +109,6 @@ const RevisitsStackNavigation = (): JSX.Element => {
                 component={ AddOrEditRevisit }
                 name="AddOrEditRevisitScreen"
                 options={{
-                    headerTitleStyle: { marginLeft: -margins.xs },
                     headerLeft: ({ onPress }) => <BackButton onPress={ onPress } />,
                     headerRight: () => (
                         <HeaderButtons
@@ -94,7 +116,7 @@ const RevisitsStackNavigation = (): JSX.Element => {
                             deleteModalText="¿Está seguro de eliminar esta revisita?"
                             isDeleteModalLoading={ isRevisitDeleting }
                             onCloseDeleteModal={ () => setShowDeleteModal(false) }
-                            onConfirmDeleteModal={ handleDeleteConfirm }
+                            onConfirmDeleteModal={ () => handleDeleteConfirm(() => handlePopTo('RevisitsTopTabsNavigation')) }
                             onShowDeleteModal={ () => setShowDeleteModal(true) }
                             showDeleteModal={ showDeleteModal }
 

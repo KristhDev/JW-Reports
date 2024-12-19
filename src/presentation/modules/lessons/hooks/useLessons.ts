@@ -1,7 +1,7 @@
 import { useNavigation } from '@react-navigation/native';
 
 /* Constants */
-import { authMessages, coursesMessages, lessonsMessages } from '@application/constants';
+import { authMessages, coursesMessages, lessonsMessages, precursors } from '@application/constants';
 
 /* Features */
 import { useAppDispatch, useAppSelector } from '@application/store';
@@ -43,14 +43,15 @@ import { useNetwork, useStatus } from '@shared';
 
 /* Interfaces */
 import { LessonFormValues } from '../interfaces';
-import { LoadResourcesOptions } from '@ui';
+import { CoursesStackNavigationType, LoadResourcesOptions } from '@ui';
+import { DeleteOptions } from '@infrasturcture/interfaces';
 
 /**
  * Hook to management lessons of store with state and actions
  */
 const useLessons = () => {
     const dispatch = useAppDispatch();
-    const navigation = useNavigation();
+    const navigation = useNavigation<CoursesStackNavigationType>();
     const { hasWifiConnection } = useNetwork();
 
     const state = useAppSelector(store => store.lessons);
@@ -156,13 +157,16 @@ const useLessons = () => {
     }
 
     /**
-     * It deletes a lesson from the database and updates the state of the app.
+     * Deletes a lesson and resets the selected lesson to the first lesson in the lessons list.
+     * If the selected lesson is the last lesson in the course, it loads the new last lesson and
+     * updates the last lesson in the course.
      *
-     * @param {boolean} back - This parameter allows you to return to the previous screen, by default it is `false`
-     * @param {Function} onFinish - This callback executed when the process is finished (success or failure)
+     * @param {DeleteOptions} options - An object with two properties: onFinish and onSuccess.
+     * onFinish is a callback executed when the process is finished (success or failure),
+     * onSuccess is a callback executed when the process is finished successfully.
      * @return {Promise<void>} This function does not return anything.
      */
-    const deleteLesson = async (back: boolean = false, onFinish?: () => void): Promise<void> => {
+    const deleteLesson = async ({ onFinish, onSuccess }: DeleteOptions): Promise<void> => {
         const wifiConnectionAvailable = hasWifiConnection();
         if (!wifiConnectionAvailable) return;
 
@@ -178,17 +182,18 @@ const useLessons = () => {
             await LessonsService.delete(state.selectedLesson.id);
             removeLesson(state.selectedLesson.id);
 
-            if (user.precursor === 'ninguno' && state.selectedLesson.id === state.lastLesson.id) {
+            if (user.precursor === precursors.NINGUNO && state.selectedLesson.id === state.lastLesson.id) {
                 await loadLastLesson();
             }
 
             replaceLastLessonInCourse(state.selectedLesson.id, state.lessons[0]);
-            onFinish && onFinish();
-            setStatus({ code: 200, msg: lessonsMessages.DELETED_SUCCESS });
-
+            setIsLessonDeleting(false);
             resetSelectedLesson();
-            back && navigation.goBack();
 
+            onFinish && onFinish();
+            onSuccess && onSuccess();
+
+            setStatus({ code: 200, msg: lessonsMessages.DELETED_SUCCESS });
         }
         catch (error) {
             setIsLessonDeleting(false);
@@ -226,7 +231,7 @@ const useLessons = () => {
 
             updateLessonActionState(lesson);
             updateLastLessonInCourse(lesson);
-            if (user.precursor === 'ninguno') await loadLastLesson();
+            if (user.precursor === precursors.NINGUNO) await loadLastLesson();
 
             onFinish && onFinish();
             const msg = (lesson.done) ? lessonsMessages.FINISHED_SUCCESS : lessonsMessages.RESTARTED_SUCCESS;
@@ -251,6 +256,8 @@ const useLessons = () => {
 
         const isAuth = isAuthenticated();
         if (!isAuth) return;
+
+        setIsLastLessonLoading(true);
 
         try {
             const courseIds = await CoursesService.getCourseIdsByUserId(user.id);
@@ -335,12 +342,12 @@ const useLessons = () => {
             addLastLessonInCourse(selectedCourse.id, lesson);
 
             if (state.lessons.length > 0) addLesson(lesson);
-            else setIsLessonLoading(false);
 
-            if (user.precursor === 'ninguno') await loadLastLesson();
+            if (user.precursor === precursors.NINGUNO) await loadLastLesson();
+            setIsLessonLoading(false);
 
             setStatus({ code: 201, msg: lessonsMessages.ADDED_SUCCESS });
-            navigation.navigate('LessonsScreen' as never);
+            navigation.navigate('LessonsScreen');
         }
         catch (error) {
             setIsLessonLoading(false);

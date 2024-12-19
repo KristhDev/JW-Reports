@@ -5,9 +5,10 @@ import { CardStyleInterpolators, createStackNavigator } from '@react-navigation/
 /* Modules */
 import { Profile, Credentials } from '@auth';
 import { ExportDataScreen, FeedbackScreen, ReportErrorScreen, Settings } from '../screens';
+import { SettingsStackParamsList } from '@shared';
 import { BackButton } from '@ui';
 
-const Stack = createStackNavigator();
+const Stack = createStackNavigator<SettingsStackParamsList>();
 
 /**
  * This is a stack navigation for settings
@@ -15,7 +16,7 @@ const Stack = createStackNavigator();
  * @return {JSX.Element} rendered component to show stack navigation
  */
 const SettingsStackNavigation = (): JSX.Element => {
-    const { theme: { colors, margins } } = useStyles();
+    const { theme: { colors } } = useStyles();
 
     return (
         <Stack.Navigator
@@ -30,7 +31,6 @@ const SettingsStackNavigation = (): JSX.Element => {
                 },
                 headerShadowVisible: false,
                 headerTintColor: colors.headerText,
-                headerTitleStyle: { marginLeft: -margins.xs },
             }}
         >
             <Stack.Screen

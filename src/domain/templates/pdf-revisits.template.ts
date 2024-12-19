@@ -141,7 +141,7 @@ export class PdfRevisitsTemplate {
                         <img
                             alt="Imagen que aporta más información de ${ revisit.personName }"
                             class="revisit-card__section-img"
-                            src="https://placehold.co/600x400"
+                            src="${ revisit.photo }"
                         >
                     </div>
                 `;

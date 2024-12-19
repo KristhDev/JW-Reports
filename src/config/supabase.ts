@@ -5,14 +5,14 @@ import { createClient } from '@supabase/supabase-js';
 import { storage, storageKeys } from '@infrasturcture/adapters';
 
 /* Env */
-import { SUPABASE_APY_KEY, SUPABASE_URL } from '@env';
+import { env } from './env';
 
 import 'react-native-url-polyfill/auto';
 
 /* Creating a client that will be used to connect to the database. */
 export const supabase = createClient(
-    SUPABASE_URL,
-    SUPABASE_APY_KEY,
+    env.SUPABASE_URL,
+    env.SUPABASE_APY_KEY,
     {
         auth: {
             autoRefreshToken: true,

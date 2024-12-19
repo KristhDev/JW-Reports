@@ -6,7 +6,7 @@ import { useStyles } from 'react-native-unistyles';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
 /* Components */
-import { Button, EyeBtn, FormField, Link } from '@ui';
+import { AuthStackNavigationType, Button, EyeBtn, FormField, Link } from '@ui';
 
 /* Hooks */
 import { useAuth } from '../../hooks';
@@ -28,7 +28,7 @@ export const RegisterForm = (): JSX.Element => {
     const [ showPassword, setShowPassword ] = useState<boolean>(false);
     const [ showConfirmPassword, setShowConfirmPassword ] = useState<boolean>(false);
 
-    const navigation = useNavigation();
+    const navigation = useNavigation<AuthStackNavigationType>();
     const { styles: themeStyles, theme: { colors, fontSizes, margins } } = useStyles(themeStylesheet);
 
     const { state: { isAuthLoading }, signUp } = useAuth();
@@ -177,7 +177,7 @@ export const RegisterForm = (): JSX.Element => {
                 </Text>
 
                 <Link
-                    onPress={ () => navigation.navigate('LoginScreen' as never) }
+                    onPress={ () => navigation.navigate('LoginScreen') }
                     testID="register-form-sign-in"
                 >
                     Ingresa aquí

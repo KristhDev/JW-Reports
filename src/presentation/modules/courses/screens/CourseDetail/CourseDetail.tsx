@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { ScrollView, Text, View } from 'react-native';
 import { useStyles } from 'react-native-unistyles';
 import { useNavigation } from '@react-navigation/native';
 
 /* Features */
-import { INIT_COURSE, INIT_LESSON } from '@application/features';
+import { INIT_LESSON } from '@application/features';
 
 /* Adapters */
 import { Time } from '@infrasturcture/adapters';
@@ -14,7 +14,7 @@ import { ActiveOrSuspendCourseModal } from '../ActiveOrSuspendCourseModal';
 import { FinishOrStartCourseModal }  from '../FinishOrStartCourseModal';
 
 /* Components */
-import { InfoText, Link, Title } from '@ui';
+import { CoursesStackNavigationType, InfoText, Link, Title } from '@ui';
 
 /* Hooks */
 import { useCourses } from '../../hooks';
@@ -35,11 +35,11 @@ const CourseDetail = (): JSX.Element => {
     const [ showASModal, setShowASModal ] = useState<boolean>(false);
     const [ showFSModal, setShowFSModal ] = useState<boolean>(false);
 
-    const navigation = useNavigation();
+    const navigation = useNavigation<CoursesStackNavigationType>();
     const { styles: themeStyles, theme: { colors, fontSizes, margins } } = useStyles(themeStylesheet);
     const { styles } = useStyles(stylesheet);
 
-    const { state: { selectedCourse }, setSelectedCourse } = useCourses();
+    const { state: { selectedCourse } } = useCourses();
     const { setSelectedLesson } = useLessons();
 
     const statusCourseText = (selectedCourse.finished)
@@ -60,7 +60,7 @@ const CourseDetail = (): JSX.Element => {
             nextLesson: new Date().toString()
         });
 
-        navigation.navigate('AddOrEditLessonScreen' as never);
+        navigation.navigate('AddOrEditLessonScreen');
     }
 
     /**
@@ -69,25 +69,8 @@ const CourseDetail = (): JSX.Element => {
      * @return {void} This function does not return anything.
      */
     const handleLessonsList = (): void => {
-        navigation.navigate('LessonsScreen' as never);
+        navigation.navigate('LessonsScreen');
     }
-
-    /**
-     * Effect to reset selectedCourse when index of navigation
-     * is zero.
-     */
-    useEffect(() => {
-        navigation.addListener('blur', () => {
-            const navigationState = navigation.getState();
-            if (!navigationState) return;
-
-            if (navigationState.index === 0) setSelectedCourse(INIT_COURSE);
-        });
-
-        return () => {
-            navigation.removeListener('blur', () => {});
-        }
-    }, [ selectedCourse ]);
 
     return (
         <>

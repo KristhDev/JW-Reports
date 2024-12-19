@@ -6,7 +6,7 @@ import { useFormik } from 'formik';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
 /* Components */
-import { Button, FormField, Link } from '@ui';
+import { AuthStackNavigationType, Button, FormField, Link } from '@ui';
 
 /* Hooks */
 import { useStatus } from '@shared';
@@ -28,7 +28,7 @@ import { themeStylesheet } from '@theme';
  * @return {JSX.Element} The rendered form component.
  */
 export const ForgotPasswordForm = (): JSX.Element => {
-    const navigation = useNavigation();
+    const navigation = useNavigation<AuthStackNavigationType>();
     const { styles: themeStyles, theme: { colors, fontSizes, margins } } = useStyles(themeStylesheet);
 
     const { state: { isAuthLoading }, resetPassword } = useAuth();
@@ -106,7 +106,7 @@ export const ForgotPasswordForm = (): JSX.Element => {
             {/* Sign in link */}
             <View style={{ ...themeStyles.btnLink, marginBottom: margins.sm * 6 }}>
                 <Link
-                    onPress={ () => navigation.navigate('LoginScreen' as never) }
+                    onPress={ () => navigation.navigate('LoginScreen') }
                     testID="forgot-pass-form-sign-in"
                 >
                     Ingresar con mi cuenta

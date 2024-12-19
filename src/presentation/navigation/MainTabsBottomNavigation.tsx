@@ -21,25 +21,34 @@ const Tabs = createBottomTabNavigator<MainTabsBottomParamsList>();
  * @return {JSX.Element} rendered component to show tabs bottom navigation of main
  */
 const MainTabsBottomNavigation = (): JSX.Element => {
-    const { state: { user } } = useAuth();
-    const { state } = usePermissions();
     const { theme: { colors } } = useStyles();
+
+    const { state: { user } } = useAuth();
+    const { state: { isPermissionsRequested, permissions }, checkPermissions, requestPermissions } = usePermissions();
+
+    /**
+     * Effect to check or request permissions.
+     */
+    useEffect(() => {
+        if (isPermissionsRequested) checkPermissions();
+        else requestPermissions({ notifications: true });
+    }, []);
 
     /**
      * Effect to listen notifications by user.
      */
     useEffect(() => {
-        if (!user.id || state.permissions.notifications !== permissionsStatus.GRANTED) return;
+        if (!user.id || permissions.notifications !== permissionsStatus.GRANTED) return;
         NotificationsService.listenNotificationsByUser(user.id);
     }, [ user.id ]);
 
     return (
         <Tabs.Navigator
-            sceneContainerStyle={{
-                backgroundColor: colors.background
-            }}
             screenOptions={{
                 headerShown: false,
+                sceneStyle: {
+                    backgroundColor: colors.background
+                },
                 tabBarActiveTintColor: colors.button,
                 tabBarInactiveTintColor: colors.icon
             }}

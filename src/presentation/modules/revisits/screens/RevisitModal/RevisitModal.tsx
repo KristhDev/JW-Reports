@@ -1,4 +1,4 @@
-import React, { useState, FC } from 'react';
+import React, { useState, FC, useEffect } from 'react';
 import { ActivityIndicator, Text, View } from 'react-native';
 import { useStyles } from 'react-native-unistyles';
 import { useFormik } from 'formik';
@@ -37,7 +37,7 @@ const RevisitModal: FC<ModalProps> = ({ isOpen, onClose }): JSX.Element => {
 
     const modalTitle = (selectedRevisit.done)
         ? `¿Quieres volver a visitar a ${ selectedRevisit.personName }?`
-        : '¿Está seguro de marcar esta revisitada como visitada?';
+        : '¿Está seguro de marcar esta revisita como visitada?';
 
     const confirmTextButton = (revisitPerson)
         ? 'GUARDAR'
@@ -52,6 +52,8 @@ const RevisitModal: FC<ModalProps> = ({ isOpen, onClose }): JSX.Element => {
      * @param {{ about: string, nextVisit: Date }} values - { about: string, next_visit: Date }
      */
     const handleConfirm = async (values?: { about: string, nextVisit: Date }) => {
+        setCompleteMsg('');
+
         if (!selectedRevisit.done) {
             const msg = await completeRevisit(onClose);
             setCompleteMsg(msg);
@@ -89,6 +91,7 @@ const RevisitModal: FC<ModalProps> = ({ isOpen, onClose }): JSX.Element => {
      * set to false.
      */
     const handleClose = () => {
+        setCompleteMsg('');
         setRevisitPerson(false);
         onClose();
     }
@@ -103,6 +106,11 @@ const RevisitModal: FC<ModalProps> = ({ isOpen, onClose }): JSX.Element => {
         if (isValid) handleSubmit();
         else setErrorForm(errors);
     }
+
+    useEffect(() => {
+        if (selectedRevisit.id === '') return;
+        setFieldValue('about', selectedRevisit.about);
+    }, [ selectedRevisit.about ]);
 
     return (
         <Modal isOpen={ isOpen }>

@@ -1,7 +1,7 @@
 import { useNavigation } from '@react-navigation/native';
 
 /* Constants */
-import { coursesMessages } from '@application/constants';
+import { coursesMessages, precursors } from '@application/constants';
 
 /* Features */
 import { useAppDispatch, useAppSelector } from '@application/store';
@@ -50,13 +50,15 @@ import { useStatus, useNetwork } from '@shared';
 
 /* Interfaces */
 import { CourseFilter, CourseFormValues, loadCoursesOptions } from '../interfaces';
+import { DeleteOptions } from '@infrasturcture/interfaces';
+import { CoursesStackNavigationType } from '@ui';
 
 /**
  * Hook to management courses of store with state and actions
  */
 const useCourses = () => {
     const dispatch = useAppDispatch();
-    const navigation = useNavigation();
+    const navigation = useNavigation<CoursesStackNavigationType>();
     const { hasWifiConnection } = useNetwork();
 
     const state = useAppSelector(store => store.courses);
@@ -170,7 +172,7 @@ const useCourses = () => {
             const msg = (course.suspended) ? coursesMessages.SUSPENDED_SUCCESS : coursesMessages.RENEW_SUCCESS;
             updateCourseActionState(course);
 
-            if (user.precursor === 'ninguno' && lastLesson.courseId === state.selectedCourse.id) {
+            if (user.precursor === precursors.NINGUNO && lastLesson.courseId === state.selectedCourse.id) {
                 addLastLesson({ ...lastLesson, course })
             }
 
@@ -186,13 +188,14 @@ const useCourses = () => {
     }
 
     /**
-     * It deletes a course and all its lessons from the database.
+     * Deletes the selected course and its associated lessons. It checks for network
+     * connection, authentication, and course alteration permissions before proceeding.
      *
-     * @param {boolean} back - This parameter allows you to return to the previous screen, by default it is `false`
-     * @param {Function} onFinish - This callback executed when the process is finished (success or failure)
-     * @return {Promise<void>} This function does not return anything.
+     * @param {DeleteOptions} options - An object containing onFinish and onSuccess callbacks.
+     * onFinish is called after the process ends, while onSuccess is called upon successful deletion.
+     * @return {Promise<void>} - This function does not return anything.
      */
-    const deleteCourse = async (back: boolean = false, onFinish?: () => void): Promise<void> => {
+    const deleteCourse = async ({ onFinish, onSuccess }: DeleteOptions): Promise<void> => {
         const wifi = hasWifiConnection();
         if (!wifi) return;
 
@@ -208,14 +211,14 @@ const useCourses = () => {
             await LessonsService.deleteLessonsByCourseId(state.selectedCourse.id);
             await CoursesService.delete(state.selectedCourse.id, user.id);
 
-            if (user.precursor === 'ninguno' && lastLesson.courseId === state.selectedCourse.id) {
+            if (user.precursor === precursors.NINGUNO && lastLesson.courseId === state.selectedCourse.id) {
                 await loadLastLesson();
             }
 
             removeCourse(state.selectedCourse.id);
 
             onFinish && onFinish();
-            back && navigation.navigate('CoursesScreen' as never);
+            onSuccess && onSuccess();
 
             setSelectedCourse(INIT_COURSE);
             setStatus({ code: 200, msg: coursesMessages.DELETED_SUCCESS });
@@ -305,7 +308,7 @@ const useCourses = () => {
             const msg = (course.finished) ? coursesMessages.FINISHED_SUCCESS : coursesMessages.RESTARTED_SUCCESS;
             updateCourseActionState(course);
 
-            if (user.precursor === 'ninguno' && lastLesson.courseId === state.selectedCourse.id) {
+            if (user.precursor === precursors.NINGUNO && lastLesson.courseId === state.selectedCourse.id) {
                 addLastLesson({ ...lastLesson, course });
             }
 
@@ -392,12 +395,7 @@ const useCourses = () => {
             addCourse(course);
             setStatus({ code: 201, msg: coursesMessages.ADDED_SUCCESS });
 
-            navigation.navigate({
-                name: 'CoursesStackNavigation',
-                params: {
-                    screen: 'CoursesTopTabsNavigation'
-                }
-            } as never);
+            navigation.popTo('CoursesTopTabsNavigation');
         }
         catch (error) {
             setIsCourseLoading(false);
@@ -435,7 +433,7 @@ const useCourses = () => {
 
             updateCourseActionState(course);
 
-            if (user.precursor === 'ninguno' && lastLesson.courseId === state.selectedCourse.id) {
+            if (user.precursor === precursors.NINGUNO && lastLesson.courseId === state.selectedCourse.id) {
                 addLastLesson({ ...lastLesson, course });
             }
 

@@ -57,7 +57,6 @@ const lessonsSlice = createSlice({
 
             state.lessons = [ ...lessonsArr ];
             state.lessons = state.lessons.sort((a, b) => new Date(b.nextLesson).getTime() - new Date(a.nextLesson).getTime());
-            state.isLessonLoading = false;
         },
 
         addLastLesson: (state, action: PayloadAction<SetLessonWithCoursePayload>) => {
@@ -83,7 +82,6 @@ const lessonsSlice = createSlice({
 
         removeLesson: (state, action: PayloadAction<RemoveResourcePayload>) => {
             state.lessons = state.lessons.filter(l => l.id !== action.payload.id);
-            state.isLessonDeleting = false;
         },
 
         removeLessons: (state) => {

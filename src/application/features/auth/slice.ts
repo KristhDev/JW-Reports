@@ -1,5 +1,8 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
+/* Constants */
+import { precursors } from '@application/constants';
+
 /* Entities */
 import { UserEntity } from '@domain/entities';
 
@@ -12,7 +15,7 @@ export const INIT_USER: UserEntity = {
     name: '',
     surname: '',
     email: '',
-    precursor: 'ninguno',
+    precursor: precursors.NINGUNO,
     hoursRequirement: 0,
     hoursLDC: false,
     createdAt: new Date().toISOString(),

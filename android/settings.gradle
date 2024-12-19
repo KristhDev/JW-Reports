@@ -11,7 +11,4 @@ project(':react-native-html-to-pdf').projectDir = new File(rootProject.projectDi
 include ':react-native-fs'
 project(':react-native-fs').projectDir = new File(settingsDir, '../node_modules/react-native-fs/android')
 
-include ':@react-native-voice_voice', ':app'
-project(':@react-native-voice_voice').projectDir = new File(rootProject.projectDir, '../node_modules/@react-native-voice/voice/android')
-
 includeBuild('../node_modules/@react-native/gradle-plugin')

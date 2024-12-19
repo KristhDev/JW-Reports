@@ -1,4 +1,4 @@
-import { ItemOption } from '@infrasturcture/interfaces';
+import { ItemOption, Precursor } from '@infrasturcture/interfaces';
 
 /**
  * The precursors options to select
@@ -9,6 +9,13 @@ export const PRECURSORS_OPTIONS: ItemOption[] = [
     { label: 'Regular', value: 'regular' },
     { label: 'Especial', value: 'especial' }
 ];
+
+export const precursors: Record<Uppercase<Precursor>, Precursor> = {
+    AUXILIAR: 'auxiliar',
+    ESPECIAL: 'especial',
+    NINGUNO: 'ninguno',
+    REGULAR: 'regular'
+}
 
 export const authMessages = {
     CONFIRM_PASSWORD_EMPTY: 'La confirmación de la contraseña es requerida.',
