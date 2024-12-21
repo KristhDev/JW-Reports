@@ -53,7 +53,7 @@ describe('Test in useCourses hook - deleteCourse', () => {
         });
 
         await act(async () => {
-            await result.current.useCourses.deleteCourse(true, onFinishMock);
+            await result.current.useCourses.deleteCourse({ onFinish: onFinishMock });
         });
 
         /* Check is state contain selectedCourse */
@@ -89,7 +89,7 @@ describe('Test in useCourses hook - deleteCourse', () => {
         const { result } = renderUseCourses(mockStore);
 
         await act(async () => {
-            await result.current.useCourses.deleteCourse(true, onFinishMock);
+            await result.current.useCourses.deleteCourse({ onFinish: onFinishMock });
         });
 
         /**
@@ -110,7 +110,7 @@ describe('Test in useCourses hook - deleteCourse', () => {
         const { result } = renderUseCourses(mockStore);
 
         await act(async () => {
-            await result.current.useCourses.deleteCourse(true, onFinishMock);
+            await result.current.useCourses.deleteCourse({ onFinish: onFinishMock });
         });
 
         /**

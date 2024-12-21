@@ -59,7 +59,7 @@ describe('Test useRevisits hook - deleteRevisit', () => {
         });
 
         await act(async () => {
-            await result.current.useRevisits.deleteRevisit(false, onFinishMock);
+            await result.current.useRevisits.deleteRevisit({ onFinish: onFinishMock });
         });
 
         /* Check if revisits state not contain revisit deleted */
@@ -102,7 +102,7 @@ describe('Test useRevisits hook - deleteRevisit', () => {
         const { result } = renderUseRevisits(mockStore);
 
         await act(async () => {
-            await result.current.useRevisits.deleteRevisit(false, onFinishMock);
+            await result.current.useRevisits.deleteRevisit({ onFinish: onFinishMock });
         });
 
         /* Check if revisits state inst changed and onFinish is called one time */
@@ -121,7 +121,7 @@ describe('Test useRevisits hook - deleteRevisit', () => {
         const { result } = renderUseRevisits(mockStore);
 
         await act(async () => {
-            await result.current.useRevisits.deleteRevisit(false, onFinishMock);
+            await result.current.useRevisits.deleteRevisit({ onFinish: onFinishMock });
         });
 
         /* Check if revisits state inst changed and onFinish is called one time */

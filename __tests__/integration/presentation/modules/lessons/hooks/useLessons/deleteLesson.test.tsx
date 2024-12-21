@@ -73,7 +73,7 @@ describe('Test in useLessons hook - deleteLesson', () => {
         });
 
         await act(async () => {
-            await result.current.useLessons.deleteLesson(true, onFinishMock);
+            await result.current.useLessons.deleteLesson({ onFinish: onFinishMock });
         });
 
         /* Check is state contain selectedCourse, selectedLesson, etc */
@@ -125,7 +125,7 @@ describe('Test in useLessons hook - deleteLesson', () => {
         const { result } = renderUseLessons(mockStore);
 
         await act(async () => {
-            await result.current.useLessons.deleteLesson(true, onFinishMock);
+            await result.current.useLessons.deleteLesson({ onFinish: onFinishMock });
         });
 
         /* Check if courses state is equal to initial state and check onFinish is called one time  */
@@ -144,7 +144,7 @@ describe('Test in useLessons hook - deleteLesson', () => {
         const { result } = renderUseLessons(mockStore);
 
         await act(async () => {
-            await result.current.useLessons.deleteLesson(true, onFinishMock);
+            await result.current.useLessons.deleteLesson({ onFinish: onFinishMock });
         });
 
         /* Check if courses state is equal to initial state and check onFinish is called one time */
