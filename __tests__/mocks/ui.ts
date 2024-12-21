@@ -18,3 +18,6 @@ export const initialUIStateMock: UIState = {
 }
 
 export const setActiveFormFieldMock = jest.fn();
+
+export const navigateToDetailMock = jest.fn();
+export const navigateToEditMock = jest.fn();
