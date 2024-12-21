@@ -1,6 +1,10 @@
-import { emailMessages, networkMessages, permissionsMessages } from '@application/constants';
+import { appMessages, emailMessages, networkMessages, permissionsMessages } from '@application/constants';
 
 describe('Test in constants of shared', () => {
+    it('should to match snapshot - appMessages', () => {
+        expect(appMessages).toMatchSnapshot();
+    });
+
     it('should to match snapshot - permissionsMessages', () => {
         expect(permissionsMessages).toMatchSnapshot();
     });

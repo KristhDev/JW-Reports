@@ -40,17 +40,19 @@ const renderScreen = () => render(
                 canGoBack: jest.fn(),
                 dispatch: jest.fn(),
                 getId: jest.fn(),
-                goBack: jest.fn(),
-                isFocused: jest.fn(),
-                navigate: jest.fn(),
                 getParent: jest.fn(),
                 getState: jest.fn(),
+                goBack: jest.fn(),
+                isFocused: jest.fn(),
                 jumpTo: jest.fn(),
+                navigate: jest.fn(),
+                preload: jest.fn(),
                 removeListener: jest.fn(),
                 reset: jest.fn(),
                 setOptions: jest.fn(),
-                setParams: jest.fn()
-            }}
+                setParams: jest.fn(),
+                setStateForNextRouteNamesChange: jest.fn()
+            } as any }
         />
     </MenuProvider>
 );

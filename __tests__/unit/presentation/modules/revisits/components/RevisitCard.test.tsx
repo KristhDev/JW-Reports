@@ -2,11 +2,17 @@ import React from 'react';
 import { render, screen, userEvent } from '@testing-library/react-native';
 import { MenuProvider } from 'react-native-popup-menu';
 
-/* Setup */
-import { mockUseNavigation } from '@test-setup';
-
 /* Mocks */
-import { onDeleteMock, onPassMock, onRevisitMock, selectedRevisitStateMock, setSelectedRevisitMock, useRevisitsSpy } from '@mocks';
+import {
+    navigateToDetailMock,
+    navigateToEditMock,
+    onDeleteMock,
+    onPassMock,
+    onRevisitMock,
+    selectedRevisitStateMock,
+    setSelectedRevisitMock,
+    useRevisitsSpy
+} from '@mocks';
 
 /* Entities */
 import { RevisitEntity } from '@domain/entities';
@@ -23,11 +29,12 @@ const user = userEvent.setup();
 const renderComponent = (revisit: RevisitEntity) => render(
     <MenuProvider>
         <RevisitCard
+            navigateToDetail={ navigateToDetailMock }
+            navigateToEdit={ navigateToEditMock }
             onDelete={ onDeleteMock }
             onPass={ onPassMock }
             onRevisit={ onRevisitMock }
             revisit={ revisit }
-            screenToNavigate="RevisitDetailScreen"
         />
     </MenuProvider>
 );
@@ -77,8 +84,8 @@ describe('Test in <RevisitCard /> component', () => {
          */
         expect(setSelectedRevisitMock).toHaveBeenCalledTimes(1);
         expect(setSelectedRevisitMock).toHaveBeenCalledWith(selectedRevisit);
-        expect(mockUseNavigation.navigate).toHaveBeenCalledTimes(1);
-        expect(mockUseNavigation.navigate).toHaveBeenCalledWith('RevisitDetailScreen');
+        expect(navigateToDetailMock).toHaveBeenCalledTimes(1);
+        expect(navigateToDetailMock).toHaveBeenCalledWith('RevisitDetailScreen');
     });
 
     it('should render Visita hecha when selectedRevisit.done is true', () => {

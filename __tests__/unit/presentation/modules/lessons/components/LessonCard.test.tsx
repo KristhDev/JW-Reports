@@ -2,11 +2,8 @@ import React from 'react';
 import { render, screen, userEvent } from '@testing-library/react-native';
 import { MenuProvider } from 'react-native-popup-menu';
 
-/* Setup */
-import { mockUseNavigation } from '@test-setup';
-
 /* Mocks */
-import { lessonsMock, setSelectedLessonMock, useLessonsSpy } from '@mocks';
+import { lessonsMock, navigateToDetailMock, navigateToEditMock, setSelectedLessonMock, useLessonsSpy } from '@mocks';
 
 /* Adapters */
 import { Time } from '@infrasturcture/adapters';
@@ -21,9 +18,10 @@ const renderScreen = () => render(
     <MenuProvider>
         <LessonCard
             lesson={ lesson }
+            navigateToDetail={ navigateToDetailMock }
+            navigateToEdit={ navigateToEditMock }
             onDelete={ jest.fn() }
             onFinish={ jest.fn() }
-            screenToNavigate="LessonDetailScreen"
         />
     </MenuProvider>
 );
@@ -71,7 +69,7 @@ describe('Test in <LessonCard /> component', () => {
          */
         expect(setSelectedLessonMock).toHaveBeenCalledTimes(1);
         expect(setSelectedLessonMock).toHaveBeenCalledWith(lesson);
-        expect(mockUseNavigation.navigate).toHaveBeenCalledTimes(1);
-        expect(mockUseNavigation.navigate).toHaveBeenCalledWith('LessonDetailScreen');
+        expect(navigateToDetailMock).toHaveBeenCalledTimes(1);
+        expect(navigateToDetailMock).toHaveBeenCalledWith('LessonDetailScreen');
     });
 });
