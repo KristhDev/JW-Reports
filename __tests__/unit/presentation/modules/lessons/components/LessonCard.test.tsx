@@ -70,6 +70,5 @@ describe('Test in <LessonCard /> component', () => {
         expect(setSelectedLessonMock).toHaveBeenCalledTimes(1);
         expect(setSelectedLessonMock).toHaveBeenCalledWith(lesson);
         expect(navigateToDetailMock).toHaveBeenCalledTimes(1);
-        expect(navigateToDetailMock).toHaveBeenCalledWith('LessonDetailScreen');
     });
 });

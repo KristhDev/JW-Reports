@@ -4,6 +4,7 @@ import mockRNDeviceInfo from 'react-native-device-info/jest/react-native-device-
 
 import 'react-native-gesture-handler/jestSetup';
 import 'react-native-url-polyfill/auto';
+import '@shopify/flash-list/jestSetup';
 import '@config/unistyles';
 
 jest.spyOn(Image, 'resolveAssetSource').mockImplementation(() => ({

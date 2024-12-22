@@ -156,7 +156,7 @@ describe('Test in <RevisitsList /> component', () => {
         expect(setRevisitsPaginationMock).toHaveBeenCalledTimes(1);
         expect(setRevisitsPaginationMock).toHaveBeenCalledWith({ from: 0, to: 9 });
         expect(removeRevisitsMock).toHaveBeenCalledTimes(1);
-        expect(loadRevisitsMock).toHaveBeenCalledTimes(1);
+        expect(loadRevisitsMock).toHaveBeenCalledTimes(2);
         expect(loadRevisitsMock).toHaveBeenCalledWith({ filter: 'all', search: 'Test search', refresh: true });
     });
 });

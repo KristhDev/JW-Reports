@@ -52,7 +52,7 @@ describe('Test in <RevisitModal /> screen', () => {
 
         const modalTitle = (selectedRevisit.done)
             ? `¿Quieres volver a visitar a ${ selectedRevisit.personName }?`
-            : '¿Está seguro de marcar esta revisitada como visitada?';
+            : '¿Está seguro de marcar esta revisita como visitada?';
 
         /* Get modal title */
         const title = await screen.findByTestId('revisit-modal-title');

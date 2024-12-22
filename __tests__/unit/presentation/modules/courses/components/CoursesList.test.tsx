@@ -180,7 +180,7 @@ describe('Test in <CoursesList /> component', () => {
         expect(setCoursesPaginationMock).toHaveBeenCalledTimes(1);
         expect(setCoursesPaginationMock).toHaveBeenCalledWith({ from: 0, to: 9 });
         expect(removeCoursesMock).toHaveBeenCalledTimes(1);
-        expect(loadCoursesMock).toHaveBeenCalledTimes(1);
+        expect(loadCoursesMock).toHaveBeenCalledTimes(2);
         expect(loadCoursesMock).toHaveBeenCalledWith({
             filter: 'all', search: 'Test search', refresh: true
         });

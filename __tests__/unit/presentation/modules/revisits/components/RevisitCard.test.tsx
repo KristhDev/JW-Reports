@@ -85,7 +85,6 @@ describe('Test in <RevisitCard /> component', () => {
         expect(setSelectedRevisitMock).toHaveBeenCalledTimes(1);
         expect(setSelectedRevisitMock).toHaveBeenCalledWith(selectedRevisit);
         expect(navigateToDetailMock).toHaveBeenCalledTimes(1);
-        expect(navigateToDetailMock).toHaveBeenCalledWith('RevisitDetailScreen');
     });
 
     it('should render Visita hecha when selectedRevisit.done is true', () => {

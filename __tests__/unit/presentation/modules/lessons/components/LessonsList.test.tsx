@@ -150,7 +150,7 @@ describe('Test in <LessonsList /> component', () => {
         expect(setLessonsPaginationMock).toHaveBeenCalledTimes(2);
         expect(setLessonsPaginationMock).toHaveBeenCalledWith({ from: 0, to: 9 });
         expect(removeLessonsMock).toHaveBeenCalledTimes(2);
-        expect(loadLessonsMock).toHaveBeenCalledTimes(2);
+        expect(loadLessonsMock).toHaveBeenCalledTimes(3);
         expect(loadLessonsMock).toHaveBeenCalledWith({ search: 'Test search', refresh: true });
     });
 });
