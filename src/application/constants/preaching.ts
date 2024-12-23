@@ -1,4 +1,5 @@
-import { ParticipateInMinistry } from '@infrasturcture/interfaces';
+/* Interfaces */
+import { ParticipateInMinistry, Precursor } from '@infrasturcture/interfaces';
 
 /**
  * The headers of the table that will be displayed in the PreachingTable component
@@ -10,11 +11,11 @@ export const TABLE_PREACHING_HEADERS = [
     'Hora de Fin'
 ];
 
-export const HOURS_REQUIREMENTS = {
-    'ninguno': 0,
-    'auxiliar': 30,
-    'regular': 50,
-    'especial': 90
+export const HOURS_REQUIREMENTS: Record<Precursor, number> = {
+    ninguno: 0,
+    auxiliar: 30,
+    regular: 50,
+    especial: 70
 }
 
 export const preachingMessages = {
