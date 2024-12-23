@@ -87,7 +87,8 @@ export const mockUseNavigation = {
     goBack: jest.fn(),
     isFocused: jest.fn().mockImplementation(() => true),
     navigate: jest.fn(),
-    removeListener: jest.fn()
+    popTo: jest.fn(),
+    removeListener: jest.fn(),
 }
 
 jest.mock('@react-navigation/native', () => {
