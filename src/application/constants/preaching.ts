@@ -15,7 +15,7 @@ export const HOURS_REQUIREMENTS: Record<Precursor, number> = {
     ninguno: 0,
     auxiliar: 30,
     regular: 50,
-    especial: 70
+    especial: 90
 }
 
 export const preachingMessages = {
