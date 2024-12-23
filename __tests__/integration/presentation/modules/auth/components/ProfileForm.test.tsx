@@ -14,6 +14,9 @@ import {
     wifiMock
 } from '@mocks';
 
+/* Constants */
+import { precursors } from '@application/constants';
+
 /* Modules */
 import { ProfileForm } from '@auth';
 
@@ -83,7 +86,7 @@ describe('Test in <ProfileForm /> component', () => {
                 isAuthLoading: false,
                 user: {
                     ...testUser,
-                    precursor: 'ninguno'
+                    precursor: precursors.NINGUNO
                 }
             },
             updateProfile: updateProfileMock
