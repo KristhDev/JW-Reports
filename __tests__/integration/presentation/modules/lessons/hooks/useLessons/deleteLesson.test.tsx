@@ -1,7 +1,6 @@
 import { act } from '@testing-library/react-native';
 
 /* Setups */
-import { mockUseNavigation } from '@test-setup';
 import { getMockStoreUseLessons, renderUseLessons } from '@setups';
 
 /* Mocks */
@@ -17,6 +16,7 @@ import {
     lessonMock,
     LessonsServiceSpy,
     onFinishMock,
+    onSuccessMock,
     useNetworkSpy,
     wifiMock
 } from '@mocks';
@@ -73,7 +73,7 @@ describe('Test in useLessons hook - deleteLesson', () => {
         });
 
         await act(async () => {
-            await result.current.useLessons.deleteLesson({ onFinish: onFinishMock });
+            await result.current.useLessons.deleteLesson({ onFinish: onFinishMock, onSuccess: onSuccessMock });
         });
 
         /* Check is state contain selectedCourse, selectedLesson, etc */
@@ -115,9 +115,9 @@ describe('Test in useLessons hook - deleteLesson', () => {
             msg: lessonsMessages.DELETED_SUCCESS
         });
 
-        /* Check if onFinish and goBack is called with respective arg */
+        /* Check if onFinish and onSuccess is called */
         expect(onFinishMock).toHaveBeenCalledTimes(1);
-        expect(mockUseNavigation.goBack).toHaveBeenCalledTimes(1);
+        expect(onSuccessMock).toHaveBeenCalledTimes(1);
     });
 
     it('should faild if user isnt authenticated', async () => {
