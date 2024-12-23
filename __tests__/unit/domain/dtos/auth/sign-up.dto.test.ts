@@ -1,3 +1,6 @@
+/* Constants */
+import { precursors } from '@application/constants';
+
 /* DTOs */
 import { SignUpDto } from '@domain/dtos';
 
@@ -22,7 +25,7 @@ describe('Test in SignUpDto', () => {
             surname: values.surname,
             email: values.email,
             password: values.password,
-            precursor: 'ninguno',
+            precursor: precursors.NINGUNO,
             hours_requirement: 0,
             hours_ldc: false
         });
