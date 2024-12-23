@@ -10,9 +10,6 @@ import RevisitsTopTabsNavigation from './RevisitsTopTabsNavigation';
 import { AddOrEditRevisit, RevisitDetail, RevisitsStackParamsList, useRevisits } from '@revisits';
 import { BackButton, HeaderButtons, MainTabsBottomNavigationType } from '@ui';
 
-/* Utils */
-import { Characters } from '@utils';
-
 const Stack = createStackNavigator<RevisitsStackParamsList>();
 
 /**
@@ -101,7 +98,9 @@ const RevisitsStackNavigation = (): JSX.Element => {
                             onPressEditButton={ () => handleGoTo('AddOrEditRevisitScreen') }
                         />
                     ),
-                    title: Characters.truncate(revisitDetailTitle, 22)
+                    headerTitleContainerStyle: { flexGrow: 1 },
+                    headerTitleStyle: { maxWidth: '80%' },
+                    title: revisitDetailTitle
                 }}
             />
 
