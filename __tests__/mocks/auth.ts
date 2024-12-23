@@ -1,3 +1,6 @@
+/* Constants */
+import { precursors } from '@application/constants';
+
 /* Features */
 import { AuthState } from '@application/features';
 
@@ -17,7 +20,7 @@ export const testUser: UserEntity = {
     name: 'Celestino',
     surname: 'Wilderman',
     email: 'Ernestine_Doyle@yahoo.com',
-    precursor: 'ninguno',
+    precursor: precursors.NINGUNO,
     hoursRequirement: 0,
     hoursLDC: false,
     createdAt: '2021-03-10T12:00:00.000Z',
@@ -64,7 +67,7 @@ export const initialAuthStateMock: AuthState = {
         name: '',
         surname: '',
         email: '',
-        precursor: 'ninguno',
+        precursor: precursors.NINGUNO,
         hoursRequirement: 0,
         hoursLDC: false,
         createdAt: '2021-08-26T15:00:00.000Z',
@@ -79,7 +82,7 @@ export const authenticateStateMock: AuthState = {
     user: {
         ...newUserData,
         id: '3eb3fd2c-31ad-48c3-ab9b-587a059de40d',
-        precursor: 'ninguno',
+        precursor: precursors.NINGUNO,
         hoursRequirement: 0,
         hoursLDC: false,
         createdAt: '2021-08-26T15:00:00.000Z',
@@ -94,7 +97,7 @@ export const authenticatePrecursorMock: AuthState = {
     user: {
         ...newUserData,
         id: '3eb3fd2c-31ad-48c3-ab9b-587a059de40d',
-        precursor: 'regular',
+        precursor: precursors.REGULAR,
         hoursRequirement: 50,
         hoursLDC: false,
         createdAt: '2021-08-26T15:00:00.000Z',
@@ -109,7 +112,7 @@ export const authenticateLDCMock: AuthState = {
     user: {
         ...newUserData,
         id: '3eb3fd2c-31ad-48c3-ab9b-587a059de40d',
-        precursor: 'regular',
+        precursor: precursors.REGULAR,
         hoursRequirement: 60,
         hoursLDC: true,
         createdAt: '2021-08-26T15:00:00.000Z',
