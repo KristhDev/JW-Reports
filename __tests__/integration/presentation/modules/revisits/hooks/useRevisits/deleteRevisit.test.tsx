@@ -1,7 +1,6 @@
 import { act } from '@testing-library/react-native';
 
 /* Setups */
-import { mockUseNavigation } from '@test-setup';
 import { getMockStoreUseRevisits, renderUseRevisits } from '@setups';
 
 /* Mocks */
@@ -12,6 +11,7 @@ import {
     initialRevisitsStateMock,
     initialStatusStateMock,
     onFinishMock,
+    onSuccessMock,
     revisitsMock,
     RevisitsServiceSpy,
     useNetworkSpy,
@@ -80,15 +80,12 @@ describe('Test useRevisits hook - deleteRevisit', () => {
             }
         });
 
-        /**
-         * Check if length of useRevisits.state.revisits is 0, onFinish is called
-         * one time
-         */
+        /* Check if length of useRevisits.state.revisits is 0 */
         expect(result.current.useRevisits.state.revisits).toHaveLength(0);
-        expect(onFinishMock).toHaveBeenCalledTimes(1);
 
-        /* Check if navigate isnt called */
-        expect(mockUseNavigation.navigate).not.toHaveBeenCalled();
+        /* Check if onFinish is called one time and onSuccess isn't called */
+        expect(onFinishMock).toHaveBeenCalledTimes(1);
+        expect(onSuccessMock).not.toHaveBeenCalled();
 
         /* Check if status state is equal to respective status */
         expect(result.current.useStatus.state).toEqual({

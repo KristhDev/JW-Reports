@@ -84,7 +84,10 @@ describe('Test useRevisits hook - updateRevisit', () => {
         });
 
         await act(async () => {
-            await result.current.useRevisits.updateRevisit({ ...testRevisit, personName: 'Chris Frami' }, null);
+            await result.current.useRevisits.updateRevisit({
+                revisitValues: { ...testRevisit, personName: 'Chris Frami' },
+                image: null
+            });
         });
 
         /* Check if revisits and selectedRevisit is updated */
@@ -109,7 +112,7 @@ describe('Test useRevisits hook - updateRevisit', () => {
         const { result } = renderUseRevisits(mockStore);
 
         await act(async () => {
-            await result.current.useRevisits.updateRevisit(testRevisit, null);
+            await result.current.useRevisits.updateRevisit({ revisitValues: testRevisit, image: null });
         });
 
         /* Check if revisits state inst changed */
@@ -131,7 +134,7 @@ describe('Test useRevisits hook - updateRevisit', () => {
         });
 
         await act(async () => {
-            await result.current.useRevisits.updateRevisit(testRevisit, null);
+            await result.current.useRevisits.updateRevisit({ revisitValues: testRevisit, image: null });
         });
 
         /* Check if revisits state inst changed */
@@ -155,7 +158,10 @@ describe('Test useRevisits hook - updateRevisit', () => {
         });
 
         await act(async () => {
-            await result.current.useRevisits.updateRevisit({ ...testRevisit, nextVisit: new Date('invalid') }, null);
+            await result.current.useRevisits.updateRevisit({
+                revisitValues: { ...testRevisit, nextVisit: new Date('invalid') },
+                image: null
+            });
         });
 
         /* Check if revisits and selectedRevisits inst updated */

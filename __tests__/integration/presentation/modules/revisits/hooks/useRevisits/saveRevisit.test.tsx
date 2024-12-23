@@ -85,8 +85,8 @@ describe('Test useRevisits hook - saveRevisit', () => {
 
         /* Check if onFinish and navigate is called one time with respective arg */
         expect(onFinishMock).toHaveBeenCalledTimes(1);
-        expect(mockUseNavigation.navigate).toHaveBeenCalledTimes(1);
-        expect(mockUseNavigation.navigate).toHaveBeenCalledWith('RevisitsTopTabsNavigation');
+        expect(mockUseNavigation.popTo).toHaveBeenCalledTimes(1);
+        expect(mockUseNavigation.popTo).toHaveBeenCalledWith('RevisitsTopTabsNavigation');
     });
 
     it('should show other message when back is false', async () => {
