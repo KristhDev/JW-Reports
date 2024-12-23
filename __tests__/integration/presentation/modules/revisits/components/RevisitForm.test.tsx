@@ -134,15 +134,15 @@ describe('Test in <RevisitForm /> component', () => {
 
         /* Check if updateRevisit is called with respective args */
         expect(updateRevisitMock).toHaveBeenCalledTimes(1);
-        expect(updateRevisitMock).toHaveBeenCalledWith(
-            {
+        expect(updateRevisitMock).toHaveBeenCalledWith({
+            revisitValues: {
                 personName: selectedRevisitStateMock.selectedRevisit.personName,
                 about,
                 address: selectedRevisitStateMock.selectedRevisit.address,
                 nextVisit: expect.any(Date)
             },
-            imageModelMock
-        );
+            image: imageModelMock
+        });
     });
 
     it('should call takeImageToGallery if gallery button is pressed', async () => {
