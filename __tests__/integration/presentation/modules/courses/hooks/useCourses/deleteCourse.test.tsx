@@ -1,7 +1,6 @@
 import { act } from '@testing-library/react-native';
 
 /* Setups */
-import { mockUseNavigation } from '@test-setup';
 import { getMockStoreUseCourses, renderUseCourses } from '@setups';
 
 /* Mocks */
@@ -16,6 +15,7 @@ import {
     initialStatusStateMock,
     LessonsServiceSpy,
     onFinishMock,
+    onSuccessMock,
     useNetworkSpy,
     wifiMock
 } from '@mocks';
@@ -53,7 +53,7 @@ describe('Test in useCourses hook - deleteCourse', () => {
         });
 
         await act(async () => {
-            await result.current.useCourses.deleteCourse({ onFinish: onFinishMock });
+            await result.current.useCourses.deleteCourse({ onFinish: onFinishMock, onSuccess: onSuccessMock });
         });
 
         /* Check is state contain selectedCourse */
@@ -72,10 +72,9 @@ describe('Test in useCourses hook - deleteCourse', () => {
             msg: coursesMessages.DELETED_SUCCESS
         });
 
-        /* Check if onFinish and navigate is called with respective arg */
+        /* Check if onFinish and onSuccess is called one time */
         expect(onFinishMock).toHaveBeenCalledTimes(1);
-        expect(mockUseNavigation.navigate).toHaveBeenCalledTimes(1);
-        expect(mockUseNavigation.navigate).toHaveBeenCalledWith('CoursesScreen');
+        expect(onSuccessMock).toHaveBeenCalledTimes(1);
     });
 
     it('should faild if user isnt authenticated', async () => {

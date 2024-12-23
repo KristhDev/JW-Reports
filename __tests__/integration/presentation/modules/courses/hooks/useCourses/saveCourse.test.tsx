@@ -54,13 +54,13 @@ describe('Test in useCourses hook - saveCourse', () => {
 
         CoursesServiceSpy.create.mockResolvedValue({
             ...testCourse,
-            id: expect.any(String),
+            id: '4707f771-396f-4133-a454-257bc77b55b1',
             userId: mockStore.getState().auth.user.id,
             finished: false,
             suspended: false,
             lastLesson: undefined,
-            createdAt: expect.any(String),
-            updatedAt: expect.any(String)
+            createdAt: '1734968345186',
+            updatedAt: '1734968345186'
         });
 
         const { result } = renderUseCourses(mockStore);
@@ -92,13 +92,8 @@ describe('Test in useCourses hook - saveCourse', () => {
 
         /* Check if onFinish and navigate is called one time with respective arg */
         expect(onFinishMock).toHaveBeenCalledTimes(1);
-        expect(mockUseNavigation.navigate).toHaveBeenCalledTimes(1);
-        expect(mockUseNavigation.navigate).toHaveBeenCalledWith({
-            name: 'CoursesStackNavigation',
-            params: {
-                screen: 'CoursesTopTabsNavigation'
-            }
-        });
+        expect(mockUseNavigation.popTo).toHaveBeenCalledTimes(1);
+        expect(mockUseNavigation.popTo).toHaveBeenCalledWith('CoursesTopTabsNavigation');
     });
 
     it('should faild if user inst autenticated', async () => {
@@ -118,9 +113,9 @@ describe('Test in useCourses hook - saveCourse', () => {
             msg: authMessages.UNATHENTICATED
         });
 
-        /* Check if onFinish called one time and navigate not called */
+        /* Check if onFinish called one time and popTo not called */
         expect(onFinishMock).toHaveBeenCalledTimes(1);
-        expect(mockUseNavigation.navigate).not.toHaveBeenCalled();
+        expect(mockUseNavigation.popTo).not.toHaveBeenCalled();
     });
 
     it('should faild if data is invalid', async () => {
@@ -146,6 +141,6 @@ describe('Test in useCourses hook - saveCourse', () => {
         });
 
         expect(onFinishMock).toHaveBeenCalledTimes(1);
-        expect(mockUseNavigation.navigate).not.toHaveBeenCalled();
+        expect(mockUseNavigation.popTo).not.toHaveBeenCalled();
     });
 });
