@@ -3,6 +3,7 @@ import { useNavigation } from '@react-navigation/native';
 import { CardStyleInterpolators, createStackNavigator } from '@react-navigation/stack';
 import { useStyles } from 'react-native-unistyles';
 
+/* Modules */
 import { useCourses } from '@courses';
 import { AddOrEditLesson, LessonDetail, useLessons } from '@lessons';
 import { AddOrEditRevisit, RevisitDetail, useRevisits } from '@revisits';
@@ -10,16 +11,23 @@ import { PublisherHome, PublisherStackParamsList } from '@preaching';
 import { useNetwork, useStatus } from '@shared';
 import { BackButton, HeaderButtons, PreachingStackNavigationType } from '@ui';
 
-import { Characters } from '@utils';
-
 const Stack = createStackNavigator<PublisherStackParamsList>();
 
+/**
+ * This is a stack navigation for the publisher, providing navigation
+ * between various screens related to lessons and revisits. It manages
+ * the display and handling of delete modals for lessons and revisits,
+ * and handles navigation logic within the stack.
+ *
+ * @return {JSX.Element} rendered component to show stack navigation
+ * of publisher.
+ */
 const PublisherStackNavigation = (): JSX.Element => {
     const [ showDeleteLessonModal, setShowDeleteLessonModal ] = useState<boolean>(false);
     const [ showDeleteRevisitModal, setShowDeleteRevisitModal ] = useState<boolean>(false);
 
     const navigation = useNavigation<PreachingStackNavigationType>();
-    const { theme: { colors, margins } } = useStyles();
+    const { theme: { colors } } = useStyles();
 
     const { state: { selectedCourse } } = useCourses();
     const { state: { isRevisitDeleting, selectedRevisit }, deleteRevisit, loadLastRevisit } = useRevisits();
@@ -120,7 +128,6 @@ const PublisherStackNavigation = (): JSX.Element => {
                 component={ AddOrEditLesson }
                 name="AddOrEditLessonScreen"
                 options={{
-                    headerTitleStyle: { marginLeft: -margins.xs },
                     headerLeft: ({ onPress }) => <BackButton onPress={ onPress } />,
                     headerRight: () => (
                         <HeaderButtons
@@ -141,7 +148,6 @@ const PublisherStackNavigation = (): JSX.Element => {
                 component={ LessonDetail }
                 name="LessonDetailScreen"
                 options={{
-                    headerTitleStyle: { marginLeft: -margins.xs },
                     headerLeft: ({ onPress }) => <BackButton onPress={ onPress } />,
                     headerRight: () => (
                         <HeaderButtons
@@ -165,7 +171,6 @@ const PublisherStackNavigation = (): JSX.Element => {
                 component={ AddOrEditRevisit }
                 name="AddOrEditRevisitScreen"
                 options={{
-                    headerTitleStyle: { marginLeft: -margins.xs },
                     headerLeft: ({ onPress }) => <BackButton onPress={ onPress } />,
                     headerRight: () => (
                         <HeaderButtons
@@ -188,7 +193,6 @@ const PublisherStackNavigation = (): JSX.Element => {
                 component={ RevisitDetail }
                 name="RevisitDetailScreen"
                 options={{
-                    headerTitleStyle: { marginLeft: -margins.xs },
                     headerLeft: ({ onPress }) => <BackButton onPress={ onPress } />,
                     headerRight: () => (
                         <HeaderButtons
@@ -204,7 +208,9 @@ const PublisherStackNavigation = (): JSX.Element => {
                             onPressEditButton={ () => handleGoTo('AddOrEditRevisitScreen') }
                         />
                     ),
-                    title: Characters.truncate(revisitDetailTitle, 22)
+                    headerTitleContainerStyle: { flexGrow: 1 },
+                    headerTitleStyle: { maxWidth: '80%' },
+                    title: revisitDetailTitle
                 }}
             />
         </Stack.Navigator>

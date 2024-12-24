@@ -19,7 +19,7 @@ import { PrecursorStackParamsList } from '../interfaces';
 const Stack = createStackNavigator<PrecursorStackParamsList>();
 
 /**
- * This is a stack navigation for preaching.
+ * This is a stack navigation for precursors.
  *
  * @return {JSX.Element} rendered component to show stack navigation of preaching
  */
