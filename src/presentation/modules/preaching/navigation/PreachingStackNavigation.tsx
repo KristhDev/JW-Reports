@@ -27,16 +27,16 @@ const Stack = createStackNavigator<PreachingStackParamsList>();
 const PreachingStackNavigation = (): JSX.Element => {
     const { theme: { colors } } = useStyles();
 
-    const { state: { user } } = useAuth();
+    const { state: { isAuthenticated, user } } = useAuth();
     const { loadCourses } = useCourses();
 
     const { wifi } = useNetwork();
 
     /**
-     * Effect to select default date and load courses.
+     * Effect to load courses.
      */
     useEffect(() => {
-        if (wifi.hasConnection) loadCourses({ filter: 'all' });
+        if (wifi.hasConnection || isAuthenticated) loadCourses({ filter: 'all' });
     }, []);
 
     return (
