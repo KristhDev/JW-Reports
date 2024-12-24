@@ -1,8 +1,7 @@
 import React, { FC, useState } from 'react';
-import { Pressable, Text, View, useWindowDimensions } from 'react-native';
+import { Pressable, Text, View } from 'react-native';
 import { useStyles } from 'react-native-unistyles';
 import { Menu, MenuOption, MenuOptions, MenuTrigger } from 'react-native-popup-menu';
-import { useNavigation } from '@react-navigation/native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
 /* Adapters */
@@ -25,22 +24,21 @@ import { themeStylesheet } from '@theme';
 import { stylesheet } from './styles';
 
 /**
- * This component is responsible for rendering part of the information of a
- * lesson in the form of a card.
+ * This component is responsible for rendering a lesson in the form of a card.
  *
- * @param {LessonCardProps} props { lesson: Lesson, onDelete: () => void, onFinish: () => void } - This is a props
- * to functionality of the component
- * - lesson: This is a lesson object that render in the card
- * - onDelete: This is a function to delete the lesson
- * - onFinish: This is a function to finish the lesson
- * @return {JSX.Element} rendered component to show the lesson
+ * @param {LessonCardProps} props The props to functionality of the component
+ * @param {LessonEntity} props.lesson The lesson object that render in the card
+ * @param {() => void} props.navigateToDetail The function to navigate to the LessonDetailScreen
+ * @param {() => void} props.navigateToEdit The function to navigate to the AddOrEditLessonScreen
+ * @param {() => void} props.onClick The function to call when the user clicks on the card
+ * @param {() => void} props.onDelete The function to call when the user clicks on the delete option
+ * @param {() => void} props.onFinish The function to call when the user clicks on the finish option
+ * @return {JSX.Element} The JSX element representing the lesson card
  */
-export const LessonCard: FC<LessonCardProps> = ({ lesson, screenToNavigate, onClick, onDelete, onFinish }): JSX.Element => {
+export const LessonCard: FC<LessonCardProps> = ({ lesson, navigateToDetail, navigateToEdit, onClick, onDelete, onFinish }): JSX.Element => {
     const [ isOpen, setIsOpen ] = useState<boolean>(false);
-    const { width } = useWindowDimensions();
 
-    const navigation = useNavigation();
-    const { styles, theme: { colors, fontSizes, margins } } = useStyles(stylesheet);
+    const { styles, theme: { colors, fontSizes } } = useStyles(stylesheet);
     const { styles: themeStyles, } = useStyles(themeStylesheet);
 
     const { setSelectedLesson } = useLessons();
@@ -56,7 +54,7 @@ export const LessonCard: FC<LessonCardProps> = ({ lesson, screenToNavigate, onCl
     const handleLessonDetail = (): void => {
         setSelectedLesson(lesson);
         onClick && onClick();
-        navigation.navigate(screenToNavigate as never);
+        navigateToDetail();
     }
 
     /**
@@ -68,7 +66,7 @@ export const LessonCard: FC<LessonCardProps> = ({ lesson, screenToNavigate, onCl
     const handleEdit = (): void => {
         setIsOpen(false);
         setSelectedLesson(lesson);
-        navigation.navigate('AddOrEditLessonScreen' as never);
+        navigateToEdit();
     }
 
     /**
@@ -89,7 +87,7 @@ export const LessonCard: FC<LessonCardProps> = ({ lesson, screenToNavigate, onCl
                 foreground: true
             }}
             onPress={ handleLessonDetail }
-            style={{ ...styles.pressable, width: width - margins.sm }}
+            style={ styles.pressable }
             testID="lesson-card-pressable"
         >
             <View style={ styles.cardContainer }>

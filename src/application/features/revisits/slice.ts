@@ -103,7 +103,6 @@ const revisitsSlice = createSlice({
 
         removeRevisit: (state, action: PayloadAction<RemoveResourcePayload>) => {
             state.revisits = state.revisits.filter(r => r.id !== action.payload.id);
-            state.isRevisitDeleting = false;
         },
 
         removeRevisits: (state) => {

@@ -1,3 +1,6 @@
+/* Constants */
+import { precursors } from '@application/constants';
+
 /* Entities */
 import { PreachingEntity } from '@domain/entities';
 import { GroupedPreachingsModel, PreachingReportModel } from '@domain/models';
@@ -23,10 +26,10 @@ export class PreachingReportService {
         report += `Nombre: ${ username }\n`;
         report += `Mes: ${ Characters.capitalize(month) }\n`;
 
-        if (precursor !== 'ninguno') report += `Horas: ${ hours }\n`;
+        if (precursor !== precursors.NINGUNO) report += `Horas: ${ hours }\n`;
         else report += `Participo en el ministerio: ${ participated }`;
 
-        if (precursor !== 'ninguno' && hoursLDC > 0) report += `Horas LDC: ${ hoursLDC }\n`;
+        if (precursor !== precursors.NINGUNO && hoursLDC > 0) report += `Horas LDC: ${ hoursLDC }\n`;
 
         report += `Cursos: ${ courses } \n`;
         report += 'Comentarios: \n';

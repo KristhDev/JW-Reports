@@ -43,6 +43,8 @@ const useUI = () => {
                 height: 0,
                 isVisible: false
             });
+
+            setActiveFormField('');
         });
     }
 

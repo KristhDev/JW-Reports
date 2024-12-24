@@ -9,7 +9,7 @@ import { INIT_REVISIT } from '@application/features';
 
 /* Components */
 import { RevisitsList } from '../../components';
-import { Fab } from '@ui';
+import { Fab, RevisitsStackNavigationType } from '@ui';
 
 /* Hooks */
 import { useRevisits } from '../../hooks';
@@ -30,7 +30,7 @@ type RevisitsProps = MaterialTopTabScreenProps<RevisitsTopTabsParamsList>;
  * @return {JSX.Element} rendered component to show list of revisits
  */
 const Revisits: FC<RevisitsProps> = ({ route }): JSX.Element => {
-    const navigation = useNavigation();
+    const navigation = useNavigation<RevisitsStackNavigationType>();
     const { styles: themeStyles, theme: { colors, fontSizes } } = useStyles(themeStylesheet);
 
     const { setSelectedRevisit, setRevisitsScreenHistory } = useRevisits();
@@ -47,7 +47,7 @@ const Revisits: FC<RevisitsProps> = ({ route }): JSX.Element => {
             nextVisit: new Date().toString()
         });
 
-        navigation.navigate('AddOrEditRevisitScreen' as never);
+        navigation.navigate('AddOrEditRevisitScreen');
     }
 
     /**

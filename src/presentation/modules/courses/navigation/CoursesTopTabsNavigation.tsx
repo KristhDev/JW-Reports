@@ -1,10 +1,17 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { useWindowDimensions } from 'react-native';
-import { useStyles } from 'react-native-unistyles';
+import { useFocusEffect } from '@react-navigation/native';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
+import { useStyles } from 'react-native-unistyles';
+
+/* Features */
+import { INIT_COURSE } from '@application/features';
 
 /* Screens */
 import { Courses } from '../screens';
+
+/* Hooks */
+import { useCourses } from '../hooks';
 
 /* Interfaces */
 import { CoursesTopTabsParamsList } from '../interfaces';
@@ -20,13 +27,21 @@ const CoursesTopTabsNavigation = (): JSX.Element => {
     const { width } = useWindowDimensions();
     const { theme: { colors } } = useStyles();
 
+    const { setSelectedCourse } = useCourses();
+
+    useFocusEffect(
+        useCallback(() => {
+            setSelectedCourse(INIT_COURSE);
+        }, [])
+    );
+
     return (
         <Tabs.Navigator
             overScrollMode="never"
-            sceneContainerStyle={{
-                backgroundColor: colors.contentHeader,
-            }}
             screenOptions={ ({ navigation }) => ({
+                sceneStyle: {
+                    backgroundColor: colors.contentHeader
+                },
                 tabBarActiveTintColor: colors.button,
                 tabBarInactiveTintColor: colors.headerText,
                 tabBarIndicatorStyle: {

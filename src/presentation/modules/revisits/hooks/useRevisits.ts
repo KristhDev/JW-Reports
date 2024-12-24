@@ -1,7 +1,10 @@
 import { useNavigation } from '@react-navigation/native';
 
+/* Config */
+import { env } from '@config';
+
 /* Constants */
-import { authMessages, revisitsMessages } from '@application/constants';
+import { authMessages, precursors, revisitsMessages } from '@application/constants';
 
 /* Features */
 import { useAppDispatch, useAppSelector } from '@application/store';
@@ -35,9 +38,6 @@ import { CompleteRevisitDto, CreateRevisitDto, UpdateRevisitDto } from '@domain/
 /* Entities */
 import { RevisitEntity } from '@domain/entities';
 
-/* Models */
-import { ImageModel } from '@domain/models';
-
 /* Templates */
 import { PdfRevisitsTemplate } from '@domain/templates';
 
@@ -52,17 +52,16 @@ import { useAuth } from '@auth';
 import { useImage, useNetwork, useStatus } from '@shared';
 
 /* Interfaces */
-import { loadRevisitsOptions, RevisitFilter, RevisitFormValues, SaveRevisitOptions } from '../interfaces';
-
-/* ENV */
-import { SUPABASE_REVISITS_FOLDER } from '@env';
+import { loadRevisitsOptions, RevisitFilter, SaveRevisitOptions, UpdateRevisitOptions } from '../interfaces';
+import { DeleteOptions } from '@infrasturcture/interfaces';
+import { RevisitsStackNavigationType } from '@ui';
 
 /**
  * Hook to management revisits of store with state and actions
  */
 const useRevisits = () => {
     const dispatch = useAppDispatch();
-    const navigation = useNavigation();
+    const navigation = useNavigation<RevisitsStackNavigationType>();
 
     const state = useAppSelector(store => store.revisits);
     const { user } = useAppSelector(store => store.auth);
@@ -142,7 +141,7 @@ const useRevisits = () => {
             updateRevisitActionState(revisit);
             setSelectedRevisit(revisit);
 
-            if (user.precursor === 'ninguno' && state.lastRevisit.id === state.selectedRevisit.id) setLastRevisit(revisit);
+            if (user.precursor === precursors.NINGUNO && state.lastRevisit.id === state.selectedRevisit.id) setLastRevisit(revisit);
 
             return revisitsMessages.COMPLETED_SUCCESS;
         }
@@ -156,13 +155,14 @@ const useRevisits = () => {
     }
 
     /**
-     * This function is to delete a revisit.
+     * This function deletes a revisit.
      *
-     * @param {boolean} back - This is a flag to indicate whether to navigate to the previous screen or not, default is `false`
-     * @param {Function} onFinish - This callback executed when the process is finished (success or failure), default is `undefined`
-     * @return {Promise<void>} This function does not return anything
+     * @param {{ onFinish: Function, onSuccess: Function }} options - The options of the function.
+     * @param {Function} options.onFinish - This callback is executed when the function finish.
+     * @param {Function} options.onSuccess - This callback is executed when the function success.
+     * @return {Promise<void>} This function returns a promise that resolves when the function finish.
      */
-    const deleteRevisit = async (back: boolean = false, onFinish?: () => void): Promise<void> => {
+    const deleteRevisit = async ({ onFinish, onSuccess }: DeleteOptions): Promise<void> => {
         const wifiConnectionAvailable = hasWifiConnection();
         if (!wifiConnectionAvailable) return;
 
@@ -176,21 +176,21 @@ const useRevisits = () => {
 
         try {
             /* If revisit has a photo you have to delete it */
-            if (state.selectedRevisit.photo) await deleteImage(state.selectedRevisit.photo, SUPABASE_REVISITS_FOLDER);
+            if (state.selectedRevisit.photo) await deleteImage(state.selectedRevisit.photo, env.SUPABASE_REVISITS_FOLDER);
             await RevisitsService.delete(state.selectedRevisit.id, user.id);
 
             removeRevisit(state.selectedRevisit.id);
 
-            setIsRevisitDeleting(false);
-            onFinish && onFinish();
-
-            back && navigation.navigate('RevisitsTopTabsNavigation' as never);
-
-            if (user.precursor === 'ninguno' && state.lastRevisit.id === state.selectedRevisit.id) {
+            if (user.precursor === precursors.NINGUNO && state.lastRevisit.id === state.selectedRevisit.id) {
                 await loadLastRevisit();
             }
 
+            setIsRevisitDeleting(false);
             setSelectedRevisit(INIT_REVISIT);
+
+            onFinish && onFinish();
+            onSuccess && onSuccess();
+
             setStatus({ code: 200, msg: revisitsMessages.DELETED_SUCCESS });
         }
         catch (error) {
@@ -345,7 +345,7 @@ const useRevisits = () => {
             let photo = null;
 
             /* If image is other than undefined, an attempt is made to upload */
-            if (image) photo = await uploadImage(image, SUPABASE_REVISITS_FOLDER);
+            if (image) photo = await uploadImage(image, env.SUPABASE_REVISITS_FOLDER);
             const createDto = CreateRevisitDto.create({ ...revisitValues, userId: user.id, photo });
             const revisit = await RevisitsService.create(createDto);
 
@@ -360,8 +360,8 @@ const useRevisits = () => {
 
             setStatus({ code: 201, msg: successMsg });
 
-            back && navigation.navigate('RevisitsTopTabsNavigation' as never);
-            if (user.precursor === 'ninguno') await loadLastRevisit();
+            back && navigation.popTo('RevisitsTopTabsNavigation');
+            if (user.precursor === precursors.NINGUNO) await loadLastRevisit();
         }
         catch (error) {
             setIsRevisitLoading(false);
@@ -372,13 +372,14 @@ const useRevisits = () => {
     }
 
     /**
-     * This function is responsible for updating a revisit and returns to the previous screen.
+     * Updates a revisit with the given values and image.
      *
-     * @param {RevisitFormValues} revisitValues - RevisitEntity values to update
-     * @param {ImageModel | null} image - Image to upload, default is `undefined`
-     * @return {Promise<void>} This function does not return anything
+     * @param {UpdateRevisitOptions} { image: Image, revisitValues: RevisitFormValues } - The options to update the revisit.
+     * - image: The image to be uploaded, default is `null`.
+     * - revisitValues: The values of the revisit to be updated.
+     * @return {Promise<void>} This function does not return anything.
      */
-    const updateRevisit = async (revisitValues: RevisitFormValues, image: ImageModel | null): Promise<void> => {
+    const updateRevisit = async ({ image = null, revisitValues }: UpdateRevisitOptions): Promise<void> => {
         const wifi = hasWifiConnection();
         if (!wifi) return;
 
@@ -397,8 +398,8 @@ const useRevisits = () => {
             if (image) {
 
                 /* If revisit has an image you have to delete it to update it with the new one */
-                if (photo && photo.trim().length > 0) await deleteImage(photo, SUPABASE_REVISITS_FOLDER);
-                photo = await uploadImage(image, SUPABASE_REVISITS_FOLDER);
+                if (photo && photo.trim().length > 0) await deleteImage(photo, env.SUPABASE_REVISITS_FOLDER);
+                photo = await uploadImage(image, env.SUPABASE_REVISITS_FOLDER);
             }
 
             const updateDto = UpdateRevisitDto.create({ ...revisitValues, photo });
@@ -407,7 +408,7 @@ const useRevisits = () => {
             updateRevisitActionState(revisit);
             setStatus({ code: 200, msg: revisitsMessages.UPDATED_SUCCESS });
 
-            if (user.precursor === 'ninguno') await loadLastRevisit();
+            if (user.precursor === precursors.NINGUNO) await loadLastRevisit();
 
             navigation.goBack();
         }

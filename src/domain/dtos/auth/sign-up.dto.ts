@@ -1,3 +1,6 @@
+/* Constants */
+import { precursors } from '@application/constants';
+
 /* Interfaces */
 import { SignUpData } from '@auth';
 import { Precursor } from '@infrasturcture/interfaces';
@@ -25,7 +28,7 @@ export class SignUpDto {
             values.surname,
             values.email,
             values.password,
-            'ninguno',
+            precursors.NINGUNO,
             0,
             false
         );

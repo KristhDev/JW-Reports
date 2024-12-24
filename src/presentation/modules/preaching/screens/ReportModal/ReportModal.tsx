@@ -3,7 +3,7 @@ import { View, Text, Share, TextInput } from 'react-native';
 import { useStyles } from 'react-native-unistyles';
 
 /* Constants */
-import { MINISTRY_PARTICIPATIONS } from '@application/constants';
+import { MINISTRY_PARTICIPATIONS, precursors } from '@application/constants';
 
 /* Services */
 import { PreachingReportService } from '@domain/services';
@@ -22,9 +22,6 @@ import { Modal, RadioBtn, ModalActions } from '@ui';
 import { useAuth } from '@auth';
 import { usePreaching } from '../../hooks';
 import { useCourses } from '@courses';
-
-/* Utils */
-import { Characters } from '@utils';
 
 /* Styles */
 import { themeStylesheet } from '@theme';
@@ -123,14 +120,14 @@ const ReportModal: FC<ReportModalProps> = ({ isOpen, month, onClose }): JSX.Elem
                         <Text style={ styles.reportText(colors.text) }>Mes: </Text>
 
                         <Text
-                            style={ styles.reportText(colors.modalText) }
+                            style={[ styles.reportText(colors.modalText), { textTransform: 'capitalize' } ]}
                             testID="report-modal-month-text"
                         >
-                            { Characters.capitalize(month) }
+                            { month }
                         </Text>
                     </View>
 
-                    { (user.precursor !== 'ninguno') && (
+                    { (user.precursor !== precursors.NINGUNO) && (
                         <View style={{ flexDirection: 'row' }}>
                             <Text style={ styles.reportText(colors.text) }>Horas: </Text>
 
@@ -154,7 +151,7 @@ const ReportModal: FC<ReportModalProps> = ({ isOpen, month, onClose }): JSX.Elem
                         </Text>
                     </View>
 
-                    { (user.precursor === 'ninguno') && (
+                    { (user.precursor === precursors.NINGUNO) && (
                         <View style={{ flexDirection: 'column' }}>
                             <Text style={ styles.reportText(colors.text) }>Participo en el ministerio: </Text>
 
@@ -205,7 +202,7 @@ const ReportModal: FC<ReportModalProps> = ({ isOpen, month, onClose }): JSX.Elem
                         </View>
                     </View>
 
-                    { (user.hoursLDC && user.precursor !== 'ninguno') && (
+                    { (user.hoursLDC && user.precursor !== precursors.NINGUNO) && (
                         <View style={{ flexDirection: 'column', marginTop: margins.sm - 4 }}>
                             <Text style={{ ...styles.reportText(colors.text), marginBottom: margins.sm - 4 }}>
                                 Horas LDC:

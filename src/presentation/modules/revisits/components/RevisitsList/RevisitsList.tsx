@@ -1,7 +1,8 @@
 import React, { FC, useCallback, useEffect, useState } from 'react';
-import { FlatList, RefreshControl } from 'react-native';
-import { useStyles } from 'react-native-unistyles';
+import { RefreshControl, View } from 'react-native';
 import { useFocusEffect, useNavigation } from '@react-navigation/native';
+import { useStyles } from 'react-native-unistyles';
+import { FlashList } from '@shopify/flash-list';
 
 /* Features */
 import { INIT_REVISIT } from '@application/features';
@@ -12,7 +13,7 @@ import { RevisitEntity } from '@domain/entities';
 /* Modules */
 import { PassToCourseModal } from '@courses';
 import { RevisitCard, RevisitModal, useRevisits } from '@revisits';
-import { DeleteModal, ListEmptyComponent, ListFooterComponent, SearchInput, Title } from '@ui';
+import { DeleteModal, ListEmptyComponent, ListFooterComponent, RevisitsStackNavigationType, SearchInput, Title } from '@ui';
 
 /* Hooks */
 import { useNetwork } from '@shared';
@@ -45,7 +46,7 @@ export const RevisitsList: FC<RevisitsListProps> = ({ emptyMessage, filter, titl
 
     const { styles: themeStyles, theme: { fontSizes, margins } } = useStyles(themeStylesheet);
 
-    const navigation = useNavigation();
+    const navigation = useNavigation<RevisitsStackNavigationType>();
     const navigationState = navigation.getState();
 
     const emptyMsg = (searchTerm.trim().length > 0)
@@ -156,7 +157,9 @@ export const RevisitsList: FC<RevisitsListProps> = ({ emptyMessage, filter, titl
      * @return {void} - This function does not return any value
      */
     const handleDeleteConfirm = (): void => {
-        deleteRevisit(false, () => setShowDeleteModal(false));
+        deleteRevisit({
+            onFinish: () => setShowDeleteModal(false)
+        });
     }
 
     /**
@@ -186,9 +189,10 @@ export const RevisitsList: FC<RevisitsListProps> = ({ emptyMessage, filter, titl
 
     return (
         <>
-            <FlatList
-                contentContainerStyle={ themeStyles.flatListContainer }
+            <FlashList
+                contentContainerStyle={ themeStyles.listContainer }
                 data={ revisits }
+                estimatedItemSize={ 256 }
                 keyExtractor={ (item) => item.id }
                 ListFooterComponent={
                     <ListFooterComponent
@@ -197,7 +201,7 @@ export const RevisitsList: FC<RevisitsListProps> = ({ emptyMessage, filter, titl
                     />
                 }
                 ListHeaderComponent={
-                    <>
+                    <View style={{ paddingHorizontal: margins.xs, width: '100%' }}>
                         <Title
                             containerStyle={{ marginVertical: margins.xs }}
                             text={ title }
@@ -210,7 +214,7 @@ export const RevisitsList: FC<RevisitsListProps> = ({ emptyMessage, filter, titl
                             searchTerm={ searchTerm }
                             refreshing={ isRefreshing }
                         />
-                    </>
+                    </View>
                 }
                 ListEmptyComponent={
                     <ListEmptyComponent
@@ -218,7 +222,6 @@ export const RevisitsList: FC<RevisitsListProps> = ({ emptyMessage, filter, titl
                         showMsg={ !isRevisitsLoading && revisits.length === 0 }
                     />
                 }
-                ListHeaderComponentStyle={{ alignSelf: 'flex-start' }}
                 onEndReached={ handleEndReach }
                 onEndReachedThreshold={ 0.5 }
                 overScrollMode="never"
@@ -230,11 +233,12 @@ export const RevisitsList: FC<RevisitsListProps> = ({ emptyMessage, filter, titl
                 }
                 renderItem={ ({ item }) => (
                     <RevisitCard
+                        navigateToDetail={ () => navigation.navigate('RevisitDetailScreen') }
+                        navigateToEdit={ () => navigation.navigate('AddOrEditRevisitScreen') }
                         onDelete={ () => handleShowModal(item, setShowDeleteModal) }
                         onPass={ () => handleShowModal(item, setShowPassModal) }
                         onRevisit={ () => handleShowModal(item, setShowRevisitModal) }
                         revisit={ item }
-                        screenToNavigate="RevisitDetailScreen"
                     />
                 ) }
             />

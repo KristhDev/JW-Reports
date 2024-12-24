@@ -5,7 +5,7 @@ declare module '@env' {
     export const EMAILJS_REPORT_ERROR_TEMPLATE_ID: string;
     export const EMAILJS_SERVICE_ID: string;
     export const REPOSITORY_URL: string;
-    export const SITIE_URL: string;
+    export const SITE_URL: string;
     export const SUPABASE_APY_KEY: string;
     export const SUPABASE_BUCKET: string;
     export const SUPABASE_ERRORS_FOLDER: string;

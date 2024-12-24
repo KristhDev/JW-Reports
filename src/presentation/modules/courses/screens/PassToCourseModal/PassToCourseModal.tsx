@@ -1,4 +1,4 @@
-import React, { FC, useState } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import { View, ActivityIndicator, Text } from 'react-native';
 import { useStyles } from 'react-native-unistyles';
 import { useFormik } from 'formik';
@@ -64,7 +64,7 @@ const PassToCourseModal: FC<ModalProps> = ({ isOpen, onClose }): JSX.Element => 
         }
     }
 
-    const { handleChange, handleSubmit, values } = useFormik({
+    const { handleChange, handleSubmit, setFieldValue, values } = useFormik({
         initialValues: { publication: '' },
         onSubmit: handleConfirm
     });
@@ -79,6 +79,10 @@ const PassToCourseModal: FC<ModalProps> = ({ isOpen, onClose }): JSX.Element => 
         onClose();
         setStartCourse(false);
     }
+
+    useEffect(() => {
+        setFieldValue('publication', '');
+    }, [ startCourse ]);
 
     return (
         <Modal isOpen={ isOpen }>

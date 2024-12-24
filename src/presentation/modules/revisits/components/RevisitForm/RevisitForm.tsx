@@ -50,7 +50,7 @@ export const RevisitForm: FC = (): JSX.Element => {
     const handleSaveOrUpdate = (revisitValues: RevisitFormValues): void => {
         (selectedRevisit.id === '')
             ? saveRevisit({ revisitValues, image })
-            : updateRevisit(revisitValues, image);
+            : updateRevisit({ revisitValues, image });
     }
 
     const { errors, handleChange, handleSubmit, setFieldValue, isValid, values } = useFormik({
@@ -95,7 +95,6 @@ export const RevisitForm: FC = (): JSX.Element => {
                     />
                 }
                 label="Nombre de la persona:"
-                onBlur={ () => setActiveFormField('') }
                 onChangeText={ handleChange('personName') }
                 onFocus={ () => setActiveFormField('personName') }
                 placeholder="Ingrese el nombre"
@@ -108,7 +107,6 @@ export const RevisitForm: FC = (): JSX.Element => {
                 label="Información de la persona:"
                 multiline
                 numberOfLines={ 9 }
-                onBlur={ () => setActiveFormField('') }
                 onChangeText={ handleChange('about') }
                 onFocus={ () => setActiveFormField('about') }
                 placeholder="Ingrese datos sobre la persona, tema de conversación, aspectos importantes, etc..."
@@ -121,7 +119,6 @@ export const RevisitForm: FC = (): JSX.Element => {
                 label="Dirección:"
                 multiline
                 numberOfLines={ 3 }
-                onBlur={ () => setActiveFormField('') }
                 onChangeText={ handleChange('address') }
                 onFocus={ () => setActiveFormField('address') }
                 placeholder="Ingrese la dirección"

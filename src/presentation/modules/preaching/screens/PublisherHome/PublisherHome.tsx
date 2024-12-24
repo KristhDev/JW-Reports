@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { ActivityIndicator, ScrollView, RefreshControl } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 import { useStyles } from 'react-native-unistyles';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
@@ -19,7 +20,7 @@ import { RevisitCard, RevisitModal, useRevisits } from '@revisits';
 
 /* Components */
 import { ReportModal } from '../ReportModal';
-import { DeleteModal, Fab, InfoText, Title } from '@ui';
+import { DeleteModal, Fab, InfoText, PublisherStackNavigationType, Title } from '@ui';
 
 /* Hooks */
 import { usePreaching } from '../../hooks';
@@ -36,13 +37,16 @@ import { themeStylesheet } from '@theme';
  */
 const PublisherHome = (): JSX.Element => {
     const [ isRefreshing, setIsRefreshing ] = useState<boolean>(false);
+
     const [ showDeleteLessonModal, setShowDeleteLessonModal ] = useState<boolean>(false);
     const [ showDeleteRevisitModal, setShowDeleteRevisitModal ] = useState<boolean>(false);
+
     const [ showFSModal, setShowFSModal ] = useState<boolean>(false);
     const [ showPassModal, setShowPassModal ] = useState<boolean>(false);
     const [ showReportModal, setShowReportModal ] = useState<boolean>(false);
     const [ showRevisitModal, setShowRevisitModal ] = useState<boolean>(false);
 
+    const navigation = useNavigation<PublisherStackNavigationType>();
     const { styles: themeStyles, theme: { colors, fontSizes, margins } } = useStyles(themeStylesheet);
 
     const { state: { selectedDate } } = usePreaching();
@@ -65,6 +69,7 @@ const PublisherHome = (): JSX.Element => {
             isRevisitDeleting,
             lastRevisit
         },
+        deleteRevisit,
         setSelectedRevisit,
         loadLastRevisit
     } = useRevisits();
@@ -72,15 +77,15 @@ const PublisherHome = (): JSX.Element => {
     const month = Time.format(selectedDate, 'MMMM').toUpperCase();
 
     /**
-     * When the user swipes down to refresh, load the preachings for the selected date and set the
-     * refreshing state to false.
+     * Refreshes the state by loading the most recent lesson and revisit data.
+     * Sets the refreshing state to false before and after the load operations.
      *
-     * @return {void} This function does not return anything
+     * @return {Promise<void>} A promise that resolves when the refresh is complete.
      */
-    const handleRefreshing = (): void => {
+    const handleRefreshing = async (): Promise<void> => {
         setIsRefreshing(false);
-        loadLastLesson();
-        loadLastRevisit();
+        await Promise.all([ loadLastLesson(), loadLastRevisit() ]);
+        setIsRefreshing(false);
     }
 
     /**
@@ -103,7 +108,7 @@ const PublisherHome = (): JSX.Element => {
      * @param {(setShowModal: (value: boolean) => void)} setShowModal The function to set the modal visibility.
      * @return {void} This function does not return any value.
      */
-    const handleShowLessonsModals = (lesson: LessonWithCourseEntity, setShowModal: (value: boolean) => void): void => {
+    const handleShowLessonsModal = (lesson: LessonWithCourseEntity, setShowModal: (value: boolean) => void): void => {
         const { course, ...rest } = lesson;
         setSelectedLesson(rest);
         setShowModal(true);
@@ -139,19 +144,33 @@ const PublisherHome = (): JSX.Element => {
     }
 
     /**
-     * Handles the delete confirmation by calling the deleteLesson function with a boolean value of false,
-     * and then hides the delete modal by calling setShowDeleteModal with a boolean value of false.
+     * Handles the deletion of a lesson by calling the deleteLesson function with a callback to
+     * hide the delete modal after the deletion is complete.
      *
-     * @return {void} - This function does not return any value.
+     * @return {void} This function does not return anything.
      */
-    const handleDeleteConfirm = (): void => {
-        deleteLesson(false, () => setShowDeleteLessonModal(false));
+    const handleDeleteLessonConfirm = (): void => {
+        deleteLesson({
+            onFinish: () => setShowDeleteLessonModal(false)
+        });
+    }
+
+    /**
+     * Handles the deletion of a revisit by calling the deleteRevisit function with a callback to
+     * hide the delete modal after the deletion is complete.
+     *
+     * @return {void} This function does not return anything.
+     */
+    const handleDeleteRevisitConfirm = (): void => {
+        deleteRevisit({
+            onFinish: () => setShowDeleteRevisitModal(false)
+        });
     }
 
     return (
         <>
             <ScrollView
-                contentContainerStyle={{ alignItems: 'center', padding: margins.md, paddingBottom: 100 }}
+                contentContainerStyle={{ alignItems: 'center', paddingHorizontal: margins.xs, paddingTop: margins.md, paddingBottom: 100 }}
                 overScrollMode="never"
                 refreshControl={
                     <RefreshControl
@@ -163,7 +182,7 @@ const PublisherHome = (): JSX.Element => {
                 style={{ flex: 1 }}
             >
                 <Title
-                    containerStyle={{ ...themeStyles.titleContainer, marginBottom: margins.sm }}
+                    containerStyle={{ ...themeStyles.titleContainer, paddingHorizontal: margins.sm, marginBottom: margins.sm }}
                     text="ÚLTIMA LECCIÓN"
                     textStyle={{ fontSize: fontSizes.md }}
                 />
@@ -188,16 +207,17 @@ const PublisherHome = (): JSX.Element => {
 
                 { (!isLastLessonLoading && lastLesson?.id) && (
                     <LessonCard
-                        screenToNavigate="HomeLessonDetailScreen"
                         lesson={ lastLesson }
-                        onDelete={ () => handleShowLessonsModals(lastLesson, setShowDeleteLessonModal) }
-                        onFinish={ () => handleShowLessonsModals(lastLesson, setShowFSModal) }
+                        navigateToDetail={ () => navigation.navigate('LessonDetailScreen') }
+                        navigateToEdit={ () => navigation.navigate('AddOrEditLessonScreen') }
                         onClick={ () => setSelectedCourse(lastLesson.course) }
+                        onDelete={ () => handleShowLessonsModal(lastLesson, setShowDeleteLessonModal) }
+                        onFinish={ () => handleShowLessonsModal(lastLesson, setShowFSModal) }
                     />
                 ) }
 
                 <Title
-                    containerStyle={{ ...themeStyles.titleContainer, paddingTop: margins.lg, marginBottom: margins.sm }}
+                    containerStyle={{ ...themeStyles.titleContainer, paddingTop: margins.lg, paddingHorizontal: margins.sm, marginBottom: margins.sm }}
                     text="ÚLTIMA REVISITA"
                     textStyle={{ fontSize: fontSizes.md }}
                 />
@@ -222,11 +242,12 @@ const PublisherHome = (): JSX.Element => {
 
                 { (!isLastRevisitLoading && lastRevisit?.id) && (
                     <RevisitCard
+                        navigateToDetail={ () => navigation.navigate('RevisitDetailScreen') }
+                        navigateToEdit={ () => navigation.navigate('AddOrEditRevisitScreen') }
                         onDelete={ () => handleShowRevisitsModal(lastRevisit, setShowDeleteRevisitModal) }
                         onPass={ () => handleShowRevisitsModal(lastRevisit, setShowPassModal) }
                         onRevisit={ () => handleShowRevisitsModal(lastRevisit, setShowRevisitModal) }
                         revisit={ lastRevisit }
-                        screenToNavigate="HomeRevisitDetailScreen"
                     />
                 ) }
             </ScrollView>
@@ -263,7 +284,7 @@ const PublisherHome = (): JSX.Element => {
                 isLoading={ isLessonDeleting }
                 isOpen={ showDeleteLessonModal }
                 onClose={ () => handleHideLessonsModals(setShowDeleteLessonModal) }
-                onConfirm={ handleDeleteConfirm }
+                onConfirm={ handleDeleteLessonConfirm }
                 text="¿Está seguro de eliminar esta clase?"
             />
 
@@ -284,7 +305,7 @@ const PublisherHome = (): JSX.Element => {
                 isLoading={ isRevisitDeleting }
                 isOpen={ showDeleteRevisitModal }
                 onClose={ () => handleHideRevisitsModal(setShowDeleteRevisitModal) }
-                onConfirm={ handleDeleteConfirm }
+                onConfirm={ handleDeleteRevisitConfirm }
                 text="¿Está seguro de eliminar esta revisita?"
             />
         </>
