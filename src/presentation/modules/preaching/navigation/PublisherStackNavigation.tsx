@@ -4,6 +4,7 @@ import { CardStyleInterpolators, createStackNavigator } from '@react-navigation/
 import { useStyles } from 'react-native-unistyles';
 
 /* Modules */
+import { useAuth } from '@auth';
 import { useCourses } from '@courses';
 import { AddOrEditLesson, LessonDetail, useLessons } from '@lessons';
 import { AddOrEditRevisit, RevisitDetail, useRevisits } from '@revisits';
@@ -29,6 +30,7 @@ const PublisherStackNavigation = (): JSX.Element => {
     const navigation = useNavigation<PreachingStackNavigationType>();
     const { theme: { colors } } = useStyles();
 
+    const { state: { isAuthenticated } } = useAuth();
     const { state: { selectedCourse } } = useCourses();
     const { state: { isRevisitDeleting, selectedRevisit }, deleteRevisit, loadLastRevisit } = useRevisits();
     const { state: { isLessonDeleting, selectedLesson }, deleteLesson, loadLastLesson } = useLessons();
@@ -86,6 +88,8 @@ const PublisherStackNavigation = (): JSX.Element => {
     }
 
     useEffect(() => {
+        if (!isAuthenticated) return;
+
         if (!wifi.hasConnection) {
             setNetworkError();
             return;
