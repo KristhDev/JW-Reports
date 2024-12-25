@@ -26,7 +26,7 @@ const Stack = createStackNavigator<PrecursorStackParamsList>();
 const PrecursorStackNavigation = (): JSX.Element => {
     const [ showDeletePreachingModal, setShowDeletePreachingModal ] = useState<boolean>(false);
 
-    const { state: { user } } = useAuth();
+    const { state: { isAuthenticated } } = useAuth();
 
     const {
         state: {
@@ -64,12 +64,13 @@ const PrecursorStackNavigation = (): JSX.Element => {
      * Effect to load preachings of the selected date.
      */
     useEffect(() => {
+        if (!isAuthenticated) return;
+
         if (!wifi.hasConnection) {
             setNetworkError();
             return;
         }
 
-        if (user.id === '') return;
         loadPreachings(selectedDate);
     } ,[ selectedDate ]);
 
