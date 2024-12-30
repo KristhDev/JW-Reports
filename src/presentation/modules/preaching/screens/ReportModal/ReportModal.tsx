@@ -23,9 +23,6 @@ import { useAuth } from '@auth';
 import { usePreaching } from '../../hooks';
 import { useCourses } from '@courses';
 
-/* Utils */
-import { Characters } from '@utils';
-
 /* Styles */
 import { fontSizes, themeStylesheet } from '@theme';
 import { stylesheet } from './styles';
@@ -123,10 +120,10 @@ const ReportModal: FC<ReportModalProps> = ({ isOpen, month, onClose }): JSX.Elem
                         <Text style={ styles.reportText(colors.text) }>Mes: </Text>
 
                         <Text
-                            style={ styles.reportText(colors.modalText) }
+                            style={[ styles.reportText(colors.modalText), { textTransform: 'capitalize' } ]}
                             testID="report-modal-month-text"
                         >
-                            { Characters.capitalize(month) }
+                            { month }
                         </Text>
                     </View>
 

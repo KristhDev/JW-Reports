@@ -203,9 +203,9 @@ export const RevisitsList: FC<RevisitsListProps> = ({ emptyMessage, filter, titl
                     />
                 }
                 ListHeaderComponent={
-                    <View style={{ paddingHorizontal: margins.sm, width: '100%' }}>
+                    <View style={{ paddingHorizontal: margins.xs, width: '100%' }}>
                         <Title
-                            containerStyle={{ marginTop: margins.md, marginBottom: margins.xl  }}
+                            containerStyle={{ marginVertical: margins.xs }}
                             text={ title }
                             textStyle={{ fontSize: fontSizes.md }}
                         />

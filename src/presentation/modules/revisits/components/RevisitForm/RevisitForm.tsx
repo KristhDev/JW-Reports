@@ -50,7 +50,7 @@ export const RevisitForm: FC = (): JSX.Element => {
     const handleSaveOrUpdate = (revisitValues: RevisitFormValues): void => {
         (selectedRevisit.id === '')
             ? saveRevisit({ revisitValues, image })
-            : updateRevisit(revisitValues, image);
+            : updateRevisit({ revisitValues, image });
     }
 
     const { errors, handleChange, handleSubmit, setFieldValue, isValid, values } = useFormik({

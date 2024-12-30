@@ -1,14 +1,11 @@
 import { useState } from 'react';
-import { Stack, useRouter } from 'expo-router';
+import { Href, Stack, useRouter } from 'expo-router';
 import { useStyles } from 'react-native-unistyles';
 
 /* Modules */
 import { useCourses } from '@courses';
 import { useLessons } from '@lessons';
 import { Header, HeaderButtons } from '@ui';
-
-/* Utils */
-import { Characters } from '@utils';
 
 export default function CoursesLayout(): JSX.Element {
     const [ showDeleteCourseModal, setShowDeleteCourseModal ] = useState<boolean>(false);
@@ -48,6 +45,37 @@ export default function CoursesLayout(): JSX.Element {
         });
     }
 
+    /**
+     * Navigate to the route specified by the href parameter.
+     *
+     * @param {Href} href - The route to navigate to.
+     *
+     * @return {void} This function does not return anything
+     */
+    const handleGoTo = (href: Href): void => {
+        router.navigate(href);
+    }
+
+    /**
+     * Dismiss to the route specified by the href parameter.
+     *
+     * @param {Href} href - The route to dismiss to.
+     *
+     * @return {void} This function does not return anything
+     */
+    const handleDismissTo = (href: Href): void => {
+        router.dismissTo(href);
+    }
+
+    /**
+     * Go back to the previous screen in the navigation stack.
+     *
+     * @return {void} This function does not return anything
+     */
+    const handleGoBack = (): void => {
+        router.back();
+    }
+
     return (
         <Stack
             screenOptions={{
@@ -78,16 +106,16 @@ export default function CoursesLayout(): JSX.Element {
                                 deleteModalText="¿Está seguro de eliminar este curso?"
                                 isDeleteModalLoading={ isCourseDeleting }
                                 onCloseDeleteModal={ () => setShowDeleteCourseModal(false) }
-                                onConfirmDeleteModal={ () => handleDeleteCourse(router.back) }
+                                onConfirmDeleteModal={ () => handleDeleteCourse(handleGoBack) }
                                 onShowDeleteModal={ () => setShowDeleteCourseModal(true) }
                                 showDeleteModal={ showDeleteCourseModal }
 
                                 editButton={ !selectedCourse.finished }
-                                onPressEditButton={ () => router.navigate('/(app)/(tabs)/courses/add-or-edit') }
+                                onPressEditButton={ () => handleGoTo('/(app)/(tabs)/courses/add-or-edit') }
                             />
                         </Header>
                     ),
-                    title: Characters.truncate(courseDetailTitle, 22)
+                    title: courseDetailTitle
                 }}
             />
 
@@ -106,7 +134,7 @@ export default function CoursesLayout(): JSX.Element {
                                 deleteModalText="¿Está seguro de eliminar este curso?"
                                 isDeleteModalLoading={ isCourseDeleting }
                                 onCloseDeleteModal={ () => setShowDeleteCourseModal(false) }
-                                onConfirmDeleteModal={ () => handleDeleteCourse(() => router.dismissTo('/(app)/(tabs)/courses/(tabs)')) }
+                                onConfirmDeleteModal={ () => handleDeleteCourse(() => handleDismissTo('/(app)/(tabs)/courses/(tabs)')) }
                                 onShowDeleteModal={ () => setShowDeleteCourseModal(true) }
                                 showDeleteModal={ showDeleteCourseModal }
                             />
@@ -131,7 +159,7 @@ export default function CoursesLayout(): JSX.Element {
                                 deleteModalText="¿Está seguro de eliminar esta clase?"
                                 isDeleteModalLoading={ isLessonDeleting }
                                 onCloseDeleteModal={ () => setShowDeleteLessonModal(false) }
-                                onConfirmDeleteModal={ () => handleDeleteLesson(() => router.dismissTo('/(app)/(tabs)/courses/lessons')) }
+                                onConfirmDeleteModal={ () => handleDeleteLesson(() => handleDismissTo('/(app)/(tabs)/courses/lessons')) }
                                 onShowDeleteModal={ () => setShowDeleteLessonModal(true) }
                                 showDeleteModal={ showDeleteLessonModal }
                             />
@@ -170,16 +198,16 @@ export default function CoursesLayout(): JSX.Element {
                                 deleteModalText="¿Está seguro de eliminar esta clase?"
                                 isDeleteModalLoading={ isLessonDeleting }
                                 onCloseDeleteModal={ () => setShowDeleteLessonModal(false) }
-                                onConfirmDeleteModal={ () => handleDeleteLesson(router.back) }
+                                onConfirmDeleteModal={ () => handleDeleteLesson(handleGoBack) }
                                 onShowDeleteModal={ () => setShowDeleteLessonModal(true) }
                                 showDeleteModal={ showDeleteLessonModal }
     
                                 editButton={ !selectedCourse.finished || !selectedCourse.suspended }
-                                onPressEditButton={ () => router.navigate('/(app)/(tabs)/courses/add-or-edit-lesson') }
+                                onPressEditButton={ () => handleGoTo('/(app)/(tabs)/courses/add-or-edit-lesson') }
                             />
                         </Header>
                     ),
-                    title: Characters.truncate(courseDetailTitle, 22)
+                    title: `Clase con ${ selectedCourse.personName }`
                 }}
             />
         </Stack>

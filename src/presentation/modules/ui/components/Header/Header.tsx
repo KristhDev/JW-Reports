@@ -23,7 +23,7 @@ export const Header: FC<PropsWithChildren<HeaderProps>> = ({ backButtonColor, ch
 
     return (
         <View style={[ styles.container, style ]}>
-            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+            <View style={ styles.headerTitleContainer }>
                 { (showBackButton) && (
                     <BackButton
                         color={ backButtonColor }
@@ -32,13 +32,18 @@ export const Header: FC<PropsWithChildren<HeaderProps>> = ({ backButtonColor, ch
                 ) }
 
                 { (showTitle) && (
-                    <Text style={[ styles.headerTitle, titleStyle ]}>
+                    <Text 
+                        numberOfLines={ 1 }
+                        style={[ styles.headerTitle, titleStyle ]}
+                    >
                         { title }
                     </Text>
                 ) }
             </View>
 
-            { children }
+            <View>
+                { children }
+            </View>
         </View>
     );
 }

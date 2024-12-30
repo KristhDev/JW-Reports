@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Redirect, Stack, useRouter } from 'expo-router';
+import { Href, Redirect, Stack, useRouter } from 'expo-router';
 import { useStyles } from 'react-native-unistyles';
 
 /* Constants */
@@ -12,9 +12,6 @@ import { useLessons } from '@lessons';
 import { useRevisits } from '@revisits';
 import { useNetwork, useStatus } from '@shared';
 import { Header, HeaderButtons } from '@ui';
-
-/* Utils */
-import { Characters } from '@utils';
 
 export default function PublisherLayout(): JSX.Element {
     const [ showDeleteLessonModal, setShowDeleteLessonModal ] = useState<boolean>(false);
@@ -54,6 +51,37 @@ export default function PublisherLayout(): JSX.Element {
             onFinish: () => setShowDeleteRevisitModal(false),
             onSuccess
         });
+    }
+
+    /**
+     * Navigate to the route specified by the href parameter.
+     *
+     * @param {Href} href - The route to navigate to.
+     *
+     * @return {void} This function does not return anything
+     */
+    const handleGoTo = (href: Href): void => {
+        router.navigate(href);
+    }
+
+    /**
+     * Dismiss to the route specified by the href parameter.
+     *
+     * @param {Href} href - The route to dismiss to.
+     *
+     * @return {void} This function does not return anything
+     */
+    const handleDismissTo = (href: Href): void => {
+        router.dismissTo(href);
+    }
+
+    /**
+     * Go back to the previous screen in the navigation stack.
+     *
+     * @return {void} This function does not return anything
+     */
+    const handleGoBack = (): void => {
+        router.back();
     }
 
     useEffect(() => {
@@ -113,7 +141,7 @@ export default function PublisherLayout(): JSX.Element {
                                 deleteModalText="¿Está seguro de eliminar esta clase?"
                                 isDeleteModalLoading={ isLessonDeleting }
                                 onCloseDeleteModal={ () => setShowDeleteLessonModal(false) }
-                                onConfirmDeleteModal={ () => handleDeleteLesson(() => router.dismissTo('/(app)/(tabs)/preaching/publisher')) }
+                                onConfirmDeleteModal={ () => handleDeleteLesson(() => handleDismissTo('/(app)/(tabs)/preaching/publisher')) }
                                 onShowDeleteModal={ () => setShowDeleteLessonModal(true) }
                                 showDeleteModal={ showDeleteLessonModal }
                             />
@@ -138,12 +166,12 @@ export default function PublisherLayout(): JSX.Element {
                                 deleteModalText="¿Está seguro de eliminar esta clase?"
                                 isDeleteModalLoading={ isLessonDeleting }
                                 onCloseDeleteModal={ () => setShowDeleteLessonModal(false) }
-                                onConfirmDeleteModal={ () => handleDeleteLesson(router.back) }
+                                onConfirmDeleteModal={ () => handleDeleteLesson(handleGoBack) }
                                 onShowDeleteModal={ () => setShowDeleteLessonModal(true) }
                                 showDeleteModal={ showDeleteLessonModal }
 
                                 editButton={ !selectedCourse.finished || !selectedCourse.suspended }
-                                onPressEditButton={ () => router.navigate('/(app)/(tabs)/preaching/publisher/add-or-edit-lesson') }
+                                onPressEditButton={ () => handleGoTo('/(app)/(tabs)/preaching/publisher/add-or-edit-lesson') }
                             />
                         </Header>
                     ),
@@ -167,7 +195,7 @@ export default function PublisherLayout(): JSX.Element {
                                 editButton={ false }
                                 isDeleteModalLoading={ isRevisitDeleting }
                                 onCloseDeleteModal={ () => setShowDeleteRevisitModal(false) }
-                                onConfirmDeleteModal={ () => handleDeleteRevisit(() => router.dismissTo('/(app)/(tabs)/preaching/publisher')) }
+                                onConfirmDeleteModal={ () => handleDeleteRevisit(() => handleDismissTo('/(app)/(tabs)/preaching/publisher')) }
                                 onShowDeleteModal={ () => setShowDeleteRevisitModal(true) }
                                 showDeleteModal={ showDeleteRevisitModal }
                             />
@@ -192,16 +220,16 @@ export default function PublisherLayout(): JSX.Element {
                                 deleteModalText="¿Está seguro de eliminar esta revisita?"
                                 isDeleteModalLoading={ isRevisitDeleting }
                                 onCloseDeleteModal={ () => setShowDeleteRevisitModal(false) }
-                                onConfirmDeleteModal={ () =>handleDeleteRevisit(router.back) }
+                                onConfirmDeleteModal={ () =>handleDeleteRevisit(handleGoBack) }
                                 onShowDeleteModal={ () => setShowDeleteRevisitModal(true) }
                                 showDeleteModal={ showDeleteRevisitModal }
 
                                 editButton={ true }
-                                onPressEditButton={ () => router.navigate('/(app)/(tabs)/preaching/publisher/add-or-edit-revisit') }
+                                onPressEditButton={ () => handleGoTo('/(app)/(tabs)/preaching/publisher/add-or-edit-revisit') }
                             />
                         </Header>
                     ),
-                    title: Characters.truncate(`Revisita ${ selectedRevisit.personName }`, 22)
+                    title: `Revisita ${ selectedRevisit.personName }`
                 }}
             />
         </Stack>
