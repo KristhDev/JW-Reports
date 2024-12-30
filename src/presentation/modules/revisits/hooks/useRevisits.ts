@@ -1,5 +1,8 @@
 import { useRouter } from 'expo-router';
 
+/* Config */
+import { env } from '@config';
+
 /* Constants */
 import { authMessages, precursors, revisitsMessages } from '@application/constants';
 
@@ -45,7 +48,7 @@ import { PdfRevisitsTemplate } from '@domain/templates';
 import { RevisitsService } from '@domain/services';
 
 /* Adapters */
-import { ExternalStorage, InternalStorage, PDF } from '@infrasturcture/adapters';
+import { ExternalStorage, PDF } from '@infrasturcture/adapters';
 
 /* Hooks */
 import { useAuth } from '@auth';
@@ -175,7 +178,7 @@ const useRevisits = () => {
 
         try {
             /* If revisit has a photo you have to delete it */
-            if (state.selectedRevisit.photo) await deleteImage(state.selectedRevisit.photo, process.env.EXPO_PUBLIC_SUPABASE_REVISITS_FOLDER!);
+            if (state.selectedRevisit.photo) await deleteImage(state.selectedRevisit.photo, env.SUPABASE_REVISITS_FOLDER!);
             await RevisitsService.delete(state.selectedRevisit.id, user.id);
 
             if (user.precursor === precursors.NINGUNO && state.lastRevisit.id === state.selectedRevisit.id) {
@@ -337,7 +340,7 @@ const useRevisits = () => {
             let photo = null;
 
             /* If image is other than undefined, an attempt is made to upload */
-            if (image) photo = await uploadImage(image, process.env.EXPO_PUBLIC_SUPABASE_REVISITS_FOLDER!);
+            if (image) photo = await uploadImage(image, env.SUPABASE_REVISITS_FOLDER!);
             const createDto = CreateRevisitDto.create({ ...revisitValues, userId: user.id, photo });
             const revisit = await RevisitsService.create(createDto);
 
@@ -389,8 +392,8 @@ const useRevisits = () => {
             if (image) {
 
                 /* If revisit has an image you have to delete it to update it with the new one */
-                if (photo && photo.trim().length > 0) await deleteImage(photo, process.env.EXPO_PUBLIC_SUPABASE_REVISITS_FOLDER!);
-                photo = await uploadImage(image, process.env.EXPO_PUBLIC_SUPABASE_REVISITS_FOLDER!);
+                if (photo && photo.trim().length > 0) await deleteImage(photo, env.SUPABASE_REVISITS_FOLDER!);
+                photo = await uploadImage(image, env.SUPABASE_REVISITS_FOLDER!);
             }
 
             const updateDto = UpdateRevisitDto.create({ ...revisitValues, photo });
