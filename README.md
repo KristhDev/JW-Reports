@@ -645,7 +645,7 @@ tabla con la explicación de cada una de las variables:
 | EXPO_PUBLIC_EMAILJS_REPORT_ERROR_TEMPLATE_ID | ID de la plantilla de correo de error en EmailJS              |
 | EXPO_PUBLIC_EMAILJS_SERVICE_ID               | ID de servicio de EmailJS                                     |
 | EXPO_PUBLIC_REPOSITORY_URL                   | https://github.com/KristhDev/JW-Reports                       |
-| EXPO_PUBLIC_SITIE_URL                        | Sitio de Internet para la autenticación de los usuarios       |
+| EXPO_PUBLIC_SITE_URL                        | Sitio de Internet para la autenticación de los usuarios       |
 | EXPO_PUBLIC_SUPABASE_APY_KEY                 | Clave de aplicación de Supabase                               |
 | EXPO_PUBLIC_SUPABASE_BUCKET                  | Nombre del bucket para la subida de archivos                  |
 | EXPO_PUBLIC_SUPABASE_ERRORS_FOLDER           | Nombre del directorio de errores                              |
