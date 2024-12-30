@@ -106,7 +106,7 @@ export const ForgotPasswordForm = (): JSX.Element => {
             {/* Sign in link */}
             <View style={{ ...themeStyles.btnLink, marginBottom: margins.sm * 6 }}>
                 <Link
-                    onPress={ () => navigation.navigate('LoginScreen') }
+                    onPress={ () => navigation.popTo('LoginScreen') }
                     testID="forgot-pass-form-sign-in"
                 >
                     Ingresar con mi cuenta
