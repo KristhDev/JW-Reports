@@ -177,7 +177,7 @@ export const RegisterForm = (): JSX.Element => {
                 </Text>
 
                 <Link
-                    onPress={ () => navigation.navigate('LoginScreen') }
+                    onPress={ () => navigation.popTo('LoginScreen') }
                     testID="register-form-sign-in"
                 >
                     Ingresa aquí
