@@ -171,7 +171,7 @@ const PublisherHome = (): JSX.Element => {
     return (
         <>
             <ScrollView
-                contentContainerStyle={[ themeStyles.screenContainer, { flex: 0, paddingHorizontal: margins.xs, paddingBottom: 100 } ]}
+                contentContainerStyle={{ alignItems: 'center', paddingHorizontal: margins.xs, paddingTop: margins.md, paddingBottom: 100 }}
                 overScrollMode="never"
                 refreshControl={
                     <RefreshControl
@@ -183,7 +183,7 @@ const PublisherHome = (): JSX.Element => {
                 style={{ flex: 1 }}
             >
                 <Title
-                    containerStyle={{ ...themeStyles.titleContainer, marginBottom: margins.sm, paddingHorizontal: margins.sm }}
+                    containerStyle={{ ...themeStyles.titleContainer, paddingHorizontal: margins.sm, marginBottom: margins.sm }}
                     text="ÚLTIMA LECCIÓN"
                     textStyle={{ fontSize: fontSizes.md }}
                 />
@@ -218,7 +218,7 @@ const PublisherHome = (): JSX.Element => {
                 ) }
 
                 <Title
-                    containerStyle={{ ...themeStyles.titleContainer, paddingTop: margins.lg, marginBottom: margins.sm, paddingHorizontal: margins.sm }}
+                    containerStyle={{ ...themeStyles.titleContainer, paddingTop: margins.lg, paddingHorizontal: margins.sm, marginBottom: margins.sm }}
                     text="ÚLTIMA REVISITA"
                     textStyle={{ fontSize: fontSizes.md }}
                 />

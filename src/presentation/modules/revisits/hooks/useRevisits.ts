@@ -48,14 +48,14 @@ import { PdfRevisitsTemplate } from '@domain/templates';
 import { RevisitsService } from '@domain/services';
 
 /* Adapters */
-import { ExternalStorage, InternalStorage, PDF } from '@infrasturcture/adapters';
+import { ExternalStorage, PDF } from '@infrasturcture/adapters';
 
 /* Hooks */
 import { useAuth } from '@auth';
 import { useImage, useNetwork, useStatus } from '@shared';
 
 /* Interfaces */
-import { loadRevisitsOptions, RevisitFilter, RevisitFormValues, SaveRevisitOptions } from '../interfaces';
+import { loadRevisitsOptions, RevisitFilter, RevisitFormValues, SaveRevisitOptions, UpdateRevisitOptions } from '../interfaces';
 import { deleteOptions } from '@infrasturcture/interfaces';
 
 /**
@@ -367,13 +367,14 @@ const useRevisits = () => {
     }
 
     /**
-     * This function is responsible for updating a revisit and returns to the previous screen.
+     * Updates a revisit with the given values and image.
      *
-     * @param {RevisitFormValues} revisitValues - RevisitEntity values to update
-     * @param {ImageModel | null} image - Image to upload, default is `undefined`
-     * @return {Promise<void>} This function does not return anything
+     * @param {UpdateRevisitOptions} { image: Image, revisitValues: RevisitFormValues } - The options to update the revisit.
+     * - image: The image to be uploaded, default is `null`.
+     * - revisitValues: The values of the revisit to be updated.
+     * @return {Promise<void>} This function does not return anything.
      */
-    const updateRevisit = async (revisitValues: RevisitFormValues, image: ImageModel | null): Promise<void> => {
+    const updateRevisit = async ({ image = null, revisitValues }: UpdateRevisitOptions): Promise<void> => {
         const wifi = hasWifiConnection();
         if (!wifi) return;
 

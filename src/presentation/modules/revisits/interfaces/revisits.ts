@@ -34,6 +34,14 @@ export interface SaveRevisitOptions {
     revisitValues: RevisitFormValues;
 }
 
+/**
+ * Defining the structure of the UpdateRevisitOptions object.
+ *
+ * @property {Image | undefined} image - This is the image of the revisit.
+ * @property {RevisitFormValues} revisitValues - This is the revisit values to update.
+ */
+export type UpdateRevisitOptions = Pick<SaveRevisitOptions, 'image' | 'revisitValues'>;
+
 /* Extending the LoadResourcesOptions interface. */
 export interface loadRevisitsOptions extends LoadResourcesOptions {
     filter: RevisitFilter;

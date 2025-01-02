@@ -62,7 +62,7 @@ export class AuthService {
      */
     public static async resetPassword(email: string): Promise<void> {
         const result = await supabase.auth.resetPasswordForEmail(email, {
-            redirectTo: `${ env.SITIE_URL }/reset-password`
+            redirectTo: `${ env.SITE_URL }/reset-password`
         });
 
         if (result.error) {

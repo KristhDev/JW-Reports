@@ -169,9 +169,9 @@ export const LessonsList = (): JSX.Element => {
                     />
                 }
                 ListHeaderComponent={
-                    <View style={{ paddingHorizontal: margins.sm, width: '100%' }}>
+                    <View style={{ paddingHorizontal: margins.xs, width: '100%' }}>
                         <Title
-                            containerStyle={{ marginTop: margins.md, marginBottom: margins.xl }}
+                            containerStyle={{ marginVertical: margins.xs }}
                             text={ `CLASES DEL CURSO CON ${ selectedCourse.personName.toUpperCase() }` }
                             textStyle={{ fontSize: fontSizes.md }}
                         />

@@ -34,6 +34,10 @@ yarn-error.*
 .env*.local
 .env
 
+# testing
+coverage/
+__snapshots__/
+
 # typescript
 *.tsbuildinfo
 

@@ -57,12 +57,12 @@ const useAuth = () => {
      * @return {void} This function does not return anything.
      */
     const handleClearStore = (): void => {
+        NotificationsService.close();
+        clearAuth();
         clearCourses();
         clearLessons();
         clearPreaching();
         clearRevisits();
-        clearAuth();
-        NotificationsService.close();
     }
 
     /**

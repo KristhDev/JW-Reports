@@ -80,7 +80,7 @@ export const HeaderButtons: FC<HeaderButtonsProps> = ({
 
     return (
         <>
-            <View style={{ flexDirection: 'row' }}>
+            <View style={{ flexDirection: 'row', flex: 1, gap: 2, alignItems: 'center' }}>
                 { (logoutButton) && (
                     <Fab
                         color={ 'transparent' }
@@ -91,7 +91,6 @@ export const HeaderButtons: FC<HeaderButtonsProps> = ({
                                 size={ (fontSizes.lg + 2) }
                             />
                         }
-                        style={{ marginRight: -2 }}
                         onPress={ signOut }
                         touchColor={ colors.buttonTransparent }
                     />
@@ -109,7 +108,6 @@ export const HeaderButtons: FC<HeaderButtonsProps> = ({
                             />
                         }
                         onPress={ () => setShowMonthPicker(true) }
-                        style={{ marginRight: -2 }}
                         touchColor={ colors.buttonTransparent }
                     />
                 ) }
@@ -124,7 +122,6 @@ export const HeaderButtons: FC<HeaderButtonsProps> = ({
                                 size={ (fontSizes.lg - 2) }
                             />
                         }
-                        style={{ marginRight: (margins.xs - 2) }}
                         onPress={ () => router.navigate('/(app)/settings') }
                         touchColor={ colors.buttonTransparent }
                     />
@@ -141,7 +138,6 @@ export const HeaderButtons: FC<HeaderButtonsProps> = ({
                             />
                         }
                         onPress={ onPressEditButton }
-                        style={{ marginRight: -2 }}
                         touchColor={ colors.buttonTransparent }
                     />
                 ) }
@@ -157,7 +153,6 @@ export const HeaderButtons: FC<HeaderButtonsProps> = ({
                             />
                         }
                         onPress={ onShowDeleteModal }
-                        style={{ marginRight: (margins.xs - 2) }}
                         touchColor={ colors.buttonTransparent }
                     />
                 ) }
