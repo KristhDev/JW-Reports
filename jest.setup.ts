@@ -40,10 +40,7 @@ jest.mock('@react-native-async-storage/async-storage', () =>
 );
 
 jest.mock('@emailjs/react-native', () => {
-    const real = jest.requireActual<typeof import('@emailjs/react-native')>('@emailjs/react-native');
-
     return {
-        ...real,
         init: jest.fn(),
         send: jest.fn(),
         sendForm: jest.fn(),
