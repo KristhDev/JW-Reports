@@ -11,11 +11,11 @@ describe('Test in DeviceInfo adapter', () => {
 
     it('should get build version - getBuildVersion', () => {
         const result = DeviceInfo.getBuildVersion();
-        expect(result).toBe('9102');
+        expect(result).toBe('1');
     });
 
     it('should get system version - getSystemVersion', () => {
         const result = DeviceInfo.getSystemVersion();
-        expect(result).toBe('12');
+        expect(result).toBe('1.0.0');
     });
 });
