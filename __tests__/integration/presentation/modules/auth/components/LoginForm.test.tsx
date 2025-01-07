@@ -37,6 +37,9 @@ describe('Test in <LoginForm /> component', () => {
     it('should call setErrorForm when the form is empty or invalid', async () => {
         renderComponent();
 
+        const inputsText = await screen.findAllByTestId('form-field-text-input');
+        await user.clear(inputsText[0]);
+
         /* Get pressable to submit form */
         const pressable = await screen.findByTestId('button-pressable');
         await user.press(pressable);
@@ -72,14 +75,14 @@ describe('Test in <LoginForm /> component', () => {
         await user.press(touchableSignUp);
 
         /* Check if navigate is called with respective arg */
-        expect(mockUseRouter.navigate).toHaveBeenCalledWith('RegisterScreen');
+        expect(mockUseRouter.navigate).toHaveBeenCalledWith('/auth/register');
 
         /* Get touchable to navigate of ForgotPasswordScreen */
         const touchableForgotPass = await screen.findByTestId('login-form-forgor-pass');
         await user.press(touchableForgotPass);
 
         /* Check if navigate is called with respective arg */
-        expect(mockUseRouter.navigate).toHaveBeenCalledWith('ForgotPasswordScreen');
+        expect(mockUseRouter.navigate).toHaveBeenCalledWith('/auth/forgot-password');
     });
 
     it('should disabled button then isAuthLoading is true', async () => {
