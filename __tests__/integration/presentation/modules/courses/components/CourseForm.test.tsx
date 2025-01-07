@@ -53,6 +53,9 @@ describe('Test in <CourseForm /> component', () => {
     it('should call setErrorForm when the form is empty or invalid', async () => {
         renderComponent();
 
+        const inputsText = await  screen.findAllByTestId('form-field-text-input');
+        await user.clear(inputsText[0]);
+
         const pressable = await screen.findByTestId('button-pressable');
         await user.press(pressable);
 
@@ -87,7 +90,7 @@ describe('Test in <CourseForm /> component', () => {
 
         /* check if saveCourse is called with respective args */
         expect(saveCourseMock).toHaveBeenCalledTimes(1);
-        expect(saveCourseMock).toHaveBeenCalledWith({ personName, personAbout, personAddress, publication });
+        expect(saveCourseMock).toHaveBeenCalledWith({ personName, personAbout, personAddress, publication }, true);
     });
 
     it('should call updateCourse when the form is valid and selectedCourse isnt empty', async () => {
