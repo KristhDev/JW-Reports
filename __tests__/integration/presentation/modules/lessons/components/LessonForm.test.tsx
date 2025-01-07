@@ -57,6 +57,9 @@ describe('Test in <LessonForm /> component', () => {
     it('should call setErrorForm when form is invalid', async () => {
         renderComponent();
 
+        const input = await screen.findByTestId('form-field-text-input');
+        await user.clear(input);
+
         const pressable = (await screen.findAllByTestId('button-pressable'))[1];
         await user.press(pressable);
 
