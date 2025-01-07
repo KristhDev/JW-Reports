@@ -51,6 +51,7 @@ describe('Test in <ProfileForm /> component', () => {
         /* Get text inputs to type empty content */
         const inputsText = await screen.findAllByTestId('form-field-text-input');
         await user.clear(inputsText[0]);
+        await user.clear(inputsText[0]);
 
         /* Get pressable to submit form */
         const pressable = screen.getByTestId('button-pressable');
