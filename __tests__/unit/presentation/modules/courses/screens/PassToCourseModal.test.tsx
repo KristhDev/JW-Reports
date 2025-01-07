@@ -95,6 +95,6 @@ describe('Test in <PassToCourseModal /> screen', () => {
             personAbout: selectedRevisitStateMock.selectedRevisit.about,
             personAddress: selectedRevisitStateMock.selectedRevisit.address,
             publication: pubName
-        }, onCloseMock);
+        }, false, onCloseMock);
     });
 });
