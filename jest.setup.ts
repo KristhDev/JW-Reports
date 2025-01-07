@@ -57,7 +57,9 @@ jest.mock('@react-native-community/netinfo', () =>
 
 jest.mock('expo-application', () => ({
     getBuildVersion: jest.fn().mockReturnValue('1'),
-    getSystemVersion: jest.fn().mockReturnValue('1.0.0')
+    getSystemVersion: jest.fn().mockReturnValue('1.0.0'),
+    nativeBuildVersion: '1',
+    nativeApplicationVersion: '1.0.0'
 }))
 
 jest.mock('expo-file-system', () => ({
@@ -118,6 +120,22 @@ jest.mock('expo-print', () => ({
         uri: 'file:///storage/emulated/0/Android/data/com.kristhdev.jwreports/Print/file.pdf'
     })
 }));
+
+export const mockUseRouter = {
+    back: jest.fn(),
+    dismiss: jest.fn(),
+    dismissTo: jest.fn(),
+    navigate: jest.fn(),
+}
+
+jest.mock('expo-router', () => {
+    const real = jest.requireActual<typeof import('expo-router')>('expo-router');
+
+    return {
+        ...real,
+        useRouter: () => mockUseRouter
+    }
+});
 
 jest.mock('expo-speech-recognition', () => ({
     ExpoSpeechRecognitionModule: {
