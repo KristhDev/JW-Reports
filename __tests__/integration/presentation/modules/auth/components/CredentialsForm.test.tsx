@@ -119,6 +119,9 @@ describe('Test in <CredentialsForm /> component', () => {
 
         renderComponent();
 
+        const inputsText = await screen.findAllByTestId('form-field-text-input');
+        await user.clear(inputsText[0]);
+
         /* Get pressable submit to send request of change password */
         const pressables = await screen.findAllByTestId('button-pressable');
         await user.press(pressables[1]);
@@ -142,6 +145,7 @@ describe('Test in <CredentialsForm /> component', () => {
 
         /* Get text inputs of change passowrd */
         const inputsText = await screen.findAllByTestId('form-field-text-input');
+
         await user.type(inputsText[1], newPass);
         await user.type(inputsText[2], newPass);
 
