@@ -60,7 +60,7 @@ describe('Test in useVoiceRecorder hook', () => {
 
         expect(result.current.useStatus.state).toEqual({
             code: 400,
-            msg: 'Por favor hable de forma clara y sin ruido para copiar el texto.'
+            msg: 'La grabación ha sido abortada.'
         });
     });
 
