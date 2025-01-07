@@ -23,7 +23,7 @@ describe('Test in PDF adapter', () => {
         const filePath = '/storage/emulated/0/Download/path/to/directory/file-name.pdf';
         const pdfPath = '/storage/emulated/0/Download/path/to/directory/PDF-name.pdf';
 
-        (Print.printAsync as jest.Mock).mockResolvedValueOnce({ uri: filePath });
+        (Print.printToFileAsync as jest.Mock).mockResolvedValueOnce({ uri: filePath });
         InternalStorageSpy.rename.mockResolvedValueOnce();
 
         const fileName = 'PDF-name';
@@ -32,12 +32,12 @@ describe('Test in PDF adapter', () => {
         const path = await PDF.writeFromHTML({ fileName, html });
         expect(path).toBe(pdfPath);
 
-        expect(Print.printAsync).toHaveBeenCalledTimes(1);
-        expect(Print.printAsync).toHaveBeenCalledWith({ html });
+        expect(Print.printToFileAsync).toHaveBeenCalledTimes(1);
+        expect(Print.printToFileAsync).toHaveBeenCalledWith({ html });
     });
 
     it('should faild write a PDF file when throw a error - writeFromHTML', async () => {
-        (Print.printAsync as jest.Mock).mockRejectedValueOnce(new Error('Permission denied'));
+        (Print.printToFileAsync as jest.Mock).mockRejectedValueOnce(new Error('Permission denied'));
 
         const fileName = 'file-name.pdf';
         const html = '<html><body>HTML</body></html>';
@@ -50,8 +50,8 @@ describe('Test in PDF adapter', () => {
             expect(error).toBeInstanceOf(PDFError);
             expect(error).toHaveProperty('message', 'Permission denied');
 
-            expect(Print.printAsync).toHaveBeenCalledTimes(1);
-            expect(Print.printAsync).toHaveBeenCalledWith({ html });
+            expect(Print.printToFileAsync).toHaveBeenCalledTimes(1);
+            expect(Print.printToFileAsync).toHaveBeenCalledWith({ html });
         }
     });
 
@@ -60,7 +60,7 @@ describe('Test in PDF adapter', () => {
         const fileName = 'file-name.pdf';
         const html = '<html><body>HTML</body></html>';
 
-        (Print.printAsync as jest.Mock).mockResolvedValueOnce({ uri: filePath });
+        (Print.printToFileAsync as jest.Mock).mockResolvedValueOnce({ uri: filePath });
         InternalStorageSpy.rename.mockRejectedValueOnce(new Error('Path to move file not found'));
 
         try {
@@ -71,8 +71,8 @@ describe('Test in PDF adapter', () => {
             expect(error).toBeInstanceOf(PDFError);
             expect(error).toHaveProperty('message', 'Path to move file not found');
 
-            expect(Print.printAsync).toHaveBeenCalledTimes(1);
-            expect(Print.printAsync).toHaveBeenCalledWith({ html });
+            expect(Print.printToFileAsync).toHaveBeenCalledTimes(1);
+            expect(Print.printToFileAsync).toHaveBeenCalledWith({ html });
         }
     });
 });
