@@ -16,6 +16,10 @@ jest.spyOn(Image, 'resolveAssetSource').mockImplementation(() => ({
     scale: 1
 }));
 
+jest.spyOn(Image, 'getSize').mockImplementation((uri: string, callback: (width: number, height: number) => void) => {
+    callback(300, 180);
+});
+
 export const shareSpy = jest.spyOn(Share, 'share');
 
 jest.mock('@bugfender/rn-bugfender', () => {
@@ -39,7 +43,22 @@ jest.mock('@react-native-async-storage/async-storage', () =>
 );
 
 jest.mock('@emailjs/react-native', () => {
+    class EmailJSResponseStatus {
+        public name = 'EmailJSResponseStatus';
+        public text: string;
+        public status: number;
+
+        constructor(
+            _status: number,
+            _text: string
+        ) {
+            this.status = _status;
+            this.text = _text;
+        }
+    }
+
     return {
+        EmailJSResponseStatus,
         init: jest.fn(),
         send: jest.fn(),
         sendForm: jest.fn(),
@@ -128,12 +147,22 @@ export const mockUseRouter = {
     navigate: jest.fn(),
 }
 
+export const mockUseNavigation = {
+    getState: () => ({
+        routeNames: [ 'index', 'courses' ],
+        index: 0
+    }),
+    isFocused: () => false
+}
+
 jest.mock('expo-router', () => {
     const real = jest.requireActual<typeof import('expo-router')>('expo-router');
 
     return {
         ...real,
-        useRouter: () => mockUseRouter
+        useRouter: () => mockUseRouter,
+        useNavigation: () => mockUseNavigation,
+        useFocusEffect: (callback: Function) => callback()
     }
 });
 
@@ -182,9 +211,14 @@ jest.mock('react-native-onesignal', () => {
 
 jest.mock('react-native-permissions', () => require('react-native-permissions/mock'));
 
-jest.mock('react-native-safe-area-context', () => 
-    require('react-native-safe-area-context/jest/mock')
-);
+jest.mock('react-native-safe-area-context', () => {
+    const mock = require('react-native-safe-area-context/jest/mock');
+
+    return {
+        ...mock,
+        useSafeAreaInsets: () => ({ bottom: 0, left: 0, right: 0, top: 32 })
+    }
+});
 
 jest.mock('react-native-unistyles', () => {
     const real = jest.requireActual('react-native-unistyles');
