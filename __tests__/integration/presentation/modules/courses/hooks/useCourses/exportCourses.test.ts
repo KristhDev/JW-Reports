@@ -76,9 +76,9 @@ describe('Test in useCourses hook - exportCourses', () => {
 
         expect(PDFSpy.writeFromHTML).toHaveBeenCalledTimes(1);
         expect(PDFSpy.writeFromHTML).toHaveBeenCalledWith({
-            directory: 'Exports',
             fileName,
-            html: '<h1>Pdf courses template</h1>'
+            html: '<h1>Pdf courses template</h1>',
+            width: 480
         });
 
         expect(ExternalStorageSpy.moveFileOfInternalExtorage).toHaveBeenCalledTimes(1);
@@ -187,9 +187,9 @@ describe('Test in useCourses hook - exportCourses', () => {
 
         expect(PDFSpy.writeFromHTML).toHaveBeenCalledTimes(1);
         expect(PDFSpy.writeFromHTML).toHaveBeenCalledWith({
-            directory: 'Exports',
             fileName,
-            html: '<h1>Pdf courses template</h1>'
+            html: '<h1>Pdf courses template</h1>',
+            width: 480
         });
 
         expect(ExternalStorageSpy.moveFileOfInternalExtorage).not.toHaveBeenCalled();
@@ -226,9 +226,9 @@ describe('Test in useCourses hook - exportCourses', () => {
 
         expect(PDFSpy.writeFromHTML).toHaveBeenCalledTimes(1);
         expect(PDFSpy.writeFromHTML).toHaveBeenCalledWith({
-            directory: 'Exports',
             fileName,
-            html: '<h1>Pdf courses template</h1>'
+            html: '<h1>Pdf courses template</h1>',
+            width: 480
         });
 
         expect(ExternalStorageSpy.moveFileOfInternalExtorage).toHaveBeenCalledTimes(1);
