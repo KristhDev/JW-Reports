@@ -6,7 +6,7 @@ import { getMockStoreUsePreaching, renderUsePreaching } from '@setups';
 /* Mocks */
 import {
     authenticateStateMock,
-    FileSystemSpy,
+    ExternalStorageSpy,
     hasWifiConnectionMock,
     initialAuthStateMock,
     initialPreachingStateMock,
@@ -24,7 +24,7 @@ import { authMessages, preachingMessages } from '@application/constants';
 
 /* Services */
 import { PreachingReportService } from '@domain/services';
-import { FileSystemError, PDFError, RequestError } from '@domain/errors';
+import { ExternalStorageError, PDFError, RequestError } from '@domain/errors';
 
 describe('Test in usePreaching hook - exportPreachings', () => {
     useNetworkSpy.mockImplementation(() => ({
@@ -50,7 +50,7 @@ describe('Test in usePreaching hook - exportPreachings', () => {
         PreachingServiceSpy.getAllByUserId.mockResolvedValue(preachingsMock);
         PdfPreachingsTemplateSpy.generate.mockReturnValue('<h1>Pdf preachings template</h1>');
         PDFSpy.writeFromHTML.mockResolvedValue(`/storage/emulated/0/com.kristhdev.jw-reports/Exports/${ fileName }.pdf`);
-        FileSystemSpy.moveFile.mockResolvedValue(undefined);
+        ExternalStorageSpy.moveFileOfInternalExtorage.mockResolvedValue(undefined);
 
         const preachingsGrouped = PreachingReportService.groupByMonthAndYear(preachingsMock);
         const reports = preachingsGrouped.map(PreachingReportService.generatePreachingReportForExport);
@@ -83,10 +83,10 @@ describe('Test in usePreaching hook - exportPreachings', () => {
             html: '<h1>Pdf preachings template</h1>'
         });
 
-        expect(FileSystemSpy.moveFile).toHaveBeenCalledTimes(1);
-        expect(FileSystemSpy.moveFile).toHaveBeenCalledWith({
-            from: `/storage/emulated/0/com.kristhdev.jw-reports/Exports/${ fileName }.pdf`,
-            to: `/storage/emulated/0/Download/${ fileName }.pdf`
+        expect(ExternalStorageSpy.moveFileOfInternalExtorage).toHaveBeenCalledTimes(1);
+        expect(ExternalStorageSpy.moveFileOfInternalExtorage).toHaveBeenCalledWith({
+            filePath: `/storage/emulated/0/com.kristhdev.jw-reports/Exports/${ fileName }.pdf`,
+            mimeType: 'application/pdf'
         });
     });
 
@@ -113,7 +113,7 @@ describe('Test in usePreaching hook - exportPreachings', () => {
         expect(PreachingServiceSpy.getAllByUserId).not.toHaveBeenCalled();
         expect(PdfPreachingsTemplateSpy.generate).not.toHaveBeenCalled();
         expect(PDFSpy.writeFromHTML).not.toHaveBeenCalled();
-        expect(FileSystemSpy.moveFile).not.toHaveBeenCalled();
+        expect(ExternalStorageSpy.moveFileOfInternalExtorage).not.toHaveBeenCalled();
     });
 
     it('should faild if user dont have wifi connection', async () => {
@@ -130,7 +130,7 @@ describe('Test in usePreaching hook - exportPreachings', () => {
         expect(PreachingServiceSpy.getAllByUserId).not.toHaveBeenCalled();
         expect(PdfPreachingsTemplateSpy.generate).not.toHaveBeenCalled();
         expect(PDFSpy.writeFromHTML).not.toHaveBeenCalled();
-        expect(FileSystemSpy.moveFile).not.toHaveBeenCalled();
+        expect(ExternalStorageSpy.moveFileOfInternalExtorage).not.toHaveBeenCalled();
     });
 
     it('should faild if get all preachings throws an error', async () => {
@@ -155,7 +155,7 @@ describe('Test in usePreaching hook - exportPreachings', () => {
 
         expect(PdfPreachingsTemplateSpy.generate).not.toHaveBeenCalled();
         expect(PDFSpy.writeFromHTML).not.toHaveBeenCalled();
-        expect(FileSystemSpy.moveFile).not.toHaveBeenCalled();
+        expect(ExternalStorageSpy.moveFileOfInternalExtorage).not.toHaveBeenCalled();
     });
 
     it('should faild if write from html throws an error', async () => {
@@ -196,7 +196,7 @@ describe('Test in usePreaching hook - exportPreachings', () => {
             html: '<h1>Pdf prechings template</h1>'
         });
 
-        expect(FileSystemSpy.moveFile).not.toHaveBeenCalled();
+        expect(ExternalStorageSpy.moveFileOfInternalExtorage).not.toHaveBeenCalled();
     });
 
     it('should faild if move file throws an error', async () => {
@@ -205,7 +205,7 @@ describe('Test in usePreaching hook - exportPreachings', () => {
         PreachingServiceSpy.getAllByUserId.mockResolvedValue(preachingsMock);
         PdfPreachingsTemplateSpy.generate.mockReturnValue('<h1>Pdf preachings template</h1>');
         PDFSpy.writeFromHTML.mockResolvedValue(`/storage/emulated/0/com.kristhdev.jw-reports/Exports/${ fileName }.pdf`);
-        FileSystemSpy.moveFile.mockRejectedValue(new FileSystemError('Failed to move file'));
+        ExternalStorageSpy.moveFileOfInternalExtorage.mockRejectedValue(new ExternalStorageError('Failed to move file'));
 
         const preachingsGrouped = PreachingReportService.groupByMonthAndYear(preachingsMock);
         const reports = preachingsGrouped.map(PreachingReportService.generatePreachingReportForExport);
@@ -238,10 +238,10 @@ describe('Test in usePreaching hook - exportPreachings', () => {
             html: '<h1>Pdf preachings template</h1>'
         });
 
-        expect(FileSystemSpy.moveFile).toHaveBeenCalledTimes(1);
-        expect(FileSystemSpy.moveFile).toHaveBeenCalledWith({
-            from: `/storage/emulated/0/com.kristhdev.jw-reports/Exports/${ fileName }.pdf`,
-            to: `/storage/emulated/0/Download/${ fileName }.pdf`
+        expect(ExternalStorageSpy.moveFileOfInternalExtorage).toHaveBeenCalledTimes(1);
+        expect(ExternalStorageSpy.moveFileOfInternalExtorage).toHaveBeenCalledWith({
+            filePath: `/storage/emulated/0/com.kristhdev.jw-reports/Exports/${ fileName }.pdf`,
+            mimeType: 'application/pdf'
         });
     });
 });

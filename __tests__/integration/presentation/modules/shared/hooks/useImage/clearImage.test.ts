@@ -4,12 +4,10 @@ import { act } from '@testing-library/react-native';
 import { getMockStoreUseImage, renderUseImage } from '@setups';
 
 /* Mocks */
-import { DeviceImageServiceSpy, grantedStateMock, imageModelMock, initialStatusStateMock } from '@mocks';
+import { grantedStateMock, imageModelMock, initialStatusStateMock } from '@mocks';
 
 describe('Test in useImage - clearImage', () => {
     it('should clear image', async () => {
-        DeviceImageServiceSpy.clean.mockImplementation(() => Promise.resolve());
-
         const mockStore = getMockStoreUseImage({ permissions: grantedStateMock, status: initialStatusStateMock });
         const { result } = renderUseImage(mockStore);
 

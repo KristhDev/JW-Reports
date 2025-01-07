@@ -1,7 +1,7 @@
 import { act } from '@testing-library/react-native';
 
 /* Setups */
-import { mockUseNavigation } from '@test-setup';
+import { mockUseRouter } from '@test-setup';
 import { getMockStoreUseLessons, renderUseLessons } from '@setups';
 
 /* Mocks */
@@ -146,8 +146,8 @@ describe('Test in useLessons hook - updateLesson', () => {
             msg: lessonsMessages.UPDATED_SUCCESS
         });
 
-        /* Check if goBack is called one time */
-        expect(mockUseNavigation.goBack).toHaveBeenCalledTimes(1);
+        /* Check if back is called one time */
+        expect(mockUseRouter.back).toHaveBeenCalledTimes(1);
     });
 
     it('should if user inst authenticate', async () => {

@@ -1,7 +1,7 @@
 import { act } from '@testing-library/react-native';
 
 /* Setups */
-import { mockUseNavigation } from '@test-setup';
+import { mockUseRouter } from '@test-setup';
 import { getMockStoreUseRevisits, renderUseRevisits } from '@setups';
 
 /* Mocks */
@@ -83,10 +83,9 @@ describe('Test useRevisits hook - saveRevisit', () => {
             msg: revisitsMessages.ADDED_SUCCESS
         });
 
-        /* Check if onFinish and navigate is called one time with respective arg */
+        /* Check if onFinish and back is called one time */
         expect(onFinishMock).toHaveBeenCalledTimes(1);
-        expect(mockUseNavigation.popTo).toHaveBeenCalledTimes(1);
-        expect(mockUseNavigation.popTo).toHaveBeenCalledWith('RevisitsTopTabsNavigation');
+        expect(mockUseRouter.back).toHaveBeenCalledTimes(1);
     });
 
     it('should show other message when back is false', async () => {
@@ -120,7 +119,7 @@ describe('Test useRevisits hook - saveRevisit', () => {
 
         /* Check if onFinish is called one time and navigate inst called */
         expect(onFinishMock).toHaveBeenCalledTimes(1);
-        expect(mockUseNavigation.navigate).not.toHaveBeenCalled();
+        expect(mockUseRouter.back).not.toHaveBeenCalled();
     });
 
     it('should faild if user inst authenticated', async () => {

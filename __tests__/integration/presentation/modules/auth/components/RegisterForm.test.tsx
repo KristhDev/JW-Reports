@@ -2,7 +2,7 @@ import React from 'react';
 import { act, render, screen, userEvent } from '@testing-library/react-native';
 
 /* Setup */
-import { mockUseNavigation } from '@test-setup';
+import { mockUseRouter } from '@test-setup';
 
 /* Mocks */
 import { initialUIStateMock, setErrorFormMock, signUpMock, useAuthSpy, useStatusSpy, useUISpy } from '@mocks';
@@ -76,8 +76,8 @@ describe('Test in <RegisterForm /> component', () => {
         const touchableSignIn = await screen.findByTestId('register-form-sign-in');
         await user.press(touchableSignIn);
 
-        /* Check if navigate is called with respective arg */
-        expect(mockUseNavigation.navigate).toHaveBeenCalledWith('LoginScreen');
+        /* Check if back is called with respective arg */
+        expect(mockUseRouter.back).toHaveBeenCalledTimes(1);
     });
 
     it('should disabled button then isAuthLoading is true', async () => {

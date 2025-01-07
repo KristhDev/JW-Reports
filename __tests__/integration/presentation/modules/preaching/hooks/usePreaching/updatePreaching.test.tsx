@@ -1,7 +1,7 @@
 import { act } from '@testing-library/react-native';
 
 /* Setups */
-import { mockUseNavigation } from '@test-setup';
+import { mockUseRouter } from '@test-setup';
 import { getMockStoreUsePreaching, renderUsePreaching } from '@setups';
 
 /* Mocks */
@@ -88,8 +88,8 @@ describe('Test in usePreaching hook - updatePreaching', () => {
             msg: preachingMessages.UPDATED_SUCCESS
         });
 
-        /* Check if goBack is called two times */
-        expect(mockUseNavigation.goBack).toHaveBeenCalledTimes(1);
+        /* Check if back is called two times */
+        expect(mockUseRouter.back).toHaveBeenCalledTimes(1);
     });
 
     it('should faild if user inst authenticated', async () => {

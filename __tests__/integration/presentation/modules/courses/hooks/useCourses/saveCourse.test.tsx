@@ -1,7 +1,7 @@
 import { act } from '@testing-library/react-native';
 
 /* Setups */
-import { mockUseNavigation } from '@test-setup';
+import { mockUseRouter } from '@test-setup';
 import { getMockStoreUseCourses, renderUseCourses } from '@setups';
 
 /* Mocks */
@@ -66,7 +66,7 @@ describe('Test in useCourses hook - saveCourse', () => {
         const { result } = renderUseCourses(mockStore);
 
         await act(async () => {
-            await result.current.useCourses.saveCourse(testCourse, onFinishMock);
+            await result.current.useCourses.saveCourse(testCourse, true, onFinishMock);
         });
 
         /* Check if courses state contain new course added */
@@ -90,10 +90,9 @@ describe('Test in useCourses hook - saveCourse', () => {
             msg: coursesMessages.ADDED_SUCCESS
         });
 
-        /* Check if onFinish and navigate is called one time with respective arg */
+        /* Check if onFinish and back is called one time */
         expect(onFinishMock).toHaveBeenCalledTimes(1);
-        expect(mockUseNavigation.popTo).toHaveBeenCalledTimes(1);
-        expect(mockUseNavigation.popTo).toHaveBeenCalledWith('CoursesTopTabsNavigation');
+        expect(mockUseRouter.back).toHaveBeenCalledTimes(1);
     });
 
     it('should faild if user inst autenticated', async () => {
@@ -101,7 +100,7 @@ describe('Test in useCourses hook - saveCourse', () => {
         const { result } = renderUseCourses(mockStore);
 
         await act(async () => {
-            await result.current.useCourses.saveCourse(testCourse, onFinishMock);
+            await result.current.useCourses.saveCourse(testCourse, true, onFinishMock);
         });
 
         /* Check if courses state is equal to initial state */
@@ -115,7 +114,7 @@ describe('Test in useCourses hook - saveCourse', () => {
 
         /* Check if onFinish called one time and popTo not called */
         expect(onFinishMock).toHaveBeenCalledTimes(1);
-        expect(mockUseNavigation.popTo).not.toHaveBeenCalled();
+        expect(mockUseRouter.back).not.toHaveBeenCalled();
     });
 
     it('should faild if data is invalid', async () => {
@@ -128,7 +127,7 @@ describe('Test in useCourses hook - saveCourse', () => {
             await result.current.useCourses.saveCourse({
                 ...testCourse,
                 publication: undefined as any
-            }, onFinishMock);
+            }, true, onFinishMock);
         });
 
         /* Check if courses state is equal to initial state */
@@ -141,6 +140,6 @@ describe('Test in useCourses hook - saveCourse', () => {
         });
 
         expect(onFinishMock).toHaveBeenCalledTimes(1);
-        expect(mockUseNavigation.popTo).not.toHaveBeenCalled();
+        expect(mockUseRouter.back).not.toHaveBeenCalled();
     });
 });

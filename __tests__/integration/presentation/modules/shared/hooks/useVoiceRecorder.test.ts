@@ -42,7 +42,9 @@ describe('Test in useVoiceRecorder hook', () => {
     });
 
     it('should start recording faild if throws an error - startRecording', async () => {
-        VoiceRecorderSpy.startRecording.mockRejectedValueOnce(new VoiceRecorderError('7/No match'));
+        VoiceRecorderSpy.startRecording.mockImplementation(() => {
+            throw new VoiceRecorderError('7/No match', 'aborted')
+        });
 
         const mockStore = getMockStoreUseVoiceRecorder({ status: initialStatusStateMock, permissions: grantedStateMock });
         const { result } = renderUseVoiceRecorder(mockStore);
@@ -74,7 +76,9 @@ describe('Test in useVoiceRecorder hook', () => {
     });
 
     it('should stop recording faild if throws an error - stopRecording', async () => {
-        VoiceRecorderSpy.stopRecording.mockRejectedValueOnce(new VoiceRecorderError('Stop recording error'));
+        VoiceRecorderSpy.stopRecording.mockImplementation(() => {
+            throw new VoiceRecorderError('7/No match', 'aborted')
+        });
 
         const mockStore = getMockStoreUseVoiceRecorder({ status: initialStatusStateMock, permissions: grantedStateMock });
         const { result } = renderUseVoiceRecorder(mockStore);
@@ -102,7 +106,7 @@ describe('Test in useVoiceRecorder hook', () => {
     });
 
     it('should set error if onSpeechError emits a value', () => {
-        const voiceRecorderError = new VoiceRecorderError('Voice not reconized');
+        const voiceRecorderError = new VoiceRecorderError('Voice not reconized', 'bad-grammar');
         VoiceRecorderSpy.onSpeechError.mockImplementation(callback => callback(voiceRecorderError));
 
         const mockStore = getMockStoreUseVoiceRecorder({ status: initialStatusStateMock, permissions: grantedStateMock });

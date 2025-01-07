@@ -1,7 +1,7 @@
 import { act } from '@testing-library/react-native';
 
 /* Setups */
-import { mockUseNavigation } from '@test-setup';
+import { mockUseRouter } from '@test-setup';
 import { getMockStoreUseLessons, renderUseLessons } from '@setups';
 
 /* Mocks */
@@ -146,9 +146,8 @@ describe('Test in useLessons hook - saveLesson', () => {
             msg: lessonsMessages.ADDED_SUCCESS
         });
 
-        /* Check if navigate is called two times with respectve args */
-        expect(mockUseNavigation.navigate).toHaveBeenCalledTimes(1);
-        expect(mockUseNavigation.navigate).toHaveBeenCalledWith('LessonsScreen');
+        /* Check if back is called one times */
+        expect(mockUseRouter.back).toHaveBeenCalledTimes(1);
     });
 
     it('should faild if user inst autenticated', async () => {
@@ -168,8 +167,8 @@ describe('Test in useLessons hook - saveLesson', () => {
             msg: authMessages.UNATHENTICATED
         });
 
-        /* Check if navigate isnt called */
-        expect(mockUseNavigation.navigate).not.toHaveBeenCalled();
+        /* Check if back isnt called */
+        expect(mockUseRouter.back).not.toHaveBeenCalled();
     });
 
     it('should faild if selectedCourse is empty', async () => {

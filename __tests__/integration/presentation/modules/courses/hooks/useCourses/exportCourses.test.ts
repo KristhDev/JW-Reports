@@ -8,7 +8,7 @@ import {
     authenticateStateMock,
     CoursesServiceSpy,
     coursesWithLessonsMock,
-    FileSystemSpy,
+    ExternalStorageSpy,
     hasWifiConnectionMock,
     initialAuthStateMock,
     initialCoursesStateMock,
@@ -24,7 +24,7 @@ import {
 import { authMessages, coursesMessages } from '@application/constants';
 
 /* Errors */
-import { FileSystemError, PDFError, RequestError } from '@domain/errors';
+import { ExternalStorageError, PDFError, RequestError } from '@domain/errors';
 
 describe('Test in useCourses hook - exportCourses', () => {
     useNetworkSpy.mockImplementation(() => ({
@@ -51,7 +51,7 @@ describe('Test in useCourses hook - exportCourses', () => {
         CoursesServiceSpy.getAllByUserId.mockResolvedValue(coursesWithLessonsMock);
         PdfCoursesTemplateSpy.generate.mockReturnValue('<h1>Pdf courses template</h1>');
         PDFSpy.writeFromHTML.mockResolvedValue(`/storage/emulated/0/com.kristhdev.jw-reports/Exports/${ fileName }.pdf`);
-        FileSystemSpy.moveFile.mockResolvedValue(undefined);
+        ExternalStorageSpy.moveFileOfInternalExtorage.mockResolvedValue(undefined);
 
         const { result } = renderUseCourses(mockStore);
 
@@ -81,10 +81,10 @@ describe('Test in useCourses hook - exportCourses', () => {
             html: '<h1>Pdf courses template</h1>'
         });
 
-        expect(FileSystemSpy.moveFile).toHaveBeenCalledTimes(1);
-        expect(FileSystemSpy.moveFile).toHaveBeenCalledWith({
-            from: `/storage/emulated/0/com.kristhdev.jw-reports/Exports/${ fileName }.pdf`,
-            to: `/storage/emulated/0/Download/${ fileName }.pdf`
+        expect(ExternalStorageSpy.moveFileOfInternalExtorage).toHaveBeenCalledTimes(1);
+        expect(ExternalStorageSpy.moveFileOfInternalExtorage).toHaveBeenCalledWith({
+            filePath: `/storage/emulated/0/com.kristhdev.jw-reports/Exports/${ fileName }.pdf`,
+            mimeType: 'application/pdf'
         });
     });
 
@@ -112,7 +112,7 @@ describe('Test in useCourses hook - exportCourses', () => {
         expect(CoursesServiceSpy.getAllByUserId).not.toHaveBeenCalled();
         expect(PdfCoursesTemplateSpy.generate).not.toHaveBeenCalled();
         expect(PDFSpy.writeFromHTML).not.toHaveBeenCalled();
-        expect(FileSystemSpy.moveFile).not.toHaveBeenCalled();
+        expect(ExternalStorageSpy.moveFileOfInternalExtorage).not.toHaveBeenCalled();
     });
 
     it('should faild if user dont have wifi connection', async () => {
@@ -129,7 +129,7 @@ describe('Test in useCourses hook - exportCourses', () => {
         expect(CoursesServiceSpy.getAllByUserId).not.toHaveBeenCalled();
         expect(PdfCoursesTemplateSpy.generate).not.toHaveBeenCalled();
         expect(PDFSpy.writeFromHTML).not.toHaveBeenCalled();
-        expect(FileSystemSpy.moveFile).not.toHaveBeenCalled();
+        expect(ExternalStorageSpy.moveFileOfInternalExtorage).not.toHaveBeenCalled();
     });
 
     it('should faild if get all courses throws an error', async () => {
@@ -154,7 +154,7 @@ describe('Test in useCourses hook - exportCourses', () => {
 
         expect(PdfCoursesTemplateSpy.generate).not.toHaveBeenCalled();
         expect(PDFSpy.writeFromHTML).not.toHaveBeenCalled();
-        expect(FileSystemSpy.moveFile).not.toHaveBeenCalled();
+        expect(ExternalStorageSpy.moveFileOfInternalExtorage).not.toHaveBeenCalled();
     });
 
     it('should faild if write from html throws an error', async () => {
@@ -192,7 +192,7 @@ describe('Test in useCourses hook - exportCourses', () => {
             html: '<h1>Pdf courses template</h1>'
         });
 
-        expect(FileSystemSpy.moveFile).not.toHaveBeenCalled();
+        expect(ExternalStorageSpy.moveFileOfInternalExtorage).not.toHaveBeenCalled();
     });
 
     it('should faild if move file throws an error', async () => {
@@ -201,7 +201,7 @@ describe('Test in useCourses hook - exportCourses', () => {
         CoursesServiceSpy.getAllByUserId.mockResolvedValue(coursesWithLessonsMock);
         PdfCoursesTemplateSpy.generate.mockReturnValue('<h1>Pdf courses template</h1>');
         PDFSpy.writeFromHTML.mockResolvedValue(`/storage/emulated/0/com.kristhdev.jw-reports/Exports/${ fileName }.pdf`);
-        FileSystemSpy.moveFile.mockRejectedValue(new FileSystemError('Failed to move file'));
+        ExternalStorageSpy.moveFileOfInternalExtorage.mockRejectedValue(new ExternalStorageError('Failed to move file'));
 
         const { result } = renderUseCourses(mockStore);
 
@@ -231,10 +231,10 @@ describe('Test in useCourses hook - exportCourses', () => {
             html: '<h1>Pdf courses template</h1>'
         });
 
-        expect(FileSystemSpy.moveFile).toHaveBeenCalledTimes(1);
-        expect(FileSystemSpy.moveFile).toHaveBeenCalledWith({
-            from: `/storage/emulated/0/com.kristhdev.jw-reports/Exports/${ fileName }.pdf`,
-            to: `/storage/emulated/0/Download/${ fileName }.pdf`
+        expect(ExternalStorageSpy.moveFileOfInternalExtorage).toHaveBeenCalledTimes(1);
+        expect(ExternalStorageSpy.moveFileOfInternalExtorage).toHaveBeenCalledWith({
+            filePath: `/storage/emulated/0/com.kristhdev.jw-reports/Exports/${ fileName }.pdf`,
+            mimeType: 'application/pdf'
         });
     });
 });

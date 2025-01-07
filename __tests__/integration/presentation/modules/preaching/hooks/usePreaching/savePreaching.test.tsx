@@ -1,7 +1,7 @@
 import { act } from '@testing-library/react-native';
 
 /* Setups */
-import { mockUseNavigation } from '@test-setup';
+import { mockUseRouter } from '@test-setup';
 import { getMockStoreUsePreaching, renderUsePreaching } from '@setups';
 
 /* Mocks */
@@ -90,8 +90,8 @@ describe('Test in usePreaching hook - savePreaching', () => {
             msg: preachingMessages.ADDED_SUCCESS
         });
 
-        /* Check if goBack is called one time */
-        expect(mockUseNavigation.goBack).toHaveBeenCalledTimes(1);
+        /* Check if back is called one time */
+        expect(mockUseRouter.back).toHaveBeenCalledTimes(1);
     });
 
     it('should faild if user isnt authenticated', async () => {
@@ -118,8 +118,8 @@ describe('Test in usePreaching hook - savePreaching', () => {
             msg: authMessages.UNATHENTICATED
         });
 
-        /* Check if goBack is called one time */
-        expect(mockUseNavigation.goBack).not.toHaveBeenCalled();
+        /* Check if back is called one time */
+        expect(mockUseRouter.back).not.toHaveBeenCalled();
     });
 
     it('should faild if data is invalid', async () => {
@@ -148,7 +148,7 @@ describe('Test in usePreaching hook - savePreaching', () => {
             msg: expect.any(String)
         });
 
-        /* Check if goBack isnt called */
-        expect(mockUseNavigation.goBack).not.toHaveBeenCalled();
+        /* Check if back isnt called */
+        expect(mockUseRouter.back).not.toHaveBeenCalled();
     });
 });

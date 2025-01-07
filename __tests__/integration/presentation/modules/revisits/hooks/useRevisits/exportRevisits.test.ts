@@ -6,7 +6,7 @@ import { getMockStoreUseRevisits, renderUseRevisits } from '@setups';
 /* Mocks */
 import {
     authenticateStateMock,
-    FileSystemSpy,
+    ExternalStorageSpy,
     hasWifiConnectionMock,
     initialAuthStateMock,
     initialRevisitsStateMock,
@@ -23,7 +23,7 @@ import {
 import { authMessages, revisitsMessages } from '@application/constants';
 
 /* Errors */
-import { FileSystemError, PDFError, RequestError } from '@domain/errors';
+import { ExternalStorageError, PDFError, RequestError } from '@domain/errors';
 
 describe('Test in useRevisits hook - exportRevisits', () => {
     useNetworkSpy.mockImplementation(() => ({
@@ -49,7 +49,7 @@ describe('Test in useRevisits hook - exportRevisits', () => {
         RevisitsServiceSpy.getAllByUserId.mockResolvedValue(revisitsMock);
         PdfRevisitsTemplateSpy.generate.mockResolvedValueOnce('<h1>Pdf revisits template</h1>');
         PDFSpy.writeFromHTML.mockResolvedValue(`/storage/emulated/0/com.kristhdev.jw-reports/Exports/${ fileName }.pdf`);
-        FileSystemSpy.moveFile.mockResolvedValue(undefined);
+        ExternalStorageSpy.moveFileOfInternalExtorage.mockResolvedValue(undefined);
 
         const { result } = renderUseRevisits(mockStore);
 
@@ -79,10 +79,10 @@ describe('Test in useRevisits hook - exportRevisits', () => {
             html: '<h1>Pdf revisits template</h1>'
         });
 
-        expect(FileSystemSpy.moveFile).toHaveBeenCalledTimes(1);
-        expect(FileSystemSpy.moveFile).toHaveBeenCalledWith({
-            from: `/storage/emulated/0/com.kristhdev.jw-reports/Exports/${ fileName }.pdf`,
-            to: `/storage/emulated/0/Download/${ fileName }.pdf`
+        expect(ExternalStorageSpy.moveFileOfInternalExtorage).toHaveBeenCalledTimes(1);
+        expect(ExternalStorageSpy.moveFileOfInternalExtorage).toHaveBeenCalledWith({
+            filePath: `/storage/emulated/0/com.kristhdev.jw-reports/Exports/${ fileName }.pdf`,
+            mimeType: 'application/pdf'
         });
     });
 
@@ -109,7 +109,7 @@ describe('Test in useRevisits hook - exportRevisits', () => {
         expect(RevisitsServiceSpy.getAllByUserId).not.toHaveBeenCalled();
         expect(PdfRevisitsTemplateSpy.generate).not.toHaveBeenCalled();
         expect(PDFSpy.writeFromHTML).not.toHaveBeenCalled();
-        expect(FileSystemSpy.moveFile).not.toHaveBeenCalled();
+        expect(ExternalStorageSpy.moveFileOfInternalExtorage).not.toHaveBeenCalled();
     });
 
     it('should faild if user dont have wifi connection', async () => {
@@ -126,7 +126,7 @@ describe('Test in useRevisits hook - exportRevisits', () => {
         expect(RevisitsServiceSpy.getAllByUserId).not.toHaveBeenCalled();
         expect(PdfRevisitsTemplateSpy.generate).not.toHaveBeenCalled();
         expect(PDFSpy.writeFromHTML).not.toHaveBeenCalled();
-        expect(FileSystemSpy.moveFile).not.toHaveBeenCalled();
+        expect(ExternalStorageSpy.moveFileOfInternalExtorage).not.toHaveBeenCalled();
     });
 
     it('should faild if get all courses throws an error', async () => {
@@ -151,7 +151,7 @@ describe('Test in useRevisits hook - exportRevisits', () => {
 
         expect(PdfRevisitsTemplateSpy.generate).not.toHaveBeenCalled();
         expect(PDFSpy.writeFromHTML).not.toHaveBeenCalled();
-        expect(FileSystemSpy.moveFile).not.toHaveBeenCalled();
+        expect(ExternalStorageSpy.moveFileOfInternalExtorage).not.toHaveBeenCalled();
     });
 
     it('should faild if write from html throws an error', async () => {
@@ -189,7 +189,7 @@ describe('Test in useRevisits hook - exportRevisits', () => {
             html: '<h1>Pdf revisits template</h1>'
         });
 
-        expect(FileSystemSpy.moveFile).not.toHaveBeenCalled();
+        expect(ExternalStorageSpy.moveFileOfInternalExtorage).not.toHaveBeenCalled();
     });
 
     it('should faild if move file throws an error', async () => {
@@ -198,7 +198,7 @@ describe('Test in useRevisits hook - exportRevisits', () => {
         RevisitsServiceSpy.getAllByUserId.mockResolvedValue(revisitsMock);
         PdfRevisitsTemplateSpy.generate.mockResolvedValueOnce('<h1>Pdf revisits template</h1>');
         PDFSpy.writeFromHTML.mockResolvedValue(`/storage/emulated/0/com.kristhdev.jw-reports/Exports/${ fileName }.pdf`);
-        FileSystemSpy.moveFile.mockRejectedValue(new FileSystemError('Failed to move file'));
+        ExternalStorageSpy.moveFileOfInternalExtorage.mockRejectedValue(new ExternalStorageError('Failed to move file'));
 
         const { result } = renderUseRevisits(mockStore);
 
@@ -228,10 +228,10 @@ describe('Test in useRevisits hook - exportRevisits', () => {
             html: '<h1>Pdf revisits template</h1>'
         });
 
-        expect(FileSystemSpy.moveFile).toHaveBeenCalledTimes(1);
-        expect(FileSystemSpy.moveFile).toHaveBeenCalledWith({
-            from: `/storage/emulated/0/com.kristhdev.jw-reports/Exports/${ fileName }.pdf`,
-            to: `/storage/emulated/0/Download/${ fileName }.pdf`
+        expect(ExternalStorageSpy.moveFileOfInternalExtorage).toHaveBeenCalledTimes(1);
+        expect(ExternalStorageSpy.moveFileOfInternalExtorage).toHaveBeenCalledWith({
+            filePath: `/storage/emulated/0/com.kristhdev.jw-reports/Exports/${ fileName }.pdf`,
+            mimeType: 'application/pdf'
         });
     });
 });

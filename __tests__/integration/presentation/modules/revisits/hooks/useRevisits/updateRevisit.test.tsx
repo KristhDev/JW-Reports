@@ -1,7 +1,7 @@
 import { act } from '@testing-library/react-native';
 
 /* Setups */
-import { mockUseNavigation } from '@test-setup';
+import { mockUseRouter } from '@test-setup';
 import { getMockStoreUseRevisits, renderUseRevisits } from '@setups';
 
 /* Mocks */
@@ -103,8 +103,8 @@ describe('Test useRevisits hook - updateRevisit', () => {
             msg: revisitsMessages.UPDATED_SUCCESS
         });
 
-        /* Check if goBack is called one time */
-        expect(mockUseNavigation.goBack).toHaveBeenCalledTimes(1);
+        /* Check if back is called one time */
+        expect(mockUseRouter.back).toHaveBeenCalledTimes(1);
     });
 
     it('should faild if user inst authenticated', async () => {
@@ -181,7 +181,7 @@ describe('Test useRevisits hook - updateRevisit', () => {
             msg: expect.any(String)
         });
 
-        /* Check if goBack inst called */
-        expect(mockUseNavigation.goBack).not.toHaveBeenCalled();
+        /* Check if back inst called */
+        expect(mockUseRouter.back).not.toHaveBeenCalled();
     });
 });
