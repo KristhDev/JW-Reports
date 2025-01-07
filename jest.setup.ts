@@ -1,5 +1,4 @@
 import { Image, Share } from 'react-native';
-import mockSafeAreaContext from 'react-native-safe-area-context/jest/mock';
 
 import 'react-native-gesture-handler/jestSetup';
 import 'react-native-url-polyfill/auto';
@@ -107,6 +106,13 @@ jest.mock('expo-image-picker', () => ({
     })
 }));
 
+jest.mock('expo-font', () => ({
+    getLoadedFonts: jest.fn().mockReturnValue([]),
+    isLoaded: jest.fn().mockReturnValue(true),
+    isLoading: jest.fn().mockReturnValue(false),
+    loadAsync: jest.fn().mockResolvedValue(true)
+}));
+
 jest.mock('expo-print', () => ({
     printToFileAsync: jest.fn().mockResolvedValue({
         uri: 'file:///storage/emulated/0/Android/data/com.kristhdev.jwreports/Print/file.pdf'
@@ -158,7 +164,9 @@ jest.mock('react-native-onesignal', () => {
 
 jest.mock('react-native-permissions', () => require('react-native-permissions/mock'));
 
-jest.mock('react-native-safe-area-context', () => mockSafeAreaContext);
+jest.mock('react-native-safe-area-context', () => 
+    require('react-native-safe-area-context/jest/mock')
+);
 
 jest.mock('react-native-unistyles', () => {
     const real = jest.requireActual('react-native-unistyles');
