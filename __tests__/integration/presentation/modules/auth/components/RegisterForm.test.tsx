@@ -33,6 +33,9 @@ describe('Test in <RegisterForm /> component', () => {
     it('should call setErrorForm when the form is empty or invalid', async () => {
         renderComponent();
 
+        const inputsText = await screen.findAllByTestId('form-field-text-input');
+        await user.clear(inputsText[0]);
+
         const pressable = await screen.findByTestId('button-pressable');
         await user.press(pressable);
 
@@ -70,7 +73,7 @@ describe('Test in <RegisterForm /> component', () => {
         }, expect.any(Function));
     });
 
-    it('should call navigate of useNavigation with respective values', async () => {
+    it('should call navigate of useRouter with respective values', async () => {
         renderComponent();
 
         const touchableSignIn = await screen.findByTestId('register-form-sign-in');
