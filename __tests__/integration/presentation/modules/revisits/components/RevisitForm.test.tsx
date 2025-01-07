@@ -74,6 +74,9 @@ describe('Test in <RevisitForm /> component', () => {
     it('should call setErrorForm if form is invalid', async () => {
         renderComponent();
 
+        const inputs = await screen.findAllByTestId('form-field-text-input');
+        await user.clear(inputs[0]);
+
         /* Get submit pressable */
         const pressable = (await screen.findAllByTestId('button-pressable'))[3];
         await user.press(pressable);
