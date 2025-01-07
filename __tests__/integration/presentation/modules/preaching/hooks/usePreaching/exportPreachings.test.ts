@@ -78,9 +78,9 @@ describe('Test in usePreaching hook - exportPreachings', () => {
 
         expect(PDFSpy.writeFromHTML).toHaveBeenCalledTimes(1);
         expect(PDFSpy.writeFromHTML).toHaveBeenCalledWith({
-            directory: 'Exports',
             fileName,
-            html: '<h1>Pdf preachings template</h1>'
+            html: '<h1>Pdf preachings template</h1>',
+            width: 480
         });
 
         expect(ExternalStorageSpy.moveFileOfInternalExtorage).toHaveBeenCalledTimes(1);
@@ -161,7 +161,7 @@ describe('Test in usePreaching hook - exportPreachings', () => {
     it('should faild if write from html throws an error', async () => {
         const fileName = `Informes_de_Predicación_de_${ authenticateStateMock.user.name }_${ authenticateStateMock.user.surname }`;
 
-        PdfPreachingsTemplateSpy.generate.mockReturnValue('<h1>Pdf prechings template</h1>');
+        PdfPreachingsTemplateSpy.generate.mockReturnValue('<h1>Pdf preachings template</h1>');
         PDFSpy.writeFromHTML.mockRejectedValueOnce(new PDFError('Failed to write from html'));
 
         const preachingsGrouped = PreachingReportService.groupByMonthAndYear(preachingsMock);
@@ -191,9 +191,9 @@ describe('Test in usePreaching hook - exportPreachings', () => {
 
         expect(PDFSpy.writeFromHTML).toHaveBeenCalledTimes(1);
         expect(PDFSpy.writeFromHTML).toHaveBeenCalledWith({
-            directory: 'Exports',
             fileName,
-            html: '<h1>Pdf prechings template</h1>'
+            html: '<h1>Pdf preachings template</h1>',
+            width: 480
         });
 
         expect(ExternalStorageSpy.moveFileOfInternalExtorage).not.toHaveBeenCalled();
@@ -233,9 +233,9 @@ describe('Test in usePreaching hook - exportPreachings', () => {
 
         expect(PDFSpy.writeFromHTML).toHaveBeenCalledTimes(1);
         expect(PDFSpy.writeFromHTML).toHaveBeenCalledWith({
-            directory: 'Exports',
             fileName,
-            html: '<h1>Pdf preachings template</h1>'
+            html: '<h1>Pdf preachings template</h1>',
+            width: 480
         });
 
         expect(ExternalStorageSpy.moveFileOfInternalExtorage).toHaveBeenCalledTimes(1);
