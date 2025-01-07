@@ -37,6 +37,9 @@ describe('Test in <ForgotPasswordForm /> component', () => {
     it('should call setErrorForm when the form is empty or invalid', async () => {
         renderComponent();
 
+        const inputText = await screen.findByTestId('form-field-text-input');
+        await user.clear(inputText);
+
         /* Get submit pressable */
         const pressable = await screen.findByTestId('button-pressable');
         await user.press(pressable);
