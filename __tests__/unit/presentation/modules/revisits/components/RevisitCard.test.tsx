@@ -29,9 +29,9 @@ const user = userEvent.setup();
 const renderComponent = (revisit: RevisitEntity) => render(
     <MenuProvider>
         <RevisitCard
-            navigateToDetail={ navigateToDetailMock }
-            navigateToEdit={ navigateToEditMock }
             onDelete={ onDeleteMock }
+            onNavigateDetail={ navigateToDetailMock }
+            onNavigateEdit={ navigateToEditMock }
             onPass={ onPassMock }
             onRevisit={ onRevisitMock }
             revisit={ revisit }

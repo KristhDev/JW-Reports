@@ -3,7 +3,7 @@ import { MenuProvider } from 'react-native-popup-menu';
 import { render, screen, userEvent } from '@testing-library/react-native';
 
 /* Setup */
-import { mockUseNavigation } from '@test-setup';
+import { mockUseRouter } from '@test-setup';
 
 /* Mocks */
 import {
@@ -79,7 +79,7 @@ describe('Test in <CourseCard /> component', () => {
         /* Check if setSelectedCourse and Navigate is called with respective args */
         expect(setSelectedCourseMock).toHaveBeenCalledTimes(1);
         expect(setSelectedCourseMock).toHaveBeenCalledWith(course);
-        expect(mockUseNavigation.navigate).toHaveBeenCalledTimes(1);
-        expect(mockUseNavigation.navigate).toHaveBeenCalledWith('CourseDetailScreen');
+        expect(mockUseRouter.navigate).toHaveBeenCalledTimes(1);
+        expect(mockUseRouter.navigate).toHaveBeenCalledWith('/(app)/(tabs)/courses/detail');
     });
 });

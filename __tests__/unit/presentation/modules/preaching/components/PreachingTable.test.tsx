@@ -2,7 +2,7 @@ import React from 'react';
 import { render, screen, userEvent } from '@testing-library/react-native';
 
 /* Setup */
-import { mockUseNavigation } from '@test-setup';
+import { mockUseRouter } from '@test-setup';
 
 /* Mocks */
 import { preachingsStateMock, setSelectedPreachingMock, usePreachingSpy, useThemeSpy } from '@mocks';
@@ -53,7 +53,7 @@ describe('Test in <PreachingTable /> component', () => {
          */
         expect(setSelectedPreachingMock).toHaveBeenCalledTimes(1);
         expect(setSelectedPreachingMock).toHaveBeenCalledWith(preachingsStateMock.preachings[0]);
-        expect(mockUseNavigation.navigate).toHaveBeenCalledTimes(1);
-        expect(mockUseNavigation.navigate).toHaveBeenCalledWith('AddOrEditPreachingScreen');
+        expect(mockUseRouter.navigate).toHaveBeenCalledTimes(1);
+        expect(mockUseRouter.navigate).toHaveBeenCalledWith('/(app)/(tabs)/preaching/precursor/add-or-edit');
     });
 });

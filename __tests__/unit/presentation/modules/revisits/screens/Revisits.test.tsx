@@ -24,33 +24,10 @@ const user = userEvent.setup();
 const renderScreen = () => render(
     <MenuProvider>
         <Revisits
-            route={{
-                name: 'RevisitsScreen',
-                params: {
-                    title: 'TODAS MIS REVISITAS',
-                    emptyMessage: 'No has agregado ninguna revisita.',
-                    filter: 'all',
-                },
-                key: 'RevisitsScreen',
-            }}
-            navigation={{
-                addListener: jest.fn(),
-                canGoBack: jest.fn(),
-                dispatch: jest.fn(),
-                getId: jest.fn(),
-                getParent: jest.fn(),
-                getState: jest.fn(),
-                goBack: jest.fn(),
-                isFocused: jest.fn(),
-                jumpTo: jest.fn(),
-                navigate: jest.fn(),
-                preload: jest.fn(),
-                removeListener: jest.fn(),
-                reset: jest.fn(),
-                setOptions: jest.fn(),
-                setParams: jest.fn(),
-                setStateForNextRouteNamesChange: jest.fn(),
-            } as any }
+            emptyMessage="No has agregado ninguna revisita."
+            filter="all"
+            segment="index"
+            title="TODAS MIS REVISITAS"
         />
     </MenuProvider>
 );

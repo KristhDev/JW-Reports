@@ -2,7 +2,7 @@ import React from 'react';
 import { render, screen, userEvent } from '@testing-library/react-native';
 
 /* Setup */
-import { mockUseNavigation } from '@test-setup';
+import { mockUseRouter } from '@test-setup';
 
 /* Mocks */
 import {
@@ -134,7 +134,7 @@ describe('Test in <PrecursorHome /> screen', () => {
         });
 
         /* Check if navigate is called one time with respective value */
-        expect(mockUseNavigation.navigate).toHaveBeenCalledTimes(1);
-        expect(mockUseNavigation.navigate).toHaveBeenCalledWith('AddOrEditPreachingScreen');
+        expect(mockUseRouter.navigate).toHaveBeenCalledTimes(1);
+        expect(mockUseRouter.navigate).toHaveBeenCalledWith('/(app)/(tabs)/preaching/precursor/add-or-edit');
     });
 });

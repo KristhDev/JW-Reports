@@ -2,7 +2,7 @@ import React from 'react';
 import { render, screen, userEvent } from '@testing-library/react-native';
 
 /* Setup */
-import { mockUseNavigation } from '@test-setup';
+import { mockUseRouter } from '@test-setup';
 
 /* Mocks */
 import { initialUIStateMock, setStatusMock, setThemeMock, useStatusSpy, useThemeSpy, useUISpy } from '@mocks';
@@ -42,14 +42,14 @@ describe('Test in <Settings /> screen', () => {
         await user.press(pressables[0]);
 
         /* Check is navigate is called one times with respective value */
-        expect(mockUseNavigation.navigate).toHaveBeenCalledTimes(1);
-        expect(mockUseNavigation.navigate).toHaveBeenCalledWith('ProfileScreen');
+        expect(mockUseRouter.navigate).toHaveBeenCalledTimes(1);
+        expect(mockUseRouter.navigate).toHaveBeenCalledWith('/(app)/settings/profile');
 
         await user.press(pressables[1]);
 
         /* Check is navigate is called one times with respective value */
-        expect(mockUseNavigation.navigate).toHaveBeenCalledTimes(2);
-        expect(mockUseNavigation.navigate).toHaveBeenCalledWith('CredentialsScreen');
+        expect(mockUseRouter.navigate).toHaveBeenCalledTimes(2);
+        expect(mockUseRouter.navigate).toHaveBeenCalledWith('/(app)/settings/credentials');
     });
 
     it('should call setStatus with respective values', async () => {

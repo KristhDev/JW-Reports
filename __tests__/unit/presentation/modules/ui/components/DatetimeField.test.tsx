@@ -1,7 +1,7 @@
 import React from 'react';
 import { Formik } from 'formik';
 import { render, screen } from '@testing-library/react-native';
-import Ionicons from 'react-native-vector-icons/Ionicons';
+import Ionicons from '@expo/vector-icons/Ionicons';
 
 /* Adapters */
 import { Time } from '@infrasturcture/adapters';

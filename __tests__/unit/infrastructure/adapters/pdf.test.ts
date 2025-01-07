@@ -1,4 +1,7 @@
-import RNHtmlToPdf from 'react-native-html-to-pdf';
+import * as Print from 'expo-print';
+
+/* Mocks */
+import { InternalStorageSpy } from '@mocks';
 
 /* Errors */
 import { PDFError } from '@domain/errors';
@@ -18,36 +21,58 @@ describe('Test in PDF adapter', () => {
 
     it('should return a path to the saved PDF file - writeFromHTML', async () => {
         const filePath = '/storage/emulated/0/Download/path/to/directory/file-name.pdf';
-        (RNHtmlToPdf.convert as jest.Mock).mockResolvedValueOnce({ filePath });
+        const pdfPath = '/storage/emulated/0/Download/path/to/directory/PDF-name.pdf';
 
-        const directory = 'path/to/directory';
-        const fileName = 'file-name.pdf';
+        (Print.printAsync as jest.Mock).mockResolvedValueOnce({ uri: filePath });
+        InternalStorageSpy.rename.mockResolvedValueOnce();
+
+        const fileName = 'PDF-name';
         const html = '<html><body>HTML</body></html>';
 
-        const path = await PDF.writeFromHTML({ directory, fileName, html });
-        expect(path).toBe(filePath);
+        const path = await PDF.writeFromHTML({ fileName, html });
+        expect(path).toBe(pdfPath);
 
-        expect(RNHtmlToPdf.convert).toHaveBeenCalledTimes(1);
-        expect(RNHtmlToPdf.convert).toHaveBeenCalledWith({ directory, fileName, html, width: 480 });
+        expect(Print.printAsync).toHaveBeenCalledTimes(1);
+        expect(Print.printAsync).toHaveBeenCalledWith({ html });
     });
 
     it('should faild write a PDF file when throw a error - writeFromHTML', async () => {
-        (RNHtmlToPdf.convert as jest.Mock).mockRejectedValueOnce(new Error('Permission denied'));
+        (Print.printAsync as jest.Mock).mockRejectedValueOnce(new Error('Permission denied'));
 
-        const directory = 'path/to/directory';
         const fileName = 'file-name.pdf';
         const html = '<html><body>HTML</body></html>';
 
         try {
-            await PDF.writeFromHTML({ directory, fileName, html });
+            await PDF.writeFromHTML({ fileName, html });
             expect(true).toBeFalsy();
         }
         catch (error) {
             expect(error).toBeInstanceOf(PDFError);
             expect(error).toHaveProperty('message', 'Permission denied');
 
-            expect(RNHtmlToPdf.convert).toHaveBeenCalledTimes(1);
-            expect(RNHtmlToPdf.convert).toHaveBeenCalledWith({ directory, fileName, html, width: 480 });
+            expect(Print.printAsync).toHaveBeenCalledTimes(1);
+            expect(Print.printAsync).toHaveBeenCalledWith({ html });
+        }
+    });
+
+    it('should faild becuase rename throws an error - writeFromHTML', async () => {
+        const filePath = '/storage/emulated/0/Download/path/to/directory/file-name.pdf';
+        const fileName = 'file-name.pdf';
+        const html = '<html><body>HTML</body></html>';
+
+        (Print.printAsync as jest.Mock).mockResolvedValueOnce({ uri: filePath });
+        InternalStorageSpy.rename.mockRejectedValueOnce(new Error('Path to move file not found'));
+
+        try {
+            await PDF.writeFromHTML({ fileName, html });
+            expect(true).toBeFalsy();
+        }
+        catch (error) {
+            expect(error).toBeInstanceOf(PDFError);
+            expect(error).toHaveProperty('message', 'Path to move file not found');
+
+            expect(Print.printAsync).toHaveBeenCalledTimes(1);
+            expect(Print.printAsync).toHaveBeenCalledWith({ html });
         }
     });
 });

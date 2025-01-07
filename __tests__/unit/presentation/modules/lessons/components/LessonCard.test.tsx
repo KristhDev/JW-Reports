@@ -18,10 +18,10 @@ const renderScreen = () => render(
     <MenuProvider>
         <LessonCard
             lesson={ lesson }
-            navigateToDetail={ navigateToDetailMock }
-            navigateToEdit={ navigateToEditMock }
             onDelete={ jest.fn() }
             onFinish={ jest.fn() }
+            onNavigateDetail={ navigateToDetailMock }
+            onNavigateEdit={ navigateToEditMock }
         />
     </MenuProvider>
 );

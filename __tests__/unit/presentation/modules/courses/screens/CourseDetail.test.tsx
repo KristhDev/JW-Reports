@@ -2,7 +2,7 @@ import React from 'react';
 import { render, screen, userEvent } from '@testing-library/react-native';
 
 /* Setup */
-import { mockUseNavigation } from '@test-setup';
+import { mockUseRouter } from '@test-setup';
 
 /* Mocks */
 import { courseSelectedStateMock, setSelectedCourseMock, setSelectedLessonMock, useCoursesSpy, useLessonsSpy } from '@mocks';
@@ -136,8 +136,8 @@ describe('Test in <CourseDetail /> screen', () => {
         await user.press(touchable);
 
         /* Check if navigate is called one time with respective value */
-        expect(mockUseNavigation.navigate).toHaveBeenCalledTimes(1);
-        expect(mockUseNavigation.navigate).toHaveBeenCalledWith('LessonsScreen');
+        expect(mockUseRouter.navigate).toHaveBeenCalledTimes(1);
+        expect(mockUseRouter.navigate).toHaveBeenCalledWith('/(app)/(tabs)/courses/lessons');
     });
 
     it('should call setSelectedLesson and navigate when add lesson link is pressed', async () => {
@@ -157,7 +157,7 @@ describe('Test in <CourseDetail /> screen', () => {
         });
 
         /* Check if navigate is called one time with respective value */
-        expect(mockUseNavigation.navigate).toHaveBeenCalledTimes(1);
-        expect(mockUseNavigation.navigate).toHaveBeenCalledWith('AddOrEditLessonScreen');
+        expect(mockUseRouter.navigate).toHaveBeenCalledTimes(1);
+        expect(mockUseRouter.navigate).toHaveBeenCalledWith('/(app)/(tabs)/courses/add-or-edit-lesson');
     });
 });

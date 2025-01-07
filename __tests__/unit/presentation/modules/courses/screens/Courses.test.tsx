@@ -26,33 +26,10 @@ const user = userEvent.setup();
 const renderScreen = () => render(
     <MenuProvider>
         <Courses
-            route={{
-                name: 'CoursesScreen',
-                params: {
-                    title: 'TODOS MIS CURSOS',
-                    emptyMessage: 'No has agregado ningún curso.',
-                    filter: 'all',
-                },
-                key: 'CoursesScreen',
-            }}
-            navigation={{
-                addListener: jest.fn(),
-                canGoBack: jest.fn(),
-                dispatch: jest.fn(),
-                getId: jest.fn(),
-                getParent: jest.fn(),
-                getState: jest.fn(),
-                goBack: jest.fn(),
-                isFocused: jest.fn(),
-                jumpTo: jest.fn(),
-                navigate: jest.fn(),
-                preload: jest.fn(),
-                removeListener: jest.fn(),
-                reset: jest.fn(),
-                setOptions: jest.fn(),
-                setParams: jest.fn(),
-                setStateForNextRouteNamesChange: jest.fn()
-            } as any }
+            emptyMessage="No has agregado ningún curso."
+            filter="all"
+            segment="index"
+            title="TODOS MIS CURSOS"
         />
     </MenuProvider>
 );

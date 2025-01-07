@@ -5,9 +5,9 @@ import { act, render, screen } from '@testing-library/react-native';
 import { initialUIStateMock, useEmailSpy, useImageSpy, useStatusSpy, useThemeSpy, useUISpy } from '@mocks';
 
 /* Modules */
-import { ReportErrorScreen } from '@shared';
+import { ReportError } from '@shared';
 
-const renderScreen = () => render(<ReportErrorScreen />);
+const renderScreen = () => render(<ReportError />);
 
 useEmailSpy.mockImplementation(() => ({
     sendFeedbackEmail: jest.fn()

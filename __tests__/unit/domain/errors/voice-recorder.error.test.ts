@@ -2,8 +2,9 @@ import { VoiceRecorderError } from '@domain/errors';
 
 describe('Test in VoiceRecorderError', () => {
     it('should have respective methods and properties', () => {
-        const error = new VoiceRecorderError('Voice not reconized');
+        const error = new VoiceRecorderError('Voice not reconized', 'bad-grammar');
 
+        expect(error.code).toBe('bad-grammar');
         expect(error.message).toBe('Voice not reconized');
         expect(error.name).toBe('VoiceRecorderError');
 
