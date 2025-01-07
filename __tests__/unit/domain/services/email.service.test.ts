@@ -54,6 +54,7 @@ describe('Test in EmailService', () => {
             expect(true).toBeFalsy();
         }
         catch (error) {
+            console.error(error);
             expect(error).toBeInstanceOf(EmailError);
             expect(error).toHaveProperty('message', 'Message not send')
         }
