@@ -74,9 +74,9 @@ describe('Test in useRevisits hook - exportRevisits', () => {
 
         expect(PDFSpy.writeFromHTML).toHaveBeenCalledTimes(1);
         expect(PDFSpy.writeFromHTML).toHaveBeenCalledWith({
-            directory: 'Exports',
             fileName,
-            html: '<h1>Pdf revisits template</h1>'
+            html: '<h1>Pdf revisits template</h1>',
+            width: 480
         });
 
         expect(ExternalStorageSpy.moveFileOfInternalExtorage).toHaveBeenCalledTimes(1);
@@ -184,9 +184,9 @@ describe('Test in useRevisits hook - exportRevisits', () => {
 
         expect(PDFSpy.writeFromHTML).toHaveBeenCalledTimes(1);
         expect(PDFSpy.writeFromHTML).toHaveBeenCalledWith({
-            directory: 'Exports',
             fileName,
-            html: '<h1>Pdf revisits template</h1>'
+            html: '<h1>Pdf revisits template</h1>',
+            width: 480
         });
 
         expect(ExternalStorageSpy.moveFileOfInternalExtorage).not.toHaveBeenCalled();
@@ -223,9 +223,9 @@ describe('Test in useRevisits hook - exportRevisits', () => {
 
         expect(PDFSpy.writeFromHTML).toHaveBeenCalledTimes(1);
         expect(PDFSpy.writeFromHTML).toHaveBeenCalledWith({
-            directory: 'Exports',
             fileName,
-            html: '<h1>Pdf revisits template</h1>'
+            html: '<h1>Pdf revisits template</h1>',
+            width: 480
         });
 
         expect(ExternalStorageSpy.moveFileOfInternalExtorage).toHaveBeenCalledTimes(1);
