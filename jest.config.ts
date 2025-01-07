@@ -28,11 +28,11 @@ const jestConfig: Config = {
     preset: 'jest-expo',
     setupFiles: [ './jest.setup.ts' ],
     setupFilesAfterEnv: [ './jest.setup-after-env.ts' ],
-    transform: {
-        '\\.[jt]sx?$': [ 'babel-jest', { caller: { preserveEnvVars: true } } ],
-    },
+    // transform: {
+    //     '\\.[jt]sx?$': [ 'babel-jest', { caller: { preserveEnvVars: true } } ],
+    // },
     transformIgnorePatterns: [
-        'node_modules/(?!((jest-)?react-native|@react-native(-community)?)|expo(nent)?|@expo(nent)?/.*|@expo-google-fonts/.*|react-navigation|@react-navigation/.*|@sentry/react-native|native-base|react-native-svg)',
+        'node_modules/(?!((jest-)?react-native|@react-native(-community)?)|expo(nent)?|@expo(nent)?/.*|@expo-google-fonts/.*|react-navigation|react-redux|@react-navigation/.*|@sentry/react-native|native-base|react-native-svg)',
     ],
     verbose: true
 }
