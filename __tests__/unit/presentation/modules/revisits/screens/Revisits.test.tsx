@@ -40,14 +40,15 @@ describe('Test in <Revisits /> screen', () => {
 
     useRevisitsSpy.mockImplementation(() => ({
         state: revisitsStateMock,
+        completeRevisit: jest.fn(),
         deleteRevisit: jest.fn(),
         loadRevisits: jest.fn(),
         removeRevisits: jest.fn(),
+        saveRevisit: jest.fn(),
         setRefreshRevisits: jest.fn(),
         setRevisitsPagination: jest.fn(),
+        setRevisitsScreenHistory: jest.fn(),
         setSelectedRevisit: setSelectedRevisitMock,
-        completeRevisit: jest.fn(),
-        saveRevisit: jest.fn(),
     }) as any);
 
     useStatusSpy.mockImplementation(() => ({
