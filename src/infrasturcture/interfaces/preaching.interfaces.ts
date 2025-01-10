@@ -1,5 +1,10 @@
 import { Precursor } from './auth.interfaces';
 
+/**
+ * Type representing the valid participate in ministry values that can be used in the Preaching object.
+ *
+ * @type {string} - The participate in ministry value (e.g., 'ninguno', 'auxiliar', 'regular', 'especial')
+ */
 export type ParticipateInMinistry = 'si' | 'no';
 
 /**
