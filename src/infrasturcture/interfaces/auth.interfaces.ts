@@ -1,3 +1,9 @@
+
+/**
+ * Type representing the valid precursor values that can be used in the User object.
+ *
+ * @type {string} - The precursor value (e.g., 'ninguno', 'auxiliar', 'regular', 'especial')
+ */
 export type Precursor = 'ninguno' | 'auxiliar' | 'regular' | 'especial';
 
 /**
