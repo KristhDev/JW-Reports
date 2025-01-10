@@ -4,7 +4,7 @@ import { StorageAccessFramework, EncodingType } from 'expo-file-system';
 import { ExternalStorageError } from '@domain/errors';
 
 /* Interfaces */
-import { CopyFileOptions } from '@infrasturcture/interfaces';
+import { MoveFileOptions } from '@infrasturcture/interfaces';
 
 /* Adapters */
 import { InternalStorage } from './internal-storage';
@@ -15,7 +15,14 @@ export class ExternalStorage {
         UTF8: EncodingType.UTF8
     }
 
-    public static async moveFileOfInternalExtorage({ filePath, mimeType }: CopyFileOptions): Promise<void> {
+    /**
+     * Moves a file from InternalStorage to ExternalStorage.
+     * 
+     * @param {MoveFileOptions} options - The options for moving the file.
+     * @returns {Promise<void>} A promise that resolves when the file is moved successfully.
+     * @throws {ExternalStorageError} If there is an error moving the file.
+     */
+    public static async moveFileOfInternalExtorage({ filePath, mimeType }: MoveFileOptions): Promise<void> {
         try {
             const permission = await StorageAccessFramework.requestDirectoryPermissionsAsync();
             if (!permission.granted) throw new Error('Permiso denegado para exportar el archivo.');

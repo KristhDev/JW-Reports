@@ -12,6 +12,13 @@ export class InternalStorage {
         UTF8: FileSystem.EncodingType.UTF8
     }
 
+    /**
+     * Deletes a file from internal storage.
+     * 
+     * @param {string} path - The path of the file to be deleted.
+     * @returns {Promise<void>} A promise that resolves when the file is deleted successfully.
+     * @throws {InternalStorageError} If there is an error deleting the file.
+     */
     public static async deleteFile(path: string): Promise<void> {
         try {
             await FileSystem.deleteAsync(path);
@@ -23,6 +30,14 @@ export class InternalStorage {
         }
     }
 
+    /**
+     * Reads a file from internal storage.
+     * 
+     * @param {string} path - The path of the file to be read.
+     * @param {EncodingValue} encoding - The encoding to be used to read the file.
+     * @returns {Promise<string>} The contents of the file as a string.
+     * @throws {InternalStorageError} If a file operation error occurs.
+     */
     public static async readFile(path: string, encoding: EncodingValue): Promise<string> {
         try {
             const file = await FileSystem.readAsStringAsync(path, { encoding });
