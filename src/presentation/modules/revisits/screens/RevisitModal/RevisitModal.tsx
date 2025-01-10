@@ -37,7 +37,7 @@ const RevisitModal: FC<ModalProps> = ({ isOpen, onClose }): JSX.Element => {
 
     const modalTitle = (selectedRevisit.done)
         ? `¿Quieres volver a visitar a ${ selectedRevisit.personName }?`
-        : '¿Está seguro de marcar esta revisitada como visitada?';
+        : '¿Está seguro de marcar esta revisita como visitada?';
 
     const confirmTextButton = (revisitPerson)
         ? 'GUARDAR'

@@ -26,7 +26,6 @@ export class InternalStorage {
     public static async readFile(path: string, encoding: EncodingValue): Promise<string> {
         try {
             const file = await FileSystem.readAsStringAsync(path, { encoding });
-
             return file;
         }
         catch (error) {
