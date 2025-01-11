@@ -8,10 +8,7 @@ import { getMockStoreUsePermissions, renderUsePermissions } from '@setups';
 import { grantedStateMock, initialPermissionsStateMock, initialStatusStateMock } from '@mocks';
 
 /* Constants */
-import { permissionsMessages } from '@application/constants';
-
-/* Shared */
-import { permissionsStatus } from '@shared';
+import { permissionsMessages, permissionsStatus } from '@application/constants';
 
 describe('Test in usePermissions hook', () => {
     let mockStore = {} as any;
@@ -57,7 +54,7 @@ describe('Test in usePermissions hook', () => {
         const { result } = renderUsePermissions(mockStore);
 
         await act(async () => {
-            const status = await result.current.usePermissions.askPermission('readExternalStorage');
+            const status = await result.current.usePermissions.askPermission('mediaLibrary');
             expect(status).toEqual(permissionsStatus.DENIED);
         });
 
@@ -66,13 +63,13 @@ describe('Test in usePermissions hook', () => {
             isPermissionsRequested: false,
             permissions: {
                 ...initialPermissionsStateMock.permissions,
-                readExternalStorage: 'denied'
+                mediaLibrary: permissionsStatus.DENIED
             }
         });
     });
 
-    it('should change status if permission is unavailable', async () => {
-        (request as jest.Mock).mockResolvedValue(permissionsStatus.UNAVAILABLE);
+    it('should change status if permission is undermined', async () => {
+        (request as jest.Mock).mockResolvedValue(permissionsStatus.UNDETERMINED);
 
         const { result } = renderUsePermissions(mockStore);
 
