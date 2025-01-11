@@ -6,20 +6,16 @@ import { getMockStoreUseImage, renderUseImage } from '@setups';
 
 /* Mocks */
 import {
-    blockedStateMock,
     deniedStateMock,
     DeviceImageServiceSpy,
     grantedStateMock,
     imageModelMock,
     initialStatusStateMock,
-    unavailableStateMock
+    undeterminedStateMock
 } from '@mocks';
 
 /* Constants */
-import { permissionsMessages } from '@application/constants';
-
-/* Shared */
-import { permissionsStatus } from '@shared';
+import { permissionsMessages, permissionsStatus } from '@application/constants';
 
 describe('Test in useImage hook - takePhoto', () => {
     beforeEach(() => {
@@ -41,23 +37,6 @@ describe('Test in useImage hook - takePhoto', () => {
         expect(result.current.useImage.image).toEqual(imageModelMock);
     });
 
-    it('should not access to camera if permission is blocked', async () => {
-        const mockStore = getMockStoreUseImage({ permissions: blockedStateMock, status: initialStatusStateMock });
-        const { result } = renderUseImage(mockStore);
-
-        await act(async () => {
-            await result.current.useImage.takePhoto();
-        });
-
-        /* Check if DeviceImageServiceSpy.openCamera isnt called and image is empty */
-        expect(DeviceImageServiceSpy.openCamera).not.toHaveBeenCalled();
-        expect(result.current.useImage.image).toBeNull();
-        expect(result.current.useStatus.state).toEqual({
-            msg: permissionsMessages.REQUEST,
-            code: 401
-        });
-    });
-
     it('should request camera permission if permission is denied', async () => {
         DeviceImageServiceSpy.openCamera.mockResolvedValueOnce(imageModelMock);
         (request as jest.Mock).mockResolvedValue(permissionsStatus.GRANTED);
@@ -75,8 +54,8 @@ describe('Test in useImage hook - takePhoto', () => {
         expect(result.current.useImage.image).toEqual(imageModelMock);
     });
 
-    it('should not access to camera if permission is unavailable', async () => {
-        const mockStore = getMockStoreUseImage({ permissions: unavailableStateMock, status: initialStatusStateMock });
+    it('should not access to camera if permission is undetermined', async () => {
+        const mockStore = getMockStoreUseImage({ permissions: undeterminedStateMock, status: initialStatusStateMock });
         const { result } = renderUseImage(mockStore);
 
         await act(async () => {
