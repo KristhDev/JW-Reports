@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 
 /* Constants */
-import { permissionsMessages } from '@application/constants';
+import { permissionsMessages, permissionsStatus } from '@application/constants';
 
 /* Adapters */
 import { VoiceRecorder } from '@infrasturcture/adapters';
@@ -10,19 +10,19 @@ import { VoiceRecorder } from '@infrasturcture/adapters';
 import useStatus from './useStatus';
 import usePermissions from './usePermissions';
 
-/* Utils */
-import { permissionsStatus } from '../utils';
-
 const useVoiceRecorder = () => {
     const [ isRecording, setIsRecording ] = useState<boolean>(false);
     const [ record, setRecord ] = useState<string>('');
 
-    const { state: { permissions }, askPermission } = usePermissions();
+    const {
+        state: { permissions },
+        askPermission,
+        isRecordAudioBlocked,
+        isRecordAudioDenied,
+        isRecordAudioUnavailable,
+        isRecordAudioUndetermined
+    } = usePermissions();
     const { setError, setStatus } = useStatus();
-
-    const isRecordAudioBlocked = permissions.recordAudio === permissionsStatus.BLOCKED;
-    const isRecordAudioDenied = permissions.recordAudio === permissionsStatus.DENIED;
-    const isRecordAudioUnavailable = permissions.recordAudio === permissionsStatus.UNAVAILABLE;
 
     /**
      * Starts a speech recognition session in the given language.
@@ -37,14 +37,12 @@ const useVoiceRecorder = () => {
         }
 
         if (isRecordAudioBlocked) {
-            setStatus({ msg: permissionsMessages.REQUEST, code: 401 });
+            setStatus({ msg: permissionsMessages.REQUEST, code: 403 });
             return;
         }
 
         let status = permissions.recordAudio;
-
-        if (isRecordAudioDenied) status = await askPermission('recordAudio');
-        if (status !== permissionsStatus.GRANTED) return;
+        if (isRecordAudioDenied || isRecordAudioUndetermined) status = await askPermission('recordAudio');
 
         try {
             VoiceRecorder.startRecording(lang);
