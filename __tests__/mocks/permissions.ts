@@ -3,24 +3,10 @@ import { PermissionsState } from '@application/features';
 export const initialPermissionsStateMock: PermissionsState = {
     isPermissionsRequested: false,
     permissions: {
-        camera: 'unavailable',
-        notifications: 'unavailable',
-        readExternalStorage: 'unavailable',
-        readMediaImages: 'unavailable',
-        recordAudio: 'unavailable',
-        writeExternalStorage: 'unavailable'
-    }
-}
-
-export const blockedStateMock: PermissionsState = {
-    isPermissionsRequested: true,
-    permissions: {
-        camera: 'blocked',
-        notifications: 'blocked',
-        readExternalStorage: 'blocked',
-        readMediaImages: 'blocked',
-        recordAudio: 'blocked',
-        writeExternalStorage: 'blocked'
+        camera: 'undetermined',
+        notifications: 'undetermined',
+        mediaLibrary: 'undetermined',
+        recordAudio: 'undetermined',
     }
 }
 
@@ -29,10 +15,18 @@ export const deniedStateMock: PermissionsState = {
     permissions: {
         camera: 'denied',
         notifications: 'denied',
-        readExternalStorage: 'denied',
-        readMediaImages: 'denied',
+        mediaLibrary: 'denied',
         recordAudio: 'denied',
-        writeExternalStorage: 'denied'
+    }
+}
+
+export const blockedStateMock: PermissionsState = {
+    isPermissionsRequested: true,
+    permissions: {
+        camera: 'blocked',
+        notifications: 'blocked',
+        mediaLibrary: 'blocked',
+        recordAudio: 'blocked',
     }
 }
 
@@ -41,10 +35,8 @@ export const grantedStateMock: PermissionsState = {
     permissions: {
         camera: 'granted',
         notifications: 'granted',
-        readExternalStorage: 'granted',
-        readMediaImages: 'granted',
+        mediaLibrary: 'granted',
         recordAudio: 'granted',
-        writeExternalStorage: 'granted'
     }
 }
 
@@ -53,9 +45,17 @@ export const unavailableStateMock: PermissionsState = {
     permissions: {
         camera: 'unavailable',
         notifications: 'unavailable',
-        readExternalStorage: 'unavailable',
-        readMediaImages: 'unavailable',
+        mediaLibrary: 'unavailable',
         recordAudio: 'unavailable',
-        writeExternalStorage: 'unavailable'
+    }
+}
+
+export const undeterminedStateMock: PermissionsState = {
+    isPermissionsRequested: true,
+    permissions: {
+        camera: 'undetermined',
+        notifications: 'undetermined',
+        mediaLibrary: 'undetermined',
+        recordAudio: 'undetermined',
     }
 }
