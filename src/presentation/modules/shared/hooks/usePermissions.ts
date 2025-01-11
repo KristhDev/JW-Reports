@@ -1,7 +1,5 @@
-import { request, requestNotifications, PERMISSIONS, PermissionStatus } from 'react-native-permissions';
-
 /* Constants */
-import { permissionsMessages } from '@application/constants';
+import { permissionsMessages, permissionsStatus } from '@application/constants';
 
 /* Features */
 import { useAppDispatch, useAppSelector } from '@application/store';
@@ -10,14 +8,19 @@ import {
     requestPermissions as requestPermissionsThunk,
     setPermission,
     Permissions,
-    RequestPermissionsOptions
+    RequestPermissionsOptions,
+    PermissionStatus
 } from '@application/features';
+
+/* Services */
+import { DeviceImageService } from '@domain/services';
+import { NotificationsService } from '@services';
+
+/* Adapters */
+import { VoiceRecorder } from '@infrasturcture/adapters';
 
 /* Hooks */
 import useStatus from './useStatus';
-
-/* Utils */
-import { permissionsStatus } from '../utils';
 
 /**
  * Hook to management permissions of store
@@ -28,6 +31,30 @@ const usePermissions = () => {
 
     const state = useAppSelector(store => store.permissions);
     const { setStatus } = useStatus();
+
+    const isCameraBlocked = state.permissions.camera === permissionsStatus.BLOCKED;
+    const isCameraDenied = state.permissions.camera === permissionsStatus.DENIED;
+    const isCameraGranted = state.permissions.camera === permissionsStatus.GRANTED;
+    const isCameraUnavailable = state.permissions.camera === permissionsStatus.UNAVAILABLE;
+    const isCameraUndetermined = state.permissions.camera === permissionsStatus.UNDETERMINED;
+
+    const isMediaLibraryBlocked = state.permissions.mediaLibrary === permissionsStatus.BLOCKED;
+    const isMediaLibraryDenied = state.permissions.mediaLibrary === permissionsStatus.DENIED;
+    const isMediaLibraryGranted = state.permissions.mediaLibrary === permissionsStatus.GRANTED;
+    const isMediaLibraryUndetermined = state.permissions.mediaLibrary === permissionsStatus.UNDETERMINED;
+    const isMediaLibraryUnavailable = state.permissions.mediaLibrary === permissionsStatus.UNAVAILABLE;
+
+    const isNotificationsBlocked = state.permissions.notifications === permissionsStatus.BLOCKED;
+    const isNotificationsDenied = state.permissions.notifications === permissionsStatus.DENIED;
+    const isNotificationsGranted = state.permissions.notifications === permissionsStatus.GRANTED;
+    const isNotificationsUndetermined = state.permissions.notifications === permissionsStatus.UNDETERMINED;
+    const isNotificationsUnavailable = state.permissions.notifications === permissionsStatus.UNAVAILABLE;
+
+    const isRecordAudioBlocked = state.permissions.recordAudio === permissionsStatus.BLOCKED;
+    const isRecordAudioDenied = state.permissions.recordAudio === permissionsStatus.DENIED;
+    const isRecordAudioGranted = state.permissions.recordAudio === permissionsStatus.GRANTED;
+    const isRecordAudioUndetermined = state.permissions.recordAudio === permissionsStatus.UNDETERMINED;
+    const isRecordAudioUnavailable = state.permissions.recordAudio === permissionsStatus.UNAVAILABLE;
 
     /**
      * Checks the permissions of the app.
@@ -56,29 +83,48 @@ const usePermissions = () => {
      */
     const askPermission = async (permission: keyof Permissions): Promise<PermissionStatus> => {
         const askPermissions = {
-            camera: PERMISSIONS.ANDROID.CAMERA,
-            readExternalStorage: PERMISSIONS.ANDROID.READ_EXTERNAL_STORAGE,
-            readMediaImages: PERMISSIONS.ANDROID.READ_MEDIA_IMAGES,
-            recordAudio: PERMISSIONS.ANDROID.RECORD_AUDIO,
-            writeExternalStorage: PERMISSIONS.ANDROID.WRITE_EXTERNAL_STORAGE
+            camera: DeviceImageService.requestCameraPermission,
+            mediaLibrary: DeviceImageService.requestMediaLibraryPermission,
+            notifications: NotificationsService.requestNotificationsPermission,
+            recordAudio: VoiceRecorder.requestRecordAudioPermission
         }
 
-        let status: PermissionStatus = permissionsStatus.UNAVAILABLE;
+        const status: PermissionStatus = await askPermissions[permission]();
 
-        if (permission === 'notifications') {
-            const result = await requestNotifications([ 'alert', 'badge', 'sound' ]);
-            status = result.status;
-        }
-        else status = await request(askPermissions[permission]);
-
-        if (status === permissionsStatus.UNAVAILABLE) setStatus({ msg: permissionsMessages.UNSUPPORTED, code: 418 });
+        const isPermissionUnavailable = status === permissionsStatus.UNAVAILABLE;
+        if (isPermissionUnavailable) setStatus({ msg: permissionsMessages.UNSUPPORTED, code: 418 });
 
         dispatch(setPermission({ key: permission, value: status }));
         return status;
     }
 
     return {
+        // State
         state,
+
+        // Properties
+        isCameraBlocked,
+        isCameraDenied,
+        isCameraGranted,
+        isCameraUnavailable,
+        isCameraUndetermined,
+        isMediaLibraryBlocked,
+        isMediaLibraryDenied,
+        isMediaLibraryGranted,
+        isMediaLibraryUnavailable,
+        isMediaLibraryUndetermined,
+        isNotificationsBlocked,
+        isNotificationsDenied,
+        isNotificationsGranted,
+        isNotificationsUnavailable,
+        isNotificationsUndetermined,
+        isRecordAudioBlocked,
+        isRecordAudioDenied,
+        isRecordAudioGranted,
+        isRecordAudioUnavailable,
+        isRecordAudioUndetermined,
+
+        // Functions
         askPermission,
         checkPermissions,
         requestPermissions
