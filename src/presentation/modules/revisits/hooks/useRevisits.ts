@@ -38,9 +38,6 @@ import { CompleteRevisitDto, CreateRevisitDto, UpdateRevisitDto } from '@domain/
 /* Entities */
 import { RevisitEntity } from '@domain/entities';
 
-/* Models */
-import { ImageModel } from '@domain/models';
-
 /* Templates */
 import { PdfRevisitsTemplate } from '@domain/templates';
 
@@ -55,7 +52,7 @@ import { useAuth } from '@auth';
 import { useImage, useNetwork, useStatus } from '@shared';
 
 /* Interfaces */
-import { loadRevisitsOptions, RevisitFilter, RevisitFormValues, SaveRevisitOptions, UpdateRevisitOptions } from '../interfaces';
+import { loadRevisitsOptions, RevisitFilter, SaveRevisitOptions, UpdateRevisitOptions } from '../interfaces';
 import { deleteOptions } from '@infrasturcture/interfaces';
 
 /**
