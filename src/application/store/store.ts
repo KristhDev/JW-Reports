@@ -32,7 +32,7 @@ import reactotron from '../../../ReactotronConfig';
 const permissionsPersistConfig: PersistConfig<PermissionsState> = {
     key: storageKeys.STORE_PERMISSIONS,
     storage: storePersistor,
-    whitelist: ['isPermissionsRequested'],
+    whitelist: [ 'isPermissionsRequested' ],
 }
 
 const uiPersistConfig: PersistConfig<UIState> = {
@@ -57,7 +57,7 @@ const reducers = combineReducers({
 const persistConfig: PersistConfig<RootState> = {
     key: storageKeys.STORE,
     storage: storePersistor,
-    blacklist: [ 'status' ]
+    blacklist: [ 'permissions', 'status', 'ui' ]
 };
 
 const reducer = persistReducer(persistConfig, reducers);
