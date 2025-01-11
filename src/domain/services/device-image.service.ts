@@ -1,5 +1,11 @@
 import * as ImagePicker from 'expo-image-picker';
 
+/* Constants */
+import { permissionsStatus } from '@application/constants';
+
+/* Features */
+import { PermissionStatus } from '@application/features';
+
 /* Errors */
 import { ImageError } from '@domain/errors';
 
@@ -42,6 +48,48 @@ export class DeviceImageService {
             console.error(imageError);
             throw imageError;
         }
+    }
+
+    /**
+     * Retrieves the current permission status for the camera.
+     *
+     * This method uses the `expo-image-picker` library to get the camera permission status
+     * on the device. It returns a promise that resolves with the current permission status,
+     * which can be one of the following: 'granted', 'denied', or 'undetermined'.
+     *
+     * @returns {Promise<PermissionStatus>} A promise that resolves with the current camera permission status.
+     */
+    public static async getCameraPermission(): Promise<PermissionStatus> {
+        const result = await ImagePicker.getCameraPermissionsAsync();
+        const isUndetermined = result.status === permissionsStatus.UNDETERMINED;
+
+        if (result.granted) return permissionsStatus.GRANTED;
+        if (isUndetermined) return permissionsStatus.UNDETERMINED;
+        if (result.canAskAgain && !isUndetermined) return permissionsStatus.DENIED;
+        if (!result.canAskAgain && !isUndetermined) return permissionsStatus.BLOCKED;
+
+        return permissionsStatus.UNAVAILABLE;
+    }
+
+    /**
+     * Retrieves the current permission status for the media library.
+     *
+     * This method uses the `expo-image-picker` library to get the media library permission status
+     * on the device. It returns a promise that resolves with the current permission status,
+     * which can be one of the following: 'granted', 'denied', or 'undetermined'.
+     *
+     * @returns {Promise<PermissionStatus>} A promise that resolves with the current media library permission status.
+     */
+    public static async getMediaLibraryPermission(): Promise<PermissionStatus> {
+        const result = await ImagePicker.getMediaLibraryPermissionsAsync();
+        const isUndetermined = result.status === permissionsStatus.UNDETERMINED;
+
+        if (result.granted) return permissionsStatus.GRANTED;
+        if (isUndetermined) return permissionsStatus.UNDETERMINED;
+        if (result.canAskAgain && !isUndetermined) return permissionsStatus.DENIED;
+        if (!result.canAskAgain && !isUndetermined) return permissionsStatus.BLOCKED;
+
+        return permissionsStatus.UNAVAILABLE;
     }
 
     /**
@@ -121,5 +169,47 @@ export class DeviceImageService {
             console.error(imageError);
             throw imageError;
         }
+    }
+
+    /**
+     * Requests the camera permission from the user.
+     *
+     * This method uses the `expo-image-picker` library to prompt the user for camera access permission.
+     * It returns a promise that resolves with the permission status, which can be one of the following:
+     * 'granted', 'denied', or 'undetermined'.
+     *
+     * @returns {Promise<PermissionStatus>} A promise that resolves with the current camera permission status.
+     */
+    public static async requestCameraPermission(): Promise<PermissionStatus> {
+        const result = await ImagePicker.requestCameraPermissionsAsync();
+        const isUndetermined = result.status === permissionsStatus.UNDETERMINED;
+
+        if (result.granted) return permissionsStatus.GRANTED;
+        if (isUndetermined) return permissionsStatus.UNDETERMINED;
+        if (result.canAskAgain && !isUndetermined) return permissionsStatus.DENIED;
+        if (!result.canAskAgain && !isUndetermined) return permissionsStatus.BLOCKED;
+
+        return permissionsStatus.UNAVAILABLE;
+    }
+
+    /**
+     * Requests the media library permission from the user.
+     *
+     * This method uses the `expo-image-picker` library to prompt the user for media library access permission.
+     * It returns a promise that resolves with the permission status, which can be one of the following:
+     * 'granted', 'denied', or 'undetermined'.
+     *
+     * @returns {Promise<PermissionStatus>} A promise that resolves with the current media library permission status.
+     */
+    public static async requestMediaLibraryPermission(): Promise<PermissionStatus> {
+        const result = await ImagePicker.requestMediaLibraryPermissionsAsync();
+        const isUndetermined = result.status === permissionsStatus.UNDETERMINED;
+
+        if (result.granted) return permissionsStatus.GRANTED;
+        if (isUndetermined) return permissionsStatus.UNDETERMINED;
+        if (result.canAskAgain && !isUndetermined) return permissionsStatus.DENIED;
+        if (!result.canAskAgain && !isUndetermined) return permissionsStatus.BLOCKED;
+
+        return permissionsStatus.UNAVAILABLE;
     }
 }
