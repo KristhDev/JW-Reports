@@ -26,7 +26,6 @@ const renderComponent = () => render(
                 }
                 inputDateFormat="DD"
                 label="Día de predicación:"
-                modalTitle="Día de predicación"
                 mode="date"
                 onChangeDate={ (date) => setFieldValue('day', Time.toDate(date)) }
                 placeholder="Seleccione el día"
