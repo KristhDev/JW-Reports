@@ -6463,11 +6463,6 @@ react-native-pager-view@6.5.1:
   resolved "https://registry.yarnpkg.com/react-native-pager-view/-/react-native-pager-view-6.5.1.tgz#e639e8c975f4c749aae1c3120dc4208265fce4cc"
   integrity sha512-YdX7bP+rPYvATMU7HzlMq9JaG3ui/+cVRbFZFGW+QshDULANFg9ECR1BA7H7JTIcO/ZgWCwF+1aVmYG5yBA9Og==
 
-react-native-permissions@^5.2.0:
-  version "5.2.0"
-  resolved "https://registry.yarnpkg.com/react-native-permissions/-/react-native-permissions-5.2.0.tgz#2394a584e90c5aa63d121bd70deee086272cf377"
-  integrity sha512-ohLjRJbP4w4SV7awGvWoCHbNbif/N8lJWcjPl0BBQsTQAA/AVdXXY7rMYaHQStSXURl7S+51m2rina3OHE0rFw==
-
 react-native-popup-menu@^0.16.1:
   version "0.16.1"
   resolved "https://registry.yarnpkg.com/react-native-popup-menu/-/react-native-popup-menu-0.16.1.tgz#b1bb56be5c0838bbc2f532af7b1f554b7ceef566"
