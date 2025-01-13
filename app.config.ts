@@ -29,14 +29,7 @@ const config = ({ config }: ConfigContext): ExpoConfig => ({
             foregroundImage: './assets/images/adaptive-icon.png',
             backgroundColor: lightColors.button
         },
-        package: appId,
-        permissions: [
-            'android.permission.CAMERA',
-            'android.permission.READ_EXTERNAL_STORAGE',
-            'android.permission.READ_MEDIA_IMAGES',
-            'android.permission.RECORD_AUDIO',
-            'android.permission.WRITE_EXTERNAL_STORAGE'
-        ]
+        package: appId
     },
     web: {
         bundler: 'metro',
@@ -63,12 +56,6 @@ const config = ({ config }: ConfigContext): ExpoConfig => ({
                 mode: 'development',
                 smallIcons: [ './assets/notifications/ic_stat_onesignal_default.png' ],
                 largeIcons: [ './assets/notifications/ic_onesignal_large_icon_default.png' ],
-            }
-        ],
-        [
-            'react-native-permissions',
-            {
-                iosPermissions: []
             }
         ],
         'expo-speech-recognition'
