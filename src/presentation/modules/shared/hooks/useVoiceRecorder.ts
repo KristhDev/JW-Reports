@@ -43,6 +43,7 @@ const useVoiceRecorder = () => {
 
         let status = permissions.recordAudio;
         if (isRecordAudioDenied || isRecordAudioUndetermined) status = await askPermission('recordAudio');
+        if (status !== permissionsStatus.GRANTED) return;
 
         try {
             VoiceRecorder.startRecording(lang);
