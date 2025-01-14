@@ -93,7 +93,7 @@ export class AppErrors {
         'language-not-supported': 'El idioma en el cuál se encuentra hablando no es soportado.',
         'network': 'Ocurrio un error de red.',
         'no-speech': 'No se ha detectado ninguna voz.',
-        'not-allowed': 'La grabación de audio no está soportada por el dispositivo.',
+        'not-allowed': 'No se ha concedido el acceso al microfono.',
         'speech-timeout': 'El tiempo de grabación se ha agotado.',
     }
 
