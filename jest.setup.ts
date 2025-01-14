@@ -99,6 +99,13 @@ jest.mock('expo-file-system', () => ({
     }
 }));
 
+const mockExpoPermissionResult = {
+    canAskAgain: false,
+    expires: 'never',
+    granted: true,
+    status: 'granted',
+}
+
 jest.mock('expo-image-picker', () => ({
     launchCameraAsync: jest.fn().mockResolvedValue({
         canceled: false,
@@ -124,7 +131,13 @@ jest.mock('expo-image-picker', () => ({
                 width: 300
             }
         ]
-    })
+    }),
+
+    getCameraPermissionsAsync: jest.fn().mockResolvedValue(mockExpoPermissionResult),
+    getMediaLibraryPermissionsAsync: jest.fn().mockResolvedValue(mockExpoPermissionResult),
+
+    requestCameraPermissionsAsync: jest.fn().mockResolvedValue(mockExpoPermissionResult),
+    requestMediaLibraryPermissionsAsync: jest.fn().mockResolvedValue(mockExpoPermissionResult)
 }));
 
 jest.mock('expo-font', () => ({
@@ -168,10 +181,12 @@ jest.mock('expo-router', () => {
 
 jest.mock('expo-speech-recognition', () => ({
     ExpoSpeechRecognitionModule: {
-        removeAllListeners: jest.fn(),
         addListener: jest.fn(),
+        getPermissionsAsync: jest.fn().mockResolvedValue(mockExpoPermissionResult),
+        removeAllListeners: jest.fn(),
+        requestPermissionsAsync: jest.fn().mockResolvedValue(mockExpoPermissionResult),
         start: jest.fn(),
-        stop: jest.fn()
+        stop: jest.fn(),
     }
 }));
 
@@ -201,15 +216,14 @@ jest.mock('react-native-onesignal', () => {
             },
             initialize: jest.fn(),
             Notifications: {
-                requestPermission: jest.fn()
+                requestPermission: jest.fn().mockResolvedValue(true),
+                getPermissionAsync: jest.fn().mockResolvedValue(true)
             },
             login: jest.fn(),
             logout: jest.fn()
         }
     }
 });
-
-jest.mock('react-native-permissions', () => require('react-native-permissions/mock'));
 
 jest.mock('react-native-safe-area-context', () => {
     const mock = require('react-native-safe-area-context/jest/mock');
