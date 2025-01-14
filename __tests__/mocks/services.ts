@@ -1,11 +1,14 @@
-import { DeviceImageService } from '../../src/domain/services/device-image.service';
+import { NotificationsService } from '@services';
+
 import {
     AuthService,
+    CloudService,
     CoursesService,
+    DeviceImageService,
     EmailService,
     LessonsService,
     PreachingService,
-    RevisitsService
+    RevisitsService,
 } from '@domain/services';
 
 export const AuthServiceSpy = {
@@ -19,6 +22,11 @@ export const AuthServiceSpy = {
     updateProfile: jest.spyOn(AuthService, 'updateProfile')
 }
 
+export const CloudServiceSpy = {
+    deleteImage: jest.spyOn(CloudService, 'deleteImage'),
+    uploadImage: jest.spyOn(CloudService, 'uploadImage'),
+}
+
 export const CoursesServiceSpy = {
     activeOrSuspend: jest.spyOn(CoursesService, 'activeOrSuspend'),
     create: jest.spyOn(CoursesService, 'create'),
@@ -28,6 +36,15 @@ export const CoursesServiceSpy = {
     getCourseIdsByUserId: jest.spyOn(CoursesService, 'getCourseIdsByUserId'),
     paginateByUserId: jest.spyOn(CoursesService, 'paginateByUserId'),
     update: jest.spyOn(CoursesService, 'update'),
+}
+
+export const DeviceImageServiceSpy = {
+    getCameraPermission: jest.spyOn(DeviceImageService, 'getCameraPermission'),
+    getMediaLibraryPermissionsAsync: jest.spyOn(DeviceImageService, 'getMediaLibraryPermission'),
+    openCamera: jest.spyOn(DeviceImageService, 'openCamera'),
+    openPicker: jest.spyOn(DeviceImageService, 'openPicker'),
+    requestCameraPermission: jest.spyOn(DeviceImageService, 'requestCameraPermission'),
+    requestMediaLibraryPermission: jest.spyOn(DeviceImageService, 'requestMediaLibraryPermission'),
 }
 
 export const EmailServiceSpy = {
@@ -63,7 +80,7 @@ export const PreachingServiceSpy = {
     update: jest.spyOn(PreachingService, 'update'),
 }
 
-export const DeviceImageServiceSpy = {
-    openCamera: jest.spyOn(DeviceImageService, 'openCamera'),
-    openPicker: jest.spyOn(DeviceImageService, 'openPicker'),
+export const NotificationsServiceSpy = {
+    getNotificationsPermission: jest.spyOn(NotificationsService, 'getNotificationsPermission'),
+    requestNotificationsPermission: jest.spyOn(NotificationsService, 'requestNotificationsPermission'),
 }
