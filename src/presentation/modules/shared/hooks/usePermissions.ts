@@ -59,20 +59,20 @@ const usePermissions = () => {
     /**
      * Checks the permissions of the app.
      *
-     * @return {void} This function does not return any value.
+     * @return {Promise<void>} This function does not return any value.
      */
-    const checkPermissions = (): void => {
-        dispatch(checkPermissionsThunk());
+    const checkPermissions = async (): Promise<void> => {
+        await dispatch(checkPermissionsThunk());
     }
 
     /**
      * Requests the permissions of the app.
      *
      * @param {RequestPermissionsOptions} options - RequestPermissionsOptions
-     * @return {void} This function does not return any value.
+     * @return {Promise<void>} This function does not return any value.
      */
-    const requestPermissions = (options: RequestPermissionsOptions): void => {
-        dispatch(requestPermissionsThunk(options));
+    const requestPermissions = async (options: RequestPermissionsOptions): Promise<void> => {
+        await dispatch(requestPermissionsThunk(options));
     }
 
     /**
