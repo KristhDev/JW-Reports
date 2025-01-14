@@ -28,10 +28,12 @@ export const PDFSpy = {
 
 export const VoiceRecorderSpy = {
     destroyListeners: jest.spyOn(VoiceRecorder, 'destroyListeners'),
+    getRecordAudioPermission: jest.spyOn(VoiceRecorder, 'getRecordAudioPermission'),
     onSpeechEnd: jest.spyOn(VoiceRecorder, 'onSpeechEnd'),
     onSpeechError: jest.spyOn(VoiceRecorder, 'onSpeechError'),
     onSpeechResults: jest.spyOn(VoiceRecorder, 'onSpeechResults'),
     onSpeechStart: jest.spyOn(VoiceRecorder, 'onSpeechStart'),
+    requestRecordAudioPermission: jest.spyOn(VoiceRecorder, 'requestRecordAudioPermission'),
     startRecording: jest.spyOn(VoiceRecorder, 'startRecording'),
     stopRecording: jest.spyOn(VoiceRecorder, 'stopRecording')
 }
