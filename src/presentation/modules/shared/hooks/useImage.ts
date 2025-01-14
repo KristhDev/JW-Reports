@@ -75,7 +75,7 @@ const useImage = () => {
 
         /* Asking for the media library permission. */
         if (isMediaLibraryBlocked) {
-            setStatus({ msg: permissionsMessages.REQUEST, code: 403 });
+            setStatus({ msg: permissionsMessages.REQUEST, code: 401 });
             return;
         }
 
@@ -113,7 +113,7 @@ const useImage = () => {
 
         /* This is a message that is shown to the user when the camera permission is blocked. */
         if (isCameraBlocked) {
-            setStatus({ msg: permissionsMessages.REQUEST, code: 403 });
+            setStatus({ msg: permissionsMessages.REQUEST, code: 401 });
             return;
         }
 
