@@ -59,6 +59,8 @@ export class VoiceRecorder {
      */
     public static onSpeechError(callback: (error: VoiceRecorderError) => void): void {
         ExpoSpeechRecognitionModule.addListener('error', (error) => {
+            if (error.error === 'not-allowed') return;
+
             const voiceRecorderError = new VoiceRecorderError(
                 error.message || appMessages.UNEXPECTED_ERROR,
                 error.error
