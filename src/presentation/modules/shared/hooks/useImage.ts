@@ -1,11 +1,13 @@
 import { useState } from 'react';
-import { PermissionStatus } from 'react-native-permissions';
 
 /* Config */
 import { env } from '@config';
 
 /* Constants */
-import { permissionsMessages } from '@application/constants';
+import { permissionsMessages, permissionsStatus } from '@application/constants';
+
+/* Features */
+import { PermissionStatus } from '@application/features';
 
 /* Models */
 import { ImageModel } from '@domain/models';
@@ -13,40 +15,31 @@ import { ImageModel } from '@domain/models';
 /* Services */
 import { CloudService, DeviceImageService } from '@domain/services';
 
-/* Adapters */
-import { DeviceInfo } from '@infrasturcture/adapters';
-
 /* Hooks */
-import { usePermissions, useStatus } from '.';
-
-/* Utils */
-import { permissionsStatus } from '../utils';
+import { usePermissions, useStatus } from './';
 
 /**
  * This hook allows to group the functions and states in relation to the images.
  */
 const useImage = () => {
-    const { state: { permissions }, askPermission } = usePermissions();
+    const {
+        askPermission,
+
+        isCameraBlocked,
+        isCameraDenied,
+        isCameraGranted,
+        isCameraUnavailable,
+        isCameraUndetermined,
+
+        isMediaLibraryBlocked,
+        isMediaLibraryDenied,
+        isMediaLibraryGranted,
+        isMediaLibraryUnavailable,
+        isMediaLibraryUndetermined,
+    } = usePermissions();
+
     const { setStatus } = useStatus();
-
     const [ image, setImage ] = useState<ImageModel | null>(null);
-
-    const androidVersion = DeviceInfo.getSystemVersion();
-
-    const isCameraBlocked = permissions.camera === permissionsStatus.BLOCKED;
-    const isCameraDenied = permissions.camera === permissionsStatus.DENIED;
-    const isCameraGranted = permissions.camera === permissionsStatus.GRANTED;
-    const isCameraUnavailable = permissions.camera === permissionsStatus.UNAVAILABLE;
-
-    const isReadExternalStorageBlocked = (permissions.readExternalStorage === 'blocked' && androidVersion < '13');
-    const isReadExternalStorageDenied = (permissions.readExternalStorage === 'denied' && androidVersion < '13');
-    const isReadExternalStorageGranted = (permissions.readExternalStorage === 'granted' && androidVersion < '13');
-    const isReadExternalStorageUnavailable = (permissions.readExternalStorage === 'unavailable' && androidVersion < '13');
-
-    const isReadMediaImagesBlocked = (permissions.readMediaImages === 'blocked' && androidVersion >= '13');
-    const isReadMediaImagesDenied = (permissions.readMediaImages === 'denied' && androidVersion >= '13');
-    const isReadMediaImagesGranted = (permissions.readMediaImages === 'granted' && androidVersion >= '13');
-    const isReadMediaImagesUnavailable = (permissions.readMediaImages === 'unavailable' && androidVersion >= '13');
 
     /**
      * Clear the current image and delete it from the device
@@ -74,24 +67,23 @@ const useImage = () => {
     const takeImageToGallery = async (): Promise<void> => {
         let permissionStatus: PermissionStatus = permissionsStatus.DENIED;
 
-        /* This is a message that is shown to the user when the readExternalStorage or readMediaImages permission is unavailable. */
-        if (isReadExternalStorageUnavailable || isReadMediaImagesUnavailable) {
+        /* This is a message that is shown to the user when the media library permission is undetermined. */
+        if (isMediaLibraryUnavailable) {
             setStatus({ msg: permissionsMessages.UNSUPPORTED, code: 418 });
             return;
         }
 
-        /* This is a message that is shown to the user when the readExternalStorage or readMediaImages permission is blocked. */
-        if (isReadExternalStorageBlocked || isReadMediaImagesBlocked) {
+        /* Asking for the media library permission. */
+        if (isMediaLibraryBlocked) {
             setStatus({ msg: permissionsMessages.REQUEST, code: 401 });
             return;
         }
 
-        /* Asking for the readExternalStorage or readMediaImages permission. */
-        if (isReadExternalStorageDenied) permissionStatus = await askPermission('readExternalStorage');
-        if (isReadMediaImagesDenied) permissionStatus = await askPermission('readMediaImages');
+        /* Asking for the media library permission. */
+        if (isMediaLibraryDenied || isMediaLibraryUndetermined) permissionStatus = await askPermission('mediaLibrary');
 
-        /* This is the code that is executed when the readExternalStorage or readMediaImages permission is granted. */
-        if (isReadExternalStorageGranted || isReadMediaImagesGranted || permissionStatus === permissionsStatus.GRANTED) {
+        /* This is the code that is executed when the media library permission is granted. */
+        if (isMediaLibraryGranted || permissionStatus === permissionsStatus.GRANTED) {
             try {
                 const image = await DeviceImageService.openPicker({ cropping: true });
 
@@ -126,10 +118,10 @@ const useImage = () => {
         }
 
         /* This is the code that is executed when the camera permission is denied. */
-        if (isCameraDenied || permissionStatus === permissionsStatus.DENIED) permissionStatus = await askPermission('camera');
+        if (isCameraDenied || isCameraUndetermined) permissionStatus = await askPermission('camera');
 
         /* This is the code that is executed when the camera permission is granted. */
-        if (isCameraGranted || permissionStatus === permissionsStatus.GRANTED || permissionStatus === permissionsStatus.UNAVAILABLE) {
+        if (isCameraGranted || permissionStatus === permissionsStatus.GRANTED) {
             try {
                 const image = await DeviceImageService.openCamera({
                     cameraType: DeviceImageService.cameras.BACK,

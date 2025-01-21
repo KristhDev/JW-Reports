@@ -153,7 +153,6 @@ export const RevisitForm: FC = (): JSX.Element => {
                     }
                     inputDateFormat="DD/MM/YYYY"
                     label="Próxima visita:"
-                    modalTitle="Próxima visita"
                     mode="date"
                     onChangeDate={ (date: string) => setFieldValue('nextVisit', Time.toDate(date)) }
                     placeholder="Seleccione el día"

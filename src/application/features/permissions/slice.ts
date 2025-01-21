@@ -10,12 +10,10 @@ import { PermissionsState, SetPermissionPayload } from './types';
 export const PERMISSIONS_INITIAL_STATE: PermissionsState = {
     isPermissionsRequested: false,
     permissions: {
-        camera: 'unavailable',
-        notifications: 'unavailable',
-        readExternalStorage: 'unavailable',
-        readMediaImages: 'unavailable',
-        recordAudio: 'unavailable',
-        writeExternalStorage: 'unavailable',
+        camera: 'undetermined',
+        mediaLibrary: 'undetermined',
+        notifications: 'undetermined',
+        recordAudio: 'undetermined',
     }
 }
 

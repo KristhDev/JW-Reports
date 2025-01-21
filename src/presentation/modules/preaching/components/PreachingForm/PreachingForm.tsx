@@ -86,7 +86,6 @@ export const PreachingForm = (): JSX.Element => {
                     }
                     inputDateFormat="DD"
                     label="Día de predicación:"
-                    modalTitle="Día de predicación"
                     mode="date"
                     onChangeDate={ (date) => setFieldValue('day', Time.toDate(date)) }
                     placeholder="Seleccione el día"
@@ -122,7 +121,6 @@ export const PreachingForm = (): JSX.Element => {
                     }
                     inputDateFormat="HH:mm"
                     label="Hora de inicio:"
-                    modalTitle="Hora de inicio"
                     mode="time"
                     onChangeDate={ (date) => setFieldValue('initHour', Time.toDate(date)) }
                     placeholder="Seleccione la hora"
@@ -158,7 +156,6 @@ export const PreachingForm = (): JSX.Element => {
                     }
                     inputDateFormat="HH:mm"
                     label="Hora de fin:"
-                    modalTitle="Hora de fin"
                     mode="time"
                     onChangeDate={ (date) => setFieldValue('finalHour', Time.toDate(date)) }
                     placeholder="Seleccione la hora"

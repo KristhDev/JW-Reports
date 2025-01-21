@@ -118,7 +118,6 @@ const FinishOrStartLessonModal: FC<ModalProps> = ({ isOpen, onClose }) => {
                                     }
                                     inputDateFormat="DD/MM/YYYY"
                                     label="Reprogramar clase:"
-                                    modalTitle="Reprogramar clase"
                                     mode="date"
                                     onChangeDate={ (date: string) => setFieldValue('nextLesson', Time.toDate(date)) }
                                     placeholder="Seleccione el día"

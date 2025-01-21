@@ -18,6 +18,7 @@ export const networkMessages = {
 }
 
 export const permissionsMessages = {
+    FILE_EXPORT_DENIED: 'Permiso denegado para exportar el archivo.',
     REQUEST: 'Para realizar esta acción necesita permisos del dispositivo, por favor abra la configuración de su dispositivo y active los permisos de la aplicación.',
     UNSUPPORTED: 'Lo sentimos pero su dispositivo no soporta esta funcionalidad.',
 }

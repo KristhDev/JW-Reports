@@ -105,7 +105,6 @@ export const LessonForm = (): JSX.Element => {
                     }
                     inputDateFormat="DD/MM/YYYY"
                     label="Próxima clase:"
-                    modalTitle="Próxima clase"
                     mode="date"
                     placeholder="Seleccione el día"
                     style={{ marginBottom: margins.xl }}

@@ -2,7 +2,7 @@ import { ReactNode } from 'react';
 import { StyleProp, ViewStyle, TextStyle, TextInputProps } from 'react-native';
 
 /* Defining the interface for the FormField component. */
-export interface FormFieldProps extends TextInputProps {
+export interface FormFieldProps extends Omit<TextInputProps, 'style'> {
     controlStyle?: StyleProp<ViewStyle>;
     inputStyle?: StyleProp<TextStyle>;
     label: string;

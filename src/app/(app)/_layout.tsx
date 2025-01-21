@@ -7,14 +7,14 @@ import { NotificationsService } from '@services';
 
 /* Modules */
 import { useAuth } from '@auth';
-import { permissionsStatus, usePermissions } from '@shared';
+import { usePermissions } from '@shared';
 import { useTheme } from '@theme';
 
 export default function AppLayout(): JSX.Element {
     const { theme: { colors } } = useStyles();
 
     const { state: { isAuthenticated, user } } = useAuth();
-    const { state: { isPermissionsRequested, permissions }, checkPermissions, requestPermissions } = usePermissions();
+    const { state: { isPermissionsRequested }, checkPermissions, isNotificationsGranted, requestPermissions } = usePermissions();
     const { state: { theme } } = useTheme();
 
     /**
@@ -29,7 +29,7 @@ export default function AppLayout(): JSX.Element {
      * Effect to listen notifications by user.
      */
     useEffect(() => {
-        if (!user.id || permissions.notifications !== permissionsStatus.GRANTED) return;
+        if (!user.id || !isNotificationsGranted) return;
         NotificationsService.listenNotificationsByUser(user.id);
     }, [ user.id ]);
 
