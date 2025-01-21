@@ -1,5 +1,8 @@
 import { StorageAccessFramework, EncodingType } from 'expo-file-system';
 
+/* Constants */
+import { permissionsMessages } from '@application/constants';
+
 /* Errors */
 import { ExternalStorageError } from '@domain/errors';
 
@@ -25,7 +28,7 @@ export class ExternalStorage {
     public static async moveFileOfInternalExtorage({ filePath, mimeType }: MoveFileOptions): Promise<void> {
         try {
             const permission = await StorageAccessFramework.requestDirectoryPermissionsAsync();
-            if (!permission.granted) throw new Error('Permiso denegado para exportar el archivo.');
+            if (!permission.granted) throw ExternalStorageError.permissionDenied(permissionsMessages.FILE_EXPORT_DENIED)
 
             const fileName = filePath.split('/').slice(-1)[0];
             const fileContent = await InternalStorage.readFile(filePath, InternalStorage.encodings.BASE64);
@@ -41,6 +44,8 @@ export class ExternalStorage {
             });
         }
         catch (error) {
+            if (error instanceof ExternalStorageError) throw error;
+
             const externalStorageError = new ExternalStorageError((error as Error).message);
             console.error(externalStorageError);
             throw externalStorageError;
