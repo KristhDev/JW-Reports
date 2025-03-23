@@ -58,7 +58,8 @@ const config = ({ config }: ConfigContext): ExpoConfig => ({
                 largeIcons: [ './assets/notifications/ic_onesignal_large_icon_default.png' ],
             }
         ],
-        'expo-speech-recognition'
+        'expo-speech-recognition',
+        'expo-localization'
     ],
     extra: {
         eas: {
