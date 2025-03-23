@@ -8,7 +8,7 @@ import { NotificationsService } from '@services';
 import { PermissionStatus, RequestPermissionsOptions } from './types';
 
 /* Adapters */
-import { VoiceRecorder } from '@infrastructure/adapters';
+import { VoiceRecorderAdapter } from '@infrastructure/adapters';
 
 /* Creating a thunk that will check the permissions of the app. */
 export const checkPermissions = createAsyncThunk(
@@ -18,7 +18,7 @@ export const checkPermissions = createAsyncThunk(
             camera: DeviceImageService.getCameraPermission,
             mediaLibrary: DeviceImageService.getMediaLibraryPermission,
             notifications: NotificationsService.getNotificationsPermission,
-            recordAudio: VoiceRecorder.getRecordAudioPermission
+            recordAudio: VoiceRecorderAdapter.getRecordAudioPermission
         }
 
         const camera = await permissionsPromises.camera();
@@ -45,7 +45,7 @@ export const requestPermissions = createAsyncThunk(
             camera: DeviceImageService.requestCameraPermission,
             mediaLibrary: DeviceImageService.requestMediaLibraryPermission,
             notifications: NotificationsService.requestNotificationsPermission,
-            recordAudio: VoiceRecorder.requestRecordAudioPermission
+            recordAudio: VoiceRecorderAdapter.requestRecordAudioPermission
         }
 
         let camera: PermissionStatus = 'undetermined';

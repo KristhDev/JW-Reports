@@ -17,7 +17,7 @@ import { DeviceImageService } from '@domain/services';
 import { NotificationsService } from '@services';
 
 /* Adapters */
-import { VoiceRecorder } from '@infrastructure/adapters';
+import { VoiceRecorderAdapter } from '@infrastructure/adapters';
 
 /* Hooks */
 import useStatus from './useStatus';
@@ -86,7 +86,7 @@ const usePermissions = () => {
             camera: DeviceImageService.requestCameraPermission,
             mediaLibrary: DeviceImageService.requestMediaLibraryPermission,
             notifications: NotificationsService.requestNotificationsPermission,
-            recordAudio: VoiceRecorder.requestRecordAudioPermission
+            recordAudio: VoiceRecorderAdapter.requestRecordAudioPermission
         }
 
         const status: PermissionStatus = await askPermissions[permission]();

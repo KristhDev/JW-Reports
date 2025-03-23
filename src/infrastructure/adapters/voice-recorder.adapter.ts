@@ -9,7 +9,7 @@ import { PermissionStatus } from '@application/features';
 /* Errors */
 import { VoiceRecorderError } from '@domain/errors';
 
-export class VoiceRecorder {
+export class VoiceRecorderAdapter {
     /**
      * Destroys all listeners for speech recognition events.
      *

@@ -4,4 +4,4 @@ export * from './internal-storage';
 export * from './pdf';
 export * from './storage';
 export * from './time.adapter';
-export * from './voice-recorder';
+export * from './voice-recorder.adapter';
