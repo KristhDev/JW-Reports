@@ -15,7 +15,7 @@ import { DeviceInfo } from '@infrastructure/adapters';
 /* Modules */
 import { useStatus } from '../../hooks';
 import { ThemeModal, useTheme } from '@theme';
-import { SectionBtn, SectionContent, Switch, useUI } from '@ui';
+import { SectionBtn, SectionContent, Switch, useTranslation, useUI } from '@ui';
 
 /* Package */
 import { version as appVersion } from '@package';
@@ -35,6 +35,7 @@ const Settings = (): JSX.Element => {
     const { setStatus } = useStatus();
     const { state: { selectedTheme } } = useTheme();
     const { state: { userInterface }, setOldDatetimePicker } = useUI();
+    const { translate } = useTranslation();
 
     const buildVersion = DeviceInfo.getBuildVersion();
 
@@ -48,7 +49,7 @@ const Settings = (): JSX.Element => {
     const handleMoreInfo = (): void => {
         setStatus({
             code: 200,
-            msg: 'Para más información o dejar sus comentarios acerca de la aplicación, por favor escriba al siguiente correo: kristhdev@gmail.com',
+            msg: translate('screens.settings.moreInfo'),
         });
     }
 
@@ -57,38 +58,38 @@ const Settings = (): JSX.Element => {
             <ScrollView overScrollMode="never">
 
                 {/* Acount secction */}
-                <SectionContent title="MI CUENTA">
+                <SectionContent title={ translate('screens.settings.sections.account.title') }>
                     <SectionBtn
                         onPress={ () => router.navigate('/(app)/settings/profile') }
-                        subText="Actualice sus datos personales"
-                        text="Perfil"
+                        subText={ translate('screens.settings.sections.account.subTexts.profile') }
+                        text={ translate('screens.settings.sections.account.texts.profile') }
                     />
 
                     <SectionBtn
                         onPress={ () => router.navigate('/(app)/settings/credentials') }
-                        subText="Cambie sus credenciales (correo y contraseña)"
-                        text="Credenciales"
+                        subText={ translate('screens.settings.sections.account.subTexts.credentials') }
+                        text={ translate('screens.settings.sections.account.texts.credentials') }
                     />
 
                     <SectionBtn
                         onPress={ () => router.navigate('/(app)/settings/export-data') }
-                        subText="Exporte todos sus datos de la aplicación"
-                        text="Exportar Información"
+                        subText={ translate('screens.settings.sections.account.subTexts.exportInfo') }
+                        text={ translate('screens.settings.sections.account.texts.exportInfo') }
                     />
                 </SectionContent>
 
                 {/* UI section */}
-                <SectionContent title="INTERFAZ DE USUARIO">
+                <SectionContent title={ translate('screens.settings.sections.ui.title') }>
                     <SectionBtn
                         onPress={ () => setShowThemeModal(true) }
                         subText={ THEME_OPTIONS.find(t => t.value === selectedTheme)?.label || '' }
-                        text="Apariencia"
+                        text={ translate('screens.settings.sections.ui.texts.appearance') }
                     />
 
                     <SectionBtn
                         onPress={ () => setOldDatetimePicker(!userInterface.oldDatetimePicker) }
-                        subText="Puede escoger entre los actuales o los antiguos selectores de mes, fecha y tiempo"
-                        text="Selectores de mes, fecha y hora"
+                        subText={ translate('screens.settings.sections.ui.subTexts.datetimeSelectors') }
+                        text={ translate('screens.settings.sections.ui.texts.datetimeSelectors') }
                     >
                         <Switch
                             onChange={ () => setOldDatetimePicker(!userInterface.oldDatetimePicker) }
@@ -98,49 +99,49 @@ const Settings = (): JSX.Element => {
                 </SectionContent>
 
                 {/* Privacy section */}
-                <SectionContent title="PRIVACIDAD">
+                <SectionContent title={ translate('screens.settings.sections.privacy.title') }>
                     <SectionBtn
                         onPress={ () => Linking.openSettings() }
-                        subText="Admita o rechace los permisos de la aplicación (tenga en cuenta que ciertas funcionalidades se verán afectadas)."
-                        text="Permisos"
+                        subText={ translate('screens.settings.sections.privacy.subTexts.permissions') }
+                        text={ translate('screens.settings.sections.privacy.texts.permissions') }
                     />
                 </SectionContent>
 
-                <SectionContent title="COMENTARIOS">
+                <SectionContent title={ translate('screens.settings.sections.comments.title') }>
                     <SectionBtn
                         onPress={ () => router.navigate('/(app)/settings/feedback') }
-                        subText="Comparta sus sugerencias para mejorar la aplicación."
-                        text="Sugerencias"
+                        subText={ translate('screens.settings.sections.comments.subTexts.feedback') }
+                        text={ translate('screens.settings.sections.comments.texts.feedback') }
                     />
 
                     <SectionBtn
                         onPress={ () => router.navigate('/(app)/settings/report-errors') }
-                        subText="Reporte los errores que se presenten en la aplicación."
-                        text="Reportar un error"
+                        subText={ translate('screens.settings.sections.comments.subTexts.reportError') }
+                        text={ translate('screens.settings.sections.comments.texts.reportError') }
                     />
                 </SectionContent>
 
                 {/* About section */}
                 <SectionContent
                     containerStyle={{ borderBottomWidth: 0 }}
-                    title="SOBRE"
+                    title={ translate('screens.settings.sections.about.title') }
                 >
                     <SectionBtn
                         onPress={ () => {} }
                         subText={ `${ appVersion } (${ buildVersion })` }
-                        text="Versión"
+                        text={ translate('screens.settings.sections.about.texts.version') }
                     />
 
                     <SectionBtn
                         onPress={ () => Linking.openURL(env.REPOSITORY_URL!) }
-                        subText="Código fuente de la aplicación"
-                        text="Repositorio"
+                        subText={ translate('screens.settings.sections.about.subTexts.repository') }
+                        text={ translate('screens.settings.sections.about.texts.repository') }
                     />
 
                     <SectionBtn
                         onPress={ handleMoreInfo }
-                        subText="Obtenga información sobre la aplicación o deje sus comentarios"
-                        text="Más información"
+                        subText={ translate('screens.settings.sections.about.subTexts.moreInfo') }
+                        text={ translate('screens.settings.sections.about.texts.moreInfo') }
                     />
                 </SectionContent>
 
