@@ -22,7 +22,7 @@ import {
 } from '@domain/errors';
 
 /* Services */
-import { LoggerService } from '@domain/services';
+import { LoggerService } from '@infrastructure/services';
 
 /**
  * Hook to management status of store with state and actions

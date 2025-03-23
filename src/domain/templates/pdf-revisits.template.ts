@@ -5,7 +5,7 @@ import { TimeAdapter } from '@infrastructure/adapters';
 import { RevisitsTemplateOptions } from '@infrastructure/interfaces';
 
 /* Services */
-import { DeviceImageService } from '../services';
+import { DeviceImageService } from '@infrastructure/services';
 
 export class PdfRevisitsTemplate {
 

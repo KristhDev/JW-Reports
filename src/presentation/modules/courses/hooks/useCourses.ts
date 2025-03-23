@@ -35,7 +35,7 @@ import { ActiveOrSuspendCourseDto, CreateCourseDto, FinishOrStartCourseDto, Upda
 import { CourseEntity, LessonWithCourseEntity } from '@domain/entities';
 
 /* Services */
-import { CoursesService, LessonsService } from '@domain/services';
+import { CoursesService, LessonsService } from '@infrastructure/services';
 
 /* Templates */
 import { PdfCoursesTemplate } from '@domain/templates';

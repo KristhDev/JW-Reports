@@ -35,7 +35,7 @@ import { CreateLessonDto, FinishOrStartLessonDto, UpdateLessonDto } from '@domai
 import { LessonEntity, LessonWithCourseEntity } from '@domain/entities';
 
 /* Services */
-import { CoursesService, LessonsService } from '@domain/services';
+import { CoursesService, LessonsService } from '@infrastructure/services';
 
 /* Hooks */
 import { useAuth } from '@auth';

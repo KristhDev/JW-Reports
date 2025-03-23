@@ -13,7 +13,7 @@ import { TimeAdapter } from '@infrastructure/adapters';
 import { Provider } from '@providers';
 
 /* Services */
-import { EmailService, LoggerService } from '@domain/services';
+import { EmailService, LoggerService } from '@infrastructure/services';
 import { NotificationsService } from '@services';
 
 /* Modules */

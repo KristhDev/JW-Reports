@@ -6,7 +6,7 @@ import { useStyles } from 'react-native-unistyles';
 import { MINISTRY_PARTICIPATIONS, precursors } from '@application/constants';
 
 /* Services */
-import { PreachingReportService } from '@domain/services';
+import { PreachingReportService } from '@infrastructure/services';
 
 /* Adapters */
 import { TimeAdapter } from '@infrastructure/adapters';

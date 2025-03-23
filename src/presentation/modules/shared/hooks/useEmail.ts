@@ -8,7 +8,7 @@ import { emailMessages } from '@application/constants';
 import { EmailError } from '@domain/errors';
 
 /* Services */
-import { EmailService } from '@domain/services';
+import { EmailService } from '@infrastructure/services';
 
 /* Hooks */
 import { useAuth } from '@auth';

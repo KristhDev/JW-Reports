@@ -9,7 +9,7 @@ import { preachingMessages } from '@application/constants';
 import { PreachingEntity } from '@domain/entities';
 
 /* Services */
-import { PreachingReportService } from '@domain/services';
+import { PreachingReportService } from '@infrastructure/services';
 
 /* Adapters */
 import { TimeAdapter } from '@infrastructure/adapters';

@@ -13,7 +13,7 @@ import {
 } from '@application/features';
 
 /* Services */
-import { DeviceImageService } from '@domain/services';
+import { DeviceImageService } from '@infrastructure/services';
 import { NotificationsService } from '@services';
 
 /* Adapters */

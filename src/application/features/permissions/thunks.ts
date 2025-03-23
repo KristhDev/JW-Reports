@@ -1,7 +1,7 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 
 /* Services */
-import { DeviceImageService } from '@domain/services';
+import { DeviceImageService } from '@infrastructure/services';
 import { NotificationsService } from '@services';
 
 /* Types */

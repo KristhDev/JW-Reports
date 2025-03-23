@@ -42,7 +42,7 @@ import { RevisitEntity } from '@domain/entities';
 import { PdfRevisitsTemplate } from '@domain/templates';
 
 /* Services */
-import { RevisitsService } from '@domain/services';
+import { RevisitsService } from '@infrastructure/services';
 
 /* Adapters */
 import { ExternalStorageAdapter, PDFAdapter } from '@infrastructure/adapters';

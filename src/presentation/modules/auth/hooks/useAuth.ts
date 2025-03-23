@@ -27,7 +27,7 @@ import { useNetwork, useStatus } from '@shared';
 import { SignInData, ProfileData, SignUpData, EmailData, UpdatePasswordData } from '../interfaces';
 
 /* Services */
-import { AuthService } from '@domain/services';
+import { AuthService } from '@infrastructure/services';
 import { NotificationsService } from '@services';
 
 /**

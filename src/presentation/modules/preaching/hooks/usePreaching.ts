@@ -27,7 +27,7 @@ import { CreatePreachingDto, UpdatePreachingDto } from '@domain/dtos';
 import { PreachingEntity } from '@domain/entities';
 
 /* Services */
-import { PreachingReportService, PreachingService } from '@domain/services';
+import { PreachingReportService, PreachingService } from '@infrastructure/services';
 
 /* Adapters */
 import { ExternalStorageAdapter, PDFAdapter, TimeAdapter } from '@infrastructure/adapters';

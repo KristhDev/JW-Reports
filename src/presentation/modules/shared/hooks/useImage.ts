@@ -13,7 +13,7 @@ import { PermissionStatus } from '@application/features';
 import { ImageModel } from '@domain/models';
 
 /* Services */
-import { CloudService, DeviceImageService } from '@domain/services';
+import { CloudService, DeviceImageService } from '@infrastructure/services';
 
 /* Hooks */
 import { usePermissions, useStatus } from './';
