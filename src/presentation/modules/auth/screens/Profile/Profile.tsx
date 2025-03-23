@@ -5,7 +5,7 @@ import { useStyles } from 'react-native-unistyles';
 
 /* Components */
 import { ProfileForm } from '../../components';
-import { Title } from '@ui';
+import { Title, useTranslation } from '@ui';
 
 /* Theme */
 import { themeStylesheet } from '@theme';
@@ -18,6 +18,7 @@ import { themeStylesheet } from '@theme';
  */
 const Profile = (): JSX.Element => {
     const { styles: themeStyles, theme: { fontSizes } } = useStyles(themeStylesheet);
+    const { translate } = useTranslation();
 
     return (
         <KeyboardAwareScrollView
@@ -27,7 +28,7 @@ const Profile = (): JSX.Element => {
             <View style={ themeStyles.screenContainer }>
                 <Title
                     containerStyle={ themeStyles.titleContainer }
-                    text="MI PERFIL"
+                    text={ translate('screens.auth.titles.profile') }
                     textStyle={{ fontSize: fontSizes.md }}
                 />
 

@@ -5,7 +5,7 @@ import { useStyles } from 'react-native-unistyles';
 
 /* Components */
 import { CredentialsForm } from '../../components';
-import { Title } from '@ui';
+import { Title, useTranslation } from '@ui';
 
 /* Theme */
 import { themeStylesheet } from '@theme';
@@ -18,6 +18,7 @@ import { themeStylesheet } from '@theme';
  */
 const Credentials = (): JSX.Element => {
     const { styles: themeStyles, theme: { fontSizes, margins } } = useStyles(themeStylesheet);
+    const { translate } = useTranslation();
 
     return (
         <KeyboardAwareScrollView
@@ -28,7 +29,7 @@ const Credentials = (): JSX.Element => {
             <View style={ themeStyles.screenContainer }>
                 <Title
                     containerStyle={ themeStyles.titleContainer }
-                    text="CREDENCIALES"
+                    text={ translate('screens.auth.titles.credentials') }
                     textStyle={{ fontSize: fontSizes.md }}
                 />
 

@@ -5,7 +5,7 @@ import { useStyles } from 'react-native-unistyles';
 
 /* Components */
 import { ForgotPasswordForm } from '../../components';
-import { Title } from '@ui';
+import { Title, useTranslation } from '@ui';
 
 /* Styles */
 import { themeStylesheet } from '@theme';
@@ -18,6 +18,7 @@ import { themeStylesheet } from '@theme';
  */
 const ForgotPassword = (): JSX.Element => {
     const { styles: themeStyles, theme: { fontSizes } } = useStyles(themeStylesheet);
+    const { translate } = useTranslation();
 
     return (
         <KeyboardAwareScrollView
@@ -26,7 +27,7 @@ const ForgotPassword = (): JSX.Element => {
         >
             <View style={ themeStyles.screenContainer }>
                 <Title
-                    text="OLVIDE MI CONTRASEÑA"
+                    text={ translate('screens.auth.titles.forgotPassword') }
                     textStyle={{ fontSize: fontSizes.lg }}
                 />
 

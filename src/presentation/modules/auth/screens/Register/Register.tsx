@@ -5,7 +5,7 @@ import { useStyles } from 'react-native-unistyles';
 
 /* Components */
 import { RegisterForm } from '../../components';
-import { Title } from '@ui';
+import { Title, useTranslation } from '@ui';
 
 /* Theme */
 import { themeStylesheet } from '@theme';
@@ -18,6 +18,7 @@ import { themeStylesheet } from '@theme';
  */
 const Register = (): JSX.Element => {
     const { styles: themeStyles, theme: { fontSizes, margins } } = useStyles(themeStylesheet);
+    const { translate } = useTranslation();
 
     return (
         <KeyboardAwareScrollView
@@ -27,7 +28,7 @@ const Register = (): JSX.Element => {
         >
             <View style={ themeStyles.screenContainer }>
                 <Title
-                    text="CREAR CUENTA"
+                    text={ translate('screens.auth.titles.signUp') }
                     textStyle={{ fontSize: fontSizes.lg }}
                 />
 
