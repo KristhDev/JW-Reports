@@ -1,3 +1,4 @@
+import { TranslationAdapter } from '@infrastructure/adapters/translation.adapter';
 import { ItemOption, Precursor } from '@infrastructure/interfaces';
 
 /**
@@ -17,26 +18,91 @@ export const precursors: Record<Uppercase<Precursor>, Precursor> = {
     REGULAR: 'regular'
 }
 
+export const authPlaceholeders = {
+    EMAIL: TranslationAdapter.translate('forms.placeholders.type', {
+        attribute: TranslationAdapter.translate('forms.fields.email')
+    }),
+
+    PASSWORD: TranslationAdapter.translate('forms.placeholders.type', {
+        attribute: TranslationAdapter.translate('forms.fields.password')
+    }),
+
+    CONFIRM_PASSWORD: TranslationAdapter.translate('forms.placeholders.type', {
+        attribute: TranslationAdapter.translate('forms.fields.confirmPassword')
+    }),
+
+    NAME: TranslationAdapter.translate('forms.placeholders.type', {
+        attribute: TranslationAdapter.translate('forms.fields.name')
+    }),
+
+    SURNAME: TranslationAdapter.translate('forms.placeholders.type', {
+        attribute: TranslationAdapter.translate('forms.fields.surname')
+    }),
+}
+
 export const authMessages = {
-    CONFIRM_PASSWORD_EMPTY: 'La confirmación de la contraseña es requerida.',
-    EMAIL_ALREADY_REGISTERED: 'Ya existe un usuario con este correo.',
-    EMAIL_EMPTY: 'El correo no puede estar vacío.',
-    EMAIL_INVALID: 'Correo electrónico inválido.',
+    CONFIRM_PASSWORD_EMPTY: TranslationAdapter.translate('forms.validations.empty', {
+        article: 'La',
+        attribute: TranslationAdapter.translate('forms.fields.confirmPassword'),
+        empty: 'vacía'
+    }),
+    EMAIL_ALREADY_REGISTERED: TranslationAdapter.translate('forms.validations.email.exists'),
+    EMAIL_EMPTY: TranslationAdapter.translate('forms.validations.empty', {
+        article: 'El',
+        attribute: TranslationAdapter.translate('forms.fields.email'),
+        empty: 'vacío'
+    }),
+    EMAIL_INVALID: TranslationAdapter.translate('forms.validations.email.invalid', {
+        article: 'El',
+        attribute: TranslationAdapter.translate('forms.fields.email')
+    }),
     EMAIL_UPDATE_UNCHANGED: 'Para actualizar tu correo debes cambiarlo.',
-    NAME_EMPTY: 'El nombre no puede estar vacío.',
-    NAME_MIN_LENGTH: 'El nombre debe tener al menos 2 caracteres.',
-    PASSWORD_EMPTY: 'La contraseña no puede estar vacía.',
-    PASSWORD_MIN_LENGTH: 'La contraseña debe tener al menos 6 caracteres.',
-    PASSWORD_NOT_MATCH: 'Las contraseñas no coinciden.',
+    NAME_EMPTY: TranslationAdapter.translate('forms.validations.empty', {
+        article: 'El',
+        attribute: TranslationAdapter.translate('forms.fields.name'),
+        empty: 'vacío'
+    }),
+    NAME_MIN_LENGTH: TranslationAdapter.translate('forms.validations.min', {
+        article: 'El',
+        attribute: TranslationAdapter.translate('forms.fields.name'),
+        min: 2
+    }),
+    PASSWORD_EMPTY: TranslationAdapter.translate('forms.validations.empty', {
+        article: 'La',
+        attribute: TranslationAdapter.translate('forms.fields.password'),
+        empty: 'vacía'
+    }),
+    PASSWORD_MIN_LENGTH: TranslationAdapter.translate('forms.validations.min', {
+        article: 'La',
+        attribute: TranslationAdapter.translate('forms.fields.password'),
+        min: 6
+    }),
+    PASSWORD_NOT_MATCH: TranslationAdapter.translate('forms.validations.password.mismatch'),
     PASSWORD_UPDATED: 'Ha actualizado su contraseña correctamente.',
     PROFILE_UPDATED: 'Ha actualizado su perfil correctamente.',
-    SURNAME_EMPTY: 'Los apellidos no pueden estar vacíos.',
-    SURNAME_MIN_LENGTH: 'Los apellidos deben tener al menos 2 caracteres.',
+    SURNAME_EMPTY: TranslationAdapter.translate('forms.validations.empty', {
+        article: 'Los',
+        attribute: TranslationAdapter.translate('forms.fields.surname'),
+        empty: 'vacíos'
+    }),
+    SURNAME_MIN_LENGTH: TranslationAdapter.translate('forms.validations.min', {
+        article: 'Los',
+        attribute: TranslationAdapter.translate('forms.fields.surname'),
+        min: 2
+    }),
     UNATHENTICATED: 'Para realizar está acción debe iniciar sesión.',
     UNAUTHORIZED: 'No tiene permiso para realizar está acción.',
 }
 
 export const precursorMessages = {
-    PRECURSOR_EMPTY: 'El campo precursor es requerido.',
-    PRECURSOR_INVALID: 'Por favor seleccione una opción de precursor.',
+    PRECURSOR_EMPTY: TranslationAdapter.translate('forms.validations.empty', {
+        article: 'El',
+        attribute: TranslationAdapter.translate('forms.fields.precursor'),
+        empty: 'vacío'
+    }),
+    PRECURSOR_INVALID: TranslationAdapter.translate('forms.validations.enum', {
+        article: 'El',
+        attribute: TranslationAdapter.translate('forms.fields.precursor'),
+        values: PRECURSORS_OPTIONS.map(({ label }) => label).join(', ')
+    }),
 }
