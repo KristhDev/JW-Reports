@@ -1,4 +1,4 @@
-export * from './device-info';
+export * from './device-info.adapter';
 export * from './external-storage';
 export * from './internal-storage';
 export * from './pdf.adapter';

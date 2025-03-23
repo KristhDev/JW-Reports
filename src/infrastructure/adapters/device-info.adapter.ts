@@ -1,6 +1,6 @@
 import * as Application from 'expo-application';
 
-export class DeviceInfo {
+export class DeviceInfoAdapter {
     /**
      * A function that retrieves the build version.
      *

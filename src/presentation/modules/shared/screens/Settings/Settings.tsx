@@ -10,7 +10,7 @@ import { env } from '@config';
 import { THEME_OPTIONS } from '@application/constants';
 
 /* Adapters */
-import { DeviceInfo } from '@infrastructure/adapters';
+import { DeviceInfoAdapter } from '@infrastructure/adapters';
 
 /* Modules */
 import { useStatus } from '../../hooks';
@@ -37,7 +37,7 @@ const Settings = (): JSX.Element => {
     const { state: { userInterface }, setOldDatetimePicker } = useUI();
     const { translate } = useTranslation();
 
-    const buildVersion = DeviceInfo.getBuildVersion();
+    const buildVersion = DeviceInfoAdapter.getBuildVersion();
 
     /**
      * When the user clicks the button, set the status to a new object with a code of 200 and a msg of
