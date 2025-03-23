@@ -87,5 +87,61 @@
                 }
             }
         }
+    },
+
+    "forms": {
+        "labels": {
+            "email": "Correo:",
+            "password": "Contraseña:",
+            "confirmPassword": "Confirmar contraseña:",
+            "name": "Nombre:",
+            "surname": "Apellidos:"
+        },
+
+        "placeholders": {
+            "type": "Ingrese su {{attribute}}"
+        },
+
+        "fields": {
+            "email": "correo",
+            "password": "contraseña",
+            "confirmPassword": "confirmación de contraseña",
+            "name": "nombre",
+            "surname": "apellidos",
+            "precursor": "precursor"
+        },
+
+        "actions": {
+            "cancel": "Cancelar",
+            "ok": "Esta bien",
+            "settings": "Configuración",
+            "signIn": "Ingresar",
+            "signUp": "Crear cuenta"
+        },
+
+        "links": {
+            "createAccount": {
+                "ask": "¿No tienes una cuenta?",
+                "action": "Crea una aquí"
+            },
+
+            "forgotPassword": "Olvidé mi contraseña"
+        },
+
+        "validations": {
+            "empty": "{{article} {{attribute}} no puede estar {{empty}}.",
+            "min": "{{article} {{attribute}} debe tener al menos {{min}} caracteres.",
+
+            "enum": "{{article}} {{attribute}} debe ser uno de los siguientes valores: {{values}}.",
+
+            "email": {
+                "invalid": "{{article} {{attribute}} no es una dirección de correo válida.",
+                "exists": "Ya existe un usuario con este correo."
+            },
+
+            "password": {
+                "mismatch": "Las contraseñas no coinciden."
+            }
+        }
     }
 }

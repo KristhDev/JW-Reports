@@ -87,5 +87,61 @@
                 }
             }
         }
+    },
+
+    "forms": {
+        "labels": {
+            "email": "Email:",
+            "password": "Password:",
+            "confirmPassword": "Confirm Password:",
+            "name": "Name:",
+            "surname": "Surname:"
+        },
+
+        "placeholders": {
+            "type": "Type your {{attribute}}"
+        },
+
+        "fields": {
+            "email": "email",
+            "password": "password",
+            "confirmPassword": "confirm password",
+            "name": "name",
+            "surname": "surname",
+            "precursor": "pioner"
+        },
+
+        "actions": {
+            "cancel": "Cancel",
+            "ok": "Ok",
+            "settings": "Settings",
+            "signIn": "Login",
+            "signUp": "Create account"
+        },
+
+        "links": {
+            "createAccount": {
+                "ask": "Don't have an account?",
+                "action": "Create one here"
+            },
+
+            "forgotPassword": "Forgot my password"
+        },
+
+        "validations": {
+            "empty": "The {{attribute}} can't be empty.",
+            "min": "The {{attribute}} must be at least {{min}} characters.",
+
+            "enum": "The {{attribute}} must be one of the following values: {{values}}.",
+
+            "email": {
+                "invalid": "The {{attribute}} isn't a valid email address.",
+                "exists": "There is already a user with this email."
+            },
+
+            "password": {
+                "mismatch": "The passwords don't match."
+            }
+        }
     }
 }
