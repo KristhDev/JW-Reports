@@ -1,5 +1,5 @@
-/* Infrasturcture */
-import { PreachingsTemplateOptions } from '@infrasturcture/interfaces';
+/* infrastructure */
+import { PreachingsTemplateOptions } from '@infrastructure/interfaces';
 
 export class PdfPreachingsTemplate {
     /**

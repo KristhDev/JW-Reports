@@ -1,5 +1,5 @@
 /* Interfaces */
-import { LessonWithCourseEndpoint } from '@infrasturcture/interfaces';
+import { LessonWithCourseEndpoint } from '@infrastructure/interfaces';
 
 /* Entities */
 import { CourseEntity } from './course.entity';

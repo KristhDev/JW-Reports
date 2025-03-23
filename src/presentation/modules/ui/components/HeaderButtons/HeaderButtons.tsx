@@ -5,7 +5,7 @@ import { useRouter } from 'expo-router';
 import Ionicons from '@expo/vector-icons/Ionicons';
 
 /* Adapters */
-import { Time } from '@infrasturcture/adapters';
+import { Time } from '@infrastructure/adapters';
 
 /* Screens */
 import { DeleteModal, MonthPickerModal } from '../../screens';

@@ -1,5 +1,5 @@
 /* Interfaces */
-import { RevisitEndpoint } from '@infrasturcture/interfaces';
+import { RevisitEndpoint } from '@infrastructure/interfaces';
 
 export class RevisitEntity {
     private constructor(

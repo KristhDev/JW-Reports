@@ -1,4 +1,4 @@
-import { ItemOption, Precursor } from '@infrasturcture/interfaces';
+import { ItemOption, Precursor } from '@infrastructure/interfaces';
 
 /**
  * The precursors options to select

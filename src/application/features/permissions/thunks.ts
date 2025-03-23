@@ -8,7 +8,7 @@ import { NotificationsService } from '@services';
 import { PermissionStatus, RequestPermissionsOptions } from './types';
 
 /* Adapters */
-import { VoiceRecorder } from '@infrasturcture/adapters';
+import { VoiceRecorder } from '@infrastructure/adapters';
 
 /* Creating a thunk that will check the permissions of the app. */
 export const checkPermissions = createAsyncThunk(

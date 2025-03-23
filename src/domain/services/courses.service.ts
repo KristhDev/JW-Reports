@@ -11,7 +11,7 @@ import { CourseEntity, CourseWithLessonsEntity } from '@domain/entities';
 import { RequestError } from '@domain/errors';
 
 /* Interfaces */
-import { CourseEndpoint, PaginateOptions } from '@infrasturcture/interfaces';
+import { CourseEndpoint, PaginateOptions } from '@infrastructure/interfaces';
 import { CourseFilter } from '@courses';
 
 export class CoursesService {

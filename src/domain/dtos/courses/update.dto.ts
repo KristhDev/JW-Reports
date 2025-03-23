@@ -1,5 +1,5 @@
 /* Adapters */
-import { Time } from '@infrasturcture/adapters';
+import { Time } from '@infrastructure/adapters';
 
 /* Interfaces */
 import { CourseFormValues } from '@courses';

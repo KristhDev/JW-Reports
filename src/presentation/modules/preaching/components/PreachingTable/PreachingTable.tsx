@@ -10,7 +10,7 @@ import { TABLE_PREACHING_HEADERS } from '@application/constants';
 import { PreachingEntity } from '@domain/entities';
 
 /* Adapters */
-import { Time } from '@infrasturcture/adapters';
+import { Time } from '@infrastructure/adapters';
 
 /* Components */
 import { TableCell } from '@ui';

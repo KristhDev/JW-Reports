@@ -5,7 +5,7 @@ import { useStyles } from 'react-native-unistyles';
 import Ionicons from '@expo/vector-icons/Ionicons';
 
 /* Adapters */
-import { Time } from '@infrasturcture/adapters';
+import { Time } from '@infrastructure/adapters';
 
 /* Modules */
 import { useLessons } from '../../hooks';

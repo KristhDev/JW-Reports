@@ -1,5 +1,5 @@
 /* Interfaces */
-import { PreachingEndpoint } from '@infrasturcture/interfaces';
+import { PreachingEndpoint } from '@infrastructure/interfaces';
 
 export class PreachingEntity {
     private constructor(

@@ -1,5 +1,5 @@
 /* Interfaces */
-import { Precursor, UserEndpoint } from '@infrasturcture/interfaces';
+import { Precursor, UserEndpoint } from '@infrastructure/interfaces';
 
 export class UserEntity {
     private constructor(

@@ -44,7 +44,7 @@ import { useNetwork, useStatus } from '@shared';
 /* Interfaces */
 import { LessonFormValues } from '../interfaces';
 import { LoadResourcesOptions } from '@ui';
-import { deleteOptions } from '@infrasturcture/interfaces';
+import { deleteOptions } from '@infrastructure/interfaces';
 
 /**
  * Hook to management lessons of store with state and actions

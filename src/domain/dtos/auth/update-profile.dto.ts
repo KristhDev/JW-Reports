@@ -1,6 +1,6 @@
 /* Interfaces */
 import { ProfileData } from '@auth';
-import { Precursor } from '@infrasturcture/interfaces';
+import { Precursor } from '@infrastructure/interfaces';
 
 export class UpdateProfileDto {
     private constructor(

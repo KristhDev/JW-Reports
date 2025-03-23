@@ -11,7 +11,7 @@ import { INIT_LESSON, INIT_REVISIT } from '@application/features';
 import { LessonWithCourseEntity, RevisitEntity } from '@domain/entities';
 
 /* Adapters */
-import { Time } from '@infrasturcture/adapters';
+import { Time } from '@infrastructure/adapters';
 
 /* Modules */
 import { useCourses, PassToCourseModal } from '@courses';

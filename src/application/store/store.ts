@@ -24,7 +24,7 @@ import {
 } from '@application/features';
 
 /* Adapters */
-import { storageKeys, storePersistor } from '@infrasturcture/adapters';
+import { storageKeys, storePersistor } from '@infrastructure/adapters';
 
 /* Debugger */
 import reactotron from '../../../ReactotronConfig';

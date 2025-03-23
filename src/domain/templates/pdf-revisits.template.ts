@@ -1,8 +1,8 @@
 /* Adapters */
-import { Time } from '@infrasturcture/adapters';
+import { Time } from '@infrastructure/adapters';
 
 /* Interfaces */
-import { RevisitsTemplateOptions } from '@infrasturcture/interfaces';
+import { RevisitsTemplateOptions } from '@infrastructure/interfaces';
 
 /* Services */
 import { DeviceImageService } from '../services';

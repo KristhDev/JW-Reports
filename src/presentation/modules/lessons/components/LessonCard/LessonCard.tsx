@@ -5,7 +5,7 @@ import { Menu, MenuOption, MenuOptions, MenuTrigger } from 'react-native-popup-m
 import Ionicons from '@expo/vector-icons/Ionicons';
 
 /* Adapters */
-import { Time } from '@infrasturcture/adapters';
+import { Time } from '@infrastructure/adapters';
 
 /* Components */
 import { Fab } from '@ui';

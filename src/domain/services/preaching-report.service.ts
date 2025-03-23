@@ -6,10 +6,10 @@ import { PreachingEntity } from '@domain/entities';
 import { GroupedPreachingsModel, PreachingReportModel } from '@domain/models';
 
 /* Adapters */
-import { Time } from '@infrasturcture/adapters';
+import { Time } from '@infrastructure/adapters';
 
 /* Interfaces */
-import { RemainingHoursOfWeeklyRequirement, ReamainingOfHoursRequirement, PreachingReportOptions } from '@infrasturcture/interfaces';
+import { RemainingHoursOfWeeklyRequirement, ReamainingOfHoursRequirement, PreachingReportOptions } from '@infrastructure/interfaces';
 
 /* Utils */
 import { Characters } from '@utils';

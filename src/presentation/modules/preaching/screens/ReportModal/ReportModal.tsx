@@ -9,10 +9,10 @@ import { MINISTRY_PARTICIPATIONS, precursors } from '@application/constants';
 import { PreachingReportService } from '@domain/services';
 
 /* Adapters */
-import { Time } from '@infrasturcture/adapters';
+import { Time } from '@infrastructure/adapters';
 
 /* Interfaces */
-import { ParticipateInMinistry } from '@infrasturcture/interfaces';
+import { ParticipateInMinistry } from '@infrastructure/interfaces';
 import { ReportModalProps } from './interfaces';
 
 /* Screens */

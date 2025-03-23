@@ -1,4 +1,4 @@
-import { Precursor } from '@infrasturcture/interfaces';
+import { Precursor } from '@infrastructure/interfaces';
 
 /**
  * AuthStackParamsList is a type that is an object with three properties, each of which

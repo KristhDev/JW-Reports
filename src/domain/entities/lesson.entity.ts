@@ -1,5 +1,5 @@
 /* Interfaces */
-import { LessonEndpoint } from '@infrasturcture/interfaces';
+import { LessonEndpoint } from '@infrastructure/interfaces';
 
 export class LessonEntity {
     private constructor(

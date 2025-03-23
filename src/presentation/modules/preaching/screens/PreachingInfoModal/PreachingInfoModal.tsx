@@ -12,7 +12,7 @@ import { PreachingEntity } from '@domain/entities';
 import { PreachingReportService } from '@domain/services';
 
 /* Adapters */
-import { Time } from '@infrasturcture/adapters';
+import { Time } from '@infrastructure/adapters';
 
 /* UI */
 import { Button, Modal, ModalProps } from '@ui';

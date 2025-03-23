@@ -3,10 +3,11 @@ import { AppState } from 'react-native';
 import { Stack } from 'expo-router';
 import { useStyles } from 'react-native-unistyles';
 
+import '@config/i18n';
 import '@config/unistyles';
 
 /* Adapters */
-import { Time } from '@infrasturcture/adapters';
+import { Time } from '@infrastructure/adapters';
 
 /* Providers */
 import { Provider } from '@providers';

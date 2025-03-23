@@ -5,7 +5,7 @@ import { createClient } from '@supabase/supabase-js';
 import { env } from './env';
 
 /* Adapters */
-import { storage, storageKeys } from '@infrasturcture/adapters';
+import { storage, storageKeys } from '@infrastructure/adapters';
 
 import 'react-native-url-polyfill/auto';
 

@@ -3,7 +3,7 @@ import { ScrollView, Text, View } from 'react-native';
 import { useStyles } from 'react-native-unistyles';
 
 /* Adapters */
-import { Time } from '@infrasturcture/adapters';
+import { Time } from '@infrastructure/adapters';
 
 /* Screens */
 import { FinishOrStartLessonModal } from '../FinishOrStartLessonModal';

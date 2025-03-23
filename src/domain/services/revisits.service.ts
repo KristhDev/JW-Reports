@@ -14,7 +14,7 @@ import { RevisitEntity } from '@domain/entities';
 import { RequestError } from '@domain/errors';
 
 /* Interfaces */
-import { PaginateOptions, RevisitEndpoint } from '@infrasturcture/interfaces';
+import { PaginateOptions, RevisitEndpoint } from '@infrastructure/interfaces';
 import { RevisitFilter } from '@revisits';
 
 export class RevisitsService {

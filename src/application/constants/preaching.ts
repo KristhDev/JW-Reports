@@ -1,4 +1,4 @@
-import { ParticipateInMinistry } from '@infrasturcture/interfaces';
+import { ParticipateInMinistry } from '@infrastructure/interfaces';
 
 /**
  * The headers of the table that will be displayed in the PreachingTable component

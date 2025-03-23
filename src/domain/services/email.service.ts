@@ -7,7 +7,7 @@ import { env } from '@config';
 import { EmailError } from '@domain/errors';
 
 /* Interfaces */
-import { SendEmailOptions } from '@infrasturcture/interfaces';
+import { SendEmailOptions } from '@infrastructure/interfaces';
 
 export class EmailService {
     /**

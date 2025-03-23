@@ -3,7 +3,7 @@ import { Appearance } from 'react-native';
 import { UnistylesRuntime, useStyles } from 'react-native-unistyles';
 
 /* Adapters */
-import { storage, storageKeys } from '@infrasturcture/adapters';
+import { storage, storageKeys } from '@infrastructure/adapters';
 
 /* Context */
 import ThemeContext from './ThemeContext';

@@ -1,8 +1,8 @@
 /* Adapters */
-import { Time } from '@infrasturcture/adapters';
+import { Time } from '@infrastructure/adapters';
 
 /* Interfaces */
-import { CoursesTemplateOptions } from '@infrasturcture/interfaces';
+import { CoursesTemplateOptions } from '@infrastructure/interfaces';
 
 export class PdfCoursesTemplate {
 

@@ -1,4 +1,4 @@
-import { ItemOption } from '@infrasturcture/interfaces';
+import { ItemOption } from '@infrastructure/interfaces';
 
 /**
  * The theme options to select

@@ -13,7 +13,7 @@ import { ImageError } from '@domain/errors';
 import { ImageModel } from '@domain/models';
 
 /* Interfaces */
-import { CameraType, OpenCameraOptions, OpenPickerOptions } from '@infrasturcture/interfaces';
+import { CameraType, OpenCameraOptions, OpenPickerOptions } from '@infrastructure/interfaces';
 
 export class DeviceImageService {
     public static cameras: Record<Uppercase<CameraType>, CameraType> = {

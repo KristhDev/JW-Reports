@@ -14,7 +14,7 @@ import { LessonEntity, LessonWithCourseEntity } from '@domain/entities';
 import { RequestError } from '@domain/errors';
 
 /* Interfaces */
-import { PaginateOptions, LessonEndpoint, LessonWithCourseEndpoint } from '@infrasturcture/interfaces';
+import { PaginateOptions, LessonEndpoint, LessonWithCourseEndpoint } from '@infrastructure/interfaces';
 
 export class LessonsService {
     /**

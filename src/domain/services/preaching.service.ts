@@ -11,10 +11,10 @@ import { CreatePreachingDto, UpdatePreachingDto } from '@domain/dtos';
 import { PreachingEntity } from '@domain/entities';
 
 /* Adapters */
-import { Time } from '@infrasturcture/adapters';
+import { Time } from '@infrastructure/adapters';
 
 /* Interfaces */
-import { PreachingEndpoint } from '@infrasturcture/interfaces';
+import { PreachingEndpoint } from '@infrastructure/interfaces';
 
 export class PreachingService {
     /**

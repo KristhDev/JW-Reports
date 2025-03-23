@@ -2,7 +2,7 @@ import { ReactNode } from 'react';
 import { StyleProp, ViewStyle, TextStyle } from 'react-native';
 
 /* Interfaces */
-import { ItemOption } from '@infrasturcture/interfaces';
+import { ItemOption } from '@infrastructure/interfaces';
 
 /* Defining the props that the component will receive. */
 export interface FormSelectProps {

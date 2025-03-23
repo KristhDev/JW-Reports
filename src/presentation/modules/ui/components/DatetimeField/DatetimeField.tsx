@@ -4,7 +4,7 @@ import { useStyles } from 'react-native-unistyles';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
 
 /* Adapters */
-import { Time } from '@infrasturcture/adapters';
+import { Time } from '@infrastructure/adapters';
 
 /* Components */
 import { Button } from '../Button';

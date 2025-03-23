@@ -41,7 +41,7 @@ import { CoursesService, LessonsService } from '@domain/services';
 import { PdfCoursesTemplate } from '@domain/templates';
 
 /* Adapters */
-import { ExternalStorage, PDF } from '@infrasturcture/adapters';
+import { ExternalStorage, PDF } from '@infrastructure/adapters';
 
 /* Modules */
 import { useAuth } from '@auth';
@@ -50,7 +50,7 @@ import { useStatus, useNetwork } from '@shared';
 
 /* Interfaces */
 import { CourseFilter, CourseFormValues, loadCoursesOptions } from '../interfaces';
-import { deleteOptions } from '@infrasturcture/interfaces';
+import { deleteOptions } from '@infrastructure/interfaces';
 
 /**
  * Hook to management courses of store with state and actions

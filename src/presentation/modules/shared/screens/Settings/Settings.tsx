@@ -10,7 +10,7 @@ import { env } from '@config';
 import { THEME_OPTIONS } from '@application/constants';
 
 /* Adapters */
-import { DeviceInfo } from '@infrasturcture/adapters';
+import { DeviceInfo } from '@infrastructure/adapters';
 
 /* Modules */
 import { useStatus } from '../../hooks';

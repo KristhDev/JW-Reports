@@ -7,7 +7,7 @@ import { useRouter } from 'expo-router';
 import { INIT_LESSON } from '@application/features';
 
 /* Adapters */
-import { Time } from '@infrasturcture/adapters';
+import { Time } from '@infrastructure/adapters';
 
 /* Screens */
 import { ActiveOrSuspendCourseModal } from '../ActiveOrSuspendCourseModal';

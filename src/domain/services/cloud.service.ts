@@ -7,7 +7,7 @@ import { supabase } from '@config';
 import { CloudError } from '@domain/errors';
 
 /* Interfaces */
-import { DeleteImageOptions, UploadImageOptions } from '@infrasturcture/interfaces';
+import { DeleteImageOptions, UploadImageOptions } from '@infrastructure/interfaces';
 
 export class CloudService {
     /**

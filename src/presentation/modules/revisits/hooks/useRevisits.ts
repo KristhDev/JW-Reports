@@ -45,7 +45,7 @@ import { PdfRevisitsTemplate } from '@domain/templates';
 import { RevisitsService } from '@domain/services';
 
 /* Adapters */
-import { ExternalStorage, PDF } from '@infrasturcture/adapters';
+import { ExternalStorage, PDF } from '@infrastructure/adapters';
 
 /* Hooks */
 import { useAuth } from '@auth';
@@ -53,7 +53,7 @@ import { useImage, useNetwork, useStatus } from '@shared';
 
 /* Interfaces */
 import { loadRevisitsOptions, RevisitFilter, SaveRevisitOptions, UpdateRevisitOptions } from '../interfaces';
-import { deleteOptions } from '@infrasturcture/interfaces';
+import { deleteOptions } from '@infrastructure/interfaces';
 
 /**
  * Hook to management revisits of store with state and actions

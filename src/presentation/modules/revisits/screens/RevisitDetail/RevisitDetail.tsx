@@ -3,7 +3,7 @@ import { Image, ScrollView, Text, View, useWindowDimensions } from 'react-native
 import { useStyles } from 'react-native-unistyles';
 
 /* Adapters */
-import { Time } from '@infrasturcture/adapters';
+import { Time } from '@infrastructure/adapters';
 
 /* Modules */
 import { RevisitModal, useRevisits } from '../..';

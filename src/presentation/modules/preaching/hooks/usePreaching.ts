@@ -30,7 +30,7 @@ import { PreachingEntity } from '@domain/entities';
 import { PreachingReportService, PreachingService } from '@domain/services';
 
 /* Adapters */
-import { ExternalStorage, PDF, Time } from '@infrasturcture/adapters';
+import { ExternalStorage, PDF, Time } from '@infrastructure/adapters';
 
 /* Hooks */
 import { useAuth } from '@auth';

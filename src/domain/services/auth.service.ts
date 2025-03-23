@@ -13,7 +13,7 @@ import { UserEntity } from '@domain/entities';
 import { RequestError } from '@domain/errors';
 
 /* Interfaces */
-import { UserEndpoint } from '@infrasturcture/interfaces';
+import { UserEndpoint } from '@infrastructure/interfaces';
 
 export class AuthService {
     /**
