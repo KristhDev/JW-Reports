@@ -4,7 +4,7 @@ import { date, object } from 'yup';
 import { preachingMessages } from '@application/constants';
 
 /* Adapters */
-import { Time } from '@infrastructure/adapters';
+import { TimeAdapter } from '@infrastructure/adapters';
 
 /* Validation schema for preaching */
 export const preachingFormSchema = object().shape({
@@ -14,7 +14,7 @@ export const preachingFormSchema = object().shape({
     initHour: date()
         .required(preachingMessages.INIT_HOUR_REQUIRED)
         .test('date-min', preachingMessages.INIT_HOUR_GREATER_THAN_FINAL, (value, { parent }) => {
-            return Time.isBefore(value, parent.finalHour);
+            return TimeAdapter.isBefore(value, parent.finalHour);
         }),
 
     finalHour: date()

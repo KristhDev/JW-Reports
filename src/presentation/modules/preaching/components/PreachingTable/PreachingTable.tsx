@@ -10,7 +10,7 @@ import { TABLE_PREACHING_HEADERS } from '@application/constants';
 import { PreachingEntity } from '@domain/entities';
 
 /* Adapters */
-import { Time } from '@infrastructure/adapters';
+import { TimeAdapter } from '@infrastructure/adapters';
 
 /* Components */
 import { TableCell } from '@ui';
@@ -83,17 +83,17 @@ export const PreachingTable = (): JSX.Element => {
                         />
 
                         <TableCell
-                            text={ Time.format(preaching.day, 'DD') }
+                            text={ TimeAdapter.format(preaching.day, 'DD') }
                             style={{ backgroundColor: '#746C84', width: cellWidth }}
                         />
 
                         <TableCell
-                            text={ Time.format(preaching.initHour, 'HH:mm') }
+                            text={ TimeAdapter.format(preaching.initHour, 'HH:mm') }
                             style={{ backgroundColor: '#746C84', width: cellWidthHours }}
                         />
 
                         <TableCell
-                            text={ Time.format(preaching.finalHour, 'HH:mm') }
+                            text={ TimeAdapter.format(preaching.finalHour, 'HH:mm') }
                             style={{ backgroundColor: '#746C84', width: cellWidthHours }}
                         />
                     </View>
@@ -108,7 +108,7 @@ export const PreachingTable = (): JSX.Element => {
                 />
 
                 <TableCell
-                    text={ `${ Time.sumHours(preachings.map(p => ({ init: p.initHour, finish: p.finalHour }))) }H` }
+                    text={ `${ TimeAdapter.sumHours(preachings.map(p => ({ init: p.initHour, finish: p.finalHour }))) }H` }
                     style={{ backgroundColor: '#544C63', width: cellWidthHours * 2 }}
                 />
             </View>

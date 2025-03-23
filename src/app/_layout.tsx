@@ -7,7 +7,7 @@ import '@config/i18n';
 import '@config/unistyles';
 
 /* Adapters */
-import { Time } from '@infrastructure/adapters';
+import { TimeAdapter } from '@infrastructure/adapters';
 
 /* Providers */
 import { Provider } from '@providers';
@@ -27,8 +27,8 @@ import { useTheme } from '@theme';
 import { useUI } from '@ui';
 
 /* Global config of date util */
-Time.extend(Time.plugins.weekday);
-Time.setLocale(Time.locale.es);
+TimeAdapter.extend(TimeAdapter.plugins.weekday);
+TimeAdapter.setLocale(TimeAdapter.locale.es);
 
 if (__DEV__) require('../../ReactotronConfig');
 

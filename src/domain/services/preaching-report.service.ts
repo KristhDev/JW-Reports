@@ -6,7 +6,7 @@ import { PreachingEntity } from '@domain/entities';
 import { GroupedPreachingsModel, PreachingReportModel } from '@domain/models';
 
 /* Adapters */
-import { Time } from '@infrastructure/adapters';
+import { TimeAdapter } from '@infrastructure/adapters';
 
 /* Interfaces */
 import { RemainingHoursOfWeeklyRequirement, ReamainingOfHoursRequirement, PreachingReportOptions } from '@infrastructure/interfaces';
@@ -45,8 +45,8 @@ export class PreachingReportService {
      * @return {PreachingReportModel} The preaching report.
      */
     public static generatePreachingReportForExport({ month, year, preachings }: GroupedPreachingsModel): PreachingReportModel {
-        const hours = Time.sumHours(preachings.map(p => ({ init: p.initHour, finish: p.finalHour })));
-        const restMins = Time.getRestMins(preachings.map(p => ({ init: p.initHour, finish: p.finalHour })));
+        const hours = TimeAdapter.sumHours(preachings.map(p => ({ init: p.initHour, finish: p.finalHour })));
+        const restMins = TimeAdapter.getRestMins(preachings.map(p => ({ init: p.initHour, finish: p.finalHour })));
 
         return {
             hours,
@@ -63,8 +63,8 @@ export class PreachingReportService {
      * @return {string} The total hours and minutes formatted as "hours:minutes".
      */
     public static getHoursDoneByWeek(preachingsOfWeek: PreachingEntity[]): string {
-        const hours = Time.sumHours(preachingsOfWeek.map(p => ({ init: p.initHour, finish: p.finalHour })));
-        const { restMins } = Time.sumMins(preachingsOfWeek.map(p => ({ init: p.initHour, finish: p.finalHour })));
+        const hours = TimeAdapter.sumHours(preachingsOfWeek.map(p => ({ init: p.initHour, finish: p.finalHour })));
+        const { restMins } = TimeAdapter.sumMins(preachingsOfWeek.map(p => ({ init: p.initHour, finish: p.finalHour })));
 
         return `${ hours }:${ (restMins === 0) ? '00' : restMins }`;
     }
@@ -100,11 +100,11 @@ export class PreachingReportService {
 
         const currentDate = new Date();
 
-        const hours = Time.setHoursMinutesAndSecondsToDate(currentDate, Number(hoursDone), Number(minsDone), 0);
-        const hoursByWeek = Time.setHoursMinutesAndSecondsToDate(currentDate, Number(hoursRequired), Number(minsRequired), 0);
+        const hours = TimeAdapter.setHoursMinutesAndSecondsToDate(currentDate, Number(hoursDone), Number(minsDone), 0);
+        const hoursByWeek = TimeAdapter.setHoursMinutesAndSecondsToDate(currentDate, Number(hoursRequired), Number(minsRequired), 0);
 
-        const hoursDiff = Time.getDiffBetweenDatesInHours(hoursByWeek, hours);
-        const minsDiff = Time.getDiffBetweenDatesInMinutes(hoursByWeek, hours) % 60;
+        const hoursDiff = TimeAdapter.getDiffBetweenDatesInHours(hoursByWeek, hours);
+        const minsDiff = TimeAdapter.getDiffBetweenDatesInMinutes(hoursByWeek, hours) % 60;
 
         const hoursToReturn = (hoursDiff < 0) ? hoursDiff * -1 : hoursDiff;
         const minsToReturn = (minsDiff < 0) ? minsDiff * -1 : minsDiff;
@@ -123,16 +123,16 @@ export class PreachingReportService {
      * @return {ReamainingOfHoursRequirement} - An object containing the remaining hours of the requirement and a flag indicating if it is negative.
      */
     public static getReamainingOfHoursRequirement(preachings: PreachingEntity[], hoursRequirement: number): ReamainingOfHoursRequirement {
-        const hours = Time.sumHours(preachings.map(p => ({ init: p.initHour, finish: p.finalHour })));
-        const restMins = Time.getRestMins(preachings.map(p => ({ init: p.initHour, finish: p.finalHour })));
+        const hours = TimeAdapter.sumHours(preachings.map(p => ({ init: p.initHour, finish: p.finalHour })));
+        const restMins = TimeAdapter.getRestMins(preachings.map(p => ({ init: p.initHour, finish: p.finalHour })));
 
         const currentDate = new Date()
 
-        const dateWithHoursRequirement = Time.setHoursMinutesAndSecondsToDate(currentDate, hoursRequirement, 0, 0);
-        const dateWithHoursDone = Time.setHoursMinutesAndSecondsToDate(currentDate, hours, restMins, 0);
+        const dateWithHoursRequirement = TimeAdapter.setHoursMinutesAndSecondsToDate(currentDate, hoursRequirement, 0, 0);
+        const dateWithHoursDone = TimeAdapter.setHoursMinutesAndSecondsToDate(currentDate, hours, restMins, 0);
 
-        const hoursDiff = Time.getDiffBetweenDatesInHours(dateWithHoursRequirement, dateWithHoursDone);
-        const minsDiff = Time.getDiffBetweenDatesInMinutes(dateWithHoursRequirement, dateWithHoursDone) % 60;
+        const hoursDiff = TimeAdapter.getDiffBetweenDatesInHours(dateWithHoursRequirement, dateWithHoursDone);
+        const minsDiff = TimeAdapter.getDiffBetweenDatesInMinutes(dateWithHoursRequirement, dateWithHoursDone) % 60;
 
         const hoursToReturn = (hoursDiff < 0) ? hoursDiff * -1 : hoursDiff;
         const minsToReturn = (minsDiff < 0) ? minsDiff * -1 : minsDiff;
@@ -151,10 +151,10 @@ export class PreachingReportService {
      */
     public static groupByMonthAndYear(preachings: PreachingEntity[]): GroupedPreachingsModel[] {
         return preachings.reduce((acc: GroupedPreachingsModel[], preaching) => {
-            const month = Time.getMonthOfDate(preaching.day);
-            const monthName = Time.getMonthName(month);
+            const month = TimeAdapter.getMonthOfDate(preaching.day);
+            const monthName = TimeAdapter.getMonthName(month);
 
-            const year = Time.getYearOfDate(preaching.day);
+            const year = TimeAdapter.getYearOfDate(preaching.day);
 
             let group = acc.find(g => g.month === monthName && g.year === year);
 

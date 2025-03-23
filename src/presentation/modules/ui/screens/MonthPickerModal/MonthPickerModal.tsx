@@ -4,7 +4,7 @@ import { useStyles } from 'react-native-unistyles';
 import Ionicons from '@expo/vector-icons/Ionicons';
 
 /* Adapters */
-import { Time } from '@infrastructure/adapters';
+import { TimeAdapter } from '@infrastructure/adapters';
 
 /* Components */
 import { Button, ModalActions } from '../../components';
@@ -34,12 +34,12 @@ const MonthPickerModal: FC<MonthPickerModalProps> = ({ isOpen, monthDate, onClos
     const { styles } = useStyles(stylesheet);
 
     const [ monthOfDate, setMonthOfDate ] = useState<{ label: string, value: number }>({
-        label: Time.getMonthName(Time.getMonthOfDate(monthDate)),
-        value: Time.getMonthOfDate(monthDate)
+        label: TimeAdapter.getMonthName(TimeAdapter.getMonthOfDate(monthDate)),
+        value: TimeAdapter.getMonthOfDate(monthDate)
     });
 
-    const [ monthNumber, setMonthNumber ] = useState<number>(Time.getMonthOfDate(monthDate));
-    const [ year, setYear ] = useState<number>(Time.getYearOfDate(monthDate));
+    const [ monthNumber, setMonthNumber ] = useState<number>(TimeAdapter.getMonthOfDate(monthDate));
+    const [ year, setYear ] = useState<number>(TimeAdapter.getYearOfDate(monthDate));
 
     /**
      * Handles the change in month number by adding the provided value and ensuring it stays within the valid range of 0-11.
@@ -62,7 +62,7 @@ const MonthPickerModal: FC<MonthPickerModalProps> = ({ isOpen, monthDate, onClos
      * @return {void} Nothing is returned, the onConfirm callback is called internally.
      */
     const handleSelectMonthYear = (): void => {
-        const selectedDateWithMonthAndYear = Time.setMonthAndYearToDate(monthDate, monthNumber, year);
+        const selectedDateWithMonthAndYear = TimeAdapter.setMonthAndYearToDate(monthDate, monthNumber, year);
         onConfirm(selectedDateWithMonthAndYear);
     }
 
@@ -73,19 +73,19 @@ const MonthPickerModal: FC<MonthPickerModalProps> = ({ isOpen, monthDate, onClos
      */
     const handleClose = (): void => {
         setMonthOfDate({
-            label: Time.getMonthName(Time.getMonthOfDate(monthDate)),
-            value: Time.getMonthOfDate(monthDate)
+            label: TimeAdapter.getMonthName(TimeAdapter.getMonthOfDate(monthDate)),
+            value: TimeAdapter.getMonthOfDate(monthDate)
         });
 
-        setYear(Time.getYearOfDate(monthDate));
-        setMonthNumber(Time.getMonthOfDate(monthDate));
+        setYear(TimeAdapter.getYearOfDate(monthDate));
+        setMonthNumber(TimeAdapter.getMonthOfDate(monthDate));
 
         onClose();
     }
 
     useEffect(() => {
         setMonthOfDate({
-            label: Time.getMonthName(monthNumber),
+            label: TimeAdapter.getMonthName(monthNumber),
             value: monthNumber
         });
     }, [ monthNumber ]);

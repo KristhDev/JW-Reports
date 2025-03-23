@@ -7,7 +7,7 @@ import { useRouter } from 'expo-router';
 import { INIT_LESSON } from '@application/features';
 
 /* Adapters */
-import { Time } from '@infrastructure/adapters';
+import { TimeAdapter } from '@infrastructure/adapters';
 
 /* Screens */
 import { ActiveOrSuspendCourseModal } from '../ActiveOrSuspendCourseModal';
@@ -171,7 +171,7 @@ const CourseDetail = (): JSX.Element => {
                                     {
                                         (selectedCourse.lastLesson.done)
                                             ? 'Clase impartida'
-                                            : `Próxima clase ${ Time.format(selectedCourse.lastLesson.nextLesson, 'DD/MM/YYYY') }`
+                                            : `Próxima clase ${ TimeAdapter.format(selectedCourse.lastLesson.nextLesson, 'DD/MM/YYYY') }`
                                         }
                                 </Text>
                             </View>
@@ -210,7 +210,7 @@ const CourseDetail = (): JSX.Element => {
                         style={ themeStyles.createdAtText }
                         testID="course-detail-text-date"
                     >
-                        { Time.format(selectedCourse.createdAt, 'DD/MM/YYYY') }
+                        { TimeAdapter.format(selectedCourse.createdAt, 'DD/MM/YYYY') }
                     </Text>
                 </View>
             </ScrollView>

@@ -9,7 +9,7 @@ import { MINISTRY_PARTICIPATIONS, precursors } from '@application/constants';
 import { PreachingReportService } from '@domain/services';
 
 /* Adapters */
-import { Time } from '@infrastructure/adapters';
+import { TimeAdapter } from '@infrastructure/adapters';
 
 /* Interfaces */
 import { ParticipateInMinistry } from '@infrastructure/interfaces';
@@ -59,9 +59,9 @@ const ReportModal: FC<ReportModalProps> = ({ isOpen, month, onClose }): JSX.Elem
     const { state: { courses } } = useCourses();
 
     const username = `${ user.name } ${ user.surname }`;
-    const totalHours = Time.sumHours(preachings.map(p => ({ init: p.initHour, finish: p.finalHour })));
+    const totalHours = TimeAdapter.sumHours(preachings.map(p => ({ init: p.initHour, finish: p.finalHour })));
     const totalCourses = courses.filter(c => !c.suspended && !c.finished)?.length;
-    const restMins = Time.getRestMins(preachings.map(p => ({ init: p.initHour, finish: p.finalHour })));
+    const restMins = TimeAdapter.getRestMins(preachings.map(p => ({ init: p.initHour, finish: p.finalHour })));
 
     /**
      * When the user clicks the button, the function will close the modal, create a report string, and

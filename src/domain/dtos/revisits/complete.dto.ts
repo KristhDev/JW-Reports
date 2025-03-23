@@ -1,5 +1,5 @@
 /* Adapters */
-import { Time } from '@infrastructure/adapters';
+import { TimeAdapter } from '@infrastructure/adapters';
 
 export class CompleteRevisitDto {
 
@@ -14,6 +14,6 @@ export class CompleteRevisitDto {
      * @returns {CompleteRevisitDto} The new CompleteRevisitDto.
      */
     public static create(done: boolean): CompleteRevisitDto {
-        return new CompleteRevisitDto(done, Time.format(new Date(), 'YYYY-MM-DD HH:mm:ss.SSSSSS'));
+        return new CompleteRevisitDto(done, TimeAdapter.format(new Date(), 'YYYY-MM-DD HH:mm:ss.SSSSSS'));
     }
 }

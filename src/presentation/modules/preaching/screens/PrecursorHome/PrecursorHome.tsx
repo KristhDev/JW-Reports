@@ -8,7 +8,7 @@ import Ionicons from '@expo/vector-icons/Ionicons';
 import { INIT_PREACHING } from '@application/features';
 
 /* Adapters */
-import { Time } from '@infrastructure/adapters';
+import { TimeAdapter } from '@infrastructure/adapters';
 
 /* Screens */
 import { ReportModal } from '../ReportModal';
@@ -44,9 +44,9 @@ const Home = (): JSX.Element => {
     const { state: { user } } = useAuth();
     const { state: { selectedDate, preachings, isPreachingsLoading }, setSelectedPreaching, loadPreachings } = usePreaching();
 
-    const month = Time.format(selectedDate,'MMMM').toUpperCase();
-    const currentMonth = Time.format(new Date(), 'MMMM').toUpperCase();
-    const year = Time.getYearOfDate(selectedDate);
+    const month = TimeAdapter.format(selectedDate,'MMMM').toUpperCase();
+    const currentMonth = TimeAdapter.format(new Date(), 'MMMM').toUpperCase();
+    const year = TimeAdapter.getYearOfDate(selectedDate);
 
     /**
      * I'm trying to set the state of the selectedPreaching object to the INIT_PREACHING object, but I

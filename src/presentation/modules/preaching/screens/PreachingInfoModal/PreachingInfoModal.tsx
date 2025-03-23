@@ -12,7 +12,7 @@ import { PreachingEntity } from '@domain/entities';
 import { PreachingReportService } from '@domain/services';
 
 /* Adapters */
-import { Time } from '@infrastructure/adapters';
+import { TimeAdapter } from '@infrastructure/adapters';
 
 /* UI */
 import { Button, Modal, ModalProps } from '@ui';
@@ -39,7 +39,7 @@ const PreachingInfoModal: FC<ModalProps> = ({ isOpen, onClose }): JSX.Element =>
     const { state: { user } } = useAuth();
     const { state: { preachings } } = usePreaching();
 
-    const preachingsOfWeek = Time.getArrayValuesOfWeek<PreachingEntity>(preachings);
+    const preachingsOfWeek = TimeAdapter.getArrayValuesOfWeek<PreachingEntity>(preachings);
 
     const hoursRequirementByWeek = PreachingReportService.getHoursRequirementByWeek(user.hoursRequirement);
     const hoursDoneByWeek = PreachingReportService.getHoursDoneByWeek(preachingsOfWeek);

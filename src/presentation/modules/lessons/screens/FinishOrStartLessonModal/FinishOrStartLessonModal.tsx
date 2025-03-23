@@ -5,7 +5,7 @@ import { useStyles } from 'react-native-unistyles';
 import Ionicons from '@expo/vector-icons/Ionicons';
 
 /* Adapters */
-import { Time } from '@infrastructure/adapters';
+import { TimeAdapter } from '@infrastructure/adapters';
 
 /* Modules */
 import { useLessons } from '../../hooks';
@@ -119,7 +119,7 @@ const FinishOrStartLessonModal: FC<ModalProps> = ({ isOpen, onClose }) => {
                                     inputDateFormat="DD/MM/YYYY"
                                     label="Reprogramar clase:"
                                     mode="date"
-                                    onChangeDate={ (date: string) => setFieldValue('nextLesson', Time.toDate(date)) }
+                                    onChangeDate={ (date: string) => setFieldValue('nextLesson', TimeAdapter.toDate(date)) }
                                     placeholder="Seleccione el día"
                                     style={{ marginBottom: 0 }}
                                     value={ values.nextLesson.toString() }
@@ -136,7 +136,7 @@ const FinishOrStartLessonModal: FC<ModalProps> = ({ isOpen, onClose }) => {
                                     }
                                     inputDateFormat="DD/MM/YYYY"
                                     label="Reprogramar clase:"
-                                    onChangeDate={ (date: string) => setFieldValue('nextLesson', Time.toDate(date)) }
+                                    onChangeDate={ (date: string) => setFieldValue('nextLesson', TimeAdapter.toDate(date)) }
                                     style={{ marginBottom: 0 }}
                                     value={ values.nextLesson.toString() }
                                 />

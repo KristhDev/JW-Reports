@@ -5,7 +5,7 @@ import { useRouter } from 'expo-router';
 import Ionicons from '@expo/vector-icons/Ionicons';
 
 /* Adapters */
-import { Time } from '@infrastructure/adapters';
+import { TimeAdapter } from '@infrastructure/adapters';
 
 /* Screens */
 import { DeleteModal, MonthPickerModal } from '../../screens';
@@ -72,7 +72,7 @@ export const HeaderButtons: FC<HeaderButtonsProps> = ({
      * @return {void} This function does not return anything.
      */
     const handleSelectMonthYear = (value: string): void => {
-        const newDate = Time.toDate(value);
+        const newDate = TimeAdapter.toDate(value);
 
         setSelectedDate(newDate);
         setShowMonthPicker(false);
@@ -160,7 +160,7 @@ export const HeaderButtons: FC<HeaderButtonsProps> = ({
 
             <MonthPickerModal
                 isOpen={ showMonthPicker }
-                monthDate={ Time.toISOString(selectedDate) }
+                monthDate={ TimeAdapter.toISOString(selectedDate) }
                 onClose={ () => setShowMonthPicker(false) }
                 onConfirm={ handleSelectMonthYear }
             />

@@ -8,7 +8,7 @@ import Ionicons from '@expo/vector-icons/Ionicons';
 import { ImageModel } from '@domain/models';
 
 /* Adapters */
-import { Time } from '@infrastructure/adapters';
+import { TimeAdapter } from '@infrastructure/adapters';
 
 /* Modules */
 import { useRevisits } from '../../hooks';
@@ -154,7 +154,7 @@ export const RevisitForm: FC = (): JSX.Element => {
                     inputDateFormat="DD/MM/YYYY"
                     label="Próxima visita:"
                     mode="date"
-                    onChangeDate={ (date: string) => setFieldValue('nextVisit', Time.toDate(date)) }
+                    onChangeDate={ (date: string) => setFieldValue('nextVisit', TimeAdapter.toDate(date)) }
                     placeholder="Seleccione el día"
                     style={{ marginBottom: margins.xl }}
                     value={ values.nextVisit.toString() }
@@ -171,7 +171,7 @@ export const RevisitForm: FC = (): JSX.Element => {
                     }
                     inputDateFormat="DD/MM/YYYY"
                     label="Próxima visita:"
-                    onChangeDate={ (date: string) => setFieldValue('nextVisit', Time.toDate(date)) }
+                    onChangeDate={ (date: string) => setFieldValue('nextVisit', TimeAdapter.toDate(date)) }
                     style={{ marginBottom: margins.xl }}
                     value={ values.nextVisit.toString() }
                 />

@@ -3,7 +3,7 @@ import { Image, ScrollView, Text, View, useWindowDimensions } from 'react-native
 import { useStyles } from 'react-native-unistyles';
 
 /* Adapters */
-import { Time } from '@infrastructure/adapters';
+import { TimeAdapter } from '@infrastructure/adapters';
 
 /* Modules */
 import { RevisitModal, useRevisits } from '../..';
@@ -29,7 +29,7 @@ const RevisitDetail = (): JSX.Element => {
 
     const { state: { selectedRevisit } } = useRevisits();
 
-    const nextVisit = Time.format(selectedRevisit.nextVisit, 'DD [de] MMMM [del] YYYY');
+    const nextVisit = TimeAdapter.format(selectedRevisit.nextVisit, 'DD [de] MMMM [del] YYYY');
 
     /**
      * Effect to set imageHeight when changing the selectedRevisit.photo
@@ -158,7 +158,7 @@ const RevisitDetail = (): JSX.Element => {
                         style={ themeStyles.createdAtText }
                         testID="revisit-detail-created-date"
                     >
-                        { Time.format(selectedRevisit.createdAt, 'DD/MM/YYYY') }
+                        { TimeAdapter.format(selectedRevisit.createdAt, 'DD/MM/YYYY') }
                     </Text>
                 </View>
             </ScrollView>

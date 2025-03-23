@@ -30,7 +30,7 @@ import { PreachingEntity } from '@domain/entities';
 import { PreachingReportService, PreachingService } from '@domain/services';
 
 /* Adapters */
-import { ExternalStorage, PDF, Time } from '@infrastructure/adapters';
+import { ExternalStorage, PDF, TimeAdapter } from '@infrastructure/adapters';
 
 /* Hooks */
 import { useAuth } from '@auth';
@@ -226,7 +226,7 @@ const usePreaching = () => {
             const createDto = CreatePreachingDto.create({ ...preachingValues, userId: user.id });
             const result = await PreachingService.create(createDto);
 
-            if (Time.format(result.day, 'MMMM') === Time.format(state.selectedDate, 'MMMM')) addPreaching(result);
+            if (TimeAdapter.format(result.day, 'MMMM') === TimeAdapter.format(state.selectedDate, 'MMMM')) addPreaching(result);
 
             router.back();
             setStatus({ code: 201, msg: preachingMessages.ADDED_SUCCESS });

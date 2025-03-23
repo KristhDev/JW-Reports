@@ -5,7 +5,7 @@ import { useFormik } from 'formik';
 import Ionicons from '@expo/vector-icons/Ionicons';
 
 /* Adapters */
-import { Time } from '@infrastructure/adapters';
+import { TimeAdapter } from '@infrastructure/adapters';
 
 /* Modules */
 import { useLessons } from '@lessons';
@@ -108,7 +108,7 @@ export const LessonForm = (): JSX.Element => {
                     mode="date"
                     placeholder="Seleccione el día"
                     style={{ marginBottom: margins.xl }}
-                    onChangeDate={ (date) => setFieldValue('nextLesson', Time.toDate(date)) }
+                    onChangeDate={ (date) => setFieldValue('nextLesson', TimeAdapter.toDate(date)) }
                     value={ values.nextLesson.toISOString() }
                 />
             ) : (
@@ -123,7 +123,7 @@ export const LessonForm = (): JSX.Element => {
                     }
                     inputDateFormat="DD/MM/YYYY"
                     label="Próxima clase:"
-                    onChangeDate={ (date) => setFieldValue('nextLesson', Time.toDate(date)) }
+                    onChangeDate={ (date) => setFieldValue('nextLesson', TimeAdapter.toDate(date)) }
                     style={{ marginBottom: margins.xl }}
                     value={ values.nextLesson.toISOString() }
                 />

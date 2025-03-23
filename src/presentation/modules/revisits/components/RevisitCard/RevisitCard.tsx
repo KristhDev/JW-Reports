@@ -5,7 +5,7 @@ import { Menu, MenuOption, MenuOptions, MenuTrigger } from 'react-native-popup-m
 import Ionicons from '@expo/vector-icons/Ionicons';
 
 /* Adapters */
-import { Time } from '@infrastructure/adapters';
+import { TimeAdapter } from '@infrastructure/adapters';
 
 /* Components */
 import { Fab } from '@ui';
@@ -46,7 +46,7 @@ export const RevisitCard: FC<RevisitCardProps> = ({
 
     const { setSelectedRevisit } = useRevisits();
 
-    const nextVisit = Time.format(revisit.nextVisit, 'DD [de] MMMM [del] YYYY');
+    const nextVisit = TimeAdapter.format(revisit.nextVisit, 'DD [de] MMMM [del] YYYY');
 
     /**
      * When the user clicks on a revisit, set the selected revisit to the revisit that was clicked on

@@ -2,7 +2,7 @@ import dayjs, { Dayjs } from 'dayjs';
 import localeEs from 'dayjs/locale/es';
 import weekday from 'dayjs/plugin/weekday';
 
-export class Time {
+export class TimeAdapter {
     public static locale = {
         es: localeEs
     };
@@ -40,8 +40,8 @@ export class Time {
      * @returns {Array<T>} An array of objects where the 'day' property is within the current week.
      */
     public static getArrayValuesOfWeek<T extends { day: string }>(array: T[]): Array<T> {
-        const firstDayOfWeek = Time.getFirstDayOfCurrentWeek();
-        const lastDayOfWeek = Time.getLastDayOfCurrentWeek();
+        const firstDayOfWeek = TimeAdapter.getFirstDayOfCurrentWeek();
+        const lastDayOfWeek = TimeAdapter.getLastDayOfCurrentWeek();
 
         return array.filter(
             el => dayjs(el.day).isSame(firstDayOfWeek)
@@ -140,7 +140,7 @@ export class Time {
      * @return {number} The total remaining minutes after calculating the difference for each date range.
      */
     public static getRestMins(dates: { init: string, finish: string }[]): number {
-        const { restMins } = Time.sumMins(dates);
+        const { restMins } = TimeAdapter.sumMins(dates);
         return restMins;
     }
 
@@ -224,11 +224,11 @@ export class Time {
             return end.diff(start, 'hours');
         });
 
-        const { hours: minHours } = Time.sumMins(dates);
+        const { hours: minHours } = TimeAdapter.sumMins(dates);
 
         return (minHours >= 1)
-            ? minHours + Time.sumNumbers(hours)
-            : Time.sumNumbers(hours);
+            ? minHours + TimeAdapter.sumNumbers(hours)
+            : TimeAdapter.sumNumbers(hours);
     }
 
     /**
@@ -250,7 +250,7 @@ export class Time {
             return restMins;
         });
 
-        const totalMins = Time.sumNumbers(mins);
+        const totalMins = TimeAdapter.sumNumbers(mins);
         const restMins = totalMins % 60;
 
         return {

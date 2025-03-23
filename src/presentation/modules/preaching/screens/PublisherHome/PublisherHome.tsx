@@ -11,7 +11,7 @@ import { INIT_LESSON, INIT_REVISIT } from '@application/features';
 import { LessonWithCourseEntity, RevisitEntity } from '@domain/entities';
 
 /* Adapters */
-import { Time } from '@infrastructure/adapters';
+import { TimeAdapter } from '@infrastructure/adapters';
 
 /* Modules */
 import { useCourses, PassToCourseModal } from '@courses';
@@ -75,7 +75,7 @@ const PublisherHome = (): JSX.Element => {
         loadLastRevisit
     } = useRevisits();
 
-    const month = Time.format(selectedDate, 'MMMM').toUpperCase();
+    const month = TimeAdapter.format(selectedDate, 'MMMM').toUpperCase();
 
     /**
      * Refreshes the state by loading the most recent lesson and revisit data.

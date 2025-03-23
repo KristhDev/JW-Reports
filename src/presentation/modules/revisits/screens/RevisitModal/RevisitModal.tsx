@@ -5,7 +5,7 @@ import { useFormik } from 'formik';
 import Ionicons from '@expo/vector-icons/Ionicons';
 
 /* Adapters */
-import { Time } from '@infrastructure/adapters';
+import { TimeAdapter } from '@infrastructure/adapters';
 
 /* Modules */
 import { themeStylesheet } from '@theme';
@@ -178,7 +178,7 @@ const RevisitModal: FC<ModalProps> = ({ isOpen, onClose }): JSX.Element => {
                                         inputDateFormat="DD/MM/YYYY"
                                         label="Próxima visita:"
                                         mode="date"
-                                        onChangeDate={ (date: string) => setFieldValue('nextVisit', Time.toDate(date)) }
+                                        onChangeDate={ (date: string) => setFieldValue('nextVisit', TimeAdapter.toDate(date)) }
                                         placeholder="Seleccione el día"
                                         style={{ marginBottom: 0 }}
                                         value={ values.nextVisit.toString() }
@@ -195,7 +195,7 @@ const RevisitModal: FC<ModalProps> = ({ isOpen, onClose }): JSX.Element => {
                                         }
                                         inputDateFormat="DD/MM/YYYY"
                                         label="Próxima visita:"
-                                        onChangeDate={ (date: string) => setFieldValue('nextVisit', Time.toDate(date)) }
+                                        onChangeDate={ (date: string) => setFieldValue('nextVisit', TimeAdapter.toDate(date)) }
                                         style={{ marginBottom: 0 }}
                                         value={ values.nextVisit.toString() }
                                     />

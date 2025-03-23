@@ -5,7 +5,7 @@ import { Menu, MenuOption, MenuOptions, MenuTrigger } from 'react-native-popup-m
 import Ionicons from '@expo/vector-icons/Ionicons';
 
 /* Adapters */
-import { Time } from '@infrastructure/adapters';
+import { TimeAdapter } from '@infrastructure/adapters';
 
 /* Components */
 import { Fab } from '@ui';
@@ -42,7 +42,7 @@ export const LessonCard: FC<LessonCardProps> = ({ lesson, onNavigateDetail, onNa
 
     const { setSelectedLesson } = useLessons();
 
-    const nextVisit = Time.format(lesson.nextLesson, 'DD [de] MMMM [del] YYYY');
+    const nextVisit = TimeAdapter.format(lesson.nextLesson, 'DD [de] MMMM [del] YYYY');
 
     /**
      * When the user clicks on a lesson, the lesson is set as the selected lesson and the user is
