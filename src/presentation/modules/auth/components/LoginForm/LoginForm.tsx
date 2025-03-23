@@ -5,8 +5,11 @@ import { useRouter } from 'expo-router';
 import { useFormik } from 'formik';
 import Ionicons from '@expo/vector-icons/Ionicons';
 
+/* Constants */
+import { authPlaceholeders } from '@application/constants';
+
 /* Components */
-import { Button, EyeBtn, FormField, Link } from '@ui';
+import { Button, EyeBtn, FormField, Link, useTranslation } from '@ui';
 
 /* Hooks */
 import { useAuth } from '../../hooks';
@@ -32,6 +35,7 @@ export const LoginForm = (): JSX.Element => {
 
     const { state: { isAuthLoading }, signIn } = useAuth();
     const { setErrorForm } = useStatus();
+    const { translate } = useTranslation();
 
     const { errors, handleChange, handleSubmit, isValid, values } = useFormik({
         initialValues: {
@@ -70,9 +74,9 @@ export const LoginForm = (): JSX.Element => {
                     />
                 }
                 keyboardType="email-address"
-                label="Correo:"
+                label={ translate('forms.labels.email') }
                 onChangeText={ handleChange('email') }
-                placeholder="Ingrese su correo"
+                placeholder={ authPlaceholeders.EMAIL }
                 value={ values.email }
             />
 
@@ -92,9 +96,9 @@ export const LoginForm = (): JSX.Element => {
                         value={ showPassword }
                     />
                 }
-                label="Contraseña:"
+                label={ translate('forms.labels.password') }
                 onChangeText={ handleChange('password') }
-                placeholder="Ingrese su contraseña"
+                placeholder={ authPlaceholeders.PASSWORD }
                 secureTextEntry={ !showPassword }
                 style={{ marginBottom: margins.xl }}
                 value={ values.password }
@@ -110,20 +114,20 @@ export const LoginForm = (): JSX.Element => {
                     />
                 ) }
                 onPress={ handlePress }
-                text="Ingresar"
+                text={ translate('forms.actions.signIn') }
             />
 
             {/* Sign up link */}
             <View style={ themeStyles.btnLink }>
                 <Text style={ themeStyles.formText }>
-                    ¿No tienes cuenta?
+                    { translate('forms.links.createAccount.ask') }
                 </Text>
 
                 <Link
                     onPress={ () => router.navigate('/auth/register') }
                     testID="login-form-sign-up"
                 >
-                    Crea una aquí
+                    { translate('forms.links.createAccount.action') }
                 </Link>
             </View>
 
@@ -133,7 +137,7 @@ export const LoginForm = (): JSX.Element => {
                     onPress={ () => router.navigate('/auth/forgot-password') }
                     testID="login-form-forgor-pass"
                 >
-                    Olvide mi contraseña
+                    { translate('forms.links.forgotPassword') }
                 </Link>
             </View>
         </View>
