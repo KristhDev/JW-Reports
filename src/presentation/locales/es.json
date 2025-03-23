@@ -8,6 +8,84 @@
                 "signIn": "INGRESAR",
                 "signUp": "CREAR CUENTA"
             }
+        },
+
+        "settings": {
+            "moreInfo": "Para más información o dejar sus comentarios acerca de la aplicación, por favor escriba al siguiente correo: kristhdev@gmail.com.",
+
+            "sections": {
+                "account": {
+                    "title": "MI CUENTA",
+
+                    "texts": {
+                        "profile": "Perfil",
+                        "credentials": "Credenciales",
+                        "exportInfo": "Exportar información"
+                    },
+
+                    "subTexts": {
+                        "profile": "Actualice sus datos personales.",
+                        "credentials": "Cambie sus credenciales (correo electrónico y contraseña).",
+                        "exportInfo": "Exporte todos sus datos de la aplicación."
+                    }
+                },
+
+                "ui": {
+                    "title": "INTERFAZ DE USUARIO",
+
+                    "texts": {
+                        "appearance": "Apariencia",
+                        "language": "Idioma",
+                        "datetimeSelectors": "Selectores de fecha y hora"
+                    },
+
+                    "subTexts": {
+                        "language": "Seleccione el idioma de la aplicación.",
+                        "datetimeSelectors": "Puede escoger entre los actuales o los antiguos selectores de fecha y tiempo."
+                    }
+                },
+
+                "privacy": {
+                    "title": "PRIVACIDAD",
+
+                    "texts": {
+                        "permissions": "Permisos"
+                    },
+
+                    "subTexts": {
+                        "permissions": "Admita o rechace los permisos de la aplicación (tenga en cuenta que ciertas funcionalidades se verán afectadas)."
+                    }
+                },
+
+                "comments": {
+                    "title": "COMENTARIOS",
+
+                    "texts": {
+                        "feedback": "Sugerencias",
+                        "reportError": "Reportar un error"
+                    },
+
+                    "subTexts": {
+                        "feedback": "Comparta sus sugerencias para mejorar la aplicación.",
+                        "reportError": "Reporte los errores que se presenten en la aplicación."
+                    }
+                },
+
+                "about": {
+                    "title": "SOBRE",
+
+                    "texts": {
+                        "version": "Versión",
+                        "repository": "Repositorio",
+                        "moreInfo": "Más información"
+                    },
+
+                    "subTexts": {
+                        "repository": "Código fuente de la aplicación.",
+                        "moreInfo": "Obtenga información sobre la aplicación o deje sus comentarios."
+                    }
+                }
+            }
         }
     }
 }

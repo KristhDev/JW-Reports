@@ -8,6 +8,84 @@
                 "signIn": "SIGN IN",
                 "signUp": "CREATE ACCOUNT"
             }
+        },
+
+        "settings": {
+            "moreInfo": "For more information or to leave your comments about the application, please write to the following email: kristhdev@gmail.com.",
+
+            "sections": {
+                "account": {
+                    "title": "MY ACCOUNT",
+
+                    "texts": {
+                        "profile": "Profile",
+                        "credentials": "Credentials",
+                        "exportInfo": "Export Information"
+                    },
+
+                    "subTexts": {
+                        "profile": "Update your personal information.",
+                        "credentials": "Change your credentials (email and password).",
+                        "exportInfo": "Export all your application data."
+                    }
+                },
+
+                "ui": {
+                    "title": "USER INTERFACE",
+
+                    "texts": {
+                        "appearance": "Appearance",
+                        "language": "Language",
+                        "datetimeSelectors": "Date and time selectors"
+                    },
+
+                    "subTexts": {
+                        "language": "Select the language of the application.",
+                        "datetimeSelectors": "You can choose between the current or the old date and time selectors."
+                    }
+                },
+
+                "privacy": {
+                    "title": "PRIVACY",
+
+                    "texts": {
+                        "permissions": "Permissions"
+                    },
+
+                    "subTexts": {
+                        "permissions": "Admit or deny the application permissions (note that certain functionalities will be affected)."
+                    }
+                },
+
+                "comments": {
+                    "title": "COMMENTS",
+
+                    "texts": {
+                        "feedback": "Feedback",
+                        "reportError": "Report an error"
+                    },
+
+                    "subTexts": {
+                        "feedback": "Share your suggestions to improve the application.",
+                        "reportError": "Report any errors that occur in the application."
+                    }
+                },
+
+                "about": {
+                    "title": "ABOUT",
+
+                    "texts": {
+                        "version": "Version",
+                        "repository": "Repository",
+                        "moreInfo": "More information"
+                    },
+
+                    "subTexts": {
+                        "repository": "Application source code.",
+                        "moreInfo": "Get information about the application or leave your comments."
+                    }
+                }
+            }
         }
     }
 }
