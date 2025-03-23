@@ -41,7 +41,7 @@ import { CoursesService, LessonsService } from '@domain/services';
 import { PdfCoursesTemplate } from '@domain/templates';
 
 /* Adapters */
-import { ExternalStorage, PDF } from '@infrastructure/adapters';
+import { ExternalStorage, PDFAdapter } from '@infrastructure/adapters';
 
 /* Modules */
 import { useAuth } from '@auth';
@@ -254,7 +254,7 @@ const useCourses = () => {
             });
 
             const fileName = `Cursos_de_${ user.name }_${ user.surname }`;
-            const pdfPath = await PDF.writeFromHTML({ fileName, html: coursesTemplate, width: 480 });
+            const pdfPath = await PDFAdapter.writeFromHTML({ fileName, html: coursesTemplate, width: 480 });
 
             await ExternalStorage.moveFileOfInternalExtorage({
                 filePath: pdfPath,

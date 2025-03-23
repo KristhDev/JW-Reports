@@ -9,7 +9,7 @@ import { WriteFromHtmlOptions } from '@infrastructure/interfaces';
 /* Adapters */
 import { InternalStorage } from './internal-storage';
 
-export class PDF {
+export class PDFAdapter {
     /**
      * Writes a PDF from the given HTML to the given file in the given directory.
      *
