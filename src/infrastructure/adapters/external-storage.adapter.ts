@@ -10,7 +10,7 @@ import { ExternalStorageError } from '@domain/errors';
 import { MoveFileOptions } from '@infrastructure/interfaces';
 
 /* Adapters */
-import { InternalStorage } from './internal-storage';
+import { InternalAdapterStorage } from './internal-storage.adapter';
 
 export class ExternalStorageAdapter {
     public static encodings = {
@@ -31,7 +31,7 @@ export class ExternalStorageAdapter {
             if (!permission.granted) throw ExternalStorageError.permissionDenied(permissionsMessages.FILE_EXPORT_DENIED)
 
             const fileName = filePath.split('/').slice(-1)[0];
-            const fileContent = await InternalStorage.readFile(filePath, InternalStorage.encodings.BASE64);
+            const fileContent = await InternalAdapterStorage.readFile(filePath, InternalAdapterStorage.encodings.BASE64);
 
             const fileInExternalStorageUri = await StorageAccessFramework.createFileAsync(
                 permission.directoryUri,
@@ -51,7 +51,7 @@ export class ExternalStorageAdapter {
             throw externalStorageError;
         }
         finally {
-            await InternalStorage.deleteFile(filePath);
+            await InternalAdapterStorage.deleteFile(filePath);
         }
     }
 }

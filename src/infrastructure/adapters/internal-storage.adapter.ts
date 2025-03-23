@@ -6,7 +6,7 @@ import { InternalStorageError } from '@domain/errors';
 /* Interfaces */
 import { EncodingValue, RenameOptions } from '@infrastructure/interfaces';
 
-export class InternalStorage {
+export class InternalAdapterStorage {
     public static encodings = {
         BASE64: FileSystem.EncodingType.Base64,
         UTF8: FileSystem.EncodingType.UTF8

@@ -7,7 +7,7 @@ import { PDFError } from '@domain/errors';
 import { WriteFromHtmlOptions } from '@infrastructure/interfaces';
 
 /* Adapters */
-import { InternalStorage } from './internal-storage';
+import { InternalAdapterStorage } from './internal-storage.adapter';
 
 export class PDFAdapter {
     /**
@@ -24,7 +24,7 @@ export class PDFAdapter {
             const oldFileName = result.uri.split('/').slice(-1)[0];
             const newPath = `${ path }/${ fileName }.pdf`;
 
-            await InternalStorage.rename({ newName: `${ fileName }.pdf`, oldName: oldFileName, path });
+            await InternalAdapterStorage.rename({ newName: `${ fileName }.pdf`, oldName: oldFileName, path });
 
             return newPath;
         }
