@@ -1,5 +1,5 @@
 export * from './device-info.adapter';
-export * from './external-storage';
+export * from './external-storage.adapter';
 export * from './internal-storage';
 export * from './pdf.adapter';
 export * from './storage.adapter';

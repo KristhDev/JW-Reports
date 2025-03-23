@@ -12,7 +12,7 @@ import { MoveFileOptions } from '@infrastructure/interfaces';
 /* Adapters */
 import { InternalStorage } from './internal-storage';
 
-export class ExternalStorage {
+export class ExternalStorageAdapter {
     public static encodings = {
         BASE64: EncodingType.Base64,
         UTF8: EncodingType.UTF8
@@ -40,7 +40,7 @@ export class ExternalStorage {
             );
 
             await StorageAccessFramework.writeAsStringAsync(fileInExternalStorageUri, fileContent, {
-                encoding: ExternalStorage.encodings.BASE64
+                encoding: ExternalStorageAdapter.encodings.BASE64
             });
         }
         catch (error) {

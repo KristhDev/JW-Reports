@@ -45,7 +45,7 @@ import { PdfRevisitsTemplate } from '@domain/templates';
 import { RevisitsService } from '@domain/services';
 
 /* Adapters */
-import { ExternalStorage, PDFAdapter } from '@infrastructure/adapters';
+import { ExternalStorageAdapter, PDFAdapter } from '@infrastructure/adapters';
 
 /* Hooks */
 import { useAuth } from '@auth';
@@ -224,7 +224,7 @@ const useRevisits = () => {
             const fileName = `Revisitas_de_${ user.name }_${ user.surname }`;
             const pdfPath = await PDFAdapter.writeFromHTML({ fileName, html: revisitsTemplate, width: 480 });
 
-            await ExternalStorage.moveFileOfInternalExtorage({
+            await ExternalStorageAdapter.moveFileOfInternalExtorage({
                 filePath: pdfPath,
                 mimeType: 'application/pdf',
             });
