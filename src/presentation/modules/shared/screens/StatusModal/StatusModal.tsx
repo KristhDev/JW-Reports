@@ -5,7 +5,7 @@ import { useStyles } from 'react-native-unistyles';
 /* Modules */
 import { useStatus } from '../../hooks';
 import { themeStylesheet } from '@theme';
-import { Modal, ModalActions } from '@ui';
+import { Modal, ModalActions, useTranslation } from '@ui';
 
 /**
  * This modal is responsible for displaying the success and error
@@ -14,14 +14,16 @@ import { Modal, ModalActions } from '@ui';
  * @return {JSX.Element} return jsx element to render status modal
  */
 const StatusModal = (): JSX.Element => {
-    const { state: { msg }, clearStatus } = useStatus();
     const { styles: themeStyles } = useStyles(themeStylesheet);
+
+    const { state: { msg }, clearStatus } = useStatus();
+    const { translate } = useTranslation();
 
     const configMsg = 'Para realizar está acción necesita permisos del dispositivo, por favor abra la configuración de su dispositivo y active los permisos de la aplicación.';
 
     const btnText = (msg === configMsg)
-        ? 'CONFIGURACIÓN'
-        : 'ESTA BIEN';
+        ? translate('forms.actions.settings').toUpperCase()
+        : translate('forms.actions.ok').toUpperCase();
 
     /**
      * If the message is the config message, open the settings page, otherwise clear the status.
@@ -46,7 +48,7 @@ const StatusModal = (): JSX.Element => {
 
                 {/* Modal actions */}
                 <ModalActions
-                    cancelButtonText="CANCELAR"
+                    cancelButtonText={ translate('forms.actions.cancel').toUpperCase() }
                     confirmTextButton={ btnText }
                     onCancel={ clearStatus }
                     onConfirm={ handleClose }
