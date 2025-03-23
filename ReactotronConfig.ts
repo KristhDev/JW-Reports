@@ -2,7 +2,7 @@ import Reactotron, { openInEditor, trackGlobalErrors, ReactotronReactNative } fr
 import { reactotronRedux } from 'reactotron-redux';
 import mmkvPlugin from 'reactotron-react-native-mmkv';
 
-import { mmkvStorage } from '@infrasturcture/adapters';
+import { mmkvStorage } from '@infrastructure/adapters';
 
 const reactotron = Reactotron
     .configure({
