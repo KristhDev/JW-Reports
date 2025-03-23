@@ -1,0 +1,13 @@
+{
+    "screens": {
+        "auth": {
+            "titles": {
+                "credentials": "CREDECIALES",
+                "forgotPassword": "OLVIDÉ MI CONTRASEÑA",
+                "profile": "MI PERFIL",
+                "signIn": "INGRESAR",
+                "signUp": "CREAR CUENTA"
+            }
+        }
+    }
+}
