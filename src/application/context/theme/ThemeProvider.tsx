@@ -3,7 +3,7 @@ import { Appearance } from 'react-native';
 import { UnistylesRuntime, useStyles } from 'react-native-unistyles';
 
 /* Adapters */
-import { storage, storageKeys } from '@infrastructure/adapters';
+import { storageAdapter, storageKeys } from '@infrastructure/adapters';
 
 /* Context */
 import ThemeContext from './ThemeContext';
@@ -38,7 +38,7 @@ const ThemeProvider: FC<PropsWithChildren> = ({ children }) => {
         setThemeState(userTheme as Theme);
         setSelectedTheme(theme);
 
-        storage.setItem(storageKeys.THEME, theme);
+        storageAdapter.setItem(storageKeys.THEME, theme);
     }
 
     const store = useMemo(() => ({
@@ -58,7 +58,7 @@ const ThemeProvider: FC<PropsWithChildren> = ({ children }) => {
     }, []);
 
     useEffect(() => {
-        const theme = storage.getItem(storageKeys.THEME);
+        const theme = storageAdapter.getItem(storageKeys.THEME);
         setTheme(theme as Theme || 'default');
     }, []);
 

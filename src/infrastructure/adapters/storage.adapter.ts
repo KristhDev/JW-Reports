@@ -11,7 +11,7 @@ export const storageKeys = {
 
 export const mmkvStorage = new MMKV();
 
-export const storage = {
+export const storageAdapter = {
     /**
      * Sets a value in the storage.
      *
