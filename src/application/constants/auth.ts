@@ -1,14 +1,28 @@
 import { TranslationAdapter } from '@infrastructure/adapters/translation.adapter';
 import { ItemOption, Precursor } from '@infrastructure/interfaces';
 
+import { Characters } from '@utils';
+
 /**
  * The precursors options to select
  */
 export const PRECURSORS_OPTIONS: ItemOption[] = [
-    { label: 'Ninguno', value: 'ninguno' },
-    { label: 'Auxiliar', value: 'auxiliar' },
-    { label: 'Regular', value: 'regular' },
-    { label: 'Especial', value: 'especial' }
+    { 
+        label: Characters.capitalize(TranslationAdapter.translate('pioners.none')), 
+        value: 'ninguno' 
+    },
+    { 
+        label: Characters.capitalize(TranslationAdapter.translate('pioners.auxiliary')), 
+        value: 'auxiliar' 
+    },
+    { 
+        label: Characters.capitalize(TranslationAdapter.translate('pioners.regular')), 
+        value: 'regular' 
+    },
+    { 
+        label: Characters.capitalize(TranslationAdapter.translate('pioners.special')), 
+        value: 'especial' 
+    }
 ];
 
 export const precursors: Record<Uppercase<Precursor>, Precursor> = {
@@ -56,7 +70,9 @@ export const authMessages = {
         article: 'El',
         attribute: TranslationAdapter.translate('forms.fields.email')
     }),
-    EMAIL_UPDATE_UNCHANGED: 'Para actualizar tu correo debes cambiarlo.',
+    EMAIL_UPDATE_UNCHANGED: TranslationAdapter.translate('forms.validations.unchanged', {
+        attribute: TranslationAdapter.translate('forms.fields.email')
+    }),
     NAME_EMPTY: TranslationAdapter.translate('forms.validations.empty', {
         article: 'El',
         attribute: TranslationAdapter.translate('forms.fields.name'),
@@ -78,8 +94,12 @@ export const authMessages = {
         min: 6
     }),
     PASSWORD_NOT_MATCH: TranslationAdapter.translate('forms.validations.password.mismatch'),
-    PASSWORD_UPDATED: 'Ha actualizado su contraseña correctamente.',
-    PROFILE_UPDATED: 'Ha actualizado su perfil correctamente.',
+    PASSWORD_UPDATED: TranslationAdapter.translate('messages.success.updated', {
+        attribute: TranslationAdapter.translate('forms.fields.password')
+    }),
+    PROFILE_UPDATED: TranslationAdapter.translate('messages.success.updated', {
+        attribute: TranslationAdapter.translate('forms.fields.profile')
+    }),
     SURNAME_EMPTY: TranslationAdapter.translate('forms.validations.empty', {
         article: 'Los',
         attribute: TranslationAdapter.translate('forms.fields.surname'),
@@ -90,8 +110,8 @@ export const authMessages = {
         attribute: TranslationAdapter.translate('forms.fields.surname'),
         min: 2
     }),
-    UNATHENTICATED: 'Para realizar está acción debe iniciar sesión.',
-    UNAUTHORIZED: 'No tiene permiso para realizar está acción.',
+    UNATHENTICATED: TranslationAdapter.translate('messages.errors.unauthenticated'),
+    UNAUTHORIZED: TranslationAdapter.translate('messages.errors.unauthorized'),
 }
 
 export const precursorMessages = {
