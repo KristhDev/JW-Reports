@@ -1,4 +1,22 @@
 {
+    "messages": {
+        "success": {
+            "updated": "Ha actualizado su {{attribute}} correctamente."
+        },
+
+        "errors": {
+            "unauthenticated": "Para realizar está acción debe iniciar sesión.",
+            "unauthorized": "No tiene permiso para realizar está acción."
+        }
+    },
+
+    "pioners": {
+        "none": "ninguno",
+        "auxiliary": "auxiliar",
+        "regular": "regular",
+        "special": "especial"
+    },
+
     "screens": {
         "auth": {
             "titles": {
@@ -108,7 +126,8 @@
             "confirmPassword": "confirmación de contraseña",
             "name": "nombre",
             "surname": "apellidos",
-            "precursor": "precursor"
+            "precursor": "precursor",
+            "profile": "perfil"
         },
 
         "actions": {
@@ -129,19 +148,20 @@
         },
 
         "validations": {
-            "empty": "{{article} {{attribute}} no puede estar {{empty}}.",
-            "min": "{{article} {{attribute}} debe tener al menos {{min}} caracteres.",
-
-            "enum": "{{article}} {{attribute}} debe ser uno de los siguientes valores: {{values}}.",
-
             "email": {
                 "invalid": "{{article} {{attribute}} no es una dirección de correo válida.",
                 "exists": "Ya existe un usuario con este correo."
             },
 
+            "empty": "{{article} {{attribute}} no puede estar {{empty}}.",
+            "enum": "{{article}} {{attribute}} debe ser uno de los siguientes valores: {{values}}.",
+            "min": "{{article} {{attribute}} debe tener al menos {{min}} caracteres.",
+
             "password": {
                 "mismatch": "Las contraseñas no coinciden."
-            }
+            },
+
+            "unchanged": "Para actualizar su {{attribute}} debes cambiarlo."
         }
     }
 }

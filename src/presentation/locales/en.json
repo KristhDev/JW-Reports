@@ -1,4 +1,22 @@
 {
+    "messages": {
+        "success": {
+            "updated": "You have updated your {{attribute}} successfully."
+        },
+
+        "errors": {
+            "unauthenticated": "You must be logged in to perform this action.",
+            "unauthorized": "You don't have permission to perform this action."
+        }
+    },
+
+    "pioners": {
+        "none": "none",
+        "auxiliary": "auxiliary",
+        "regular": "regular",
+        "special": "special"
+    },
+
     "screens": {
         "auth": {
             "titles": {
@@ -108,7 +126,8 @@
             "confirmPassword": "confirm password",
             "name": "name",
             "surname": "surname",
-            "precursor": "pioner"
+            "precursor": "pioner",
+            "profile": "profile"
         },
 
         "actions": {
@@ -129,19 +148,20 @@
         },
 
         "validations": {
-            "empty": "The {{attribute}} can't be empty.",
-            "min": "The {{attribute}} must be at least {{min}} characters.",
-
-            "enum": "The {{attribute}} must be one of the following values: {{values}}.",
-
             "email": {
                 "invalid": "The {{attribute}} isn't a valid email address.",
                 "exists": "There is already a user with this email."
             },
 
+            "empty": "The {{attribute}} can't be empty.",
+            "enum": "The {{attribute}} must be one of the following values: {{values}}.",
+            "min": "The {{attribute}} must be at least {{min}} characters.",
+
             "password": {
                 "mismatch": "The passwords don't match."
-            }
+            },
+
+            "unchanged": "To update your {{attribute}} you must change it."
         }
     }
 }
