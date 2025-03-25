@@ -114,7 +114,7 @@ export const LoginForm = (): JSX.Element => {
                     />
                 ) }
                 onPress={ handlePress }
-                text={ translate('forms.actions.signIn') }
+                text={ translate('forms.actions.auth.signIn') }
             />
 
             {/* Sign up link */}
