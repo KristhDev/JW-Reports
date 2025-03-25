@@ -17,6 +17,14 @@
         "special": "especial"
     },
 
+    "modals": {
+        "auth": {
+            "titles": {
+                "selectPioneer": "Seleccione su precursorado"
+            }
+        }
+    },
+
     "screens": {
         "auth": {
             "titles": {
@@ -108,34 +116,58 @@
     },
 
     "forms": {
+        "paragraphs": {
+            "forgotPassword": "Ingrese su correo electrónico para restablecer su contraseña y recuperar la cuenta."
+        },
+
         "labels": {
-            "email": "Correo:",
-            "password": "Contraseña:",
             "confirmPassword": "Confirmar contraseña:",
+            "email": "Correo:",
+            "hoursRequirement": "Requerimiento de horas:",
             "name": "Nombre:",
+            "newPassword": "Nueva contraseña:",
+            "password": "Contraseña:",
+            "pioner": "Precursor:",
             "surname": "Apellidos:"
         },
 
+        "checkboxes": {
+            "auth": {
+                "editHoursRequirement": "Editar requerimiento de horas",
+                "ldcParticipation": "Estoy participando en el LDC"
+            }
+        },
+
         "placeholders": {
+            "confirm": "Confirme su {{attribute}}",
+            "selectOne": "Seleccione una opción",
             "type": "Ingrese su {{attribute}}"
         },
 
         "fields": {
-            "email": "correo",
-            "password": "contraseña",
             "confirmPassword": "confirmación de contraseña",
+            "email": "correo",
+            "hoursRequirement": "requerimiento de horas",
             "name": "nombre",
-            "surname": "apellidos",
-            "precursor": "precursor",
-            "profile": "perfil"
+            "password": "contraseña",
+            "pioner": "precursor",
+            "profile": "perfil",
+            "surname": "apellidos"
         },
 
         "actions": {
+            "auth": {
+                "changeEmail": "Cambiar correo",
+                "changePassword": "Cambiar contraseña",
+                "resetPassword": "Restablecer contraseña",
+                "signIn": "Ingresar",
+                "signUp": "Crear cuenta"
+            },
+
             "cancel": "Cancelar",
             "ok": "Esta bien",
-            "settings": "Configuración",
-            "signIn": "Ingresar",
-            "signUp": "Crear cuenta"
+            "save": "Guardar",
+            "settings": "Configuración"
         },
 
         "links": {
@@ -144,7 +176,12 @@
                 "action": "Crea una aquí"
             },
 
-            "forgotPassword": "Olvidé mi contraseña"
+            "forgotPassword": "Olvidé mi contraseña",
+            "signIn": {
+                "ask": "¿Ya tienes cuenta?",
+                "action": "Ingresa aquí"
+            },
+            "signInWithAccount": "Ingresar con mi cuenta"
         },
 
         "validations": {

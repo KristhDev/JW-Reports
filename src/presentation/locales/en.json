@@ -17,6 +17,14 @@
         "special": "special"
     },
 
+    "modals": {
+        "auth": {
+            "titles": {
+                "selectPioneer": "Select your pioneer"
+            }
+        }
+    },
+
     "screens": {
         "auth": {
             "titles": {
@@ -108,34 +116,58 @@
     },
 
     "forms": {
+        "paragraphs": {
+            "forgotPassword":"Enter your email address to reset your password and recover your account."
+        },
+
         "labels": {
-            "email": "Email:",
-            "password": "Password:",
             "confirmPassword": "Confirm Password:",
+            "email": "Email:",
+            "hoursRequirement": "Hours Requirement:",
             "name": "Name:",
+            "newPassword": "New Password:",
+            "password": "Password:",
+            "pioner": "Pioner:",
             "surname": "Surname:"
         },
 
+        "checkboxes": {
+            "auth": {
+                "editHoursRequirement": "Edit hours requirement",
+                "ldcParticipation": "I'm participating in LDC"
+            }
+        },
+
         "placeholders": {
+            "confirm": "Confirm your {{attribute}}",
+            "selectOne": "Select one option",
             "type": "Type your {{attribute}}"
         },
 
         "fields": {
-            "email": "email",
-            "password": "password",
             "confirmPassword": "confirm password",
+            "email": "email",
+            "hoursRequirement": "hours requirement",
             "name": "name",
-            "surname": "surname",
-            "precursor": "pioner",
-            "profile": "profile"
+            "password": "password",
+            "pioner": "pioner",
+            "profile": "profile",
+            "surname": "surname"
         },
 
         "actions": {
+            "auth": {
+                "changeEmail": "Change email",
+                "changePassword": "Change password",
+                "resetPassword": "Reset password",
+                "signIn": "Login",
+                "signUp": "Create account"
+            },
+
             "cancel": "Cancel",
             "ok": "Ok",
-            "settings": "Settings",
-            "signIn": "Login",
-            "signUp": "Create account"
+            "save": "Save",
+            "settings": "Settings"
         },
 
         "links": {
@@ -144,7 +176,12 @@
                 "action": "Create one here"
             },
 
-            "forgotPassword": "Forgot my password"
+            "forgotPassword": "Forgot my password",
+            "signIn": {
+                "ask": "Already have an account?",
+                "action": "Login here"
+            },
+            "signInWithAccount": "Login with my account"
         },
 
         "validations": {
