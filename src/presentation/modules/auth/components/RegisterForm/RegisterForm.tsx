@@ -5,8 +5,11 @@ import { useRouter } from 'expo-router';
 import { useStyles } from 'react-native-unistyles';
 import Ionicons from '@expo/vector-icons/Ionicons';
 
+/* Constants */
+import { authPlaceholeders } from '@application/constants';
+
 /* Components */
-import { Button, EyeBtn, FormField, Link } from '@ui';
+import { Button, EyeBtn, FormField, Link, useTranslation } from '@ui';
 
 /* Hooks */
 import { useAuth } from '../../hooks';
@@ -33,6 +36,7 @@ export const RegisterForm = (): JSX.Element => {
 
     const { state: { isAuthLoading }, signUp } = useAuth();
     const { setErrorForm } = useStatus();
+    const { translate } = useTranslation();
 
     const { errors, handleChange, handleSubmit, isValid, values } = useFormik({
         initialValues: {
@@ -71,9 +75,9 @@ export const RegisterForm = (): JSX.Element => {
                         size={ fontSizes.icon }
                     />
                 }
-                label="Nombre:"
+                label={ translate('forms.labels.name') }
                 onChangeText={ handleChange('name') }
-                placeholder="Ingrese su nombre"
+                placeholder={ authPlaceholeders.NAME }
                 value={ values.name }
             />
 
@@ -87,9 +91,9 @@ export const RegisterForm = (): JSX.Element => {
                         size={ fontSizes.icon }
                     />
                 }
-                label="Apellidos:"
+                label={ translate('forms.labels.surname') }
                 onChangeText={ handleChange('surname') }
-                placeholder="Ingrese su apellido"
+                placeholder={ authPlaceholeders.SURNAME }
                 value={ values.surname }
             />
 
@@ -104,9 +108,9 @@ export const RegisterForm = (): JSX.Element => {
                     />
                 }
                 keyboardType="email-address"
-                label="Correo:"
+                label={ translate('forms.labels.email') }
                 onChangeText={ handleChange('email') }
-                placeholder="Ingrese su correo"
+                placeholder={ authPlaceholeders.EMAIL }
                 value={ values.email }
             />
 
@@ -126,9 +130,9 @@ export const RegisterForm = (): JSX.Element => {
                         value={ showPassword }
                     />
                 }
-                label="Contraseña:"
+                label={ translate('forms.labels.password') }
                 onChangeText={ handleChange('password') }
-                placeholder="Ingrese su contraseña"
+                placeholder={ authPlaceholeders.PASSWORD }
                 secureTextEntry={ !showPassword }
                 value={ values.password }
             />
@@ -149,9 +153,9 @@ export const RegisterForm = (): JSX.Element => {
                         value={ showConfirmPassword }
                     />
                 }
-                label="Confirmar contraseña:"
+                label={ translate('forms.labels.confirmPassword') }
                 onChangeText={ handleChange('confirmPassword') }
-                placeholder="Confirme su contraseña"
+                placeholder={ authPlaceholeders.CONFIRM_PASSWORD }
                 secureTextEntry={ !showConfirmPassword }
                 value={ values.confirmPassword }
             />
@@ -167,20 +171,20 @@ export const RegisterForm = (): JSX.Element => {
                 ) }
                 onPress={ handlePress }
                 pressableStyle={{ marginTop: (margins.lg - 2) }}
-                text="Crear cuenta"
+                text={ translate('forms.actions.auth.signUp') }
             />
 
             {/* Sign in link */}
             <View style={ themeStyles.btnLink }>
                 <Text style={ themeStyles.formText }>
-                    ¿Ya tienes cuenta?
+                    { translate('forms.links.signIn.ask') }
                 </Text>
 
                 <Link
                     onPress={ () => router.back() }
                     testID="register-form-sign-in"
                 >
-                    Ingresa aquí
+                    { translate('forms.links.signIn.action') }
                 </Link>
             </View>
         </View>
