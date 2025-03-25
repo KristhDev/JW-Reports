@@ -4,8 +4,11 @@ import { useStyles } from 'react-native-unistyles';
 import { useFormik } from 'formik';
 import Ionicons from '@expo/vector-icons/Ionicons';
 
+/* Constants */
+import { authPlaceholeders } from '@application/constants';
+
 /* Components */
-import { Button, EyeBtn, FormField } from '@ui';
+import { Button, EyeBtn, FormField, useTranslation } from '@ui';
 
 /* Hooks */
 import { useAuth } from '../../hooks';
@@ -30,6 +33,7 @@ export const CredentialsForm = (): JSX.Element => {
 
     const { state: { user, isAuthLoading }, updateEmail, updatePassword } = useAuth();
     const { setErrorForm } = useStatus();
+    const { translate } = useTranslation();
 
     /**
      * Handles updating the email.
@@ -114,9 +118,9 @@ export const CredentialsForm = (): JSX.Element => {
                         />
                     }
                     keyboardType="email-address"
-                    label="Correo:"
+                    label={ translate('forms.labels.email') }
                     onChangeText={ formikUpdateEmail.handleChange('email') }
-                    placeholder="Ingrese su correo"
+                    placeholder={ authPlaceholeders.EMAIL }
                     style={{ marginBottom: margins.xl }}
                     value={ formikUpdateEmail.values.email }
                 />
@@ -132,7 +136,7 @@ export const CredentialsForm = (): JSX.Element => {
                     ) }
                     onPress={ handleSubmitUpdateEmail }
                     pressableStyle={{ marginBottom: margins.xl }}
-                    text="Cambiar correo"
+                    text={ translate('forms.actions.auth.changeEmail') }
                 />
             </View>
 
@@ -154,9 +158,9 @@ export const CredentialsForm = (): JSX.Element => {
                             value={ showPassword }
                         />
                     }
-                    label="Nueva contraseña:"
+                    label={ translate('forms.labels.password') }
                     onChangeText={ formikUpdatePassword.handleChange('password') }
-                    placeholder="Ingrese su contraseña"
+                    placeholder={ authPlaceholeders.PASSWORD }
                     secureTextEntry={ !showPassword }
                     value={ formikUpdatePassword.values.password }
                 />
@@ -177,9 +181,9 @@ export const CredentialsForm = (): JSX.Element => {
                             value={ showConfirmPassword }
                         />
                     }
-                    label="Confirmar contraseña:"
+                    label={ translate('forms.labels.confirmPassword') }
                     onChangeText={ formikUpdatePassword.handleChange('confirmPassword') }
-                    placeholder="Confirme su contraseña"
+                    placeholder={ authPlaceholeders.CONFIRM_NEW_PASSWORD }
                     secureTextEntry={ !showConfirmPassword }
                     style={{ marginBottom: margins.xl }}
                     value={ formikUpdatePassword.values.confirmPassword }
@@ -196,7 +200,7 @@ export const CredentialsForm = (): JSX.Element => {
                     ) }
                     onPress={ handleSubmitUpdatePassword }
                     pressableStyle={{ marginBottom: margins.xl }}
-                    text="Cambiar contraseña"
+                    text={ translate('forms.actions.auth.changePassword') }
                 />
             </View>
         </View>
