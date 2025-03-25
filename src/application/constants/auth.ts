@@ -45,6 +45,14 @@ export const authPlaceholeders = {
         attribute: TranslationAdapter.translate('forms.fields.confirmPassword')
     }),
 
+    CONFIRM_NEW_PASSWORD: TranslationAdapter.translate('forms.placeholders.confirm', {
+        attribute: TranslationAdapter.translate('forms.fields.password')
+    }),
+
+    HOURS_REQUIREMENT: TranslationAdapter.translate('forms.placeholders.type', {
+        attribute: TranslationAdapter.translate('forms.fields.hoursRequirement')
+    }),
+
     NAME: TranslationAdapter.translate('forms.placeholders.type', {
         attribute: TranslationAdapter.translate('forms.fields.name')
     }),
@@ -117,12 +125,12 @@ export const authMessages = {
 export const precursorMessages = {
     PRECURSOR_EMPTY: TranslationAdapter.translate('forms.validations.empty', {
         article: 'El',
-        attribute: TranslationAdapter.translate('forms.fields.precursor'),
+        attribute: TranslationAdapter.translate('forms.fields.pioner'),
         empty: 'vacío'
     }),
     PRECURSOR_INVALID: TranslationAdapter.translate('forms.validations.enum', {
         article: 'El',
-        attribute: TranslationAdapter.translate('forms.fields.precursor'),
+        attribute: TranslationAdapter.translate('forms.fields.pioner'),
         values: PRECURSORS_OPTIONS.map(({ label }) => label).join(', ')
     }),
 }
