@@ -6,10 +6,10 @@ import { useStyles } from 'react-native-unistyles';
 import Ionicons from '@expo/vector-icons/Ionicons';
 
 /* Constants */
-import { HOURS_REQUIREMENTS, precursors, PRECURSORS_OPTIONS } from '@application/constants';
+import { authPlaceholeders, HOURS_REQUIREMENTS, precursors, PRECURSORS_OPTIONS } from '@application/constants';
 
 /* Components */
-import { Button, Checkbox, FormField, FormSelect } from '@ui';
+import { Button, Checkbox, FormField, FormSelect, useTranslation } from '@ui';
 
 /* Hooks */
 import { useStatus } from '@shared';
@@ -33,6 +33,7 @@ export const ProfileForm = (): JSX.Element => {
 
     const { state: { user, isAuthLoading }, updateProfile } = useAuth();
     const { setErrorForm } = useStatus();
+    const { translate } = useTranslation();
 
     const [ editHoursRequirement, setEditHoursRequirement ] = useState<boolean>(
         !Object.values(HOURS_REQUIREMENTS).includes(user?.hoursRequirement || 0)
@@ -89,9 +90,9 @@ export const ProfileForm = (): JSX.Element => {
                         size={ fontSizes.icon }
                     />
                 }
-                label="Nombre:"
+                label={ translate('forms.labels.name') }
                 onChangeText={ handleChange('name') }
-                placeholder="Ingrese su nombre"
+                placeholder={ authPlaceholeders.NAME }
                 value={ values.name }
             />
 
@@ -105,9 +106,9 @@ export const ProfileForm = (): JSX.Element => {
                         size={ fontSizes.icon }
                     />
                 }
-                label="Apellidos:"
+                label={ translate('forms.labels.surname') }
                 onChangeText={ handleChange('surname') }
-                placeholder="Ingrese su apellido"
+                placeholder={ authPlaceholeders.SURNAME }
                 value={ values.surname }
             />
 
@@ -121,11 +122,11 @@ export const ProfileForm = (): JSX.Element => {
                     />
                 }
                 items={ PRECURSORS_OPTIONS }
-                label="Precursor:"
+                label={ translate('forms.labels.pioner') }
                 onChange={ handleSelect }
-                placeholder="Seleccione una opción"
+                placeholder={ translate('forms.placeholders.selectOne') }
                 style={{ marginBottom: 0 }}
-                title="Seleccione su precursorado"
+                title={ translate('modals.auth.titles.selectPioneer') }
                 value={ values.precursor }
             />
 
@@ -142,8 +143,8 @@ export const ProfileForm = (): JSX.Element => {
                                 size={ fontSizes.icon }
                             />
                         }
-                        label="Requerimiento de horas:"
-                        placeholder="Ingrese su requerimiento de horas"
+                        label={ translate('forms.labels.hoursRequirement') }
+                        placeholder={ authPlaceholeders.HOURS_REQUIREMENT }
                         style={{ marginBottom: 0, marginTop: margins.sm }}
                         onChangeText={ handleChange('hoursRequirement') }
                         value={ values.hoursRequirement.toString() }
@@ -153,7 +154,7 @@ export const ProfileForm = (): JSX.Element => {
                     <Checkbox
                         onPress={ () => setEditHoursRequirement(!editHoursRequirement) }
                         status={ editHoursRequirement ? 'checked' : 'unchecked' }
-                        label="Editar requerimiento de horas"
+                        label={ translate('forms.checkboxes.auth.editHoursRequirement') }
                         style={{ marginBottom: 0, marginTop: margins.md }}
                     />
                 </>
@@ -162,7 +163,7 @@ export const ProfileForm = (): JSX.Element => {
             <Checkbox
                 onPress={ () => setFieldValue('hoursLDC', !values.hoursLDC) }
                 status={ values.hoursLDC ? 'checked' : 'unchecked' }
-                label="Estoy participando en LDC"
+                label={ translate('forms.checkboxes.auth.ldcParticipation') }
                 style={{ marginBottom: 0, marginTop: margins.md }}
             />
 
@@ -177,7 +178,7 @@ export const ProfileForm = (): JSX.Element => {
                 ) }
                 onPress={ handlePress }
                 pressableStyle={{ marginBottom: top, marginTop: margins.xl }}
-                text="Guardar"
+                text={ translate('forms.actions.save') }
             />
         </View>
     );
