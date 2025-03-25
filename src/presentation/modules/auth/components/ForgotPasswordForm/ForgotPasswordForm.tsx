@@ -5,8 +5,11 @@ import { useRouter } from 'expo-router';
 import { useFormik } from 'formik';
 import Ionicons from '@expo/vector-icons/Ionicons';
 
+/* Constants */
+import { authPlaceholeders } from '@application/constants';
+
 /* Components */
-import { Button, FormField, Link } from '@ui';
+import { Button, FormField, Link, useTranslation } from '@ui';
 
 /* Hooks */
 import { useStatus } from '@shared';
@@ -33,6 +36,7 @@ export const ForgotPasswordForm = (): JSX.Element => {
 
     const { state: { isAuthLoading }, resetPassword } = useAuth();
     const { setErrorForm } = useStatus();
+    const { translate } = useTranslation();
 
     /**
      * Handles the reset password functionality.
@@ -67,8 +71,8 @@ export const ForgotPasswordForm = (): JSX.Element => {
     return (
         <View style={ themeStyles.formContainer }>
             <View style={{ ...themeStyles.btnLink, marginTop: 0, marginBottom: margins.xl }}>
-                <Text style={{ ...themeStyles.formText, fontSize: (fontSizes.sm + 2) }}>
-                    Ingrese su correo electrónico para restablecer su contraseña y recuperar la cuenta.
+                <Text style={{ ...themeStyles.formText, fontSize: (fontSizes.sm + 2), marginRight: 0, width: '100%' }}>
+                    { translate('forms.paragraphs.forgotPassword') }
                 </Text>
             </View>
 
@@ -83,9 +87,9 @@ export const ForgotPasswordForm = (): JSX.Element => {
                     />
                 }
                 keyboardType="email-address"
-                label="Correo:"
+                label={ translate('forms.labels.email') }
                 onChangeText={ handleChange('email') }
-                placeholder="Ingrese su correo"
+                placeholder={ authPlaceholeders.EMAIL }
                 style={{ marginBottom: margins.xl }}
                 value={  values.email }
             />
@@ -100,7 +104,7 @@ export const ForgotPasswordForm = (): JSX.Element => {
                     />
                 ) }
                 onPress={ handlePress }
-                text="Restablecer contraseña"
+                text={ translate('forms.actions.auth.resetPassword') }
             />
 
             {/* Sign in link */}
@@ -109,7 +113,7 @@ export const ForgotPasswordForm = (): JSX.Element => {
                     onPress={ () => router.back() }
                     testID="forgot-pass-form-sign-in"
                 >
-                    Ingresar con mi cuenta
+                    { translate('forms.links.signIn') }
                 </Link>
             </View>
 
