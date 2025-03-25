@@ -8,6 +8,9 @@ import { Modal } from '../Modal';
 /* Components */
 import { InfoText, ModalActions, RadioBtn } from '../../components';
 
+/* Hooks */
+import { useTranslation } from '@ui/hooks';
+
 /* Interfaces */
 import { OptionsModalProps } from './interfaces';
 
@@ -33,6 +36,8 @@ const OptionsModal: FC<OptionsModalProps> = ({ isOpen, items, onCancel, onChange
     const { styles: themeStyles, theme: { margins } } = useStyles(themeStylesheet);
     const { styles } = useStyles(stylesheet);
 
+    const { translate } = useTranslation();
+
     return (
         <Modal isOpen={ isOpen }>
             <View style={ themeStyles.modalContainer }>
@@ -53,7 +58,7 @@ const OptionsModal: FC<OptionsModalProps> = ({ isOpen, items, onCancel, onChange
                 </View>
 
                 <ModalActions
-                    cancelButtonText="CANCELAR"
+                    cancelButtonText={ translate('forms.actions.cancel').toUpperCase() }
                     onCancel={ onCancel }
                     showCancelButton
                 />
