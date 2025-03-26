@@ -6,7 +6,7 @@ import { useStyles } from 'react-native-unistyles';
 import Ionicons from '@expo/vector-icons/Ionicons';
 
 /* Components */
-import { Fab } from '@ui';
+import { Fab, useTranslation } from '@ui';
 
 /* Hooks */
 import { useCourses } from '../../hooks';
@@ -38,10 +38,11 @@ export const CourseCard: FC<CourseCardProps> = ({ course, onActiveOrSuspend, onD
 
     const router = useRouter();
     const { styles: themeStyles } = useStyles(themeStylesheet);
-    const { styles, theme: { colors, fontSizes, margins } } = useStyles(stylesheet);
+    const { styles, theme: { colors, fontSizes } } = useStyles(stylesheet);
 
     const { setSelectedCourse } = useCourses();
     const { state: { selectedLesson }, setSelectedLesson } = useLessons();
+    const { translate } = useTranslation();
 
     /**
      * When the user clicks on a course, set the selected course to the course that was clicked on and
@@ -126,10 +127,10 @@ export const CourseCard: FC<CourseCardProps> = ({ course, onActiveOrSuspend, onD
                     testID="course-card-status-text"
                 >
                     { (course.finished)
-                        ? 'Terminado'
+                        ? translate('cards.courses.status.finished')
                         : (course.suspended)
-                            ? 'Suspendido'
-                            : 'En Curso'
+                            ? translate('cards.courses.status.suspended')
+                            : translate('cards.courses.status.inCourse')
                     }
                 </Text>
 
@@ -157,7 +158,7 @@ export const CourseCard: FC<CourseCardProps> = ({ course, onActiveOrSuspend, onD
                 </Text>
 
                 <Fab
-                    color={ 'transparent' }
+                    color="transparent"
                     icon={
                         <Ionicons
                             color={ colors.button }
@@ -186,13 +187,16 @@ export const CourseCard: FC<CourseCardProps> = ({ course, onActiveOrSuspend, onD
                             <>
                                 <MenuOption onSelect={ handleEdit }>
                                     <Text style={ themeStyles.menuItemText }>
-                                        Editar
+                                        { translate('cards.actions.edit') }
                                     </Text>
                                 </MenuOption>
 
                                 <MenuOption onSelect={ () => handleSelect(onActiveOrSuspend) }>
                                     <Text style={ themeStyles.menuItemText }>
-                                        { (course.suspended) ? 'Continuar' : 'Suspender' }
+                                        { (course.suspended) 
+                                            ?  translate('cards.courses.actions.continue')
+                                            : translate('cards.courses.actions.suspended')
+                                        }
                                     </Text>
                                 </MenuOption>
                             </>
@@ -200,7 +204,7 @@ export const CourseCard: FC<CourseCardProps> = ({ course, onActiveOrSuspend, onD
 
                         <MenuOption onSelect={ handleLessonList }>
                             <Text style={ themeStyles.menuItemText }>
-                                Clases
+                                { translate('cards.courses.actions.classes') }
                             </Text>
                         </MenuOption>
 
@@ -210,13 +214,16 @@ export const CourseCard: FC<CourseCardProps> = ({ course, onActiveOrSuspend, onD
                             <>
                                 <MenuOption onSelect={ handleAddClass }>
                                     <Text style={ themeStyles.menuItemText }>
-                                        Agregar clase
+                                        { translate('cards.courses.actions.addClass') }
                                     </Text>
                                 </MenuOption>
 
                                 <MenuOption onSelect={ () => handleSelect(onFinishOrStart) }>
                                     <Text style={ themeStyles.menuItemText }>
-                                        { (course.finished) ? 'Comenzar de nuevo' : 'Terminar' }
+                                        { (course.finished) 
+                                            ? translate('cards.courses.actions.startAgain')
+                                            : translate('cards.courses.actions.finish')
+                                        }
                                     </Text>
                                 </MenuOption>
                             </>
@@ -224,7 +231,7 @@ export const CourseCard: FC<CourseCardProps> = ({ course, onActiveOrSuspend, onD
 
                         <MenuOption onSelect={ () => handleSelect(onDelete) }>
                             <Text style={ themeStyles.menuItemText }>
-                                Eliminar
+                                { translate('cards.actions.delete') }
                             </Text>
                         </MenuOption>
                     </MenuOptions>
