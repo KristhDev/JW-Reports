@@ -25,6 +25,30 @@
         }
     },
 
+    "cards": {
+        "actions": {
+            "delete": "Delete",
+            "edit": "Edit"
+        },
+
+        "courses": {
+            "status": {
+                "finished": "Finished",
+                "inCourse": "In course",
+                "suspended": "Suspended"
+            },
+
+            "actions": {
+                "addClass": "Add class",
+                "classes": "Classes",
+                "continue": "Continue",
+                "finish": "Finish",
+                "startAgain": "Start again",
+                "suspended": "Suspend"
+            }
+        }
+    },
+
     "screens": {
         "auth": {
             "titles": {
@@ -121,6 +145,7 @@
         },
 
         "labels": {
+            "address": "Address:",
             "confirmPassword": "Confirm Password:",
             "email": "Email:",
             "hoursRequirement": "Hours Requirement:",
@@ -128,6 +153,9 @@
             "newPassword": "New Password:",
             "password": "Password:",
             "pioner": "Pioner:",
+            "student": "Student name:",
+            "studentInfo": "Student information:",
+            "studyPublication": "Study Publication:",
             "surname": "Surname:"
         },
 
@@ -139,12 +167,18 @@
         },
 
         "placeholders": {
+            "personAbout": "Enter data about the person, topics of interest, preferences, important aspects, etc...",
+
             "confirm": "Confirm your {{attribute}}",
             "selectOne": "Select one option",
-            "type": "Type your {{attribute}}"
+            "type": "Type your {{attribute}}",
+            "typeThe": "Type the {{attribute}}"
         },
 
         "fields": {
+            "address": "address",
+            "personName": "person name",
+            "personAbout": "person information",
             "confirmPassword": "confirm password",
             "email": "email",
             "hoursRequirement": "hours requirement",
@@ -152,6 +186,7 @@
             "password": "password",
             "pioner": "pioner",
             "profile": "profile",
+            "publication": "publication",
             "surname": "surname"
         },
 
@@ -167,7 +202,8 @@
             "cancel": "Cancel",
             "ok": "Ok",
             "save": "Save",
-            "settings": "Settings"
+            "settings": "Settings",
+            "update": "Update"
         },
 
         "links": {
@@ -193,6 +229,7 @@
             "empty": "The {{attribute}} can't be empty.",
             "enum": "The {{attribute}} must be one of the following values: {{values}}.",
             "min": "The {{attribute}} must be at least {{min}} characters.",
+            "required": "The {{attribute}} is required.",
 
             "password": {
                 "mismatch": "The passwords don't match."

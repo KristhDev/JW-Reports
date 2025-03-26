@@ -25,6 +25,30 @@
         }
     },
 
+    "cards": {
+        "actions": {
+            "delete": "Eliminar",
+            "edit": "Editar"
+        },
+
+        "courses": {
+            "status": {
+                "finished": "Terminado",
+                "inCourse": "En curso",
+                "suspended": "Suspendido"
+            },
+
+            "actions": {
+                "addClass": "Agregar clase",
+                "classes": "Clases",
+                "continue": "Continuar",
+                "finish": "Terminar",
+                "startAgain": "Comenzar de nuevo",
+                "suspended": "Suspender"
+            }
+        }
+    },
+
     "screens": {
         "auth": {
             "titles": {
@@ -121,6 +145,7 @@
         },
 
         "labels": {
+            "address": "Dirección:",
             "confirmPassword": "Confirmar contraseña:",
             "email": "Correo:",
             "hoursRequirement": "Requerimiento de horas:",
@@ -128,6 +153,9 @@
             "newPassword": "Nueva contraseña:",
             "password": "Contraseña:",
             "pioner": "Precursor:",
+            "student": "Nombre del estudiante:",
+            "studentInfo": "Información del estudiante:",
+            "studyPublication": "Publicación de estudio:",
             "surname": "Apellidos:"
         },
 
@@ -139,12 +167,18 @@
         },
 
         "placeholders": {
+            "personAbout": "Ingrese datos sobre la persona, temas de interés, preferencias, aspectos importantes, etc...",
+
             "confirm": "Confirme su {{attribute}}",
             "selectOne": "Seleccione una opción",
-            "type": "Ingrese su {{attribute}}"
+            "type": "Ingrese su {{attribute}}",
+            "typeThe": "Ingrese {{article}} {{attribute}}"
         },
 
         "fields": {
+            "address": "dirección",
+            "personName": "nombre de la persona",
+            "personAbout": "información de la persona",
             "confirmPassword": "confirmación de contraseña",
             "email": "correo",
             "hoursRequirement": "requerimiento de horas",
@@ -152,6 +186,7 @@
             "password": "contraseña",
             "pioner": "precursor",
             "profile": "perfil",
+            "publication": "publicación",
             "surname": "apellidos"
         },
 
@@ -167,7 +202,8 @@
             "cancel": "Cancelar",
             "ok": "Esta bien",
             "save": "Guardar",
-            "settings": "Configuración"
+            "settings": "Configuración",
+            "update": "Actualizar"
         },
 
         "links": {
@@ -193,6 +229,7 @@
             "empty": "{{article} {{attribute}} no puede estar {{empty}}.",
             "enum": "{{article}} {{attribute}} debe ser uno de los siguientes valores: {{values}}.",
             "min": "{{article} {{attribute}} debe tener al menos {{min}} caracteres.",
+            "required": "{{article}} {{attribute}} es {{required}}.",
 
             "password": {
                 "mismatch": "Las contraseñas no coinciden."
