@@ -4,8 +4,11 @@ import { useFormik } from 'formik';
 import { useStyles } from 'react-native-unistyles';
 import Ionicons from '@expo/vector-icons/Ionicons';
 
+/* Constants */
+import { coursesPlaceholders } from '@application/constants';
+
 /* Components */
-import { Button, FormField, useUI } from '@ui';
+import { Button, FormField, useTranslation, useUI } from '@ui';
 
 /* Hooks */
 import { useCourses } from '../../hooks';
@@ -32,6 +35,11 @@ export const CourseForm = (): JSX.Element => {
     const { state: { isCourseLoading, selectedCourse }, saveCourse, updateCourse } = useCourses();
     const { setErrorForm } = useStatus();
     const { state: { activeFormField, recordedAudio }, setActiveFormField } = useUI();
+    const { translate } = useTranslation();
+
+    const buttonText = (selectedCourse.id === '') 
+        ? translate('forms.actions.save')
+        : translate('forms.actions.update');
 
     /**
      * If the selectedCourse.id is an empty string, then save the formValues, otherwise update the
@@ -86,10 +94,10 @@ export const CourseForm = (): JSX.Element => {
                         size={ fontSizes.icon }
                     />
                 }
-                label="Nombre del estudiante:"
+                label={ translate('forms.labels.student') }
                 onChangeText={ handleChange('personName') }
                 onFocus={ () => setActiveFormField('personName') }
-                placeholder="Ingrese el nombre"
+                placeholder={ coursesPlaceholders.PERSON_NAME }
                 value={ values.personName }
             />
 
@@ -97,12 +105,12 @@ export const CourseForm = (): JSX.Element => {
             <FormField
                 controlStyle={{ paddingVertical: margins.xs + 2 }}
                 inputStyle={{ minHeight: margins.sm * 10  }}
-                label="Información del estudiante:"
+                label={ translate('forms.labels.studentInfo') }
                 multiline
                 numberOfLines={ 10 }
                 onChangeText={ handleChange('personAbout') }
                 onFocus={ () => setActiveFormField('personAbout') }
-                placeholder="Ingrese datos sobre la persona, temas de interés, preferencias, aspectos importantes, etc..."
+                placeholder={ coursesPlaceholders.PERSON_ABOUT }
                 value={ values.personAbout }
             />
 
@@ -110,12 +118,12 @@ export const CourseForm = (): JSX.Element => {
             <FormField
                 controlStyle={{ paddingVertical: margins.xs + 2 }}
                 inputStyle={{ minHeight: margins.sm * 5  }}
-                label="Dirección:"
+                label={ translate('forms.labels.address') }
                 multiline
                 numberOfLines={ 4 }
                 onChangeText={ handleChange('personAddress') }
                 onFocus={ () => setActiveFormField('personAddress') }
-                placeholder="Ingrese la dirección"
+                placeholder={ coursesPlaceholders.PERSON_ADDRESS }
                 value={ values.personAddress }
             />
 
@@ -128,10 +136,10 @@ export const CourseForm = (): JSX.Element => {
                         size={ fontSizes.icon }
                     />
                 }
-                label="Publicación de estudio:"
+                label={ translate('forms.labels.studyPublication') }
                 onChangeText={ handleChange('publication') }
                 onFocus={ () => setActiveFormField('publication') }
-                placeholder="Ingrese la publicación"
+                placeholder={ coursesPlaceholders.PUBLICATION }
                 style={{ marginBottom: margins.xl }}
                 value={ values.publication }
             />
@@ -146,7 +154,7 @@ export const CourseForm = (): JSX.Element => {
                     />
                 ) }
                 onPress={ handlePress }
-                text={ (selectedCourse.id !== '') ? 'Actualizar' : 'Guardar' }
+                text={ buttonText }
             />
         </View>
     );
