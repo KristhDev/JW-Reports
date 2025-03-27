@@ -10,7 +10,6 @@
       "@assets/*": [ "src/presentation/assets/*" ],
       "@auth": [ "src/presentation/modules/auth" ],
       "@auth/*": [ "src/presentation/modules/auth/*" ],
-      "@config": [ "src/config" ],
       "@config/*": [ "src/config/*" ],
       "@courses": [ "src/presentation/modules/courses" ],
       "@courses/*": [ "src/presentation/modules/courses/*" ],
