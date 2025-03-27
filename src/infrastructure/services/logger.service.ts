@@ -1,18 +1,23 @@
+import { injectable } from 'inversify';
 import { Bugfender, LogLevel } from '@bugfender/rn-bugfender';
 
 /* Config */
-import { env } from '@config';
+import { env } from '@config/env';
+
+/* Contracts */
+import { LoggerServiceContract } from '@domain/contracts/services';
 
 /* Version */
 import { version as appVersion } from '@package';
 
-export class LoggerService {
+@injectable()
+export class LoggerService extends LoggerServiceContract {
     /**
      * Initializes the logging service with Bugfender.
      *
      * @returns {void} - This function does not return anything
      */
-    public static init(): void {
+    public init(): void {
         Bugfender.init({
             appKey: env.BUGFENDER_API_KEY!,
             version: appVersion
@@ -25,7 +30,7 @@ export class LoggerService {
      * @param {string} message - The message to log
      * @returns {void} - This function does not return anything
      */
-    public static info(message: string): void {
+    public info(message: string): void {
         Bugfender.sendLog({
             level: LogLevel.Info,
             text: message
@@ -38,7 +43,7 @@ export class LoggerService {
      * @param {any} error - The error to log
      * @returns {void} - This function does not return anything
      */
-    public static error(error: any): void {
+    public error(error: any): void {
         Bugfender.sendLog({
             level: LogLevel.Error,
             text: JSON.stringify(error)

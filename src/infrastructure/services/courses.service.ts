@@ -1,5 +1,8 @@
 /* Config */
-import { supabase } from '@config';
+import { supabase } from '@config/supabase';
+
+/* Contracts */
+import { CoursesServiceContract } from '@domain/contracts/services';
 
 /* DTOs */
 import { ActiveOrSuspendCourseDto, CreateCourseDto, FinishOrStartCourseDto, UpdateCourseDto } from '@domain/dtos';
@@ -14,7 +17,7 @@ import { RequestError } from '@domain/errors';
 import { CourseEndpoint, PaginateOptions } from '@infrastructure/interfaces';
 import { CourseFilter } from '@courses';
 
-export class CoursesService {
+export class CoursesService extends CoursesServiceContract {
     /**
      * This function is responsible for activating or suspending a course.
      *
@@ -23,7 +26,7 @@ export class CoursesService {
      * @param {ActiveOrSuspendCourseDto} dto - The dto that contains the data for the update.
      * @returns {Promise<CourseEntity>} - The updated course if the request was successful.
      */
-    public static async activeOrSuspend(id: string, userId: string, dto: ActiveOrSuspendCourseDto): Promise<CourseEntity> {
+    public async activeOrSuspend(id: string, userId: string, dto: ActiveOrSuspendCourseDto): Promise<CourseEntity> {
         const result = await supabase.from('courses')
             .update(dto)
             .eq('id', id)
@@ -48,7 +51,7 @@ export class CoursesService {
      * @param {CreateCourseDto} dto - The dto that contains the data for the new course.
      * @returns {Promise<CourseEntity>} - The newly created course if the request was successful.
      */
-    public static async create(dto: CreateCourseDto): Promise<CourseEntity> {
+    public async create(dto: CreateCourseDto): Promise<CourseEntity> {
         const result = await supabase.from('courses')
             .insert(dto)
             .select<'*', CourseEndpoint>()
@@ -73,7 +76,7 @@ export class CoursesService {
      * @returns {Promise<void>} - This function does not return anything.
      * @throws {RequestError} If there is an error in deleting the course.
      */
-    public static async delete(id: string, userId: string): Promise<void> {
+    public async delete(id: string, userId: string): Promise<void> {
         const result = await supabase.from('courses')
             .delete()
             .eq('id', id)
@@ -96,7 +99,7 @@ export class CoursesService {
      * @param {FinishOrStartCourseDto} dto - The dto that contains the data to update the course.
      * @returns {Promise<CourseEntity>} - The updated course if the request was successful.
      */
-    public static async finishOrStart(id: string, userId: string, dto: FinishOrStartCourseDto): Promise<CourseEntity> {
+    public async finishOrStart(id: string, userId: string, dto: FinishOrStartCourseDto): Promise<CourseEntity> {
         const result = await supabase.from('courses')
             .update(dto)
             .eq('id', id)
@@ -123,7 +126,7 @@ export class CoursesService {
      * @returns {Promise<CourseEntity[]>} - A promise that resolves to an array of CourseEntity objects.
      * @throws {RequestError} - If there is an error in the request.
      */
-    public static async paginateByUserId(userId: string, options: PaginateOptions<CourseFilter>): Promise<CourseEntity[]> {
+    public async paginateByUserId(userId: string, options: PaginateOptions<CourseFilter>): Promise<CourseEntity[]> {
         const coursesPromise = supabase.from('courses')
             .select('*, lessons (*)')
             .eq('user_id', userId)
@@ -166,7 +169,7 @@ export class CoursesService {
      * @returns {Promise<CourseWithLessonsEntity[]>} - A promise that resolves to an array of CourseWithLessonsEntity objects.
      * @throws {RequestError} - If there is an error in fetching the courses.
      */
-    public static async getAllByUserId(userId: string): Promise<CourseWithLessonsEntity[]> {
+    public async getAllByUserId(userId: string): Promise<CourseWithLessonsEntity[]> {
         const result = await supabase.from('courses')
             .select('*, lessons (*)')
             .eq('user_id', userId)
@@ -190,7 +193,7 @@ export class CoursesService {
      * @param {string} userId - The id of the user.
      * @returns {Promise<string[]>} - The course ids of the user if the request was successful.
      */
-    public static async getCourseIdsByUserId(userId: string): Promise<string[]> {
+    public async getCourseIdsByUserId(userId: string): Promise<string[]> {
         const result = await supabase.from('courses')
             .select('id')
             .eq('user_id', userId);
@@ -214,7 +217,7 @@ export class CoursesService {
      * @param {UpdateCourseDto} dto - The data to update the course.
      * @returns {Promise<CourseEntity>} - The course with the updated data if the request was successful.
      */
-    public static async update(id: string, userId: string, dto: UpdateCourseDto): Promise<CourseEntity> {
+    public async update(id: string, userId: string, dto: UpdateCourseDto): Promise<CourseEntity> {
         const result = await supabase.from('courses')
             .update(dto)
             .eq('id', id)

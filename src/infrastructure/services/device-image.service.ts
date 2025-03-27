@@ -1,3 +1,4 @@
+import { injectable } from 'inversify';
 import * as ImagePicker from 'expo-image-picker';
 
 /* Constants */
@@ -5,6 +6,9 @@ import { permissionsStatus } from '@application/constants';
 
 /* Features */
 import { PermissionStatus } from '@application/features';
+
+/* Contracts */
+import { DeviceImageServiceContract } from '@domain/contracts/services';
 
 /* Errors */
 import { ImageError } from '@domain/errors';
@@ -15,8 +19,9 @@ import { ImageModel } from '@domain/models';
 /* Interfaces */
 import { CameraType, OpenCameraOptions, OpenPickerOptions } from '@infrastructure/interfaces';
 
-export class DeviceImageService {
-    public static cameras: Record<Uppercase<CameraType>, CameraType> = {
+@injectable()
+export class DeviceImageService implements DeviceImageServiceContract {
+    public cameras: Record<Uppercase<CameraType>, CameraType> = {
         BACK: 'back',
         FRONT: 'front'
     }
@@ -30,7 +35,7 @@ export class DeviceImageService {
      * @returns {Promise<string>} - A promise that resolves with the Base64 string of the image.
      * @throws {ImageError} - If an error occurs during fetching or reading the image.
      */
-    public static async getBase64FromUri(uri: string): Promise<string> {
+    public async getBase64FromUri(uri: string): Promise<string> {
         try {
             const blob = await fetch(uri).then(res => res.blob());
             const reader = new FileReader();
@@ -59,7 +64,7 @@ export class DeviceImageService {
      *
      * @returns {Promise<PermissionStatus>} A promise that resolves with the current camera permission status.
      */
-    public static async getCameraPermission(): Promise<PermissionStatus> {
+    public async getCameraPermission(): Promise<PermissionStatus> {
         const result = await ImagePicker.getCameraPermissionsAsync();
         const isUndetermined = result.status === permissionsStatus.UNDETERMINED;
 
@@ -80,7 +85,7 @@ export class DeviceImageService {
      *
      * @returns {Promise<PermissionStatus>} A promise that resolves with the current media library permission status.
      */
-    public static async getMediaLibraryPermission(): Promise<PermissionStatus> {
+    public async getMediaLibraryPermission(): Promise<PermissionStatus> {
         const result = await ImagePicker.getMediaLibraryPermissionsAsync();
         const isUndetermined = result.status === permissionsStatus.UNDETERMINED;
 
@@ -105,7 +110,7 @@ export class DeviceImageService {
      * @returns {Promise<ImageModel | undefined>} A promise that resolves with an `ImageModel` object.
      * @throws {ImageError} If the user cancels the operation.
      */
-    public static async openCamera(options: OpenCameraOptions): Promise<ImageModel | undefined> {
+    public async openCamera(options: OpenCameraOptions): Promise<ImageModel | undefined> {
         try {
             const result = await ImagePicker.launchCameraAsync({
                 allowsEditing: options.cropping,
@@ -145,7 +150,7 @@ export class DeviceImageService {
      * @returns {Promise<ImageModel | undefined>} A promise that resolves with an array of `ImageModel` objects.
      * @throws {ImageError} If the user cancels the operation.
      */
-    public static async openPicker(options: OpenPickerOptions): Promise<ImageModel | undefined> {
+    public async openPicker(options: OpenPickerOptions): Promise<ImageModel | undefined> {
         try {
             const result = await ImagePicker.launchImageLibraryAsync({
                 allowsEditing: options.cropping,
@@ -180,7 +185,7 @@ export class DeviceImageService {
      *
      * @returns {Promise<PermissionStatus>} A promise that resolves with the current camera permission status.
      */
-    public static async requestCameraPermission(): Promise<PermissionStatus> {
+    public async requestCameraPermission(): Promise<PermissionStatus> {
         const result = await ImagePicker.requestCameraPermissionsAsync();
         const isUndetermined = result.status === permissionsStatus.UNDETERMINED;
 
@@ -201,7 +206,7 @@ export class DeviceImageService {
      *
      * @returns {Promise<PermissionStatus>} A promise that resolves with the current media library permission status.
      */
-    public static async requestMediaLibraryPermission(): Promise<PermissionStatus> {
+    public async requestMediaLibraryPermission(): Promise<PermissionStatus> {
         const result = await ImagePicker.requestMediaLibraryPermissionsAsync();
         const isUndetermined = result.status === permissionsStatus.UNDETERMINED;
 

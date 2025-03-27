@@ -1,7 +1,11 @@
+import { injectable } from 'inversify';
 import EmailJs, { EmailJSResponseStatus } from '@emailjs/react-native';
 
 /* Config */
-import { env } from '@config';
+import { env } from '@config/env';
+
+/* Contracts */
+import { EmailServiceContract } from '@domain/contracts/services';
 
 /* Errors */
 import { EmailError } from '@domain/errors';
@@ -9,13 +13,14 @@ import { EmailError } from '@domain/errors';
 /* Interfaces */
 import { SendEmailOptions } from '@infrastructure/interfaces';
 
-export class EmailService {
+@injectable()
+export class EmailService extends EmailServiceContract {
     /**
      * Initializes the email service
      *
      * @returns {void} - This function does not return anything
      */
-    public static init(): void {
+    public init(): void {
         EmailJs.init({ publicKey: env.EMAILJS_PUBLIC_KEY! });
     }
 
@@ -25,7 +30,7 @@ export class EmailService {
      * @param {SendEmailOptions} options - The options to send the email
      * @returns {Promise<void>} - A promise that resolves when the email is sent
      */
-    public static async send({ email, imageUrl, message, templateId }: SendEmailOptions): Promise<void> {
+    public async send({ email, imageUrl, message, templateId }: SendEmailOptions): Promise<void> {
         try {
             await EmailJs.send(
                 env.EMAILJS_SERVICE_ID!,

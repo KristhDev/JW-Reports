@@ -1,3 +1,8 @@
+import { useMemo } from 'react';
+
+/* Config */
+import { dependencies, DEPENDENCIES_TYPES } from '@config/inversify';
+
 /* Constants */
 import { permissionsMessages, permissionsStatus } from '@application/constants';
 
@@ -12,9 +17,8 @@ import {
     PermissionStatus
 } from '@application/features';
 
-/* Services */
-import { DeviceImageService } from '@infrastructure/services';
-import { NotificationsService } from '@services';
+/* Contracts */
+import { DeviceImageServiceContract, NotificationsServiceContract } from '@domain/contracts/services';
 
 /* Adapters */
 import { VoiceRecorderAdapter } from '@infrastructure/adapters';
@@ -27,6 +31,9 @@ import useStatus from './useStatus';
  * with state, actions and thunks
  */
 const usePermissions = () => {
+    const notificationsService = useMemo(() => dependencies.get<NotificationsServiceContract>(DEPENDENCIES_TYPES.NotificationsService), []);
+    const deviceImageService = useMemo(() => dependencies.get<DeviceImageServiceContract>(DEPENDENCIES_TYPES.DeviceImageService), []);
+
     const dispatch = useAppDispatch();
 
     const state = useAppSelector(store => store.permissions);
@@ -83,9 +90,9 @@ const usePermissions = () => {
      */
     const askPermission = async (permission: keyof Permissions): Promise<PermissionStatus> => {
         const askPermissions = {
-            camera: DeviceImageService.requestCameraPermission,
-            mediaLibrary: DeviceImageService.requestMediaLibraryPermission,
-            notifications: NotificationsService.requestNotificationsPermission,
+            camera: deviceImageService.requestCameraPermission,
+            mediaLibrary: deviceImageService.requestMediaLibraryPermission,
+            notifications: notificationsService.requestNotificationsPermission,
             recordAudio: VoiceRecorderAdapter.requestRecordAudioPermission
         }
 

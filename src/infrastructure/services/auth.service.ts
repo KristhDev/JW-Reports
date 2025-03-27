@@ -1,7 +1,12 @@
+import { injectable } from 'inversify';
 import { AuthResponse } from '@supabase/supabase-js';
 
 /* Config */
-import { env, supabase } from '@config';
+import { env } from '@config/env';
+import { supabase } from '@config/supabase';
+
+/* Contracts */
+import { AuthServiceContract } from '@domain/contracts/services';
 
 /* DTOs */
 import { SignUpDto, UpdateEmailDto, UpdatePasswordDto, UpdateProfileDto } from '@domain/dtos';
@@ -15,14 +20,15 @@ import { RequestError } from '@domain/errors';
 /* Interfaces */
 import { UserEndpoint } from '@infrastructure/interfaces';
 
-export class AuthService {
+@injectable()
+export class AuthService extends AuthServiceContract {
     /**
      * Get the session and the user from the given token.
      *
      * @param {string} token The token to get the session and user from.
      * @return {Promise<{ user: UserEntity, token: string }>} A promise that resolves with an object containing the user and token.
      */
-    public static async getSession(token: string): Promise<{ user: UserEntity, token: string }> {
+    public async getSession(token: string): Promise<{ user: UserEntity, token: string }> {
         const user = await supabase.auth.getUser(token);
         const session = await supabase.auth.getSession();
 
@@ -60,7 +66,7 @@ export class AuthService {
      *
      * @param {string} email - The email of the user whose password is being reset.
      */
-    public static async resetPassword(email: string): Promise<void> {
+    public async resetPassword(email: string): Promise<void> {
         const result = await supabase.auth.resetPasswordForEmail(email, {
             redirectTo: `${ env.SITE_URL }/reset-password`
         });
@@ -81,7 +87,7 @@ export class AuthService {
      * @param {string} password - The password of the user.
      * @return {Promise<{ token: string, user: UserEntity }>} A promise that resolves with an object containing the access token.
      */
-    public static async signIn(email: string, password: string): Promise<{ token: string, user: UserEntity }> {
+    public async signIn(email: string, password: string): Promise<{ token: string, user: UserEntity }> {
         const result = await supabase.auth.signInWithPassword({ email, password });
 
         if (result.error) {
@@ -114,7 +120,7 @@ export class AuthService {
      * @return {Promise<void>} A promise that resolves when the sign-out process is complete.
      * @throws {RequestError} If the request fails.
      */
-    public static async signOut(): Promise<void> {
+    public async signOut(): Promise<void> {
         const result = await supabase.auth.signOut();
 
         if (result.error) {
@@ -132,7 +138,7 @@ export class AuthService {
      * @param {SignUpDto} data - The data of the user to sign up.
      * @return {Promise<{ emailAlreadyExists: boolean }>} A promise that resolves with an object containing the emailAlreadyExists flag.
      */
-    public static async signUp({ email, password, ...rest }: SignUpDto): Promise<{ emailAlreadyExists: boolean }> {
+    public async signUp({ email, password, ...rest }: SignUpDto): Promise<{ emailAlreadyExists: boolean }> {
         const result = await supabase.auth.signUp({
             email,
             password,
@@ -160,7 +166,7 @@ export class AuthService {
      * @param {UpdateEmailDto} dto - The update email data transfer object.
      * @return {Promise<void>} A promise that resolves when the email update is complete.
      */
-    public static async updateEmail(dto: UpdateEmailDto): Promise<void> {
+    public async updateEmail(dto: UpdateEmailDto): Promise<void> {
         const result = await supabase.auth.updateUser({ email: dto.email });
 
         if (result.error) {
@@ -178,7 +184,7 @@ export class AuthService {
      * @param {UpdatePasswordDto} dto - The update password data transfer object.
      * @return {Promise<void>} A promise that resolves when the password update is complete.
      */
-    public static async updatePassword(dto: UpdatePasswordDto): Promise<void> {
+    public async updatePassword(dto: UpdatePasswordDto): Promise<void> {
         const result = await supabase.auth.updateUser({ password: dto.password });
 
         if (result.error) {
@@ -196,7 +202,7 @@ export class AuthService {
      * @param {UpdateProfileDto} dto - The update profile data transfer object.
      * @return {Promise<UserEntity>} A promise that resolves with the user response.
      */
-    public static async updateProfile(dto: UpdateProfileDto): Promise<UserEntity> {
+    public async updateProfile(dto: UpdateProfileDto): Promise<UserEntity> {
         const result = await supabase.auth.updateUser({ data: dto });
 
         if (result.error) {

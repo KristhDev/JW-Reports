@@ -1,3 +1,8 @@
+import { useMemo } from 'react';
+
+/* Config */
+import { dependencies, DEPENDENCIES_TYPES } from '@config/inversify';
+
 /* Constants */
 import { networkMessages, authMessages } from '@application/constants';
 
@@ -14,6 +19,9 @@ import {
     clearRevisits as clearRevisitsAction
 } from '@application/features';
 
+/* Contracts */
+import { AuthServiceContract, NotificationsServiceContract } from '@domain/contracts/services';
+
 /* DTOs */
 import { SignUpDto, UpdateEmailDto, UpdatePasswordDto, UpdateProfileDto } from '@domain/dtos';
 
@@ -26,14 +34,13 @@ import { useNetwork, useStatus } from '@shared';
 /* Interfaces */
 import { SignInData, ProfileData, SignUpData, EmailData, UpdatePasswordData } from '../interfaces';
 
-/* Services */
-import { AuthService } from '@infrastructure/services';
-import { NotificationsService } from '@services';
-
 /**
  * Hook to management authentication of store with state and actions
  */
 const useAuth = () => {
+    const authService = useMemo(() => dependencies.get<AuthServiceContract>(DEPENDENCIES_TYPES.AuthService), []);
+    const notificationsService = useMemo(() => dependencies.get<NotificationsServiceContract>(DEPENDENCIES_TYPES.NotificationsService), []);
+
     const dispatch = useAppDispatch();
 
     const { setStatus, setError, setUnauthenticatedError } = useStatus();
@@ -57,7 +64,7 @@ const useAuth = () => {
      * @return {void} This function does not return anything.
      */
     const handleClearStore = (): void => {
-        NotificationsService.close();
+        notificationsService.close();
         clearAuth();
         clearCourses();
         clearLessons();
@@ -90,7 +97,7 @@ const useAuth = () => {
         if (!wifiConnectionAvailable) return;
 
         try {
-            const { token, user } = await AuthService.getSession(state.token);
+            const { token, user } = await authService.getSession(state.token);
             setUser(token, user);
         }
         catch (error) {
@@ -112,7 +119,7 @@ const useAuth = () => {
         setIsAuthLoading(true);
 
         try {
-            await AuthService.resetPassword(email);
+            await authService.resetPassword(email);
 
             let msg = `Hemos enviado un correo de restablecimiento de contraseña a ${ email }. `;
             msg += 'Por favor revísalo y sigue los pasos para recuperar tu cuenta.';
@@ -140,7 +147,7 @@ const useAuth = () => {
         setIsAuthLoading(true);
 
         try {
-            const { token, user } = await AuthService.signIn(email, password);
+            const { token, user } = await authService.signIn(email, password);
             setUser(token, user);
         }
         catch (error) {
@@ -160,7 +167,7 @@ const useAuth = () => {
         if (!state.isAuthenticated) return;
 
         try {
-            if (wifi.hasConnection) await AuthService.signOut();
+            if (wifi.hasConnection) await authService.signOut();
             handleClearStore();
         }
         catch (error) {
@@ -186,17 +193,17 @@ const useAuth = () => {
 
         try {
             const signUpDto = SignUpDto.create(data);
-            const result = await AuthService.signUp(signUpDto);
+            const result = await authService.signUp(signUpDto);
 
             if (result.emailAlreadyExists) {
                 setIsAuthLoading(false);
                 setStatus({ code: 400, msg: authMessages.EMAIL_ALREADY_REGISTERED });
-                await AuthService.signOut();
+                await authService.signOut();
 
                 return;
             }
 
-            await AuthService.signOut();
+            await authService.signOut();
 
             onSuccess && onSuccess();
 
@@ -207,8 +214,8 @@ const useAuth = () => {
             setStatus({ code: 200, msg });
         }
         catch (error) {
-            await AuthService.signOut();
-            NotificationsService.close();
+            await authService.signOut();
+            notificationsService.close();
             setIsAuthLoading(false);
             clearAuth();
 
@@ -231,7 +238,7 @@ const useAuth = () => {
 
         try {
             const updateEmailDto = UpdateEmailDto.create(email, state.user.email);
-            await AuthService.updateEmail(updateEmailDto);
+            await authService.updateEmail(updateEmailDto);
 
             setIsAuthLoading(false);
             onFinish && onFinish();
@@ -265,7 +272,7 @@ const useAuth = () => {
 
         try {
             const updatePasswordDto = UpdatePasswordDto.create(password);
-            await AuthService.updatePassword(updatePasswordDto);
+            await authService.updatePassword(updatePasswordDto);
 
             setIsAuthLoading(false);
             onFinish && onFinish();
@@ -296,7 +303,7 @@ const useAuth = () => {
 
         try {
             const updateDto = UpdateProfileDto.create(values);
-            const user = await AuthService.updateProfile(updateDto);
+            const user = await authService.updateProfile(updateDto);
 
             updateUser({ ...state.user, ...user });
             setStatus({ code: 200, msg: authMessages.PROFILE_UPDATED });

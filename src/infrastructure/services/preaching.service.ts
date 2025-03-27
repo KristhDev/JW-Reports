@@ -1,5 +1,8 @@
 /* Config */
-import { supabase } from '@config';
+import { supabase } from '@config/supabase';
+
+/* Contracts */
+import { PreachingServiceContract } from '@domain/contracts/services';
 
 /* Errors */
 import { RequestError } from '@domain/errors';
@@ -16,7 +19,7 @@ import { TimeAdapter } from '@infrastructure/adapters';
 /* Interfaces */
 import { PreachingEndpoint } from '@infrastructure/interfaces';
 
-export class PreachingService {
+export class PreachingService extends PreachingServiceContract {
     /**
      * Creates a new preaching and returns the created preaching.
      *
@@ -24,7 +27,7 @@ export class PreachingService {
      * @returns {Promise<PreachingEntity>} A promise that resolves with the created preaching or throws a
      * RequestError if something goes wrong.
      */
-    public static async create(dto: CreatePreachingDto): Promise<PreachingEntity> {
+    public async create(dto: CreatePreachingDto): Promise<PreachingEntity> {
         const result = await supabase.from('preachings')
             .insert(dto)
             .select<'*', PreachingEndpoint>()
@@ -49,7 +52,7 @@ export class PreachingService {
      * @returns {Promise<void>} - A promise that resolves when the preaching is deleted.
      * @throws {RequestError} If there is an error in deleting the preaching.
      */
-    public static async delete(id: string, userId: string): Promise<void> {
+    public async delete(id: string, userId: string): Promise<void> {
         const result = await supabase.from('preachings')
             .delete()
             .eq('id', id)
@@ -72,7 +75,7 @@ export class PreachingService {
      * @returns {Promise<PreachingEntity[]>} A promise that resolves with an array of preachings for the specified user and month.
      * @throws {RequestError} If there is an error in fetching the preachings.
      */
-    public static async getByUserIdAndMonth(userId: string, month: Date): Promise<PreachingEntity[]> {
+    public async getByUserIdAndMonth(userId: string, month: Date): Promise<PreachingEntity[]> {
         const init_date = TimeAdapter.getFirstDateOfMonth(month, 'YYYY-MM-DD');
         const final_date = TimeAdapter.getLastDateOfMonth(month, 'YYYY-MM-DD');
 
@@ -102,7 +105,7 @@ export class PreachingService {
      * @returns {Promise<PreachingEntity[]>} A promise that resolves with an array of preachings for the specified user.
      * @throws {RequestError} If there is an error in fetching the preachings.
      */
-    public static async getAllByUserId(userId: string): Promise<PreachingEntity[]> {
+    public async getAllByUserId(userId: string): Promise<PreachingEntity[]> {
         const result = await supabase.from('preachings')
             .select<'*', PreachingEndpoint>()
             .eq('user_id', userId)
@@ -129,7 +132,7 @@ export class PreachingService {
      * @returns {Promise<PreachingEntity>} A promise that resolves with the updated preaching or throws a
      * RequestError if something goes wrong.
      */
-    public static async update(id: string, userId: string, dto: UpdatePreachingDto): Promise<PreachingEntity> {
+    public async update(id: string, userId: string, dto: UpdatePreachingDto): Promise<PreachingEntity> {
         const result = await supabase.from('preachings')
             .update(dto)
             .eq('id', id)

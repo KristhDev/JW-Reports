@@ -5,7 +5,7 @@ import DateTimePicker, { DateType } from 'react-native-ui-datepicker';
 import Ionicons from '@expo/vector-icons/Ionicons';
 
 /* Config */
-import { locales } from '@config';
+import { locales } from '@config/calendar';
 
 /* Adapters */
 import { TimeAdapter } from '@infrastructure/adapters';

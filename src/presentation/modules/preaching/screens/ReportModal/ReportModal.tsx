@@ -1,12 +1,15 @@
-import React, { Children, FC, useState } from 'react';
+import React, { Children, FC, useMemo, useState } from 'react';
 import { View, Text, Share, TextInput } from 'react-native';
 import { useStyles } from 'react-native-unistyles';
+
+/* Config */
+import { dependencies, DEPENDENCIES_TYPES } from '@config/inversify';
 
 /* Constants */
 import { MINISTRY_PARTICIPATIONS, precursors } from '@application/constants';
 
-/* Services */
-import { PreachingReportService } from '@infrastructure/services';
+/* Contracts */
+import { PreachingReportServiceContract } from '@domain/contracts/services';
 
 /* Adapters */
 import { TimeAdapter } from '@infrastructure/adapters';
@@ -35,6 +38,8 @@ import { stylesheet } from './styles';
  * @return {JSX.Element} rendered component to show modal
  */
 const ReportModal: FC<ReportModalProps> = ({ isOpen, month, onClose }): JSX.Element => {
+    const preachingReportService = useMemo(() => dependencies.get<PreachingReportServiceContract>(DEPENDENCIES_TYPES.PreachingReportService), []);
+
     const [ comment, setComment ] = useState<string>('');
     const [ hoursLDC, setHoursLDC ] = useState<string>('');
     const [ participated, setParticipated ] = useState<ParticipateInMinistry>('si');
@@ -72,7 +77,7 @@ const ReportModal: FC<ReportModalProps> = ({ isOpen, month, onClose }): JSX.Elem
     const handleDeliverReport = async (): Promise<void> => {
         onClose();
 
-        const report = PreachingReportService.generatePrechingReportString({
+        const report = preachingReportService.generatePrechingReportString({
             comment,
             courses: totalCourses,
             hours: totalHours,

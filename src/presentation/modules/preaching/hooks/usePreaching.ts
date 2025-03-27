@@ -1,4 +1,8 @@
+import { useMemo } from 'react';
 import { useRouter } from 'expo-router';
+
+/* Config */
+import { dependencies, DEPENDENCIES_TYPES } from '@config/inversify';
 
 /* Constants */
 import { authMessages, preachingMessages } from '@application/constants';
@@ -20,14 +24,17 @@ import {
     updatePreaching as updatePreachingAction
 } from '@application/features';
 
+/* Contracts */
+import { PreachingReportServiceContract, PreachingServiceContract } from '@domain/contracts/services';
+
 /* Dtos */
 import { CreatePreachingDto, UpdatePreachingDto } from '@domain/dtos';
 
 /* Entities */
 import { PreachingEntity } from '@domain/entities';
 
-/* Services */
-import { PreachingReportService, PreachingService } from '@infrastructure/services';
+/* Templates */
+import { PdfPreachingsTemplate } from '@domain/templates';
 
 /* Adapters */
 import { ExternalStorageAdapter, PDFAdapter, TimeAdapter } from '@infrastructure/adapters';
@@ -38,12 +45,14 @@ import { useNetwork, useStatus } from '@shared';
 
 /* Interfaces */
 import { PreachingFormValues } from '../interfaces';
-import { PdfPreachingsTemplate } from '@domain/templates';
 
 /**
  * Hook to management preaching of store with state and actions
  */
 const usePreaching = () => {
+    const preachingService = useMemo(() => dependencies.get<PreachingServiceContract>(DEPENDENCIES_TYPES.PreachingService), []);
+    const preachingReportService = useMemo(() => dependencies.get<PreachingReportServiceContract>(DEPENDENCIES_TYPES.PreachingReportService), []);
+
     const dispatch = useAppDispatch();
     const router = useRouter();
 
@@ -126,7 +135,7 @@ const usePreaching = () => {
         setIsPreachingDeleting(true);
 
         try {
-            await PreachingService.delete(state.seletedPreaching.id, user.id);
+            await preachingService.delete(state.seletedPreaching.id, user.id);
             removePreaching(state.seletedPreaching.id);
 
             resetSelectedPreaching();
@@ -161,10 +170,10 @@ const usePreaching = () => {
         setIsPreachingsExporting(true);
 
         try {
-            const allPreachings = await PreachingService.getAllByUserId(user.id);
+            const allPreachings = await preachingService.getAllByUserId(user.id);
 
-            const preachingsGrouped = PreachingReportService.groupByMonthAndYear(allPreachings);
-            const reportsPreaching = preachingsGrouped.map(PreachingReportService.generatePreachingReportForExport);
+            const preachingsGrouped = preachingReportService.groupByMonthAndYear(allPreachings);
+            const reportsPreaching = preachingsGrouped.map(preachingReportService.generatePreachingReportForExport);
 
             const fileName = `Informes_de_Predicación_de_${ user.name }_${ user.surname }`;
             const preachingsTemplate = PdfPreachingsTemplate.generate({ fullName: `${ user.name } ${ user.surname }`, reports: reportsPreaching });
@@ -198,7 +207,7 @@ const usePreaching = () => {
         setIsPreachingsLoading(true);
 
         try {
-            const preachings = await PreachingService.getByUserIdAndMonth(user.id, date);
+            const preachings = await preachingService.getByUserIdAndMonth(user.id, date);
             setPreachings(preachings);
         }
         catch (error) {
@@ -224,7 +233,7 @@ const usePreaching = () => {
 
         try {
             const createDto = CreatePreachingDto.create({ ...preachingValues, userId: user.id });
-            const result = await PreachingService.create(createDto);
+            const result = await preachingService.create(createDto);
 
             if (TimeAdapter.format(result.day, 'MMMM') === TimeAdapter.format(state.selectedDate, 'MMMM')) addPreaching(result);
 
@@ -259,7 +268,7 @@ const usePreaching = () => {
 
         try {
             const updateDto = UpdatePreachingDto.create(preachingValues);
-            const preaching = await PreachingService.update(state.seletedPreaching.id, user.id, updateDto);
+            const preaching = await preachingService.update(state.seletedPreaching.id, user.id, updateDto);
 
             updatePreachingState(preaching);
             resetSelectedPreaching();

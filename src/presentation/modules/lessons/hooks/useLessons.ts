@@ -1,7 +1,11 @@
+import { useMemo } from 'react';
 import { useRouter } from 'expo-router';
 
 /* Constants */
 import { authMessages, coursesMessages, lessonsMessages, precursors } from '@application/constants';
+
+/* Config */
+import { dependencies, DEPENDENCIES_TYPES } from '@config/inversify';
 
 /* Features */
 import { useAppDispatch, useAppSelector } from '@application/store';
@@ -28,14 +32,14 @@ import {
     updateLesson as updateLessonAction,
 } from '@application/features';
 
+/* Contracts */
+import { CoursesServiceContract, LessonsServiceContract } from '@domain/contracts/services';
+
 /* DTOs */
 import { CreateLessonDto, FinishOrStartLessonDto, UpdateLessonDto } from '@domain/dtos';
 
 /* Entities */
 import { LessonEntity, LessonWithCourseEntity } from '@domain/entities';
-
-/* Services */
-import { CoursesService, LessonsService } from '@infrastructure/services';
 
 /* Hooks */
 import { useAuth } from '@auth';
@@ -50,6 +54,9 @@ import { deleteOptions } from '@infrastructure/interfaces';
  * Hook to management lessons of store with state and actions
  */
 const useLessons = () => {
+    const coursesService = useMemo(() => dependencies.get<CoursesServiceContract>(DEPENDENCIES_TYPES.CoursesService), []);
+    const lessonsService = useMemo(() => dependencies.get<LessonsServiceContract>(DEPENDENCIES_TYPES.LessonsService), []);
+
     const dispatch = useAppDispatch();
     const router = useRouter();
     const { hasWifiConnection } = useNetwork();
@@ -177,7 +184,7 @@ const useLessons = () => {
         setIsLessonDeleting(true);
 
         try {
-            await LessonsService.delete(state.selectedLesson.id);
+            await lessonsService.delete(state.selectedLesson.id);
 
             if (user.precursor === precursors.NINGUNO && state.selectedLesson.id === state.lastLesson.id) {
                 await loadLastLesson();
@@ -223,7 +230,7 @@ const useLessons = () => {
 
         try {
             const finishOrStartDto = FinishOrStartLessonDto.create({ done: !state.selectedLesson.done, nextLesson });
-            const lesson = await LessonsService.finishOrStart(state.selectedLesson.id, selectedCourse.id, finishOrStartDto);
+            const lesson = await lessonsService.finishOrStart(state.selectedLesson.id, selectedCourse.id, finishOrStartDto);
 
             updateLessonActionState(lesson);
             updateLastLessonInCourse(lesson);
@@ -256,8 +263,8 @@ const useLessons = () => {
         setIsLastLessonLoading(true);
 
         try {
-            const courseIds = await CoursesService.getCourseIdsByUserId(user.id);
-            const lastLesson = await LessonsService.getLastLessonByCoursesId(courseIds);
+            const courseIds = await coursesService.getCourseIdsByUserId(user.id);
+            const lastLesson = await lessonsService.getLastLessonByCoursesId(courseIds);
 
             addLastLesson(lastLesson);
         }
@@ -292,7 +299,7 @@ const useLessons = () => {
         setIsLessonsLoading(true);
 
         try {
-            const lessons = await LessonsService.paginateByCourseId(selectedCourse.id, {
+            const lessons = await lessonsService.paginateByCourseId(selectedCourse.id, {
                 search,
                 pagination: {
                     from: (refresh) ? 0 : state.lessonsPagination.from,
@@ -333,7 +340,7 @@ const useLessons = () => {
 
         try {
             const createDto = CreateLessonDto.create({ ...lessonValues, courseId: selectedCourse.id });
-            const lesson = await LessonsService.create(createDto);
+            const lesson = await lessonsService.create(createDto);
 
             addLastLessonInCourse(selectedCourse.id, lesson);
             if (user.precursor === precursors.NINGUNO) await loadLastLesson();
@@ -370,7 +377,7 @@ const useLessons = () => {
 
         try {
             const updateDto = UpdateLessonDto.create(lessonValues);
-            const lesson = await LessonsService.update(state.selectedLesson.id, selectedCourse.id, updateDto);
+            const lesson = await lessonsService.update(state.selectedLesson.id, selectedCourse.id, updateDto);
 
             updateLessonActionState(lesson);
             updateLastLessonInCourse(lesson);

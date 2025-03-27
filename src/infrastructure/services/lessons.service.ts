@@ -1,8 +1,13 @@
+import { injectable } from 'inversify';
+
 /* Config */
-import { supabase } from '@config';
+import { supabase } from '@config/supabase';
 
 /* Features */
 import { INIT_COURSE, INIT_LESSON } from '@application/features';
+
+/* Contracts */
+import { LessonsServiceContract } from '@domain/contracts/services';
 
 /* DTOs */
 import { CreateLessonDto, FinishOrStartLessonDto, UpdateLessonDto } from '@domain/dtos';
@@ -16,13 +21,14 @@ import { RequestError } from '@domain/errors';
 /* Interfaces */
 import { PaginateOptions, LessonEndpoint, LessonWithCourseEndpoint } from '@infrastructure/interfaces';
 
-export class LessonsService {
+@injectable()
+export class LessonsService extends LessonsServiceContract {
     /**
      * Creates a new lesson and returns the created lesson.
      * @param {CreateLessonDto} dto The data to be used to create the lesson.
      * @returns {Promise<LessonEntity>} The created lesson.
      */
-    public static async create(dto: CreateLessonDto): Promise<LessonEntity> {
+    public async create(dto: CreateLessonDto): Promise<LessonEntity> {
         const result = await supabase.from('lessons')
             .insert(dto)
             .select<'*', LessonEndpoint>()
@@ -44,7 +50,7 @@ export class LessonsService {
      * @param {string} id The id of the lesson to be deleted.
      * @returns {Promise<void>} This function does not return anything.
      */
-    public static async delete(id: string): Promise<void> {
+    public async delete(id: string): Promise<void> {
         const result = await supabase.from('lessons')
             .delete()
             .eq('id', id);
@@ -63,7 +69,7 @@ export class LessonsService {
      * @param {string} courseId The id of the course to delete the lessons from.
      * @returns {Promise<void>} This function does not return anything.
      */
-    public static async deleteLessonsByCourseId(courseId: string): Promise<void> {
+    public async deleteLessonsByCourseId(courseId: string): Promise<void> {
         const result = await supabase.from('lessons')
             .delete()
             .eq('course_id', courseId);
@@ -84,7 +90,7 @@ export class LessonsService {
      * @param {FinishOrStartLessonDto} dto A dto with the data to finish or start the lesson.
      * @returns {Promise<LessonEntity>} The updated lesson.
      */
-    public static async finishOrStart(id: string, courseId: string, dto: FinishOrStartLessonDto): Promise<LessonEntity> {
+    public async finishOrStart(id: string, courseId: string, dto: FinishOrStartLessonDto): Promise<LessonEntity> {
         const result = await supabase.from('lessons')
             .update(dto)
             .eq('id', id)
@@ -111,7 +117,7 @@ export class LessonsService {
      * @returns {Promise<LessonEntity[]>} - A promise that resolves to an array of LessonEntity objects.
      * @throws {RequestError} - If there is an error in the request.
      */
-    public static async paginateByCourseId(courseId: string, options: PaginateOptions): Promise<LessonEntity[]> {
+    public async paginateByCourseId(courseId: string, options: PaginateOptions): Promise<LessonEntity[]> {
         const lessonsPromise = supabase.from('lessons')
             .select<'*', LessonEndpoint>()
             .eq('course_id', courseId);
@@ -139,7 +145,7 @@ export class LessonsService {
      * @param {string[]} courseIds The ids of the courses to get the last lesson from.
      * @returns {Promise<LessonWithCourseEntity>} The last lesson of the courses if the request was successful.
      */
-    public static async getLastLessonByCoursesId(courseIds: string[]): Promise<LessonWithCourseEntity> {
+    public async getLastLessonByCoursesId(courseIds: string[]): Promise<LessonWithCourseEntity> {
         const result = await supabase.from('lessons')
             .select<'*, courses (*)', LessonWithCourseEndpoint>('*, courses (*)')
             .in('course_id', [ courseIds ])
@@ -166,7 +172,7 @@ export class LessonsService {
      * @param {UpdateLessonDto} dto A dto with the data to update the lesson.
      * @returns {Promise<LessonEntity>} The updated lesson if the request was successful.
      */
-    public static async update(id: string, courseId: string, dto: UpdateLessonDto): Promise<LessonEntity> {
+    public async update(id: string, courseId: string, dto: UpdateLessonDto): Promise<LessonEntity> {
         const result = await supabase.from('lessons')
             .update(dto)
             .eq('id', id)

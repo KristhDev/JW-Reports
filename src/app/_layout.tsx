@@ -6,15 +6,17 @@ import { useStyles } from 'react-native-unistyles';
 import '@config/i18n';
 import '@config/unistyles';
 
+/* Config */
+import { dependencies, DEPENDENCIES_TYPES } from '@config/inversify';
+
+/* Constracts */
+import { EmailServiceContract, LoggerServiceContract, NotificationsServiceContract } from '@domain/contracts/services';
+
 /* Adapters */
 import { TimeAdapter } from '@infrastructure/adapters';
 
 /* Providers */
 import { Provider } from '@providers';
-
-/* Services */
-import { EmailService, LoggerService } from '@infrastructure/services';
-import { NotificationsService } from '@services';
 
 /* Modules */
 import { useAuth } from '@auth';
@@ -25,6 +27,10 @@ import { useRevisits } from '@revisits';
 import { useNetwork, usePermissions } from '@shared';
 import { useTheme } from '@theme';
 import { useUI } from '@ui';
+
+const emailService = dependencies.get<EmailServiceContract>(DEPENDENCIES_TYPES.EmailService);
+const loggerService = dependencies.get<LoggerServiceContract>(DEPENDENCIES_TYPES.LoggerService);
+const notificationsService = dependencies.get<NotificationsServiceContract>(DEPENDENCIES_TYPES.NotificationsService);
 
 /* Global config of date util */
 TimeAdapter.extend(TimeAdapter.plugins.weekday);
@@ -118,21 +124,21 @@ export default function RootLayout(): JSX.Element {
    * Effect to mount service for notifications.
    */
   useEffect(() => {
-    NotificationsService.mount();
+    notificationsService.mount();
   }, []);
 
   /**
    * Effect to initialize logger
    */
   useEffect(() => {
-    LoggerService.init();
+    loggerService.init();
   }, []);
 
   /**
    * Effect to initialize email
    */
   useEffect(() => {
-    EmailService.init();
+    emailService.init();
   }, []);
 
   return (

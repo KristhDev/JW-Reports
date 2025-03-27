@@ -1,7 +1,9 @@
+import { useMemo } from 'react';
 import { useRouter } from 'expo-router';
 
 /* Config */
-import { env } from '@config';
+import { env } from '@config/env';
+import { dependencies, DEPENDENCIES_TYPES } from '@config/inversify';
 
 /* Constants */
 import { authMessages, precursors, revisitsMessages } from '@application/constants';
@@ -32,6 +34,9 @@ import {
     updateRevisit as updateRevisitAction
 } from '@application/features';
 
+/* Contracts */
+import { RevisitsServiceContract } from '@domain/contracts/services';
+
 /* Dtos */
 import { CompleteRevisitDto, CreateRevisitDto, UpdateRevisitDto } from '@domain/dtos';
 
@@ -40,9 +45,6 @@ import { RevisitEntity } from '@domain/entities';
 
 /* Templates */
 import { PdfRevisitsTemplate } from '@domain/templates';
-
-/* Services */
-import { RevisitsService } from '@infrastructure/services';
 
 /* Adapters */
 import { ExternalStorageAdapter, PDFAdapter } from '@infrastructure/adapters';
@@ -59,6 +61,8 @@ import { deleteOptions } from '@infrastructure/interfaces';
  * Hook to management revisits of store with state and actions
  */
 const useRevisits = () => {
+    const revisitsService = useMemo(() => dependencies.get<RevisitsServiceContract>(DEPENDENCIES_TYPES.RevisitsService), []);
+
     const dispatch = useAppDispatch();
     const router = useRouter();
 
@@ -135,7 +139,7 @@ const useRevisits = () => {
 
         try {
             const completeDto = CompleteRevisitDto.create(true);
-            const revisit = await RevisitsService.complete(state.selectedRevisit.id, user.id, completeDto);
+            const revisit = await revisitsService.complete(state.selectedRevisit.id, user.id, completeDto);
 
             updateRevisitActionState(revisit);
             setSelectedRevisit(revisit);
@@ -176,7 +180,7 @@ const useRevisits = () => {
         try {
             /* If revisit has a photo you have to delete it */
             if (state.selectedRevisit.photo) await deleteImage(state.selectedRevisit.photo, env.SUPABASE_REVISITS_FOLDER!);
-            await RevisitsService.delete(state.selectedRevisit.id, user.id);
+            await revisitsService.delete(state.selectedRevisit.id, user.id);
 
             if (user.precursor === precursors.NINGUNO && state.lastRevisit.id === state.selectedRevisit.id) {
                 await loadLastRevisit();
@@ -214,7 +218,7 @@ const useRevisits = () => {
         setIsRevisitsExporting(true);
 
         try {
-            const allRevisits = await RevisitsService.getAllByUserId(user.id);
+            const allRevisits = await revisitsService.getAllByUserId(user.id);
 
             const revisitsTemplate = await PdfRevisitsTemplate.generate({
                 fullName: `${ user.name } ${ user.surname }`,
@@ -254,7 +258,7 @@ const useRevisits = () => {
         setIsLastRevisitLoading(true);
 
         try {
-            const lastRevisit = await RevisitsService.getLastByUserId(user.id);
+            const lastRevisit = await revisitsService.getLastByUserId(user.id);
             setLastRevisit(lastRevisit);
         }
         catch (error) {
@@ -295,7 +299,7 @@ const useRevisits = () => {
         }
 
         try {
-            const revisits = await RevisitsService.paginateByUserId(user.id, options);
+            const revisits = await revisitsService.paginateByUserId(user.id, options);
 
             if (revisits.length >= 10) {
                 setRevisitsPagination({
@@ -339,7 +343,7 @@ const useRevisits = () => {
             /* If image is other than undefined, an attempt is made to upload */
             if (image) photo = await uploadImage(image, env.SUPABASE_REVISITS_FOLDER!);
             const createDto = CreateRevisitDto.create({ ...revisitValues, userId: user.id, photo });
-            const revisit = await RevisitsService.create(createDto);
+            const revisit = await revisitsService.create(createDto);
 
             addRevisit(revisit);
 
@@ -395,7 +399,7 @@ const useRevisits = () => {
             }
 
             const updateDto = UpdateRevisitDto.create({ ...revisitValues, photo });
-            const revisit = await RevisitsService.update(state.selectedRevisit.id, user.id, updateDto);
+            const revisit = await revisitsService.update(state.selectedRevisit.id, user.id, updateDto);
 
             if (user.precursor === precursors.NINGUNO) await loadLastRevisit();
             updateRevisitActionState(revisit);

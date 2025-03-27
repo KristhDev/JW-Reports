@@ -1,8 +1,13 @@
+import { injectable } from 'inversify';
+
 /* Config */
-import { supabase } from '@config';
+import { supabase } from '@config/supabase';
 
 /* Features */
 import { INIT_REVISIT } from '@application/features';
+
+/* Contracts */
+import { RevisitsServiceContract } from '@domain/contracts/services';
 
 /* DTOs */
 import { CompleteRevisitDto, CreateRevisitDto, UpdateRevisitDto } from '@domain/dtos';
@@ -17,7 +22,8 @@ import { RequestError } from '@domain/errors';
 import { PaginateOptions, RevisitEndpoint } from '@infrastructure/interfaces';
 import { RevisitFilter } from '@revisits';
 
-export class RevisitsService {
+@injectable()
+export class RevisitsService extends RevisitsServiceContract {
     /**
      * Completes a revisit by updating the given fields.
      *
@@ -27,7 +33,7 @@ export class RevisitsService {
      * @returns {Promise<RevisitEntity>} The updated revisit.
      * @throws {RequestError} If the request fails.
      */
-    public static async complete(id: string, userId: string, dto: CompleteRevisitDto): Promise<RevisitEntity> {
+    public async complete(id: string, userId: string, dto: CompleteRevisitDto): Promise<RevisitEntity> {
         const result = await supabase.from('revisits')
             .update(dto)
             .eq('id', id)
@@ -52,7 +58,7 @@ export class RevisitsService {
      * @param {CreateRevisitDto} dto - The data to create the revisit with.
      * @returns {Promise<RevisitEntity>} A promise that resolves with the created revisit
      */
-    public static async create(dto: CreateRevisitDto): Promise<RevisitEntity> {
+    public async create(dto: CreateRevisitDto): Promise<RevisitEntity> {
         const result = await supabase.from('revisits')
             .insert(dto)
             .select<'*', RevisitEndpoint>()
@@ -77,7 +83,7 @@ export class RevisitsService {
      * @returns {Promise<void>} A promise that resolves when the revisit is deleted.
      * @throws {RequestError} If the request fails.
      */
-    public static async delete(id: string, userId: string): Promise<void> {
+    public async delete(id: string, userId: string): Promise<void> {
         const result = await supabase.from('revisits')
             .delete()
             .eq('id', id)
@@ -103,7 +109,7 @@ export class RevisitsService {
      * @returns {Promise<RevisitEntity[]>} A promise that resolves to an array of revisits for the user.
      * @throws {RequestError} If there is an error in fetching the revisits.
      */
-    public static async paginateByUserId(userId: string, options: PaginateOptions<RevisitFilter>): Promise<RevisitEntity[]> {
+    public async paginateByUserId(userId: string, options: PaginateOptions<RevisitFilter>): Promise<RevisitEntity[]> {
         const revisitsPromise = supabase.from('revisits')
             .select<'*', RevisitEndpoint>()
             .eq('user_id', userId);
@@ -143,7 +149,7 @@ export class RevisitsService {
      * @returns {Promise<RevisitEntity[]>} A promise that resolves to an array of revisits for the user.
      * @throws {RequestError} If there is an error in fetching the revisits.
      */
-    public static async getAllByUserId(userId: string): Promise<RevisitEntity[]> {
+    public async getAllByUserId(userId: string): Promise<RevisitEntity[]> {
         const result = await supabase.from('revisits')
             .select<'*', RevisitEndpoint>()
             .eq('user_id', userId)
@@ -168,7 +174,7 @@ export class RevisitsService {
      * @returns {Promise<RevisitEntity>} A promise that resolves with the last revisit
      * or a RequestError if something goes wrong.
      */
-    public static async getLastByUserId(userId: string): Promise<RevisitEntity> {
+    public async getLastByUserId(userId: string): Promise<RevisitEntity> {
         const result = await supabase.from('revisits')
             .select<'*', RevisitEndpoint>('*')
             .eq('user_id', userId)
@@ -194,7 +200,7 @@ export class RevisitsService {
      * @param {UpdateRevisitDto} dto - The update revisit dto.
      * @returns {Promise<RevisitEntity>} A promise that resolves with the updated revisit
      */
-    public static async update(id: string, userId: string, dto: UpdateRevisitDto): Promise<RevisitEntity> {
+    public async update(id: string, userId: string, dto: UpdateRevisitDto): Promise<RevisitEntity> {
         const result = await supabase.from('revisits')
             .update(dto)
             .eq('id', id)

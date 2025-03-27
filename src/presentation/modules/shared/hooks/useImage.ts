@@ -1,7 +1,8 @@
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 
 /* Config */
-import { env } from '@config';
+import { env } from '@config/env';
+import { dependencies, DEPENDENCIES_TYPES } from '@config/inversify';
 
 /* Constants */
 import { permissionsMessages, permissionsStatus } from '@application/constants';
@@ -9,11 +10,11 @@ import { permissionsMessages, permissionsStatus } from '@application/constants';
 /* Features */
 import { PermissionStatus } from '@application/features';
 
+/* Contracts */
+import { CloudServiceContract, DeviceImageServiceContract } from '@domain/contracts/services';
+
 /* Models */
 import { ImageModel } from '@domain/models';
-
-/* Services */
-import { CloudService, DeviceImageService } from '@infrastructure/services';
 
 /* Hooks */
 import { usePermissions, useStatus } from './';
@@ -22,6 +23,9 @@ import { usePermissions, useStatus } from './';
  * This hook allows to group the functions and states in relation to the images.
  */
 const useImage = () => {
+    const cloudService = useMemo(() => dependencies.get<CloudServiceContract>(DEPENDENCIES_TYPES.CloudService), []);
+    const deviceImageService = useMemo(() => dependencies.get<DeviceImageServiceContract>(DEPENDENCIES_TYPES.DeviceImageService), []);
+
     const {
         askPermission,
 
@@ -56,7 +60,7 @@ const useImage = () => {
      * @return {Promise<void>} This function return object.
      */
     const deleteImage = async (uri: string, folder: string): Promise<void> => {
-        await CloudService.deleteImage({ bucket: env.SUPABASE_BUCKET!, folder, uri });
+        await cloudService.deleteImage({ bucket: env.SUPABASE_BUCKET!, folder, uri });
     }
 
     /**
@@ -85,7 +89,7 @@ const useImage = () => {
         /* This is the code that is executed when the media library permission is granted. */
         if (isMediaLibraryGranted || permissionStatus === permissionsStatus.GRANTED) {
             try {
-                const image = await DeviceImageService.openPicker({ cropping: true });
+                const image = await deviceImageService.openPicker({ cropping: true });
 
                 if (!image) return;
                 setImage(image);
@@ -123,8 +127,8 @@ const useImage = () => {
         /* This is the code that is executed when the camera permission is granted. */
         if (isCameraGranted || permissionStatus === permissionsStatus.GRANTED) {
             try {
-                const image = await DeviceImageService.openCamera({
-                    cameraType: DeviceImageService.cameras.BACK,
+                const image = await deviceImageService.openCamera({
+                    cameraType: deviceImageService.cameras.BACK,
                     cropping: true
                 });
 
@@ -143,7 +147,7 @@ const useImage = () => {
      * @return {Promise<string | ImageError>} This function return object
      */
     const uploadImage = async (photo: ImageModel, folder: string): Promise<string> => {
-        const result = await CloudService.uploadImage({ bucket: env.SUPABASE_BUCKET!, folder, image: photo });
+        const result = await cloudService.uploadImage({ bucket: env.SUPABASE_BUCKET!, folder, image: photo });
         return result;
     }
 

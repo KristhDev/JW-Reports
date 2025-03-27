@@ -1,14 +1,17 @@
+import { useMemo } from 'react';
+
 /* Config */
-import { env } from '@config';
+import { env } from '@config/env';
+import { dependencies, DEPENDENCIES_TYPES } from '@config/inversify';
 
 /* Constants */
 import { emailMessages } from '@application/constants';
 
+/* Contracts */
+import { EmailServiceContract } from '@domain/contracts/services';
+
 /* Errors */
 import { EmailError } from '@domain/errors';
-
-/* Services */
-import { EmailService } from '@infrastructure/services';
 
 /* Hooks */
 import { useAuth } from '@auth';
@@ -19,6 +22,8 @@ import useStatus from './useStatus';
 import { ReportErrorOptions, UtilFunctions } from '../interfaces';
 
 const useEmail = () => {
+    const emailService = useMemo(() => dependencies.get<EmailServiceContract>(DEPENDENCIES_TYPES.EmailService),[]);
+
     const { state: { user } } = useAuth();
     const { uploadImage } = useImage();
     const { setStatus, setError } = useStatus();
@@ -32,7 +37,7 @@ const useEmail = () => {
      */
     const sendFeedbackEmail = async (message: string, { onFinish, onSuccess }: UtilFunctions): Promise<void> => {
         try {
-            await EmailService.send({
+            await emailService.send({
                 email: user.email,
                 message,
                 templateId: env.EMAILJS_FEEDBACK_TEMPLATE_ID!
@@ -62,7 +67,7 @@ const useEmail = () => {
             let imageUrl = 'https://t4.ftcdn.net/jpg/04/73/25/49/360_F_473254957_bxG9yf4ly7OBO5I0O5KABlN930GwaMQz.jpg';
             if (image) imageUrl = await uploadImage(image, env.SUPABASE_ERRORS_FOLDER!);
 
-            await EmailService.send({
+            await emailService.send({
                 email: user.email,
                 message,
                 templateId: env.EMAILJS_REPORT_ERROR_TEMPLATE_ID!,

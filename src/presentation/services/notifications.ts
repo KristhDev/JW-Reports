@@ -1,7 +1,8 @@
 import { LogLevel, OneSignal } from 'react-native-onesignal';
+import { injectable } from 'inversify';
 
 /* Config */
-import { env } from '@config';
+import { env } from '@config/env';
 
 /* Constants */
 import { permissionsStatus } from '@application/constants';
@@ -9,13 +10,17 @@ import { permissionsStatus } from '@application/constants';
 /* Features */
 import { PermissionStatus } from '@application/features';
 
-export class NotificationsService {
+/* Contracts */
+import { NotificationsServiceContract } from '@domain/contracts/services';
+
+@injectable()
+export class NotificationsService extends NotificationsServiceContract {
     /**
      * Closes the OneSignal SDK and logs out the current user.
      *
      * @return {void} This function does not return anything.
      */
-    public static close(): void {
+    public close(): void {
         OneSignal.logout();
     }
 
@@ -24,7 +29,7 @@ export class NotificationsService {
      *
      * @returns {Promise<PermissionStatus>} A promise that resolves with the current permission status for the notifications permission.
      */
-    public static async getNotificationsPermission(): Promise<PermissionStatus> {
+    public async getNotificationsPermission(): Promise<PermissionStatus> {
         const result = await OneSignal.Notifications.getPermissionAsync();
         return (result) ? permissionsStatus.GRANTED : permissionsStatus.DENIED;
     }
@@ -35,7 +40,7 @@ export class NotificationsService {
      * @param {string} userId - The ID of the user to listen for notifications for.
      * @return {void} This function does not return anything.
      */
-    public static listenNotificationsByUser(userId: string): void {
+    public listenNotificationsByUser(userId: string): void {
         OneSignal.login(userId);
     }
 
@@ -44,7 +49,7 @@ export class NotificationsService {
      *
      * @return {void} This function does not return anything.
      */
-    public static mount(): void {
+    public mount(): void {
         OneSignal.Debug.setLogLevel(LogLevel.Verbose);
         OneSignal.initialize(env.ONESIGNAL_APP_ID!);
     }
@@ -57,7 +62,7 @@ export class NotificationsService {
      *
      * @returns {Promise<PermissionStatus>} A promise that resolves with the current notifications permission status.
      */
-    public static async requestNotificationsPermission(): Promise<PermissionStatus> {
+    public async requestNotificationsPermission(): Promise<PermissionStatus> {
         const result = await OneSignal.Notifications.requestPermission(true);
         return (result) ? 'granted' : 'denied';
     }

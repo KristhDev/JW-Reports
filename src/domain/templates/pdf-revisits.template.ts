@@ -1,11 +1,16 @@
+/* Config */
+import { dependencies, DEPENDENCIES_TYPES } from '@config/inversify';
+
+/* Contracts */
+import { DeviceImageServiceContract } from '@domain/contracts/services';
+
 /* Adapters */
 import { TimeAdapter } from '@infrastructure/adapters';
 
 /* Interfaces */
 import { RevisitsTemplateOptions } from '@infrastructure/interfaces';
 
-/* Services */
-import { DeviceImageService } from '@infrastructure/services';
+const deviceImageService = dependencies.get<DeviceImageServiceContract>(DEPENDENCIES_TYPES.DeviceImageService);
 
 export class PdfRevisitsTemplate {
 
@@ -19,7 +24,7 @@ export class PdfRevisitsTemplate {
     public static async generate({ fullName, revisits }: RevisitsTemplateOptions): Promise<string> {
         const revisitsWithImageBase64Promise = revisits.map(async (revisit) => ({
             ...revisit,
-            photo: revisit?.photo ? await DeviceImageService.getBase64FromUri(revisit.photo) : undefined
+            photo: revisit?.photo ? await deviceImageService.getBase64FromUri(revisit.photo) : undefined
         }));
 
         const revisitsWithImageBase64 = await Promise.all(revisitsWithImageBase64Promise);

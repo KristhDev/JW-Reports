@@ -2,13 +2,18 @@ import { useEffect } from 'react';
 import { Redirect, Stack } from 'expo-router';
 import { useStyles } from 'react-native-unistyles';
 
-/* Services */
-import { NotificationsService } from '@services';
+/* Config */
+import { dependencies, DEPENDENCIES_TYPES } from '@config/inversify';
+
+/* Constracts */
+import { NotificationsServiceContract } from '@domain/contracts/services';
 
 /* Modules */
 import { useAuth } from '@auth';
 import { usePermissions } from '@shared';
 import { useTheme } from '@theme';
+
+const notificationsService = dependencies.get<NotificationsServiceContract>(DEPENDENCIES_TYPES.NotificationsService);
 
 export default function AppLayout(): JSX.Element {
     const { theme: { colors } } = useStyles();
@@ -30,7 +35,7 @@ export default function AppLayout(): JSX.Element {
      */
     useEffect(() => {
         if (!user.id || !isNotificationsGranted) return;
-        NotificationsService.listenNotificationsByUser(user.id);
+        notificationsService.listenNotificationsByUser(user.id);
     }, [ user.id ]);
 
     if (!isAuthenticated) return (<Redirect href="/auth/login" />);

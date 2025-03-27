@@ -1,4 +1,8 @@
+import { useMemo } from 'react';
 import { useRouter } from 'expo-router';
+
+/* Config */
+import { dependencies, DEPENDENCIES_TYPES } from '@config/inversify';
 
 /* Constants */
 import { coursesMessages, precursors } from '@application/constants';
@@ -28,14 +32,14 @@ import {
     updateCourse as updateCourseAction
 } from '@application/features';
 
+/* Contracts */
+import { CoursesServiceContract, LessonsServiceContract } from '@domain/contracts/services';
+
 /* DTOs */
 import { ActiveOrSuspendCourseDto, CreateCourseDto, FinishOrStartCourseDto, UpdateCourseDto } from '@domain/dtos';
 
 /* Entities */
 import { CourseEntity, LessonWithCourseEntity } from '@domain/entities';
-
-/* Services */
-import { CoursesService, LessonsService } from '@infrastructure/services';
 
 /* Templates */
 import { PdfCoursesTemplate } from '@domain/templates';
@@ -56,6 +60,9 @@ import { deleteOptions } from '@infrastructure/interfaces';
  * Hook to management courses of store with state and actions
  */
 const useCourses = () => {
+    const coursesService = useMemo(() => dependencies.get<CoursesServiceContract>(DEPENDENCIES_TYPES.CoursesService), []);
+    const lessonsService = useMemo(() => dependencies.get<LessonsServiceContract>(DEPENDENCIES_TYPES.LessonsService), []);
+
     const dispatch = useAppDispatch();
     const router = useRouter();
     const { hasWifiConnection } = useNetwork();
@@ -93,6 +100,7 @@ const useCourses = () => {
      * If the course is empty or finished, it will return false and
      * set the status with the appropiate message.
      * If the course can be updated, it will return true.
+     *
      * @param {string} unSelectedMsg - The message to be displayed if the course is not selected.
      * @param {() => void} [onError] - The function to be called when the course can not be updated.
      * @returns {boolean} - If the course can be updated or not.
@@ -123,12 +131,13 @@ const useCourses = () => {
      * If the course is empty or suspended, it will return true and
      * set the status with the appropiate message.
      * If the course can not be suspended, it will return false.
+     *
      * @param {string} unSelectedMsg - The message to be displayed if the course is not selected.
      * @param {string} suspendMsg - The message to be displayed if the course is suspended.
      * @param {() => void} [onError] - The function to be called when the course can not be suspended.
      * @returns {boolean} - If the course can be suspended or not.
      */
-    const isSelectedCourseSuspended = (unSelectedMsg: string, suspendMsg: string, onError?: () => void) => {
+    const isSelectedCourseSuspended = (unSelectedMsg: string, suspendMsg: string, onError?: () => void): boolean => {
         if (state.selectedCourse.id === '') {
             onError && onError();
             setStatus({ code: 400, msg: unSelectedMsg });
@@ -166,7 +175,7 @@ const useCourses = () => {
 
         try {
             const activeOrSuspendDto = ActiveOrSuspendCourseDto.create(!state.selectedCourse.suspended);
-            const course = await CoursesService.activeOrSuspend(state.selectedCourse.id, user.id, activeOrSuspendDto);
+            const course = await coursesService.activeOrSuspend(state.selectedCourse.id, user.id, activeOrSuspendDto);
 
             const msg = (course.suspended) ? coursesMessages.SUSPENDED_SUCCESS : coursesMessages.RENEW_SUCCESS;
             updateCourseActionState(course);
@@ -206,8 +215,8 @@ const useCourses = () => {
         setIsCourseDeleting(true);
 
         try {
-            await LessonsService.deleteLessonsByCourseId(state.selectedCourse.id);
-            await CoursesService.delete(state.selectedCourse.id, user.id);
+            await lessonsService.deleteLessonsByCourseId(state.selectedCourse.id);
+            await coursesService.delete(state.selectedCourse.id, user.id);
 
             if (user.precursor === precursors.NINGUNO && lastLesson.courseId === state.selectedCourse.id) {
                 await loadLastLesson();
@@ -246,7 +255,7 @@ const useCourses = () => {
         setIsCoursesExporting(true);
 
         try {
-            const allCourses = await CoursesService.getAllByUserId(user.id);
+            const allCourses = await coursesService.getAllByUserId(user.id);
 
             const coursesTemplate = PdfCoursesTemplate.generate({
                 courses: allCourses,
@@ -296,7 +305,7 @@ const useCourses = () => {
 
         try {
             const finishOrStartDto = FinishOrStartCourseDto.create(!state.selectedCourse.finished);
-            const course = await CoursesService.finishOrStart(state.selectedCourse.id, user.id, finishOrStartDto);
+            const course = await coursesService.finishOrStart(state.selectedCourse.id, user.id, finishOrStartDto);
 
             const msg = (course.finished) ? coursesMessages.FINISHED_SUCCESS : coursesMessages.RESTARTED_SUCCESS;
             updateCourseActionState(course);
@@ -339,7 +348,7 @@ const useCourses = () => {
         setIsCoursesLoading(true);
 
         try {
-            const courses = await CoursesService.paginateByUserId(user.id, {
+            const courses = await coursesService.paginateByUserId(user.id, {
                 filter,
                 search,
                 pagination: {
@@ -384,7 +393,7 @@ const useCourses = () => {
 
         try {
             const createDto = CreateCourseDto.create({ ...courseValues, userId: user.id });
-            const course = await CoursesService.create(createDto);
+            const course = await coursesService.create(createDto);
 
             addCourse(course);
 
@@ -423,7 +432,7 @@ const useCourses = () => {
 
         try {
             const updateDto = UpdateCourseDto.create(courseValues);
-            const course = await CoursesService.update(state.selectedCourse.id, user.id, updateDto);
+            const course = await coursesService.update(state.selectedCourse.id, user.id, updateDto);
 
             updateCourseActionState(course);
 

@@ -1,8 +1,10 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 
-/* Services */
-import { DeviceImageService } from '@infrastructure/services';
-import { NotificationsService } from '@services';
+/* Config */
+import { DEPENDENCIES_TYPES, dependencies }  from '@config/inversify';
+
+/* Contracts */
+import { DeviceImageServiceContract, NotificationsServiceContract } from '@domain/contracts/services';
 
 /* Types */
 import { PermissionStatus, RequestPermissionsOptions } from './types';
@@ -10,14 +12,17 @@ import { PermissionStatus, RequestPermissionsOptions } from './types';
 /* Adapters */
 import { VoiceRecorderAdapter } from '@infrastructure/adapters';
 
+const notificationsService = dependencies.get<NotificationsServiceContract>(DEPENDENCIES_TYPES.NotificationsService);
+const deviceImageService = dependencies.get<DeviceImageServiceContract>(DEPENDENCIES_TYPES.DeviceImageService);
+
 /* Creating a thunk that will check the permissions of the app. */
 export const checkPermissions = createAsyncThunk(
     'permissions/checkPermissions',
     async () => {
         const permissionsPromises = {
-            camera: DeviceImageService.getCameraPermission,
-            mediaLibrary: DeviceImageService.getMediaLibraryPermission,
-            notifications: NotificationsService.getNotificationsPermission,
+            camera: deviceImageService.getCameraPermission,
+            mediaLibrary: deviceImageService.getMediaLibraryPermission,
+            notifications: notificationsService.getNotificationsPermission,
             recordAudio: VoiceRecorderAdapter.getRecordAudioPermission
         }
 
@@ -42,9 +47,9 @@ export const requestPermissions = createAsyncThunk(
     'permissions/requestPermissions',
     async (options: RequestPermissionsOptions) => {
         const permissionsPromises = {
-            camera: DeviceImageService.requestCameraPermission,
-            mediaLibrary: DeviceImageService.requestMediaLibraryPermission,
-            notifications: NotificationsService.requestNotificationsPermission,
+            camera: deviceImageService.requestCameraPermission,
+            mediaLibrary: deviceImageService.requestMediaLibraryPermission,
+            notifications: notificationsService.requestNotificationsPermission,
             recordAudio: VoiceRecorderAdapter.requestRecordAudioPermission
         }
 

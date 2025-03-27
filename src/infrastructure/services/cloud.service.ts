@@ -1,7 +1,11 @@
+import { injectable } from 'inversify';
 import { decode } from 'base64-arraybuffer';
 
 /* Config */
-import { supabase } from '@config';
+import { supabase } from '@config/supabase';
+
+/* Contracts */
+import { CloudServiceContract } from '@domain/contracts/services';
 
 /* Errors */
 import { CloudError } from '@domain/errors';
@@ -9,7 +13,8 @@ import { CloudError } from '@domain/errors';
 /* Interfaces */
 import { DeleteImageOptions, UploadImageOptions } from '@infrastructure/interfaces';
 
-export class CloudService {
+@injectable()
+export class CloudService extends CloudServiceContract {
     /**
      * Deletes an image from the given bucket and folder, specified by the URI
      * @param {DeleteImageOptions} options
@@ -18,7 +23,7 @@ export class CloudService {
      * @param {string} options.uri - The URI of the image to be deleted
      * @returns {Promise<void>} - This function returns nothing.
      */
-    public static async deleteImage({ bucket, folder, uri }: DeleteImageOptions): Promise<void> {
+    public async deleteImage({ bucket, folder, uri }: DeleteImageOptions): Promise<void> {
         const imageId = uri.split('/')[uri.split('/').length - 1];
 
         const result = await supabase.storage
@@ -41,7 +46,7 @@ export class CloudService {
      * @param {Image} options.image - The image to be uploaded
      * @returns {Promise<string>} - The URL of the uploaded image if successful
      */
-    public static async uploadImage({ bucket, folder, image }: UploadImageOptions): Promise<string> {
+    public async uploadImage({ bucket, folder, image }: UploadImageOptions): Promise<string> {
         const file = image.path.split('/')[image.path.split('/').length - 1];
         const [ fileName, fileExt ] = file.split('.');
         const id = Math.floor(Math.random()).toString(16);

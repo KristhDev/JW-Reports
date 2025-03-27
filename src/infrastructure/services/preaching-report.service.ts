@@ -1,5 +1,10 @@
+import { injectable } from 'inversify';
+
 /* Constants */
 import { precursors } from '@application/constants';
+
+/* Contracts */
+import { PreachingReportServiceContract } from '@domain/contracts/services';
 
 /* Entities */
 import { PreachingEntity } from '@domain/entities';
@@ -14,14 +19,15 @@ import { RemainingHoursOfWeeklyRequirement, ReamainingOfHoursRequirement, Preach
 /* Utils */
 import { Characters } from '@utils';
 
-export class PreachingReportService {
+@injectable()
+export class PreachingReportService extends PreachingReportServiceContract {
     /**
      * Generates a preaching report string given the required options.
      *
      * @param {PreachingReportOptions} options - An object with the required properties to generate the report.
      * @return {string} The preaching report string.
      */
-    public static generatePrechingReportString({ comment, courses, hours, hoursLDC, month, participated, precursor, username }: PreachingReportOptions): string {
+    public generatePrechingReportString({ comment, courses, hours, hoursLDC, month, participated, precursor, username }: PreachingReportOptions): string {
         let report = '*Informe De Predicación* \n \n';
         report += `Nombre: ${ username }\n`;
         report += `Mes: ${ Characters.capitalize(month) }\n`;
@@ -44,7 +50,7 @@ export class PreachingReportService {
      * @param {GroupedPreachingsModel} options - An object with the required properties to generate the report.
      * @return {PreachingReportModel} The preaching report.
      */
-    public static generatePreachingReportForExport({ month, year, preachings }: GroupedPreachingsModel): PreachingReportModel {
+    public generatePreachingReportForExport({ month, year, preachings }: GroupedPreachingsModel): PreachingReportModel {
         const hours = TimeAdapter.sumHours(preachings.map(p => ({ init: p.initHour, finish: p.finalHour })));
         const restMins = TimeAdapter.getRestMins(preachings.map(p => ({ init: p.initHour, finish: p.finalHour })));
 
@@ -62,7 +68,7 @@ export class PreachingReportService {
      * @param {PreachingEntity[]} preachingsOfWeek - An array of preaching entities for the week.
      * @return {string} The total hours and minutes formatted as "hours:minutes".
      */
-    public static getHoursDoneByWeek(preachingsOfWeek: PreachingEntity[]): string {
+    public getHoursDoneByWeek(preachingsOfWeek: PreachingEntity[]): string {
         const hours = TimeAdapter.sumHours(preachingsOfWeek.map(p => ({ init: p.initHour, finish: p.finalHour })));
         const { restMins } = TimeAdapter.sumMins(preachingsOfWeek.map(p => ({ init: p.initHour, finish: p.finalHour })));
 
@@ -75,7 +81,7 @@ export class PreachingReportService {
      * @param {number} hoursRequirement - The total hours requirement over the period.
      * @return {string} The required hours per week formatted as "hours:minutes".
      */
-    public static getHoursRequirementByWeek(hoursRequirement: number): string {
+    public getHoursRequirementByWeek(hoursRequirement: number): string {
         const hoursByDay = hoursRequirement / 28;
         const hourByWeek = Math.floor(hoursByDay * 7);
         const minsByWeek = hoursByDay * 60 * 7;
@@ -94,7 +100,7 @@ export class PreachingReportService {
      * @param {string} hoursDoneByWeek - The hours done by week in the format "hours:minutes".
      * @return {RemainingHoursOfWeeklyRequirement} An object containing the remaining hours of the weekly requirement and a flag indicating if it is negative.
      */
-    public static getRemainingHoursOfWeeklyRequirement(hoursRequirementByWeek: string, hoursDoneByWeek: string): RemainingHoursOfWeeklyRequirement {
+    public getRemainingHoursOfWeeklyRequirement(hoursRequirementByWeek: string, hoursDoneByWeek: string): RemainingHoursOfWeeklyRequirement {
         const [ hoursDone, minsDone ] = hoursDoneByWeek.split(':');
         const [ hoursRequired, minsRequired ] = hoursRequirementByWeek.split(':');
 
@@ -122,7 +128,7 @@ export class PreachingReportService {
      * @param {number} hoursRequirement - The total hours required for the specified period.
      * @return {ReamainingOfHoursRequirement} - An object containing the remaining hours of the requirement and a flag indicating if it is negative.
      */
-    public static getReamainingOfHoursRequirement(preachings: PreachingEntity[], hoursRequirement: number): ReamainingOfHoursRequirement {
+    public getReamainingOfHoursRequirement(preachings: PreachingEntity[], hoursRequirement: number): ReamainingOfHoursRequirement {
         const hours = TimeAdapter.sumHours(preachings.map(p => ({ init: p.initHour, finish: p.finalHour })));
         const restMins = TimeAdapter.getRestMins(preachings.map(p => ({ init: p.initHour, finish: p.finalHour })));
 
@@ -149,7 +155,7 @@ export class PreachingReportService {
      * @param {PreachingEntity[]} preachings - The array of PreachingEntity objects to group.
      * @returns {GroupedPreachingsModel[]} An array of GroupedPreachingsModel objects, where each object contains the month, year and an array of preachings for that month and year.
      */
-    public static groupByMonthAndYear(preachings: PreachingEntity[]): GroupedPreachingsModel[] {
+    public groupByMonthAndYear(preachings: PreachingEntity[]): GroupedPreachingsModel[] {
         return preachings.reduce((acc: GroupedPreachingsModel[], preaching) => {
             const month = TimeAdapter.getMonthOfDate(preaching.day);
             const monthName = TimeAdapter.getMonthName(month);

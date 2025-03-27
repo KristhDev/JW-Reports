@@ -1,4 +1,8 @@
+import { useMemo } from 'react';
 import { useRouter } from 'expo-router';
+
+/* Config */
+import { dependencies, DEPENDENCIES_TYPES } from '@config/inversify';
 
 /* Constants */
 import { networkMessages, authMessages, appMessages } from '@application/constants';
@@ -6,6 +10,9 @@ import { networkMessages, authMessages, appMessages } from '@application/constan
 /* Features */
 import { useAppDispatch, useAppSelector } from '@application/store';
 import { clearStatus as clearStatusAction, setStatus as setStatusAction, SetStatusPayload } from '@application/features';
+
+/* Contracts */
+import { LoggerServiceContract } from '@domain/contracts/services';
 
 /* Errors */
 import {
@@ -21,13 +28,12 @@ import {
     VoiceRecorderError
 } from '@domain/errors';
 
-/* Services */
-import { LoggerService } from '@infrastructure/services';
-
 /**
  * Hook to management status of store with state and actions
  */
 const useStatus = () => {
+    const loggerService = useMemo(() => dependencies.get<LoggerServiceContract>(DEPENDENCIES_TYPES.LoggerService), []);
+
     const dispatch = useAppDispatch();
     const state = useAppSelector(store => store.status);
 
@@ -89,7 +95,7 @@ const useStatus = () => {
             : { ...(error as Error), message: (error as Error).message }
 
         console.error(JSON.stringify(errorData, null, 2));
-        LoggerService.error(errorData);
+        loggerService.error(errorData);
     }
 
     /**

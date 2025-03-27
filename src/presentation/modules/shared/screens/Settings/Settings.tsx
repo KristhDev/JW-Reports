@@ -4,7 +4,7 @@ import { useStyles } from 'react-native-unistyles';
 import { useRouter } from 'expo-router';
 
 /* Config */
-import { env } from '@config';
+import { env } from '@config/env';
 
 /* Constants */
 import { THEME_OPTIONS } from '@application/constants';
