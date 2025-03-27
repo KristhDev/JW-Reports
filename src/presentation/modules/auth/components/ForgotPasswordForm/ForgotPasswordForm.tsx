@@ -113,7 +113,7 @@ export const ForgotPasswordForm = (): JSX.Element => {
                     onPress={ () => router.back() }
                     testID="forgot-pass-form-sign-in"
                 >
-                    { translate('forms.links.signIn') }
+                    { translate('forms.links.signInWithAccount') }
                 </Link>
             </View>
 
