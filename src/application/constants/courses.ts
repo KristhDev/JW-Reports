@@ -70,16 +70,42 @@ export const coursesMessages = {
         min: 5
     }),
 
-    UNSELECTED: 'No hay un curso seleccionado.',
+    UNSELECTED: TranslationAdapter.translate('messages.errors.unSelected.empty', {
+        attribute: TranslationAdapter.translate('forms.fields.course'),
+        article: 'un',
+        genderEnding: 'o'
+    }),
+
     UNSELECTED_FINISH_OR_START: 'No pudes terminar o comenzar de nuevo un curso suspendido.',
-    UNSELECTED_DELETE: 'No hay un curso seleccionado para eliminar.',
-    UNSELECTED_UPDATE: 'No hay un curso seleccionado para actualizar.',
+
+    UNSELECTED_DELETE: TranslationAdapter.translate('messages.errors.unSelected.deleted', {
+        attribute: TranslationAdapter.translate('forms.fields.course'),
+        article: 'un',
+        genderEnding: 'o'
+    }),
+
+    UNSELECTED_UPDATE: TranslationAdapter.translate('messages.errors.unSelected.updated', {
+        attribute: TranslationAdapter.translate('forms.fields.course'),
+        article: 'un',
+        genderEnding: 'o'
+    }),
+
     FINISHED: 'No puedes suspender o renovar un curso terminado.',
     SUSPENDED_SUCCESS: 'Has suspendido el curso correctamente.',
     RENEW_SUCCESS: 'Has renovado el curso correctamente.',
-    DELETED_SUCCESS: 'Has eliminado el curso correctamente.',
+
+    DELETED_SUCCESS: TranslationAdapter.translate('messages.success.deleted', {
+        attribute: TranslationAdapter.translate('forms.fields.course'),
+        article: 'el',
+    }),
+
     FINISHED_SUCCESS: 'Has terminado el curso correctamente.',
     RESTARTED_SUCCESS: 'Has comenzado de nuevo el curso correctamente.',
-    ADDED_SUCCESS: 'Has agregado el curso correctamente.',
+
+    ADDED_SUCCESS: TranslationAdapter.translate('messages.success.added', {
+        attribute: TranslationAdapter.translate('forms.fields.course'),
+        article: 'el',
+    }),
+
     UPDATED_SUCCESS: 'Has actualizado el curso correctamente.',
 }
