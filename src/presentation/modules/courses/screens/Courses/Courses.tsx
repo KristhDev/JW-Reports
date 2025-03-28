@@ -8,7 +8,7 @@ import { INIT_COURSE } from '@application/features';
 
 /* Components */
 import { CoursesList } from '../../components';
-import { Fab } from '@ui';
+import { Fab } from '@ui/components';
 
 /* Hooks */
 import { useCourses } from '../../hooks';
@@ -17,7 +17,7 @@ import { useCourses } from '../../hooks';
 import { CoursesProps } from './interfaces';
 
 /* Theme */
-import { themeStylesheet } from '@theme';
+import { themeStylesheet } from '@theme/styles';
 
 /**
  * This screen is responsible for grouping the components to show

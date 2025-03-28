@@ -2,7 +2,7 @@
 import { ImageModel } from '@domain/models';
 
 /* Interfaces */
-import { LoadResourcesOptions } from '@ui';
+import { LoadResourcesOptions } from '@ui/interfaces';
 
 /**
  * Defining the structure of the RevisitFormValues object.

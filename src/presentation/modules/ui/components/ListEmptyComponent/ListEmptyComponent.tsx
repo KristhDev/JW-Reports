@@ -2,7 +2,7 @@ import React, { FC } from 'react';
 import { useWindowDimensions } from 'react-native';
 
 /* Components */
-import { InfoText } from '../..';
+import { InfoText } from '../InfoText';
 
 /* Interfaces */
 import { ListEmptyComponentProps } from './interfaces';

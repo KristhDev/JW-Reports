@@ -13,20 +13,26 @@ import { LessonWithCourseEntity, RevisitEntity } from '@domain/entities';
 /* Adapters */
 import { TimeAdapter } from '@infrastructure/adapters';
 
-/* Modules */
-import { useCourses, PassToCourseModal } from '@courses';
-import { FinishOrStartLessonModal, LessonCard, useLessons } from '@lessons';
-import { RevisitCard, RevisitModal, useRevisits } from '@revisits';
+/* Screens */
+import { PassToCourseModal } from '@courses/screens';
+import { FinishOrStartLessonModal } from '@lessons/screens';
+import { RevisitModal } from '@revisits/screens';
+import { DeleteModal } from '@ui/screens';
 
 /* Components */
+import { LessonCard } from '@lessons/components';
+import { RevisitCard } from '@revisits/components';
 import { ReportModal } from '../ReportModal';
-import { DeleteModal, Fab, InfoText, Title } from '@ui';
+import { Fab, InfoText, Title } from '@ui/components';
 
 /* Hooks */
+import { useCourses } from '@courses/hooks';
+import { useLessons } from '@lessons/hooks';
+import { useRevisits } from '@revisits/hooks';
 import { usePreaching } from '../../hooks';
 
 /* Theme */
-import { themeStylesheet } from '@theme';
+import { themeStylesheet } from '@theme/styles';
 
 /**
  * This screen is in charge of grouping the components to list the preaching days by

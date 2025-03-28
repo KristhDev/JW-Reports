@@ -5,14 +5,16 @@ import { useStyles } from 'react-native-unistyles';
 
 /* Components */
 import { LessonForm } from '../../components';
-import { MicrophoneBtn, useStatus } from '@shared';
-import { Title, useUI } from '@ui';
+import { MicrophoneBtn } from '@shared/components';
+import { Title } from '@ui/components';
 
 /* Hooks */
 import { useLessons } from '../../hooks';
+import { useStatus } from '@shared/hooks';
+import { useUI } from '@ui/hooks';
 
 /* Theme */
-import { themeStylesheet } from '@theme';
+import { themeStylesheet } from '@theme/styles';
 
 /**
  * This screen is responsible for grouping the components

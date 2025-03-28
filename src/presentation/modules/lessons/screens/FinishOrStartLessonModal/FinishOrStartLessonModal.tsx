@@ -7,10 +7,20 @@ import Ionicons from '@expo/vector-icons/Ionicons';
 /* Adapters */
 import { TimeAdapter } from '@infrastructure/adapters';
 
-/* Modules */
+/* Screens */
+import { Modal } from '@ui/screens';
+
+/* Components */
+import { ModalActions, FormCalendar, DatetimeField } from '@ui/components';
+
+/* Hooks */
 import { useLessons } from '../../hooks';
-import { themeStylesheet } from '@theme';
-import { Modal, ModalActions, ModalProps, FormCalendar, useUI, DatetimeField } from '@ui';
+import { useUI } from '@ui/hooks';
+
+import { ModalProps } from '@ui/interfaces';
+
+/* Styles */
+import { themeStylesheet } from '@theme/styles';
 
 /**
  * This modal is responsible for grouping the components to finish

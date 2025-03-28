@@ -19,14 +19,14 @@ import { TimeAdapter } from '@infrastructure/adapters';
 import { Provider } from '@providers';
 
 /* Modules */
-import { useAuth } from '@auth';
-import { useCourses } from '@courses';
-import { useLessons } from '@lessons';
-import { usePreaching } from '@preaching';
-import { useRevisits } from '@revisits';
-import { useNetwork, usePermissions } from '@shared';
-import { useTheme } from '@theme';
-import { useUI } from '@ui';
+import { useAuth } from '@auth/hooks';
+import { useCourses } from '@courses/hooks';
+import { useLessons } from '@lessons/hooks';
+import { usePreaching } from '@preaching/hooks';
+import { useRevisits } from '@revisits/hooks';
+import { useNetwork, usePermissions } from '@shared/hooks';
+import { useTheme } from '@theme/hooks';
+import { useUI } from '@ui/hooks';
 
 const emailService = dependencies.get<EmailServiceContract>(DEPENDENCIES_TYPES.EmailService);
 const loggerService = dependencies.get<LoggerServiceContract>(DEPENDENCIES_TYPES.LoggerService);

@@ -9,14 +9,14 @@ import { TimeAdapter } from '@infrastructure/adapters';
 import { FinishOrStartLessonModal } from '../FinishOrStartLessonModal';
 
 /* Components */
-import { InfoText, Link, Title } from '@ui';
+import { InfoText, Link, Title } from '@ui/components';
 
 /* Hooks */
-import { useCourses } from '@courses';
+import { useCourses } from '@courses/hooks';
 import { useLessons } from '../../hooks';
 
 /* Styles */
-import { themeStylesheet } from '@theme';
+import { themeStylesheet } from '@theme/styles';
 
 /**
  * This screen is responsible for grouping the components to

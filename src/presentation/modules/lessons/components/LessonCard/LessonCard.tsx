@@ -8,7 +8,7 @@ import Ionicons from '@expo/vector-icons/Ionicons';
 import { TimeAdapter } from '@infrastructure/adapters';
 
 /* Components */
-import { Fab } from '@ui';
+import { Fab } from '@ui/components';
 
 /* Hooks */
 import { useLessons } from '../../hooks';
@@ -20,7 +20,7 @@ import { LessonCardProps } from './interfaces';
 import { Characters } from '@utils';
 
 /* Styles */
-import { themeStylesheet } from '@theme';
+import { themeStylesheet } from '@theme/styles';
 import { stylesheet } from './styles';
 
 /**

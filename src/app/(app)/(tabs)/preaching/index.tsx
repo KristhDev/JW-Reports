@@ -4,7 +4,7 @@ import { Redirect } from 'expo-router';
 import { precursors } from '@application/constants';
 
 /* Auth */
-import { useAuth } from '@auth';
+import { useAuth } from '@auth/hooks';
 
 /**
  * Redirects to either the Precursor or Publisher tab based on the user's

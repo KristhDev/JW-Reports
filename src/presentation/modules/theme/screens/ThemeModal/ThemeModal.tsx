@@ -7,10 +7,13 @@ import { THEME_OPTIONS } from '@application/constants';
 import { Theme } from '@application/context';
 
 /* Screens */
-import { OptionsModal, ModalProps } from '@ui';
+import { OptionsModal } from '@ui/screens';
 
 /* Hooks */
 import { useTheme } from '../../hooks';
+
+/* Interfaces */
+import { ModalProps } from '@ui/interfaces';
 
 /**
  * This is a modal that allows the user to change the theme.

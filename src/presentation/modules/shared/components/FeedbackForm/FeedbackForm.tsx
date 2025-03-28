@@ -4,7 +4,7 @@ import { useFormik } from 'formik';
 import { useStyles } from 'react-native-unistyles';
 
 /* Components */
-import { Button, FormField } from '@ui';
+import { Button, FormField } from '@ui/components';
 
 /* Hooks */
 import { useEmail, useStatus } from '../../hooks';
@@ -16,7 +16,7 @@ import { FormActions } from '../../interfaces';
 import { feedbackFormSchema } from './schemas';
 
 /* Styles */
-import { themeStylesheet } from '@theme';
+import { themeStylesheet } from '@theme/styles';
 
 /**
  * This component is responsible for rendering the fields to send a feedback

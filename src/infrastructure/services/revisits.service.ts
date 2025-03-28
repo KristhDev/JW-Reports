@@ -20,7 +20,7 @@ import { RequestError } from '@domain/errors';
 
 /* Interfaces */
 import { PaginateOptions, RevisitEndpoint } from '@infrastructure/interfaces';
-import { RevisitFilter } from '@revisits';
+import { RevisitFilter } from '@revisits/interfaces';
 
 @injectable()
 export class RevisitsService extends RevisitsServiceContract {

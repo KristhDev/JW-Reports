@@ -3,9 +3,12 @@ import { View } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-controller';
 import { useStyles } from 'react-native-unistyles';
 
+/* Components */
 import { FeedbackForm } from '../../components';
-import { themeStylesheet } from '@theme';
-import { Title } from '@ui';
+import { Title } from '@ui/components';
+
+/* Styles */
+import { themeStylesheet } from '@theme/styles';
 
 const FeedbackScreen = (): JSX.Element => {
     const { styles: themeStyles, theme: { fontSizes } } = useStyles(themeStylesheet);

@@ -6,7 +6,7 @@ import { useStyles } from 'react-native-unistyles';
 
 import { INIT_REVISIT } from '@application/features';
 
-import { useRevisits } from '@revisits';
+import { useRevisits } from '@revisits/hooks';
 
 const { Navigator } = createMaterialTopTabNavigator();
 

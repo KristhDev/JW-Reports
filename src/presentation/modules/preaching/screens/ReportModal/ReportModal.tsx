@@ -19,15 +19,18 @@ import { ParticipateInMinistry } from '@infrastructure/interfaces';
 import { ReportModalProps } from './interfaces';
 
 /* Screens */
-import { Modal, RadioBtn, ModalActions } from '@ui';
+import { Modal } from '@ui/screens';
+
+/* Components */
+import { RadioBtn, ModalActions } from '@ui/components';
 
 /* Hooks */
-import { useAuth } from '@auth';
+import { useAuth } from '@auth/hooks';
 import { usePreaching } from '../../hooks';
-import { useCourses } from '@courses';
+import { useCourses } from '@courses/hooks';
 
 /* Styles */
-import { fontSizes, themeStylesheet } from '@theme';
+import { themeStylesheet } from '@theme/styles';
 import { stylesheet } from './styles';
 
 /**
@@ -56,7 +59,7 @@ const ReportModal: FC<ReportModalProps> = ({ isOpen, month, onClose }): JSX.Elem
         end: comment.length || 0
     });
 
-    const { styles: themeStyles, theme: { colors, margins } } = useStyles(themeStylesheet);
+    const { styles: themeStyles, theme: { colors, fontSizes, margins } } = useStyles(themeStylesheet);
     const { styles } = useStyles(stylesheet);
 
     const { state: { user } } = useAuth();

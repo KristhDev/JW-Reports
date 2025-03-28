@@ -10,18 +10,21 @@ import { INIT_LESSON } from '@application/features';
 /* Entities */
 import { LessonEntity } from '@domain/entities';
 
-/* Modules */
+/* Screens */
 import { FinishOrStartLessonModal } from '../../screens';
-import { DeleteModal, ListEmptyComponent, ListFooterComponent, SearchInput, Title } from '@ui';
+import { DeleteModal } from '@ui/screens';
+
+/* Components */
+import { ListEmptyComponent, ListFooterComponent, SearchInput, Title } from '@ui/components';
 import { LessonCard } from '../LessonCard';
 
 /* Hooks */
-import { useCourses } from '@courses';
+import { useCourses } from '@courses/hooks';
 import { useLessons } from '../../hooks';
-import { useNetwork } from '@shared';
+import { useNetwork } from '@shared/hooks';
 
 /* Theme */
-import { themeStylesheet } from '@theme';
+import { themeStylesheet } from '@theme/styles';
 
 /**
  * Render a list of lessons.

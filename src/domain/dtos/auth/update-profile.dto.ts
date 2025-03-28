@@ -1,5 +1,5 @@
 /* Interfaces */
-import { ProfileData } from '@auth';
+import { ProfileData } from '@auth/interfaces';
 import { Precursor } from '@infrastructure/interfaces';
 
 export class UpdateProfileDto {

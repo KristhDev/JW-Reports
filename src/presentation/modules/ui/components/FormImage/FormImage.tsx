@@ -7,13 +7,13 @@ import Ionicons from '@expo/vector-icons/Ionicons';
 import { Button } from '../Button';
 
 /* Hooks */
-import { useImage } from '@shared';
+import { useImage } from '@shared/hooks';
 
 /* Interfaces */
 import { FormImageProps, FormImageRef } from './interfaces';
 
 /* Theme */
-import { themeStylesheet } from '@theme';
+import { themeStylesheet } from '@theme/styles';
 import { stylesheet } from './styles';
 
 /**

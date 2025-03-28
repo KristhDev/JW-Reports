@@ -42,12 +42,12 @@ import { CreateLessonDto, FinishOrStartLessonDto, UpdateLessonDto } from '@domai
 import { LessonEntity, LessonWithCourseEntity } from '@domain/entities';
 
 /* Hooks */
-import { useAuth } from '@auth';
-import { useNetwork, useStatus } from '@shared';
+import { useAuth } from '@auth/hooks';
+import { useNetwork, useStatus } from '@shared/hooks';
 
 /* Interfaces */
 import { LessonFormValues } from '../interfaces';
-import { LoadResourcesOptions } from '@ui';
+import { LoadResourcesOptions } from '@ui/interfaces';
 import { deleteOptions } from '@infrastructure/interfaces';
 
 /**

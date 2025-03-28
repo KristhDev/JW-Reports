@@ -40,8 +40,8 @@ import { PdfPreachingsTemplate } from '@domain/templates';
 import { ExternalStorageAdapter, PDFAdapter, TimeAdapter } from '@infrastructure/adapters';
 
 /* Hooks */
-import { useAuth } from '@auth';
-import { useNetwork, useStatus } from '@shared';
+import { useAuth } from '@auth/hooks';
+import { useNetwork, useStatus } from '@shared/hooks';
 
 /* Interfaces */
 import { PreachingFormValues } from '../interfaces';

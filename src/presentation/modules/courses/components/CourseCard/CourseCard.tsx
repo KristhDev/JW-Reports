@@ -6,11 +6,12 @@ import { useStyles } from 'react-native-unistyles';
 import Ionicons from '@expo/vector-icons/Ionicons';
 
 /* Components */
-import { Fab, useTranslation } from '@ui';
+import { Fab } from '@ui/components';
 
 /* Hooks */
 import { useCourses } from '../../hooks';
-import { useLessons } from '@lessons';
+import { useLessons } from '@lessons/hooks';
+import { useTranslation } from '@ui/hooks';
 
 /* Interfaces */
 import { CourseCardProps } from './interfaces';
@@ -20,7 +21,7 @@ import { Characters } from '@utils';
 
 /* Styles */
 import { stylesheet } from './styles';
-import { themeStylesheet } from '@theme';
+import { themeStylesheet } from '@theme/styles';
 
 /**
  * This component is responsible for rendering part of the information of a

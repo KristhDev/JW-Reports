@@ -1,4 +1,4 @@
-import { CourseDetail } from '@courses';
+import { CourseDetail } from '@courses/screens';
 
 export default function CourseDetailScreen(): JSX.Element {
     return (<CourseDetail />)

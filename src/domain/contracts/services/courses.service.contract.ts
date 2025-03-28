@@ -2,7 +2,7 @@ import { ActiveOrSuspendCourseDto, CreateCourseDto, FinishOrStartCourseDto, Upda
 
 import { CourseEntity, CourseWithLessonsEntity } from '@domain/entities';
 
-import { CourseFilter } from '@courses';
+import { CourseFilter } from '@courses/interfaces';
 import { PaginateOptions } from '@infrastructure/interfaces';
 
 export abstract class CoursesServiceContract {

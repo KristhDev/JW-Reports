@@ -1,7 +1,7 @@
 import { useLocalSearchParams } from 'expo-router';
 
-/* Modules */
-import { Revisits, RevisitsProps } from '@revisits';
+/* Screens */
+import { Revisits, RevisitsProps } from '@revisits/screens';
 
 export default function RevisitsScreen({ segment }: { segment: string }): JSX.Element {
     const params = useLocalSearchParams<RevisitsProps>();

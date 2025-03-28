@@ -17,16 +17,20 @@ import { PreachingEntity } from '@domain/entities';
 /* Adapters */
 import { TimeAdapter } from '@infrastructure/adapters';
 
-/* UI */
-import { Button, Modal, ModalProps } from '@ui';
+import { Modal } from '@ui/screens';
+
+/* Components */
+import { Button } from '@ui/components';
 
 /* Hooks */
-import { useAuth } from '@auth';
+import { useAuth } from '@auth/hooks';
 import { usePreaching } from '../../hooks';
+
+import { ModalProps } from '@ui/interfaces';
 
 /* Styles */
 import { stylesheet } from './styles';
-import { themeStylesheet } from '@theme';
+import { themeStylesheet } from '@theme/styles';
 
 /**
  * Generates a preaching information modal component.

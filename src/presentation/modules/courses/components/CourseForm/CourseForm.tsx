@@ -8,11 +8,12 @@ import Ionicons from '@expo/vector-icons/Ionicons';
 import { coursesPlaceholders } from '@application/constants';
 
 /* Components */
-import { Button, FormField, useTranslation, useUI } from '@ui';
+import { Button, FormField } from '@ui/components';
 
 /* Hooks */
 import { useCourses } from '../../hooks';
-import { useStatus } from '@shared';
+import { useStatus } from '@shared/hooks';
+import { useTranslation, useUI } from '@ui/hooks';
 
 /* Schemas */
 import { courseFormSchema } from './schemas';
@@ -21,7 +22,7 @@ import { courseFormSchema } from './schemas';
 import { CourseFormValues } from '../../interfaces';
 
 /* Theme */
-import { themeStylesheet } from '@theme';
+import { themeStylesheet } from '@theme/styles';
 
 /**
  * This component is responsible for rendering the fields to create

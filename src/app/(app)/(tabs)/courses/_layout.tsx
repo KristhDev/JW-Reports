@@ -2,10 +2,12 @@ import { useState } from 'react';
 import { Href, Stack, useRouter } from 'expo-router';
 import { useStyles } from 'react-native-unistyles';
 
-/* Modules */
-import { useCourses } from '@courses';
-import { useLessons } from '@lessons';
-import { Header, HeaderButtons } from '@ui';
+/* Components */
+import { Header, HeaderButtons } from '@ui/components';
+
+/* Hooks */
+import { useCourses } from '@courses/hooks';
+import { useLessons } from '@lessons/hooks';
 
 export default function CoursesLayout(): JSX.Element {
     const [ showDeleteCourseModal, setShowDeleteCourseModal ] = useState<boolean>(false);

@@ -2,7 +2,7 @@
 import { TimeAdapter } from '@infrastructure/adapters';
 
 /* Interfaces */
-import { LessonFormValues } from '@lessons';
+import { LessonFormValues } from '@lessons/interfaces';
 
 export interface UpdateLessonDtoValues extends LessonFormValues {}
 

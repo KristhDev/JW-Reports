@@ -7,10 +7,12 @@ import Ionicons from '@expo/vector-icons/Ionicons';
 /* Adapters */
 import { TimeAdapter } from '@infrastructure/adapters';
 
-/* Modules */
-import { useLessons } from '@lessons';
-import { useStatus } from '@shared';
-import { Button, DatetimeField, FormCalendar, FormField, useUI } from '@ui';
+import { Button, DatetimeField, FormCalendar, FormField } from '@ui/components';
+
+/* Hooks */
+import { useLessons } from '@lessons/hooks';
+import { useStatus } from '@shared/hooks';
+import { useUI } from '@ui/hooks';
 
 /* Schemas */
 import { lessonFormSchema } from './schemas';
@@ -19,7 +21,7 @@ import { lessonFormSchema } from './schemas';
 import { LessonFormValues } from '../../interfaces';
 
 /* Theme */
-import { themeStylesheet } from '@theme';
+import { themeStylesheet } from '@theme/styles';
 
 /**
  * This component is responsible for rendering the fields to create

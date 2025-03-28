@@ -9,7 +9,7 @@ import { useUI } from '../../hooks';
 import { FormFieldProps } from './interfaces';
 
 /* Theme */
-import { themeStylesheet } from '@theme';
+import { themeStylesheet } from '@theme/styles';
 
 /**
  * This component is responsible for displaying fields for forms of

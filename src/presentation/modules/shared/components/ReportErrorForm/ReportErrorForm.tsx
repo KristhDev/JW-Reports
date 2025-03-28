@@ -7,10 +7,11 @@ import { useStyles } from 'react-native-unistyles';
 import { ImageModel } from '@domain/models';
 
 /* Components */
-import { Button, FormField, FormImage, FormImageRef } from '@ui';
+import { Button, FormField, FormImage, FormImageRef } from '@ui/components';
 
 /* Hooks */
 import { useEmail, useStatus } from '../../hooks';
+import { useTheme } from '@theme/hooks';
 
 /* Schemas */
 import { reportErrorFormSchema } from './schemas';
@@ -22,7 +23,7 @@ import { FormActions } from '../../interfaces';
 import { reportErrorDefaultImgs } from '../../utils';
 
 /* Styles */
-import { useTheme, themeStylesheet } from '@theme';
+import { themeStylesheet } from '@theme/styles';
 
 /**
  * This component is responsible for rendering the form to report an error.

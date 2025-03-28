@@ -3,8 +3,8 @@ import { Redirect, Stack } from 'expo-router';
 import { useStyles } from 'react-native-unistyles';
 
 /* Modules */
-import { useAuth } from '@auth';
-import { useTheme } from '@theme';
+import { useAuth } from '@auth/hooks';
+import { useTheme } from '@theme/hooks';
 
 export default function AuthLayout(): JSX.Element {
     const { theme: { colors } } = useStyles();

@@ -1,6 +1,6 @@
 import { RevisitEntity } from '@domain/entities/revisit.entity';
 import { Pagination } from '../ui/types';
-import { RevisitFilter } from 'src/presentation/modules/revisits';
+import { RevisitFilter } from '@revisits/interfaces';
 
 /**
  * Defining the structure of the RevisitsState object.

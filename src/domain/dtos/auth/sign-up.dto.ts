@@ -2,7 +2,7 @@
 import { precursors } from '@application/constants';
 
 /* Interfaces */
-import { SignUpData } from '@auth';
+import { SignUpData } from '@auth/interfaces';
 import { Precursor } from '@infrastructure/interfaces';
 
 export class SignUpDto {

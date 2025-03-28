@@ -19,7 +19,7 @@ import { Modal } from '../../screens';
 import { FormCalendarProps } from './interfaces';
 
 /* Theme */
-import { themeStylesheet } from '@theme';
+import { themeStylesheet } from '@theme/styles';
 
 /**
  * Renders a form calendar component.

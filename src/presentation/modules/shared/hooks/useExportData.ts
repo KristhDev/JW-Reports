@@ -1,12 +1,12 @@
 /* Constants */
 import { appMessages } from '@application/constants';
 
-/* Modules */
-import { useCourses } from '@courses';
-import { usePreaching } from '@preaching';
-import { useRevisits } from '@revisits';
+/* Hooks */
+import { useCourses } from '@courses/hooks';
+import { usePreaching } from '@preaching/hooks';
+import { useRevisits } from '@revisits/hooks';
 import useStatus from './useStatus';
-import { useUI } from '@ui';
+import { useUI } from '@ui/hooks';
 
 const useExportData = () => {
     const { state: { isCoursesExporting }, exportCourses } = useCourses();

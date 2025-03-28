@@ -15,7 +15,7 @@ import { useTranslation } from '@ui/hooks';
 import { OptionsModalProps } from './interfaces';
 
 /* Styles */
-import { themeStylesheet } from '@theme';
+import { themeStylesheet } from '@theme/styles';
 import { stylesheet } from './styles';
 
 /**

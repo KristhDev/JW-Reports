@@ -2,7 +2,7 @@
 import { TimeAdapter } from '@infrastructure/adapters';
 
 /* Interfaces */
-import { PreachingFormValues } from '@preaching';
+import { PreachingFormValues } from '@preaching/interfaces';
 
 export interface CreatePreachingDtoValues extends PreachingFormValues {
     userId: string;

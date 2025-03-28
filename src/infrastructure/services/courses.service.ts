@@ -15,7 +15,7 @@ import { RequestError } from '@domain/errors';
 
 /* Interfaces */
 import { CourseEndpoint, PaginateOptions } from '@infrastructure/interfaces';
-import { CourseFilter } from '@courses';
+import { CourseFilter } from '@courses/interfaces';
 
 export class CoursesService extends CoursesServiceContract {
     /**

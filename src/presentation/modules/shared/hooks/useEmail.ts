@@ -14,7 +14,7 @@ import { EmailServiceContract } from '@domain/contracts/services';
 import { EmailError } from '@domain/errors';
 
 /* Hooks */
-import { useAuth } from '@auth';
+import { useAuth } from '@auth/hooks';
 import useImage from './useImage';
 import useStatus from './useStatus';
 

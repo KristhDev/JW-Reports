@@ -8,13 +8,13 @@ import { INIT_LESSON } from '@application/features';
 
 /* Components */
 import { LessonsList } from '../../components';
-import { Fab } from '@ui';
+import { Fab } from '@ui/components';
 
 /* Hooks */
 import { useLessons } from '../../hooks';
 
 /* Theme */
-import { themeStylesheet } from '@theme';
+import { themeStylesheet } from '@theme/styles';
 
 /**
  * This screen is responsible for grouping the components to show

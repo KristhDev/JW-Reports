@@ -2,9 +2,9 @@ import { useEffect } from 'react';
 import { useStyles } from 'react-native-unistyles';
 import { Stack } from 'expo-router';
 
-import { useAuth } from '@auth';
-import { useCourses } from '@courses';
-import { useNetwork } from '@shared';
+import { useAuth } from '@auth/hooks';
+import { useCourses } from '@courses/hooks';
+import { useNetwork } from '@shared/hooks';
 
 export default function PreachingLayout(): JSX.Element {
     const { theme: { colors } } = useStyles();

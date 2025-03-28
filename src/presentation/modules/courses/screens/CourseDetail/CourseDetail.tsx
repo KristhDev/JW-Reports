@@ -14,15 +14,15 @@ import { ActiveOrSuspendCourseModal } from '../ActiveOrSuspendCourseModal';
 import { FinishOrStartCourseModal }  from '../FinishOrStartCourseModal';
 
 /* Components */
-import { InfoText, Link, Title } from '@ui';
+import { InfoText, Link, Title } from '@ui/components';
 
 /* Hooks */
 import { useCourses } from '../../hooks';
-import { useLessons } from '@lessons';
+import { useLessons } from '@lessons/hooks';
 
 
 /* Styles */
-import { themeStylesheet } from '@theme';
+import { themeStylesheet } from '@theme/styles';
 import { stylesheet } from './styles';
 
 /**

@@ -2,8 +2,11 @@ import { useState } from 'react';
 import { Href, Stack, useRouter } from 'expo-router';
 import { useStyles } from 'react-native-unistyles';
 
-import { useRevisits } from '@revisits';
-import { Header, HeaderButtons } from '@ui';
+/* Components */
+import { Header, HeaderButtons } from '@ui/components';
+
+/* Hooks */
+import { useRevisits } from '@revisits/hooks';
 
 export default function RevisitsLayout(): JSX.Element {
     const [ showDeleteModal, setShowDeleteModal ] = useState<boolean>(false);

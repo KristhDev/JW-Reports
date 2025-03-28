@@ -13,11 +13,11 @@ import { PreachingEntity } from '@domain/entities';
 import { TimeAdapter } from '@infrastructure/adapters';
 
 /* Components */
-import { TableCell } from '@ui';
+import { TableCell } from '@ui/components';
 
 /* Hooks */
 import { usePreaching } from '../../hooks';
-import { useTheme } from '@theme';
+import { useTheme } from '@theme/hooks';
 
 /* Styles */
 import { stylesheet } from './styles';

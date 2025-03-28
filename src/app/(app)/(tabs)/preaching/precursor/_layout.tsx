@@ -5,11 +5,13 @@ import { useStyles } from 'react-native-unistyles';
 /* Constants */
 import { precursors } from '@application/constants';
 
-/* Modules */
-import { useAuth } from '@auth';
-import { usePreaching } from '@preaching';
-import { Header, HeaderButtons } from '@ui';
-import { useNetwork, useStatus } from '@shared';
+/* Components */
+import { Header, HeaderButtons } from '@ui/components';
+
+/* Hooks */
+import { useAuth } from '@auth/hooks';
+import { usePreaching } from '@preaching/hooks';
+import { useNetwork, useStatus } from '@shared/hooks';
 
 export default function PrecursorLayout(): JSX.Element {
     const [ showDeletePreachingModal, setShowDeletePreachingModal ] = useState<boolean>(false);

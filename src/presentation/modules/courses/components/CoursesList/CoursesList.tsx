@@ -12,21 +12,22 @@ import { CourseEntity } from '@domain/entities';
 
 /* Screens */
 import { ActiveOrSuspendCourseModal, FinishOrStartCourseModal } from '../../screens';
-import { DeleteModal, ListEmptyComponent, ListFooterComponent, SearchInput, Title } from '@ui';
+import { DeleteModal } from '@ui/screens';
 
 /* Components */
 import { CourseCard } from '../CourseCard';
+import { ListEmptyComponent, ListFooterComponent, SearchInput, Title } from '@ui/components';
 
 /* Hooks */
 import { useCourses } from '../../hooks';
-import { useLessons } from '@lessons';
-import { useNetwork } from '@shared';
+import { useLessons } from '@lessons/hooks';
+import { useNetwork } from '@shared/hooks';
 
 /* Interfaces */
 import { CoursesListProps } from './interfaces';
 
 /* Theme */
-import { themeStylesheet } from '@theme';
+import { themeStylesheet } from '@theme/styles';
 
 /**
  * This component is responsible for rendering a list of courses based

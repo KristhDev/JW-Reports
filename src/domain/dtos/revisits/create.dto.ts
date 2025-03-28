@@ -2,7 +2,7 @@
 import { TimeAdapter } from '@infrastructure/adapters';
 
 /* Interfaces */
-import { RevisitFormValues } from '@revisits';
+import { RevisitFormValues } from '@revisits/interfaces';
 
 export interface CreateRevisitDtoValues extends RevisitFormValues {
     userId: string;

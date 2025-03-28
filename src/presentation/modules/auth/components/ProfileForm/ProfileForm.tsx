@@ -9,17 +9,18 @@ import Ionicons from '@expo/vector-icons/Ionicons';
 import { authPlaceholeders, HOURS_REQUIREMENTS, precursors, PRECURSORS_OPTIONS } from '@application/constants';
 
 /* Components */
-import { Button, Checkbox, FormField, FormSelect, useTranslation } from '@ui';
+import { Button, Checkbox, FormField, FormSelect } from '@ui/components';
 
 /* Hooks */
-import { useStatus } from '@shared';
 import { useAuth } from '../../hooks';
+import { useStatus } from '@shared/hooks';
+import { useTranslation } from '@ui/hooks';
 
 /* Schemas */
 import { profileFormSchema } from './schemas';
 
 /* Theme */
-import { themeStylesheet } from '@theme';
+import { themeStylesheet } from '@theme/styles';
 
 /**
  * This component is responsible for rendering the fields so that an

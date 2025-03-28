@@ -1,4 +1,4 @@
-import { LoadResourcesOptions } from '@ui';
+import { LoadResourcesOptions } from '@ui/interfaces';
 
 /**
  * Defining the structure of the CourseFormValues object.

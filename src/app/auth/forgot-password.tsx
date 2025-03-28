@@ -1,5 +1,5 @@
 /* Auth */
-import { ForgotPassword } from '@auth';
+import { ForgotPassword } from '@auth/screens';
 
 /**
  * This screen is to display the form to request a

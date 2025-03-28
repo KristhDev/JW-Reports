@@ -17,7 +17,7 @@ import { MonthPickerModalProps } from './interfaces';
 import { Characters } from '@utils';
 
 /* Theme */
-import { themeStylesheet } from '@theme';
+import { themeStylesheet } from '@theme/styles';
 import { stylesheet } from './styles';
 
 /**

@@ -50,8 +50,8 @@ import { PdfRevisitsTemplate } from '@domain/templates';
 import { ExternalStorageAdapter, PDFAdapter } from '@infrastructure/adapters';
 
 /* Hooks */
-import { useAuth } from '@auth';
-import { useImage, useNetwork, useStatus } from '@shared';
+import { useAuth } from '@auth/hooks';
+import { useImage, useNetwork, useStatus } from '@shared/hooks';
 
 /* Interfaces */
 import { loadRevisitsOptions, RevisitFilter, SaveRevisitOptions, UpdateRevisitOptions } from '../interfaces';

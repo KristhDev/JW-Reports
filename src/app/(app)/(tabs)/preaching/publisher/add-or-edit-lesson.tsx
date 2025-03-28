@@ -1,4 +1,4 @@
-import { AddOrEditLesson } from '@lessons';
+import { AddOrEditLesson } from '@lessons/screens';
 
 export default function AddOrEditLessonScreen(): JSX.Element {
     return (<AddOrEditLesson />)

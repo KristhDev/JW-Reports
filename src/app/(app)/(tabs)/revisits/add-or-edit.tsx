@@ -1,4 +1,4 @@
-import { AddOrEditRevisit } from '@revisits';
+import { AddOrEditRevisit } from '@revisits/screens';
 
 /**
  * This screen is responsible for grouping the components to add or

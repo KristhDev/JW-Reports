@@ -14,8 +14,8 @@ import { DeleteModal, MonthPickerModal } from '../../screens';
 import { Fab } from '../Fab';
 
 /* Hooks */
-import { useAuth } from '@auth';
-import { usePreaching } from '@preaching';
+import { useAuth } from '@auth/hooks';
+import { usePreaching } from '@preaching/hooks';
 
 /* Interfaces */
 import { HeaderButtonsProps } from './interfaces';

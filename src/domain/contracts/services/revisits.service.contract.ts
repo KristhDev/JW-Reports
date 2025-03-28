@@ -3,8 +3,7 @@ import { CompleteRevisitDto, CreateRevisitDto, UpdateRevisitDto } from '@domain/
 import { RevisitEntity } from '@domain/entities';
 
 import { PaginateOptions } from '@infrastructure/interfaces';
-
-import { RevisitFilter } from '@revisits';
+import { RevisitFilter } from '@revisits/interfaces';
 
 export abstract class RevisitsServiceContract {
     public abstract complete(id: string, userId: string, completeRevisitDto: CompleteRevisitDto): Promise<RevisitEntity>;

@@ -5,12 +5,17 @@ import { useStyles } from 'react-native-unistyles';
 /* Adapters */
 import { TimeAdapter } from '@infrastructure/adapters';
 
-/* Modules */
-import { RevisitModal, useRevisits } from '../..';
-import { themeStylesheet } from '@theme';
-import { Link, Title } from '@ui';
+/* Screens */
+import { RevisitModal } from '@revisits/screens';
+
+/* Components */
+import { Link, Title } from '@ui/components';
+
+/* Hooks */
+import { useRevisits } from '@revisits/hooks'
 
 /* Styles */
+import { themeStylesheet } from '@theme/styles';
 import { stylesheet } from './styles';
 
 /**

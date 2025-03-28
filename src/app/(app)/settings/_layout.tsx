@@ -1,7 +1,7 @@
 import { Stack } from 'expo-router';
 import { useStyles } from 'react-native-unistyles';
 
-import { Header } from '@ui';
+import { Header } from '@ui/components';
 
 export default function SettingsLayout(): JSX.Element {
     const { theme: { colors } } = useStyles();

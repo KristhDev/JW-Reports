@@ -2,10 +2,18 @@ import React from 'react';
 import { Linking, Text, View } from 'react-native';
 import { useStyles } from 'react-native-unistyles';
 
-/* Modules */
+/* Screens */
+import { Modal } from '@ui/screens';
+
+/* Components */
+import { ModalActions } from '@ui/components';
+
+/* Hooks */
 import { useStatus } from '../../hooks';
-import { themeStylesheet } from '@theme';
-import { Modal, ModalActions, useTranslation } from '@ui';
+import { useTranslation } from '@ui/hooks';
+
+/* Styles */
+import { themeStylesheet } from '@theme/styles';
 
 /**
  * This modal is responsible for displaying the success and error

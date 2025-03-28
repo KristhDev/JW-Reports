@@ -10,19 +10,24 @@ import { INIT_REVISIT } from '@application/features';
 /* Entities */
 import { RevisitEntity } from '@domain/entities';
 
-/* Modules */
-import { PassToCourseModal } from '@courses';
-import { RevisitCard, RevisitModal, useRevisits } from '@revisits';
-import { DeleteModal, ListEmptyComponent, ListFooterComponent, SearchInput, Title } from '@ui';
+/* Screens */
+import { PassToCourseModal } from '@courses/screens';
+import { RevisitModal } from '@revisits/screens';
+import { DeleteModal } from '@ui/screens';
+
+/* Components */
+import { RevisitCard } from '@revisits/components';
+import { ListEmptyComponent, ListFooterComponent, SearchInput, Title } from '@ui/components';
 
 /* Hooks */
-import { useNetwork } from '@shared';
+import { useRevisits } from '@revisits/hooks';
+import { useNetwork } from '@shared/hooks';
 
 /* Interfaces */
 import { RevisitsListProps } from './interfaces';
 
 /* Theme */
-import { themeStylesheet } from '@theme';
+import { themeStylesheet } from '@theme/styles';
 
 /**
  * This component is responsible for rendering a list of revisits based

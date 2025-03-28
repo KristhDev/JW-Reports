@@ -21,7 +21,7 @@ import {
     SetRevisitsPayload
 } from './types';
 
-import { RevisitFilter } from 'src/presentation/modules/revisits';
+import { RevisitFilter } from '@revisits/interfaces';
 
 /* Initial revisit */
 export const INIT_REVISIT: RevisitEntity = {

@@ -8,7 +8,7 @@ import { INIT_REVISIT } from '@application/features';
 
 /* Components */
 import { RevisitsList } from '../../components';
-import { Fab } from '@ui';
+import { Fab } from '@ui/components';
 
 /* Hooks */
 import { useRevisits } from '../../hooks';
@@ -17,7 +17,7 @@ import { useRevisits } from '../../hooks';
 import { RevisitsProps } from './interfaces';
 
 /* Theme */
-import { themeStylesheet } from '@theme';
+import { themeStylesheet } from '@theme/styles';
 
 /**
  * This screen is responsible for grouping the components to show a list

@@ -29,7 +29,7 @@ import { SignUpDto, UpdateEmailDto, UpdatePasswordDto, UpdateProfileDto } from '
 import { UserEntity } from '@domain/entities';
 
 /* Hooks */
-import { useNetwork, useStatus } from '@shared';
+import { useNetwork, useStatus } from '@shared/hooks';
 
 /* Interfaces */
 import { SignInData, ProfileData, SignUpData, EmailData, UpdatePasswordData } from '../interfaces';

@@ -2,10 +2,20 @@ import React, { FC } from 'react';
 import { ActivityIndicator, Text, View } from 'react-native';
 import { useStyles } from 'react-native-unistyles';
 
-/* Modules */
+/* Screens */
+import { Modal } from '@ui/screens';
+
+/* Components */
+import { ModalActions } from '@ui/components';
+
+/* Hooks */
 import { useCourses } from '../../hooks';
-import { themeStylesheet } from '@theme';
-import { Modal, ModalProps, ModalActions } from '@ui';
+
+/* Interfaces */
+import { ModalProps } from '@ui/interfaces';
+
+/* Styles */
+import { themeStylesheet } from '@theme/styles';
 
 /**
  * This modal is responsible for grouping the components to finish

@@ -2,14 +2,14 @@ import React from 'react';
 import { ActivityIndicator, Text, View } from 'react-native';
 import { useStyles } from 'react-native-unistyles';
 
-/* Modules */
-import { Button, Title } from '@ui';
+/* Components */
+import { Button, Title } from '@ui/components';
 
 /* Hooks */
 import { useExportData } from '../../hooks';
 
 /* Theme */
-import { themeStylesheet } from '@theme';
+import { themeStylesheet } from '@theme/styles';
 
 /**
  * Screen to export app data.

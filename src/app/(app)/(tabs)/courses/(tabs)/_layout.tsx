@@ -6,7 +6,7 @@ import { useFocusEffect, withLayoutContext } from 'expo-router';
 import { useStyles } from 'react-native-unistyles';
 
 /* Hooks */
-import { useCourses } from '@courses';
+import { useCourses } from '@courses/hooks';
 
 const { Navigator } = createMaterialTopTabNavigator();
 

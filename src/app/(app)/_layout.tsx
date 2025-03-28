@@ -8,10 +8,10 @@ import { dependencies, DEPENDENCIES_TYPES } from '@config/inversify';
 /* Constracts */
 import { NotificationsServiceContract } from '@domain/contracts/services';
 
-/* Modules */
-import { useAuth } from '@auth';
-import { usePermissions } from '@shared';
-import { useTheme } from '@theme';
+/* Hooks */
+import { useAuth } from '@auth/hooks';
+import { usePermissions } from '@shared/hooks';
+import { useTheme } from '@theme/hooks';
 
 const notificationsService = dependencies.get<NotificationsServiceContract>(DEPENDENCIES_TYPES.NotificationsService);
 

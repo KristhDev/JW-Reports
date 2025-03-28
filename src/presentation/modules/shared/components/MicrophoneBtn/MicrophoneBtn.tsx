@@ -3,16 +3,17 @@ import Ionicons from '@expo/vector-icons/Ionicons';
 import { useStyles } from 'react-native-unistyles';
 
 /* Components */
-import { Fab, useUI } from '@ui';
+import { Fab } from '@ui/components';
 
 /* Hooks */
 import { useVoiceRecorder } from '../../hooks';
+import { useUI } from '@ui/hooks';
 
 /* Interfaces */
 import { MicrophoneBtnProps } from './interfaces';
 
 /* Styles */
-import { themeStylesheet } from '@theme';
+import { themeStylesheet } from '@theme/styles';
 
 /**
  * A button to record audio from the device's microphone.

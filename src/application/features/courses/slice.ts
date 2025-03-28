@@ -23,7 +23,7 @@ import {
     SetCoursesPayload,
 } from './types';
 
-import { CourseFilter } from 'src/presentation/modules/courses';
+import { CourseFilter } from '@courses/interfaces';
 import { LessonPayload } from '../lessons/types';
 
 /* Initial course */

@@ -2,8 +2,8 @@ import React from 'react';
 import { Tabs } from 'expo-router';
 import { useStyles } from 'react-native-unistyles';
 
-/* Modules */
-import { TabBar } from '@ui';
+/* Components */
+import { TabBar } from '@ui/components';
 
 export default function MianTabsLayout(): JSX.Element {
     const { theme: { colors } } = useStyles();

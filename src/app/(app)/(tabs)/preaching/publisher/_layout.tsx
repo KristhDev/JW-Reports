@@ -5,13 +5,15 @@ import { useStyles } from 'react-native-unistyles';
 /* Constants */
 import { precursors } from '@application/constants';
 
-/* Modules */
-import { useAuth } from '@auth';
-import { useCourses } from '@courses';
-import { useLessons } from '@lessons';
-import { useRevisits } from '@revisits';
-import { useNetwork, useStatus } from '@shared';
-import { Header, HeaderButtons } from '@ui';
+/* Components */
+import { Header, HeaderButtons } from '@ui/components';
+
+/* Hooks */
+import { useAuth } from '@auth/hooks';
+import { useCourses } from '@courses/hooks';
+import { useLessons } from '@lessons/hooks';
+import { useRevisits } from '@revisits/hooks';
+import { useNetwork, useStatus } from '@shared/hooks';
 
 export default function PublisherLayout(): JSX.Element {
     const [ showDeleteLessonModal, setShowDeleteLessonModal ] = useState<boolean>(false);

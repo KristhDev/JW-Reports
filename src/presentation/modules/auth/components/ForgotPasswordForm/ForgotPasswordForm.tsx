@@ -9,11 +9,12 @@ import Ionicons from '@expo/vector-icons/Ionicons';
 import { authPlaceholeders } from '@application/constants';
 
 /* Components */
-import { Button, FormField, Link, useTranslation } from '@ui';
+import { Button, FormField, Link } from '@ui/components';
 
 /* Hooks */
-import { useStatus } from '@shared';
 import { useAuth } from '../../hooks';
+import { useStatus } from '@shared/hooks';
+import { useTranslation } from '@ui/hooks';
 
 /* Schemas */
 import { forgotPasswordFormSchema } from './schemas';
@@ -22,7 +23,7 @@ import { forgotPasswordFormSchema } from './schemas';
 import { EmailData } from '../../interfaces';
 
 /* Theme */
-import { themeStylesheet } from '@theme';
+import { themeStylesheet } from '@theme/styles';
 
 /**
  * This component is responsible for rendering the fields to request a user's

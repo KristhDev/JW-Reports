@@ -8,7 +8,7 @@ import Ionicons from '@expo/vector-icons/Ionicons';
 import { TimeAdapter } from '@infrastructure/adapters';
 
 /* Components */
-import { Fab } from '@ui';
+import { Fab } from '@ui/components';
 
 /* Hooks */
 import { useRevisits } from '../../hooks';
@@ -21,7 +21,7 @@ import { Characters } from '@utils';
 
 /* Styles */
 import { stylesheet } from './styles';
-import { themeStylesheet } from '@theme';
+import { themeStylesheet } from '@theme/styles';
 
 /**
  * This component is responsible for displaying a card with the person's name and some information

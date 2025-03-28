@@ -8,11 +8,12 @@ import Ionicons from '@expo/vector-icons/Ionicons';
 import { TimeAdapter } from '@infrastructure/adapters';
 
 /* Components */
-import { Button, DatetimeField, FormCalendar, FormTime, useUI } from '@ui';
+import { Button, DatetimeField, FormCalendar, FormTime } from '@ui/components';
 
 /* Hooks */
 import { usePreaching } from '../../hooks';
-import { useStatus } from '@shared';
+import { useStatus } from '@shared/hooks';
+import { useUI } from '@ui/hooks';
 
 /* Schemas */
 import { preachingFormSchema } from './schemas';
@@ -21,7 +22,7 @@ import { preachingFormSchema } from './schemas';
 import { PreachingFormValues } from '../../interfaces';
 
 /* Theme */
-import { themeStylesheet } from '@theme';
+import { themeStylesheet } from '@theme/styles';
 
 /**
  * This component is responsible for rendering the fields to create

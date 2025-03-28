@@ -8,11 +8,12 @@ import Ionicons from '@expo/vector-icons/Ionicons';
 import { authPlaceholeders } from '@application/constants';
 
 /* Components */
-import { Button, EyeBtn, FormField, useTranslation } from '@ui';
+import { Button, EyeBtn, FormField } from '@ui/components';
 
 /* Hooks */
 import { useAuth } from '../../hooks';
-import { useStatus } from '@shared';
+import { useStatus } from '@shared/hooks';
+import { useTranslation } from '@ui/hooks';
 
 /* Schemas */
 import { emailFormSchema, passwordFormSchema } from './schemas';

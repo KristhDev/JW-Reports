@@ -15,7 +15,7 @@ import { Modal } from '../../screens';
 import { FormTimeProps } from './interfaces';
 
 /* Theme */
-import { themeStylesheet } from '@theme';
+import { themeStylesheet } from '@theme/styles';
 import { stylesheet } from './styles';
 
 /**

@@ -47,10 +47,10 @@ import { PdfCoursesTemplate } from '@domain/templates';
 /* Adapters */
 import { ExternalStorageAdapter, PDFAdapter } from '@infrastructure/adapters';
 
-/* Modules */
-import { useAuth } from '@auth';
-import { useLessons } from '@lessons';
-import { useStatus, useNetwork } from '@shared';
+/* Hooks */
+import { useAuth } from '@auth/hooks';
+import { useLessons } from '@lessons/hooks';
+import { useStatus, useNetwork } from '@shared/hooks';
 
 /* Interfaces */
 import { CourseFilter, CourseFormValues, loadCoursesOptions } from '../interfaces';

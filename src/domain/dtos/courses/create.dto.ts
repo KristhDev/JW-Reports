@@ -1,5 +1,5 @@
 /* Interfaces */
-import { CourseFormValues } from '@courses';
+import { CourseFormValues } from '@courses/interfaces';
 
 export interface CreateCourseDtoValues extends CourseFormValues {
     userId: string;

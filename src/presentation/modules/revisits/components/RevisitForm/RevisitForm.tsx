@@ -10,10 +10,13 @@ import { ImageModel } from '@domain/models';
 /* Adapters */
 import { TimeAdapter } from '@infrastructure/adapters';
 
-/* Modules */
+/* Components */
+import { Button, DatetimeField, FormCalendar, FormField, FormImage } from '@ui/components';
+
+/* Hooks */
 import { useRevisits } from '../../hooks';
-import { useStatus } from '@shared';
-import { Button, DatetimeField, FormCalendar, FormField, FormImage, useUI } from '@ui';
+import { useStatus } from '@shared/hooks';
+import { useUI } from '@ui/hooks';
 
 /* Schemas */
 import { revisitFormSchema } from './schemas';
@@ -22,7 +25,7 @@ import { revisitFormSchema } from './schemas';
 import { RevisitFormValues } from '../../interfaces';
 
 /* Theme */
-import { themeStylesheet } from '@theme';
+import { themeStylesheet } from '@theme/styles';
 
 const defaultRevisit = require('@assets/revisit-default.jpg');
 

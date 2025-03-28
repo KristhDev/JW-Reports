@@ -1,4 +1,4 @@
-import { RevisitDetail } from '@revisits';
+import { RevisitDetail } from '@revisits/screens';
 
 /**
  * This screen is responsible for grouping the components to show

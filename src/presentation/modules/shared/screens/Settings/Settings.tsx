@@ -12,10 +12,16 @@ import { THEME_OPTIONS } from '@application/constants';
 /* Adapters */
 import { DeviceInfoAdapter } from '@infrastructure/adapters';
 
-/* Modules */
+/* Screens */
+import { ThemeModal } from '@theme/screens';
+
+/* Components */
+import { SectionBtn, SectionContent, Switch } from '@ui/components';
+
+/* Hooks */
 import { useStatus } from '../../hooks';
-import { ThemeModal, useTheme } from '@theme';
-import { SectionBtn, SectionContent, Switch, useTranslation, useUI } from '@ui';
+import { useTheme } from '@theme/hooks';
+import { useTranslation, useUI } from '@ui/hooks';
 
 /* Package */
 import { version as appVersion } from '@package';

@@ -5,10 +5,13 @@ import { useStyles } from 'react-native-unistyles';
 
 /* Components */
 import { ProfileForm } from '../../components';
-import { Title, useTranslation } from '@ui';
+import { Title } from '@ui/components';
+
+/* Hooks */
+import { useTranslation } from '@ui/hooks';
 
 /* Theme */
-import { themeStylesheet } from '@theme';
+import { themeStylesheet } from '@theme/styles';
 
 /**
  * This screen is to display the form that changes the

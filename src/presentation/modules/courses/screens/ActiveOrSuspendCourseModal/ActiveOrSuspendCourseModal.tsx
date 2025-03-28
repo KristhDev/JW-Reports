@@ -2,14 +2,20 @@ import React, { FC } from 'react';
 import { ActivityIndicator, Text, View } from 'react-native';
 import { useStyles } from 'react-native-unistyles';
 
-/* UI */
-import { Modal, ModalActions, ModalProps } from '@ui';
+/* Screens */
+import { Modal } from '@ui/screens';
+
+/* Components */
+import { ModalActions } from '@ui/components';
 
 /* Hooks */
 import { useCourses } from '../../hooks';
 
-/* Theme */
-import { themeStylesheet } from '@theme';
+/* Interfaces */
+import { ModalProps } from '@ui/interfaces';
+
+/* Styles */
+import { themeStylesheet } from '@theme/styles';
 
 /**
  * This is a modal that groups the components to activate

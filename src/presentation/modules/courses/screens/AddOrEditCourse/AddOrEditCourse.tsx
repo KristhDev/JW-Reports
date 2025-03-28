@@ -3,16 +3,18 @@ import { View } from 'react-native';
 import { useStyles } from 'react-native-unistyles';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-controller';
 
-/* Modules */
+/* Components */
 import { CourseForm } from '../../components';
-import { MicrophoneBtn, useStatus } from '@shared';
-import { Title, useUI } from '@ui';
+import { MicrophoneBtn } from '@shared/components';
+import { Title } from '@ui/components';
 
 /* Hooks */
 import { useCourses } from '../../hooks';
+import { useStatus } from '@shared/hooks';
+import { useUI } from '@ui/hooks';
 
 /* Theme */
-import { themeStylesheet } from '@theme';
+import { themeStylesheet } from '@theme/styles';
 
 /**
  * This screen is responsible for grouping the components

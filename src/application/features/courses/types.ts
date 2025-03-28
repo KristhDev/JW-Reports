@@ -2,7 +2,7 @@
 import { CourseEntity, LessonEntity } from '@domain/entities';
 
 /* Types */
-import { CourseFilter } from 'src/presentation/modules/courses';
+import { CourseFilter } from '@courses/interfaces';
 import { Pagination } from '../ui/types';
 
 /**
