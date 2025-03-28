@@ -1,10 +1,19 @@
 {
     "messages": {
         "success": {
+            "added": "You have added the {{attribute}} successfully.",
+            "deleted": "You have deleted the {{attribute}} successfully.",
             "updated": "You have updated your {{attribute}} successfully."
         },
 
         "errors": {
+            "unSelected": {
+                "completed": "There is no selected {{attribute}} to complete.",
+                "deleted": "There is no selected {{attribute}} to delete.",
+                "empty": "There is no selected {{attribute}}.",
+                "updated": "There is no selected {{attribute}} to update."
+            },
+
             "unauthenticated": "You must be logged in to perform this action.",
             "unauthorized": "You don't have permission to perform this action."
         }
@@ -177,16 +186,22 @@
 
         "fields": {
             "address": "address",
-            "personName": "person name",
-            "personAbout": "person information",
             "confirmPassword": "confirm password",
+            "course": "course",
+            "day": "day",
+            "description": "description",
             "email": "email",
             "hoursRequirement": "hours requirement",
+            "lesson": "lesson",
             "name": "name",
             "password": "password",
+            "personAbout": "person information",
+            "personName": "person name",
             "pioner": "pioner",
+            "preachingDay": "preaching day",
             "profile": "profile",
             "publication": "publication",
+            "revisit": "revisit",
             "surname": "surname"
         },
 

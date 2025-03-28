@@ -1,10 +1,19 @@
 {
     "messages": {
         "success": {
+            "added": "Ha agregado {{article}} {{attribute}} correctamente.",
+            "deleted": "Ha eliminado {{article}} {{attribute}} correctamente.",
             "updated": "Ha actualizado su {{attribute}} correctamente."
         },
 
         "errors": {
+            "unSelected": {
+                "completed": "No hay {{article}} {{attribute}} seleccionad{{genderEnding}} para completar.",
+                "deleted": "No hay {{article}} {{attribute}} seleccionad{{genderEnding}} para eliminar.",
+                "empty": "No hay {{article}} {{attribute}} seleccionad{{genderEnding}}.",
+                "updated": "No hay {{article}} {{attribute}} seleccionad{{genderEnding}} para actualizar."
+            },
+
             "unauthenticated": "Para realizar está acción debe iniciar sesión.",
             "unauthorized": "No tiene permiso para realizar está acción."
         }
@@ -177,16 +186,22 @@
 
         "fields": {
             "address": "dirección",
-            "personName": "nombre de la persona",
-            "personAbout": "información de la persona",
             "confirmPassword": "confirmación de contraseña",
+            "course": "curso",
+            "day": "día",
+            "description": "descripción",
             "email": "correo",
             "hoursRequirement": "requerimiento de horas",
+            "lesson": "clase",
             "name": "nombre",
             "password": "contraseña",
+            "personAbout": "información de la persona",
+            "personName": "nombre de la persona",
             "pioner": "precursor",
+            "preachingDay": "día de predicación",
             "profile": "perfil",
             "publication": "publicación",
+            "revisit": "revisita",
             "surname": "apellidos"
         },
 
