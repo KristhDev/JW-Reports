@@ -1,6 +1,8 @@
 import 'reflect-metadata';
 import { Container } from 'inversify';
 
+import { DeviceInfoAdapterContract } from '@domain/contracts/adapters';
+
 import { 
     AuthServiceContract,
     CloudServiceContract,
@@ -14,6 +16,8 @@ import {
     PreachingServiceContract,
     RevisitsServiceContract
 } from '@domain/contracts/services';
+
+import { DeviceInfoAdapter } from '@infrastructure/adapters';
 
 import { 
     AuthService,
@@ -41,6 +45,8 @@ export const DEPENDENCIES_TYPES = {
     PreachingReportService: Symbol.for('PreachingReportService'),
     PreachingService: Symbol.for('PreachingService'),
     RevisitsService: Symbol.for('RevisitsService'),
+
+    DeviceInfoAdapter: Symbol.for('DeviceInfoAdapter')
 }
 
 const dependencies = new Container();
@@ -57,6 +63,6 @@ dependencies.bind<PreachingReportServiceContract>(DEPENDENCIES_TYPES.PreachingRe
 dependencies.bind<PreachingServiceContract>(DEPENDENCIES_TYPES.PreachingService).to(PreachingService);
 dependencies.bind<RevisitsServiceContract>(DEPENDENCIES_TYPES.RevisitsService).to(RevisitsService);
 
-console.log({ dependencies });
+dependencies.bind<DeviceInfoAdapterContract>(DEPENDENCIES_TYPES.DeviceInfoAdapter).to(DeviceInfoAdapter);
 
 export { dependencies }
