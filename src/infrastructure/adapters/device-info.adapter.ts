@@ -1,12 +1,14 @@
 import * as Application from 'expo-application';
 
-export class DeviceInfoAdapter {
+import { DeviceInfoAdapterContract } from '@domain/contracts/adapters';
+
+export class DeviceInfoAdapter extends DeviceInfoAdapterContract {
     /**
      * A function that retrieves the build version.
      *
      * @return {string} The build version.
      */
-    public static getBuildVersion(): string {
+    public getBuildVersion(): string {
         return Application.nativeBuildVersion || '1';
     }
 
@@ -15,7 +17,7 @@ export class DeviceInfoAdapter {
      *
      * @return {string} The system version of the device.
      */
-    public static getSystemVersion(): string {
+    public getSystemVersion(): string {
         return Application.nativeApplicationVersion || '1.0.0';
     }
 }
