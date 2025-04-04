@@ -6,16 +6,19 @@ import { appMessages, permissionsStatus } from '@application/constants';
 /* Features */
 import { PermissionStatus } from '@application/features';
 
+/* Contracts */
+import { VoiceRecorderAdapterContract } from '@domain/contracts/adapters';
+
 /* Errors */
 import { VoiceRecorderError } from '@domain/errors';
 
-export class VoiceRecorderAdapter {
+export class VoiceRecorderAdapter implements VoiceRecorderAdapterContract {
     /**
      * Destroys all listeners for speech recognition events.
      *
      * @returns {void} - This function does not return anything.
      */
-    public static destroyListeners(): void {
+    public destroyListeners(): void {
         ExpoSpeechRecognitionModule.removeAllListeners('start');
         ExpoSpeechRecognitionModule.removeAllListeners('end');
         ExpoSpeechRecognitionModule.removeAllListeners('result');
@@ -28,7 +31,7 @@ export class VoiceRecorderAdapter {
      * @returns {Promise<PermissionStatus>} A promise that resolves with the current permission status 
      * for the record audio permission.
      */
-    public static async getRecordAudioPermission(): Promise<PermissionStatus> {
+    public async getRecordAudioPermission(): Promise<PermissionStatus> {
         const result = await ExpoSpeechRecognitionModule.getPermissionsAsync();
         const isUndetermined = result.status === permissionsStatus.UNDETERMINED;
 
@@ -46,7 +49,7 @@ export class VoiceRecorderAdapter {
      * @param {() => void} callback - The callback to be called when the speech recognition session is ended.
      * @returns {void} - This function does not return anything.
      */
-    public static onSpeechEnd(callback: () => void): void {
+    public onSpeechEnd(callback: () => void): void {
         ExpoSpeechRecognitionModule.addListener('end', callback);
     }
 
@@ -57,7 +60,7 @@ export class VoiceRecorderAdapter {
      * speech recognition session.
      * @returns {void} - This function does not return anything.
      */
-    public static onSpeechError(callback: (error: VoiceRecorderError) => void): void {
+    public onSpeechError(callback: (error: VoiceRecorderError) => void): void {
         ExpoSpeechRecognitionModule.addListener('error', (error) => {
             if (error.error === 'not-allowed') return;
 
@@ -76,7 +79,7 @@ export class VoiceRecorderAdapter {
      * @param {(value?: string) => void} callback - The callback to be called when the speech recognition session returns a result.
      * @returns {void} - This function does not return anything.
      */
-    public static onSpeechResults(callback: (value?: string) => void): void {
+    public onSpeechResults(callback: (value?: string) => void): void {
         ExpoSpeechRecognitionModule.addListener('result', (e) => {
             callback(e.results[0].transcript);
         });
@@ -88,7 +91,7 @@ export class VoiceRecorderAdapter {
      * @param {() => void} callback - The callback to be called when the speech recognition session is started.
      * @returns {void} - This function does not return anything.
      */
-    public static onSpeechStart(callback: () => void): void {
+    public onSpeechStart(callback: () => void): void {
         ExpoSpeechRecognitionModule.addListener('start', callback);
     }
 
@@ -98,7 +101,7 @@ export class VoiceRecorderAdapter {
      * @returns {Promise<PermissionStatus>} A promise that resolves with the current permission status for the 
      * record audio permission.
      */
-    public static async requestRecordAudioPermission(): Promise<PermissionStatus> {
+    public async requestRecordAudioPermission(): Promise<PermissionStatus> {
         const result = await ExpoSpeechRecognitionModule.requestPermissionsAsync();
         const isUndetermined = result.status === permissionsStatus.UNDETERMINED;
 
@@ -116,7 +119,7 @@ export class VoiceRecorderAdapter {
      * @param {string} lang - The language code for the speech recognition session.
      * @throws {VoiceRecorderError} If an error occurs while starting the session.
      */
-    public static startRecording(lang: string): void {
+    public startRecording(lang: string): void {
         try {
             ExpoSpeechRecognitionModule.start({ lang });
         }
@@ -137,7 +140,7 @@ export class VoiceRecorderAdapter {
      *
      * @throws {VoiceRecorderError} If an error occurs while stopping the session.
      */
-    public static stopRecording(): void {
+    public stopRecording(): void {
         try {
             ExpoSpeechRecognitionModule.stop();
         }
