@@ -1,5 +1,3 @@
-import { injectable } from 'inversify';
-
 /* Config */
 import { supabase } from '@config/supabase';
 
@@ -21,8 +19,7 @@ import { RequestError } from '@domain/errors';
 /* Interfaces */
 import { PaginateOptions, LessonEndpoint, LessonWithCourseEndpoint } from '@infrastructure/interfaces';
 
-@injectable()
-export class LessonsService extends LessonsServiceContract {
+export class LessonsService implements LessonsServiceContract {
     /**
      * Creates a new lesson and returns the created lesson.
      * @param {CreateLessonDto} dto The data to be used to create the lesson.

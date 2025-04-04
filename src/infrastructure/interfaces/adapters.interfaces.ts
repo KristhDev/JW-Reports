@@ -1,4 +1,4 @@
-import { InternalAdapterStorage } from '@infrastructure/adapters';
+import { fileEncodings } from '@application/constants';
 
 /**
  * Interface representing the options for moving a file from InternalStorage to ExternalStorage.
@@ -17,7 +17,7 @@ export interface MoveFileOptions {
  * 
  * @type {string} - The encoding value (e.g., 'utf8', 'ascii', etc.)
  */
-export type EncodingValue = (typeof InternalAdapterStorage.encodings)[keyof typeof InternalAdapterStorage.encodings];
+export type EncodingValue = (typeof fileEncodings)[keyof typeof fileEncodings];
 
 /**
  * Interface representing the options for renaming a file in InternalStorage.

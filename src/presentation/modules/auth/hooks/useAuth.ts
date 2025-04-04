@@ -1,7 +1,5 @@
-import { useMemo } from 'react';
-
 /* Config */
-import { dependencies, DEPENDENCIES_TYPES } from '@config/inversify';
+import { authService, notificationsService } from '@config/di';
 
 /* Constants */
 import { networkMessages, authMessages } from '@application/constants';
@@ -19,9 +17,6 @@ import {
     clearRevisits as clearRevisitsAction
 } from '@application/features';
 
-/* Contracts */
-import { AuthServiceContract, NotificationsServiceContract } from '@domain/contracts/services';
-
 /* DTOs */
 import { SignUpDto, UpdateEmailDto, UpdatePasswordDto, UpdateProfileDto } from '@domain/dtos';
 
@@ -38,9 +33,6 @@ import { SignInData, ProfileData, SignUpData, EmailData, UpdatePasswordData } fr
  * Hook to management authentication of store with state and actions
  */
 const useAuth = () => {
-    const authService = useMemo(() => dependencies.get<AuthServiceContract>(DEPENDENCIES_TYPES.AuthService), []);
-    const notificationsService = useMemo(() => dependencies.get<NotificationsServiceContract>(DEPENDENCIES_TYPES.NotificationsService), []);
-
     const dispatch = useAppDispatch();
 
     const { setStatus, setError, setUnauthenticatedError } = useStatus();

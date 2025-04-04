@@ -2,7 +2,7 @@ import * as Application from 'expo-application';
 
 import { DeviceInfoAdapterContract } from '@domain/contracts/adapters';
 
-export class DeviceInfoAdapter extends DeviceInfoAdapterContract {
+export class DeviceInfoAdapter implements DeviceInfoAdapterContract {
     /**
      * A function that retrieves the build version.
      *

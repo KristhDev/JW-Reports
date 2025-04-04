@@ -1,5 +1,3 @@
-import { injectable } from 'inversify';
-
 /* Constants */
 import { precursors } from '@application/constants';
 
@@ -19,8 +17,7 @@ import { RemainingHoursOfWeeklyRequirement, ReamainingOfHoursRequirement, Preach
 /* Utils */
 import { Characters } from '@utils';
 
-@injectable()
-export class PreachingReportService extends PreachingReportServiceContract {
+export class PreachingReportService implements PreachingReportServiceContract {
     /**
      * Generates a preaching report string given the required options.
      *

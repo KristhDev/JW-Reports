@@ -1,5 +1,4 @@
 import { LogLevel, OneSignal } from 'react-native-onesignal';
-import { injectable } from 'inversify';
 
 /* Config */
 import { env } from '@config/env';
@@ -13,7 +12,6 @@ import { PermissionStatus } from '@application/features';
 /* Contracts */
 import { NotificationsServiceContract } from '@domain/contracts/services';
 
-@injectable()
 export class NotificationsService extends NotificationsServiceContract {
     /**
      * Closes the OneSignal SDK and logs out the current user.

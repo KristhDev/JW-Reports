@@ -1,11 +1,10 @@
-import { useMemo } from 'react';
 import { useRouter } from 'expo-router';
+
+/* Config */
+import { coursesService, lessonsService } from '@config/di';
 
 /* Constants */
 import { authMessages, coursesMessages, lessonsMessages, precursors } from '@application/constants';
-
-/* Config */
-import { dependencies, DEPENDENCIES_TYPES } from '@config/inversify';
 
 /* Features */
 import { useAppDispatch, useAppSelector } from '@application/store';
@@ -32,9 +31,6 @@ import {
     updateLesson as updateLessonAction,
 } from '@application/features';
 
-/* Contracts */
-import { CoursesServiceContract, LessonsServiceContract } from '@domain/contracts/services';
-
 /* DTOs */
 import { CreateLessonDto, FinishOrStartLessonDto, UpdateLessonDto } from '@domain/dtos';
 
@@ -54,9 +50,6 @@ import { deleteOptions } from '@infrastructure/interfaces';
  * Hook to management lessons of store with state and actions
  */
 const useLessons = () => {
-    const coursesService = useMemo(() => dependencies.get<CoursesServiceContract>(DEPENDENCIES_TYPES.CoursesService), []);
-    const lessonsService = useMemo(() => dependencies.get<LessonsServiceContract>(DEPENDENCIES_TYPES.LessonsService), []);
-
     const dispatch = useAppDispatch();
     const router = useRouter();
     const { hasWifiConnection } = useNetwork();

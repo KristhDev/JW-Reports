@@ -3,13 +3,10 @@ import { Text, View } from 'react-native';
 import { useStyles } from 'react-native-unistyles';
 
 /* Config */
-import { dependencies, DEPENDENCIES_TYPES } from '@config/inversify';
+import { preachingReportService } from '@config/di';
 
 /* Constants */
 import { preachingMessages } from '@application/constants';
-
-/* Contracts */
-import { PreachingReportServiceContract } from '@domain/contracts/services';
 
 /* Entities */
 import { PreachingEntity } from '@domain/entities';
@@ -40,8 +37,6 @@ import { themeStylesheet } from '@theme/styles';
  * @return {JSX.Element} - The preaching information modal component.
  */
 const PreachingInfoModal: FC<ModalProps> = ({ isOpen, onClose }): JSX.Element => {
-    const preachingReportService = useMemo(() => dependencies.get<PreachingReportServiceContract>(DEPENDENCIES_TYPES.PreachingReportService), []);
-
     const { styles: themeStyles, theme: { colors, fontSizes, margins } } = useStyles(themeStylesheet);
     const { styles } = useStyles(stylesheet);
 

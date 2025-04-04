@@ -1,7 +1,10 @@
-import { StorageAccessFramework, EncodingType } from 'expo-file-system';
+import { StorageAccessFramework } from 'expo-file-system';
 
 /* Constants */
-import { permissionsMessages } from '@application/constants';
+import { fileEncodings, permissionsMessages } from '@application/constants';
+
+/* Contracts */
+import { ExternalStorageAdapterContract, InternalStorageAdapterContract } from '@domain/contracts/adapters';
 
 /* Errors */
 import { ExternalStorageError } from '@domain/errors';
@@ -9,14 +12,10 @@ import { ExternalStorageError } from '@domain/errors';
 /* Interfaces */
 import { MoveFileOptions } from '@infrastructure/interfaces';
 
-/* Adapters */
-import { InternalAdapterStorage } from './internal-storage.adapter';
-
-export class ExternalStorageAdapter {
-    public static encodings = {
-        BASE64: EncodingType.Base64,
-        UTF8: EncodingType.UTF8
-    }
+export class ExternalStorageAdapter implements ExternalStorageAdapterContract {
+    constructor (
+        private readonly internalStorageAdapter: InternalStorageAdapterContract
+    ) {}
 
     /**
      * Moves a file from InternalStorage to ExternalStorage.
@@ -25,13 +24,13 @@ export class ExternalStorageAdapter {
      * @returns {Promise<void>} A promise that resolves when the file is moved successfully.
      * @throws {ExternalStorageError} If there is an error moving the file.
      */
-    public static async moveFileOfInternalExtorage({ filePath, mimeType }: MoveFileOptions): Promise<void> {
+    public async moveFileOfInternalExtorage({ filePath, mimeType }: MoveFileOptions): Promise<void> {
         try {
             const permission = await StorageAccessFramework.requestDirectoryPermissionsAsync();
             if (!permission.granted) throw ExternalStorageError.permissionDenied(permissionsMessages.FILE_EXPORT_DENIED)
 
             const fileName = filePath.split('/').slice(-1)[0];
-            const fileContent = await InternalAdapterStorage.readFile(filePath, InternalAdapterStorage.encodings.BASE64);
+            const fileContent = await this.internalStorageAdapter.readFile(filePath, fileEncodings.BASE64);
 
             const fileInExternalStorageUri = await StorageAccessFramework.createFileAsync(
                 permission.directoryUri,
@@ -40,7 +39,7 @@ export class ExternalStorageAdapter {
             );
 
             await StorageAccessFramework.writeAsStringAsync(fileInExternalStorageUri, fileContent, {
-                encoding: ExternalStorageAdapter.encodings.BASE64
+                encoding: fileEncodings.BASE64
             });
         }
         catch (error) {
@@ -51,7 +50,7 @@ export class ExternalStorageAdapter {
             throw externalStorageError;
         }
         finally {
-            await InternalAdapterStorage.deleteFile(filePath);
+            await this.internalStorageAdapter.deleteFile(filePath);
         }
     }
 }

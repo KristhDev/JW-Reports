@@ -3,17 +3,12 @@ import { Redirect, Stack } from 'expo-router';
 import { useStyles } from 'react-native-unistyles';
 
 /* Config */
-import { dependencies, DEPENDENCIES_TYPES } from '@config/inversify';
-
-/* Constracts */
-import { NotificationsServiceContract } from '@domain/contracts/services';
+import { notificationsService } from '@config/di';
 
 /* Hooks */
 import { useAuth } from '@auth/hooks';
 import { usePermissions } from '@shared/hooks';
 import { useTheme } from '@theme/hooks';
-
-const notificationsService = dependencies.get<NotificationsServiceContract>(DEPENDENCIES_TYPES.NotificationsService);
 
 export default function AppLayout(): JSX.Element {
     const { theme: { colors } } = useStyles();

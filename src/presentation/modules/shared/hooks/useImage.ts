@@ -1,17 +1,14 @@
-import { useMemo, useState } from 'react';
+import { useState } from 'react';
 
 /* Config */
 import { env } from '@config/env';
-import { dependencies, DEPENDENCIES_TYPES } from '@config/inversify';
+import { cloudService, deviceImageService } from '@config/di';
 
 /* Constants */
 import { permissionsMessages, permissionsStatus } from '@application/constants';
 
 /* Features */
 import { PermissionStatus } from '@application/features';
-
-/* Contracts */
-import { CloudServiceContract, DeviceImageServiceContract } from '@domain/contracts/services';
 
 /* Models */
 import { ImageModel } from '@domain/models';
@@ -23,9 +20,6 @@ import { usePermissions, useStatus } from './';
  * This hook allows to group the functions and states in relation to the images.
  */
 const useImage = () => {
-    const cloudService = useMemo(() => dependencies.get<CloudServiceContract>(DEPENDENCIES_TYPES.CloudService), []);
-    const deviceImageService = useMemo(() => dependencies.get<DeviceImageServiceContract>(DEPENDENCIES_TYPES.DeviceImageService), []);
-
     const {
         askPermission,
 

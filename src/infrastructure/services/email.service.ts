@@ -1,4 +1,3 @@
-import { injectable } from 'inversify';
 import EmailJs, { EmailJSResponseStatus } from '@emailjs/react-native';
 
 /* Config */
@@ -13,8 +12,7 @@ import { EmailError } from '@domain/errors';
 /* Interfaces */
 import { SendEmailOptions } from '@infrastructure/interfaces';
 
-@injectable()
-export class EmailService extends EmailServiceContract {
+export class EmailService implements EmailServiceContract {
     /**
      * Initializes the email service
      *

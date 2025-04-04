@@ -1,7 +1,5 @@
-import { useMemo } from 'react';
-
 /* Config */
-import { dependencies, DEPENDENCIES_TYPES } from '@config/inversify';
+import { notificationsService, deviceImageService } from '@config/di';
 
 /* Constants */
 import { permissionsMessages, permissionsStatus } from '@application/constants';
@@ -17,9 +15,6 @@ import {
     PermissionStatus
 } from '@application/features';
 
-/* Contracts */
-import { DeviceImageServiceContract, NotificationsServiceContract } from '@domain/contracts/services';
-
 /* Adapters */
 import { VoiceRecorderAdapter } from '@infrastructure/adapters';
 
@@ -31,9 +26,6 @@ import useStatus from './useStatus';
  * with state, actions and thunks
  */
 const usePermissions = () => {
-    const notificationsService = useMemo(() => dependencies.get<NotificationsServiceContract>(DEPENDENCIES_TYPES.NotificationsService), []);
-    const deviceImageService = useMemo(() => dependencies.get<DeviceImageServiceContract>(DEPENDENCIES_TYPES.DeviceImageService), []);
-
     const dispatch = useAppDispatch();
 
     const state = useAppSelector(store => store.permissions);

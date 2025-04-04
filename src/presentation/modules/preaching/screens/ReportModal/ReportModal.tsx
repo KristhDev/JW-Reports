@@ -3,13 +3,10 @@ import { View, Text, Share, TextInput } from 'react-native';
 import { useStyles } from 'react-native-unistyles';
 
 /* Config */
-import { dependencies, DEPENDENCIES_TYPES } from '@config/inversify';
+import { preachingReportService } from '@config/di';
 
 /* Constants */
 import { MINISTRY_PARTICIPATIONS, precursors } from '@application/constants';
-
-/* Contracts */
-import { PreachingReportServiceContract } from '@domain/contracts/services';
 
 /* Adapters */
 import { TimeAdapter } from '@infrastructure/adapters';
@@ -41,8 +38,6 @@ import { stylesheet } from './styles';
  * @return {JSX.Element} rendered component to show modal
  */
 const ReportModal: FC<ReportModalProps> = ({ isOpen, month, onClose }): JSX.Element => {
-    const preachingReportService = useMemo(() => dependencies.get<PreachingReportServiceContract>(DEPENDENCIES_TYPES.PreachingReportService), []);
-
     const [ comment, setComment ] = useState<string>('');
     const [ hoursLDC, setHoursLDC ] = useState<string>('');
     const [ participated, setParticipated ] = useState<ParticipateInMinistry>('si');

@@ -1,9 +1,8 @@
-import { useMemo } from 'react';
 import { useRouter } from 'expo-router';
 
 /* Config */
 import { env } from '@config/env';
-import { dependencies, DEPENDENCIES_TYPES } from '@config/inversify';
+import { externalStorageAdapter, pdfAdapter, revisitsService } from '@config/di';
 
 /* Constants */
 import { authMessages, precursors, revisitsMessages } from '@application/constants';
@@ -34,9 +33,6 @@ import {
     updateRevisit as updateRevisitAction
 } from '@application/features';
 
-/* Contracts */
-import { RevisitsServiceContract } from '@domain/contracts/services';
-
 /* Dtos */
 import { CompleteRevisitDto, CreateRevisitDto, UpdateRevisitDto } from '@domain/dtos';
 
@@ -45,9 +41,6 @@ import { RevisitEntity } from '@domain/entities';
 
 /* Templates */
 import { PdfRevisitsTemplate } from '@domain/templates';
-
-/* Adapters */
-import { ExternalStorageAdapter, PDFAdapter } from '@infrastructure/adapters';
 
 /* Hooks */
 import { useAuth } from '@auth/hooks';
@@ -61,8 +54,6 @@ import { deleteOptions } from '@infrastructure/interfaces';
  * Hook to management revisits of store with state and actions
  */
 const useRevisits = () => {
-    const revisitsService = useMemo(() => dependencies.get<RevisitsServiceContract>(DEPENDENCIES_TYPES.RevisitsService), []);
-
     const dispatch = useAppDispatch();
     const router = useRouter();
 
@@ -226,9 +217,9 @@ const useRevisits = () => {
             });
 
             const fileName = `Revisitas_de_${ user.name }_${ user.surname }`;
-            const pdfPath = await PDFAdapter.writeFromHTML({ fileName, html: revisitsTemplate, width: 480 });
+            const pdfPath = await pdfAdapter.writeFromHTML({ fileName, html: revisitsTemplate, width: 480 });
 
-            await ExternalStorageAdapter.moveFileOfInternalExtorage({
+            await externalStorageAdapter.moveFileOfInternalExtorage({
                 filePath: pdfPath,
                 mimeType: 'application/pdf',
             });

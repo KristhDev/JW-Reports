@@ -19,7 +19,7 @@ import { TimeAdapter } from '@infrastructure/adapters';
 /* Interfaces */
 import { PreachingEndpoint } from '@infrastructure/interfaces';
 
-export class PreachingService extends PreachingServiceContract {
+export class PreachingService implements PreachingServiceContract {
     /**
      * Creates a new preaching and returns the created preaching.
      *

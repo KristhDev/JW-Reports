@@ -1,4 +1,3 @@
-import { injectable } from 'inversify';
 import { AuthResponse } from '@supabase/supabase-js';
 
 /* Config */
@@ -20,8 +19,7 @@ import { RequestError } from '@domain/errors';
 /* Interfaces */
 import { UserEndpoint } from '@infrastructure/interfaces';
 
-@injectable()
-export class AuthService extends AuthServiceContract {
+export class AuthService implements AuthServiceContract {
     /**
      * Get the session and the user from the given token.
      *

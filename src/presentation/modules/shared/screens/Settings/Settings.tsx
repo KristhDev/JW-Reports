@@ -1,17 +1,14 @@
-import React, { useMemo, useState } from 'react';
+import React, { useState } from 'react';
 import { Linking, ScrollView, Text } from 'react-native';
 import { useStyles } from 'react-native-unistyles';
 import { useRouter } from 'expo-router';
 
 /* Config */
 import { env } from '@config/env';
-import { dependencies, DEPENDENCIES_TYPES } from '@config/inversify';
+import { deviceInfoAdapter } from '@config/di';
 
 /* Constants */
 import { THEME_OPTIONS } from '@application/constants';
-
-/* Contracts */
-import { DeviceInfoAdapterContract } from '@domain/contracts/adapters';
 
 /* Screens */
 import { ThemeModal } from '@theme/screens';
@@ -35,7 +32,6 @@ import { version as appVersion } from '@package';
  */
 const Settings = (): JSX.Element => {
     const [ showThemeModal, setShowThemeModal ] = useState<boolean>(false);
-    const deviceInfoAdapter = useMemo(() => dependencies.get<DeviceInfoAdapterContract>(DEPENDENCIES_TYPES.DeviceInfoAdapter), []);
 
     const router = useRouter();
     const { theme: { colors, fontSizes, margins } } = useStyles();

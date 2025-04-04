@@ -1,4 +1,3 @@
-import { injectable } from 'inversify';
 import { decode } from 'base64-arraybuffer';
 
 /* Config */
@@ -13,8 +12,7 @@ import { CloudError } from '@domain/errors';
 /* Interfaces */
 import { DeleteImageOptions, UploadImageOptions } from '@infrastructure/interfaces';
 
-@injectable()
-export class CloudService extends CloudServiceContract {
+export class CloudService implements CloudServiceContract {
     /**
      * Deletes an image from the given bucket and folder, specified by the URI
      * @param {DeleteImageOptions} options

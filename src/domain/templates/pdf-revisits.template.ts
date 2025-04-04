@@ -1,16 +1,11 @@
 /* Config */
-import { dependencies, DEPENDENCIES_TYPES } from '@config/inversify';
-
-/* Contracts */
-import { DeviceImageServiceContract } from '@domain/contracts/services';
+import { deviceImageService } from '@config/di';
 
 /* Adapters */
 import { TimeAdapter } from '@infrastructure/adapters';
 
 /* Interfaces */
 import { RevisitsTemplateOptions } from '@infrastructure/interfaces';
-
-const deviceImageService = dependencies.get<DeviceImageServiceContract>(DEPENDENCIES_TYPES.DeviceImageService);
 
 export class PdfRevisitsTemplate {
 

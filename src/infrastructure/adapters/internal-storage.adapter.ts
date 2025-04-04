@@ -1,17 +1,15 @@
 import * as FileSystem from 'expo-file-system';
 
+/* Contracts */
+import { InternalStorageAdapterContract } from '@domain/contracts/adapters';
+
 /* Errors */
 import { InternalStorageError } from '@domain/errors';
 
 /* Interfaces */
 import { EncodingValue, RenameOptions } from '@infrastructure/interfaces';
 
-export class InternalAdapterStorage {
-    public static encodings = {
-        BASE64: FileSystem.EncodingType.Base64,
-        UTF8: FileSystem.EncodingType.UTF8
-    }
-
+export class InternalStorageAdapter implements InternalStorageAdapterContract {
     /**
      * Deletes a file from internal storage.
      * 
@@ -19,7 +17,7 @@ export class InternalAdapterStorage {
      * @returns {Promise<void>} A promise that resolves when the file is deleted successfully.
      * @throws {InternalStorageError} If there is an error deleting the file.
      */
-    public static async deleteFile(path: string): Promise<void> {
+    public async deleteFile(path: string): Promise<void> {
         try {
             await FileSystem.deleteAsync(path);
         }
@@ -38,7 +36,7 @@ export class InternalAdapterStorage {
      * @returns {Promise<string>} The contents of the file as a string.
      * @throws {InternalStorageError} If a file operation error occurs.
      */
-    public static async readFile(path: string, encoding: EncodingValue): Promise<string> {
+    public async readFile(path: string, encoding: EncodingValue): Promise<string> {
         try {
             const file = await FileSystem.readAsStringAsync(path, { encoding });
             return file;
@@ -56,7 +54,7 @@ export class InternalAdapterStorage {
      * @returns {Promise<void>}
      * @throws {InternalStorageError} If a file operation error occurs.
      */
-    public static async rename({ newName, oldName, path }: RenameOptions): Promise<void> {
+    public async rename({ newName, oldName, path }: RenameOptions): Promise<void> {
         try {
             await FileSystem.moveAsync({
                 from: `${ path }/${ oldName }`,

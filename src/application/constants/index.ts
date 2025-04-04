@@ -1,3 +1,4 @@
+export * from './adapters';
 export * from './auth';
 export * from './courses';
 export * from './lessons';

@@ -7,10 +7,7 @@ import '@config/i18n';
 import '@config/unistyles';
 
 /* Config */
-import { dependencies, DEPENDENCIES_TYPES } from '@config/inversify';
-
-/* Constracts */
-import { EmailServiceContract, LoggerServiceContract, NotificationsServiceContract } from '@domain/contracts/services';
+import { emailService, loggerService, notificationsService } from '@config/di';
 
 /* Adapters */
 import { TimeAdapter } from '@infrastructure/adapters';
@@ -27,11 +24,7 @@ import { useRevisits } from '@revisits/hooks';
 import { useNetwork, usePermissions } from '@shared/hooks';
 import { useTheme } from '@theme/hooks';
 import { useUI } from '@ui/hooks';
-
-const emailService = dependencies.get<EmailServiceContract>(DEPENDENCIES_TYPES.EmailService);
-const loggerService = dependencies.get<LoggerServiceContract>(DEPENDENCIES_TYPES.LoggerService);
-const notificationsService = dependencies.get<NotificationsServiceContract>(DEPENDENCIES_TYPES.NotificationsService);
-
+1
 /* Global config of date util */
 TimeAdapter.extend(TimeAdapter.plugins.weekday);
 TimeAdapter.setLocale(TimeAdapter.locale.es);
@@ -39,7 +32,7 @@ TimeAdapter.setLocale(TimeAdapter.locale.es);
 if (__DEV__) require('../../ReactotronConfig');
 
 const Navigation = (): JSX.Element => {
-  const { theme: { colors }  } = useStyles();
+  const { theme: { colors } } = useStyles();
 
   const { state: { isAuthenticated }, getAuth } = useAuth();
   const { clearCourses } = useCourses();

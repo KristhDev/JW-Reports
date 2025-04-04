@@ -1,8 +1,7 @@
-import { useMemo } from 'react';
 import { useRouter } from 'expo-router';
 
 /* Config */
-import { dependencies, DEPENDENCIES_TYPES } from '@config/inversify';
+import { externalStorageAdapter, pdfAdapter, preachingService, preachingReportService } from '@config/di';
 
 /* Constants */
 import { authMessages, preachingMessages } from '@application/constants';
@@ -24,9 +23,6 @@ import {
     updatePreaching as updatePreachingAction
 } from '@application/features';
 
-/* Contracts */
-import { PreachingReportServiceContract, PreachingServiceContract } from '@domain/contracts/services';
-
 /* Dtos */
 import { CreatePreachingDto, UpdatePreachingDto } from '@domain/dtos';
 
@@ -37,7 +33,7 @@ import { PreachingEntity } from '@domain/entities';
 import { PdfPreachingsTemplate } from '@domain/templates';
 
 /* Adapters */
-import { ExternalStorageAdapter, PDFAdapter, TimeAdapter } from '@infrastructure/adapters';
+import { TimeAdapter } from '@infrastructure/adapters';
 
 /* Hooks */
 import { useAuth } from '@auth/hooks';
@@ -50,9 +46,6 @@ import { PreachingFormValues } from '../interfaces';
  * Hook to management preaching of store with state and actions
  */
 const usePreaching = () => {
-    const preachingService = useMemo(() => dependencies.get<PreachingServiceContract>(DEPENDENCIES_TYPES.PreachingService), []);
-    const preachingReportService = useMemo(() => dependencies.get<PreachingReportServiceContract>(DEPENDENCIES_TYPES.PreachingReportService), []);
-
     const dispatch = useAppDispatch();
     const router = useRouter();
 
@@ -178,8 +171,8 @@ const usePreaching = () => {
             const fileName = `Informes_de_Predicación_de_${ user.name }_${ user.surname }`;
             const preachingsTemplate = PdfPreachingsTemplate.generate({ fullName: `${ user.name } ${ user.surname }`, reports: reportsPreaching });
 
-            const pdfPath = await PDFAdapter.writeFromHTML({ fileName, html: preachingsTemplate, width: 480 });
-            await ExternalStorageAdapter.moveFileOfInternalExtorage({ filePath: pdfPath, mimeType: 'application/pdf' });
+            const pdfPath = await pdfAdapter.writeFromHTML({ fileName, html: preachingsTemplate, width: 480 });
+            await externalStorageAdapter.moveFileOfInternalExtorage({ filePath: pdfPath, mimeType: 'application/pdf' });
 
             if (showStatusMessage) setStatus({ code: 200, msg: preachingMessages.EXPORTED_SUCCESS });
         }

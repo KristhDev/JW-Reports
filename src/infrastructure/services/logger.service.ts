@@ -1,4 +1,3 @@
-import { injectable } from 'inversify';
 import { Bugfender, LogLevel } from '@bugfender/rn-bugfender';
 
 /* Config */
@@ -10,8 +9,7 @@ import { LoggerServiceContract } from '@domain/contracts/services';
 /* Version */
 import { version as appVersion } from '@package';
 
-@injectable()
-export class LoggerService extends LoggerServiceContract {
+export class LoggerService implements LoggerServiceContract {
     /**
      * Initializes the logging service with Bugfender.
      *

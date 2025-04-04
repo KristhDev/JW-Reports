@@ -1,4 +1,3 @@
-import { injectable } from 'inversify';
 import * as ImagePicker from 'expo-image-picker';
 
 /* Constants */
@@ -19,7 +18,6 @@ import { ImageModel } from '@domain/models';
 /* Interfaces */
 import { CameraType, OpenCameraOptions, OpenPickerOptions } from '@infrastructure/interfaces';
 
-@injectable()
 export class DeviceImageService implements DeviceImageServiceContract {
     public cameras: Record<Uppercase<CameraType>, CameraType> = {
         BACK: 'back',

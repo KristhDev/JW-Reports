@@ -1,5 +1,3 @@
-import { injectable } from 'inversify';
-
 /* Config */
 import { supabase } from '@config/supabase';
 
@@ -22,8 +20,7 @@ import { RequestError } from '@domain/errors';
 import { PaginateOptions, RevisitEndpoint } from '@infrastructure/interfaces';
 import { RevisitFilter } from '@revisits/interfaces';
 
-@injectable()
-export class RevisitsService extends RevisitsServiceContract {
+export class RevisitsService implements RevisitsServiceContract {
     /**
      * Completes a revisit by updating the given fields.
      *

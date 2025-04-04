@@ -1,22 +1,26 @@
 import * as Print from 'expo-print';
 
+/* Contracts */
+import { InternalStorageAdapterContract, PDFAdapterContract } from '@domain/contracts/adapters';
+
 /* Errors */
 import { PDFError } from '@domain/errors';
 
 /* Interfaces */
 import { WriteFromHtmlOptions } from '@infrastructure/interfaces';
 
-/* Adapters */
-import { InternalAdapterStorage } from './internal-storage.adapter';
+export class PDFAdapter implements PDFAdapterContract {
+    constructor (
+        private readonly internalStorageAdapter: InternalStorageAdapterContract
+    ) {}
 
-export class PDFAdapter {
     /**
      * Writes a PDF from the given HTML to the given file in the given directory.
      *
      * @param {WriteFromHtmlOptions} options The options to write the PDF.
      * @returns {Promise<string>} The path to the saved PDF file.
      */
-    public static async writeFromHTML({ fileName, html, width }: WriteFromHtmlOptions): Promise<string> {
+    public async writeFromHTML({ fileName, html, width }: WriteFromHtmlOptions): Promise<string> {
         try {
             const result = await Print.printToFileAsync({ html, width });
 
@@ -24,7 +28,7 @@ export class PDFAdapter {
             const oldFileName = result.uri.split('/').slice(-1)[0];
             const newPath = `${ path }/${ fileName }.pdf`;
 
-            await InternalAdapterStorage.rename({ newName: `${ fileName }.pdf`, oldName: oldFileName, path });
+            await this.internalStorageAdapter.rename({ newName: `${ fileName }.pdf`, oldName: oldFileName, path });
 
             return newPath;
         }

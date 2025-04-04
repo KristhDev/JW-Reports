@@ -1,8 +1,7 @@
-import { useMemo } from 'react';
 import { useRouter } from 'expo-router';
 
 /* Config */
-import { dependencies, DEPENDENCIES_TYPES } from '@config/inversify';
+import { externalStorageAdapter, pdfAdapter, coursesService, lessonsService } from '@config/di';
 
 /* Constants */
 import { coursesMessages, precursors } from '@application/constants';
@@ -32,9 +31,6 @@ import {
     updateCourse as updateCourseAction
 } from '@application/features';
 
-/* Contracts */
-import { CoursesServiceContract, LessonsServiceContract } from '@domain/contracts/services';
-
 /* DTOs */
 import { ActiveOrSuspendCourseDto, CreateCourseDto, FinishOrStartCourseDto, UpdateCourseDto } from '@domain/dtos';
 
@@ -43,9 +39,6 @@ import { CourseEntity, LessonWithCourseEntity } from '@domain/entities';
 
 /* Templates */
 import { PdfCoursesTemplate } from '@domain/templates';
-
-/* Adapters */
-import { ExternalStorageAdapter, PDFAdapter } from '@infrastructure/adapters';
 
 /* Hooks */
 import { useAuth } from '@auth/hooks';
@@ -60,9 +53,6 @@ import { deleteOptions } from '@infrastructure/interfaces';
  * Hook to management courses of store with state and actions
  */
 const useCourses = () => {
-    const coursesService = useMemo(() => dependencies.get<CoursesServiceContract>(DEPENDENCIES_TYPES.CoursesService), []);
-    const lessonsService = useMemo(() => dependencies.get<LessonsServiceContract>(DEPENDENCIES_TYPES.LessonsService), []);
-
     const dispatch = useAppDispatch();
     const router = useRouter();
     const { hasWifiConnection } = useNetwork();
@@ -263,9 +253,9 @@ const useCourses = () => {
             });
 
             const fileName = `Cursos_de_${ user.name }_${ user.surname }`;
-            const pdfPath = await PDFAdapter.writeFromHTML({ fileName, html: coursesTemplate, width: 480 });
+            const pdfPath = await pdfAdapter.writeFromHTML({ fileName, html: coursesTemplate, width: 480 });
 
-            await ExternalStorageAdapter.moveFileOfInternalExtorage({
+            await externalStorageAdapter.moveFileOfInternalExtorage({
                 filePath: pdfPath,
                 mimeType: 'application/pdf'
             });

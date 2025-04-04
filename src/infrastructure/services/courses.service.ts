@@ -17,7 +17,7 @@ import { RequestError } from '@domain/errors';
 import { CourseEndpoint, PaginateOptions } from '@infrastructure/interfaces';
 import { CourseFilter } from '@courses/interfaces';
 
-export class CoursesService extends CoursesServiceContract {
+export class CoursesService implements CoursesServiceContract {
     /**
      * This function is responsible for activating or suspending a course.
      *

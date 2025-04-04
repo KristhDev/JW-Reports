@@ -1,19 +1,13 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 
 /* Config */
-import { DEPENDENCIES_TYPES, dependencies }  from '@config/inversify';
-
-/* Contracts */
-import { DeviceImageServiceContract, NotificationsServiceContract } from '@domain/contracts/services';
+import { notificationsService, deviceImageService } from '@config/di';
 
 /* Types */
 import { PermissionStatus, RequestPermissionsOptions } from './types';
 
 /* Adapters */
 import { VoiceRecorderAdapter } from '@infrastructure/adapters';
-
-const notificationsService = dependencies.get<NotificationsServiceContract>(DEPENDENCIES_TYPES.NotificationsService);
-const deviceImageService = dependencies.get<DeviceImageServiceContract>(DEPENDENCIES_TYPES.DeviceImageService);
 
 /* Creating a thunk that will check the permissions of the app. */
 export const checkPermissions = createAsyncThunk(
