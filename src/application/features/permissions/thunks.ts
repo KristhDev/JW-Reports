@@ -1,13 +1,10 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 
 /* Config */
-import { notificationsService, deviceImageService } from '@config/di';
+import { notificationsService, deviceImageService, voiceRecorderAdapter } from '@config/di';
 
 /* Types */
 import { PermissionStatus, RequestPermissionsOptions } from './types';
-
-/* Adapters */
-import { VoiceRecorderAdapter } from '@infrastructure/adapters';
 
 /* Creating a thunk that will check the permissions of the app. */
 export const checkPermissions = createAsyncThunk(
@@ -17,7 +14,7 @@ export const checkPermissions = createAsyncThunk(
             camera: deviceImageService.getCameraPermission,
             mediaLibrary: deviceImageService.getMediaLibraryPermission,
             notifications: notificationsService.getNotificationsPermission,
-            recordAudio: VoiceRecorderAdapter.getRecordAudioPermission
+            recordAudio: voiceRecorderAdapter.getRecordAudioPermission
         }
 
         const camera = await permissionsPromises.camera();
@@ -44,7 +41,7 @@ export const requestPermissions = createAsyncThunk(
             camera: deviceImageService.requestCameraPermission,
             mediaLibrary: deviceImageService.requestMediaLibraryPermission,
             notifications: notificationsService.requestNotificationsPermission,
-            recordAudio: VoiceRecorderAdapter.requestRecordAudioPermission
+            recordAudio: voiceRecorderAdapter.requestRecordAudioPermission
         }
 
         let camera: PermissionStatus = 'undetermined';
