@@ -1,5 +1,5 @@
 /* Config */
-import { notificationsService, deviceImageService } from '@config/di';
+import { notificationsService, deviceImageService, voiceRecorderAdapter } from '@config/di';
 
 /* Constants */
 import { permissionsMessages, permissionsStatus } from '@application/constants';
@@ -14,9 +14,6 @@ import {
     RequestPermissionsOptions,
     PermissionStatus
 } from '@application/features';
-
-/* Adapters */
-import { VoiceRecorderAdapter } from '@infrastructure/adapters';
 
 /* Hooks */
 import useStatus from './useStatus';
@@ -85,7 +82,7 @@ const usePermissions = () => {
             camera: deviceImageService.requestCameraPermission,
             mediaLibrary: deviceImageService.requestMediaLibraryPermission,
             notifications: notificationsService.requestNotificationsPermission,
-            recordAudio: VoiceRecorderAdapter.requestRecordAudioPermission
+            recordAudio: voiceRecorderAdapter.requestRecordAudioPermission
         }
 
         const status: PermissionStatus = await askPermissions[permission]();

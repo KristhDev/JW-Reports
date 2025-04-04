@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react';
 
+/* Config */
+import { voiceRecorderAdapter } from '@config/di';
+
 /* Constants */
 import { permissionsMessages, permissionsStatus } from '@application/constants';
-
-/* Adapters */
-import { VoiceRecorderAdapter } from '@infrastructure/adapters';
 
 /* Hooks */
 import useStatus from './useStatus';
@@ -46,7 +46,7 @@ const useVoiceRecorder = () => {
         if (status !== permissionsStatus.GRANTED) return;
 
         try {
-            VoiceRecorderAdapter.startRecording(lang);
+            voiceRecorderAdapter.startRecording(lang);
         }
         catch (error) {
             setError(error);
@@ -60,7 +60,7 @@ const useVoiceRecorder = () => {
      */
     const stopRecording = (): void => {
         try {
-            VoiceRecorderAdapter.stopRecording();
+            voiceRecorderAdapter.stopRecording();
         }
         catch (error) {
             setError(error);
@@ -68,18 +68,18 @@ const useVoiceRecorder = () => {
     }
 
     useEffect(() => {
-        VoiceRecorderAdapter.onSpeechStart(() => setIsRecording(true));
-        VoiceRecorderAdapter.onSpeechEnd(() => setIsRecording(false));
+        voiceRecorderAdapter.onSpeechStart(() => setIsRecording(true));
+        voiceRecorderAdapter.onSpeechEnd(() => setIsRecording(false));
 
-        VoiceRecorderAdapter.onSpeechResults(value => setRecord(value || ''));
+        voiceRecorderAdapter.onSpeechResults(value => setRecord(value || ''));
 
-        VoiceRecorderAdapter.onSpeechError(error => {
+        voiceRecorderAdapter.onSpeechError(error => {
             setError(error);
             setIsRecording(false);
         });
 
         return () => {
-            VoiceRecorderAdapter.destroyListeners();
+            voiceRecorderAdapter.destroyListeners();
         }
     }, []);
 
