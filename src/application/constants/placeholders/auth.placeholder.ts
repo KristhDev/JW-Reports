@@ -1,7 +1,5 @@
 import { translationAdapter } from '@config/di';
 
-
-
 export const authPlaceholeders = {
     EMAIL: translationAdapter.translate('forms.placeholders.type', {
         attribute: translationAdapter.translate('forms.fields.email')
