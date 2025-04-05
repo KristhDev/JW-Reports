@@ -2,26 +2,23 @@ import { useTranslation as useTranslationI18Next } from 'react-i18next';
 
 import { TranslationKeys } from '@config/i18n';
 
+import { TimeAdapter } from '@infrastructure/adapters';
+
 import { Languages } from '@infrastructure/interfaces';
+
+import useUI from './useUI';
 
 const useTranslation = () => {
     const { t, i18n } = useTranslationI18Next();
-
-    // const settings = useStore((state) => state.settings);
-    // const setSettings = useStore((state) => state.setSettings);
+    const { setLanguage } = useUI();
 
     const changeLanguage = async (lang: Languages): Promise<void> => {
         try {
             await i18n.changeLanguage(lang);
+            setLanguage(lang);
 
-            // const newSettings: UISettings = {
-            //     ...settings,
-            //     language: {
-            //         language: lang
-            //     }
-            // }
-
-            // setSettings(newSettings);
+            const timerLocale = TimeAdapter.locale[lang as keyof typeof TimeAdapter.locale];
+            TimeAdapter.setLocale(timerLocale);
         } 
         catch (error) {
             console.error(error);
