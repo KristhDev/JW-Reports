@@ -1,6 +1,6 @@
 import { EncodingType } from 'expo-file-system';
 
-import { Languages } from '@infrastructure/interfaces';
+import { ItemOption, Languages } from '@infrastructure/interfaces';
 
 export const fileEncodings = {
     BASE64: EncodingType.Base64,
@@ -14,6 +14,11 @@ export const storageKeys = {
     STORE: 'jwreports-store',
     THEME: 'jwreports-theme'
 }
+
+export const LANGUAGE_OPTIONS: ItemOption[] = [
+    { label: 'Español', value: 'es' },
+    { label: 'English', value: 'en' }
+];
 
 export const languagesCodes: Record<Uppercase<Languages>, Languages> = {
     EN: 'en',
