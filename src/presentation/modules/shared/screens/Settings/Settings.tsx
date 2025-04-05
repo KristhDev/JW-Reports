@@ -8,9 +8,10 @@ import { env } from '@config/env';
 import { deviceInfoAdapter } from '@config/di';
 
 /* Constants */
-import { THEME_OPTIONS } from '@application/constants/utils';
+import { LANGUAGE_OPTIONS, THEME_OPTIONS } from '@application/constants/utils';
 
 /* Screens */
+import { LanguageModal } from '../LanguageModal';
 import { ThemeModal } from '@theme/screens';
 
 /* Components */
@@ -32,6 +33,7 @@ import { version as appVersion } from '@package';
  */
 const Settings = (): JSX.Element => {
     const [ showThemeModal, setShowThemeModal ] = useState<boolean>(false);
+    const [ showLanguageModal, setShowLanguageModal ] = useState<boolean>(false);
 
     const router = useRouter();
     const { theme: { colors, fontSizes, margins } } = useStyles();
@@ -88,6 +90,12 @@ const Settings = (): JSX.Element => {
                         onPress={ () => setShowThemeModal(true) }
                         subText={ THEME_OPTIONS.find(t => t.value === selectedTheme)?.label || '' }
                         text={ translate('screens.settings.sections.ui.texts.appearance') }
+                    />
+
+                    <SectionBtn
+                        onPress={ () => setShowLanguageModal(true) }
+                        subText={ LANGUAGE_OPTIONS.find(t => t.value === userInterface.language)?.label || '' }
+                        text={ translate('screens.settings.sections.ui.texts.language') }
                     />
 
                     <SectionBtn
@@ -161,6 +169,11 @@ const Settings = (): JSX.Element => {
             <ThemeModal
                 isOpen={ showThemeModal }
                 onClose={ () => setShowThemeModal(false) }
+            />
+
+            <LanguageModal 
+                isOpen={ showLanguageModal }
+                onClose={ () => setShowLanguageModal(false) }
             />
         </>
     );
