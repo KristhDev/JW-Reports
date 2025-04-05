@@ -4,7 +4,7 @@ import { useFocusEffect, useNavigation, useRouter } from 'expo-router';
 import Ionicons from '@expo/vector-icons/Ionicons';
 
 /* Features */
-import { INIT_COURSE } from '@application/features';
+import { INIT_COURSE } from '@application/features/courses';
 
 /* Components */
 import { CoursesList } from '../../components';

@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 /* Constants */
-import { precursors } from '@application/constants';
+import { precursors } from '@application/constants/utils/auth.util';
 
 /* Entities */
 import { UserEntity } from '@domain/entities';

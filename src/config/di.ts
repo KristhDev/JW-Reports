@@ -3,6 +3,7 @@ import {
     ExternalStorageAdapterContract,
     InternalStorageAdapterContract,
     PDFAdapterContract,
+    TranslationAdapterContract,
     VoiceRecorderAdapterContract
 } from '@domain/contracts/adapters';
 
@@ -25,6 +26,7 @@ import {
     ExternalStorageAdapter,
     InternalStorageAdapter,
     PDFAdapter,
+    TranslationAdapter,
     VoiceRecorderAdapter
 } from '@infrastructure/adapters';
 
@@ -44,9 +46,12 @@ import { NotificationsService } from '@services';
 
 export const internalStorageAdapter: InternalStorageAdapterContract = new InternalStorageAdapter();
 export const externalStorageAdapter: ExternalStorageAdapterContract = new ExternalStorageAdapter(internalStorageAdapter);
-export const pdfAdapter: PDFAdapterContract = new PDFAdapter(internalStorageAdapter);
 export const deviceInfoAdapter: DeviceInfoAdapterContract = new DeviceInfoAdapter();
+export const pdfAdapter: PDFAdapterContract = new PDFAdapter(internalStorageAdapter);
+export const translationAdapter: TranslationAdapterContract = new TranslationAdapter();
 export const voiceRecorderAdapter: VoiceRecorderAdapterContract = new VoiceRecorderAdapter();
+
+
 
 export const authService: AuthServiceContract = new AuthService();
 export const cloudService: CloudServiceContract = new CloudService();

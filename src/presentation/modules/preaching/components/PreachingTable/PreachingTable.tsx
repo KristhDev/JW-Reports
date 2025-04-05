@@ -4,7 +4,7 @@ import { useRouter } from 'expo-router';
 import { useStyles } from 'react-native-unistyles';
 
 /* Constants */
-import { TABLE_PREACHING_HEADERS } from '@application/constants';
+import { TABLE_PREACHING_HEADERS } from '@application/constants/utils';
 
 /* Entities */
 import { PreachingEntity } from '@domain/entities';

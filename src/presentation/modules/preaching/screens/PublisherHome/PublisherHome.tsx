@@ -5,7 +5,8 @@ import { useStyles } from 'react-native-unistyles';
 import Ionicons from '@expo/vector-icons/Ionicons';
 
 /* Features */
-import { INIT_LESSON, INIT_REVISIT } from '@application/features';
+import { INIT_LESSON } from '@application/features/lessons';
+import { INIT_REVISIT } from '@application/features/revisits';
 
 /* Entities */
 import { LessonWithCourseEntity, RevisitEntity } from '@domain/entities';

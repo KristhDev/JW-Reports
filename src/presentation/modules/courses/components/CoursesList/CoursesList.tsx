@@ -5,7 +5,7 @@ import { FlashList } from '@shopify/flash-list';
 import { useStyles } from 'react-native-unistyles';
 
 /* Features */
-import { INIT_COURSE } from '@application/features';
+import { INIT_COURSE } from '@application/features/courses';
 
 /* Entities */
 import { CourseEntity } from '@domain/entities';

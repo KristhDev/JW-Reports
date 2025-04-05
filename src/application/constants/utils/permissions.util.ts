@@ -1,4 +1,4 @@
-import { PermissionStatus } from '@application/features';
+import { PermissionStatus } from '@application/features/permissions';
 
 export const permissionsStatus: Record<Uppercase<PermissionStatus>, PermissionStatus> = {
     BLOCKED: 'blocked',

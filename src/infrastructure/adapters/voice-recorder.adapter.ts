@@ -1,10 +1,11 @@
 import { ExpoSpeechRecognitionModule } from 'expo-speech-recognition';
 
 /* Constants */
-import { appMessages, permissionsStatus } from '@application/constants';
+import { appMessages } from '@application/constants/messages/shared.message';
+import { permissionsStatus } from '@application/constants/utils/permissions.util';
 
 /* Features */
-import { PermissionStatus } from '@application/features';
+import { PermissionStatus } from '@application/features/permissions';
 
 /* Contracts */
 import { VoiceRecorderAdapterContract } from '@domain/contracts/adapters';

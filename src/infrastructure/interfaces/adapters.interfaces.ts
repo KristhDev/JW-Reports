@@ -1,4 +1,4 @@
-import { fileEncodings } from '@application/constants';
+import { fileEncodings } from '@application/constants/utils';
 
 /**
  * Interface representing the options for moving a file from InternalStorage to ExternalStorage.

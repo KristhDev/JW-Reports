@@ -2,7 +2,7 @@
 import { authService, notificationsService } from '@config/di';
 
 /* Constants */
-import { networkMessages, authMessages } from '@application/constants';
+import { authMessages, networkMessages } from '@application/constants/messages';
 
 /* Features */
 import { useAppDispatch, useAppSelector } from '@application/store';
@@ -11,11 +11,12 @@ import {
     setIsAuthLoading as setIsAuthLoadingAction,
     setUser as setUserAction,
     updateUser as updateUserAction,
-    clearCourses as clearCoursesAction,
-    clearLessons as clearLessonsAction,
-    clearPreaching as clearPreachingAction,
-    clearRevisits as clearRevisitsAction
-} from '@application/features';
+} from '@application/features/auth';
+
+import { clearCourses as clearCoursesAction } from '@application/features/courses';
+import { clearLessons as clearLessonsAction } from '@application/features/lessons';
+import { clearPreaching as clearPreachingAction } from '@application/features/preaching';
+import { clearRevisits as clearRevisitsAction } from '@application/features/revisits';
 
 /* DTOs */
 import { SignUpDto, UpdateEmailDto, UpdatePasswordDto, UpdateProfileDto } from '@domain/dtos';

@@ -4,7 +4,7 @@ import { useStyles } from 'react-native-unistyles';
 import { useRouter } from 'expo-router';
 
 /* Features */
-import { INIT_LESSON } from '@application/features';
+import { INIT_LESSON } from '@application/features/lessons';
 
 /* Adapters */
 import { TimeAdapter } from '@infrastructure/adapters';

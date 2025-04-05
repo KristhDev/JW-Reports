@@ -4,7 +4,8 @@ import { useRouter } from 'expo-router';
 import { externalStorageAdapter, pdfAdapter, coursesService, lessonsService } from '@config/di';
 
 /* Constants */
-import { coursesMessages, precursors } from '@application/constants';
+import { coursesMessages } from '@application/constants/messages';
+import { precursors } from '@application/constants/utils';
 
 /* Features */
 import { useAppDispatch, useAppSelector } from '@application/store';
@@ -12,12 +13,10 @@ import {
     INIT_COURSE,
     addCourse as addCourseAction,
     addCourses as addCoursesAction,
-    addLastLesson as addLastLessonAction,
     clearCourses as clearCoursesAction,
     removeCourse as removeCourseAction,
     removeCourses as removeCoursesAction,
     setCourseFilter as setCourseFilterAction,
-    Pagination,
     setCourses as setCoursesAction,
     setCoursesPagination as setCoursesPaginationAction,
     setCoursesScreenHistory as setCoursesScreenHistoryAction,
@@ -29,7 +28,10 @@ import {
     setRefreshCourses as setRefreshCoursesAction,
     setSelectedCourse as setSelectedCourseAction,
     updateCourse as updateCourseAction
-} from '@application/features';
+} from '@application/features/courses';
+
+import { addLastLesson as addLastLessonAction } from '@application/features/lessons';
+import { Pagination } from '@application/features/ui';
 
 /* DTOs */
 import { ActiveOrSuspendCourseDto, CreateCourseDto, FinishOrStartCourseDto, UpdateCourseDto } from '@domain/dtos';

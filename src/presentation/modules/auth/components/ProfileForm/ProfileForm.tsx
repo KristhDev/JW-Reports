@@ -6,7 +6,8 @@ import { useStyles } from 'react-native-unistyles';
 import Ionicons from '@expo/vector-icons/Ionicons';
 
 /* Constants */
-import { authPlaceholeders, HOURS_REQUIREMENTS, precursors, PRECURSORS_OPTIONS } from '@application/constants';
+import { authPlaceholeders } from '@application/constants/placeholders';
+import { HOURS_REQUIREMENTS, precursors, PRECURSORS_OPTIONS } from '@application/constants/utils';
 
 /* Components */
 import { Button, Checkbox, FormField, FormSelect } from '@ui/components';
@@ -37,7 +38,7 @@ export const ProfileForm = (): JSX.Element => {
     const { translate } = useTranslation();
 
     const [ editHoursRequirement, setEditHoursRequirement ] = useState<boolean>(
-        !Object.values(HOURS_REQUIREMENTS).includes(user?.hoursRequirement || 0)
+        !Object.values(HOURS_REQUIREMENTS).includes(user?.hoursRequirement as any || HOURS_REQUIREMENTS.ninguno)
     );
 
     const { errors, handleChange, handleSubmit, isValid, setFieldValue, values } = useFormik({

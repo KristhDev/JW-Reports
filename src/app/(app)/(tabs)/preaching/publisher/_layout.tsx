@@ -3,7 +3,7 @@ import { Href, Redirect, Stack, useRouter } from 'expo-router';
 import { useStyles } from 'react-native-unistyles';
 
 /* Constants */
-import { precursors } from '@application/constants';
+import { precursors } from '@application/constants/utils';
 
 /* Components */
 import { Header, HeaderButtons } from '@ui/components';

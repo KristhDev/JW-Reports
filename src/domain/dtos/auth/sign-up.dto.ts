@@ -1,5 +1,5 @@
 /* Constants */
-import { precursors } from '@application/constants';
+import { precursors } from '@application/constants/utils';
 
 /* Interfaces */
 import { SignUpData } from '@auth/interfaces';

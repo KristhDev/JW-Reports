@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
 
 /* Constants */
-import { THEME_OPTIONS } from '@application/constants';
+import { THEME_OPTIONS } from '@application/constants/utils';
 
 /* Context */
 import { Theme } from '@application/context';

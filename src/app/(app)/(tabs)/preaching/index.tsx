@@ -1,7 +1,7 @@
 import { Redirect } from 'expo-router';
 
 /* Constants */
-import { precursors } from '@application/constants';
+import { precursors } from '@application/constants/utils';
 
 /* Auth */
 import { useAuth } from '@auth/hooks';

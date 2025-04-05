@@ -4,7 +4,8 @@ import { useEffect, useState } from 'react';
 import { voiceRecorderAdapter } from '@config/di';
 
 /* Constants */
-import { permissionsMessages, permissionsStatus } from '@application/constants';
+import { permissionsMessages } from '@application/constants/messages';
+import { permissionsStatus } from '@application/constants/utils';
 
 /* Hooks */
 import useStatus from './useStatus';

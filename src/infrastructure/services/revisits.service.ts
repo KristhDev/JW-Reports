@@ -2,7 +2,7 @@
 import { supabase } from '@config/supabase';
 
 /* Features */
-import { INIT_REVISIT } from '@application/features';
+import { INIT_REVISIT } from '@application/features/revisits';
 
 /* Contracts */
 import { RevisitsServiceContract } from '@domain/contracts/services';

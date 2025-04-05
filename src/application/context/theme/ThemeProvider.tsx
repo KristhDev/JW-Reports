@@ -2,8 +2,10 @@ import React, { FC, PropsWithChildren, useEffect, useMemo, useState } from 'reac
 import { Appearance } from 'react-native';
 import { UnistylesRuntime, useStyles } from 'react-native-unistyles';
 
+import { storageKeys } from '@application/constants/utils';
+
 /* Adapters */
-import { storageAdapter, storageKeys } from '@infrastructure/adapters';
+import { storageAdapter } from '@infrastructure/adapters';
 
 /* Context */
 import ThemeContext from './ThemeContext';

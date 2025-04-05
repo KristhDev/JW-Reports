@@ -6,7 +6,7 @@ import { useStyles } from 'react-native-unistyles';
 import { preachingReportService } from '@config/di';
 
 /* Constants */
-import { preachingMessages } from '@application/constants';
+import { preachingMessages } from '@application/constants/messages';
 
 /* Entities */
 import { PreachingEntity } from '@domain/entities';

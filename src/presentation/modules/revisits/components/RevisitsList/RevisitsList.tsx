@@ -5,7 +5,7 @@ import { useFocusEffect, useNavigation, useRouter } from 'expo-router';
 import { useStyles } from 'react-native-unistyles';
 
 /* Features */
-import { INIT_REVISIT } from '@application/features';
+import { INIT_REVISIT } from '@application/features/revisits';
 
 /* Entities */
 import { RevisitEntity } from '@domain/entities';

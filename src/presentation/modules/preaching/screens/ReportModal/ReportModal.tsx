@@ -1,4 +1,4 @@
-import React, { Children, FC, useMemo, useState } from 'react';
+import React, { Children, FC, useState } from 'react';
 import { View, Text, Share, TextInput } from 'react-native';
 import { useStyles } from 'react-native-unistyles';
 
@@ -6,7 +6,7 @@ import { useStyles } from 'react-native-unistyles';
 import { preachingReportService } from '@config/di';
 
 /* Constants */
-import { MINISTRY_PARTICIPATIONS, precursors } from '@application/constants';
+import { MINISTRY_PARTICIPATIONS, precursors } from '@application/constants/utils';
 
 /* Adapters */
 import { TimeAdapter } from '@infrastructure/adapters';

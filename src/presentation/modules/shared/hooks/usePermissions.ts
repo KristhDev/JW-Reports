@@ -2,7 +2,8 @@
 import { notificationsService, deviceImageService, voiceRecorderAdapter } from '@config/di';
 
 /* Constants */
-import { permissionsMessages, permissionsStatus } from '@application/constants';
+import { permissionsMessages } from '@application/constants/messages';
+import { permissionsStatus } from '@application/constants/utils';
 
 /* Features */
 import { useAppDispatch, useAppSelector } from '@application/store';
@@ -13,7 +14,7 @@ import {
     Permissions,
     RequestPermissionsOptions,
     PermissionStatus
-} from '@application/features';
+} from '@application/features/permissions';
 
 /* Hooks */
 import useStatus from './useStatus';

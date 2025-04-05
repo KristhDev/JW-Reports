@@ -5,7 +5,7 @@ import { useStyles } from 'react-native-unistyles';
 import Ionicons from '@expo/vector-icons/Ionicons';
 
 /* Constants */
-import { coursesPlaceholders } from '@application/constants';
+import { coursesPlaceholders } from '@application/constants/placeholders';
 
 /* Components */
 import { Button, FormField } from '@ui/components';

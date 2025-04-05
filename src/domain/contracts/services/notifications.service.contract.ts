@@ -1,4 +1,4 @@
-import { PermissionStatus } from '@application/features';
+import { PermissionStatus } from '@application/features/permissions';
 
 export abstract class NotificationsServiceContract {
     public abstract close(): void;

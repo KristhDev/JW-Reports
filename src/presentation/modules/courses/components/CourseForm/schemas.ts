@@ -1,7 +1,7 @@
 import { object, string } from 'yup';
 
 /* Constants */
-import { coursesMessages } from '@application/constants';
+import { coursesMessages } from '@application/constants/messages';
 
  /* Validation schema for course */
 export const courseFormSchema = object().shape({

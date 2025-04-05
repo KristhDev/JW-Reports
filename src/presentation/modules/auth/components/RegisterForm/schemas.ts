@@ -1,6 +1,7 @@
 import { object, ref, string } from 'yup';
 
-import { authMessages } from '@application/constants';
+/* Constants */
+import { authMessages } from '@application/constants/messages';
 
 /* Validation schema for register values */
 export const registerFormSchema = object().shape({

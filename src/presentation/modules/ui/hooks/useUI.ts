@@ -9,7 +9,7 @@ import {
     setKeyboard as setIsKeyboardVisibleAction,
     setOldDatetimePicker as setOldDatetimePickerAction,
     Keyboard as KeyboardType
-} from '@application/features';
+} from '@application/features/ui';
 
 const useUI = () => {
     const dispatch = useAppDispatch();

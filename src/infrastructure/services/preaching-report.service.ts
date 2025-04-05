@@ -1,5 +1,5 @@
 /* Constants */
-import { precursors } from '@application/constants';
+import { precursors } from '@application/constants/utils';
 
 /* Contracts */
 import { PreachingReportServiceContract } from '@domain/contracts/services';

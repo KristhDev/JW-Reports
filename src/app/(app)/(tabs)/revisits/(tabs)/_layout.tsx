@@ -4,7 +4,7 @@ import { ParamListBase, TabNavigationState } from '@react-navigation/native';
 import { useFocusEffect, withLayoutContext } from 'expo-router';
 import { useStyles } from 'react-native-unistyles';
 
-import { INIT_REVISIT } from '@application/features';
+import { INIT_REVISIT } from '@application/features/revisits';
 
 import { useRevisits } from '@revisits/hooks';
 

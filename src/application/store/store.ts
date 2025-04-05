@@ -3,31 +3,25 @@ import { combineReducers } from 'redux';
 import { persistReducer, persistStore } from 'reduxjs-toolkit-persist';
 import { PersistConfig } from 'reduxjs-toolkit-persist/lib/types';
 
+/* Constants */
+import { storageKeys } from '@application/constants/utils';
+
 /* Reducers */
-import {
-    authReducer,
-    AuthState,
-    coursesReducer,
-    CoursesState,
-    lessonsReducer,
-    LessonsState,
-    permissionsReducer,
-    PermissionsState,
-    preachingReducer,
-    PreachingState,
-    revisitsReducer,
-    RevisitsState,
-    statusReducer,
-    StatusState,
-    uiReducer,
-    UIState
-} from '@application/features';
+import { authReducer, AuthState } from '@application/features/auth';
+import { coursesReducer, CoursesState } from '@application/features/courses';
+import { lessonsReducer, LessonsState } from '@application/features/lessons';
+import { permissionsReducer, PermissionsState } from '@application/features/permissions';
+import { preachingReducer, PreachingState } from '@application/features/preaching';
+import { revisitsReducer, RevisitsState } from '@application/features/revisits';
+import { statusReducer, StatusState } from '@application/features/status';
+import { uiReducer, UIState } from '@application/features/ui';
 
 /* Adapters */
-import { storageKeys, storePersistor } from '@infrastructure/adapters';
+import { storePersistor } from '@infrastructure/adapters';
 
 /* Debugger */
 import reactotron from '../../../ReactotronConfig';
+
 
 const permissionsPersistConfig: PersistConfig<PermissionsState> = {
     key: storageKeys.STORE_PERMISSIONS,

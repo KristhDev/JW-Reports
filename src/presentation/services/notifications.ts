@@ -4,10 +4,10 @@ import { LogLevel, OneSignal } from 'react-native-onesignal';
 import { env } from '@config/env';
 
 /* Constants */
-import { permissionsStatus } from '@application/constants';
+import { permissionsStatus } from '@application/constants/utils';
 
 /* Features */
-import { PermissionStatus } from '@application/features';
+import { PermissionStatus } from '@application/features/permissions';
 
 /* Contracts */
 import { NotificationsServiceContract } from '@domain/contracts/services';

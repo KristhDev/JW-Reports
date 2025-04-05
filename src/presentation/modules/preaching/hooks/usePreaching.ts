@@ -4,7 +4,7 @@ import { useRouter } from 'expo-router';
 import { externalStorageAdapter, pdfAdapter, preachingService, preachingReportService } from '@config/di';
 
 /* Constants */
-import { authMessages, preachingMessages } from '@application/constants';
+import { authMessages, preachingMessages } from '@application/constants/messages';
 
 /* Features */
 import { useAppDispatch, useAppSelector } from '@application/store';
@@ -21,7 +21,7 @@ import {
     setSelectedDate as setSelectedDateAction,
     setSelectedPreaching as setSelectedPreachingAction,
     updatePreaching as updatePreachingAction
-} from '@application/features';
+} from '@application/features/preaching';
 
 /* Dtos */
 import { CreatePreachingDto, UpdatePreachingDto } from '@domain/dtos';

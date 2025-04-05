@@ -5,7 +5,7 @@ import { useRouter } from 'expo-router';
 import Ionicons from '@expo/vector-icons/Ionicons';
 
 /* Features */
-import { INIT_PREACHING } from '@application/features';
+import { INIT_PREACHING } from '@application/features/preaching';
 
 /* Adapters */
 import { TimeAdapter } from '@infrastructure/adapters';

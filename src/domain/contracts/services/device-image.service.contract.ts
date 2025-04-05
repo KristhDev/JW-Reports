@@ -1,4 +1,4 @@
-import { PermissionStatus } from '@application/features';
+import { PermissionStatus } from '@application/features/permissions';
 
 import { ImageModel } from '@domain/models'; 
 

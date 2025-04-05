@@ -1,7 +1,8 @@
 import { StorageAccessFramework } from 'expo-file-system';
 
 /* Constants */
-import { fileEncodings, permissionsMessages } from '@application/constants';
+import { permissionsMessages } from '@application/constants/messages/shared.message';
+import { fileEncodings } from '@application/constants/utils/adapters.util';
 
 /* Contracts */
 import { ExternalStorageAdapterContract, InternalStorageAdapterContract } from '@domain/contracts/adapters';

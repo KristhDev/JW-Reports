@@ -1,7 +1,11 @@
+/* Config */
 import i18n, { TranslationKeys } from '@config/i18n';
 
-export class TranslationAdapter {
-    public static translate(key: TranslationKeys, replacements?: Record<string, any>): string {
+/* Contracts */
+import { TranslationAdapterContract } from '@domain/contracts/adapters';
+
+export class TranslationAdapter implements TranslationAdapterContract {
+    public translate(key: TranslationKeys, replacements?: Record<string, any>): string {
         return i18n.t(key, replacements);
     }
 }

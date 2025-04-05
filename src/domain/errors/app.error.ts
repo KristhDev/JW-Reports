@@ -1,4 +1,4 @@
-import { appMessages } from '@application/constants';
+import { appMessages } from '@application/constants/messages/shared.message';
 
 export class AppErrors {
     private static readonly pickerCodeErrors = {

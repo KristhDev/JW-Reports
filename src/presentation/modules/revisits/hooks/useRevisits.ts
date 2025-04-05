@@ -5,7 +5,8 @@ import { env } from '@config/env';
 import { externalStorageAdapter, pdfAdapter, revisitsService } from '@config/di';
 
 /* Constants */
-import { authMessages, precursors, revisitsMessages } from '@application/constants';
+import { authMessages, revisitsMessages } from '@application/constants/messages';
+import { precursors } from '@application/constants/utils';
 
 /* Features */
 import { useAppDispatch, useAppSelector } from '@application/store';
@@ -14,7 +15,6 @@ import {
     addRevisit as addRevisitAction,
     addRevisits as addRevisitsAction,
     clearRevisits as clearRevisitsAction,
-    Pagination,
     removeRevisit as removeRevisitAction,
     removeRevisits as removeRevisitsAction,
     setHasMoreRevisits as setHasMoreRevisitsAction,
@@ -31,7 +31,8 @@ import {
     setRevisitsScreenHistory as setRevisitsScreenHistoryAction,
     setSelectedRevisit as setSelectedRevisitAction,
     updateRevisit as updateRevisitAction
-} from '@application/features';
+} from '@application/features/revisits';
+import { Pagination } from '@application/features/ui';
 
 /* Dtos */
 import { CompleteRevisitDto, CreateRevisitDto, UpdateRevisitDto } from '@domain/dtos';

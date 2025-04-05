@@ -1,7 +1,7 @@
 import { date, object, string } from 'yup';
 
 /* Constants */
-import { revisitsMessages } from '@application/constants';
+import { revisitsMessages } from '@application/constants/messages';
 
 /* Validation schema of revisit */
 export const revisitFormSchema = object().shape({

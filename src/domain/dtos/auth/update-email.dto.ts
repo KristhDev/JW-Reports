@@ -1,5 +1,5 @@
 /* Constants */
-import { authMessages } from '@application/constants';
+import { authMessages } from '@application/constants/messages';
 
 /* Errors */
 import { DtoError } from '@domain/errors';

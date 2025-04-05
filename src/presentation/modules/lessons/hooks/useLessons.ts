@@ -4,20 +4,19 @@ import { useRouter } from 'expo-router';
 import { coursesService, lessonsService } from '@config/di';
 
 /* Constants */
-import { authMessages, coursesMessages, lessonsMessages, precursors } from '@application/constants';
+import { authMessages, coursesMessages, lessonsMessages } from '@application/constants/messages';
+import { precursors } from '@application/constants/utils';
 
 /* Features */
 import { useAppDispatch, useAppSelector } from '@application/store';
 import {
     addLastLesson as addLastLessonAction,
-    addLastLessonInCourse as addLastLessonInCourseAction,
     addLesson as addLessonAction,
     addLessons as addLessonsAction,
     clearLessons as clearLessonsAction,
     INIT_LESSON,
     removeLesson as removeLessonAction,
     removeLessons as removeLessonsAction,
-    replaceLastLessonInCourse as replaceLastLessonInCourseAction,
     setHasMoreLessons as setHasMoreLessonsAction,
     setIsLastLessonLoading as setIsLastLessonLoadingAction,
     setIsLessonDeleting as setIsLessonDeletingAction,
@@ -26,10 +25,16 @@ import {
     setLessons as setLessonsAction,
     setLessonsPagination as setLessonsPaginationAction,
     setSelectedLesson as setSelectedLessonAction,
-    updateLastLessonInCourse as updateLastLessonInCourseAction,
-    Pagination,
     updateLesson as updateLessonAction,
-} from '@application/features';
+} from '@application/features/lessons';
+
+import {
+    addLastLessonInCourse as addLastLessonInCourseAction,
+    replaceLastLessonInCourse as replaceLastLessonInCourseAction,    
+    updateLastLessonInCourse as updateLastLessonInCourseAction
+} from '@application/features/courses';
+
+import { Pagination } from '@application/features/ui';
 
 /* DTOs */
 import { CreateLessonDto, FinishOrStartLessonDto, UpdateLessonDto } from '@domain/dtos';

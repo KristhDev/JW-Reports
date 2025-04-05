@@ -1,6 +1,6 @@
 import { object, string } from 'yup';
 
-import { authMessages } from '@application/constants';
+import { authMessages } from '@application/constants/messages';
 
 /* Validation schema for login values (email and password) */
 export const loginFormSchema = object().shape({

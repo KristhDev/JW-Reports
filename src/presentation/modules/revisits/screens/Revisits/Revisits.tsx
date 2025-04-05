@@ -4,7 +4,7 @@ import { useStyles } from 'react-native-unistyles';
 import Ionicons from '@expo/vector-icons/Ionicons';
 
 /* Features */
-import { INIT_REVISIT } from '@application/features';
+import { INIT_REVISIT } from '@application/features/revisits';
 
 /* Components */
 import { RevisitsList } from '../../components';

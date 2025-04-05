@@ -1,6 +1,6 @@
 import { object, ref, string } from 'yup';
 
-import { authMessages } from '@application/constants';
+import { authMessages } from '@application/constants/messages';
 
 /* Validation schema for new email */
 export const emailFormSchema = (email: string) => object().shape({

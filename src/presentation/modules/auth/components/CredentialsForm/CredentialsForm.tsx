@@ -5,7 +5,7 @@ import { useFormik } from 'formik';
 import Ionicons from '@expo/vector-icons/Ionicons';
 
 /* Constants */
-import { authPlaceholeders } from '@application/constants';
+import { authPlaceholeders } from '@application/constants/placeholders';
 
 /* Components */
 import { Button, EyeBtn, FormField } from '@ui/components';

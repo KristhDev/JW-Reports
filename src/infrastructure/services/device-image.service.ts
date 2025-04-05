@@ -1,10 +1,10 @@
 import * as ImagePicker from 'expo-image-picker';
 
 /* Constants */
-import { permissionsStatus } from '@application/constants';
+import { permissionsStatus } from '@application/constants/utils';
 
 /* Features */
-import { PermissionStatus } from '@application/features';
+import { PermissionStatus } from '@application/features/permissions';
 
 /* Contracts */
 import { DeviceImageServiceContract } from '@domain/contracts/services';

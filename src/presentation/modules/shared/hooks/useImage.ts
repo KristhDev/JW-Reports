@@ -5,10 +5,11 @@ import { env } from '@config/env';
 import { cloudService, deviceImageService } from '@config/di';
 
 /* Constants */
-import { permissionsMessages, permissionsStatus } from '@application/constants';
+import { permissionsMessages } from '@application/constants/messages';
+import { permissionsStatus } from '@application/constants/utils';
 
 /* Features */
-import { PermissionStatus } from '@application/features';
+import { PermissionStatus } from '@application/features/permissions';
 
 /* Models */
 import { ImageModel } from '@domain/models';

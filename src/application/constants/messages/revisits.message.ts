@@ -1,16 +1,17 @@
-import { TranslationAdapter } from '@infrastructure/adapters/translation.adapter';
+/* Config */
+import { translationAdapter } from '@config/di';
 
 export const revisitsMessages = {
     ABOUT_MIN_LENGTH: 'La información de la persona debe tener al menos 10 caracteres.',
 
-    ABOUT_REQUIRED: TranslationAdapter.translate('forms.validations.required', {
+    ABOUT_REQUIRED: translationAdapter.translate('forms.validations.required', {
         article: 'La',
-        attribute: TranslationAdapter.translate('forms.fields.personAbout'),
+        attribute: translationAdapter.translate('forms.fields.personAbout'),
         required: 'requerida'
     }),
 
-    ADDED_SUCCESS: TranslationAdapter.translate('messages.success.added', {
-        attribute: TranslationAdapter.translate('forms.fields.revisit'),
+    ADDED_SUCCESS: translationAdapter.translate('messages.success.added', {
+        attribute: translationAdapter.translate('forms.fields.revisit'),
         article: 'la',
     }),
 
@@ -18,8 +19,8 @@ export const revisitsMessages = {
     ADDRESS_REQUIRED: 'La dirección es requerida.',
     COMPLETED_SUCCESS: 'Ha marcado como completa su revisita correctamente.',
 
-    DELETED_SUCCESS: TranslationAdapter.translate('messages.success.deleted', {
-        attribute: TranslationAdapter.translate('forms.fields.revisit'),
+    DELETED_SUCCESS: translationAdapter.translate('messages.success.deleted', {
+        attribute: translationAdapter.translate('forms.fields.revisit'),
         article: 'la',
     }),
 
@@ -28,20 +29,20 @@ export const revisitsMessages = {
     PERSON_MIN_LENGTH: 'El nombre de la persona debe tener al menos 2 caracteres.',
     PERSON_NAME_REQUIRED: 'El nombre de la persona es requerido.',
 
-    UNSELECTED_COMPLETE: TranslationAdapter.translate('messages.errors.unSelected.completed', {
-        attribute: TranslationAdapter.translate('forms.fields.revisit'),
+    UNSELECTED_COMPLETE: translationAdapter.translate('messages.errors.unSelected.completed', {
+        attribute: translationAdapter.translate('forms.fields.revisit'),
         article: 'una',
         genderEnding: 'a'
     }),
 
-    UNSELECTED_DELETE: TranslationAdapter.translate('messages.errors.unSelected.deleted', {
-        attribute: TranslationAdapter.translate('forms.fields.revisit'),
+    UNSELECTED_DELETE: translationAdapter.translate('messages.errors.unSelected.deleted', {
+        attribute: translationAdapter.translate('forms.fields.revisit'),
         article: 'una',
         genderEnding: 'a'
     }),
 
-    UNSELECTED_UPDATE: TranslationAdapter.translate('messages.errors.unSelected.updated', {
-        attribute: TranslationAdapter.translate('forms.fields.revisit'),
+    UNSELECTED_UPDATE: translationAdapter.translate('messages.errors.unSelected.updated', {
+        attribute: translationAdapter.translate('forms.fields.revisit'),
         article: 'una',
         genderEnding: 'a'
     }),

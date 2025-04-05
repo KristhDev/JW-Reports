@@ -1,5 +1,5 @@
 /* Constants */
-import { appMessages } from '@application/constants';
+import { appMessages } from '@application/constants/messages';
 
 /* Hooks */
 import { useCourses } from '@courses/hooks';

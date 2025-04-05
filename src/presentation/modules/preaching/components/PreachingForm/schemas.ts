@@ -1,7 +1,7 @@
 import { date, object } from 'yup';
 
 /* Constants */
-import { preachingMessages } from '@application/constants';
+import { preachingMessages } from '@application/constants/messages';
 
 /* Adapters */
 import { TimeAdapter } from '@infrastructure/adapters';

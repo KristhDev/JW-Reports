@@ -8,7 +8,7 @@ import { env } from '@config/env';
 import { deviceInfoAdapter } from '@config/di';
 
 /* Constants */
-import { THEME_OPTIONS } from '@application/constants';
+import { THEME_OPTIONS } from '@application/constants/utils';
 
 /* Screens */
 import { ThemeModal } from '@theme/screens';

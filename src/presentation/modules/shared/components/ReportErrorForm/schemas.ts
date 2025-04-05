@@ -1,7 +1,7 @@
 import { object, string } from 'yup';
 
 /* Constants */
-import { emailMessages } from '@application/constants';
+import { emailMessages } from '@application/constants/messages';
 
 /* Validation schema of error */
 export const reportErrorFormSchema = object().shape({

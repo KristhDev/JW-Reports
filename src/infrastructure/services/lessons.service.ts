@@ -2,7 +2,8 @@
 import { supabase } from '@config/supabase';
 
 /* Features */
-import { INIT_COURSE, INIT_LESSON } from '@application/features';
+import { INIT_COURSE } from '@application/features/courses';
+import { INIT_LESSON } from '@application/features/lessons';
 
 /* Contracts */
 import { LessonsServiceContract } from '@domain/contracts/services';

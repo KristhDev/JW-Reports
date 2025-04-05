@@ -4,11 +4,11 @@ import { useRouter } from 'expo-router';
 import { loggerService } from '@config/di';
 
 /* Constants */
-import { networkMessages, authMessages, appMessages } from '@application/constants';
+import { appMessages, authMessages, networkMessages } from '@application/constants/messages';
 
 /* Features */
 import { useAppDispatch, useAppSelector } from '@application/store';
-import { clearStatus as clearStatusAction, setStatus as setStatusAction, SetStatusPayload } from '@application/features';
+import { clearStatus as clearStatusAction, setStatus as setStatusAction, SetStatusPayload } from '@application/features/status';
 
 /* Errors */
 import {
@@ -61,7 +61,7 @@ const useStatus = () => {
      * @return {void} This function does not return anything
      */
     const setError = (error: unknown): void => {
-        let msg = appMessages.UNEXPECTED_ERROR;
+        let msg: string = appMessages.UNEXPECTED_ERROR;
         let status = 400;
 
         if (error instanceof RequestError) {

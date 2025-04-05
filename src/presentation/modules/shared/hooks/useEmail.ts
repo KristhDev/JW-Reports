@@ -3,7 +3,7 @@ import { env } from '@config/env';
 import { emailService } from '@config/di';
 
 /* Constants */
-import { emailMessages } from '@application/constants';
+import { emailMessages } from '@application/constants/messages';
 
 /* Errors */
 import { EmailError } from '@domain/errors';

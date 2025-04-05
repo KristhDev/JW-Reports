@@ -1,7 +1,7 @@
 export const appMessages = {
     DATA_EXPORTED_SUCCESS: 'Todos sus datos han sido exportados correctamente. Los archivos se encuentran en la carpeta que ha seleccionado.',
     UNEXPECTED_ERROR: 'Ocurrio un error inesperado, por favor intentelo de nuevo.',
-}
+} as const;
 
 export const emailMessages = {
     FEEDBACK_FAILED: 'Ocurrio un error al enviar su sugerencia, por favor intentelo de nuevo.',
@@ -10,15 +10,15 @@ export const emailMessages = {
     MESSAGE_REQUIRED: 'El mensaje no puede estar vacío.',
     REPORT_ERROR_FAILED: 'Ocurrio un error al informar de este error, por favor intentelo de nuevo.',
     REPORT_ERROR_SUCCESS: 'Gracias por informar de este error, se revisará a la brevedad para solucionarlo y se le notificará cuando se resuelva.',
-}
+} as const;
 
 export const networkMessages = {
     WIFI_HASNT_CONNEC_EXPLAIN: 'Lo sentimos pero no dispone de conexion a Internet. Los datos que hay en la aplicación no son actualizados. Hasta que recupere la conexión no podrá obtener, guardar, editar o eliminar ningún dato.',
     WIFI_HASNT_CONNECTION: 'Lo sentimos pero no dispone de conexión a Internet.'
-}
+} as const;
 
 export const permissionsMessages = {
     FILE_EXPORT_DENIED: 'Permiso denegado para exportar el archivo.',
     REQUEST: 'Para realizar esta acción necesita permisos del dispositivo, por favor abra la configuración de su dispositivo y active los permisos de la aplicación.',
     UNSUPPORTED: 'Lo sentimos pero su dispositivo no soporta esta funcionalidad.',
-}
+} as const;
