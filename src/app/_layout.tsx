@@ -7,10 +7,16 @@ import '@config/i18n';
 import '@config/unistyles';
 
 /* Config */
-import { emailService, loggerService, notificationsService } from '@config/di';
+import { emailService, localizationAdapter, loggerService, notificationsService } from '@config/di';
+
+/* Constants */
+import { languagesCodes, validLanguagesCodes } from '@application/constants/utils';
 
 /* Adapters */
 import { TimeAdapter } from '@infrastructure/adapters';
+
+/* Interfaces */
+import { Languages } from '@infrastructure/interfaces';
 
 /* Providers */
 import { Provider } from '@providers';
@@ -23,11 +29,10 @@ import { usePreaching } from '@preaching/hooks';
 import { useRevisits } from '@revisits/hooks';
 import { useNetwork, usePermissions } from '@shared/hooks';
 import { useTheme } from '@theme/hooks';
-import { useUI } from '@ui/hooks';
-1
-/* Global config of date util */
+import { useTranslation, useUI } from '@ui/hooks';
+
+/* Global config of time util */
 TimeAdapter.extend(TimeAdapter.plugins.weekday);
-TimeAdapter.setLocale(TimeAdapter.locale.es);
 
 if (__DEV__) require('../../ReactotronConfig');
 
@@ -42,7 +47,8 @@ const Navigation = (): JSX.Element => {
   const { clearRevisits } = useRevisits();
   const { state: { theme } } = useTheme();
   const { wifi } = useNetwork();
-  const { listenHideKeyboard, listenShowKeyboard } = useUI();
+  const { changeLanguage } = useTranslation();
+  const { state: { userInterface }, listenHideKeyboard, listenShowKeyboard } = useUI();
 
   /**
    * Effect to clear store when mount component.
@@ -69,6 +75,25 @@ const Navigation = (): JSX.Element => {
       showListener.remove();
       hideListener.remove();
     }
+  }, []);
+
+  /**
+   * Effect to set language of app.
+   */
+  useEffect(() => {
+    const deviceLangue = localizationAdapter.getCurrentLanguageCode();
+
+    let language = languagesCodes.EN;
+    if (userInterface?.language) language = userInterface.language;
+
+    if (!userInterface.language && validLanguagesCodes.includes(deviceLangue as any)) {
+      language = deviceLangue as Languages;
+    }
+
+    const timeLocale = TimeAdapter.locale[language as keyof typeof TimeAdapter.locale];
+
+    changeLanguage(language);
+    TimeAdapter.setLocale(timeLocale);
   }, []);
 
   /**
