@@ -3,13 +3,17 @@ import { EmitterSubscription, Keyboard } from 'react-native';
 /* Features */
 import { useAppDispatch, useAppSelector } from '@application/store';
 import {
+    Keyboard as KeyboardType,
     setActiveFormField as setActiveFormFieldAction,
-    setRecordedAudio as setRecordedAudioAction,
     setIsDataExporting as setIsDataExportingAction,
     setKeyboard as setIsKeyboardVisibleAction,
+    setLanguage as setLanguageAction,
     setOldDatetimePicker as setOldDatetimePickerAction,
-    Keyboard as KeyboardType
+    setRecordedAudio as setRecordedAudioAction,
 } from '@application/features/ui';
+
+/* Interfaces */
+import { Languages } from '@infrastructure/interfaces';
 
 const useUI = () => {
     const dispatch = useAppDispatch();
@@ -18,6 +22,7 @@ const useUI = () => {
     const setActiveFormField = (activeFormField: string) => dispatch(setActiveFormFieldAction({ activeFormField }));
     const setIsDataExporting = (isExporting: boolean) => dispatch(setIsDataExportingAction({ isExporting }));
     const setKeyboard = (keyboard: KeyboardType) => dispatch(setIsKeyboardVisibleAction({ keyboard }));
+    const setLanguage = (language: Languages) => dispatch(setLanguageAction({ language }));
     const setRecordedAudio = (recordedAudio: string) => dispatch(setRecordedAudioAction({ recordedAudio }));
 
     /**
@@ -66,6 +71,7 @@ const useUI = () => {
         state,
 
         setActiveFormField,
+        setLanguage,
         setRecordedAudio,
         listenHideKeyboard,
         listenShowKeyboard,
