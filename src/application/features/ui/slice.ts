@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 /* Interfaces */
-import { Keyboard, SetKeyboardPayload, SetOldDatetimePickerPayload, UIState } from './types';
+import { Keyboard, SetKeyboardPayload, SetLanguagePayload, SetOldDatetimePickerPayload, setRecordedAudioPayload, UIState } from './types';
 import { SetIsExportingPayload } from '../types';
 
 export const INITIAL_KEYBOARD: Keyboard = {
@@ -15,7 +15,8 @@ export const UI_INITIAL_STATE: UIState = {
     keyboard: INITIAL_KEYBOARD,
     recordedAudio: '',
     userInterface: {
-        oldDatetimePicker: false
+        oldDatetimePicker: false,
+        language: null,
     }
 }
 
@@ -35,16 +36,20 @@ const uiSlice = createSlice({
             state.keyboard = action.payload.keyboard;
         },
 
+        setLanguage: (state, action: PayloadAction<SetLanguagePayload>) => {
+            state.userInterface.language = action.payload.language;
+        },
+
         setOldDatetimePicker: (state, action: PayloadAction<SetOldDatetimePickerPayload>) => {
             state.userInterface.oldDatetimePicker = action.payload.oldDatetimePicker;
         },
 
-        setRecordedAudio: (state, action: PayloadAction<{ recordedAudio: string }>) => {
+        setRecordedAudio: (state, action: PayloadAction<setRecordedAudioPayload>) => {
             state.recordedAudio = action.payload.recordedAudio;
         },
     }
 });
 
-export const { setActiveFormField, setIsDataExporting, setKeyboard, setOldDatetimePicker, setRecordedAudio } = uiSlice.actions;
+export const { setActiveFormField, setIsDataExporting, setKeyboard, setOldDatetimePicker, setLanguage, setRecordedAudio } = uiSlice.actions;
 export default uiSlice.reducer;
 

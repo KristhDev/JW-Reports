@@ -1,5 +1,8 @@
+import { Languages } from '@infrastructure/interfaces';
+
 export type UserInterface = {
     oldDatetimePicker: boolean;
+    language: Languages | null;
 }
 
 export type Keyboard = {
@@ -17,6 +20,14 @@ export interface UIState {
 
 export type SetOldDatetimePickerPayload = {
     oldDatetimePicker: boolean;
+}
+
+export type SetLanguagePayload = {
+    language: Languages;
+}
+
+export type setRecordedAudioPayload = {
+    recordedAudio: string;
 }
 
 export type SetKeyboardPayload = {

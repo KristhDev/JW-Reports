@@ -4,6 +4,7 @@ export {
     setActiveFormField,
     setIsDataExporting,
     setKeyboard,
+    setLanguage,
     setOldDatetimePicker,
     setRecordedAudio,
     UI_INITIAL_STATE
