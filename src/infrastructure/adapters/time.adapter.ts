@@ -1,9 +1,12 @@
 import dayjs, { Dayjs } from 'dayjs';
 import localeEs from 'dayjs/locale/es';
+import localeEn from 'dayjs/locale/en';
+
 import weekday from 'dayjs/plugin/weekday';
 
 export class TimeAdapter {
     public static locale = {
+        en: localeEn,
         es: localeEs
     };
 
