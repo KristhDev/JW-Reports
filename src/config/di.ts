@@ -2,6 +2,7 @@ import {
     DeviceInfoAdapterContract,
     ExternalStorageAdapterContract,
     InternalStorageAdapterContract,
+    LocalizationAdapterContract,
     PDFAdapterContract,
     TranslationAdapterContract,
     VoiceRecorderAdapterContract
@@ -25,6 +26,7 @@ import {
     DeviceInfoAdapter,
     ExternalStorageAdapter,
     InternalStorageAdapter,
+    LocalizationAdapter,
     PDFAdapter,
     TranslationAdapter,
     VoiceRecorderAdapter
@@ -48,10 +50,9 @@ export const internalStorageAdapter: InternalStorageAdapterContract = new Intern
 export const externalStorageAdapter: ExternalStorageAdapterContract = new ExternalStorageAdapter(internalStorageAdapter);
 export const deviceInfoAdapter: DeviceInfoAdapterContract = new DeviceInfoAdapter();
 export const pdfAdapter: PDFAdapterContract = new PDFAdapter(internalStorageAdapter);
+export const localizationAdapter: LocalizationAdapterContract = new LocalizationAdapter();
 export const translationAdapter: TranslationAdapterContract = new TranslationAdapter();
 export const voiceRecorderAdapter: VoiceRecorderAdapterContract = new VoiceRecorderAdapter();
-
-
 
 export const authService: AuthServiceContract = new AuthService();
 export const cloudService: CloudServiceContract = new CloudService();
