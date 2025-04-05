@@ -15,6 +15,9 @@ import { Button } from '../Button';
 import { ModalActions } from '../ModalActions';
 import { Modal } from '../../screens';
 
+/* Hooks */
+import { useUI } from '@ui/hooks';
+
 /* Interfaces */
 import { FormCalendarProps } from './interfaces';
 
@@ -51,6 +54,9 @@ export const FormCalendar: FC<FormCalendarProps> = ({
 
     const { styles: themeStyles, theme: { borderRadius, colors, fontSizes, margins } } = useStyles(themeStylesheet);
     const [ dateValue, setDateValue ] = useState<string>(value);
+
+    const { state: { userInterface } } = useUI();
+    const calendarLocale = locales[userInterface?.language as keyof typeof locales] || locales.en;
 
     /**
      * Handles the cancel action for the form calendar.
@@ -146,7 +152,7 @@ export const FormCalendar: FC<FormCalendarProps> = ({
                         dayContainerStyle={{ borderRadius: borderRadius.xs }}
                         displayFullDays
                         headerTextStyle={{ color: colors.text, fontSize: (fontSizes.sm + 4) }}
-                        locale={ locales.es }
+                        locale={ calendarLocale }
                         minDate={ minDate }
                         mode="single"
                         monthContainerStyle={{ borderColor: colors.button, backgroundColor: 'transparent' }}
