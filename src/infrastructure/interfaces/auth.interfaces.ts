@@ -30,3 +30,27 @@ export interface UserEndpoint {
     created_at: string;
     updated_at: string;
 }
+
+export interface AuthMessages {
+    CONFIRM_PASSWORD_EMPTY: string;
+    EMAIL_ALREADY_REGISTERED: string;
+    EMAIL_EMPTY: string;
+    EMAIL_INVALID: string;
+    EMAIL_UPDATE_UNCHANGED: string;
+    NAME_EMPTY: string;
+    NAME_MIN_LENGTH: string;
+    PASSWORD_EMPTY: string;
+    PASSWORD_MIN_LENGTH: string;
+    PASSWORD_NOT_MATCH: string;
+    PASSWORD_UPDATED: string;
+    PROFILE_UPDATED: string;
+    SURNAME_EMPTY: string;
+    SURNAME_MIN_LENGTH: string;
+    UNAUTHENTICATED: string;
+    UNAUTHORIZED: string;
+}
+
+export interface PrecursorMessages {
+    PRECURSOR_EMPTY: string;
+    PRECURSOR_INVALID: string;
+}
