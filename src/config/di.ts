@@ -16,9 +16,11 @@ import {
     EmailServiceContract,
     LessonsServiceContract,
     LoggerServiceContract,
+    MessagesServiceContract,
     NotificationsServiceContract,
     PreachingReportServiceContract,
     PreachingServiceContract,
+    PublisherServiceContract,
     RevisitsServiceContract
 } from '@domain/contracts/services';
 
@@ -36,6 +38,8 @@ import {
     AuthService,
     CloudService,
     CoursesService,
+    MessagesService,
+    PublisherService,
     DeviceImageService,
     EmailService,
     LessonsService,
@@ -61,7 +65,9 @@ export const deviceImageService: DeviceImageServiceContract = new DeviceImageSer
 export const emailService: EmailServiceContract = new EmailService();
 export const lessonsService: LessonsServiceContract = new LessonsService();
 export const loggerService: LoggerServiceContract = new LoggerService();
+export const messagesService: MessagesServiceContract = new MessagesService(translationAdapter);
 export const notificationsService: NotificationsServiceContract = new NotificationsService();
 export const preachingReportService: PreachingReportServiceContract = new PreachingReportService();
 export const preachingService: PreachingServiceContract = new PreachingService();
+export const publisherService: PublisherServiceContract = new PublisherService(translationAdapter);
 export const revisitsService: RevisitsServiceContract = new RevisitsService();
