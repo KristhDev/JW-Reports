@@ -19,6 +19,13 @@
         }
     },
 
+    "preaching": {
+        "ministryParticipations": {
+            "yes": "sí",
+            "no": "no"
+        }
+    },
+
     "pioners": {
         "none": "ninguno",
         "auxiliary": "auxiliar",
