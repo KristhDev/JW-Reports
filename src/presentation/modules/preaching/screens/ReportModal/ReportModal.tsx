@@ -3,10 +3,10 @@ import { View, Text, Share, TextInput } from 'react-native';
 import { useStyles } from 'react-native-unistyles';
 
 /* Config */
-import { preachingReportService } from '@config/di';
+import { preachingReportService, publisherService } from '@config/di';
 
 /* Constants */
-import { MINISTRY_PARTICIPATIONS, precursors } from '@application/constants/utils';
+import { precursors } from '@application/constants/utils';
 
 /* Adapters */
 import { TimeAdapter } from '@infrastructure/adapters';
@@ -38,6 +38,8 @@ import { stylesheet } from './styles';
  * @return {JSX.Element} rendered component to show modal
  */
 const ReportModal: FC<ReportModalProps> = ({ isOpen, month, onClose }): JSX.Element => {
+    const MINISTRY_PARTICIPATIONS = publisherService.MINISTRY_PARTICIPATIONS
+
     const [ comment, setComment ] = useState<string>('');
     const [ hoursLDC, setHoursLDC ] = useState<string>('');
     const [ participated, setParticipated ] = useState<ParticipateInMinistry>('si');
