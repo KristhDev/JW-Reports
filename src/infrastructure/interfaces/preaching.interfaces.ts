@@ -7,6 +7,11 @@ import { Precursor } from './auth.interfaces';
  */
 export type ParticipateInMinistry = 'si' | 'no';
 
+export interface ParticipateInMinistryItem {
+    label: string;
+    value: ParticipateInMinistry
+}
+
 /**
  * Defining the structure of the Preaching object in the endpoint.
  *
