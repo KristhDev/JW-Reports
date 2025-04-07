@@ -57,3 +57,27 @@ export interface CourseWithLessonsEndpoint {
     created_at: string;
     updated_at: string;
 }
+
+export interface CoursesMessages {
+    EXPORTED_SUCCESS: string;
+    PERSON_NAME_REQUIRED: string;
+    PERSON_NAME_MIN_LENGTH: string;
+    PERSON_ABOUT_REQUIRED: string;
+    PERSON_ABOUT_MIN_LENGTH: string;
+    PERSON_ADDRESS_REQUIRED: string;
+    PERSON_ADDRESS_MIN_LENGTH: string;
+    PUBLICATION_REQUIRED: string;
+    PUBLICATION_MIN_LENGTH: string;
+    UNSELECTED: string; 
+    UNSELECTED_FINISH_OR_START: string;
+    UNSELECTED_DELETE: string;
+    UNSELECTED_UPDATE: string;
+    FINISHED: string;
+    SUSPENDED_SUCCESS: string;
+    RENEW_SUCCESS: string;
+    DELETED_SUCCESS: string;
+    FINISHED_SUCCESS: string;
+    RESTARTED_SUCCESS: string;
+    ADDED_SUCCESS: string;
+    UPDATED_SUCCESS: string;
+}

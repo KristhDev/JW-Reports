@@ -24,3 +24,21 @@ export interface RevisitEndpoint {
     created_at: string;
     updated_at: string;
 }
+
+export interface RevisitsMessages {
+    ABOUT_MIN_LENGTH: string;
+    ABOUT_REQUIRED: string;
+    ADDED_SUCCESS: string;
+    ADDRESS_MIN_LENGTH: string;
+    ADDRESS_REQUIRED: string;
+    COMPLETED_SUCCESS: string;
+    DELETED_SUCCESS: string;
+    EXPORTED_SUCCESS: string;
+    NEXT_VISIT_REQUIRED: string;
+    PERSON_MIN_LENGTH: string;
+    PERSON_NAME_REQUIRED: string;
+    UNSELECTED_COMPLETE: string;
+    UNSELECTED_DELETE: string;
+    UNSELECTED_UPDATE: string;
+    UPDATED_SUCCESS: string;
+}

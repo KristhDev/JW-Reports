@@ -1,3 +1,4 @@
+import { string } from 'yup';
 import { CourseEndpoint } from './courses.interfaces';
 
 /**
@@ -28,4 +29,19 @@ export interface LessonEndpoint {
  */
 export interface LessonWithCourseEndpoint extends LessonEndpoint {
     courses: CourseEndpoint;
+}
+
+export interface LessonsMessages {
+    ADDED_SUCCESS: string;
+    DELETED_SUCCESS: string;
+    DESCRIPTION_MIN_LENGTH: string;
+    DESCRIPTION_REQUIRED: string;
+    FINISHED_SUCCESS: string;
+    NEXT_LESSON_REQUIRED: string;
+    RESTARTED_SUCCESS: string;
+    SUSPENDED_OR_FINISHED: string;
+    UNSELECTED_DELETE: string;
+    UNSELECTED_UPDATE: string;
+    UNSELECTED: string;
+    UPDATED_SUCCESS: string;
 }

@@ -62,3 +62,18 @@ export interface PreachingReportOptions {
     courses: number;
     comment: string;
 }
+
+export interface PreachingMessages {
+    ADDED_SUCCESS: string;
+    DAY_REQUIRED: string;
+    DELETED_SUCCESS: string;
+    EXPORTED_SUCCESS: string;
+    FINAL_HOUR_REQUIRED: string;
+    INIT_HOUR_GREATER_THAN_FINAL: string;
+    INIT_HOUR_REQUIRED: string;
+    MONTHLY_HOURS_REQUIRED_DONE: string;
+    UNSELECTED_DELETE: string;
+    UNSELECTED_UPDATE: string;
+    UPDATED_SUCCESS: string;
+    WEEKLY_HOURS_REQUIRED_DONE: string;
+}

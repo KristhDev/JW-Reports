@@ -6,5 +6,6 @@ export * from './lessons.interfaces';
 export * from './preaching.interfaces';
 export * from './revisits.interfaces';
 export * from './services.interfaces';
+export * from './shared.interfaces';
 export * from './templates.interfaces';
 export * from './ui.interfaces';
