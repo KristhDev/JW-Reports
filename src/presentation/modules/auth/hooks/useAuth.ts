@@ -1,8 +1,5 @@
 /* Config */
-import { authService, notificationsService } from '@config/di';
-
-/* Constants */
-import { authMessages, networkMessages } from '@application/constants/messages';
+import { authService, notificationsService, messagesService } from '@config/di';
 
 /* Features */
 import { useAppDispatch, useAppSelector } from '@application/store';
@@ -34,6 +31,9 @@ import { SignInData, ProfileData, SignUpData, EmailData, UpdatePasswordData } fr
  * Hook to management authentication of store with state and actions
  */
 const useAuth = () => {
+    const authMessages = messagesService.authMessages;
+    const networkMessages = messagesService.networkMessages;
+
     const dispatch = useAppDispatch();
 
     const { setStatus, setError, setUnauthenticatedError } = useStatus();

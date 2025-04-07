@@ -16,7 +16,7 @@ import { useStatus } from '@shared/hooks';
 import { useTranslation } from '@ui/hooks';
 
 /* Schemas */
-import { emailFormSchema, passwordFormSchema } from './schemas';
+import { generateEmailFormSchema, generatePasswordFormSchema } from './schemas';
 
 /**
  * The function takes no arguments and returns a component that renders a form
@@ -65,7 +65,7 @@ export const CredentialsForm = (): JSX.Element => {
         initialValues: { email: user.email },
         onSubmit: handleUpdateEmail,
         validateOnMount: true,
-        validationSchema: emailFormSchema(user.email)
+        validationSchema: generateEmailFormSchema(user.email)
     });
 
     const formikUpdatePassword = useFormik({
@@ -75,7 +75,7 @@ export const CredentialsForm = (): JSX.Element => {
         },
         onSubmit: (values, { resetForm }) => handleUpdatePassword(values, resetForm),
         validateOnMount: true,
-        validationSchema: passwordFormSchema
+        validationSchema: generatePasswordFormSchema()
     });
 
     /**

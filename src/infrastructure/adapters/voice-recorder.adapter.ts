@@ -1,7 +1,6 @@
 import { ExpoSpeechRecognitionModule } from 'expo-speech-recognition';
 
 /* Constants */
-import { appMessages } from '@application/constants/messages/shared.message';
 import { permissionsStatus } from '@application/constants/utils/permissions.util';
 
 /* Features */
@@ -9,11 +8,23 @@ import { PermissionStatus } from '@application/features/permissions';
 
 /* Contracts */
 import { VoiceRecorderAdapterContract } from '@domain/contracts/adapters';
+import { MessagesServiceContract } from '@domain/contracts/services';
 
 /* Errors */
 import { VoiceRecorderError } from '@domain/errors';
 
+/* Interfaces */
+import { AppMessages } from '@infrastructure/interfaces';
+
 export class VoiceRecorderAdapter implements VoiceRecorderAdapterContract {
+    private readonly appMessages: AppMessages;
+
+    constructor(
+        private readonly messagesService: MessagesServiceContract
+    ) {
+        this.appMessages = messagesService.appMessages;
+    }
+
     /**
      * Destroys all listeners for speech recognition events.
      *
@@ -66,7 +77,7 @@ export class VoiceRecorderAdapter implements VoiceRecorderAdapterContract {
             if (error.error === 'not-allowed') return;
 
             const voiceRecorderError = new VoiceRecorderError(
-                error.message || appMessages.UNEXPECTED_ERROR,
+                error.message || this.appMessages.UNEXPECTED_ERROR,
                 error.error
             );
 
@@ -128,7 +139,7 @@ export class VoiceRecorderAdapter implements VoiceRecorderAdapterContract {
             console.error(error);
 
             const voiceRecorderError = new VoiceRecorderError(
-                (error as any).message || appMessages.UNEXPECTED_ERROR,
+                (error as any).message || this.appMessages.UNEXPECTED_ERROR,
                 (error as any).error
             );
 
@@ -149,7 +160,7 @@ export class VoiceRecorderAdapter implements VoiceRecorderAdapterContract {
             console.error(error);
 
             const voiceRecorderError = new VoiceRecorderError(
-                (error as any).message || appMessages.UNEXPECTED_ERROR,
+                (error as any).message || this.appMessages.UNEXPECTED_ERROR,
                 (error as any).error
             );
 

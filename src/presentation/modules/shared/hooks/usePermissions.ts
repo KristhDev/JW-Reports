@@ -1,8 +1,7 @@
 /* Config */
-import { notificationsService, deviceImageService, voiceRecorderAdapter } from '@config/di';
+import { notificationsService, deviceImageService, voiceRecorderAdapter, messagesService } from '@config/di';
 
 /* Constants */
-import { permissionsMessages } from '@application/constants/messages';
 import { permissionsStatus } from '@application/constants/utils';
 
 /* Features */
@@ -24,6 +23,8 @@ import useStatus from './useStatus';
  * with state, actions and thunks
  */
 const usePermissions = () => {
+    const permissionsMessages = messagesService.permissionsMessages;
+
     const dispatch = useAppDispatch();
 
     const state = useAppSelector(store => store.permissions);

@@ -1,5 +1,5 @@
-/* Constants */
-import { authMessages } from '@application/constants/messages';
+/* Config */
+import { messagesService } from '@config/di';
 
 /* Errors */
 import { DtoError } from '@domain/errors';
@@ -18,6 +18,8 @@ export class UpdateEmailDto {
      * @throws {DtoError} If the new email is empty or the same as the current email.
      */
     public static create(newEmail: string, currentEmail: string): UpdateEmailDto {
+        const authMessages = messagesService.authMessages;
+
         if (newEmail.length === 0) throw new DtoError(authMessages.EMAIL_EMPTY);
         if (newEmail === currentEmail) throw new DtoError(authMessages.EMAIL_UPDATE_UNCHANGED);
 

@@ -1,10 +1,15 @@
 import { object, string } from 'yup';
 
-import { authMessages } from '@application/constants/messages';
+/* Config */
+import { messagesService } from '@config/di';
 
 /* Validation schema to forgot password */
-export const forgotPasswordFormSchema = object().shape({
-    email: string()
-        .email(authMessages.EMAIL_INVALID)
-        .required(authMessages.EMAIL_EMPTY)
-});
+export const generateForgotPasswordFormSchema = () => {
+    const authMessages = messagesService.authMessages;
+
+    return object().shape({
+        email: string()
+            .email(authMessages.EMAIL_INVALID)
+            .required(authMessages.EMAIL_EMPTY)
+    });
+}

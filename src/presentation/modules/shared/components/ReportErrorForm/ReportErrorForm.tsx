@@ -14,7 +14,7 @@ import { useEmail, useStatus } from '../../hooks';
 import { useTheme } from '@theme/hooks';
 
 /* Schemas */
-import { reportErrorFormSchema } from './schemas';
+import { generateReportErrorFormSchema } from './schemas';
 
 /* Interfaces */
 import { FormActions } from '../../interfaces';
@@ -62,7 +62,7 @@ export const ReportErrorForm = (): JSX.Element => {
         initialValues: { message: '' },
         onSubmit: ({ message }, { resetForm, setSubmitting }) => handleSendReportErrorEmail(message, { resetForm, setSubmitting }),
         validateOnMount: true,
-        validationSchema: reportErrorFormSchema
+        validationSchema: generateReportErrorFormSchema()
     });
 
     /**

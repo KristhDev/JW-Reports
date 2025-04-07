@@ -1,10 +1,9 @@
 import { useEffect, useState } from 'react';
 
 /* Config */
-import { voiceRecorderAdapter } from '@config/di';
+import { messagesService, voiceRecorderAdapter } from '@config/di';
 
 /* Constants */
-import { permissionsMessages } from '@application/constants/messages';
 import { permissionsStatus } from '@application/constants/utils';
 
 /* Hooks */
@@ -12,6 +11,8 @@ import useStatus from './useStatus';
 import usePermissions from './usePermissions';
 
 const useVoiceRecorder = () => {
+    const permissionsMessages = messagesService.permissionsMessages;
+
     const [ isRecording, setIsRecording ] = useState<boolean>(false);
     const [ record, setRecord ] = useState<string>('');
 

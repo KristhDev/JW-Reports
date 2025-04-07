@@ -5,9 +5,12 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useStyles } from 'react-native-unistyles';
 import Ionicons from '@expo/vector-icons/Ionicons';
 
+/* Config */
+import { publisherService } from '@config/di';
+
 /* Constants */
 import { authPlaceholeders } from '@application/constants/placeholders';
-import { HOURS_REQUIREMENTS, precursors, PRECURSORS_OPTIONS } from '@application/constants/utils';
+import { HOURS_REQUIREMENTS, precursors } from '@application/constants/utils';
 
 /* Components */
 import { Button, Checkbox, FormField, FormSelect } from '@ui/components';
@@ -18,7 +21,7 @@ import { useStatus } from '@shared/hooks';
 import { useTranslation } from '@ui/hooks';
 
 /* Schemas */
-import { profileFormSchema } from './schemas';
+import { generateProfileFormSchema } from './schemas';
 
 /* Theme */
 import { themeStylesheet } from '@theme/styles';
@@ -30,6 +33,8 @@ import { themeStylesheet } from '@theme/styles';
  * @return {JSX.Element} The rendered form component.
  */
 export const ProfileForm = (): JSX.Element => {
+    const PRECURSORS_OPTIONS = publisherService.PRECURSORS_OPTIONS;
+
     const { top } = useSafeAreaInsets();
     const { styles: themeStyles, theme: { colors, fontSizes, margins } } = useStyles(themeStylesheet);
 
@@ -51,7 +56,7 @@ export const ProfileForm = (): JSX.Element => {
         },
         onSubmit: updateProfile,
         validateOnMount: true,
-        validationSchema: profileFormSchema
+        validationSchema: generateProfileFormSchema()
     });
 
     /**

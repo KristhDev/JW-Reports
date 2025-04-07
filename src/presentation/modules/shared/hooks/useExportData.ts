@@ -1,5 +1,5 @@
-/* Constants */
-import { appMessages } from '@application/constants/messages';
+/* Config */
+import { messagesService } from '@config/di';
 
 /* Hooks */
 import { useCourses } from '@courses/hooks';
@@ -9,6 +9,8 @@ import useStatus from './useStatus';
 import { useUI } from '@ui/hooks';
 
 const useExportData = () => {
+    const appMessages = messagesService.appMessages;
+
     const { state: { isCoursesExporting }, exportCourses } = useCourses();
     const { state: { isPreachingsExporting }, exportPreachings } = usePreaching();
     const { state: { isRevisitsExporting }, exportRevisits } = useRevisits();

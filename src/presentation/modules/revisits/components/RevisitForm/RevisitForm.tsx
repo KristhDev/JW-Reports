@@ -19,7 +19,7 @@ import { useStatus } from '@shared/hooks';
 import { useUI } from '@ui/hooks';
 
 /* Schemas */
-import { revisitFormSchema } from './schemas';
+import { generateRevisitFormSchema } from './schemas';
 
 /* Interfaces */
 import { RevisitFormValues } from '../../interfaces';
@@ -65,7 +65,7 @@ export const RevisitForm: FC = (): JSX.Element => {
         },
         onSubmit: handleSaveOrUpdate,
         validateOnMount: true,
-        validationSchema: revisitFormSchema
+        validationSchema: generateRevisitFormSchema()
     });
 
     /**

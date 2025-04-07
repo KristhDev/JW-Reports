@@ -1,10 +1,7 @@
 import { useRouter } from 'expo-router';
 
 /* Config */
-import { loggerService } from '@config/di';
-
-/* Constants */
-import { appMessages, authMessages, networkMessages } from '@application/constants/messages';
+import { loggerService, messagesService } from '@config/di';
 
 /* Features */
 import { useAppDispatch, useAppSelector } from '@application/store';
@@ -28,6 +25,10 @@ import {
  * Hook to management status of store with state and actions
  */
 const useStatus = () => {
+    const appMessages = messagesService.appMessages;
+    const authMessages = messagesService.authMessages;
+    const networkMessages = messagesService.networkMessages;
+
     const dispatch = useAppDispatch();
     const state = useAppSelector(store => store.status);
 
@@ -123,7 +124,7 @@ const useStatus = () => {
      */
     const setUnauthenticatedError = (onDispatch?: () => void): void => {
         onDispatch && onDispatch();
-        setStatus({ code: 401, msg: authMessages.UNATHENTICATED });
+        setStatus({ code: 401, msg: authMessages.UNAUTHENTICATED });
     }
 
     return {

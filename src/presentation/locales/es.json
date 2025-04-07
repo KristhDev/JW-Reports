@@ -241,9 +241,9 @@
                 "exists": "Ya existe un usuario con este correo."
             },
 
-            "empty": "{{article} {{attribute}} no puede estar {{empty}}.",
+            "empty": "{{article}} {{attribute}} no puede estar {{empty}}.",
             "enum": "{{article}} {{attribute}} debe ser uno de los siguientes valores: {{values}}.",
-            "min": "{{article} {{attribute}} debe tener al menos {{min}} caracteres.",
+            "min": "{{article}} {{attribute}} debe tener al menos {{min}} caracteres.",
             "required": "{{article}} {{attribute}} es {{required}}.",
 
             "password": {

@@ -1,5 +1,3 @@
-import { appMessages } from '@application/constants/messages/shared.message';
-
 export class AppErrors {
     private static readonly pickerCodeErrors = {
         E_CAMERA_IS_NOT_AVAILABLE: 'La camara no está disponible.',
@@ -52,35 +50,25 @@ export class AppErrors {
 
     private static readonly supabaseStorageCodeErrors = {
         'NoSuchBucket': 'El bucket no existe.',
-        'NoSuchKey': appMessages.UNEXPECTED_ERROR,
         'NoSuchUpload': 'El archivo del bucket no existe.',
         'InvalidJWT': 'Su tiempo de sesión ha expirado.',
         'InvalidRequest': 'El formato de la información no es válido.',
         'TenantNotFound': 'El tenant no existe.',
         'EntityTooLarge': 'El archivo es demasiado grande.',
-        'InternalError': appMessages.UNEXPECTED_ERROR,
         'ResourceAlreadyExists': 'El archivo ya existe.',
         'InvalidBucketName': 'El bucket no existe.',
-        'InvalidKey': appMessages.UNEXPECTED_ERROR,
         'InvalidRange': 'El rango de bytes es inválido.',
         'InvalidMimeType': 'El formato de la información no es válido.',
         'InvalidUploadId': 'El archivo del bucket no existe.',
-        'KeyAlreadyExists': appMessages.UNEXPECTED_ERROR,
         'BucketAlreadyExists': 'El bucket ya existe.',
-        'DatabaseTimeout': appMessages.UNEXPECTED_ERROR,
         'InvalidSignature': 'El formato de la información no es válido.',
         'SignatureDoesNotMatch': 'El formato de la información no es válido.',
         'AccessDenied': 'Su tiempo de sesión ha expirado.',
         'ResourceLocked': 'El archivo del bucket no existe.',
-        'DatabaseError': appMessages.UNEXPECTED_ERROR,
         'MissingContentLength': 'El campo Content-Length es requerido.',
         'MissingParameter': 'Falta un parámetro.',
         'InvalidUploadSignature': 'El formato de la información no es válido.',
         'LockTimeout': 'El archivo del bucket no existe.',
-        'S3Error': appMessages.UNEXPECTED_ERROR,
-        'S3InvalidAccessKeyId': appMessages.UNEXPECTED_ERROR,
-        'S3MaximumCredentialsLimit': appMessages.UNEXPECTED_ERROR,
-        'InvalidChecksum': appMessages.UNEXPECTED_ERROR,
         'MissingPart': 'Falta un parámetro.',
         'SlowDown': 'Su tiempo de sesión ha expirado.',
     }
@@ -109,6 +97,6 @@ export class AppErrors {
         (this.postgrestCodeErrors as any)[code] ||
         (this.pickerCodeErrors as any)[code] ||
         (this.voiceRecorderCodeErrors as any)[code] ||
-        appMessages.UNEXPECTED_ERROR;
+        'no error'
     }
 }

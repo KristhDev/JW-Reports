@@ -1,5 +1,5 @@
-/* Constants */
-import { authMessages } from '@application/constants/messages';
+/* Config */
+import { messagesService } from '@config/di';
 
 /* Errors */
 import { DtoError } from '@domain/errors';
@@ -17,6 +17,8 @@ export class UpdatePasswordDto {
      * @throws {DtoError} If the new password is empty or its length is less than 6.
      */
     public static create(password: string): UpdatePasswordDto {
+        const authMessages = messagesService.authMessages;
+
         if (password.trim().length === 0) throw new DtoError(authMessages.PASSWORD_EMPTY);
         if (password.trim().length < 6) throw new DtoError(authMessages.PASSWORD_MIN_LENGTH);
 

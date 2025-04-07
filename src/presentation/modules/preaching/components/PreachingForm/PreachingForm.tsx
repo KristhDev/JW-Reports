@@ -16,7 +16,7 @@ import { useStatus } from '@shared/hooks';
 import { useUI } from '@ui/hooks';
 
 /* Schemas */
-import { preachingFormSchema } from './schemas';
+import { generatePreachingFormSchema } from './schemas';
 
 /* Interfaces */
 import { PreachingFormValues } from '../../interfaces';
@@ -57,7 +57,7 @@ export const PreachingForm = (): JSX.Element => {
         },
         onSubmit: handleSaveOrUpdate,
         validateOnMount: true,
-        validationSchema: preachingFormSchema
+        validationSchema: generatePreachingFormSchema()
     });
 
     /**

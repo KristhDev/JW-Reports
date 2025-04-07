@@ -17,7 +17,7 @@ import { useStatus } from '@shared/hooks';
 import { useTranslation } from '@ui/hooks';
 
 /* Schemas */
-import { registerFormSchema } from './schemas';
+import { generateRegisterFormSchema } from './schemas';
 
 /* Theme */
 import { themeStylesheet } from '@theme/styles';
@@ -49,7 +49,7 @@ export const RegisterForm = (): JSX.Element => {
         },
         onSubmit: (values, { resetForm }) => signUp(values, resetForm),
         validateOnMount: true,
-        validationSchema: registerFormSchema
+        validationSchema: generateRegisterFormSchema()
     });
 
     /**

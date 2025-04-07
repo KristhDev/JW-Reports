@@ -1,10 +1,9 @@
 import { useRouter } from 'expo-router';
 
 /* Config */
-import { externalStorageAdapter, pdfAdapter, coursesService, lessonsService } from '@config/di';
+import { externalStorageAdapter, pdfAdapter, coursesService, lessonsService, messagesService } from '@config/di';
 
 /* Constants */
-import { coursesMessages } from '@application/constants/messages';
 import { precursors } from '@application/constants/utils';
 
 /* Features */
@@ -55,6 +54,8 @@ import { deleteOptions } from '@infrastructure/interfaces';
  * Hook to management courses of store with state and actions
  */
 const useCourses = () => {
+    const coursesMessages = messagesService.coursesMessages;
+
     const dispatch = useAppDispatch();
     const router = useRouter();
     const { hasWifiConnection } = useNetwork();

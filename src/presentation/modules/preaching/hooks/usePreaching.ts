@@ -1,10 +1,7 @@
 import { useRouter } from 'expo-router';
 
 /* Config */
-import { externalStorageAdapter, pdfAdapter, preachingService, preachingReportService } from '@config/di';
-
-/* Constants */
-import { authMessages, preachingMessages } from '@application/constants/messages';
+import { externalStorageAdapter, pdfAdapter, preachingService, preachingReportService, messagesService } from '@config/di';
 
 /* Features */
 import { useAppDispatch, useAppSelector } from '@application/store';
@@ -46,6 +43,9 @@ import { PreachingFormValues } from '../interfaces';
  * Hook to management preaching of store with state and actions
  */
 const usePreaching = () => {
+    const authMessages = messagesService.authMessages;
+    const preachingMessages = messagesService.preachingMessages;
+
     const dispatch = useAppDispatch();
     const router = useRouter();
 

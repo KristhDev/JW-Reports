@@ -13,7 +13,7 @@ import { useEmail, useStatus } from '../../hooks';
 import { FormActions } from '../../interfaces';
 
 /* Schemas */
-import { feedbackFormSchema } from './schemas';
+import { generateFeedbackFormSchema } from './schemas';
 
 /* Styles */
 import { themeStylesheet } from '@theme/styles';
@@ -48,7 +48,7 @@ export const FeedbackForm = (): JSX.Element => {
         initialValues: { message: '' },
         onSubmit: ({ message }, { resetForm, setSubmitting }) => handleSendMessage(message, { resetForm, setSubmitting }),
         validateOnMount: true,
-        validationSchema: feedbackFormSchema
+        validationSchema: generateFeedbackFormSchema()
     });
 
     /**

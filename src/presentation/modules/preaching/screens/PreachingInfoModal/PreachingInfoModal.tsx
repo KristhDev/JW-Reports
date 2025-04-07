@@ -3,10 +3,7 @@ import { Text, View } from 'react-native';
 import { useStyles } from 'react-native-unistyles';
 
 /* Config */
-import { preachingReportService } from '@config/di';
-
-/* Constants */
-import { preachingMessages } from '@application/constants/messages';
+import { messagesService, preachingReportService } from '@config/di';
 
 /* Entities */
 import { PreachingEntity } from '@domain/entities';
@@ -37,6 +34,8 @@ import { themeStylesheet } from '@theme/styles';
  * @return {JSX.Element} - The preaching information modal component.
  */
 const PreachingInfoModal: FC<ModalProps> = ({ isOpen, onClose }): JSX.Element => {
+    const preachingMessages = messagesService.preachingMessages;
+
     const { styles: themeStyles, theme: { colors, fontSizes, margins } } = useStyles(themeStylesheet);
     const { styles } = useStyles(stylesheet);
 

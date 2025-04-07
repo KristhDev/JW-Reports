@@ -1,14 +1,13 @@
-import { PRECURSORS_OPTIONS } from '@application/constants/utils/auth.util';
-
 import { TranslationAdapterContract } from '@domain/contracts/adapters';
 
-import { MessagesServiceContract } from '@domain/contracts/services';
+import { MessagesServiceContract, PublisherServiceContract } from '@domain/contracts/services';
 
 import { AppMessages, AuthMessages, CoursesMessages, EmailMessages, LessonsMessages, NetworkMessages, PermissionsMessages, PreachingMessages, PrecursorMessages, RevisitsMessages } from '@infrastructure/interfaces';
 
 export class MessagesService implements MessagesServiceContract {
     constructor(
-        private readonly translationAdapter: TranslationAdapterContract
+        private readonly translationAdapter: TranslationAdapterContract,
+        private readonly publisherService: PublisherServiceContract
     ) { }
 
     public get appMessages(): AppMessages {
@@ -311,7 +310,7 @@ export class MessagesService implements MessagesServiceContract {
             PRECURSOR_INVALID: this.translationAdapter.translate('forms.validations.enum', {
                 article: 'El',
                 attribute: this.translationAdapter.translate('forms.fields.pioner'),
-                values: PRECURSORS_OPTIONS.map(({ label }) => label).join(', ')
+                values: this.publisherService.PRECURSORS_OPTIONS.map(({ label }) => label).join(', ')
             }),
         }
     }

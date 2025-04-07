@@ -17,7 +17,7 @@ import { useStatus } from '@shared/hooks';
 import { useTranslation } from '@ui/hooks';
 
 /* Schemas */
-import { forgotPasswordFormSchema } from './schemas';
+import { generateForgotPasswordFormSchema } from './schemas';
 
 /* Interfaces */
 import { EmailData } from '../../interfaces';
@@ -55,7 +55,7 @@ export const ForgotPasswordForm = (): JSX.Element => {
         initialValues: { email: '' },
         onSubmit: (values, { resetForm }) => handleResetPassword(values, resetForm),
         validateOnMount: true,
-        validationSchema: forgotPasswordFormSchema
+        validationSchema: generateForgotPasswordFormSchema()
     });
 
     /**

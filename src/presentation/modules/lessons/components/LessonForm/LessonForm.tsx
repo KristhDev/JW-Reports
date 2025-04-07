@@ -15,7 +15,7 @@ import { useStatus } from '@shared/hooks';
 import { useUI } from '@ui/hooks';
 
 /* Schemas */
-import { lessonFormSchema } from './schemas';
+import { generateLessonFormSchema } from './schemas';
 
 /* Interfaces */
 import { LessonFormValues } from '../../interfaces';
@@ -58,7 +58,7 @@ export const LessonForm = (): JSX.Element => {
         },
         onSubmit: (values, { resetForm }) => handleSaveOrUpdate(values, resetForm),
         validateOnMount: true,
-        validationSchema: lessonFormSchema
+        validationSchema: generateLessonFormSchema()
     });
 
     /**

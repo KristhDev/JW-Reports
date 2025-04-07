@@ -1,9 +1,6 @@
 /* Config */
 import { env } from '@config/env';
-import { emailService } from '@config/di';
-
-/* Constants */
-import { emailMessages } from '@application/constants/messages';
+import { emailService, messagesService } from '@config/di';
 
 /* Errors */
 import { EmailError } from '@domain/errors';
@@ -17,6 +14,8 @@ import useStatus from './useStatus';
 import { ReportErrorOptions, UtilFunctions } from '../interfaces';
 
 const useEmail = () => {
+    const emailMessages = messagesService.emailMessages;
+
     const { state: { user } } = useAuth();
     const { uploadImage } = useImage();
     const { setStatus, setError } = useStatus();

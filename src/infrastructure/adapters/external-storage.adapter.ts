@@ -1,22 +1,27 @@
 import { StorageAccessFramework } from 'expo-file-system';
 
 /* Constants */
-import { permissionsMessages } from '@application/constants/messages/shared.message';
 import { fileEncodings } from '@application/constants/utils/adapters.util';
 
 /* Contracts */
 import { ExternalStorageAdapterContract, InternalStorageAdapterContract } from '@domain/contracts/adapters';
+import { MessagesServiceContract } from '@domain/contracts/services';
 
 /* Errors */
 import { ExternalStorageError } from '@domain/errors';
 
 /* Interfaces */
-import { MoveFileOptions } from '@infrastructure/interfaces';
+import { MoveFileOptions, PermissionsMessages } from '@infrastructure/interfaces';
 
 export class ExternalStorageAdapter implements ExternalStorageAdapterContract {
+    private readonly permissionsMessages: PermissionsMessages;
+
     constructor (
+        private readonly messagesService: MessagesServiceContract,
         private readonly internalStorageAdapter: InternalStorageAdapterContract
-    ) {}
+    ) {
+        this.permissionsMessages = this.messagesService.permissionsMessages;
+    }
 
     /**
      * Moves a file from InternalStorage to ExternalStorage.
@@ -28,7 +33,7 @@ export class ExternalStorageAdapter implements ExternalStorageAdapterContract {
     public async moveFileOfInternalExtorage({ filePath, mimeType }: MoveFileOptions): Promise<void> {
         try {
             const permission = await StorageAccessFramework.requestDirectoryPermissionsAsync();
-            if (!permission.granted) throw ExternalStorageError.permissionDenied(permissionsMessages.FILE_EXPORT_DENIED)
+            if (!permission.granted) throw ExternalStorageError.permissionDenied(this.permissionsMessages.FILE_EXPORT_DENIED)
 
             const fileName = filePath.split('/').slice(-1)[0];
             const fileContent = await this.internalStorageAdapter.readFile(filePath, fileEncodings.BASE64);

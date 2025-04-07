@@ -51,12 +51,10 @@ import {
 import { NotificationsService } from '@services';
 
 export const internalStorageAdapter: InternalStorageAdapterContract = new InternalStorageAdapter();
-export const externalStorageAdapter: ExternalStorageAdapterContract = new ExternalStorageAdapter(internalStorageAdapter);
 export const deviceInfoAdapter: DeviceInfoAdapterContract = new DeviceInfoAdapter();
 export const pdfAdapter: PDFAdapterContract = new PDFAdapter(internalStorageAdapter);
 export const localizationAdapter: LocalizationAdapterContract = new LocalizationAdapter();
 export const translationAdapter: TranslationAdapterContract = new TranslationAdapter();
-export const voiceRecorderAdapter: VoiceRecorderAdapterContract = new VoiceRecorderAdapter();
 
 export const authService: AuthServiceContract = new AuthService();
 export const cloudService: CloudServiceContract = new CloudService();
@@ -65,9 +63,12 @@ export const deviceImageService: DeviceImageServiceContract = new DeviceImageSer
 export const emailService: EmailServiceContract = new EmailService();
 export const lessonsService: LessonsServiceContract = new LessonsService();
 export const loggerService: LoggerServiceContract = new LoggerService();
-export const messagesService: MessagesServiceContract = new MessagesService(translationAdapter);
+export const publisherService: PublisherServiceContract = new PublisherService(translationAdapter);
+export const messagesService: MessagesServiceContract = new MessagesService(translationAdapter, publisherService);
 export const notificationsService: NotificationsServiceContract = new NotificationsService();
 export const preachingReportService: PreachingReportServiceContract = new PreachingReportService();
 export const preachingService: PreachingServiceContract = new PreachingService();
-export const publisherService: PublisherServiceContract = new PublisherService(translationAdapter);
 export const revisitsService: RevisitsServiceContract = new RevisitsService();
+
+export const externalStorageAdapter: ExternalStorageAdapterContract = new ExternalStorageAdapter(messagesService, internalStorageAdapter);
+export const voiceRecorderAdapter: VoiceRecorderAdapterContract = new VoiceRecorderAdapter(messagesService);

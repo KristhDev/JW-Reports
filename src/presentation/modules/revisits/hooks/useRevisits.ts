@@ -2,10 +2,9 @@ import { useRouter } from 'expo-router';
 
 /* Config */
 import { env } from '@config/env';
-import { externalStorageAdapter, pdfAdapter, revisitsService } from '@config/di';
+import { externalStorageAdapter, messagesService, pdfAdapter, revisitsService } from '@config/di';
 
 /* Constants */
-import { authMessages, revisitsMessages } from '@application/constants/messages';
 import { precursors } from '@application/constants/utils';
 
 /* Features */
@@ -55,6 +54,9 @@ import { deleteOptions } from '@infrastructure/interfaces';
  * Hook to management revisits of store with state and actions
  */
 const useRevisits = () => {
+    const authMessages = messagesService.authMessages;
+    const revisitsMessages = messagesService.revisitsMessages;
+
     const dispatch = useAppDispatch();
     const router = useRouter();
 

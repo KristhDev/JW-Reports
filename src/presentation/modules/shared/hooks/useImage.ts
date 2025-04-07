@@ -2,10 +2,9 @@ import { useState } from 'react';
 
 /* Config */
 import { env } from '@config/env';
-import { cloudService, deviceImageService } from '@config/di';
+import { cloudService, deviceImageService, messagesService } from '@config/di';
 
 /* Constants */
-import { permissionsMessages } from '@application/constants/messages';
 import { permissionsStatus } from '@application/constants/utils';
 
 /* Features */
@@ -21,6 +20,8 @@ import { usePermissions, useStatus } from './';
  * This hook allows to group the functions and states in relation to the images.
  */
 const useImage = () => {
+    const permissionsMessages = messagesService.permissionsMessages;
+
     const {
         askPermission,
 

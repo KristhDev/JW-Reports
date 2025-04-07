@@ -17,7 +17,7 @@ import { useStatus } from '@shared/hooks';
 import { useTranslation } from '@ui/hooks';
 
 /* Schemas */
-import { loginFormSchema } from './schemas';
+import { generateLoginFormSchema } from './schemas';
 
 /* Theme */
 import { themeStylesheet } from '@theme/styles';
@@ -45,7 +45,7 @@ export const LoginForm = (): JSX.Element => {
         },
         onSubmit: signIn,
         validateOnMount: true,
-        validationSchema: loginFormSchema
+        validationSchema: generateLoginFormSchema()
     });
 
     /**

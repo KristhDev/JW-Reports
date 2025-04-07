@@ -16,7 +16,7 @@ import { useStatus } from '@shared/hooks';
 import { useTranslation, useUI } from '@ui/hooks';
 
 /* Schemas */
-import { courseFormSchema } from './schemas';
+import { generateCourseFormSchema } from './schemas';
 
 /* Interfaces */
 import { CourseFormValues } from '../../interfaces';
@@ -64,7 +64,7 @@ export const CourseForm = (): JSX.Element => {
         },
         onSubmit: handleSaveOrUpdate,
         validateOnMount: true,
-        validationSchema: courseFormSchema
+        validationSchema: generateCourseFormSchema()
     });
 
     /**
