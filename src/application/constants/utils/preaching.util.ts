@@ -1,5 +1,3 @@
-import { ParticipateInMinistry } from '@infrastructure/interfaces';
-
 /**
  * The headers of the table that will be displayed in the PreachingTable component
  */
@@ -16,9 +14,3 @@ export const HOURS_REQUIREMENTS = {
     'regular': 50,
     'especial': 90
 } as const;
-
-
-export const MINISTRY_PARTICIPATIONS: { label: string, value: ParticipateInMinistry }[] = [
-    { label: 'Si', value: 'si' },
-    { label: 'No', value: 'no' }
-] as const;
