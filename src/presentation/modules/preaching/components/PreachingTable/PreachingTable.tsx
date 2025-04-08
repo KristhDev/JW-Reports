@@ -3,8 +3,8 @@ import { TouchableHighlight, View, useWindowDimensions } from 'react-native';
 import { useRouter } from 'expo-router';
 import { useStyles } from 'react-native-unistyles';
 
-/* Constants */
-import { TABLE_PREACHING_HEADERS } from '@application/constants/utils';
+/* Config */
+import { publisherService } from '@config/di';
 
 /* Entities */
 import { PreachingEntity } from '@domain/entities';
@@ -29,6 +29,7 @@ import { stylesheet } from './styles';
  * @returns {JSX.Element} The table component with the data of the preaching days.
  */
 export const PreachingTable = (): JSX.Element => {
+    const TABLE_PREACHING_HEADERS = publisherService.TABLE_PREACHING_HEADERS;
     const { width } = useWindowDimensions();
 
     const { styles } = useStyles(stylesheet);
