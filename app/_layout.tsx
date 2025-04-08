@@ -34,7 +34,7 @@ import { useTranslation, useUI } from '@ui/hooks';
 /* Global config of time util */
 TimeAdapter.extend(TimeAdapter.plugins.weekday);
 
-if (__DEV__) require('../../ReactotronConfig');
+if (__DEV__) require('../ReactotronConfig');
 
 const Navigation = (): JSX.Element => {
   const { theme: { colors } } = useStyles();
