@@ -81,3 +81,10 @@ export interface CoursesMessages {
     ADDED_SUCCESS: string;
     UPDATED_SUCCESS: string;
 }
+
+export interface CoursesPlaceholders {
+    PERSON_NAME: string;
+    PERSON_ADDRESS: string;
+    PERSON_ABOUT: string;
+    PUBLICATION: string;
+}

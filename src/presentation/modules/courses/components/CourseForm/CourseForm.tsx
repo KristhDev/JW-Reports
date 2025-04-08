@@ -4,8 +4,8 @@ import { useFormik } from 'formik';
 import { useStyles } from 'react-native-unistyles';
 import Ionicons from '@expo/vector-icons/Ionicons';
 
-/* Constants */
-import { coursesPlaceholders } from '@application/constants/placeholders';
+/* Config */
+import { placeholdersService } from '@config/di';
 
 /* Components */
 import { Button, FormField } from '@ui/components';
@@ -31,6 +31,8 @@ import { themeStylesheet } from '@theme/styles';
  * @return {JSX.Element} The course form component.
  */
 export const CourseForm = (): JSX.Element => {
+    const coursesPlaceholders = placeholdersService.coursesPlaceholders;
+
     const { styles: themeStyles, theme: { colors, fontSizes, margins } } = useStyles(themeStylesheet);
 
     const { state: { isCourseLoading, selectedCourse }, saveCourse, updateCourse } = useCourses();

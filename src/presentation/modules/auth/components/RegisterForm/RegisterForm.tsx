@@ -5,8 +5,8 @@ import { useRouter } from 'expo-router';
 import { useStyles } from 'react-native-unistyles';
 import Ionicons from '@expo/vector-icons/Ionicons';
 
-/* Constants */
-import { authPlaceholeders } from '@application/constants/placeholders';
+/* Config */
+import { placeholdersService } from '@config/di';
 
 /* Components */
 import { Button, EyeBtn, FormField, Link } from '@ui/components';
@@ -29,6 +29,8 @@ import { themeStylesheet } from '@theme/styles';
  * @return {JSX.Element} The rendered form component.
  */
 export const RegisterForm = (): JSX.Element => {
+    const authPlaceholders = placeholdersService.authPlaceholders;
+
     const [ showPassword, setShowPassword ] = useState<boolean>(false);
     const [ showConfirmPassword, setShowConfirmPassword ] = useState<boolean>(false);
 
@@ -78,7 +80,7 @@ export const RegisterForm = (): JSX.Element => {
                 }
                 label={ translate('forms.labels.name') }
                 onChangeText={ handleChange('name') }
-                placeholder={ authPlaceholeders.NAME }
+                placeholder={ authPlaceholders.NAME }
                 value={ values.name }
             />
 
@@ -94,7 +96,7 @@ export const RegisterForm = (): JSX.Element => {
                 }
                 label={ translate('forms.labels.surname') }
                 onChangeText={ handleChange('surname') }
-                placeholder={ authPlaceholeders.SURNAME }
+                placeholder={ authPlaceholders.SURNAME }
                 value={ values.surname }
             />
 
@@ -111,7 +113,7 @@ export const RegisterForm = (): JSX.Element => {
                 keyboardType="email-address"
                 label={ translate('forms.labels.email') }
                 onChangeText={ handleChange('email') }
-                placeholder={ authPlaceholeders.EMAIL }
+                placeholder={ authPlaceholders.EMAIL }
                 value={ values.email }
             />
 
@@ -133,7 +135,7 @@ export const RegisterForm = (): JSX.Element => {
                 }
                 label={ translate('forms.labels.password') }
                 onChangeText={ handleChange('password') }
-                placeholder={ authPlaceholeders.PASSWORD }
+                placeholder={ authPlaceholders.PASSWORD }
                 secureTextEntry={ !showPassword }
                 value={ values.password }
             />
@@ -156,7 +158,7 @@ export const RegisterForm = (): JSX.Element => {
                 }
                 label={ translate('forms.labels.confirmPassword') }
                 onChangeText={ handleChange('confirmPassword') }
-                placeholder={ authPlaceholeders.CONFIRM_PASSWORD }
+                placeholder={ authPlaceholders.CONFIRM_PASSWORD }
                 secureTextEntry={ !showConfirmPassword }
                 value={ values.confirmPassword }
             />

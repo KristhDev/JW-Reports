@@ -6,6 +6,7 @@ export * from './email.service';
 export * from './lessons.service';
 export * from './logger.service';
 export * from './messages.service';
+export * from './placeholders.service';
 export * from './preaching-report.service';
 export * from './preaching.service';
 export * from './publisher.service';

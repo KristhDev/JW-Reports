@@ -7,6 +7,7 @@ export * from './lessons.service.contract';
 export * from './logger.service.contract';
 export * from './messages.service.contract';
 export * from './notifications.service.contract';
+export * from './placeholders.service.contract';
 export * from './preaching-report.service.contract';
 export * from './preaching.service.contract';
 export * from './publisher.service.contract';

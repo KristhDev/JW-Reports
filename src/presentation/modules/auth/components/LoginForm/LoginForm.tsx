@@ -5,8 +5,8 @@ import { useRouter } from 'expo-router';
 import { useFormik } from 'formik';
 import Ionicons from '@expo/vector-icons/Ionicons';
 
-/* Constants */
-import { authPlaceholeders } from '@application/constants/placeholders';
+/* Config */
+import { placeholdersService } from '@config/di';
 
 /* Components */
 import { Button, EyeBtn, FormField, Link } from '@ui/components';
@@ -28,6 +28,8 @@ import { themeStylesheet } from '@theme/styles';
  * @return {JSX.Element} The login form component.
  */
 export const LoginForm = (): JSX.Element => {
+    const authPlaceholders = placeholdersService.authPlaceholders;
+
     const [ showPassword, setShowPassword ] = useState<boolean>(false);
     const { width } = useWindowDimensions();
 
@@ -77,7 +79,7 @@ export const LoginForm = (): JSX.Element => {
                 keyboardType="email-address"
                 label={ translate('forms.labels.email') }
                 onChangeText={ handleChange('email') }
-                placeholder={ authPlaceholeders.EMAIL }
+                placeholder={ authPlaceholders.EMAIL }
                 value={ values.email }
             />
 
@@ -99,7 +101,7 @@ export const LoginForm = (): JSX.Element => {
                 }
                 label={ translate('forms.labels.password') }
                 onChangeText={ handleChange('password') }
-                placeholder={ authPlaceholeders.PASSWORD }
+                placeholder={ authPlaceholders.PASSWORD }
                 secureTextEntry={ !showPassword }
                 style={{ marginBottom: margins.xl }}
                 value={ values.password }

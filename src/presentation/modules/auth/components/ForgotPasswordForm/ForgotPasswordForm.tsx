@@ -5,8 +5,8 @@ import { useRouter } from 'expo-router';
 import { useFormik } from 'formik';
 import Ionicons from '@expo/vector-icons/Ionicons';
 
-/* Constants */
-import { authPlaceholeders } from '@application/constants/placeholders';
+/* Config */
+import { placeholdersService } from '@config/di';
 
 /* Components */
 import { Button, FormField, Link } from '@ui/components';
@@ -32,6 +32,8 @@ import { themeStylesheet } from '@theme/styles';
  * @return {JSX.Element} The rendered form component.
  */
 export const ForgotPasswordForm = (): JSX.Element => {
+    const authPlaceholders = placeholdersService.authPlaceholders;
+
     const router = useRouter();
     const { styles: themeStyles, theme: { colors, fontSizes, margins } } = useStyles(themeStylesheet);
 
@@ -90,7 +92,7 @@ export const ForgotPasswordForm = (): JSX.Element => {
                 keyboardType="email-address"
                 label={ translate('forms.labels.email') }
                 onChangeText={ handleChange('email') }
-                placeholder={ authPlaceholeders.EMAIL }
+                placeholder={ authPlaceholders.EMAIL }
                 style={{ marginBottom: margins.xl }}
                 value={  values.email }
             />

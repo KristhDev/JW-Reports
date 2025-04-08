@@ -6,10 +6,9 @@ import { useStyles } from 'react-native-unistyles';
 import Ionicons from '@expo/vector-icons/Ionicons';
 
 /* Config */
-import { publisherService } from '@config/di';
+import { publisherService, placeholdersService } from '@config/di';
 
 /* Constants */
-import { authPlaceholeders } from '@application/constants/placeholders';
 import { HOURS_REQUIREMENTS, precursors } from '@application/constants/utils';
 
 /* Components */
@@ -33,6 +32,7 @@ import { themeStylesheet } from '@theme/styles';
  * @return {JSX.Element} The rendered form component.
  */
 export const ProfileForm = (): JSX.Element => {
+    const authPlaceholders = placeholdersService.authPlaceholders;
     const PRECURSORS_OPTIONS = publisherService.PRECURSORS_OPTIONS;
 
     const { top } = useSafeAreaInsets();
@@ -99,7 +99,7 @@ export const ProfileForm = (): JSX.Element => {
                 }
                 label={ translate('forms.labels.name') }
                 onChangeText={ handleChange('name') }
-                placeholder={ authPlaceholeders.NAME }
+                placeholder={ authPlaceholders.NAME }
                 value={ values.name }
             />
 
@@ -115,7 +115,7 @@ export const ProfileForm = (): JSX.Element => {
                 }
                 label={ translate('forms.labels.surname') }
                 onChangeText={ handleChange('surname') }
-                placeholder={ authPlaceholeders.SURNAME }
+                placeholder={ authPlaceholders.SURNAME }
                 value={ values.surname }
             />
 
@@ -151,7 +151,7 @@ export const ProfileForm = (): JSX.Element => {
                             />
                         }
                         label={ translate('forms.labels.hoursRequirement') }
-                        placeholder={ authPlaceholeders.HOURS_REQUIREMENT }
+                        placeholder={ authPlaceholders.HOURS_REQUIREMENT }
                         style={{ marginBottom: 0, marginTop: margins.sm }}
                         onChangeText={ handleChange('hoursRequirement') }
                         value={ values.hoursRequirement.toString() }

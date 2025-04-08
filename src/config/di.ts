@@ -18,6 +18,7 @@ import {
     LoggerServiceContract,
     MessagesServiceContract,
     NotificationsServiceContract,
+    PlaceholdersServiceContract,
     PreachingReportServiceContract,
     PreachingServiceContract,
     PublisherServiceContract,
@@ -46,7 +47,8 @@ import {
     LoggerService,
     PreachingReportService,
     PreachingService,
-    RevisitsService
+    RevisitsService,
+    PlaceholdersService
 } from '@infrastructure/services';
 import { NotificationsService } from '@services';
 
@@ -66,6 +68,7 @@ export const loggerService: LoggerServiceContract = new LoggerService();
 export const publisherService: PublisherServiceContract = new PublisherService(translationAdapter);
 export const messagesService: MessagesServiceContract = new MessagesService(translationAdapter, publisherService);
 export const notificationsService: NotificationsServiceContract = new NotificationsService();
+export const placeholdersService: PlaceholdersServiceContract = new PlaceholdersService(translationAdapter);
 export const preachingReportService: PreachingReportServiceContract = new PreachingReportService();
 export const preachingService: PreachingServiceContract = new PreachingService();
 export const revisitsService: RevisitsServiceContract = new RevisitsService();

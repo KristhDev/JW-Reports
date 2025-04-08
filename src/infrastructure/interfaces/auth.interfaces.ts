@@ -54,3 +54,13 @@ export interface PrecursorMessages {
     PRECURSOR_EMPTY: string;
     PRECURSOR_INVALID: string;
 }
+
+export interface AuthPlaceholders {
+    EMAIL: string;
+    PASSWORD: string;
+    CONFIRM_PASSWORD: string;
+    CONFIRM_NEW_PASSWORD: string;
+    HOURS_REQUIREMENT: string;
+    NAME: string;
+    SURNAME: string;
+}

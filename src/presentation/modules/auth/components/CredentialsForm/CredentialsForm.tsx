@@ -4,8 +4,8 @@ import { useStyles } from 'react-native-unistyles';
 import { useFormik } from 'formik';
 import Ionicons from '@expo/vector-icons/Ionicons';
 
-/* Constants */
-import { authPlaceholeders } from '@application/constants/placeholders';
+/* Config */
+import { placeholdersService } from '@config/di';
 
 /* Components */
 import { Button, EyeBtn, FormField } from '@ui/components';
@@ -25,6 +25,8 @@ import { generateEmailFormSchema, generatePasswordFormSchema } from './schemas';
  * @return {JSX.Element} The rendered form component.
  */
 export const CredentialsForm = (): JSX.Element => {
+    const authPlaceholders = placeholdersService.authPlaceholders;
+
     const [ loadingEmail, setLoadingEmail ] = useState<boolean>(false);
     const [ loadingPassword, setLoadingPassword ] = useState<boolean>(false);
     const [ showPassword, setShowPassword ] = useState<boolean>(false);
@@ -121,7 +123,7 @@ export const CredentialsForm = (): JSX.Element => {
                     keyboardType="email-address"
                     label={ translate('forms.labels.email') }
                     onChangeText={ formikUpdateEmail.handleChange('email') }
-                    placeholder={ authPlaceholeders.EMAIL }
+                    placeholder={ authPlaceholders.EMAIL }
                     style={{ marginBottom: margins.xl }}
                     value={ formikUpdateEmail.values.email }
                 />
@@ -161,7 +163,7 @@ export const CredentialsForm = (): JSX.Element => {
                     }
                     label={ translate('forms.labels.password') }
                     onChangeText={ formikUpdatePassword.handleChange('password') }
-                    placeholder={ authPlaceholeders.PASSWORD }
+                    placeholder={ authPlaceholders.PASSWORD }
                     secureTextEntry={ !showPassword }
                     value={ formikUpdatePassword.values.password }
                 />
@@ -184,7 +186,7 @@ export const CredentialsForm = (): JSX.Element => {
                     }
                     label={ translate('forms.labels.confirmPassword') }
                     onChangeText={ formikUpdatePassword.handleChange('confirmPassword') }
-                    placeholder={ authPlaceholeders.CONFIRM_NEW_PASSWORD }
+                    placeholder={ authPlaceholders.CONFIRM_NEW_PASSWORD }
                     secureTextEntry={ !showConfirmPassword }
                     style={{ marginBottom: margins.xl }}
                     value={ formikUpdatePassword.values.confirmPassword }
