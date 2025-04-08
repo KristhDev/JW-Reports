@@ -1,6 +1,6 @@
 import dayjs, { Dayjs } from 'dayjs';
-import localeEs from 'dayjs/locale/es';
 import localeEn from 'dayjs/locale/en';
+import localeEs from 'dayjs/locale/es';
 
 import weekday from 'dayjs/plugin/weekday';
 
