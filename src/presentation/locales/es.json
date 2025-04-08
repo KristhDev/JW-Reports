@@ -38,6 +38,21 @@
             "titles": {
                 "selectPioneer": "Seleccione su precursorado"
             }
+        },
+
+        "preaching": {
+            "titles": {
+                "preachingInfo": "Información de Predicación"
+            },
+
+            "subTitles": {
+                "hoursAproxPerWeek": "Horas aproximadas por semana:",
+                "completedHours": "Horas completas:",
+                "hoursMissingPerWeek": "Horas faltantes por semana:",
+                "overtimeWorkThisWeek": "Horas extras hechas en está semana:",
+                "hoursMissingPerMonth": "Horas faltantes por mes:",
+                "overtimeWorkThisMonth": "Horas extras hechas en este mes:"
+            }
         }
     },
 
@@ -73,6 +88,16 @@
                 "profile": "MI PERFIL",
                 "signIn": "INGRESAR",
                 "signUp": "CREAR CUENTA"
+            }
+        },
+
+        "preaching": {
+            "titles": {
+                "report": "INFORME DE {{month}} {{year}}"
+            },
+
+            "messages": {
+                "reportEmpty": "No has agregado ningún día de predicación para el informe de este mes."
             }
         },
 
@@ -258,6 +283,20 @@
             },
 
             "unchanged": "Para actualizar su {{attribute}} debes cambiarlo."
+        }
+    },
+
+    "tables": {
+        "preaching": {
+            "headers": {
+                "day": "Día",
+                "initHour": "Hora de Inicio",
+                "finalHour": "Hora de Fin"
+            },
+
+            "footers": {
+                "total": "Total"
+            }
         }
     }
 }

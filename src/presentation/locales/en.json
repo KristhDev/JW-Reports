@@ -38,6 +38,21 @@
             "titles": {
                 "selectPioneer": "Select your pioneer"
             }
+        },
+
+        "preaching": {
+            "titles": {
+                "preachingInfo": "Preaching Information"
+            },
+
+            "subTitles": {
+                "hoursAproxPerWeek": "Approximate hours per week:",
+                "completedHours": "Completed hours:",
+                "hoursMissingPerWeek": "Hours missing per week:",
+                "overtimeWorkThisWeek": "Overtime worked during this week:",
+                "hoursMissingPerMonth": "Hours missing per month:",
+                "overtimeWorkThisMonth": "Overtime worked during this month:"
+            }
         }
     },
 
@@ -73,6 +88,16 @@
                 "profile": "MY PROFILE",
                 "signIn": "SIGN IN",
                 "signUp": "CREATE ACCOUNT"
+            }
+        },
+
+        "preaching": {
+            "titles": {
+                "report": "{{month}} {{year}} REPORT"
+            },
+
+            "messages": {
+                "reportEmpty": "You have not added any preaching days for this month's report."
             }
         },
 
@@ -258,6 +283,20 @@
             },
 
             "unchanged": "To update your {{attribute}} you must change it."
+        }
+    },
+
+    "tables": {
+        "preaching": {
+            "headers": {
+                "day": "Day",
+                "initHour": "Initial hour",
+                "finalHour": "Final hour"
+            },
+
+            "footers": {
+                "total": "Total"
+            }
         }
     }
 }
