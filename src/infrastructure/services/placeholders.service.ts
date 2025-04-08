@@ -19,8 +19,8 @@ export class PlaceholdersService implements PlaceholdersServiceContract {
                 attribute: this.translationAdapter.translate('forms.fields.password')
             }),
 
-            CONFIRM_PASSWORD: this.translationAdapter.translate('forms.placeholders.type', {
-                attribute: this.translationAdapter.translate('forms.fields.confirmPassword')
+            CONFIRM_PASSWORD: this.translationAdapter.translate('forms.placeholders.confirm', {
+                attribute: this.translationAdapter.translate('forms.fields.password')
             }),
 
             CONFIRM_NEW_PASSWORD: this.translationAdapter.translate('forms.placeholders.confirm', {
