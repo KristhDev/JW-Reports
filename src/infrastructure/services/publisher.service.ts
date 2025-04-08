@@ -44,4 +44,13 @@ export class PublisherService implements PublisherServiceContract {
             }
         ]
     }
+
+    public get TABLE_PREACHING_HEADERS(): string[] {
+        return [
+            'N°',
+            this.translationAdapter.translate('tables.preaching.headers.day'),
+            this.translationAdapter.translate('tables.preaching.headers.initHour'),
+            this.translationAdapter.translate('tables.preaching.headers.finalHour')
+        ];
+    }
 }
