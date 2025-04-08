@@ -21,6 +21,7 @@ import { Fab, InfoText, Title } from '@ui/components';
 /* Hooks */
 import { useAuth } from '@auth/hooks';
 import { usePreaching } from '../../hooks';
+import { useTranslation } from '@ui/hooks';
 
 /* Theme */
 import { themeStylesheet } from '@theme/styles';
@@ -43,10 +44,13 @@ const Home = (): JSX.Element => {
 
     const { state: { user } } = useAuth();
     const { state: { selectedDate, preachings, isPreachingsLoading }, setSelectedPreaching, loadPreachings } = usePreaching();
+    const { translate } = useTranslation();
 
     const month = TimeAdapter.format(selectedDate,'MMMM').toUpperCase();
     const currentMonth = TimeAdapter.format(new Date(), 'MMMM').toUpperCase();
     const year = TimeAdapter.getYearOfDate(selectedDate);
+
+    const title = translate('screens.preaching.titles.report', { month, year });
 
     /**
      * I'm trying to set the state of the selectedPreaching object to the INIT_PREACHING object, but I
@@ -92,7 +96,7 @@ const Home = (): JSX.Element => {
             >
                 <Title
                     containerStyle={ themeStyles.titleContainer }
-                    text={ `INFORME DE ${ month } ${ year }` }
+                    text={ title }
                     textStyle={{ fontSize: fontSizes.md }}
                 />
 
@@ -115,7 +119,7 @@ const Home = (): JSX.Element => {
                 { (!isPreachingsLoading && preachings.length === 0) && (
                     <InfoText
                         containerStyle={{ marginTop: height * 0.30 }}
-                        text="No has agregado ningún día de predicación para el informe de este mes."
+                        text={ translate('screens.preaching.messages.reportEmpty') }
                     />
                 ) }
             </ScrollView>
