@@ -3,7 +3,7 @@ import { View, Text, Share, TextInput } from 'react-native';
 import { useStyles } from 'react-native-unistyles';
 
 /* Config */
-import { preachingReportService, publisherService } from '@config/di';
+import { placeholdersService, preachingReportService, publisherService } from '@config/di';
 
 /* Constants */
 import { precursors } from '@application/constants/utils';
@@ -25,6 +25,7 @@ import { RadioBtn, ModalActions } from '@ui/components';
 import { useAuth } from '@auth/hooks';
 import { usePreaching } from '../../hooks';
 import { useCourses } from '@courses/hooks';
+import { useTranslation } from '@ui/hooks';
 
 /* Styles */
 import { themeStylesheet } from '@theme/styles';
@@ -38,7 +39,8 @@ import { stylesheet } from './styles';
  * @return {JSX.Element} rendered component to show modal
  */
 const ReportModal: FC<ReportModalProps> = ({ isOpen, month, onClose }): JSX.Element => {
-    const MINISTRY_PARTICIPATIONS = publisherService.MINISTRY_PARTICIPATIONS
+    const MINISTRY_PARTICIPATIONS = publisherService.MINISTRY_PARTICIPATIONS;
+    const preachingPlaceholders = placeholdersService.preachingPlaceholders;
 
     const [ comment, setComment ] = useState<string>('');
     const [ hoursLDC, setHoursLDC ] = useState<string>('');
@@ -62,6 +64,7 @@ const ReportModal: FC<ReportModalProps> = ({ isOpen, month, onClose }): JSX.Elem
     const { state: { user } } = useAuth();
     const { state: { preachings } } = usePreaching();
     const { state: { courses } } = useCourses();
+    const { translate } = useTranslation();
 
     const username = `${ user.name } ${ user.surname }`;
     const totalHours = TimeAdapter.sumHours(preachings.map(p => ({ init: p.initHour, finish: p.finalHour })));
@@ -105,13 +108,19 @@ const ReportModal: FC<ReportModalProps> = ({ isOpen, month, onClose }): JSX.Elem
     return (
         <Modal isOpen={ isOpen }>
             <View style={ styles.reportModal }>
-                <Text style={ styles.reportModalInfo }>Estás a punto de entregar tu informe predicación, por favor revisalo.</Text>
+                <Text style={ styles.reportModalInfo }>
+                    { translate('modals.preaching.descriptions.checkReport') }
+                </Text>
 
                 <View style={{ marginTop: margins.xl }}>
-                    <Text style={ styles.reportTitle }>Informe De Predicación</Text>
+                    <Text style={ styles.reportTitle }>
+                        { translate('modals.preaching.titles.preachingReport') }
+                    </Text>
 
                     <View style={{ flexDirection: 'row' }}>
-                        <Text style={ styles.reportText(colors.text) }>Nombre: </Text>
+                        <Text style={ styles.reportText(colors.text) }>
+                            { translate('forms.labels.name') + ' ' }
+                        </Text>
 
                         <Text
                             style={ styles.reportText(colors.modalText) }
@@ -122,7 +131,9 @@ const ReportModal: FC<ReportModalProps> = ({ isOpen, month, onClose }): JSX.Elem
                     </View>
 
                     <View style={{ flexDirection: 'row' }}>
-                        <Text style={ styles.reportText(colors.text) }>Mes: </Text>
+                        <Text style={ styles.reportText(colors.text) }>
+                            { translate('forms.labels.month') + ' ' }
+                        </Text>
 
                         <Text
                             style={[ styles.reportText(colors.modalText), { textTransform: 'capitalize' } ]}
@@ -134,7 +145,9 @@ const ReportModal: FC<ReportModalProps> = ({ isOpen, month, onClose }): JSX.Elem
 
                     { (user.precursor !== precursors.NINGUNO) && (
                         <View style={{ flexDirection: 'row' }}>
-                            <Text style={ styles.reportText(colors.text) }>Horas: </Text>
+                            <Text style={ styles.reportText(colors.text) }>
+                                { translate('forms.labels.hours') + ' ' }
+                            </Text>
 
                             <Text
                                 style={ styles.reportText(colors.modalText) }
@@ -146,7 +159,9 @@ const ReportModal: FC<ReportModalProps> = ({ isOpen, month, onClose }): JSX.Elem
                     ) }
 
                     <View style={{ flexDirection: 'row' }}>
-                        <Text style={ styles.reportText(colors.text) }>Cursos: </Text>
+                        <Text style={ styles.reportText(colors.text) }>
+                            { translate('forms.labels.courses') + ' ' }
+                        </Text>
 
                         <Text
                             style={ styles.reportText(colors.modalText) }
@@ -158,7 +173,9 @@ const ReportModal: FC<ReportModalProps> = ({ isOpen, month, onClose }): JSX.Elem
 
                     { (user.precursor === precursors.NINGUNO) && (
                         <View style={{ flexDirection: 'column' }}>
-                            <Text style={ styles.reportText(colors.text) }>Participo en el ministerio: </Text>
+                            <Text style={ styles.reportText(colors.text) }>
+                                { translate('modals.preaching.subTitles.participeInMinistry') }
+                            </Text>
 
                             <View style={{ flexDirection: 'row', gap: margins.lg, paddingVertical: margins.xs }}>
                                 { Children.toArray(MINISTRY_PARTICIPATIONS.map(particition => (
@@ -175,7 +192,7 @@ const ReportModal: FC<ReportModalProps> = ({ isOpen, month, onClose }): JSX.Elem
                     {/* Comment section */}
                     <View style={{ flexDirection: 'column' }}>
                         <Text style={{ ...styles.reportText(colors.text), marginBottom: margins.sm - 4 }}>
-                            Comentarios:
+                            { translate('forms.labels.comments') }
                         </Text>
 
                         <View style={[ themeStyles.focusExternalBorder(isFocusedComment) ]}>
@@ -190,7 +207,7 @@ const ReportModal: FC<ReportModalProps> = ({ isOpen, month, onClose }): JSX.Elem
                                         onChangeText={ setComment }
                                         onFocus={ () => setIsFocusedComment(true) }
                                         onSelectionChange={ ({ nativeEvent }) => setSelectionComment(nativeEvent.selection) }
-                                        placeholder="Ninguno"
+                                        placeholder={ translate('forms.placeholders.none') }
                                         placeholderTextColor={ colors.icon }
                                         selection={ selectionComment }
                                         selectionColor={ colors.linkText }
@@ -211,7 +228,7 @@ const ReportModal: FC<ReportModalProps> = ({ isOpen, month, onClose }): JSX.Elem
                     { (user.hoursLDC && user.precursor !== precursors.NINGUNO) && (
                         <View style={{ flexDirection: 'column', marginTop: margins.sm - 4 }}>
                             <Text style={{ ...styles.reportText(colors.text), marginBottom: margins.sm - 4 }}>
-                                Horas LDC:
+                                { translate('forms.labels.hoursLDC') }
                             </Text>
 
                             <View style={[ themeStyles.focusExternalBorder(isFocusedLDC) ]}>
@@ -225,7 +242,7 @@ const ReportModal: FC<ReportModalProps> = ({ isOpen, month, onClose }): JSX.Elem
                                             onChangeText={ setHoursLDC }
                                             onFocus={ () => setIsFocusedLDC(true) }
                                             onSelectionChange={ ({ nativeEvent }) => setSelectionLDC(nativeEvent.selection) }
-                                            placeholder="Ingrese sus horas LDC completas"
+                                            placeholder={ preachingPlaceholders.LDC_HOURS }
                                             placeholderTextColor={ colors.icon }
                                             selection={ selectionLDC }
                                             selectionColor={ colors.linkText }
@@ -245,14 +262,14 @@ const ReportModal: FC<ReportModalProps> = ({ isOpen, month, onClose }): JSX.Elem
                         style={ styles.restMinsText }
                         testID="report-modal-rest-mins-text"
                     >
-                        Para este mes te sobraron { restMins } minutos, guardalos para el siguiente mes.
+                        { translate('modals.preaching.descriptions.restMinutes', { restMins }) }
                     </Text>
                 ) }
 
                 {/* Modal actions */}
                 <ModalActions
-                    cancelButtonText="CANCELAR"
-                    confirmTextButton="ENTREGAR"
+                    cancelButtonText={ translate('forms.actions.cancel').toUpperCase() }
+                    confirmTextButton={ translate('forms.actions.preaching.send').toUpperCase() }
                     onCancel={ handleClose }
                     onConfirm={ handleDeliverReport }
                     showCancelButton
