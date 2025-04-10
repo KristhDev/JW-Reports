@@ -11,6 +11,9 @@ import { Button } from '../Button';
 import { ModalActions } from '../ModalActions';
 import { Modal } from '../../screens';
 
+/* Hooks */
+import { useTranslation } from '@ui/hooks';
+
 /* Interfaces */
 import { FormTimeProps } from './interfaces';
 
@@ -50,6 +53,8 @@ export const FormTime: FC<FormTimeProps> = ({
 
     const [ hour, setHour ] = useState<string>(TimeAdapter.format(time, 'HH'));
     const [ minutes, setMinutes ] = useState<string>(TimeAdapter.format(time, 'mm'));
+
+    const { translate } = useTranslation();
 
     /**
      * This function is responsible for showing the hour picker modal and setting the touched state to true.
@@ -299,10 +304,10 @@ export const FormTime: FC<FormTimeProps> = ({
                     </View>
 
                     <ModalActions
-                        confirmTextButton="Aceptar"
+                        confirmTextButton={ translate('forms.actions.accept').toUpperCase() }
                         onConfirm={ handleConfirm }
                         showConfirmButton
-                        cancelButtonText="Cancelar"
+                        cancelButtonText={ translate('forms.actions.cancel').toUpperCase() }
                         onCancel={ handleCancel }
                         showCancelButton
                     />
