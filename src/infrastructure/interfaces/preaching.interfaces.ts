@@ -82,3 +82,9 @@ export interface PreachingMessages {
     UPDATED_SUCCESS: string;
     WEEKLY_HOURS_REQUIRED_DONE: string;
 }
+
+export interface PreachingPlaceholders {
+    DAY: string;
+    HOUR: string;
+    LDC_HOURS: string;
+}
