@@ -42,7 +42,8 @@
 
         "preaching": {
             "titles": {
-                "preachingInfo": "Información de Predicación"
+                "preachingInfo": "Información de Predicación",
+                "preachingReport": "Informe de Predicación"
             },
 
             "subTitles": {
@@ -51,7 +52,13 @@
                 "hoursMissingPerWeek": "Horas faltantes por semana:",
                 "overtimeWorkThisWeek": "Horas extras hechas en está semana:",
                 "hoursMissingPerMonth": "Horas faltantes por mes:",
-                "overtimeWorkThisMonth": "Horas extras hechas en este mes:"
+                "overtimeWorkThisMonth": "Horas extras hechas en este mes:",
+                "participeInMinistry": "Participó en el ministerio:"
+            },
+
+            "descriptions": {
+                "checkReport": "Estás a punto de entregar tu informe predicación, por favor revisalo.",
+                "restMinutes": "Para este mes te sobraron {{ restMins }} minutos, guardalos para el siguiente mes."
             }
         }
     },
@@ -93,7 +100,8 @@
 
         "preaching": {
             "titles": {
-                "report": "INFORME DE {{month}} {{year}}"
+                "report": "INFORME DE {{month}} {{year}}",
+                "preachingDay": "{{action}} DÍA DE PREDICACIÓN"
             },
 
             "messages": {
@@ -186,6 +194,12 @@
         },
 
         "labels": {
+            "preaching": {
+                "preachingDay": "Día de predicación:",
+                "initHour": "Hora de inicio:",
+                "finalHour": "Hora de fin:"
+            },
+
             "address": "Dirección:",
             "confirmPassword": "Confirmar contraseña:",
             "email": "Correo:",
@@ -197,7 +211,12 @@
             "student": "Nombre del estudiante:",
             "studentInfo": "Información del estudiante:",
             "studyPublication": "Publicación de estudio:",
-            "surname": "Apellidos:"
+            "surname": "Apellidos:",
+            "month": "Mes:",
+            "hours": "Horas:",
+            "hoursLDC": "Horas LDC:",
+            "courses": "Cursos:",
+            "comments": "Comentarios:"
         },
 
         "checkboxes": {
@@ -208,12 +227,17 @@
         },
 
         "placeholders": {
-            "personAbout": "Ingrese datos sobre la persona, temas de interés, preferencias, aspectos importantes, etc...",
+            "preaching": {
+                "hoursLDC": "Ingrese sus horas LDC completas"
+            },
 
             "confirm": "Confirme su {{attribute}}",
+            "none": "Ninguno",
+            "personAbout": "Ingrese datos sobre la persona, temas de interés, preferencias, aspectos importantes, etc...",
             "selectOne": "Seleccione una opción",
             "type": "Ingrese su {{attribute}}",
-            "typeThe": "Ingrese {{article}} {{attribute}}"
+            "typeThe": "Ingrese {{article}} {{attribute}}",
+            "select": "Seleccione {{article}} {{attribute}}"
         },
 
         "fields": {
@@ -223,6 +247,7 @@
             "day": "día",
             "description": "descripción",
             "email": "correo",
+            "hour": "hora",
             "hoursRequirement": "requerimiento de horas",
             "lesson": "clase",
             "name": "nombre",
@@ -246,9 +271,17 @@
                 "signUp": "Crear cuenta"
             },
 
+            "preaching": {
+                "send": "Entregar"
+            },
+
+            "add": "Agregar",
+            "accept": "Aceptar",
             "cancel": "Cancelar",
+            "edit": "Editar",
             "ok": "Esta bien",
             "save": "Guardar",
+            "select": "Seleccionar",
             "settings": "Configuración",
             "update": "Actualizar"
         },
