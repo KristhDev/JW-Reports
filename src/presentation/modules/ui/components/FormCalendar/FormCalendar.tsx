@@ -16,7 +16,7 @@ import { ModalActions } from '../ModalActions';
 import { Modal } from '../../screens';
 
 /* Hooks */
-import { useUI } from '@ui/hooks';
+import { useTranslation, useUI } from '@ui/hooks';
 
 /* Interfaces */
 import { FormCalendarProps } from './interfaces';
@@ -55,7 +55,9 @@ export const FormCalendar: FC<FormCalendarProps> = ({
     const { styles: themeStyles, theme: { borderRadius, colors, fontSizes, margins } } = useStyles(themeStylesheet);
     const [ dateValue, setDateValue ] = useState<string>(value);
 
+    const { translate } = useTranslation();
     const { state: { userInterface } } = useUI();
+
     const calendarLocale = locales[userInterface?.language as keyof typeof locales] || locales.en;
 
     /**
@@ -164,8 +166,8 @@ export const FormCalendar: FC<FormCalendarProps> = ({
                     />
 
                     <ModalActions
-                        cancelButtonText="Cancelar"
-                        confirmTextButton="Seleccionar"
+                        cancelButtonText={ translate('forms.actions.cancel').toUpperCase() }
+                        confirmTextButton={ translate('forms.actions.select').toUpperCase() }
                         onCancel={ handleCancel }
                         onConfirm={ handleConfirm }
                         showCancelButton
