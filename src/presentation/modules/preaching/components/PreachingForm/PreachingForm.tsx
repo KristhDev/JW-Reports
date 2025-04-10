@@ -4,6 +4,9 @@ import { useFormik } from 'formik';
 import { useStyles } from 'react-native-unistyles';
 import Ionicons from '@expo/vector-icons/Ionicons';
 
+/* Config */
+import { placeholdersService } from '@config/di';
+
 /* Adapters */
 import { TimeAdapter } from '@infrastructure/adapters';
 
@@ -13,7 +16,7 @@ import { Button, DatetimeField, FormCalendar, FormTime } from '@ui/components';
 /* Hooks */
 import { usePreaching } from '../../hooks';
 import { useStatus } from '@shared/hooks';
-import { useUI } from '@ui/hooks';
+import { useTranslation, useUI } from '@ui/hooks';
 
 /* Schemas */
 import { generatePreachingFormSchema } from './schemas';
@@ -31,11 +34,18 @@ import { themeStylesheet } from '@theme/styles';
  * @returns {JSX.Element} The preaching form component.
  */
 export const PreachingForm = (): JSX.Element => {
+    const preachingPlaceholders = placeholdersService.preachingPlaceholders;
+
     const { styles: themeStyles, theme: { colors, fontSizes, margins } } = useStyles(themeStylesheet);
 
     const { state: { isPreachingLoading, seletedPreaching }, savePreaching, updatePreaching } = usePreaching();
     const { setErrorForm } = useStatus();
+    const { translate } = useTranslation();
     const { state: { userInterface } } = useUI();
+
+    const buttonText = (seletedPreaching.id !== '') 
+        ? translate('forms.actions.update') 
+        : translate('forms.actions.save');
 
     /**
      * If the selected preaching has an id, then update the preaching, otherwise save the preaching.
@@ -86,10 +96,10 @@ export const PreachingForm = (): JSX.Element => {
                         />
                     }
                     inputDateFormat="DD"
-                    label="Día de predicación:"
+                    label={ translate('forms.labels.preaching.preachingDay') }
                     mode="date"
                     onChangeDate={ (date) => setFieldValue('day', TimeAdapter.toDate(date)) }
-                    placeholder="Seleccione el día"
+                    placeholder={ preachingPlaceholders.DAY }
                     value={ values.day.toString() }
                 />
             ) : (
@@ -103,7 +113,7 @@ export const PreachingForm = (): JSX.Element => {
                         />
                     }
                     inputDateFormat="DD"
-                    label="Día de predicación:"
+                    label={ translate('forms.labels.preaching.preachingDay') }
                     onChangeDate={ (date) => setFieldValue('day', TimeAdapter.toDate(date)) }
                     value={ values.day.toString() }
                 />
@@ -121,10 +131,10 @@ export const PreachingForm = (): JSX.Element => {
                         />
                     }
                     inputDateFormat="HH:mm"
-                    label="Hora de inicio:"
+                    label={ translate('forms.labels.preaching.initHour') }
                     mode="time"
                     onChangeDate={ (date) => setFieldValue('initHour', TimeAdapter.toDate(date)) }
-                    placeholder="Seleccione la hora"
+                    placeholder={ preachingPlaceholders.HOUR }
                     value={ values.initHour.toString() }
                 />
             ) : (
@@ -138,7 +148,7 @@ export const PreachingForm = (): JSX.Element => {
                         />
                     }
                     inputDateFormat="HH:mm"
-                    label="Hora de inicio:"
+                    label={ translate('forms.labels.preaching.initHour') }
                     onChangeTime={ (date) => setFieldValue('initHour', TimeAdapter.toDate(date)) }
                     value={ values.initHour.toString() }
                 />
@@ -156,10 +166,10 @@ export const PreachingForm = (): JSX.Element => {
                         />
                     }
                     inputDateFormat="HH:mm"
-                    label="Hora de fin:"
+                    label={ translate('forms.labels.preaching.finalHour') }
                     mode="time"
                     onChangeDate={ (date) => setFieldValue('finalHour', TimeAdapter.toDate(date)) }
-                    placeholder="Seleccione la hora"
+                    placeholder={ preachingPlaceholders.HOUR }
                     style={{ marginBottom: margins.xl }}
                     value={ values.finalHour.toString() }
                 />
@@ -174,7 +184,7 @@ export const PreachingForm = (): JSX.Element => {
                         />
                     }
                     inputDateFormat="HH:mm"
-                    label="Hora de fin:"
+                    label={ translate('forms.labels.preaching.finalHour') }
                     onChangeTime={ (date) => setFieldValue('finalHour', TimeAdapter.toDate(date)) }
                     style={{ marginBottom: margins.xl }}
                     value={ values.finalHour.toString() }
@@ -191,7 +201,7 @@ export const PreachingForm = (): JSX.Element => {
                     />
                 ) }
                 onPress={ handlePress }
-                text={ (seletedPreaching.id !== '') ? 'Actualizar' : 'Guardar' }
+                text={ buttonText  }
             />
         </View>
     );
