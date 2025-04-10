@@ -9,6 +9,7 @@ import { Title } from '@ui/components';
 
 /* Hooks */
 import { usePreaching } from '../../hooks';
+import { useTranslation } from '@ui/hooks';
 
 /* Theme */
 import { themeStylesheet } from '@theme/styles';
@@ -21,7 +22,15 @@ import { themeStylesheet } from '@theme/styles';
  */
 const AddOrEditPreaching = (): JSX.Element => {
     const { styles: themeStyles, theme: { fontSizes } } = useStyles(themeStylesheet);
+
     const { state: { seletedPreaching } } = usePreaching();
+    const { translate } = useTranslation();
+
+    const title = translate('screens.preaching.titles.preachingDay', {
+        action: (seletedPreaching.id === '') 
+            ? translate('forms.actions.add') 
+            : translate('forms.actions.edit')
+    }).toUpperCase();
 
     return (
         <KeyboardAwareScrollView
@@ -32,7 +41,7 @@ const AddOrEditPreaching = (): JSX.Element => {
                 <Title
                     containerStyle={ themeStyles.titleContainer }
                     textStyle={{ fontSize: fontSizes.md }}
-                    text={ `${ (seletedPreaching.id === '') ? 'AGREGAR' : 'EDITAR' } DÍA DE PREDICACIÓN` }
+                    text={ title }
                 />
 
                 <PreachingForm />
