@@ -2,7 +2,7 @@ import { TranslationAdapterContract } from '@domain/contracts/adapters';
 
 import { PlaceholdersServiceContract } from '@domain/contracts/services';
 
-import { AuthPlaceholders, CoursesPlaceholders } from '@infrastructure/interfaces';
+import { AuthPlaceholders, CoursesPlaceholders, PreachingPlaceholders } from '@infrastructure/interfaces';
 
 export class PlaceholdersService implements PlaceholdersServiceContract {
     constructor(
@@ -59,6 +59,22 @@ export class PlaceholdersService implements PlaceholdersServiceContract {
                 attribute: this.translationAdapter.translate('forms.fields.publication'),
                 article: 'la'
             })
+        }
+    }
+
+    public get preachingPlaceholders(): PreachingPlaceholders {
+        return {
+            DAY: this.translationAdapter.translate('forms.placeholders.select', {
+                attribute: this.translationAdapter.translate('forms.fields.day'),
+                article: 'el'
+            }),
+
+            HOUR: this.translationAdapter.translate('forms.placeholders.select', {
+                attribute: this.translationAdapter.translate('forms.fields.hour'),
+                article: 'la'
+            }),
+
+            LDC_HOURS: this.translationAdapter.translate('forms.placeholders.preaching.hoursLDC')
         }
     }
 }
