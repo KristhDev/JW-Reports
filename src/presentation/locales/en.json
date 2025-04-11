@@ -1,4 +1,13 @@
 {
+    "navigation": {
+        "titles": {
+            "home": "Home",
+            "revisits": "Revisits",
+            "courses": "Courses",
+            "preaching": "{{action}} preaching"
+        }
+    },
+
     "entities": {
         "revisit": "revisit",
         "lesson": "lesson"

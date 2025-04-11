@@ -1,4 +1,13 @@
 {
+    "navigation": {
+        "titles": {
+            "home": "Inicio",
+            "revisits": "Revisitas",
+            "courses": "Cursos",
+            "preaching": "{{action}} predicación"
+        }
+    },
+
     "entities": {
         "revisit": "revisita",
         "lesson": "lección"
