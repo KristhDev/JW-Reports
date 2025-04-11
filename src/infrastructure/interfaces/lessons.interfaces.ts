@@ -45,3 +45,7 @@ export interface LessonsMessages {
     UNSELECTED: string;
     UPDATED_SUCCESS: string;
 }
+
+export interface LessonsPlaceholders {
+    SELECT_DAY: string;
+}
