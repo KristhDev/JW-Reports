@@ -12,6 +12,7 @@ import { Fab } from '@ui/components';
 
 /* Hooks */
 import { useLessons } from '../../hooks';
+import { useTranslation } from '@ui/hooks';
 
 /* Interfaces */
 import { LessonCardProps } from './interfaces';
@@ -41,8 +42,10 @@ export const LessonCard: FC<LessonCardProps> = ({ lesson, onNavigateDetail, onNa
     const { styles: themeStyles, } = useStyles(themeStylesheet);
 
     const { setSelectedLesson } = useLessons();
+    const { translate } = useTranslation();
 
-    const nextVisit = TimeAdapter.format(lesson.nextLesson, 'DD [de] MMMM [del] YYYY');
+    const nextVisit = translate('dates.classTo', { date: TimeAdapter.format(lesson.nextLesson, 'LL') });
+    const classTaught = translate('cards.lessons.status.taught');
 
     /**
      * When the user clicks on a lesson, the lesson is set as the selected lesson and the user is
@@ -96,10 +99,7 @@ export const LessonCard: FC<LessonCardProps> = ({ lesson, onNavigateDetail, onNa
                     style={ styles.textDate }
                     testID="lesson-card-status-text"
                 >
-                    { (lesson.done)
-                        ? 'Clase impartida'
-                        : `Clase para el ${ nextVisit }`
-                    }
+                    { (lesson.done) ? classTaught : nextVisit }
                 </Text>
 
                 {/* Text */}
@@ -137,24 +137,26 @@ export const LessonCard: FC<LessonCardProps> = ({ lesson, onNavigateDetail, onNa
                         {/* Then lesson.done is false show this option */}
                         {/* The lesson can only be edited if lesson.done is false */}
                         { (!lesson.done) && (
-                            <>
-                                <MenuOption onSelect={ handleEdit }>
-                                    <Text style={ themeStyles.menuItemText }>
-                                        Editar
-                                    </Text>
-                                </MenuOption>
-                            </>
+                            <MenuOption onSelect={ handleEdit }>
+                                <Text style={ themeStyles.menuItemText }>
+                                    { translate('forms.actions.edit') }
+                                </Text>
+                            </MenuOption>
                         ) }
 
                         <MenuOption onSelect={ () => handleSelect(onFinish) }>
                             <Text style={ themeStyles.menuItemText }>
-                                { (lesson.done) ? 'Reprogramar' : 'Terminar clase' }
+                                { 
+                                    (lesson.done) 
+                                        ? translate('cards.lessons.actions.reprogram') 
+                                        : translate('cards.lessons.actions.finishClass')
+                                }
                             </Text>
                         </MenuOption>
 
-                        <MenuOption onSelect={  () => handleSelect(onDelete) }>
+                        <MenuOption onSelect={ () => handleSelect(onDelete) }>
                             <Text style={ themeStyles.menuItemText }>
-                                Eliminar
+                                { translate('forms.actions.delete') }
                             </Text>
                         </MenuOption>
                     </MenuOptions>
