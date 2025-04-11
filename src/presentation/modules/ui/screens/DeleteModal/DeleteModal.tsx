@@ -8,6 +8,9 @@ import { Modal } from '..';
 /* Components */
 import { ModalActions } from '../../components';
 
+/* Hooks */
+import { useTranslation } from '@ui/hooks';
+
 /* Interfaces */
 import { DeleteModalProps } from './interfaces';
 
@@ -27,6 +30,8 @@ import { themeStylesheet } from '@theme/styles';
  * @return {JSX.Element} rendered component to show delete modal
  */
 const DeleteModal: FC<DeleteModalProps> = ({ text, isLoading, isOpen, onClose, onConfirm }): JSX.Element => {
+    const { translate } = useTranslation();
+
     const { styles: themeStyles, theme: { colors, fontSizes } } = useStyles(themeStylesheet);
 
     return (
@@ -44,8 +49,8 @@ const DeleteModal: FC<DeleteModalProps> = ({ text, isLoading, isOpen, onClose, o
 
                     {/* Modal actions */}
                     <ModalActions
-                        cancelButtonText="CANCELAR"
-                        confirmTextButton="ELIMINAR"
+                        cancelButtonText={ translate('forms.actions.cancel').toUpperCase() }
+                        confirmTextButton={ translate('forms.actions.delete').toUpperCase() }
                         onCancel={ onClose }
                         onConfirm={ onConfirm }
                         showCancelButton
