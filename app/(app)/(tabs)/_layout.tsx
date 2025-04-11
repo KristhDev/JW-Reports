@@ -5,8 +5,13 @@ import { useStyles } from 'react-native-unistyles';
 /* Components */
 import { TabBar } from '@ui/components';
 
+/* Hooks */
+import { useTranslation } from '@ui/hooks';
+
 export default function MianTabsLayout(): JSX.Element {
     const { theme: { colors } } = useStyles();
+
+    const { translate } = useTranslation();
 
     return (
         <Tabs
@@ -22,23 +27,17 @@ export default function MianTabsLayout(): JSX.Element {
         >
             <Tabs.Screen
                 name="preaching"
-                options={{
-                    title: 'Inicio'
-                }}
+                options={{ title: translate('navigation.titles.home') }}
             />
 
             <Tabs.Screen
                 name="revisits"
-                options={{
-                    title: 'Revisitas',
-                }}
+                options={{ title: translate('navigation.titles.revisits') }}
             />
 
             <Tabs.Screen
                 name="courses"
-                options={{
-                    title: 'Cursos'
-                }}
+                options={{ title: translate('navigation.titles.courses') }}
             />
         </Tabs>
     );
