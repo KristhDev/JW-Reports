@@ -2,7 +2,7 @@ import { createStyleSheet } from 'react-native-unistyles';
 
 export const stylesheet = createStyleSheet(({ colors, fontSizes, margins }) => ({
     tableCell: {
-        backgroundColor: '#3C3547',
+        backgroundColor: colors.tableHeader,
         borderColor: colors.background,
         borderWidth: 1,
         height: 60,
@@ -10,7 +10,7 @@ export const stylesheet = createStyleSheet(({ colors, fontSizes, margins }) => (
     },
 
     tableCellText: {
-        color: '#FFFFFF',
+        color: colors.white,
         fontSize: fontSizes.sm,
         marginLeft: (margins.xs + 2)
     }
