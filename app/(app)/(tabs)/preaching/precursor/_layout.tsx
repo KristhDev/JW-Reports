@@ -12,6 +12,7 @@ import { Header, HeaderButtons } from '@ui/components';
 import { useAuth } from '@auth/hooks';
 import { usePreaching } from '@preaching/hooks';
 import { useNetwork, useStatus } from '@shared/hooks';
+import { useTranslation } from '@ui/hooks';
 
 export default function PrecursorLayout(): JSX.Element {
     const [ showDeletePreachingModal, setShowDeletePreachingModal ] = useState<boolean>(false);
@@ -22,6 +23,18 @@ export default function PrecursorLayout(): JSX.Element {
     const { state: { isPreachingDeleting, selectedDate, seletedPreaching }, deletePreaching, loadPreachings, setSelectedDate } = usePreaching();
     const { setNetworkError } = useStatus();
     const { wifi } = useNetwork();
+    const { translate } = useTranslation();
+
+    const addOrEditPreachingTitle = translate('navigation.titles.preaching', {
+        action: (seletedPreaching.id !== '')
+            ? translate('forms.actions.edit')
+            : translate('forms.actions.add')
+    });
+
+    const deletePreachingModalTitle = translate('modals.titles.deleteAsk', { 
+        article: 'este',
+        attribute: translate('forms.fields.preachingDay'),
+    });
 
     /**
      * If the user clicks the delete button, then show the delete modal, and if the user clicks the
@@ -77,7 +90,7 @@ export default function PrecursorLayout(): JSX.Element {
                             />
                         </Header>
                     ),
-                    title: 'Inicio'
+                    title: translate('navigation.titles.home')
                 }}
             />
 
@@ -93,7 +106,7 @@ export default function PrecursorLayout(): JSX.Element {
                         >
                             <HeaderButtons
                                 deleteButton={ seletedPreaching.id !== '' }
-                                deleteModalText="¿Está seguro de eliminar este día de predicación?"
+                                deleteModalText={ deletePreachingModalTitle }
                                 isDeleteModalLoading={ isPreachingDeleting }
                                 onCloseDeleteModal={ () => setShowDeletePreachingModal(false) }
                                 onConfirmDeleteModal={ handleDeleteConfirm }
@@ -102,7 +115,7 @@ export default function PrecursorLayout(): JSX.Element {
                             />
                         </Header>
                     ),
-                    title: `${ seletedPreaching.id !== '' ? 'Editar' : 'Agregar' } predicación`
+                    title: addOrEditPreachingTitle
                 }}
             />
         </Stack>
