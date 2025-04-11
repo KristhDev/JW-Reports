@@ -17,7 +17,6 @@ import { TableCell } from '@ui/components';
 
 /* Hooks */
 import { usePreaching } from '../../hooks';
-import { useTheme } from '@theme/hooks';
 
 /* Styles */
 import { stylesheet } from './styles';
@@ -32,11 +31,10 @@ export const PreachingTable = (): JSX.Element => {
     const TABLE_PREACHING_HEADERS = publisherService.TABLE_PREACHING_HEADERS;
     const { width } = useWindowDimensions();
 
-    const { styles } = useStyles(stylesheet);
+    const { styles, theme: { colors } } = useStyles(stylesheet);
     const router = useRouter();
 
     const { state: { preachings }, setSelectedPreaching } = usePreaching();
-    const { state: { theme } } = useTheme();
 
     const cellWidth = (width - 24) / 6;
     const cellWidthHours = (width - 24) / 3;
@@ -70,32 +68,31 @@ export const PreachingTable = (): JSX.Element => {
             </View>
 
             {/* Table body */}
-
             { Children.toArray(preachings.map((preaching, index) => (
                 <TouchableHighlight
                     onPress={ () => handleGoToEditPreaching(preaching) }
                     testID="preaching-table-row"
-                    underlayColor={ (theme === 'dark') ? 'rgba(255, 255, 255, 0.15)' : 'rgba(0, 0, 0, 0.15)' }
+                    underlayColor={ colors.tableHover }
                 >
                     <View style={ styles.tableRow }>
                         <TableCell
                             text={ (index + 1).toString() }
-                            style={{ backgroundColor: '#746C84', width: cellWidth }}
+                            style={{ backgroundColor: colors.tableRow, width: cellWidth }}
                         />
 
                         <TableCell
                             text={ TimeAdapter.format(preaching.day, 'DD') }
-                            style={{ backgroundColor: '#746C84', width: cellWidth }}
+                            style={{ backgroundColor: colors.tableRow, width: cellWidth }}
                         />
 
                         <TableCell
                             text={ TimeAdapter.format(preaching.initHour, 'HH:mm') }
-                            style={{ backgroundColor: '#746C84', width: cellWidthHours }}
+                            style={{ backgroundColor: colors.tableRow, width: cellWidthHours }}
                         />
 
                         <TableCell
                             text={ TimeAdapter.format(preaching.finalHour, 'HH:mm') }
-                            style={{ backgroundColor: '#746C84', width: cellWidthHours }}
+                            style={{ backgroundColor: colors.tableRow, width: cellWidthHours }}
                         />
                     </View>
                 </TouchableHighlight>
@@ -105,12 +102,12 @@ export const PreachingTable = (): JSX.Element => {
             <View style={ styles.tableRow }>
                 <TableCell
                     text="Total"
-                    style={{ backgroundColor: '#544C63', width: cellWidth * 2 }}
+                    style={{ backgroundColor: colors.tableFooter, width: cellWidth * 2 }}
                 />
 
                 <TableCell
                     text={ `${ TimeAdapter.sumHours(preachings.map(p => ({ init: p.initHour, finish: p.finalHour }))) }H` }
-                    style={{ backgroundColor: '#544C63', width: cellWidthHours * 2 }}
+                    style={{ backgroundColor: colors.tableFooter, width: cellWidthHours * 2 }}
                 />
             </View>
         </View>
