@@ -4,6 +4,9 @@ import { useFormik } from 'formik';
 import { useStyles } from 'react-native-unistyles';
 import Ionicons from '@expo/vector-icons/Ionicons';
 
+/* Config */
+import { placeholdersService } from '@config/di';
+
 /* Adapters */
 import { TimeAdapter } from '@infrastructure/adapters';
 
@@ -15,7 +18,7 @@ import { ModalActions, FormCalendar, DatetimeField } from '@ui/components';
 
 /* Hooks */
 import { useLessons } from '../../hooks';
-import { useUI } from '@ui/hooks';
+import { useTranslation, useUI } from '@ui/hooks';
 
 import { ModalProps } from '@ui/interfaces';
 
@@ -30,22 +33,33 @@ import { themeStylesheet } from '@theme/styles';
  * @return {JSX.Element} rendered component to show list of modal
  */
 const FinishOrStartLessonModal: FC<ModalProps> = ({ isOpen, onClose }) => {
+    const LESSONS_PLACEHOLDERS = placeholdersService.lessonsPlaceholders;
+
     const [ reschedule, setReschedule ] = useState<boolean>(false);
 
     const { styles: themeStyles, theme: { colors, fontSizes, margins } } = useStyles(themeStylesheet);
 
     const { state: { selectedLesson, isLessonLoading }, finishOrStartLesson } = useLessons();
+    const { translate } = useTranslation();
     const { state: { userInterface } } = useUI();
 
-    const modalMsg = (selectedLesson.done)
-        ? '¿Está seguro de reprogramar esta clase?'
-        : '¿Está seguro de terminar esta clase?';
+    const reprogramModalTitle = translate('modals.titles.reprogramAsk', {
+        article: 'esta',
+        attribute: translate('entities.lesson')
+    });
+
+    const finishModalTitle = translate('modals.titles.finishAsk', {
+        article: 'esta',
+        attribute: translate('entities.lesson')
+    });
+
+    const modalMsg = (selectedLesson.done) ? reprogramModalTitle : finishModalTitle;
 
     const confirmTextButton = (reschedule)
-        ? 'ACEPTAR'
+        ? translate('forms.actions.accept').toUpperCase()
         : (selectedLesson.done)
-            ? 'REPROGRAMAR' : 'TERMINAR';
-
+            ? translate('forms.actions.reprogram').toUpperCase() 
+            : translate('forms.actions.finish').toUpperCase();
 
     /**
      * When the user clicks the close button, the modal will close and the onClose function will be
@@ -99,7 +113,7 @@ const FinishOrStartLessonModal: FC<ModalProps> = ({ isOpen, onClose }) => {
 
                             {/* Modal actions */}
                             <ModalActions
-                                cancelButtonText="CANCELAR"
+                                cancelButtonText={ translate('forms.actions.cancel').toUpperCase() }
                                 confirmTextButton={ confirmTextButton }
                                 onCancel={ handleClose }
                                 onConfirm={ handleConfirm }
@@ -112,7 +126,7 @@ const FinishOrStartLessonModal: FC<ModalProps> = ({ isOpen, onClose }) => {
 
                             {/* Modal title in form */}
                             <Text style={{ ...themeStyles.modalText, marginBottom: margins.md }}>
-                                Por favor ingrese la fecha en la se dará la clase
+                                { translate('modals.lessons.descriptions.reprogramLesson') }
                             </Text>
 
                             {/* Next lesson field */}
@@ -127,10 +141,10 @@ const FinishOrStartLessonModal: FC<ModalProps> = ({ isOpen, onClose }) => {
                                         />
                                     }
                                     inputDateFormat="DD/MM/YYYY"
-                                    label="Reprogramar clase:"
+                                    label={ translate('forms.labels.lessons.reprogramClass') }
                                     mode="date"
                                     onChangeDate={ (date: string) => setFieldValue('nextLesson', TimeAdapter.toDate(date)) }
-                                    placeholder="Seleccione el día"
+                                    placeholder={ LESSONS_PLACEHOLDERS.SELECT_DAY }
                                     style={{ marginBottom: 0 }}
                                     value={ values.nextLesson.toString() }
                                 />
@@ -145,7 +159,7 @@ const FinishOrStartLessonModal: FC<ModalProps> = ({ isOpen, onClose }) => {
                                         />
                                     }
                                     inputDateFormat="DD/MM/YYYY"
-                                    label="Reprogramar clase:"
+                                    label={ translate('forms.labels.lessons.reprogramClass') }
                                     onChangeDate={ (date: string) => setFieldValue('nextLesson', TimeAdapter.toDate(date)) }
                                     style={{ marginBottom: 0 }}
                                     value={ values.nextLesson.toString() }
@@ -154,7 +168,7 @@ const FinishOrStartLessonModal: FC<ModalProps> = ({ isOpen, onClose }) => {
 
                             {/* Modal actions */}
                             <ModalActions
-                                cancelButtonText="CANCELAR"
+                                cancelButtonText={ translate('forms.actions.cancel').toUpperCase() }
                                 confirmTextButton={ confirmTextButton }
                                 onCancel={ handleClose }
                                 onConfirm={ handleSubmit }
