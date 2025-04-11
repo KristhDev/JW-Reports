@@ -12,6 +12,7 @@ import { Fab } from '@ui/components';
 
 /* Hooks */
 import { useRevisits } from '../../hooks';
+import { useTranslation } from '@ui/hooks';
 
 /* Interfaces */
 import { RevisitCardProps } from './interfaces';
@@ -42,11 +43,13 @@ export const RevisitCard: FC<RevisitCardProps> = ({
     const [ isOpen, setIsOpen ] = useState<boolean>(false);
 
     const { styles: themeStyles } = useStyles(themeStylesheet);
-    const { styles, theme: { colors, fontSizes, margins } } = useStyles(stylesheet);
+    const { styles, theme: { colors, fontSizes } } = useStyles(stylesheet);
 
     const { setSelectedRevisit } = useRevisits();
+    const { translate } = useTranslation();
 
-    const nextVisit = TimeAdapter.format(revisit.nextVisit, 'DD [de] MMMM [del] YYYY');
+    const nextVisit = translate('dates.visit', { date: TimeAdapter.format(revisit.nextVisit, 'LL') });
+    const visitDone = translate('cards.revisits.status.done');
 
     /**
      * When the user clicks on a revisit, set the selected revisit to the revisit that was clicked on
@@ -100,7 +103,7 @@ export const RevisitCard: FC<RevisitCardProps> = ({
                     style={ styles.textDate }
                     testID="revisit-card-next-visit-text"
                 >
-                    { (revisit.done) ? 'Visita hecha' : `Visitar el ${ nextVisit }` }
+                    { (revisit.done) ? visitDone : nextVisit }
                 </Text>
 
                 {/* Text person name */}
@@ -146,25 +149,28 @@ export const RevisitCard: FC<RevisitCardProps> = ({
                     >
                         <MenuOption onSelect={ handleEdit }>
                             <Text style={ themeStyles.menuItemText }>
-                                Editar
+                                { translate('forms.actions.edit') }
                             </Text>
                         </MenuOption>
 
                         <MenuOption onSelect={ () => handleAction(onRevisit) }>
                             <Text style={ themeStyles.menuItemText }>
-                                { (revisit.done) ? 'Volver a visitar' : 'Marcar como visitada' }
+                                { (revisit.done) 
+                                    ? translate('cards.revisits.actions.returnToVisit') 
+                                    : translate('cards.revisits.actions.markAsVisited') 
+                                }
                             </Text>
                         </MenuOption>
 
                         <MenuOption onSelect={ () => handleAction(onPass) }>
                             <Text style={ themeStyles.menuItemText }>
-                                Pasar a curso bíblico
+                                { translate('cards.revisits.actions.proceedToBibleCourse') }
                             </Text>
                         </MenuOption>
 
                         <MenuOption onSelect={ () => handleAction(onDelete) }>
                             <Text style={ themeStyles.menuItemText }>
-                                Eliminar
+                                { translate('forms.actions.delete') }
                             </Text>
                         </MenuOption>
                     </MenuOptions>
