@@ -1,4 +1,14 @@
 {
+    "entities": {
+        "revisit": "revisita",
+        "lesson": "lección"
+    },
+
+    "dates": {
+        "classTo": "Clase para el {{date}}",
+        "visit": "Visitar el {{date}}"
+    },
+
     "messages": {
         "success": {
             "added": "Ha agregado {{article}} {{attribute}} correctamente.",
@@ -34,6 +44,12 @@
     },
 
     "modals": {
+        "titles": {
+            "deleteAsk": "¿Está seguro de eliminar {{article}} {{attribute}}?",
+            "finishAsk": "¿Está seguro de terminar {{article}} {{attribute}}?",
+            "reprogramAsk": "¿Está seguro de reprogramar {{article}} {{attribute}}?"
+        },
+
         "auth": {
             "titles": {
                 "selectPioneer": "Seleccione su precursorado"
@@ -60,6 +76,12 @@
                 "checkReport": "Estás a punto de entregar tu informe predicación, por favor revisalo.",
                 "restMinutes": "Para este mes te sobraron {{ restMins }} minutos, guardalos para el siguiente mes."
             }
+        },
+
+        "lessons": {
+            "descriptions": {
+                "reprogramLesson": "Por favor ingrese la fecha en la se dará la clase."
+            }
         }
     },
 
@@ -84,6 +106,29 @@
                 "startAgain": "Comenzar de nuevo",
                 "suspended": "Suspender"
             }
+        },
+
+        "revisits": {
+            "status": {
+                "done": "Visita hecha"
+            },
+
+            "actions": {
+                "returnToVisit": "Return to revisit",
+                "markAsVisited": "Marcar como visitada",
+                "proceedToBibleCourse": "Pasar a curso bíblico"
+            }
+        },
+
+        "lessons": {
+            "status": {
+                "taught": "Clase impartida"
+            },
+
+            "actions": {
+                "reprogram": "Reprogramar",
+                "finishClass": "Terminar clase"
+            }
         }
     },
 
@@ -105,6 +150,8 @@
             },
 
             "messages": {
+                "emptyLastLesson": "No has agregado ninguna lección para un curso biblíco.",
+                "emptyLastRevisit": "No has agregado ninguna revisita.",
                 "reportEmpty": "No has agregado ningún día de predicación para el informe de este mes."
             }
         },
@@ -185,6 +232,12 @@
                     }
                 }
             }
+        },
+
+        "ui": {
+            "titles": {
+                "last": "ÚLTIMA {{attribute}}"
+            }
         }
     },
 
@@ -198,6 +251,10 @@
                 "preachingDay": "Día de predicación:",
                 "initHour": "Hora de inicio:",
                 "finalHour": "Hora de fin:"
+            },
+
+            "lessons": {
+                "reprogramClass": "Reprogramar clase:"
             },
 
             "address": "Dirección:",
@@ -275,12 +332,15 @@
                 "send": "Entregar"
             },
 
-            "add": "Agregar",
             "accept": "Aceptar",
+            "add": "Agregar",
             "cancel": "Cancelar",
+            "delete": "Eliminar",
             "edit": "Editar",
             "ok": "Esta bien",
             "save": "Guardar",
+            "finish": "Terminar",
+            "reprogram": "Reprogramar",
             "select": "Seleccionar",
             "settings": "Configuración",
             "update": "Actualizar"
