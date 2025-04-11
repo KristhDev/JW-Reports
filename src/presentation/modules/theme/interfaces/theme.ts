@@ -20,9 +20,14 @@ export interface Colors {
     navbar: string;
     switchThumb: string;
     switchTrack: string;
+    tableFooter: string;
+    tableHeader: string;
+    tableHover: string;
+    tableRow: string;
     text: string;
     titleSecondary: string;
     titleText: string;
+    white: string;
 }
 
 /**
