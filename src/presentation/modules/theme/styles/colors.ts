@@ -18,11 +18,16 @@ export const lightColors: Colors = {
     modal: '#F1F1F1',
     modalText: '#000000',
     navbar: '#FFFFFF',
-    switchTrack: '#B3B3B3',
     switchThumb: '#ECECEC',
+    switchTrack: '#B3B3B3',
+    tableFooter: '#544C63',
+    tableHeader: '#3C3547',
+    tableHover: 'rgba(0, 0, 0, 0.15)',
+    tableRow: '#746C84',
     text: '#000000',
     titleSecondary: '#5A7475',
-    titleText: '#292929'
+    titleText: '#292929',
+    white: '#FFFFFF'
 }
 
 /* Exporting the object `darkColors` as a constant. */
@@ -43,9 +48,14 @@ export const darkColors: Colors = {
     modal: '#292929',
     modalText: '#B4B4B4',
     navbar: '#000000',
-    switchTrack: '#4D4D4D',
     switchThumb: '#B9B9B9',
+    switchTrack: '#4D4D4D',
+    tableFooter: '#544C63',
+    tableHeader: '#3C3547',
+    tableHover: 'rgba(255, 255, 255, 0.15)',
+    tableRow: '#746C84',
     text: '#FFFFFF',
     titleSecondary: '#93A8AB',
     titleText: '#FFFFFF',
+    white: '#FFFFFF'
 }
