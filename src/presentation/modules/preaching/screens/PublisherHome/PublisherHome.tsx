@@ -34,6 +34,7 @@ import { usePreaching } from '../../hooks';
 
 /* Theme */
 import { themeStylesheet } from '@theme/styles';
+import { useTranslation } from '@ui/hooks';
 
 /**
  * This screen is in charge of grouping the components to list the preaching days by
@@ -82,7 +83,27 @@ const PublisherHome = (): JSX.Element => {
         loadLastRevisit
     } = useRevisits();
 
+    const { translate } = useTranslation();
+
     const month = TimeAdapter.format(selectedDate, 'MMMM').toUpperCase();
+
+    const lastLessonTitle = translate('screens.ui.titles.last', { 
+        attribute: translate('entities.lesson') 
+    }).toUpperCase();
+
+    const lastRevisitTitle = translate('screens.ui.titles.last', { 
+        attribute: translate('entities.revisit') 
+    }).toUpperCase();
+
+    const deleteLastLessonModalTitle = translate('modals.titles.deleteAsk', {
+        attribute: translate('entities.lesson'),
+        article: 'esta'
+    });
+
+    const deleteLastRevisitModalTitle = translate('modals.titles.deleteAsk', {
+        attribute: translate('entities.revisit'),
+        article: 'esta'
+    });
 
     /**
      * Refreshes the state by loading the most recent lesson and revisit data.
@@ -191,7 +212,7 @@ const PublisherHome = (): JSX.Element => {
             >
                 <Title
                     containerStyle={{ ...themeStyles.titleContainer, paddingHorizontal: margins.sm, marginBottom: margins.sm }}
-                    text="ÚLTIMA LECCIÓN"
+                    text={ lastLessonTitle }
                     textStyle={{ fontSize: fontSizes.md }}
                 />
 
@@ -209,7 +230,7 @@ const PublisherHome = (): JSX.Element => {
                 { (!isLastLessonLoading && !lastLesson?.id) && (
                     <InfoText
                         containerStyle={{ marginVertical: 63.75 }}
-                        text="No has agregado ninguna lección para un curso biblíco."
+                        text={ translate('screens.preaching.messages.emptyLastLesson') }
                     />
                 ) }
 
@@ -226,7 +247,7 @@ const PublisherHome = (): JSX.Element => {
 
                 <Title
                     containerStyle={{ ...themeStyles.titleContainer, paddingTop: margins.lg, paddingHorizontal: margins.sm, marginBottom: margins.sm }}
-                    text="ÚLTIMA REVISITA"
+                    text={ lastRevisitTitle }
                     textStyle={{ fontSize: fontSizes.md }}
                 />
 
@@ -244,7 +265,7 @@ const PublisherHome = (): JSX.Element => {
                 { (!isLastRevisitLoading && !lastRevisit?.id) && (
                     <InfoText
                         containerStyle={{ marginVertical: 63.75 }}
-                        text="No has agregado ninguna revisita."
+                        text={ translate('screens.preaching.messages.emptyLastRevisit') }
                     />
                 ) }
 
@@ -293,7 +314,7 @@ const PublisherHome = (): JSX.Element => {
                 isOpen={ showDeleteLessonModal }
                 onClose={ () => handleHideLessonsModal(setShowDeleteLessonModal) }
                 onConfirm={ handleDeleteLessonConfirm }
-                text="¿Está seguro de eliminar esta clase?"
+                text={ deleteLastLessonModalTitle }
             />
 
             {/* Modal to complete revisit */}
@@ -314,7 +335,7 @@ const PublisherHome = (): JSX.Element => {
                 isOpen={ showDeleteRevisitModal }
                 onClose={ () => handleHideRevisitsModal(setShowDeleteRevisitModal) }
                 onConfirm={ handleDeleteRevisitConfirm }
-                text="¿Está seguro de eliminar esta revisita?"
+                text={ deleteLastRevisitModalTitle }
             />
         </>
     );
