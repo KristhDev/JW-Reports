@@ -33,6 +33,7 @@ import { useTranslation, useUI } from '@ui/hooks';
 
 /* Global config of time util */
 TimeAdapter.extend(TimeAdapter.plugins.weekday);
+TimeAdapter.extend(TimeAdapter.plugins.localizedFormat);
 
 if (__DEV__) require('../ReactotronConfig');
 
