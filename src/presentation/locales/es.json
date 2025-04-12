@@ -4,7 +4,11 @@
             "home": "Inicio",
             "revisits": "Revisitas",
             "courses": "Cursos",
-            "preaching": "{{action}} predicación"
+            "preaching": "{{action}} predicación",
+            "lesson": "{{action}} lesson",
+            "revisit": "{{action}} revisit",
+            "classWith": "Clase con {{name}}",
+            "revisitTo": "Revisita {{name}}"
         }
     },
 
