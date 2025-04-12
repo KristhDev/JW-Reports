@@ -14,6 +14,7 @@ import { useCourses } from '@courses/hooks';
 import { useLessons } from '@lessons/hooks';
 import { useRevisits } from '@revisits/hooks';
 import { useNetwork, useStatus } from '@shared/hooks';
+import { useTranslation } from '@ui/hooks';
 
 export default function PublisherLayout(): JSX.Element {
     const [ showDeleteLessonModal, setShowDeleteLessonModal ] = useState<boolean>(false);
@@ -28,6 +29,37 @@ export default function PublisherLayout(): JSX.Element {
     const { state: { isRevisitDeleting, selectedRevisit }, deleteRevisit, loadLastRevisit } = useRevisits();
     const { wifi } = useNetwork();
     const { setNetworkError } = useStatus();
+    const { translate } = useTranslation();
+
+    const addOrEditLessonTitleNavigation = translate('navigation.titles.lesson', {
+        action: (selectedLesson.id !== '')
+            ? translate('forms.actions.edit')
+            : translate('forms.actions.add')
+    });
+
+    const addOrEditRevisitTitleNavigation = translate('navigation.titles.revisit', {
+        action: (selectedRevisit.id !== '')
+            ? translate('forms.actions.edit')
+            : translate('forms.actions.add')
+    });
+
+    const deleteLessonModalTitle = translate('modals.titles.deleteAsk', {
+        article: 'esta',
+        attribute: translate('forms.fields.lesson')
+    });
+
+    const deleteRevisitModalTitle = translate('modals.titles.deleteAsk', {
+        article: 'esta',
+        attribute: translate('forms.fields.revisit')
+    });
+
+    const lessonDetailModalTitle = translate('navigation.titles.classWith', {
+        name: selectedCourse.personName
+    });
+
+    const revisitDetailModalTitle = translate('navigation.titles.revisitTo', {
+        name: selectedRevisit.personName
+    });
 
     /**
      * When the user clicks the delete button, show the delete modal, and when the user clicks the
@@ -124,7 +156,7 @@ export default function PublisherLayout(): JSX.Element {
                             />
                         </Header>
                     ),
-                    title: 'Inicio'
+                    title: translate('navigation.titles.home')
                 }}
             />
 
@@ -140,7 +172,7 @@ export default function PublisherLayout(): JSX.Element {
                         >
                             <HeaderButtons
                                 deleteButton={ selectedLesson.id !== '' }
-                                deleteModalText="¿Está seguro de eliminar esta clase?"
+                                deleteModalText={ deleteLessonModalTitle }
                                 isDeleteModalLoading={ isLessonDeleting }
                                 onCloseDeleteModal={ () => setShowDeleteLessonModal(false) }
                                 onConfirmDeleteModal={ () => handleDeleteLesson(() => handleDismissTo('/(app)/(tabs)/preaching/publisher')) }
@@ -149,7 +181,7 @@ export default function PublisherLayout(): JSX.Element {
                             />
                         </Header>
                     ),
-                    title: `${ selectedLesson.id !== '' ? 'Editar' : 'Agregar' } clase`
+                    title: addOrEditLessonTitleNavigation
                 }}
             />
 
@@ -165,7 +197,7 @@ export default function PublisherLayout(): JSX.Element {
                         >
                             <HeaderButtons
                                 deleteButton={ true }
-                                deleteModalText="¿Está seguro de eliminar esta clase?"
+                                deleteModalText={ deleteLessonModalTitle }
                                 isDeleteModalLoading={ isLessonDeleting }
                                 onCloseDeleteModal={ () => setShowDeleteLessonModal(false) }
                                 onConfirmDeleteModal={ () => handleDeleteLesson(handleGoBack) }
@@ -177,7 +209,7 @@ export default function PublisherLayout(): JSX.Element {
                             />
                         </Header>
                     ),
-                    title: `Clase con ${ selectedCourse.personName }`
+                    title: lessonDetailModalTitle
                 }}
             />
 
@@ -193,7 +225,7 @@ export default function PublisherLayout(): JSX.Element {
                         >
                             <HeaderButtons
                                 deleteButton={ selectedRevisit.id !== '' }
-                                deleteModalText="¿Está seguro de eliminar esta revisita?"
+                                deleteModalText={ deleteRevisitModalTitle }
                                 editButton={ false }
                                 isDeleteModalLoading={ isRevisitDeleting }
                                 onCloseDeleteModal={ () => setShowDeleteRevisitModal(false) }
@@ -203,7 +235,7 @@ export default function PublisherLayout(): JSX.Element {
                             />
                         </Header>
                     ),
-                    title: `${ selectedRevisit.id !== '' ? 'Editar' : 'Agregar' } revisita`
+                    title: addOrEditRevisitTitleNavigation
                 }}
             />
 
@@ -219,7 +251,7 @@ export default function PublisherLayout(): JSX.Element {
                         >
                             <HeaderButtons
                                 deleteButton={ true }
-                                deleteModalText="¿Está seguro de eliminar esta revisita?"
+                                deleteModalText={ deleteRevisitModalTitle }
                                 isDeleteModalLoading={ isRevisitDeleting }
                                 onCloseDeleteModal={ () => setShowDeleteRevisitModal(false) }
                                 onConfirmDeleteModal={ () =>handleDeleteRevisit(handleGoBack) }
@@ -231,7 +263,7 @@ export default function PublisherLayout(): JSX.Element {
                             />
                         </Header>
                     ),
-                    title: `Revisita ${ selectedRevisit.personName }`
+                    title: revisitDetailModalTitle
                 }}
             />
         </Stack>
