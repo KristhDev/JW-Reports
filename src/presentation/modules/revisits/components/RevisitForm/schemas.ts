@@ -9,7 +9,7 @@ export const generateRevisitFormSchema = () => {
 
     return object().shape({
         personName: string()
-            .min(2, revisitsMessages.PERSON_MIN_LENGTH)
+            .min(2, revisitsMessages.PERSON_NAME_MIN_LENGTH)
             .required(revisitsMessages.PERSON_NAME_REQUIRED),
 
         about: string()
