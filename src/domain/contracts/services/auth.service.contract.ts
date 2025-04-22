@@ -3,7 +3,7 @@ import { SignUpDto, UpdateEmailDto, UpdatePasswordDto, UpdateProfileDto } from '
 import { UserEntity } from '@domain/entities';
 
 export abstract class AuthServiceContract {
-    public abstract getSession(token: string): Promise<{ user: UserEntity, token: string }>;
+    public abstract refreshSession(token: string): Promise<{ user: UserEntity, token: string }>;
     public abstract resetPassword(email: string): Promise<void>;
     public abstract signIn(email: string, password: string): Promise<{ token: string, user: UserEntity }>;
     public abstract signOut(): Promise<void>;
