@@ -11,7 +11,6 @@ import {
     clearPreaching as clearPreachingAction,
     removePreaching as removePreachingAction,
     setIsPreachingDeleting as setIsPreachingDeletingAction,
-    setIsPreachingLoading as setIsPreachingLoadingAction,
     setIsPreachingsExporting as setIsPreachingsExportingAction,
     setIsPreachingsLoading as setIsPreachingsLoadingAction,
     setPreachings as setPreachingsAction,
@@ -61,7 +60,6 @@ const usePreaching = () => {
     const clearPreaching = () => dispatch(clearPreachingAction());
     const setIsPreachingsLoading = (isLoading: boolean) => dispatch(setIsPreachingsLoadingAction({ isLoading }));
     const setIsPreachingsExporting = (isExporting: boolean) => dispatch(setIsPreachingsExportingAction({ isExporting }));
-    const setIsPreachingLoading = (isLoading: boolean) => dispatch(setIsPreachingLoadingAction({ isLoading }));
     const setSelectedDate = (date: Date) => dispatch(setSelectedDateAction({ selectedDate: date }));
     const setPreachings = (preachings: PreachingEntity[]) => dispatch(setPreachingsAction({ preachings }));
     const setSelectedPreaching = (preaching: PreachingEntity) => dispatch(setSelectedPreachingAction({ preaching }));
@@ -222,8 +220,6 @@ const usePreaching = () => {
         const isAuth = isAuthenticated();
         if (!isAuth) return;
 
-        setIsPreachingLoading(true);
-
         try {
             const createDto = CreatePreachingDto.create({ ...preachingValues, userId: user.id });
             const result = await preachingService.create(createDto);
@@ -235,9 +231,6 @@ const usePreaching = () => {
         }
         catch (error) {
             setError(error);
-        }
-        finally {
-            setIsPreachingLoading(false);
         }
     }
 
@@ -257,8 +250,6 @@ const usePreaching = () => {
         const canAlterate = canAlteratePreaching(preachingMessages.UNSELECTED_UPDATE);
         if (!canAlterate) return;
 
-        setIsPreachingLoading(true);
-
         try {
             const updateDto = UpdatePreachingDto.create(preachingValues);
             const preaching = await preachingService.update(state.seletedPreaching.id, user.id, updateDto);
@@ -270,7 +261,6 @@ const usePreaching = () => {
             setStatus({ code: 200, msg: preachingMessages.UPDATED_SUCCESS });
         }
         catch (error) {
-            setIsPreachingLoading(false);
             setError(error);
         }
     }
