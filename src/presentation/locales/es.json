@@ -26,7 +26,7 @@
         "success": {
             "added": "Ha agregado {{article}} {{attribute}} correctamente.",
             "deleted": "Ha eliminado {{article}} {{attribute}} correctamente.",
-            "updated": "Ha actualizado su {{attribute}} correctamente."
+            "updated": "Ha actualizado {{article}} {{attribute}} correctamente."
         },
 
         "errors": {
@@ -39,6 +39,22 @@
 
             "unauthenticated": "Para realizar está acción debe iniciar sesión.",
             "unauthorized": "No tiene permiso para realizar está acción."
+        },
+
+        "courses": {
+            "completed": "Ha marcado como completa su revisita correctamente."
+        },
+
+        "preaching": {
+            "reportExported": "Ha exportado sus informaciones de predicación correctamente. El archivo se encuentra en la carpeta que ha seleccionado.",
+            "monthlyHoursDone": "¡Excelente! has cumplido con tu requerimiento de horas por mes.",
+            "weeklyHoursDone": "¡Excelente! ha cumplido con su requerimiento de horas por semana."
+        },
+
+        "permissions": {
+            "fileExportDenied": "Permiso denegado para exportar el archivo.",
+            "request": "Para realizar esta acción necesita permisos del dispositivo, por favor abra la configuración de su dispositivo y active los permisos de la aplicación.",
+            "unsupported": "Lo sentimos pero su dispositivo no soporta esta funcionalidad."
         }
     },
 
@@ -317,8 +333,10 @@
             "day": "día",
             "description": "descripción",
             "email": "correo",
+            "finalHour": "hora de fin",
             "hour": "hora",
             "hoursRequirement": "requerimiento de horas",
+            "initHour": "hora de inicio",
             "lesson": "clase",
             "name": "nombre",
             "password": "contraseña",
@@ -383,6 +401,8 @@
             "enum": "{{article}} {{attribute}} debe ser uno de los siguientes valores: {{values}}.",
             "min": "{{article}} {{attribute}} debe tener al menos {{min}} caracteres.",
             "required": "{{article}} {{attribute}} es {{required}}.",
+
+            "lessThan": "{{article}} {{attribute}} debe ser menor que {{minArticle}} {{min}}.",
 
             "password": {
                 "mismatch": "Las contraseñas no coinciden."

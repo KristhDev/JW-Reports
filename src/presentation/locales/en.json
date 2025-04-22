@@ -25,8 +25,9 @@
     "messages": {
         "success": {
             "added": "You have added the {{attribute}} successfully.",
+            "completed": "You have completed the {{attribute}} successfully.",
             "deleted": "You have deleted the {{attribute}} successfully.",
-            "updated": "You have updated your {{attribute}} successfully."
+            "updated": "You have updated the {{attribute}} successfully."
         },
 
         "errors": {
@@ -39,6 +40,22 @@
 
             "unauthenticated": "You must be logged in to perform this action.",
             "unauthorized": "You don't have permission to perform this action."
+        },
+
+        "courses": {
+            "completed": "You have marked your revisit as complete."
+        },
+
+        "preaching": {
+            "reportExported": "You have successfully exported your preaching information. The file is located in the folder you have selected.",
+            "monthlyHoursDone": "Excellent! You have met your hours per month requirement.",
+            "weeklyHoursDone": "Excellent! you have met your hours per week requirement."
+        },
+
+        "permissions": {
+            "fileExportDenied": "Permission denied to export the file.",
+            "request": "To perform this action you need device permissions, please open your device settings and activate the application permissions.",
+            "unsupported": "We are sorry but your device does not support this functionality."
         }
     },
 
@@ -317,8 +334,10 @@
             "day": "day",
             "description": "description",
             "email": "email",
+            "finalHour": "final hour",
             "hour": "hour",
             "hoursRequirement": "hours requirement",
+            "initHour": "initial hour",
             "lesson": "lesson",
             "name": "name",
             "password": "password",
@@ -383,6 +402,8 @@
             "enum": "The {{attribute}} must be one of the following values: {{values}}.",
             "min": "The {{attribute}} must be at least {{min}} characters.",
             "required": "The {{attribute}} is required.",
+
+            "lessThan": "The {{attribute}} must be less than {{min}}.",
 
             "password": {
                 "mismatch": "The passwords don't match."
