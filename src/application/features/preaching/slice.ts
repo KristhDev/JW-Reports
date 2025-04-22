@@ -19,7 +19,6 @@ export const INIT_PREACHING: PreachingEntity = {
 /* Initial state */
 export const PREACHING_INITIAL_STATE: PreachingState = {
     isPreachingDeleting: false,
-    isPreachingLoading: false,
     isPreachingsExporting: false,
     isPreachingsLoading: false,
     preachings: [],
@@ -35,12 +34,10 @@ const preachingSlice = createSlice({
         addPreaching: (state, action: PayloadAction<PreachingPayload>) => {
             state.preachings = [ ...state.preachings, action.payload.preaching ];
             state.preachings = state.preachings.sort((a, b) => new Date(a.day).getTime() - new Date(b.day).getTime());
-            state.isPreachingLoading = false;
         },
 
         clearPreaching: (state) => {
             state.isPreachingDeleting = PREACHING_INITIAL_STATE.isPreachingDeleting;
-            state.isPreachingLoading = PREACHING_INITIAL_STATE.isPreachingLoading;
             state.isPreachingsLoading = PREACHING_INITIAL_STATE.isPreachingsLoading;
             state.preachings = PREACHING_INITIAL_STATE.preachings;
             state.selectedDate = PREACHING_INITIAL_STATE.selectedDate;
@@ -54,10 +51,6 @@ const preachingSlice = createSlice({
 
         setIsPreachingDeleting: (state, action: PayloadAction<SetIsDeletingPayload>) => {
             state.isPreachingDeleting = action.payload.isDeleting;
-        },
-
-        setIsPreachingLoading: (state, action: PayloadAction<SetIsLoadingPayload>) => {
-            state.isPreachingLoading = action.payload.isLoading;
         },
 
         setIsPreachingsExporting: (state, action: PayloadAction<SetIsExportingPayload>) => {
@@ -79,7 +72,6 @@ const preachingSlice = createSlice({
 
         setSelectedPreaching: (state, action: PayloadAction<PreachingPayload>) => {
             state.seletedPreaching = action.payload.preaching;
-            state.isPreachingLoading = false;
         },
 
         updatePreaching: (state, action: PayloadAction<PreachingPayload>) => {
@@ -89,7 +81,6 @@ const preachingSlice = createSlice({
                     : preaching
             );
             state.preachings = state.preachings.sort((a, b) => new Date(a.day).getTime() - new Date(b.day).getTime());
-            state.isPreachingLoading = false;
         }
     }
 });
@@ -99,7 +90,6 @@ export const {
     clearPreaching,
     removePreaching,
     setIsPreachingDeleting,
-    setIsPreachingLoading,
     setIsPreachingsExporting,
     setIsPreachingsLoading,
     setPreachings,

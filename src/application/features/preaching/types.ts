@@ -4,7 +4,6 @@ import { PreachingEntity } from '@domain/entities';
  * Defining the structure of the PreachingState object.
  *
  * @property {boolean} isPreachingDeleting - This indicates if the preaching is being deleted.
- * @property {boolean} isPreachingLoading - This indicates if the preaching is being loaded.
  * @property {boolean} isPreachingsExporting - This indicates if the preachings are being exported.
  * @property {boolean} isPreachingsLoading - This indicates if the preachings are being loaded.
  * @property {PreachingEntity[]} preachings - This is an array of preachings.
@@ -13,7 +12,6 @@ import { PreachingEntity } from '@domain/entities';
  */
 export interface PreachingState {
     isPreachingDeleting: boolean;
-    isPreachingLoading: boolean;
     isPreachingsExporting: boolean;
     isPreachingsLoading: boolean;
     preachings: PreachingEntity[];

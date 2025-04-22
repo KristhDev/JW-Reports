@@ -6,7 +6,6 @@ export {
     clearPreaching,
     removePreaching,
     setIsPreachingDeleting,
-    setIsPreachingLoading,
     setIsPreachingsExporting,
     setIsPreachingsLoading,
     setPreachings,
