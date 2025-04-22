@@ -16,7 +16,7 @@ import { Button, DatetimeField, FormCalendar, FormTime } from '@ui/components';
 /* Hooks */
 import { usePreaching } from '../../hooks';
 import { useStatus } from '@shared/hooks';
-import { useTranslation, useUI } from '@ui/hooks';
+import { useAsyncAction, useTranslation, useUI } from '@ui/hooks';
 
 /* Schemas */
 import { generatePreachingFormSchema } from './schemas';
@@ -38,14 +38,10 @@ export const PreachingForm = (): JSX.Element => {
 
     const { styles: themeStyles, theme: { colors, fontSizes, margins } } = useStyles(themeStylesheet);
 
-    const { state: { isPreachingLoading, seletedPreaching }, savePreaching, updatePreaching } = usePreaching();
+    const { state: { seletedPreaching }, savePreaching, updatePreaching } = usePreaching();
     const { setErrorForm } = useStatus();
     const { translate } = useTranslation();
     const { state: { userInterface } } = useUI();
-
-    const buttonText = (seletedPreaching.id !== '') 
-        ? translate('forms.actions.update') 
-        : translate('forms.actions.save');
 
     /**
      * If the selected preaching has an id, then update the preaching, otherwise save the preaching.
@@ -53,11 +49,19 @@ export const PreachingForm = (): JSX.Element => {
      * @param {PreachingFormValues} formValues - PreachingFormValues
      * @return {void} This function does not return anything.
      */
-    const handleSaveOrUpdate = (formValues: PreachingFormValues): void => {
-        (seletedPreaching.id === '')
-            ? savePreaching(formValues)
+    const handleSaveOrUpdate = async (formValues: PreachingFormValues): Promise<void> => {
+        const action = (seletedPreaching.id === '') 
+            ? savePreaching(formValues) 
             : updatePreaching(formValues);
+
+        await Promise.resolve(action)
     }
+
+    const { isLoading: isPreachingLoading, excuteAsyncAction } = useAsyncAction(handleSaveOrUpdate);
+
+    const buttonText = (seletedPreaching.id !== '') 
+        ? translate('forms.actions.update') 
+        : translate('forms.actions.save');
 
     const { errors, handleSubmit, isValid, setFieldValue, values } = useFormik({
         initialValues: {
@@ -65,7 +69,7 @@ export const PreachingForm = (): JSX.Element => {
             initHour: new Date(seletedPreaching.initHour),
             finalHour: new Date(seletedPreaching.finalHour)
         },
-        onSubmit: handleSaveOrUpdate,
+        onSubmit: excuteAsyncAction,
         validateOnMount: true,
         validationSchema: generatePreachingFormSchema()
     });

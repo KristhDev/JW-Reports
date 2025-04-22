@@ -17,7 +17,7 @@ import { Button, Checkbox, FormField, FormSelect } from '@ui/components';
 /* Hooks */
 import { useAuth } from '../../hooks';
 import { useStatus } from '@shared/hooks';
-import { useTranslation } from '@ui/hooks';
+import { useAsyncAction, useTranslation } from '@ui/hooks';
 
 /* Schemas */
 import { generateProfileFormSchema } from './schemas';
@@ -38,9 +38,10 @@ export const ProfileForm = (): JSX.Element => {
     const { top } = useSafeAreaInsets();
     const { styles: themeStyles, theme: { colors, fontSizes, margins } } = useStyles(themeStylesheet);
 
-    const { state: { user, isAuthLoading }, updateProfile } = useAuth();
+    const { state: { user }, updateProfile } = useAuth();
     const { setErrorForm } = useStatus();
     const { translate } = useTranslation();
+    const { isLoading, excuteAsyncAction } = useAsyncAction(updateProfile);
 
     const [ editHoursRequirement, setEditHoursRequirement ] = useState<boolean>(
         !Object.values(HOURS_REQUIREMENTS).includes(user?.hoursRequirement as any || HOURS_REQUIREMENTS.ninguno)
@@ -54,7 +55,7 @@ export const ProfileForm = (): JSX.Element => {
             hoursRequirement: user?.hoursRequirement || 0,
             hoursLDC: user?.hoursLDC || false
         },
-        onSubmit: updateProfile,
+        onSubmit: excuteAsyncAction,
         validateOnMount: true,
         validationSchema: generateProfileFormSchema()
     });
@@ -90,6 +91,7 @@ export const ProfileForm = (): JSX.Element => {
             {/* Name field */}
             <FormField
                 autoCapitalize="none"
+                editable={ !isLoading }
                 leftIcon={
                     <Ionicons
                         color={ colors.icon }
@@ -106,6 +108,7 @@ export const ProfileForm = (): JSX.Element => {
             {/* Surname field */}
             <FormField
                 autoCapitalize="none"
+                editable={ !isLoading }
                 leftIcon={
                     <Ionicons
                         color={ colors.icon }
@@ -142,7 +145,7 @@ export const ProfileForm = (): JSX.Element => {
                     {/* Hours requirement field */}
                     <FormField
                         autoCapitalize="none"
-                        editable={ editHoursRequirement }
+                        editable={ editHoursRequirement && !isLoading }
                         leftIcon={
                             <Ionicons
                                 color={ colors.icon }
@@ -176,8 +179,8 @@ export const ProfileForm = (): JSX.Element => {
 
             {/* Submit button */}
             <Button
-                disabled={ isAuthLoading }
-                icon={ (isAuthLoading) && (
+                disabled={ isLoading }
+                icon={ (isLoading) && (
                     <ActivityIndicator
                         color={ colors.contentHeader }
                         size={ fontSizes.icon }

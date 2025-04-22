@@ -13,7 +13,7 @@ import { Button, EyeBtn, FormField } from '@ui/components';
 /* Hooks */
 import { useAuth } from '../../hooks';
 import { useStatus } from '@shared/hooks';
-import { useTranslation } from '@ui/hooks';
+import { useAsyncAction, useTranslation } from '@ui/hooks';
 
 /* Schemas */
 import { generateEmailFormSchema, generatePasswordFormSchema } from './schemas';
@@ -27,45 +27,20 @@ import { generateEmailFormSchema, generatePasswordFormSchema } from './schemas';
 export const CredentialsForm = (): JSX.Element => {
     const authPlaceholders = placeholdersService.authPlaceholders;
 
-    const [ loadingEmail, setLoadingEmail ] = useState<boolean>(false);
-    const [ loadingPassword, setLoadingPassword ] = useState<boolean>(false);
     const [ showPassword, setShowPassword ] = useState<boolean>(false);
     const [ showConfirmPassword, setShowConfirmPassword ] = useState<boolean>(false);
 
     const { theme: { colors, fontSizes, margins } } = useStyles();
 
-    const { state: { user, isAuthLoading }, updateEmail, updatePassword } = useAuth();
+    const { state: { user }, updateEmail, updatePassword } = useAuth();
+    const { isLoading: isLoadingUpdateEmail, excuteAsyncAction: excuteAsyncUpdateEmail } = useAsyncAction(updateEmail);
+    const { isLoading: isLoadingUpdatePassword, excuteAsyncAction: excuteAsyncUpdatePassword } = useAsyncAction(updatePassword);
     const { setErrorForm } = useStatus();
     const { translate } = useTranslation();
 
-    /**
-     * Handles updating the email.
-     *
-     * @param {Object} values - The values object containing the email to be updated.
-     * @param {string} values.email - The new email.
-     * @return {void} This function does not return anything.
-     */
-    const handleUpdateEmail = (values: { email: string }): void => {
-        setLoadingEmail(true);
-        updateEmail(values, () => setLoadingEmail(false));
-    }
-
-    /**
-     * Updates the password with the provided values and resets the form.
-     *
-     * @param {Object} values - An object containing the password and confirmPassword.
-     * @param {Function} resetForm - A function to reset the form.
-     * @return {void} This function does not return anything.
-     */
-    const handleUpdatePassword = (values: { password: string, confirmPassword: string }, resetForm: () => void): void => {
-        setLoadingPassword(true);
-        updatePassword({ password: values.password }, () => setLoadingPassword(false))
-            .then(resetForm);
-    }
-
     const formikUpdateEmail = useFormik({
         initialValues: { email: user.email },
-        onSubmit: handleUpdateEmail,
+        onSubmit: excuteAsyncUpdateEmail,
         validateOnMount: true,
         validationSchema: generateEmailFormSchema(user.email)
     });
@@ -75,7 +50,7 @@ export const CredentialsForm = (): JSX.Element => {
             password: '',
             confirmPassword: ''
         },
-        onSubmit: (values, { resetForm }) => handleUpdatePassword(values, resetForm),
+        onSubmit: (values, { resetForm }) => updatePassword(values).then(() => resetForm()),
         validateOnMount: true,
         validationSchema: generatePasswordFormSchema()
     });
@@ -130,8 +105,8 @@ export const CredentialsForm = (): JSX.Element => {
 
                 {/* Submit button */}
                 <Button
-                    disabled={ isAuthLoading && loadingEmail }
-                    icon={ (isAuthLoading && loadingEmail) && (
+                    disabled={ isLoadingUpdateEmail }
+                    icon={ (isLoadingUpdateEmail) && (
                         <ActivityIndicator
                             color={ colors.contentHeader }
                             size={ fontSizes.icon }
@@ -148,6 +123,7 @@ export const CredentialsForm = (): JSX.Element => {
                 {/* New password field */}
                 <FormField
                     autoCapitalize="none"
+                    editable={ !isLoadingUpdatePassword }
                     leftIcon={
                         <Ionicons
                             color={ colors.icon }
@@ -171,6 +147,7 @@ export const CredentialsForm = (): JSX.Element => {
                 {/* Confirm password field */}
                 <FormField
                     autoCapitalize="none"
+                    editable={ !isLoadingUpdatePassword }
                     leftIcon={
                         <Ionicons
                             color={ colors.icon }
@@ -194,8 +171,8 @@ export const CredentialsForm = (): JSX.Element => {
 
                 {/* Submit button */}
                 <Button
-                    disabled={ isAuthLoading && loadingPassword }
-                    icon={ (isAuthLoading && loadingPassword) && (
+                    disabled={ isLoadingUpdatePassword }
+                    icon={ (isLoadingUpdatePassword) && (
                         <ActivityIndicator
                             color={ colors.contentHeader }
                             size={ fontSizes.icon }

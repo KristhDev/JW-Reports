@@ -14,7 +14,7 @@ import { Button, EyeBtn, FormField, Link } from '@ui/components';
 /* Hooks */
 import { useAuth } from '../../hooks';
 import { useStatus } from '@shared/hooks';
-import { useTranslation } from '@ui/hooks';
+import { useAsyncAction, useTranslation } from '@ui/hooks';
 
 /* Schemas */
 import { generateLoginFormSchema } from './schemas';
@@ -36,16 +36,17 @@ export const LoginForm = (): JSX.Element => {
     const router = useRouter();
     const { styles: themeStyles, theme: { colors, fontSizes, margins } } = useStyles(themeStylesheet);
 
-    const { state: { isAuthLoading }, signIn } = useAuth();
+    const { signIn } = useAuth();
     const { setErrorForm } = useStatus();
     const { translate } = useTranslation();
+    const { isLoading, excuteAsyncAction } = useAsyncAction(signIn);
 
     const { errors, handleChange, handleSubmit, isValid, values } = useFormik({
         initialValues: {
             email: '',
             password: ''
         },
-        onSubmit: signIn,
+        onSubmit: excuteAsyncAction,
         validateOnMount: true,
         validationSchema: generateLoginFormSchema()
     });
@@ -69,6 +70,7 @@ export const LoginForm = (): JSX.Element => {
             {/* Email field */}
             <FormField
                 autoCapitalize="none"
+                editable={ !isLoading }
                 leftIcon={
                     <Ionicons
                         color={ colors.icon }
@@ -86,6 +88,7 @@ export const LoginForm = (): JSX.Element => {
             {/* Password field */}
             <FormField
                 autoCapitalize="none"
+                editable={ !isLoading }
                 leftIcon={
                     <Ionicons
                         color={ colors.icon }
@@ -109,8 +112,8 @@ export const LoginForm = (): JSX.Element => {
 
             {/* Submit button */}
             <Button
-                disabled={ isAuthLoading }
-                icon={ (isAuthLoading) && (
+                disabled={ isLoading }
+                icon={ (isLoading) && (
                     <ActivityIndicator
                         color={ colors.contentHeader }
                         size={ fontSizes.icon }

@@ -14,7 +14,7 @@ import { Button, EyeBtn, FormField, Link } from '@ui/components';
 /* Hooks */
 import { useAuth } from '../../hooks';
 import { useStatus } from '@shared/hooks';
-import { useTranslation } from '@ui/hooks';
+import { useAsyncAction, useTranslation } from '@ui/hooks';
 
 /* Schemas */
 import { generateRegisterFormSchema } from './schemas';
@@ -37,9 +37,10 @@ export const RegisterForm = (): JSX.Element => {
     const router = useRouter();
     const { styles: themeStyles, theme: { colors, fontSizes, margins } } = useStyles(themeStylesheet);
 
-    const { state: { isAuthLoading }, signUp } = useAuth();
+    const { signUp } = useAuth();
     const { setErrorForm } = useStatus();
     const { translate } = useTranslation();
+    const { isLoading, excuteAsyncAction } = useAsyncAction(signUp);
 
     const { errors, handleChange, handleSubmit, isValid, values } = useFormik({
         initialValues: {
@@ -49,7 +50,7 @@ export const RegisterForm = (): JSX.Element => {
             password: '',
             confirmPassword: ''
         },
-        onSubmit: (values, { resetForm }) => signUp(values, resetForm),
+        onSubmit: (values, { resetForm }) => excuteAsyncAction(values).then(() => resetForm()),
         validateOnMount: true,
         validationSchema: generateRegisterFormSchema()
     });
@@ -71,6 +72,7 @@ export const RegisterForm = (): JSX.Element => {
             {/* Name field */}
             <FormField
                 autoCapitalize="none"
+                editable={ !isLoading }
                 leftIcon={
                     <Ionicons
                         color={ colors.icon }
@@ -87,6 +89,7 @@ export const RegisterForm = (): JSX.Element => {
             {/* Surname field */}
             <FormField
                 autoCapitalize="none"
+                editable={ !isLoading }
                 leftIcon={
                     <Ionicons
                         color={ colors.icon }
@@ -103,6 +106,7 @@ export const RegisterForm = (): JSX.Element => {
             {/* Email field */}
             <FormField
                 autoCapitalize="none"
+                editable={ !isLoading }
                 leftIcon={
                     <Ionicons
                         color={ colors.icon }
@@ -120,6 +124,7 @@ export const RegisterForm = (): JSX.Element => {
             {/* Password field */}
             <FormField
                 autoCapitalize="none"
+                editable={ !isLoading }
                 leftIcon={
                     <Ionicons
                         color={ colors.icon }
@@ -143,6 +148,7 @@ export const RegisterForm = (): JSX.Element => {
             {/* Confirm password field */}
             <FormField
                 autoCapitalize="none"
+                editable={ !isLoading }
                 leftIcon={
                     <Ionicons
                         color={ colors.icon }
@@ -165,8 +171,8 @@ export const RegisterForm = (): JSX.Element => {
 
             {/* Submit button */}
             <Button
-                disabled={ isAuthLoading }
-                icon={ (isAuthLoading) && (
+                disabled={ isLoading }
+                icon={ (isLoading) && (
                     <ActivityIndicator
                         color={ colors.contentHeader }
                         size={ fontSizes.icon }

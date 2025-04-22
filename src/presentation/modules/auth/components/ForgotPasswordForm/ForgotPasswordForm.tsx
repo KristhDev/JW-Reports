@@ -14,13 +14,10 @@ import { Button, FormField, Link } from '@ui/components';
 /* Hooks */
 import { useAuth } from '../../hooks';
 import { useStatus } from '@shared/hooks';
-import { useTranslation } from '@ui/hooks';
+import { useAsyncAction, useTranslation } from '@ui/hooks';
 
 /* Schemas */
 import { generateForgotPasswordFormSchema } from './schemas';
-
-/* Interfaces */
-import { EmailData } from '../../interfaces';
 
 /* Theme */
 import { themeStylesheet } from '@theme/styles';
@@ -37,25 +34,14 @@ export const ForgotPasswordForm = (): JSX.Element => {
     const router = useRouter();
     const { styles: themeStyles, theme: { colors, fontSizes, margins } } = useStyles(themeStylesheet);
 
-    const { state: { isAuthLoading }, resetPassword } = useAuth();
+    const { resetPassword } = useAuth();
     const { setErrorForm } = useStatus();
     const { translate } = useTranslation();
-
-    /**
-     * Handles the reset password functionality.
-     *
-     * @param {Object} values - An object containing the email value.
-     * @param {Function} resetForm - A function to reset the form.
-     * @return {void} This function does not return any value.
-     */
-    const handleResetPassword = (values: EmailData, resetForm: ()  => void): void => {
-        resetPassword(values);
-        resetForm();
-    }
+    const { isLoading, excuteAsyncAction } = useAsyncAction(resetPassword);
 
     const { errors, handleChange, handleSubmit, isValid, values } = useFormik({
         initialValues: { email: '' },
-        onSubmit: (values, { resetForm }) => handleResetPassword(values, resetForm),
+        onSubmit: (values, { resetForm }) => excuteAsyncAction(values).then(() => resetForm()),
         validateOnMount: true,
         validationSchema: generateForgotPasswordFormSchema()
     });
@@ -82,6 +68,7 @@ export const ForgotPasswordForm = (): JSX.Element => {
             {/* Email field */}
             <FormField
                 autoCapitalize="none"
+                editable={ !isLoading }
                 leftIcon={
                     <Ionicons
                         color={ colors.icon }
@@ -99,8 +86,8 @@ export const ForgotPasswordForm = (): JSX.Element => {
 
             {/* Submit button */}
             <Button
-                disabled={ isAuthLoading }
-                icon={ (isAuthLoading) && (
+                disabled={ isLoading }
+                icon={ (isLoading) && (
                     <ActivityIndicator
                         color={ colors.contentHeader }
                         size={ fontSizes.icon }
