@@ -2,7 +2,18 @@ import { TranslationAdapterContract } from '@domain/contracts/adapters';
 
 import { MessagesServiceContract, PublisherServiceContract } from '@domain/contracts/services';
 
-import { AppMessages, AuthMessages, CoursesMessages, EmailMessages, LessonsMessages, NetworkMessages, PermissionsMessages, PreachingMessages, PrecursorMessages, RevisitsMessages } from '@infrastructure/interfaces';
+import { 
+    AppMessages,
+    AuthMessages,
+    CoursesMessages,
+    EmailMessages,
+    LessonsMessages,
+    NetworkMessages,
+    PermissionsMessages,
+    PreachingMessages,
+    PrecursorMessages,
+    RevisitsMessages
+} from '@infrastructure/interfaces';
 
 export class MessagesService implements MessagesServiceContract {
     constructor(
@@ -67,12 +78,15 @@ export class MessagesService implements MessagesServiceContract {
             }),
 
             PASSWORD_NOT_MATCH: this.translationAdapter.translate('forms.validations.password.mismatch'),
+
             PASSWORD_UPDATED: this.translationAdapter.translate('messages.success.updated', {
-                attribute: this.translationAdapter.translate('forms.fields.password')
+                attribute: this.translationAdapter.translate('forms.fields.password'),
+                article: 'la',
             }),
 
             PROFILE_UPDATED: this.translationAdapter.translate('messages.success.updated', {
-                attribute: this.translationAdapter.translate('forms.fields.profile')
+                attribute: this.translationAdapter.translate('forms.fields.profile'),
+                article: 'su',
             }),
 
             SURNAME_EMPTY: this.translationAdapter.translate('forms.validations.empty', {
@@ -252,9 +266,9 @@ export class MessagesService implements MessagesServiceContract {
 
     public get permissionsMessages(): PermissionsMessages {
         return {
-            FILE_EXPORT_DENIED: 'Permiso denegado para exportar el archivo.',
-            REQUEST: 'Para realizar esta acción necesita permisos del dispositivo, por favor abra la configuración de su dispositivo y active los permisos de la aplicación.',
-            UNSUPPORTED: 'Lo sentimos pero su dispositivo no soporta esta funcionalidad.'
+            FILE_EXPORT_DENIED: this.translationAdapter.translate('messages.permissions.fileExportDenied'),
+            REQUEST: this.translationAdapter.translate('messages.permissions.request'),
+            UNSUPPORTED: this.translationAdapter.translate('messages.permissions.unsupported')
         }
     }
 
@@ -276,11 +290,28 @@ export class MessagesService implements MessagesServiceContract {
                 article: 'el',
             }),
 
-            EXPORTED_SUCCESS: 'Ha exportado sus informaciones de predicación correctamente. El archivo se encuentra en la carpeta que ha seleccionado.',
-            FINAL_HOUR_REQUIRED: 'La hora final no puede estar vacía.',
-            INIT_HOUR_GREATER_THAN_FINAL: 'La hora inicial no puede ser mayor que la hora final.',
-            INIT_HOUR_REQUIRED: 'La hora inicial no puede estar vacía.',
-            MONTHLY_HOURS_REQUIRED_DONE: '¡Excelente! has cumplido con tu requerimiento de horas por mes.',
+            EXPORTED_SUCCESS: this.translationAdapter.translate('messages.preaching.reportExported'),
+
+            FINAL_HOUR_REQUIRED: this.translationAdapter.translate('forms.validations.empty', {
+                article: 'La',
+                attribute: this.translationAdapter.translate('forms.fields.finalHour'),
+                required: 'vací́a'
+            }),
+
+            INIT_HOUR_GREATER_THAN_FINAL: this.translationAdapter.translate('forms.validations.lessThan', {
+                article: 'La',
+                attribute: this.translationAdapter.translate('forms.fields.initHour'),
+                min: this.translationAdapter.translate('forms.fields.finalHour'),
+                minArticle: 'la'
+            }),
+
+            INIT_HOUR_REQUIRED: this.translationAdapter.translate('forms.validations.empty', {
+                article: 'La',
+                attribute: this.translationAdapter.translate('forms.fields.initHour'),
+                required: 'vací́a'
+            }),
+
+            MONTHLY_HOURS_REQUIRED_DONE: this.translationAdapter.translate('messages.preaching.monthlyHoursDone'),
 
             UNSELECTED_DELETE: this.translationAdapter.translate('messages.errors.unSelected.deleted', {
                 attribute: this.translationAdapter.translate('forms.fields.preachingDay'),
@@ -294,8 +325,12 @@ export class MessagesService implements MessagesServiceContract {
                 genderEnding: 'o'
             }),
 
-            UPDATED_SUCCESS: 'Ha actualizado el día de predicación correctamente.',
-            WEEKLY_HOURS_REQUIRED_DONE: '¡Excelente! ha cumplido con su requerimiento de horas por semana.'
+            UPDATED_SUCCESS: this.translationAdapter.translate('messages.success.updated', {
+                attribute: this.translationAdapter.translate('forms.fields.preachingDay'),
+                article: 'el',
+            }),
+
+            WEEKLY_HOURS_REQUIRED_DONE: this.translationAdapter.translate('messages.preaching.weeklyHoursDone')
         }
     }
 
@@ -317,7 +352,11 @@ export class MessagesService implements MessagesServiceContract {
 
     public get revisitsMessages(): RevisitsMessages {
         return {
-            ABOUT_MIN_LENGTH: 'La información de la persona debe tener al menos 10 caracteres.',
+            ABOUT_MIN_LENGTH: this.translationAdapter.translate('forms.validations.min', {
+                article: 'La',
+                attribute: this.translationAdapter.translate('forms.fields.personAbout'),
+                min: 10
+            }),
 
             ABOUT_REQUIRED: this.translationAdapter.translate('forms.validations.required', {
                 article: 'La',
@@ -330,9 +369,19 @@ export class MessagesService implements MessagesServiceContract {
                 article: 'la',
             }),
 
-            ADDRESS_MIN_LENGTH: 'La dirección debe tener al menos 10 caracteres.',
-            ADDRESS_REQUIRED: 'La dirección es requerida.',
-            COMPLETED_SUCCESS: 'Ha marcado como completa su revisita correctamente.',
+            ADDRESS_MIN_LENGTH: this.translationAdapter.translate('forms.validations.min', {
+                article: 'La',
+                attribute: this.translationAdapter.translate('forms.fields.address'),
+                min: 10
+            }),
+
+            ADDRESS_REQUIRED: this.translationAdapter.translate('forms.validations.required', {
+                article: 'La',
+                attribute: this.translationAdapter.translate('forms.fields.address'),
+                required: 'requerida'
+            }),
+
+            COMPLETED_SUCCESS: this.translationAdapter.translate('messages.courses.completed'),
 
             DELETED_SUCCESS: this.translationAdapter.translate('messages.success.deleted', {
                 attribute: this.translationAdapter.translate('forms.fields.revisit'),
@@ -340,9 +389,20 @@ export class MessagesService implements MessagesServiceContract {
             }),
 
             EXPORTED_SUCCESS: 'Ha exportado sus revisitas correctamente. El archivo se encuentra en la carpeta que ha seleccionado.',
-            NEXT_VISIT_REQUIRED: 'La fecha de la último visita no puede estar vacía.',
-            PERSON_MIN_LENGTH: 'El nombre de la persona debe tener al menos 2 caracteres.',
-            PERSON_NAME_REQUIRED: 'El nombre de la persona es requerido.',
+
+            NEXT_VISIT_REQUIRED: 'La fecha de la última visita no puede estar vacía.',
+
+            PERSON_NAME_MIN_LENGTH: this.translationAdapter.translate('forms.validations.min', {
+                article: 'El',
+                attribute: this.translationAdapter.translate('forms.fields.personName'),
+                min: 2
+            }),
+
+            PERSON_NAME_REQUIRED: this.translationAdapter.translate('forms.validations.required', {
+                article: 'El',
+                attribute: this.translationAdapter.translate('forms.fields.personName'),
+                required: 'requerido'
+            }),
 
             UNSELECTED_COMPLETE: this.translationAdapter.translate('messages.errors.unSelected.completed', {
                 attribute: this.translationAdapter.translate('forms.fields.revisit'),
@@ -362,7 +422,10 @@ export class MessagesService implements MessagesServiceContract {
                 genderEnding: 'a'
             }),
 
-            UPDATED_SUCCESS: 'Ha actualizado la revisita correctamente.',
+            UPDATED_SUCCESS: this.translationAdapter.translate('messages.success.updated', {
+                attribute: this.translationAdapter.translate('forms.fields.revisit'),
+                article: 'la',
+            }),
         }
     }
 }
