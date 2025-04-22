@@ -1,5 +1,3 @@
-import { AuthResponse } from '@supabase/supabase-js';
-
 /* Config */
 import { env } from '@config/env';
 import { supabase } from '@config/supabase';
@@ -21,42 +19,37 @@ import { UserEndpoint } from '@infrastructure/interfaces';
 
 export class AuthService implements AuthServiceContract {
     /**
-     * Get the session and the user from the given token.
+     * Refreshes the session given a valid refresh token.
      *
-     * @param {string} token The token to get the session and user from.
-     * @return {Promise<{ user: UserEntity, token: string }>} A promise that resolves with an object containing the user and token.
+     * @param {string} token - The refresh token to refresh the session.
+     * @return {Promise<{ user: UserEntity, token: string }>} A promise that resolves with an object containing the new refresh token and the user.
+     * @throws {RequestError} If the request fails.
      */
-    public async getSession(token: string): Promise<{ user: UserEntity, token: string }> {
-        const user = await supabase.auth.getUser(token);
-        const session = await supabase.auth.getSession();
+    public async refreshSession(token: string): Promise<{ user: UserEntity; token: string; }> {
+        const result = await supabase.auth.refreshSession({ refresh_token: token });
 
-        const response: AuthResponse = {
-            data: {
-                session: session.data?.session,
-                user: user.data?.user
-            },
-            error: user?.error || session?.error
-        } as AuthResponse;
-
-        if (response.error) {
+        if (result.error) {
             throw new RequestError(
-                response.error.message,
-                response.error.status || 400,
-                response.error.code || ''
+                result.error.message,
+                result.error.status || 400,
+                result.error.code || ''
             );
         }
 
         const userEntity = UserEntity.fromEndpoint({
-            ...response.data.user!.user_metadata,
-            id: response.data.user!.id,
-            email: response.data.user!.email,
-            created_at: response.data!.user!.created_at,
-            updated_at: response.data.user!.updated_at
+            ...result.data.user!.user_metadata,
+            id: result.data.user!.id,
+            email: result.data.user!.email,
+            created_at: result.data!.user!.created_at,
+            updated_at: result.data.user!.updated_at
         } as UserEndpoint);
 
-        const newToken = response.data.session!.access_token;
+        const newToken = result.data.session!.refresh_token;
 
-        return { user: userEntity, token: newToken }
+        return { 
+            token: newToken,
+            user: userEntity 
+        }
     }
 
     /**
@@ -104,7 +97,7 @@ export class AuthService implements AuthServiceContract {
             updated_at: result.data.user.updated_at!
         } as UserEndpoint);
 
-        const token = result.data.session.access_token;
+        const token = result.data.session.refresh_token;
 
         return {
             token,
