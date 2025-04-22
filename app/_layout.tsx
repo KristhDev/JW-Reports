@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { AppState } from 'react-native';
-import { Stack } from 'expo-router';
+import { SplashScreen, Stack } from 'expo-router';
 import { useStyles } from 'react-native-unistyles';
 
 import '@config/i18n';
@@ -37,10 +37,12 @@ TimeAdapter.extend(TimeAdapter.plugins.localizedFormat);
 
 if (__DEV__) require('../ReactotronConfig');
 
+SplashScreen.preventAutoHideAsync();
+
 const Navigation = (): JSX.Element => {
   const { theme: { colors } } = useStyles();
 
-  const { state: { isAuthenticated }, getAuth } = useAuth();
+  const { state: { isAuthenticated, isAuthLoading }, refreshAuth } = useAuth();
   const { clearCourses } = useCourses();
   const { clearLessons } = useLessons();
   const { checkPermissions } = usePermissions();
@@ -55,15 +57,20 @@ const Navigation = (): JSX.Element => {
    * Effect to clear store when mount component.
    */
   useEffect(() => {
+    refreshAuth();
+
     if (wifi.hasConnection) {
       clearCourses();
       clearLessons();
       clearPreaching();
       clearRevisits();
-
-      getAuth();
     }
   }, []);
+
+  useEffect(() => {
+    if (isAuthLoading) return;
+    SplashScreen.hide();
+  }, [ isAuthLoading ]);
 
   /**
    * Effect to listen keyboard.
