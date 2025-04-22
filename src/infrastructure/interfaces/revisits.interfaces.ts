@@ -35,7 +35,7 @@ export interface RevisitsMessages {
     DELETED_SUCCESS: string;
     EXPORTED_SUCCESS: string;
     NEXT_VISIT_REQUIRED: string;
-    PERSON_MIN_LENGTH: string;
+    PERSON_NAME_MIN_LENGTH: string;
     PERSON_NAME_REQUIRED: string;
     UNSELECTED_COMPLETE: string;
     UNSELECTED_DELETE: string;
