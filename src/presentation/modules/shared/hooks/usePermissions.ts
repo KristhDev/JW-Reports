@@ -1,4 +1,6 @@
-/* Config */
+import { AppState, NativeEventSubscription } from 'react-native';
+
+/* DI */
 import { notificationsService, deviceImageService, voiceRecorderAdapter, messagesService } from '@config/di';
 
 /* Constants */
@@ -96,6 +98,20 @@ const usePermissions = () => {
         return status;
     }
 
+    /**
+     * Listens for changes in the app state and checks the permissions of the app when
+     * the app is active.
+     *
+     * @return {NativeEventSubscription} This function returns a subscription that can be
+     * used to remove the listener.
+     */
+    const listenCheckPermissions = (): NativeEventSubscription => {
+        return AppState.addEventListener('change', (state) => {
+            if (state !== 'active') return;
+            checkPermissions();
+        });
+    }
+
     return {
         // State
         state,
@@ -125,7 +141,8 @@ const usePermissions = () => {
         // Functions
         askPermission,
         checkPermissions,
-        requestPermissions
+        listenCheckPermissions,
+        requestPermissions,
     }
 }
 
