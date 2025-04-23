@@ -84,10 +84,11 @@ const useAuth = () => {
      * @return {Promise<void>} This function does not return any value.
      */
     const refreshAuth = async (): Promise<void> => {
+        setIsAuthLoading(true);
+
         if (state.token.trim().length === 0) {
             setIsAuthLoading(false);
             return;
-
         }
 
         const wifiConnectionAvailable = hasWifiConnection();
