@@ -2,6 +2,7 @@ export {
     default as uiReducer,
     INITIAL_KEYBOARD,
     setActiveFormField,
+    setIsAppReady,
     setIsDataExporting,
     setKeyboard,
     setLanguage,

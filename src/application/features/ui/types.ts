@@ -12,10 +12,15 @@ export type Keyboard = {
 
 export interface UIState {
     activeFormField: string;
+    isAppReady: boolean;
     isDataExporting: boolean;
     keyboard: Keyboard;
     recordedAudio: string;
     userInterface: UserInterface;
+}
+
+export type SetIsAppReadyPayload = {
+    isAppReady: boolean;
 }
 
 export type SetOldDatetimePickerPayload = {
