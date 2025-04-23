@@ -69,7 +69,7 @@ export interface CoursesMessages {
     PUBLICATION_REQUIRED: string;
     PUBLICATION_MIN_LENGTH: string;
     UNSELECTED: string; 
-    UNSELECTED_FINISH_OR_START: string;
+    UNSUSPENDED_FINISH_OR_START: string;
     UNSELECTED_DELETE: string;
     UNSELECTED_UPDATE: string;
     FINISHED: string;
