@@ -1,6 +1,7 @@
 export * from './BackButton';
 export * from './Button';
 export * from './Checkbox';
+export * from './DashLoader';
 export * from './DatetimeField';
 export * from './EyeBtn';
 export * from './Fab';
