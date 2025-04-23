@@ -25,6 +25,7 @@
     "messages": {
         "success": {
             "added": "Ha agregado {{article}} {{attribute}} correctamente.",
+            "dataExported": "Todos sus datos han sido exportados correctamente. Los archivos se encuentran en la carpeta que ha seleccionado.",
             "deleted": "Ha eliminado {{article}} {{attribute}} correctamente.",
             "updated": "Ha actualizado {{article}} {{attribute}} correctamente."
         },
@@ -38,11 +39,16 @@
             },
 
             "unauthenticated": "Para realizar está acción debe iniciar sesión.",
-            "unauthorized": "No tiene permiso para realizar está acción."
+            "unauthorized": "No tiene permiso para realizar está acción.",
+            "unexpectedError": "Ocurrio un error inesperado, por favor intentelo de nuevo."
         },
 
         "courses": {
-            "completed": "Ha marcado como completa su revisita correctamente."
+            "completed": "Ha marcado como completa su revisita correctamente.",
+            "coursesExported": "Ha exportado sus cursos correctamente. El archivo se encuentra en la carpeta que ha seleccionado.",
+            "unSuspendedFinishOrStart": "No puede terminar o comenzar de nuevo un curso suspendido.",
+            "finishedSuspendOrRestart": "No puede suspender o renovar un curso terminado.",
+            "suspended": "Ha suspendido el curso correctamente."
         },
 
         "preaching": {

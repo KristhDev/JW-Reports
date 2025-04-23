@@ -26,6 +26,7 @@
         "success": {
             "added": "You have added the {{attribute}} successfully.",
             "completed": "You have completed the {{attribute}} successfully.",
+            "dataExported": "All your data have been successfully exported. The files are located in the folder you have selected.",
             "deleted": "You have deleted the {{attribute}} successfully.",
             "updated": "You have updated the {{attribute}} successfully."
         },
@@ -39,11 +40,16 @@
             },
 
             "unauthenticated": "You must be logged in to perform this action.",
-            "unauthorized": "You don't have permission to perform this action."
+            "unauthorized": "You don't have permission to perform this action.",
+            "unexpectedError": "An unexpected error occurred, please try again."
         },
 
         "courses": {
-            "completed": "You have marked your revisit as complete."
+            "completed": "You have marked your revisit as complete.",
+            "coursesExported": "You have successfully exported your courses. The file is located in the folder you have selected.",
+            "unSuspendedFinishOrStart": "You can't not finish or restart a suspended course.",
+            "finishedSuspendOrRestart": "You can't suspended or restart a completed course.",
+            "suspended": "You have suspended the course successfully."
         },
 
         "preaching": {
