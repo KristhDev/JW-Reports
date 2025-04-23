@@ -23,8 +23,8 @@ export class MessagesService implements MessagesServiceContract {
 
     public get appMessages(): AppMessages {
         return {
-            DATA_EXPORTED_SUCCESS: 'Todos sus datos han sido exportados correctamente. Los archivos se encuentran en la carpeta que ha seleccionado.',
-            UNEXPECTED_ERROR: 'Ocurrio un error inesperado, por favor intentelo de nuevo.'
+            DATA_EXPORTED_SUCCESS: this.translationAdapter.translate('messages.success.dataExported'),
+            UNEXPECTED_ERROR: this.translationAdapter.translate('messages.errors.unexpectedError'),
         }
     }
 
@@ -108,7 +108,7 @@ export class MessagesService implements MessagesServiceContract {
 
     public get coursesMessages(): CoursesMessages {
         return {
-            EXPORTED_SUCCESS: 'Has exportado tus cursos correctamente. El archivo se encuentra en la carpeta que ha seleccionado.',
+            EXPORTED_SUCCESS: this.translationAdapter.translate('messages.courses.coursesExported'),
 
             PERSON_NAME_REQUIRED: this.translationAdapter.translate('forms.validations.required', {
                 article: 'El',
@@ -164,7 +164,7 @@ export class MessagesService implements MessagesServiceContract {
                 genderEnding: 'o'
             }),
 
-            UNSELECTED_FINISH_OR_START: 'No pudes terminar o comenzar de nuevo un curso suspendido.',
+            UNSUSPENDED_FINISH_OR_START: this.translationAdapter.translate('messages.courses.unSuspendedFinishOrStart'),
 
             UNSELECTED_DELETE: this.translationAdapter.translate('messages.errors.unSelected.deleted', {
                 attribute: this.translationAdapter.translate('forms.fields.course'),
@@ -178,8 +178,8 @@ export class MessagesService implements MessagesServiceContract {
                 genderEnding: 'o'
             }),
 
-            FINISHED: 'No puedes suspender o renovar un curso terminado.',
-            SUSPENDED_SUCCESS: 'Has suspendido el curso correctamente.',
+            FINISHED: this.translationAdapter.translate('messages.courses.finishedSuspendOrRestart'),
+            SUSPENDED_SUCCESS: this.translationAdapter.translate('messages.courses.suspended'),
             RENEW_SUCCESS: 'Has renovado el curso correctamente.',
 
             DELETED_SUCCESS: this.translationAdapter.translate('messages.success.deleted', {
