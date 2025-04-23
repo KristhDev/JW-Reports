@@ -288,7 +288,7 @@ const useCourses = () => {
 
         const courseSuspended = isSelectedCourseSuspended(
             coursesMessages.UNSELECTED,
-            coursesMessages.UNSELECTED_FINISH_OR_START,
+            coursesMessages.UNSUSPENDED_FINISH_OR_START,
             onFinish
         );
 
