@@ -1,5 +1,4 @@
 import { useEffect } from 'react';
-import { AppState } from 'react-native';
 import { Stack } from 'expo-router';
 import { useStyles } from 'react-native-unistyles';
 
