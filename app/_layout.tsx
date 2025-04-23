@@ -1,25 +1,22 @@
 import { useEffect } from 'react';
 import { AppState } from 'react-native';
-import { SplashScreen, Stack } from 'expo-router';
+import { Stack } from 'expo-router';
 import { useStyles } from 'react-native-unistyles';
 
 import '@config/i18n';
 import '@config/unistyles';
 
 /* Config */
-import { emailService, localizationAdapter, loggerService, notificationsService } from '@config/di';
-
-/* Constants */
-import { languagesCodes, validLanguagesCodes } from '@application/constants/utils';
+import { emailService, loggerService, notificationsService } from '@config/di';
 
 /* Adapters */
 import { TimeAdapter } from '@infrastructure/adapters';
 
-/* Interfaces */
-import { Languages } from '@infrastructure/interfaces';
-
 /* Providers */
 import { Provider } from '@providers';
+
+/* Screens */
+import { LoadingScreen } from '@ui/screens';
 
 /* Modules */
 import { useAuth } from '@auth/hooks';
@@ -29,7 +26,7 @@ import { usePreaching } from '@preaching/hooks';
 import { useRevisits } from '@revisits/hooks';
 import { useNetwork, usePermissions } from '@shared/hooks';
 import { useTheme } from '@theme/hooks';
-import { useTranslation, useUI } from '@ui/hooks';
+import { useUI } from '@ui/hooks';
 
 /* Global config of time util */
 TimeAdapter.extend(TimeAdapter.plugins.weekday);
@@ -37,21 +34,18 @@ TimeAdapter.extend(TimeAdapter.plugins.localizedFormat);
 
 if (__DEV__) require('../ReactotronConfig');
 
-SplashScreen.preventAutoHideAsync();
-
 const Navigation = (): JSX.Element => {
   const { theme: { colors } } = useStyles();
 
-  const { state: { isAuthenticated, isAuthLoading }, refreshAuth } = useAuth();
+  const { state: { isAuthLoading, isAuthenticated }, refreshAuth } = useAuth();
   const { clearCourses } = useCourses();
   const { clearLessons } = useLessons();
-  const { checkPermissions } = usePermissions();
+  const { listenCheckPermissions } = usePermissions();
   const { clearPreaching } = usePreaching();
   const { clearRevisits } = useRevisits();
   const { state: { theme } } = useTheme();
   const { wifi } = useNetwork();
-  const { changeLanguage } = useTranslation();
-  const { state: { userInterface }, listenHideKeyboard, listenShowKeyboard } = useUI();
+  const { state: { isAppReady }, listenHideKeyboard, listenShowKeyboard, loadSettings } = useUI();
 
   /**
    * Effect to clear store when mount component.
@@ -67,11 +61,6 @@ const Navigation = (): JSX.Element => {
     }
   }, []);
 
-  useEffect(() => {
-    if (isAuthLoading) return;
-    SplashScreen.hide();
-  }, [ isAuthLoading ]);
-
   /**
    * Effect to listen keyboard.
    */
@@ -86,37 +75,24 @@ const Navigation = (): JSX.Element => {
   }, []);
 
   /**
-   * Effect to set language of app.
+   * Effect to listen check of permissions.
    */
   useEffect(() => {
-    const deviceLangue = localizationAdapter.getCurrentLanguageCode();
+    const permissionsListener = listenCheckPermissions();
 
-    let language = languagesCodes.EN;
-    if (userInterface?.language) language = userInterface.language;
-
-    if (!userInterface.language && validLanguagesCodes.includes(deviceLangue as any)) {
-      language = deviceLangue as Languages;
+    return () => {
+      permissionsListener.remove();
     }
-
-    const timeLocale = TimeAdapter.locale[language as keyof typeof TimeAdapter.locale];
-
-    changeLanguage(language);
-    TimeAdapter.setLocale(timeLocale);
   }, []);
 
   /**
-   * Effect to check permissions when change AppState.
+   * Effect to load settings
    */
   useEffect(() => {
-    const unSubscribreAppState = AppState.addEventListener('change', async (state) => {
-      if (state !== 'active') return;
-      checkPermissions();
-    });
-
-    return () => {
-      unSubscribreAppState.remove();
-    }
+    loadSettings();
   }, []);
+
+  if (!isAppReady || isAuthLoading) return (<LoadingScreen />);
 
   return (
     <Stack
