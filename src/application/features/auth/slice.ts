@@ -26,7 +26,7 @@ export const INIT_USER: UserEntity = {
 export const AUTH_INITIAL_STATE: AuthState = {
     user: INIT_USER,
     isAuthenticated: false,
-    isAuthLoading: true,
+    isAuthLoading: false,
     token: ''
 }
 
