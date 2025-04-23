@@ -1,10 +1,15 @@
 import { EmitterSubscription, Keyboard } from 'react-native';
+import { useTranslation as useTranslationI18Next } from 'react-i18next';
+
+/* DI */
+import { localizationAdapter } from '@config/di';
 
 /* Features */
 import { useAppDispatch, useAppSelector } from '@application/store';
 import {
     Keyboard as KeyboardType,
     setActiveFormField as setActiveFormFieldAction,
+    setIsAppReady as setIsAppReadyAction,
     setIsDataExporting as setIsDataExportingAction,
     setKeyboard as setIsKeyboardVisibleAction,
     setLanguage as setLanguageAction,
@@ -12,13 +17,22 @@ import {
     setRecordedAudio as setRecordedAudioAction,
 } from '@application/features/ui';
 
+/* Constants */
+import { languagesCodes, validLanguagesCodes } from '@application/constants/utils';
+
 /* Interfaces */
 import { Languages } from '@infrastructure/interfaces';
+
+/* Adapters */
+import { TimeAdapter } from '@infrastructure/adapters';
 
 const useUI = () => {
     const dispatch = useAppDispatch();
     const state = useAppSelector(store => store.ui);
 
+    const { i18n } = useTranslationI18Next();
+
+    const setIsAppReady = (isAppReady: boolean) => dispatch(setIsAppReadyAction({ isAppReady }));
     const setActiveFormField = (activeFormField: string) => dispatch(setActiveFormFieldAction({ activeFormField }));
     const setIsDataExporting = (isExporting: boolean) => dispatch(setIsDataExportingAction({ isExporting }));
     const setKeyboard = (keyboard: KeyboardType) => dispatch(setIsKeyboardVisibleAction({ keyboard }));
@@ -67,6 +81,25 @@ const useUI = () => {
         });
     }
 
+    const loadSettings = async (): Promise<void> => {
+        const deviceLangue = localizationAdapter.getCurrentLanguageCode();
+
+        let language = languagesCodes.EN;
+        if (state.userInterface?.language) language = state.userInterface.language;
+
+        if (!state.userInterface.language && validLanguagesCodes.includes(deviceLangue as any)) {
+            language = deviceLangue as Languages;
+        }
+
+        setLanguage(language);
+        await i18n.changeLanguage(language);
+
+        const timeLocale = TimeAdapter.locale[language as keyof typeof TimeAdapter.locale];
+        TimeAdapter.setLocale(timeLocale);
+
+        setIsAppReady(true);
+    }
+
     return {
         state,
 
@@ -75,6 +108,7 @@ const useUI = () => {
         setRecordedAudio,
         listenHideKeyboard,
         listenShowKeyboard,
+        loadSettings,
         setIsDataExporting,
         setOldDatetimePicker
     }
