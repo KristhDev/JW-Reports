@@ -8,6 +8,7 @@ import { Button } from '../Button';
 
 /* Hooks */
 import { useImage } from '@shared/hooks';
+import { useTranslation } from '@ui/hooks';
 
 /* Interfaces */
 import { FormImageProps, FormImageRef } from './interfaces';
@@ -31,12 +32,12 @@ import { stylesheet } from './styles';
  * @return {JSX.Element} The rendered form image component.
  */
 export const FormImage  = forwardRef<FormImageRef, FormImageProps>(({
-    cameraButtonText = 'Cámara',
+    cameraButtonText,
     label,
     onSelectImage,
     defaultImage,
     disabled,
-    galleryButtonText = 'Galería',
+    galleryButtonText,
     imageStyle,
     imageUrl,
     labelStyle,
@@ -53,6 +54,10 @@ export const FormImage  = forwardRef<FormImageRef, FormImageProps>(({
     const { styles } = useStyles(stylesheet);
 
     const { image, clearImage, takeImageToGallery, takePhoto } = useImage();
+    const { translate } = useTranslation();
+
+    cameraButtonText = cameraButtonText || translate('forms.actions.camera');
+    galleryButtonText = galleryButtonText || translate('forms.actions.gallery');
 
     useEffect(() => {
         onSelectImage(image);
