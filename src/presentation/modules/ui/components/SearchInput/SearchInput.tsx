@@ -3,6 +3,9 @@ import { View, TextInput, Pressable } from 'react-native';
 import { useStyles } from 'react-native-unistyles';
 import Ionicons from '@expo/vector-icons/Ionicons';
 
+/* Hooks */
+import { useTranslation } from '@ui/hooks';
+
 /* Interfaces */
 import { SearchInputProps } from './interfaces';
 
@@ -28,6 +31,7 @@ export const SearchInput: FC<SearchInputProps> = ({ onClean, onSearch, refreshin
 
     const { styles: themeStyles, theme: { colors, fontSizes } } = useStyles(themeStylesheet);
     const { styles } = useStyles(stylesheet);
+    const { translate } = useTranslation();
 
     /**
      * When the user clicks the clear button, clear the search text, call the onClean function, and set
@@ -72,7 +76,7 @@ export const SearchInput: FC<SearchInputProps> = ({ onClean, onSearch, refreshin
                     onChangeText={ setSearchText }
                     onFocus={ () => setIsFocused(true) }
                     onSubmitEditing={ () => onSearch(searchText) }
-                    placeholder="Buscar"
+                    placeholder={ translate('forms.placeholders.search') }
                     placeholderTextColor={ colors.icon }
                     returnKeyType="search"
                     style={ themeStyles.formInput }
