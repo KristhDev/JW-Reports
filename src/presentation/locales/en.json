@@ -12,6 +12,14 @@
         }
     },
 
+    "topTabs": {
+        "revisits": {
+            "all": "All",
+            "visited": "Visited",
+            "unvisited": "Unvisited"
+        }
+    },
+
     "entities": {
         "revisit": "revisit",
         "lesson": "lesson"
@@ -44,6 +52,9 @@
             "unexpectedError": "An unexpected error occurred, please try again."
         },
 
+        "noResults": "No {{attribute}} found with the search: {{search}}",
+        "selectFieldToRecord": "Please select a field to record the audio.",
+
         "courses": {
             "completed": "You have marked your revisit as complete.",
             "coursesExported": "You have successfully exported your courses. The file is located in the folder you have selected.",
@@ -62,6 +73,12 @@
             "fileExportDenied": "Permission denied to export the file.",
             "request": "To perform this action you need device permissions, please open your device settings and activate the application permissions.",
             "unsupported": "We are sorry but your device does not support this functionality."
+        },
+
+        "revisits": {
+            "notAdded": "You have not added any revisits.",
+            "noMade": "No revisits have been made.",
+            "noVisit": "You do not have any revisits to visit"
         }
     },
 
@@ -192,6 +209,30 @@
             }
         },
 
+        "revisits": {
+            "titles": {
+                "allMyRevisits": "ALL MY REVISITS",
+                "madeRevisits": "REVISITS MADE",
+                "toBeMadeRevisits": "REVISITS TO BE MADE",
+                "revisit":"{{action}} REVISIT"
+            },
+
+            "labels": {
+                "nextVisit": "Next visit:",
+                "about": "{{person}} information:",
+                "address": "Address:",
+                "photo": "Photo:",
+                "revisitDone": "Revisit done"
+            },
+
+            "questions": {
+                "alreadyVisited": "Have you already visited {{person}}?",
+                "visitAgain": "Visit again?"
+            },
+
+            "photoPlaceholder": "The photo is to help you remember {{person}}'s place of residence."
+        },
+
         "settings": {
             "moreInfo": "For more information or to leave your comments about the application, please write to the following email: kristhdev@gmail.com.",
 
@@ -300,6 +341,10 @@
             "name": "Name:",
             "newPassword": "New Password:",
             "password": "Password:",
+            "personName": "Person name:",
+            "personAbout": "Person information:",
+            "photo": "Photo:",
+            "nextVisit": "Next visit:",
             "pioner": "Pioner:",
             "student": "Student name:",
             "studentInfo": "Student information:",
@@ -324,6 +369,7 @@
                 "hoursLDC": "Enter your completed LDC hours"
             },
 
+            "search": "Search",
             "confirm": "Confirm your {{attribute}}",
             "none": "None",
             "personAbout": "Enter data about the person, topics of interest, preferences, important aspects, etc...",
@@ -372,6 +418,8 @@
 
             "accept": "Accept",
             "add": "Add",
+            "camera": "Camera",
+            "gallery": "Gallery",
             "cancel": "Cancel",
             "delete": "Delete",
             "edit": "Edit",

@@ -12,9 +12,21 @@
         }
     },
 
+    "topTabs": {
+        "revisits": {
+            "all": "Todas",
+            "visited": "Visitadas",
+            "unvisited": "Por Visitar"
+        }
+    },
+
     "entities": {
         "revisit": "revisita",
-        "lesson": "lección"
+        "revisits": "revisitas",
+        "lesson": "clase",
+        "lessons": "clases",
+        "course": "curso",
+        "courses": "cursos"
     },
 
     "dates": {
@@ -43,6 +55,9 @@
             "unexpectedError": "Ocurrio un error inesperado, por favor intentelo de nuevo."
         },
 
+        "noResults": "No se encontraron {{attribute}} con la busqueda: {{search}}",
+        "selectFieldToRecord": "Por favor seleccione un campo para grabar el audio.",
+
         "courses": {
             "completed": "Ha marcado como completa su revisita correctamente.",
             "coursesExported": "Ha exportado sus cursos correctamente. El archivo se encuentra en la carpeta que ha seleccionado.",
@@ -61,6 +76,12 @@
             "fileExportDenied": "Permiso denegado para exportar el archivo.",
             "request": "Para realizar esta acción necesita permisos del dispositivo, por favor abra la configuración de su dispositivo y active los permisos de la aplicación.",
             "unsupported": "Lo sentimos pero su dispositivo no soporta esta funcionalidad."
+        },
+
+        "revisits": {
+            "notAdded": "No ha agregado ninguna revisita.",
+            "noMade": "No ha realizado ninguna revisita.",
+            "noVisit": "No tiene ninguna revisita por visitar."
         }
     },
 
@@ -191,6 +212,30 @@
             }
         },
 
+        "revisits": {
+            "titles": {
+                "allMyRevisits": "TODAS MIS REVISITAS",
+                "madeRevisits": "REVISITAS REALIZADAS",
+                "toBeMadeRevisits": "REVISITAS POR HACER",
+                "revisit":"{{action}} REVISITA"
+            },
+
+            "labels": {
+                "nextVisit": "Próxima visita:",
+                "about": "Información de {{person}}:",
+                "address": "Dirección:",
+                "photo": "Foto:",
+                "revisitDone": "Revisita realizada"
+            },
+
+            "questions": {
+                "alreadyVisited": "¿Ya visitaste a {{person}}?",
+                "visitAgain": "¿Visitar de nuevo?"
+            },
+
+            "photoPlaceholder": "La foto es para ayudarle a recordar el lugar de residencia de {{person}}."
+        },
+
         "settings": {
             "moreInfo": "Para más información o dejar sus comentarios acerca de la aplicación, por favor escriba al siguiente correo: kristhdev@gmail.com.",
 
@@ -299,6 +344,10 @@
             "name": "Nombre:",
             "newPassword": "Nueva contraseña:",
             "password": "Contraseña:",
+            "personName": "Nombre de la persona:",
+            "personAbout": "Información de la persona:",
+            "photo": "Foto:",
+            "nextVisit": "Próxima visita:",
             "pioner": "Precursor:",
             "student": "Nombre del estudiante:",
             "studentInfo": "Información del estudiante:",
@@ -323,6 +372,7 @@
                 "hoursLDC": "Ingrese sus horas LDC completas"
             },
 
+            "search": "Buscar",
             "confirm": "Confirme su {{attribute}}",
             "none": "Ninguno",
             "personAbout": "Ingrese datos sobre la persona, temas de interés, preferencias, aspectos importantes, etc...",
@@ -370,6 +420,8 @@
             },
 
             "accept": "Aceptar",
+            "camera": "Cámara",
+            "gallery": "Galería",
             "add": "Agregar",
             "cancel": "Cancelar",
             "delete": "Eliminar",
