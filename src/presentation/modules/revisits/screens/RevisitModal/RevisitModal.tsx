@@ -4,9 +4,13 @@ import { useStyles } from 'react-native-unistyles';
 import { useFormik } from 'formik';
 import Ionicons from '@expo/vector-icons/Ionicons';
 
+/* DI */
+import { placeholdersService } from '@config/di';
+
 /* Adapters */
 import { TimeAdapter } from '@infrastructure/adapters';
 
+/* Screens */
 import { Modal } from '@ui/screens';
 
 /* Components */
@@ -15,7 +19,7 @@ import { DatetimeField, FormCalendar, FormField, ModalActions } from '@ui/compon
 /* Hooks */
 import { useRevisits } from '../../hooks';
 import { useStatus } from '@shared/hooks';
-import { useUI } from '@ui/hooks';
+import { useTranslation, useUI } from '@ui/hooks';
 
 /* Interfaces */
 import { ModalProps } from '@ui/interfaces';
@@ -34,6 +38,8 @@ import { themeStylesheet } from '@theme/styles';
  * @returns {JSX.Element} Rendered component to show modal
  */
 const RevisitModal: FC<ModalProps> = ({ isOpen, onClose }): JSX.Element => {
+    const revisitsPlaceholders = placeholdersService.revisitsPlaceholders;
+
     const [ completeMsg, setCompleteMsg ] = useState<string>('');
     const [ revisitPerson, setRevisitPerson ] = useState<boolean>(false);
 
@@ -41,17 +47,26 @@ const RevisitModal: FC<ModalProps> = ({ isOpen, onClose }): JSX.Element => {
 
     const { state: { selectedRevisit, isRevisitLoading }, completeRevisit, saveRevisit } = useRevisits();
     const { setErrorForm } = useStatus();
+    const { translate } = useTranslation();
     const { state: { userInterface } } = useUI();
 
-    const modalTitle = (selectedRevisit.done)
-        ? `¿Quieres volver a visitar a ${ selectedRevisit.personName }?`
-        : '¿Está seguro de marcar esta revisita como visitada?';
+    const markAsVisitedTitle = translate('modals.titles.markAsk', { 
+        article: 'esta',
+        attribute: translate('forms.fields.revisit'),
+        mark: translate('screens.revisits.status.visited')
+    });
+
+    const visitAgainTitle = translate('modals.revisits.titles.visitAgain', { 
+        person: selectedRevisit.personName
+    });
+
+    const modalTitle = (selectedRevisit.done) ? visitAgainTitle : markAsVisitedTitle;
 
     const confirmTextButton = (revisitPerson)
-        ? 'GUARDAR'
+        ? translate('forms.actions.save').toUpperCase()
         : (selectedRevisit.done)
-            ? 'ACEPTAR'
-            : 'MARCAR';
+            ? translate('forms.actions.accept').toUpperCase()
+            : translate('forms.actions.mark').toUpperCase();
 
     /**
      * If the selectedRevisit.done is false, then call completeRevisit, otherwise if
@@ -138,7 +153,7 @@ const RevisitModal: FC<ModalProps> = ({ isOpen, onClose }): JSX.Element => {
                             </Text>
 
                             <ModalActions
-                                cancelButtonText="CANCELAR"
+                                cancelButtonText={ translate('forms.actions.cancel').toUpperCase() }
                                 confirmTextButton={ confirmTextButton }
                                 onCancel={ handleClose }
                                 onConfirm={ handleConfirm }
@@ -154,7 +169,7 @@ const RevisitModal: FC<ModalProps> = ({ isOpen, onClose }): JSX.Element => {
                                 style={{ ...themeStyles.modalText, marginBottom: margins.xl }}
                                 testID="revisit-modal-title"
                             >
-                                Por favor verifica los siguientes datos.
+                                { translate('modals.revisits.messages.verifyInfo') }
                             </Text>
 
                             <View style={{ alignItems: 'center' }}>
@@ -164,11 +179,11 @@ const RevisitModal: FC<ModalProps> = ({ isOpen, onClose }): JSX.Element => {
                                     controlStyle={{ paddingVertical: margins.xs + 2 }}
                                     editable={ !isRevisitLoading }
                                     inputStyle={{ minHeight: margins.sm * 10 }}
-                                    label="Información actual:"
+                                    label={ translate('forms.labels.personAbout') }
                                     multiline
                                     numberOfLines={ 10 }
                                     onChangeText={ handleChange('about') }
-                                    placeholder="Ingrese datos sobre la persona, tema de conversación, aspectos importantes, etc..."
+                                    placeholder={ revisitsPlaceholders.ABOUT }
                                     value={ values.about }
                                 />
 
@@ -184,10 +199,10 @@ const RevisitModal: FC<ModalProps> = ({ isOpen, onClose }): JSX.Element => {
                                             />
                                         }
                                         inputDateFormat="DD/MM/YYYY"
-                                        label="Próxima visita:"
+                                        label={ translate('forms.labels.nextVisit') }
                                         mode="date"
                                         onChangeDate={ (date: string) => setFieldValue('nextVisit', TimeAdapter.toDate(date)) }
-                                        placeholder="Seleccione el día"
+                                        placeholder={ revisitsPlaceholders.NEXT_VISIT }
                                         style={{ marginBottom: 0 }}
                                         value={ values.nextVisit.toString() }
                                     />
@@ -202,7 +217,7 @@ const RevisitModal: FC<ModalProps> = ({ isOpen, onClose }): JSX.Element => {
                                             />
                                         }
                                         inputDateFormat="DD/MM/YYYY"
-                                        label="Próxima visita:"
+                                        label={ translate('forms.labels.nextVisit') }
                                         onChangeDate={ (date: string) => setFieldValue('nextVisit', TimeAdapter.toDate(date)) }
                                         style={{ marginBottom: 0 }}
                                         value={ values.nextVisit.toString() }
@@ -211,7 +226,7 @@ const RevisitModal: FC<ModalProps> = ({ isOpen, onClose }): JSX.Element => {
 
                                 {/* Modal actions */}
                                 <ModalActions
-                                    cancelButtonText="CANCELAR"
+                                    cancelButtonText={ translate('forms.actions.cancel').toUpperCase() }
                                     confirmTextButton={ confirmTextButton }
                                     onCancel={ handleClose }
                                     onConfirm={ handlePress }
