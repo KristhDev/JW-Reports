@@ -22,7 +22,11 @@
 
     "entities": {
         "revisit": "revisit",
-        "lesson": "lesson"
+        "revisits": "revisits",
+        "lesson": "lesson",
+        "lessons": "lessons",
+        "course": "course",
+        "courses": "courses"
     },
 
     "dates": {
@@ -36,7 +40,11 @@
             "completed": "You have completed the {{attribute}} successfully.",
             "dataExported": "All your data have been successfully exported. The files are located in the folder you have selected.",
             "deleted": "You have deleted the {{attribute}} successfully.",
-            "updated": "You have updated the {{attribute}} successfully."
+            "updated": "You have updated the {{attribute}} successfully.",
+            "finished": "You have finished the {{attribute}} successfully.",
+            "renewed": "You have renewed the {{attribute}} successfully.",
+            "startedAgain": "You have started again the {{attribute}} successfully.",
+            "reprogrammed": "You have reprogrammed the {{attribute}} successfully."
         },
 
         "errors": {
@@ -63,6 +71,18 @@
             "suspended": "You have suspended the course successfully."
         },
 
+        "email": {
+            "feedbackFailed": "An error occurred while sending your suggestion, please try again.",
+            "feedbackSuccess": "Thanks for sharing your suggestion!",
+            "reportErrorFailed": "An error occurred while reporting this error, please try again.",
+            "reportErrorSuccess": "Thank you for reporting this error, it will be reviewed shortly for resolution and you will be notified when it is resolved."
+        },
+
+        "network": {
+            "hasntWifiConnection": "Sorry, but there is no Internet connection.",
+            "hasntWifiConnectionExplain": "We are sorry but you do not have Internet connection. The data in the application is not updated. Until you regain connection you will not be able to retrieve, save, edit or delete any data."
+        },
+
         "preaching": {
             "reportExported": "You have successfully exported your preaching information. The file is located in the folder you have selected.",
             "monthlyHoursDone": "Excellent! You have met your hours per month requirement.",
@@ -76,6 +96,7 @@
         },
 
         "revisits": {
+            "revisitsExported": "You have successfully exported your revisits. The file is located in the folder you have selected.",
             "notAdded": "You have not added any revisits.",
             "noMade": "No revisits have been made.",
             "noVisit": "You do not have any revisits to visit"
@@ -100,7 +121,8 @@
         "titles": {
             "deleteAsk": "Are you sure to delete this {{attribute}}?",
             "finishAsk": "Are you sure to finish this {{attribute}}?",
-            "reprogramAsk": "Are you sure to reprogram this {{attribute}}?"
+            "reprogramAsk": "Are you sure to reprogram this {{attribute}}?",
+            "markAsk": "Are you sure to mark this {{attribute}} as {{mark}}?"
         },
 
         "auth": {
@@ -134,6 +156,16 @@
         "lessons": {
             "descriptions": {
                 "reprogramLesson": "Please enter the date on which the class will be given."
+            }
+        },
+
+        "revisits": {
+            "titles": {
+                "visitAgain": "Do you want to visit {{person}} again?"
+            },
+
+            "messages": {
+                "verifyInfo": "Please verify the following information."
             }
         }
     },
@@ -228,6 +260,10 @@
             "questions": {
                 "alreadyVisited": "Have you already visited {{person}}?",
                 "visitAgain": "Visit again?"
+            },
+
+            "status": {
+                "visited": "visited"
             },
 
             "photoPlaceholder": "The photo is to help you remember {{person}}'s place of residence."
@@ -383,6 +419,7 @@
             "address": "address",
             "confirmPassword": "confirm password",
             "course": "course",
+            "contentClass": "content of class",
             "day": "day",
             "description": "description",
             "email": "email",
@@ -391,6 +428,8 @@
             "hoursRequirement": "hours requirement",
             "initHour": "initial hour",
             "lesson": "lesson",
+            "message": "message",
+            "nextLessonDate": "fecha de la próxima clase",
             "name": "name",
             "password": "password",
             "personAbout": "person information",
@@ -400,7 +439,8 @@
             "profile": "profile",
             "publication": "publication",
             "revisit": "revisit",
-            "surname": "surname"
+            "surname": "surname",
+            "lastVisitDate": "last visit date"
         },
 
         "actions": {
@@ -417,6 +457,7 @@
             },
 
             "accept": "Accept",
+            "mark": "Mark",
             "add": "Add",
             "camera": "Camera",
             "gallery": "Gallery",
@@ -463,7 +504,11 @@
                 "mismatch": "The passwords don't match."
             },
 
-            "unchanged": "To update your {{attribute}} you must change it."
+            "unchanged": "To update your {{attribute}} you must change it.",
+
+            "lessons": {
+                "suspendedOrFinished": "You may not finish or reschedule a class from a suspended or finished course."
+            }
         }
     },
 

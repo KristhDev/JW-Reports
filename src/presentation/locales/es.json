@@ -39,7 +39,11 @@
             "added": "Ha agregado {{article}} {{attribute}} correctamente.",
             "dataExported": "Todos sus datos han sido exportados correctamente. Los archivos se encuentran en la carpeta que ha seleccionado.",
             "deleted": "Ha eliminado {{article}} {{attribute}} correctamente.",
-            "updated": "Ha actualizado {{article}} {{attribute}} correctamente."
+            "updated": "Ha actualizado {{article}} {{attribute}} correctamente.",
+            "finished": "Ha terminado {{article}} {{attribute}} correctamente.",
+            "renewed": "Ha renovado {{article}} {{attribute}} correctamente.",
+            "startedAgain": "Ha comenzado de nuevo {{article}} {{attribute}} correctamente.",
+            "reprogrammed": "Ha reprogramado {{article}} {{attribute}} correctamente."
         },
 
         "errors": {
@@ -66,6 +70,18 @@
             "suspended": "Ha suspendido el curso correctamente."
         },
 
+        "email": {
+            "feedbackFailed": "Ocurrio un error al enviar su sugerencia, por favor intentelo de nuevo.",
+            "feedbackSuccess": "¡Gracias por compartir su sugerencia!",
+            "reportErrorFailed": "Ocurrio un error al informar de este error, por favor intentelo de nuevo.",
+            "reportErrorSuccess": "Gracias por informar de este error, se revisará a la brevedad para solucionarlo y se le notificará cuando se resuelva."
+        },
+
+        "network": {
+            "hasntWifiConnection": "Lo sentimos pero no dispone de conexión a Internet.",
+            "hasntWifiConnectionExplain": "Lo sentimos pero no dispone de conexion a Internet. Los datos que hay en la aplicación no son actualizados. Hasta que recupere la conexión no podrá obtener, guardar, editar o eliminar ningún dato."
+        },
+
         "preaching": {
             "reportExported": "Ha exportado sus informaciones de predicación correctamente. El archivo se encuentra en la carpeta que ha seleccionado.",
             "monthlyHoursDone": "¡Excelente! has cumplido con tu requerimiento de horas por mes.",
@@ -79,6 +95,7 @@
         },
 
         "revisits": {
+            "revisitsExported": "Ha exportado sus revisitas correctamente. El archivo se encuentra en la carpeta que ha seleccionado.",
             "notAdded": "No ha agregado ninguna revisita.",
             "noMade": "No ha realizado ninguna revisita.",
             "noVisit": "No tiene ninguna revisita por visitar."
@@ -103,7 +120,8 @@
         "titles": {
             "deleteAsk": "¿Está seguro de eliminar {{article}} {{attribute}}?",
             "finishAsk": "¿Está seguro de terminar {{article}} {{attribute}}?",
-            "reprogramAsk": "¿Está seguro de reprogramar {{article}} {{attribute}}?"
+            "reprogramAsk": "¿Está seguro de reprogramar {{article}} {{attribute}}?",
+            "markAsk": "¿Está seguro de marcar {{article}} {{attribute}} como {{mark}}?"
         },
 
         "auth": {
@@ -137,6 +155,16 @@
         "lessons": {
             "descriptions": {
                 "reprogramLesson": "Por favor ingrese la fecha en la se dará la clase."
+            }
+        },
+
+        "revisits": {
+            "titles": {
+                "visitAgain": "¿Quieres volver a visitar a {{person}}?"
+            },
+
+            "messages": {
+                "verifyInfo": "Por favor verifique los siguientes datos."
             }
         }
     },
@@ -231,6 +259,10 @@
             "questions": {
                 "alreadyVisited": "¿Ya visitaste a {{person}}?",
                 "visitAgain": "¿Visitar de nuevo?"
+            },
+
+            "status": {
+                "visited": "visitada"
             },
 
             "photoPlaceholder": "La foto es para ayudarle a recordar el lugar de residencia de {{person}}."
@@ -386,6 +418,7 @@
             "address": "dirección",
             "confirmPassword": "confirmación de contraseña",
             "course": "curso",
+            "contentClass": "contenido de la clase",
             "day": "día",
             "description": "descripción",
             "email": "correo",
@@ -394,6 +427,8 @@
             "hoursRequirement": "requerimiento de horas",
             "initHour": "hora de inicio",
             "lesson": "clase",
+            "message": "mensaje",
+            "nextLessonDate": "fecha de la próxima clase",
             "name": "nombre",
             "password": "contraseña",
             "personAbout": "información de la persona",
@@ -403,7 +438,8 @@
             "profile": "perfil",
             "publication": "publicación",
             "revisit": "revisita",
-            "surname": "apellidos"
+            "surname": "apellidos",
+            "lastVisitDate": "fecha de la última visita"
         },
 
         "actions": {
@@ -420,6 +456,7 @@
             },
 
             "accept": "Aceptar",
+            "mark": "Marcar",
             "camera": "Cámara",
             "gallery": "Galería",
             "add": "Agregar",
@@ -466,7 +503,11 @@
                 "mismatch": "Las contraseñas no coinciden."
             },
 
-            "unchanged": "Para actualizar su {{attribute}} debes cambiarlo."
+            "unchanged": "Para actualizar su {{attribute}} debes cambiarlo.",
+
+            "lessons": {
+                "suspendedOrFinished": "No puedes terminar o reprogramar de nuevo una clase de un curso suspendido o terminado."
+            }
         }
     },
 
