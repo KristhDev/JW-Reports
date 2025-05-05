@@ -1,5 +1,6 @@
 export interface AppMessages {
     DATA_EXPORTED_SUCCESS: string;
+    SELECT_FIELD_TO_RECORD: string;
     UNEXPECTED_ERROR: string;
 }
 
