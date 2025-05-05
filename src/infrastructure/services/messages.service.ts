@@ -24,6 +24,7 @@ export class MessagesService implements MessagesServiceContract {
     public get appMessages(): AppMessages {
         return {
             DATA_EXPORTED_SUCCESS: this.translationAdapter.translate('messages.success.dataExported'),
+            SELECT_FIELD_TO_RECORD: this.translationAdapter.translate('messages.selectFieldToRecord'),
             UNEXPECTED_ERROR: this.translationAdapter.translate('messages.errors.unexpectedError'),
         }
     }
