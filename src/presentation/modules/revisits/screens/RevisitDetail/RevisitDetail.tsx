@@ -13,6 +13,7 @@ import { Link, Title } from '@ui/components';
 
 /* Hooks */
 import { useRevisits } from '@revisits/hooks'
+import { useTranslation } from '@ui/hooks';
 
 /* Styles */
 import { themeStylesheet } from '@theme/styles';
@@ -33,8 +34,21 @@ const RevisitDetail = (): JSX.Element => {
     const { styles } = useStyles(stylesheet);
 
     const { state: { selectedRevisit } } = useRevisits();
+    const { translate } = useTranslation();
 
-    const nextVisit = TimeAdapter.format(selectedRevisit.nextVisit, 'DD [de] MMMM [del] YYYY');
+    const nextVisit = TimeAdapter.format(selectedRevisit.nextVisit, 'LL');
+
+    const aboutLabel = translate('screens.revisits.labels.about', {
+        person: selectedRevisit.personName
+    });
+
+    const photoPlaceholder = translate('screens.revisits.photoPlaceholder', {
+        person: selectedRevisit.personName
+    });
+
+    const alreadyVisited = translate('screens.revisits.questions.alreadyVisited', {
+        person: selectedRevisit.personName
+    });
 
     /**
      * Effect to set imageHeight when changing the selectedRevisit.photo
@@ -68,7 +82,7 @@ const RevisitDetail = (): JSX.Element => {
                     <View style={ themeStyles.detailSection }>
                         <View style={{ flexDirection: 'row' }}>
                             <Text style={{ ...themeStyles.detailSubTitle, marginBottom: 0 }}>
-                                Próxima visita:
+                                { translate('screens.revisits.labels.nextVisit') }
                             </Text>
 
                             <Text
@@ -83,7 +97,7 @@ const RevisitDetail = (): JSX.Element => {
                             onPress={ () => setShowModal(true) }
                             textStyle={ themeStyles.sectionTextSize }
                         >
-                            ¿Ya la visitaste?
+                            { alreadyVisited }
                         </Link>
                     </View>
                 ) : (
@@ -92,14 +106,14 @@ const RevisitDetail = (): JSX.Element => {
                         testID="revisit-detail-revisit-again-section"
                     >
                         <Text style={ themeStyles.detailText }>
-                            Revisita realizada
+                            { translate('screens.revisits.labels.revisitDone') }
                         </Text>
 
                         <Link
                             onPress={ () => setShowModal(true) }
                             textStyle={ themeStyles.sectionTextSize }
                         >
-                            ¿Visitar de nuevo?
+                            { translate('screens.revisits.questions.visitAgain') }
                         </Link>
                     </View>
                 ) }
@@ -110,7 +124,7 @@ const RevisitDetail = (): JSX.Element => {
                         style={ themeStyles.detailSubTitle }
                         testID="revisit-detail-about-subtitle"
                     >
-                        Información de { selectedRevisit.personName }:
+                        { aboutLabel }
                     </Text>
 
                     <Text
@@ -124,7 +138,7 @@ const RevisitDetail = (): JSX.Element => {
                 {/* Address section of revisit */}
                 <View style={ themeStyles.detailSection }>
                     <Text style={ themeStyles.detailSubTitle }>
-                        Dirección:
+                        { translate('screens.revisits.labels.address') }
                     </Text>
 
                     <Text
@@ -139,7 +153,7 @@ const RevisitDetail = (): JSX.Element => {
                 { (selectedRevisit.photo) && (
                     <View style={ themeStyles.detailSection }>
                         <Text style={ themeStyles.detailSubTitle }>
-                            Foto:
+                            { translate('screens.revisits.labels.photo') }
                         </Text>
 
                         <Image
@@ -152,7 +166,7 @@ const RevisitDetail = (): JSX.Element => {
                             style={ styles.imageText }
                             testID="revisit-detail-photo-text"
                         >
-                            La foto es para ayudarte a recordar el lugar de residencia de { selectedRevisit.personName }
+                            { photoPlaceholder }
                         </Text>
                     </View>
                 ) }
