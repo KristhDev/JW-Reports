@@ -38,7 +38,7 @@ export interface LessonsMessages {
     DESCRIPTION_REQUIRED: string;
     FINISHED_SUCCESS: string;
     NEXT_LESSON_REQUIRED: string;
-    RESTARTED_SUCCESS: string;
+    REPROGRAMMED_SUCCESS: string;
     SUSPENDED_OR_FINISHED: string;
     UNSELECTED_DELETE: string;
     UNSELECTED_UPDATE: string;
