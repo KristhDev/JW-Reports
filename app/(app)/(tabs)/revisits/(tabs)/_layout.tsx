@@ -7,6 +7,7 @@ import { useStyles } from 'react-native-unistyles';
 import { INIT_REVISIT } from '@application/features/revisits';
 
 import { useRevisits } from '@revisits/hooks';
+import { useTranslation } from '@ui/hooks';
 
 const { Navigator } = createMaterialTopTabNavigator();
 
@@ -21,6 +22,7 @@ export default function RevisitsTopTabsLauyout(): JSX.Element {
     const { theme: { colors } } = useStyles();
 
     const { setSelectedRevisit } = useRevisits();
+    const { translate } = useTranslation();
 
     useFocusEffect(
         useCallback(() => {
@@ -55,32 +57,32 @@ export default function RevisitsTopTabsLauyout(): JSX.Element {
         >
             <TopTabs.Screen
                 initialParams={{
-                    emptyMessage: 'No has agregado ninguna revisita.',
+                    emptyMessage: translate('messages.revisits.notAdded'),
                     filter: 'all',
-                    title: 'TODAS MIS REVISITAS',
+                    title: translate('screens.revisits.titles.allMyRevisits')
                 }}
                 name="index"
-                options={{ title: 'Todas' }}
+                options={{ title: translate('topTabs.revisits.all') }}
             />
 
             <TopTabs.Screen
                 initialParams={{
-                    emptyMessage: 'No has realizado ninguna revisita.',
+                    emptyMessage: translate('messages.revisits.noMade'),
                     filter: 'visited',
-                    title: 'REVISITAS REALIZADAS',
+                    title: translate('screens.revisits.titles.madeRevisits')
                 }}
                 name="visited"
-                options={{ title: 'Visitadas' }}
+                options={{ title: translate('topTabs.revisits.visited') }}
             />
 
             <TopTabs.Screen
                 initialParams={{
-                    emptyMessage: 'No tienes ninguna revisita por hacer.',
+                    emptyMessage: translate('messages.revisits.noVisit'),
                     filter: 'unvisited',
-                    title: 'REVISITAS POR HACER',
+                    title: translate('screens.revisits.titles.toBeMadeRevisits')
                 }}
                 name="unvisited"
-                options={{ title: 'Por Visitar' }}
+                options={{ title: translate('topTabs.revisits.unvisited') }}
             />
         </TopTabs>
     );

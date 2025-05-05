@@ -7,6 +7,7 @@ import { Header, HeaderButtons } from '@ui/components';
 
 /* Hooks */
 import { useRevisits } from '@revisits/hooks';
+import { useTranslation } from '@ui/hooks';
 
 export default function RevisitsLayout(): JSX.Element {
     const [ showDeleteModal, setShowDeleteModal ] = useState<boolean>(false);
@@ -15,8 +16,20 @@ export default function RevisitsLayout(): JSX.Element {
     const { theme: { colors } } = useStyles();
 
     const { state: { isRevisitDeleting, selectedRevisit }, deleteRevisit } = useRevisits();
+    const { translate } = useTranslation();
 
-    const revisitDetailTitle = `Revisita ${ selectedRevisit.personName }`;
+    const addOrEditRevisitTitleNavigation = translate('navigation.titles.revisit', {
+        action: (selectedRevisit.id !== '')
+            ? translate('forms.actions.edit')
+            : translate('forms.actions.add')
+    });
+
+    const revisitDetailTitle = translate('navigation.titles.revisitTo', { name: selectedRevisit.personName });
+
+    const deleteRevisitModalTitle = translate('modals.titles.deleteAsk', {
+        article: 'esta',
+        attribute: translate('forms.fields.revisit')
+    });
 
     /**
      * If the user confirms the delete, then delete the revisit and close the modal.
@@ -73,7 +86,7 @@ export default function RevisitsLayout(): JSX.Element {
         >
             <Stack.Screen
                 name="(tabs)"
-                options={{ title: 'Revisitas' }}
+                options={{ title: translate('navigation.titles.revisits') }}
             />
 
             <Stack.Screen
@@ -88,7 +101,7 @@ export default function RevisitsLayout(): JSX.Element {
                         >
                             <HeaderButtons
                                 deleteButton={ true }
-                                deleteModalText="¿Está seguro de eliminar esta revisita?"
+                                deleteModalText={ deleteRevisitModalTitle }
                                 isDeleteModalLoading={ isRevisitDeleting }
                                 onCloseDeleteModal={ () => setShowDeleteModal(false) }
                                 onConfirmDeleteModal={ () => handleDeleteConfirm(handleGoBack) }
@@ -116,7 +129,7 @@ export default function RevisitsLayout(): JSX.Element {
                         >
                             <HeaderButtons
                                 deleteButton={ selectedRevisit.id !== '' }
-                                deleteModalText="¿Está seguro de eliminar esta revisita?"
+                                deleteModalText={ deleteRevisitModalTitle }
                                 isDeleteModalLoading={ isRevisitDeleting }
                                 onCloseDeleteModal={ () => setShowDeleteModal(false) }
                                 onConfirmDeleteModal={ () => handleDeleteConfirm(() => handleDismissTo('/(app)/(tabs)/revisits/(tabs)')) }
@@ -127,7 +140,7 @@ export default function RevisitsLayout(): JSX.Element {
                             />
                         </Header>
                     ),
-                    title: `${ selectedRevisit.id !== '' ? 'Editar' : 'Agregar' } revisita`
+                    title: addOrEditRevisitTitleNavigation
                 }}
             />
         </Stack>
