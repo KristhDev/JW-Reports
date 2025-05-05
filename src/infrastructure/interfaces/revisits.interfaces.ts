@@ -42,3 +42,10 @@ export interface RevisitsMessages {
     UNSELECTED_UPDATE: string;
     UPDATED_SUCCESS: string;
 }
+
+export interface RevisitsPlaceholders {
+    ABOUT: string;
+    ADDRESS: string;
+    NEXT_VISIT: string;
+    PERSON_NAME: string;
+}
