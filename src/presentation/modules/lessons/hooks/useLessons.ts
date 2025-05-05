@@ -238,7 +238,7 @@ const useLessons = () => {
             if (user.precursor === precursors.NINGUNO) await loadLastLesson();
 
             onFinish && onFinish();
-            const msg = (lesson.done) ? lessonsMessages.FINISHED_SUCCESS : lessonsMessages.RESTARTED_SUCCESS;
+            const msg = (lesson.done) ? lessonsMessages.FINISHED_SUCCESS : lessonsMessages.REPROGRAMMED_SUCCESS;
             setStatus({ code: 200, msg });
         }
         catch (error) {
