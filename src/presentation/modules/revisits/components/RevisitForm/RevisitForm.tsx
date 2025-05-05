@@ -4,6 +4,9 @@ import { useStyles } from 'react-native-unistyles';
 import { useFormik } from 'formik';
 import Ionicons from '@expo/vector-icons/Ionicons';
 
+/* DI */
+import { placeholdersService } from '@config/di';
+
 /* Models */
 import { ImageModel } from '@domain/models';
 
@@ -16,7 +19,7 @@ import { Button, DatetimeField, FormCalendar, FormField, FormImage } from '@ui/c
 /* Hooks */
 import { useRevisits } from '../../hooks';
 import { useStatus } from '@shared/hooks';
-import { useUI } from '@ui/hooks';
+import { useTranslation, useUI } from '@ui/hooks';
 
 /* Schemas */
 import { generateRevisitFormSchema } from './schemas';
@@ -36,13 +39,18 @@ const defaultRevisit = require('@assets/revisit-default.jpg');
  * @return {JSX.Element} Rendered component form to create or edit a revisit
  */
 export const RevisitForm: FC = (): JSX.Element => {
+    const revisitsPlaceholders = placeholdersService.revisitsPlaceholders;
+
     const [ image, setImage ] = useState<ImageModel | null>(null);
 
     const { styles: themeStyles, theme: { colors, fontSizes, margins } } = useStyles(themeStylesheet);
 
     const { state: { selectedRevisit, isRevisitLoading }, saveRevisit, updateRevisit } = useRevisits();
     const { setErrorForm } = useStatus();
+    const { translate } = useTranslation();
     const { state: { activeFormField, recordedAudio, userInterface }, setActiveFormField } = useUI();
+
+    const btnText = selectedRevisit.id === '' ? translate('forms.actions.save') : translate('forms.actions.update');
 
     /**
      * Handles the save or update of a revisit based on the selected revisit ID.
@@ -97,10 +105,10 @@ export const RevisitForm: FC = (): JSX.Element => {
                         size={ fontSizes.icon }
                     />
                 }
-                label="Nombre de la persona:"
+                label={ translate('forms.labels.personName') }
                 onChangeText={ handleChange('personName') }
                 onFocus={ () => setActiveFormField('personName') }
-                placeholder="Ingrese el nombre"
+                placeholder={ revisitsPlaceholders.PERSON_NAME }
                 value={ values.personName }
             />
 
@@ -109,12 +117,12 @@ export const RevisitForm: FC = (): JSX.Element => {
                 controlStyle={{ paddingVertical: margins.xs + 2 }}
                 editable={ !isRevisitLoading }
                 inputStyle={{ minHeight: margins.sm * 9 }}
-                label="Información de la persona:"
+                label={ translate('forms.labels.personAbout') }
                 multiline
                 numberOfLines={ 9 }
                 onChangeText={ handleChange('about') }
                 onFocus={ () => setActiveFormField('about') }
-                placeholder="Ingrese datos sobre la persona, tema de conversación, aspectos importantes, etc..."
+                placeholder={ revisitsPlaceholders.ABOUT }
                 value={ values.about }
             />
 
@@ -123,12 +131,12 @@ export const RevisitForm: FC = (): JSX.Element => {
                 controlStyle={{ paddingVertical: margins.xs + 2 }}
                 editable={ !isRevisitLoading }
                 inputStyle={{ minHeight: margins.sm * 6 }}
-                label="Dirección:"
+                label={ translate('forms.labels.address') }
                 multiline
                 numberOfLines={ 3 }
                 onChangeText={ handleChange('address') }
                 onFocus={ () => setActiveFormField('address') }
-                placeholder="Ingrese la dirección"
+                placeholder={ revisitsPlaceholders.ADDRESS }
                 value={ values.address }
             />
 
@@ -137,7 +145,7 @@ export const RevisitForm: FC = (): JSX.Element => {
                 defaultImage={ defaultRevisit }
                 disabled={ isRevisitLoading }
                 imageUrl={ selectedRevisit.photo }
-                label="Foto:"
+                label={ translate('forms.labels.photo') }
                 onSelectImage={ setImage }
                 showCameraButton
                 showGalleryButton
@@ -155,10 +163,10 @@ export const RevisitForm: FC = (): JSX.Element => {
                         />
                     }
                     inputDateFormat="DD/MM/YYYY"
-                    label="Próxima visita:"
+                    label={ translate('forms.labels.nextVisit') }
                     mode="date"
                     onChangeDate={ (date: string) => setFieldValue('nextVisit', TimeAdapter.toDate(date)) }
-                    placeholder="Seleccione el día"
+                    placeholder={ revisitsPlaceholders.NEXT_VISIT }
                     style={{ marginBottom: margins.xl }}
                     value={ values.nextVisit.toString() }
                 />
@@ -173,7 +181,7 @@ export const RevisitForm: FC = (): JSX.Element => {
                         />
                     }
                     inputDateFormat="DD/MM/YYYY"
-                    label="Próxima visita:"
+                    label={ translate('forms.labels.nextVisit') }
                     onChangeDate={ (date: string) => setFieldValue('nextVisit', TimeAdapter.toDate(date)) }
                     style={{ marginBottom: margins.xl }}
                     value={ values.nextVisit.toString() }
@@ -190,7 +198,7 @@ export const RevisitForm: FC = (): JSX.Element => {
                     />
                 ) }
                 onPress={ handlePress }
-                text={ (selectedRevisit.id !== '') ? 'Actualizar' : 'Guardar' }
+                text={ btnText }
             />
         </View>
     );
