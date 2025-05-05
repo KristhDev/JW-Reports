@@ -22,6 +22,7 @@ import { ListEmptyComponent, ListFooterComponent, SearchInput, Title } from '@ui
 /* Hooks */
 import { useRevisits } from '@revisits/hooks';
 import { useNetwork } from '@shared/hooks';
+import { useTranslation } from '@ui/hooks';
 
 /* Interfaces */
 import { RevisitsListProps } from './interfaces';
@@ -52,12 +53,22 @@ export const RevisitsList: FC<RevisitsListProps> = ({ emptyMessage, filter, titl
     const router = useRouter();
     const { styles: themeStyles, theme: { fontSizes, margins } } = useStyles(themeStylesheet);
 
+    const { translate } = useTranslation();
+
     const navigation = useNavigation();
     const navigationState = navigation.getState();
 
-    const emptyMsg = (searchTerm.trim().length > 0)
-        ? `No se encontraron revisitas con la busqueda: ${ searchTerm.trim() }`
-        : emptyMessage
+    const noFoundResultsMsg = translate('messages.noResults', {
+        attribute: translate('entities.revisits'),
+        search: searchTerm.trim()
+    });
+
+    const emptyMsg = (searchTerm.trim().length > 0) ? noFoundResultsMsg : emptyMessage;
+
+    const deleteRevisitModalTitle = translate('modals.titles.deleteAsk', {
+        article: 'esta',
+        attribute: translate('forms.fields.revisit')
+    });
 
     const {
         state: {
@@ -269,7 +280,7 @@ export const RevisitsList: FC<RevisitsListProps> = ({ emptyMessage, filter, titl
                 isOpen={ showDeleteModal }
                 onClose={ () => handleHideModal(setShowDeleteModal) }
                 onConfirm={ handleDeleteConfirm }
-                text="¿Está seguro de eliminar esta revisita?"
+                text={ deleteRevisitModalTitle }
             />
         </>
     );
