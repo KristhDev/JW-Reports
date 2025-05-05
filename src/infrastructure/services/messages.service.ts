@@ -181,33 +181,58 @@ export class MessagesService implements MessagesServiceContract {
 
             FINISHED: this.translationAdapter.translate('messages.courses.finishedSuspendOrRestart'),
             SUSPENDED_SUCCESS: this.translationAdapter.translate('messages.courses.suspended'),
-            RENEW_SUCCESS: 'Has renovado el curso correctamente.',
+
+            RENEW_SUCCESS: this.translationAdapter.translate('messages.success.renewed', {
+                attribute: this.translationAdapter.translate('forms.fields.course'),
+                article: 'el',
+            }),
 
             DELETED_SUCCESS: this.translationAdapter.translate('messages.success.deleted', {
                 attribute: this.translationAdapter.translate('forms.fields.course'),
                 article: 'el',
             }),
 
-            FINISHED_SUCCESS: 'Has terminado el curso correctamente.',
-            RESTARTED_SUCCESS: 'Has comenzado de nuevo el curso correctamente.',
+            FINISHED_SUCCESS: this.translationAdapter.translate('messages.success.finished', {
+                attribute: this.translationAdapter.translate('forms.fields.course'),
+                article: 'el',
+            }),
+
+            RESTARTED_SUCCESS: this.translationAdapter.translate('messages.success.startedAgain', {
+                attribute: this.translationAdapter.translate('forms.fields.course'),
+                article: 'el',
+            }),
 
             ADDED_SUCCESS: this.translationAdapter.translate('messages.success.added', {
                 attribute: this.translationAdapter.translate('forms.fields.course'),
                 article: 'el',
             }),
 
-            UPDATED_SUCCESS: 'Has actualizado el curso correctamente.',
+            UPDATED_SUCCESS: this.translationAdapter.translate('messages.success.updated', {
+                attribute: this.translationAdapter.translate('forms.fields.course'),
+                article: 'el',
+            })
         }
     }
 
     public get emailMessages(): EmailMessages {
         return {
-            FEEDBACK_FAILED: 'Ocurrio un error al enviar su sugerencia, por favor intentelo de nuevo.',
-            FEEDBACK_SUCCESS: '¡Gracias por compartir su sugerencia!',
-            MESSAGE_MIN_LENGTH: 'El mensaje debe tener al menos 10 caracteres.',
-            MESSAGE_REQUIRED: 'El mensaje no puede estar vacío.',
-            REPORT_ERROR_FAILED: 'Ocurrio un error al informar de este error, por favor intentelo de nuevo.',
-            REPORT_ERROR_SUCCESS: 'Gracias por informar de este error, se revisará a la brevedad para solucionarlo y se le notificará cuando se resuelva.'
+            FEEDBACK_FAILED: this.translationAdapter.translate('messages.email.feedbackFailed'),
+            FEEDBACK_SUCCESS: this.translationAdapter.translate('messages.email.feedbackSuccess'),
+
+            MESSAGE_MIN_LENGTH: this.translationAdapter.translate('forms.validations.min', {
+                article: 'El',
+                attribute: this.translationAdapter.translate('forms.fields.message'),
+                min: 10
+            }),
+
+            MESSAGE_REQUIRED: this.translationAdapter.translate('forms.validations.empty', {
+                article: 'El',
+                attribute: this.translationAdapter.translate('forms.fields.message'),
+                empty: 'vací́o'
+            }),
+
+            REPORT_ERROR_FAILED: this.translationAdapter.translate('messages.email.reportErrorFailed'),
+            REPORT_ERROR_SUCCESS: this.translationAdapter.translate('messages.email.reportErrorSuccess'),
         }
     }
 
@@ -223,7 +248,11 @@ export class MessagesService implements MessagesServiceContract {
                 article: 'la',
             }),
 
-            DESCRIPTION_MIN_LENGTH: 'El contenido de la clase debe tener al menos 10 caracteres.',
+            DESCRIPTION_MIN_LENGTH: this.translationAdapter.translate('forms.validations.min', {
+                article: 'El',
+                attribute: this.translationAdapter.translate('forms.fields.contentClass'),
+                min: 10
+            }),
 
             DESCRIPTION_REQUIRED: this.translationAdapter.translate('forms.validations.required', {
                 article: 'El',
@@ -231,10 +260,23 @@ export class MessagesService implements MessagesServiceContract {
                 required: 'requerido'
             }),
 
-            FINISHED_SUCCESS: 'Has terminado la clase correctamente.',
-            NEXT_LESSON_REQUIRED: 'La fecha de la próxima clase no puede estar vacía.',
-            RESTARTED_SUCCESS: 'Has reprogrado la clase correctamente.',
-            SUSPENDED_OR_FINISHED: 'No pudes terminar o reprogramar de nuevo una clase de un curso suspendido o terminado.',
+            FINISHED_SUCCESS: this.translationAdapter.translate('messages.success.finished', {
+                attribute: this.translationAdapter.translate('forms.fields.lesson'),
+                article: 'la',
+            }),
+
+            NEXT_LESSON_REQUIRED: this.translationAdapter.translate('forms.validations.empty', {
+                article: 'La',
+                attribute: this.translationAdapter.translate('forms.fields.nextLessonDate'),
+                empty: 'vacía'
+            }),
+
+            REPROGRAMMED_SUCCESS: this.translationAdapter.translate('messages.success.reprogrammed', {
+                attribute: this.translationAdapter.translate('forms.fields.lesson'),
+                article: 'la',
+            }),
+
+            SUSPENDED_OR_FINISHED: this.translationAdapter.translate('forms.validations.lessons.suspendedOrFinished'),
 
             UNSELECTED_DELETE: this.translationAdapter.translate('messages.errors.unSelected.deleted', {
                 attribute: this.translationAdapter.translate('forms.fields.lesson'),
@@ -254,14 +296,17 @@ export class MessagesService implements MessagesServiceContract {
                 genderEnding: 'a'
             }),
 
-            UPDATED_SUCCESS: 'Has actualizado la clase correctamente.'
+            UPDATED_SUCCESS: this.translationAdapter.translate('messages.success.updated', {
+                attribute: this.translationAdapter.translate('forms.fields.lesson'),
+                article: 'la',
+            })
         }
     }
 
     public get networkMessages(): NetworkMessages {
         return {
-            WIFI_HASNT_CONNEC_EXPLAIN: 'Lo sentimos pero no dispone de conexion a Internet. Los datos que hay en la aplicación no son actualizados. Hasta que recupere la conexión no podrá obtener, guardar, editar o eliminar ningún dato.',
-            WIFI_HASNT_CONNECTION: 'Lo sentimos pero no dispone de conexión a Internet.'
+            WIFI_HASNT_CONNEC_EXPLAIN: this.translationAdapter.translate('messages.network.hasntWifiConnectionExplain'),
+            WIFI_HASNT_CONNECTION: this.translationAdapter.translate('messages.network.hasntWifiConnection')
         }
     }
 
@@ -389,9 +434,13 @@ export class MessagesService implements MessagesServiceContract {
                 article: 'la',
             }),
 
-            EXPORTED_SUCCESS: 'Ha exportado sus revisitas correctamente. El archivo se encuentra en la carpeta que ha seleccionado.',
+            EXPORTED_SUCCESS: this.translationAdapter.translate('messages.revisits.revisitsExported'),
 
-            NEXT_VISIT_REQUIRED: 'La fecha de la última visita no puede estar vacía.',
+            NEXT_VISIT_REQUIRED: this.translationAdapter.translate('forms.validations.empty', {
+                article: 'La',
+                attribute: this.translationAdapter.translate('forms.fields.lastVisitDate'),
+                required: 'vacía'
+            }),
 
             PERSON_NAME_MIN_LENGTH: this.translationAdapter.translate('forms.validations.min', {
                 article: 'El',
