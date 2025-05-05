@@ -3,6 +3,9 @@ import { View } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-controller';
 import { useStyles } from 'react-native-unistyles';
 
+/* DI */
+import { messagesService } from '@config/di';
+
 /* Components */
 import { RevisitForm } from '../../components';
 import { MicrophoneBtn } from '@shared/components';
@@ -11,7 +14,7 @@ import { Title } from '@ui/components';
 /* Hooks */
 import { useStatus } from '@shared/hooks';
 import { useRevisits } from '../../hooks';
-import { useUI } from '@ui/hooks';
+import { useTranslation, useUI } from '@ui/hooks';
 
 /* Theme */
 import { themeStylesheet } from '@theme/styles';
@@ -23,14 +26,22 @@ import { themeStylesheet } from '@theme/styles';
  * @return {JSX.Element} rendered component to show form to add or edit a revisit
  */
 const AddOrEditRevisit = (): JSX.Element => {
+    const appMessages = messagesService.appMessages;
     const { styles: themeStyles, theme: { fontSizes, margins } } = useStyles(themeStylesheet);
 
     const { state: { selectedRevisit } } = useRevisits();
     const { setStatus } = useStatus();
+    const { translate } = useTranslation();
     const { state: { activeFormField }, setRecordedAudio } = useUI();
 
     const conditionForNotRecording = (activeFormField.trim().length === 0);
-    const handleNotRecording = () => setStatus({ code: 400, msg: 'Por favor seleccione un campo para grabar el audio.' });
+    const handleNotRecording = () => setStatus({ code: 400, msg: appMessages.SELECT_FIELD_TO_RECORD });
+
+    const title = translate('screens.revisits.titles.revisit', {
+        action: (selectedRevisit.id === '') 
+            ? translate('forms.actions.add') 
+            : translate('forms.actions.edit')
+    }).toUpperCase();
 
     return (
         <>
@@ -42,7 +53,7 @@ const AddOrEditRevisit = (): JSX.Element => {
                 <View style={[ themeStyles.screenContainer, { paddingBottom: margins.xxl } ]}>
                     <Title
                         containerStyle={ themeStyles.titleContainer }
-                        text={ `${ (selectedRevisit.id === '') ? 'AGREGAR' : 'EDITAR' } REVISITA` }
+                        text={ title }
                         textStyle={{ fontSize: fontSizes.md }}
                     />
 
