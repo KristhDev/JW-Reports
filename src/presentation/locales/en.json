@@ -7,7 +7,7 @@
             "preaching": "{{action}} preaching",
             "lesson": "{{action}} lesson",
             "revisit": "{{action}} revisit",
-            "classWith": "Class with {{name}}",
+            "lessonWith": "Lesson with {{name}}",
             "revisitTo": "Revisit {{name}}"
         }
     },
@@ -30,7 +30,7 @@
     },
 
     "dates": {
-        "classTo": "Class to {{date}}",
+        "lessonTo": "Lesson to {{date}}",
         "visit": "Visit on {{date}}"
     },
 
@@ -119,15 +119,24 @@
 
     "modals": {
         "titles": {
+            "continueAsk": "Are you sure you want to continue this {{attribute}}?",
+            "startAgainAsk": "Are you sure to start again this {{attribute}}?",
             "deleteAsk": "Are you sure to delete this {{attribute}}?",
             "finishAsk": "Are you sure to finish this {{attribute}}?",
             "reprogramAsk": "Are you sure to reprogram this {{attribute}}?",
-            "markAsk": "Are you sure to mark this {{attribute}} as {{mark}}?"
+            "markAsk": "Are you sure to mark this {{attribute}} as {{mark}}?",
+            "suspendAsk": "Are you sure to suspend this {{attribute}}?"
         },
 
         "auth": {
             "titles": {
                 "selectPioneer": "Select your pioneer"
+            }
+        },
+
+        "courses": {
+            "titles": {
+                "startCourse": "Are you sure about starting a Bible course with {{person}}?"
             }
         },
 
@@ -155,7 +164,7 @@
 
         "lessons": {
             "descriptions": {
-                "reprogramLesson": "Please enter the date on which the class will be given."
+                "reprogramLesson": "Please enter the date on which the lesson will be given."
             }
         },
 
@@ -184,8 +193,8 @@
             },
 
             "actions": {
-                "addClass": "Add class",
-                "classes": "Classes",
+                "addLesson": "Add lesson",
+                "lessons": "Lessons",
                 "continue": "Continue",
                 "finish": "Finish",
                 "startAgain": "Start again",
@@ -207,12 +216,12 @@
 
         "lessons": {
             "status": {
-                "taught": "Class taught"
+                "taught": "Lesson taught"
             },
 
             "actions": {
                 "reprogram": "Reprogram",
-                "finishClass": "Finish class"
+                "finishLesson": "Finish lesson"
             }
         }
     },
@@ -225,6 +234,33 @@
                 "profile": "MY PROFILE",
                 "signIn": "SIGN IN",
                 "signUp": "CREATE ACCOUNT"
+            }
+        },
+
+        "courses": {
+            "titles": {
+                "course":"{{action}} COURSE"
+            },
+
+            "labels": {
+                "stateOfCourse": "Course state: {{state}}",
+                "lastLesson": "Last lesson:"
+            },
+
+            "lastLessonTitles": {
+                "lessonTaught": "Lesson taught",
+                "nextLesson": "Next lesson {{date}}"
+            },
+
+            "questions": {
+                "continue": "Continue?",
+                "suspend": "Suspend?",
+                "startAgain": "Start again?"
+            },
+
+            "links": {
+                "lessons": "View all lessons",
+                "addLesson": "Add lesson"
             }
         },
 
@@ -367,7 +403,7 @@
             },
 
             "lessons": {
-                "reprogramClass": "Reprogram class:"
+                "reprogramLesson": "Reprogram lesson:"
             },
 
             "address": "Address:",
@@ -419,7 +455,7 @@
             "address": "address",
             "confirmPassword": "confirm password",
             "course": "course",
-            "contentClass": "content of class",
+            "contentLesson": "content of lesson",
             "day": "day",
             "description": "description",
             "email": "email",
@@ -457,6 +493,7 @@
             },
 
             "accept": "Accept",
+            "start": "Start",
             "mark": "Mark",
             "add": "Add",
             "camera": "Camera",
@@ -465,6 +502,7 @@
             "delete": "Delete",
             "edit": "Edit",
             "ok": "Ok",
+            "suspend": "Suspend",
             "save": "Save",
             "finish": "Finish",
             "reprogram": "Reprogram",
@@ -506,8 +544,12 @@
 
             "unchanged": "To update your {{attribute}} you must change it.",
 
+            "courses": {
+                "writeStudyPublication": "Please enter the name of the study publication."
+            },
+
             "lessons": {
-                "suspendedOrFinished": "You may not finish or reschedule a class from a suspended or finished course."
+                "suspendedOrFinished": "You may not finish or reschedule a lesson from a suspended or finished course."
             }
         }
     },

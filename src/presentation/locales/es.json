@@ -7,7 +7,7 @@
             "preaching": "{{action}} predicación",
             "lesson": "{{action}} lesson",
             "revisit": "{{action}} revisit",
-            "classWith": "Clase con {{name}}",
+            "lessonWith": "Clase con {{name}}",
             "revisitTo": "Revisita {{name}}"
         }
     },
@@ -30,7 +30,7 @@
     },
 
     "dates": {
-        "classTo": "Clase para el {{date}}",
+        "lessonTo": "Clase para el {{date}}",
         "visit": "Visitar el {{date}}"
     },
 
@@ -118,15 +118,24 @@
 
     "modals": {
         "titles": {
+            "continueAsk": "¿Está seguro de continuar {{article}} {{attribute}}?",
+            "startAgainAsk": "¿Está seguro de comenzar de nuevo {{article}} {{attribute}}?",
             "deleteAsk": "¿Está seguro de eliminar {{article}} {{attribute}}?",
             "finishAsk": "¿Está seguro de terminar {{article}} {{attribute}}?",
             "reprogramAsk": "¿Está seguro de reprogramar {{article}} {{attribute}}?",
-            "markAsk": "¿Está seguro de marcar {{article}} {{attribute}} como {{mark}}?"
+            "markAsk": "¿Está seguro de marcar {{article}} {{attribute}} como {{mark}}?",
+            "suspendAsk": "¿Está seguro de suspender {{article}} {{attribute}}?"
         },
 
         "auth": {
             "titles": {
                 "selectPioneer": "Seleccione su precursorado"
+            }
+        },
+
+        "courses": {
+            "titles": {
+                "startCourse": "¿Está seguro de comenzar un curso bíblico con {{person}}?"
             }
         },
 
@@ -183,8 +192,8 @@
             },
 
             "actions": {
-                "addClass": "Agregar clase",
-                "classes": "Clases",
+                "addLesson": "Agregar clase",
+                "lessons": "Clases",
                 "continue": "Continuar",
                 "finish": "Terminar",
                 "startAgain": "Comenzar de nuevo",
@@ -211,7 +220,7 @@
 
             "actions": {
                 "reprogram": "Reprogramar",
-                "finishClass": "Terminar clase"
+                "finishLesson": "Terminar clase"
             }
         }
     },
@@ -224,6 +233,33 @@
                 "profile": "MI PERFIL",
                 "signIn": "INGRESAR",
                 "signUp": "CREAR CUENTA"
+            }
+        },
+
+        "courses": {
+            "titles": {
+                "course":"{{action}} CURSO"
+            },
+
+            "labels": {
+                "stateOfCourse": "Estado del curso: {{state}}",
+                "lastLesson": "Ultima clase:"
+            },
+
+            "questions": {
+                "continue": "¿Continuar?",
+                "suspend": "¿Suspender?",
+                "startAgain": "¿Comenzar de nuevo?"
+            },
+
+            "lastLessonTitles": {
+                "lessonTaught": "Clase impartida",
+                "nextLesson": "Próxima clase {{date}}"
+            },
+
+            "links": {
+                "lessons": "Ver todas las clases",
+                "addLesson": "Agregar clase"
             }
         },
 
@@ -366,7 +402,7 @@
             },
 
             "lessons": {
-                "reprogramClass": "Reprogramar clase:"
+                "reprogramLesson": "Reprogramar clase:"
             },
 
             "address": "Dirección:",
@@ -418,7 +454,7 @@
             "address": "dirección",
             "confirmPassword": "confirmación de contraseña",
             "course": "curso",
-            "contentClass": "contenido de la clase",
+            "contentLesson": "contenido de la clase",
             "day": "día",
             "description": "descripción",
             "email": "correo",
@@ -456,11 +492,13 @@
             },
 
             "accept": "Aceptar",
+            "start": "Comenzar",
             "mark": "Marcar",
             "camera": "Cámara",
             "gallery": "Galería",
             "add": "Agregar",
             "cancel": "Cancelar",
+            "suspend": "Suspender",
             "delete": "Eliminar",
             "edit": "Editar",
             "ok": "Esta bien",
@@ -504,6 +542,10 @@
             },
 
             "unchanged": "Para actualizar su {{attribute}} debes cambiarlo.",
+
+            "courses": {
+                "writeStudyPublication": "Por favor ingrese el nombre de la publicación de estudio."
+            },
 
             "lessons": {
                 "suspendedOrFinished": "No puedes terminar o reprogramar de nuevo una clase de un curso suspendido o terminado."
