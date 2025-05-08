@@ -48,7 +48,7 @@ import { useStatus, useNetwork } from '@shared/hooks';
 
 /* Interfaces */
 import { CourseFilter, CourseFormValues, loadCoursesOptions } from '../interfaces';
-import { deleteOptions } from '@infrastructure/interfaces';
+import { UtilFunctions } from '@shared/interfaces';
 
 /**
  * Hook to management courses of store with state and actions
@@ -191,11 +191,11 @@ const useCourses = () => {
     /**
      * It deletes a course and all its lessons from the database.
      *
-     * @param {boolean} back - This parameter allows you to return to the previous screen, by default it is `false`
      * @param {Function} onFinish - This callback executed when the process is finished (success or failure)
+     * @param {Function} onSuccess - This callback executed when the process is finished (success)
      * @return {Promise<void>} This function does not return anything.
      */
-    const deleteCourse = async ({ onFinish, onSuccess }: deleteOptions): Promise<void> => {
+    const deleteCourse = async ({ onFinish, onSuccess }: UtilFunctions): Promise<void> => {
         const wifi = hasWifiConnection();
         if (!wifi) return;
 
@@ -375,11 +375,11 @@ const useCourses = () => {
      * @param {Function} onFinish - This callback executed when the process is finished (success or failure)
      * @return {Promise<void>} This function does not return anything.
      */
-    const saveCourse = async (courseValues: CourseFormValues, goBack: boolean = false, onFinish?: () => void): Promise<void> => {
+    const saveCourse = async (courseValues: CourseFormValues, utils?: UtilFunctions): Promise<void> => {
         const wifiConnectionAvailable = hasWifiConnection();
         if (!wifiConnectionAvailable) return;
 
-        const isAuth = isAuthenticated(onFinish);
+        const isAuth = isAuthenticated(utils?.onFinish);
         if (!isAuth) return;
 
         setIsCourseLoading(true);
@@ -390,7 +390,7 @@ const useCourses = () => {
 
             addCourse(course);
 
-            goBack && router.back();
+            utils?.onSuccess && utils.onSuccess();
             setStatus({ code: 201, msg: coursesMessages.ADDED_SUCCESS });
         }
         catch (error) {
@@ -398,7 +398,7 @@ const useCourses = () => {
             setError(error);
         }
         finally {
-            onFinish && onFinish();
+            utils?.onFinish && utils.onFinish();
         }
     }
 
