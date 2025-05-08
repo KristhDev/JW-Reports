@@ -19,7 +19,7 @@ import { InfoText, Link, Title } from '@ui/components';
 /* Hooks */
 import { useCourses } from '../../hooks';
 import { useLessons } from '@lessons/hooks';
-
+import { useTranslation } from '@ui/hooks';
 
 /* Styles */
 import { themeStylesheet } from '@theme/styles';
@@ -40,14 +40,33 @@ const CourseDetail = (): JSX.Element => {
     const { styles: themeStyles, theme: { colors, fontSizes, margins } } = useStyles(themeStylesheet);
     const { styles } = useStyles(stylesheet);
 
-    const { state: { selectedCourse }, setSelectedCourse } = useCourses();
+    const { state: { selectedCourse } } = useCourses();
     const { setSelectedLesson } = useLessons();
+    const { translate } = useTranslation();
 
     const statusCourseText = (selectedCourse.finished)
-        ? 'Terminado'
+        ? translate('cards.courses.status.finished')
         : (selectedCourse.suspended)
-            ? 'Suspendido'
-            : 'En curso';
+            ? translate('cards.courses.status.suspended')
+            : translate('cards.courses.status.inCourse');
+
+    const courseState = translate('screens.courses.labels.stateOfCourse', {
+        state: statusCourseText
+    });
+
+    const aboutPersonText = translate('screens.revisits.labels.about', {
+        person: selectedCourse.personName
+    });
+
+    const continueOrSuspendCourseText = (selectedCourse.suspended)
+        ? translate('screens.courses.questions.continue')
+        : translate('screens.courses.questions.suspend');
+
+    const lastLessonTitle = (selectedCourse.lastLesson?.done) 
+        ? translate('screens.courses.lastLessonTitles.lessonTaught') 
+        : translate('screens.courses.lastLessonTitles.nextLesson', {
+            date: TimeAdapter.format(selectedCourse.lastLesson!.nextLesson, 'DD/MM/YYYY')
+        });
 
     /**
      * When the user clicks the button, navigate to the AddOrEditLessonScreen screen and pass the
@@ -101,7 +120,7 @@ const CourseDetail = (): JSX.Element => {
                         style={{ ...themeStyles.detailSubTitle, marginBottom: 0 }}
                         testID="course-detail-status"
                     >
-                        Estado del curso: { statusCourseText }
+                        { courseState }
                     </Text>
 
                     { (!selectedCourse.finished) ? (
@@ -110,7 +129,7 @@ const CourseDetail = (): JSX.Element => {
                             testID="course-detail-status-touchable"
                             textStyle={ themeStyles.sectionTextSize }
                         >
-                            { (selectedCourse.suspended) ? '¿Continuar?' : '¿Suspender?' }
+                            { continueOrSuspendCourseText }
                         </Link>
                     ) : (
                         <Link
@@ -118,7 +137,7 @@ const CourseDetail = (): JSX.Element => {
                             testID="course-detail-status-touchable"
                             textStyle={ themeStyles.sectionTextSize }
                         >
-                            ¿Comenzar de nuevo?
+                            { translate('screens.courses.questions.startAgain') }
                         </Link>
                     ) }
                 </View>
@@ -129,7 +148,7 @@ const CourseDetail = (): JSX.Element => {
                         style={ themeStyles.detailSubTitle }
                         testID="course-detail-about-subtitle"
                     >
-                        Información de { selectedCourse.personName }:
+                        { aboutPersonText }
                     </Text>
 
                     <Text
@@ -143,7 +162,7 @@ const CourseDetail = (): JSX.Element => {
                 {/* Text person address */}
                 <View style={ themeStyles.detailSection }>
                     <Text style={[ themeStyles.detailSubTitle, styles.sectionTextColor ]}>
-                        Dirección:
+                        { translate('screens.revisits.labels.address') }
                     </Text>
 
                     <Text
@@ -157,7 +176,7 @@ const CourseDetail = (): JSX.Element => {
                 {/* Course last lesson */}
                 <View style={ themeStyles.detailSection }>
                     <Text style={ themeStyles.detailSubTitle }>
-                        Última clase:
+                        { translate('screens.courses.labels.lastLesson') }
                     </Text>
 
                     {/* Card of last lesson */}
@@ -168,11 +187,7 @@ const CourseDetail = (): JSX.Element => {
                                     style={ styles.cardHeaderText }
                                     testID="course-detail-last-lesson-status"
                                 >
-                                    {
-                                        (selectedCourse.lastLesson.done)
-                                            ? 'Clase impartida'
-                                            : `Próxima clase ${ TimeAdapter.format(selectedCourse.lastLesson.nextLesson, 'DD/MM/YYYY') }`
-                                        }
+                                    { lastLessonTitle }
                                 </Text>
                             </View>
 
@@ -191,7 +206,7 @@ const CourseDetail = (): JSX.Element => {
                         testID="course-detail-lessons-touchable"
                         textStyle={ themeStyles.sectionTextSize }
                     >
-                        Ver todas las clases
+                        { translate('screens.courses.links.lessons') }
                     </Link>
 
                     <Link
@@ -200,7 +215,7 @@ const CourseDetail = (): JSX.Element => {
                         testID="course-detail-add-lesson-touchable"
                         textStyle={ themeStyles.sectionTextSize }
                     >
-                        Agregar clase
+                        { translate('screens.courses.links.addLesson') }
                     </Link>
                 </View>
 
