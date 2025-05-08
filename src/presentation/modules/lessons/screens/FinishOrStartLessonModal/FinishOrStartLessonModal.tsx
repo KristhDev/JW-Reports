@@ -141,7 +141,7 @@ const FinishOrStartLessonModal: FC<ModalProps> = ({ isOpen, onClose }) => {
                                         />
                                     }
                                     inputDateFormat="DD/MM/YYYY"
-                                    label={ translate('forms.labels.lessons.reprogramClass') }
+                                    label={ translate('forms.labels.lessons.reprogramLesson') }
                                     mode="date"
                                     onChangeDate={ (date: string) => setFieldValue('nextLesson', TimeAdapter.toDate(date)) }
                                     placeholder={ LESSONS_PLACEHOLDERS.SELECT_DAY }
@@ -159,7 +159,7 @@ const FinishOrStartLessonModal: FC<ModalProps> = ({ isOpen, onClose }) => {
                                         />
                                     }
                                     inputDateFormat="DD/MM/YYYY"
-                                    label={ translate('forms.labels.lessons.reprogramClass') }
+                                    label={ translate('forms.labels.lessons.reprogramLesson') }
                                     onChangeDate={ (date: string) => setFieldValue('nextLesson', TimeAdapter.toDate(date)) }
                                     style={{ marginBottom: 0 }}
                                     value={ values.nextLesson.toString() }
