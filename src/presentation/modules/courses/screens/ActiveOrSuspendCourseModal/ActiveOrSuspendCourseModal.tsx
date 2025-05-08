@@ -10,6 +10,7 @@ import { ModalActions } from '@ui/components';
 
 /* Hooks */
 import { useCourses } from '../../hooks';
+import { useTranslation } from '@ui/hooks';
 
 /* Interfaces */
 import { ModalProps } from '@ui/interfaces';
@@ -28,13 +29,23 @@ const ActiveOrSuspendCourseModal: FC<ModalProps> = ({ onClose, isOpen }): JSX.El
     const { state: { selectedCourse, isCourseLoading }, activeOrSuspendCourse } = useCourses();
     const { styles: themeStyles, theme: { colors, fontSizes } } = useStyles(themeStylesheet);
 
-    const modalMsg = (selectedCourse.suspended)
-        ? '¿Está seguro de continuar este curso?'
-        : '¿Está seguro de suspender este curso?';
+    const { translate } = useTranslation();
+
+    const continueCourseQuestion = translate('modals.titles.continueAsk', {
+        article: 'este',
+        attribute: translate('entities.course')
+    });
+
+    const suspendCourseQuestion = translate('modals.titles.suspendAsk', {
+        article: 'este',
+        attribute: translate('entities.course')
+    });
+
+    const modalMsg = (selectedCourse.suspended) ? continueCourseQuestion : suspendCourseQuestion;
 
     const confirmTextButton = (selectedCourse.suspended)
-        ? 'ACEPTAR'
-        : 'SUSPENDER';
+        ? translate('forms.actions.accept').toUpperCase()
+        : translate('forms.actions.suspend').toUpperCase();
 
     /**
      * HandleConfirm() is a function that calls activeOrSuspendCourse() and passes onClose() as an
@@ -61,7 +72,7 @@ const ActiveOrSuspendCourseModal: FC<ModalProps> = ({ onClose, isOpen }): JSX.El
 
                     {/* Modal actions */}
                     <ModalActions
-                        cancelButtonText="CANCELAR"
+                        cancelButtonText={ translate('forms.actions.cancel').toUpperCase() }
                         confirmTextButton={ confirmTextButton }
                         onCancel={ onClose }
                         onConfirm={ handleConfirm }
