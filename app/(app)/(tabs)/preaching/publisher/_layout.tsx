@@ -53,7 +53,7 @@ export default function PublisherLayout(): JSX.Element {
         attribute: translate('forms.fields.revisit')
     });
 
-    const lessonDetailModalTitle = translate('navigation.titles.classWith', {
+    const lessonDetailModalTitle = translate('navigation.titles.lessonWith', {
         name: selectedCourse.personName
     });
 

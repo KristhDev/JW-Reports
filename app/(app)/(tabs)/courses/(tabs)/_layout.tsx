@@ -5,6 +5,9 @@ import { ParamListBase, TabNavigationState } from '@react-navigation/native';
 import { useFocusEffect, withLayoutContext } from 'expo-router';
 import { useStyles } from 'react-native-unistyles';
 
+/* Constants */
+import { coursesFilters } from '@application/constants/utils';
+
 /* Hooks */
 import { useCourses } from '@courses/hooks';
 
@@ -58,7 +61,7 @@ export default function CoursesTopTabsLauyout(): JSX.Element {
             <TopTabs.Screen
                 initialParams={{
                     emptyMessage: 'No has agregado ningún curso.',
-                    filter: 'all',
+                    filter: coursesFilters.ALL,
                     title: 'TODOS MIS CURSOS',
                 }}
                 name="index"
@@ -68,7 +71,7 @@ export default function CoursesTopTabsLauyout(): JSX.Element {
             <TopTabs.Screen
                 initialParams={{
                     emptyMessage: 'No tienes ningún curso activo.',
-                    filter: 'active',
+                    filter: coursesFilters.ACTIVE,
                     title: 'CURSOS ACTIVOS'
                 }}
                 name="active"
@@ -78,7 +81,7 @@ export default function CoursesTopTabsLauyout(): JSX.Element {
             <TopTabs.Screen
                 initialParams={{
                     emptyMessage: 'No tienes ningún curso suspendido.',
-                    filter: 'suspended',
+                    filter: coursesFilters.SUSPENDED,
                     title: 'CURSOS SUSPENDIDOS'
                 }}
                 name="suspended"
@@ -88,7 +91,7 @@ export default function CoursesTopTabsLauyout(): JSX.Element {
             <TopTabs.Screen
                 initialParams={{
                     emptyMessage: 'Ninguno de tus estudiantes ha terminado el curso.',
-                    filter: 'finished',
+                    filter: coursesFilters.FINISHED,
                     title: 'CURSOS TERMINADOS'
                 }}
                 name="finished"

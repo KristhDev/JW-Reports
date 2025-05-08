@@ -4,6 +4,8 @@ import { ParamListBase, TabNavigationState } from '@react-navigation/native';
 import { useFocusEffect, withLayoutContext } from 'expo-router';
 import { useStyles } from 'react-native-unistyles';
 
+import { revisitsFilters } from '@application/constants/utils';
+
 import { INIT_REVISIT } from '@application/features/revisits';
 
 import { useRevisits } from '@revisits/hooks';
@@ -58,7 +60,7 @@ export default function RevisitsTopTabsLauyout(): JSX.Element {
             <TopTabs.Screen
                 initialParams={{
                     emptyMessage: translate('messages.revisits.notAdded'),
-                    filter: 'all',
+                    filter: revisitsFilters.ALL,
                     title: translate('screens.revisits.titles.allMyRevisits')
                 }}
                 name="index"
@@ -68,7 +70,7 @@ export default function RevisitsTopTabsLauyout(): JSX.Element {
             <TopTabs.Screen
                 initialParams={{
                     emptyMessage: translate('messages.revisits.noMade'),
-                    filter: 'visited',
+                    filter: revisitsFilters.VISITED,
                     title: translate('screens.revisits.titles.madeRevisits')
                 }}
                 name="visited"
@@ -78,7 +80,7 @@ export default function RevisitsTopTabsLauyout(): JSX.Element {
             <TopTabs.Screen
                 initialParams={{
                     emptyMessage: translate('messages.revisits.noVisit'),
-                    filter: 'unvisited',
+                    filter: revisitsFilters.UNVISITED,
                     title: translate('screens.revisits.titles.toBeMadeRevisits')
                 }}
                 name="unvisited"
