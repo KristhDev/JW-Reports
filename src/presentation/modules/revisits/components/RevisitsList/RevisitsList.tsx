@@ -53,22 +53,8 @@ export const RevisitsList: FC<RevisitsListProps> = ({ emptyMessage, filter, titl
     const router = useRouter();
     const { styles: themeStyles, theme: { fontSizes, margins } } = useStyles(themeStylesheet);
 
-    const { translate } = useTranslation();
-
     const navigation = useNavigation();
     const navigationState = navigation.getState();
-
-    const noFoundResultsMsg = translate('messages.noResults', {
-        attribute: translate('entities.revisits'),
-        search: searchTerm.trim()
-    });
-
-    const emptyMsg = (searchTerm.trim().length > 0) ? noFoundResultsMsg : emptyMessage;
-
-    const deleteRevisitModalTitle = translate('modals.titles.deleteAsk', {
-        article: 'esta',
-        attribute: translate('forms.fields.revisit')
-    });
 
     const {
         state: {
@@ -88,6 +74,19 @@ export const RevisitsList: FC<RevisitsListProps> = ({ emptyMessage, filter, titl
     } = useRevisits();
 
     const { wifi } = useNetwork();
+    const { translate } = useTranslation();
+
+    const noFoundResultsMsg = translate('messages.noResults', {
+        attribute: translate('entities.revisits'),
+        search: searchTerm.trim()
+    });
+
+    const emptyMsg = (searchTerm.trim().length > 0) ? noFoundResultsMsg : emptyMessage;
+
+    const deleteRevisitModalTitle = translate('modals.titles.deleteAsk', {
+        article: 'esta',
+        attribute: translate('forms.fields.revisit')
+    });
 
     /**
      * When the user refreshes the page, the search term is reset, the pagination is reset, the
