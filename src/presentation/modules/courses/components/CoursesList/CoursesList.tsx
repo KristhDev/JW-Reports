@@ -22,6 +22,7 @@ import { ListEmptyComponent, ListFooterComponent, SearchInput, Title } from '@ui
 import { useCourses } from '../../hooks';
 import { useLessons } from '@lessons/hooks';
 import { useNetwork } from '@shared/hooks';
+import { useTranslation } from '@ui/hooks';
 
 /* Interfaces */
 import { CoursesListProps } from './interfaces';
@@ -73,10 +74,19 @@ export const CoursesList: FC<CoursesListProps> = ({ emptyMessage, filter, title 
     const { state: { lessons }, removeLessons, setLessonsPagination } = useLessons();
 
     const { wifi } = useNetwork();
+    const { translate } = useTranslation();
 
-    const emptyMsg = (searchTerm.trim().length > 0)
-        ? `No se encontraron cursos con la busqueda: ${ searchTerm.trim() }`
-        : emptyMessage;
+    const noFoundResultsMsg = translate('messages.noResults', {
+        attribute: translate('entities.courses'),
+        search: searchTerm.trim()
+    });
+
+    const emptyMsg = (searchTerm.trim().length > 0) ? noFoundResultsMsg : emptyMessage;
+
+    const deleteCourseModalTitle = translate('modals.titles.deleteAsk', {
+        article: 'este',
+        attribute: translate('forms.fields.course')
+    });
 
     /**
      * When the user refreshes the page, the search term is reset, the pagination is reset, the courses
@@ -274,7 +284,7 @@ export const CoursesList: FC<CoursesListProps> = ({ emptyMessage, filter, title 
                 isOpen={ showDeleteModal }
                 onClose={ () => handleHideModal(setShowDeleteModal) }
                 onConfirm={ handleDeleteConfirm }
-                text="¿Está seguro de eliminar este curso?"
+                text={ deleteCourseModalTitle }
             />
         </>
     );
