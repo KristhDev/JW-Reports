@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { ActivityIndicator, View } from 'react-native';
 import { useFormik } from 'formik';
+import { useRouter } from 'expo-router';
 import { useStyles } from 'react-native-unistyles';
 import Ionicons from '@expo/vector-icons/Ionicons';
 
@@ -33,6 +34,7 @@ import { themeStylesheet } from '@theme/styles';
 export const CourseForm = (): JSX.Element => {
     const coursesPlaceholders = placeholdersService.coursesPlaceholders;
 
+    const router = useRouter();
     const { styles: themeStyles, theme: { colors, fontSizes, margins } } = useStyles(themeStylesheet);
 
     const { state: { isCourseLoading, selectedCourse }, saveCourse, updateCourse } = useCourses();
@@ -53,7 +55,7 @@ export const CourseForm = (): JSX.Element => {
      */
     const handleSaveOrUpdate = (formValues: CourseFormValues): void => {
         (selectedCourse.id === '')
-            ? saveCourse(formValues, true)
+            ? saveCourse(formValues, { onSuccess: router.back })
             : updateCourse(formValues);
     }
 
