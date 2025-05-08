@@ -47,8 +47,8 @@ import { useNetwork, useStatus } from '@shared/hooks';
 
 /* Interfaces */
 import { LessonFormValues } from '../interfaces';
+import { UtilFunctions } from '@shared/interfaces';
 import { LoadResourcesOptions } from '@ui/interfaces';
-import { deleteOptions } from '@infrastructure/interfaces';
 
 /**
  * Hook to management lessons of store with state and actions
@@ -172,7 +172,7 @@ const useLessons = () => {
      * @param {Function} options.onSuccess - Callback executed on successful deletion.
      * @return {Promise<void>} This function does not return anything.
      */
-    const deleteLesson = async ({ onFinish, onSuccess }: deleteOptions): Promise<void> => {
+    const deleteLesson = async ({ onFinish, onSuccess }: UtilFunctions): Promise<void> => {
         const wifiConnectionAvailable = hasWifiConnection();
         if (!wifiConnectionAvailable) return;
 
