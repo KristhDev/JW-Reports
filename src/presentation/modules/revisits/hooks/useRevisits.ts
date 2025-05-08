@@ -48,7 +48,7 @@ import { useImage, useNetwork, useStatus } from '@shared/hooks';
 
 /* Interfaces */
 import { loadRevisitsOptions, RevisitFilter, SaveRevisitOptions, UpdateRevisitOptions } from '../interfaces';
-import { deleteOptions } from '@infrastructure/interfaces';
+import { UtilFunctions } from '@shared/interfaces';
 
 /**
  * Hook to management revisits of store with state and actions
@@ -159,7 +159,7 @@ const useRevisits = () => {
      * - onSuccess: This callback executed when the process is success, default is `undefined`
      * @return {Promise<void>} This function does not return anything.
      */
-    const deleteRevisit = async ({ onFinish, onSuccess }: deleteOptions): Promise<void> => {
+    const deleteRevisit = async ({ onFinish, onSuccess }: UtilFunctions): Promise<void> => {
         const wifiConnectionAvailable = hasWifiConnection();
         if (!wifiConnectionAvailable) return;
 
