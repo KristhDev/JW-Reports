@@ -80,6 +80,7 @@ export interface CoursesMessages {
     RESTARTED_SUCCESS: string;
     ADDED_SUCCESS: string;
     UPDATED_SUCCESS: string;
+    WRITE_STUDY_PUBLICATION: string;
 }
 
 export interface CoursesPlaceholders {

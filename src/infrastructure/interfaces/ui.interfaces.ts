@@ -9,9 +9,4 @@ export type ItemOption = {
     value: any;
 }
 
-export interface deleteOptions {
-    onFinish?: () => void;
-    onSuccess?: () => void;
-}
-
 export type Languages = 'en' | 'es';
