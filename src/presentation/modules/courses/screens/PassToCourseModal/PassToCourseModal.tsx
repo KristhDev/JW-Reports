@@ -4,6 +4,9 @@ import { useStyles } from 'react-native-unistyles';
 import { useFormik } from 'formik';
 import Ionicons from '@expo/vector-icons/Ionicons';
 
+/* DI */
+import { messagesService, placeholdersService } from '@config/di';
+
 /* Screens */
 import { Modal } from '@ui/screens';
 
@@ -14,6 +17,7 @@ import { FormField, ModalActions } from '@ui/components';
 import { useCourses } from '../../hooks';
 import { useRevisits } from '@revisits/hooks';
 import { useStatus } from '@shared/hooks';
+import { useTranslation } from '@ui/hooks';
 
 /* Interfaces */
 import { ModalProps } from '@ui/interfaces';
@@ -29,6 +33,8 @@ import { themeStylesheet } from '@theme/styles';
  * @return {JSX.Element} rendered component to show modal
  */
 const PassToCourseModal: FC<ModalProps> = ({ isOpen, onClose }): JSX.Element => {
+    const coursesMessages = messagesService.coursesMessages;
+    const coursesPlaceholders = placeholdersService.coursesPlaceholders;
     const [ startCourse, setStartCourse ] = useState<boolean>(false);
 
     const { styles: themeStyles, theme: { colors, fontSizes, margins } } = useStyles(themeStylesheet);
@@ -36,6 +42,9 @@ const PassToCourseModal: FC<ModalProps> = ({ isOpen, onClose }): JSX.Element => 
     const { state: { selectedRevisit } } = useRevisits();
     const { state: { isCourseLoading }, saveCourse } = useCourses();
     const { setStatus } = useStatus();
+    const { translate } = useTranslation();
+
+    const startCourseTitle = translate('modals.courses.titles.startCourse', { person: selectedRevisit.personName });
 
     /**
      * This is the confirmation function of the modal that executes one or another function
@@ -45,29 +54,28 @@ const PassToCourseModal: FC<ModalProps> = ({ isOpen, onClose }): JSX.Element => 
      * @return {void} This function does not return anything
      */
     const handleConfirm = (values?: { publication: string }): void => {
-        if (startCourse) {
-            if (values?.publication && values?.publication.length >= 5) {
-                saveCourse({
-                    personName: selectedRevisit.personName,
-                    personAbout: selectedRevisit.about,
-                    personAddress: selectedRevisit.address,
-                    publication: values?.publication!
-                }, false, onClose);
-            }
-            else {
-                setStatus({
-                    code: 400,
-                    msg: 'El nombre de la publicación debe tener al menos 5 caracteres.',
-                });
-
-                onClose();
-            }
-
-            setStartCourse(false);
-        }
-        else {
+        if (!startCourse) {
             setStartCourse(true);
+            return;
         }
+
+        if (!values?.publication || values?.publication.length === 0) {
+            setStatus({ code: 400, msg: coursesMessages.PUBLICATION_MIN_LENGTH });
+            onClose();
+            setStartCourse(false);
+
+            return;
+        }
+
+        const data = {
+            personName: selectedRevisit.personName,
+            personAbout: selectedRevisit.about,
+            personAddress: selectedRevisit.address,
+            publication: values?.publication!
+        }
+
+        saveCourse(data, { onFinish: onClose });
+        setStartCourse(false);
     }
 
     const { handleChange, handleSubmit, setFieldValue, values } = useFormik({
@@ -102,13 +110,13 @@ const PassToCourseModal: FC<ModalProps> = ({ isOpen, onClose }): JSX.Element => 
                                 style={{ ...themeStyles.modalText, marginBottom: 0 }}
                                 testID="modal-text"
                             >
-                                ¿Está seguro de comenzar un curso bíblico con { selectedRevisit.personName }?
+                                { startCourseTitle }
                             </Text>
 
                             {/* Modal actions */}
                             <ModalActions
-                                cancelButtonText="CANCELAR"
-                                confirmTextButton="ACEPTAR"
+                                cancelButtonText={ translate('forms.actions.cancel').toUpperCase() }
+                                confirmTextButton={ translate('forms.actions.accept').toUpperCase() }
                                 onCancel={ handleClose }
                                 onConfirm={ handleConfirm }
                                 showCancelButton
@@ -120,7 +128,7 @@ const PassToCourseModal: FC<ModalProps> = ({ isOpen, onClose }): JSX.Element => 
 
                             {/* Modal title in form */}
                             <Text style={{ ...themeStyles.modalText, marginBottom: margins.md }}>
-                                Por favor ingrese el nombre de la publicación de estudio
+                                { coursesMessages.WRITE_STUDY_PUBLICATION }
                             </Text>
 
                             {/* Publication field */}
@@ -132,17 +140,17 @@ const PassToCourseModal: FC<ModalProps> = ({ isOpen, onClose }): JSX.Element => 
                                         size={ fontSizes.icon }
                                     />
                                 }
-                                label="Publicación de estudio:"
+                                label={ translate('forms.labels.studyPublication') }
                                 onChangeText={ handleChange('publication') }
-                                placeholder="Ingrese la publicación"
+                                placeholder={ coursesPlaceholders.PUBLICATION }
                                 style={{ marginBottom: 0 }}
                                 value={ values.publication }
                             />
 
                             {/* Modal actions in form */}
                             <ModalActions
-                                cancelButtonText="CANCELAR"
-                                confirmTextButton="ACEPTAR"
+                                cancelButtonText={ translate('forms.actions.cancel').toUpperCase() }
+                                confirmTextButton={ translate('forms.actions.accept').toUpperCase() }
                                 onCancel={ handleClose }
                                 onConfirm={ handleSubmit }
                                 showCancelButton
