@@ -210,7 +210,9 @@ export class MessagesService implements MessagesServiceContract {
             UPDATED_SUCCESS: this.translationAdapter.translate('messages.success.updated', {
                 attribute: this.translationAdapter.translate('forms.fields.course'),
                 article: 'el',
-            })
+            }),
+
+            WRITE_STUDY_PUBLICATION: this.translationAdapter.translate('forms.validations.courses.writeStudyPublication'),
         }
     }
 
@@ -250,7 +252,7 @@ export class MessagesService implements MessagesServiceContract {
 
             DESCRIPTION_MIN_LENGTH: this.translationAdapter.translate('forms.validations.min', {
                 article: 'El',
-                attribute: this.translationAdapter.translate('forms.fields.contentClass'),
+                attribute: this.translationAdapter.translate('forms.fields.contentLesson'),
                 min: 10
             }),
 
