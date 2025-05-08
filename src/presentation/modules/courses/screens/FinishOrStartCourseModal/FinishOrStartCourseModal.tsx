@@ -10,6 +10,7 @@ import { ModalActions } from '@ui/components';
 
 /* Hooks */
 import { useCourses } from '../../hooks';
+import { useTranslation } from '@ui/hooks';
 
 /* Interfaces */
 import { ModalProps } from '@ui/interfaces';
@@ -28,12 +29,23 @@ const FinishOrStartCourseModal: FC<ModalProps> = ({ isOpen, onClose }): JSX.Elem
     const { styles: themeStyles, theme: { colors, fontSizes } } = useStyles(themeStylesheet);
 
     const { state: { selectedCourse, isCourseLoading }, finishOrStartCourse } = useCourses();
+    const { translate } = useTranslation();
 
-    const modalMsg = (selectedCourse.finished)
-        ? '¿Está seguro de volver a comenzar este curso?'
-        : '¿Está seguro de terminar este curso?';
+    const startAgainCourseQuestion = translate('modals.titles.startAgainAsk', {
+        article: 'este',
+        attribute: translate('entities.course')
+    });
 
-    const confirmTextButton = (selectedCourse.finished) ? 'COMENZAR' : 'TERMINAR';
+    const finishCourseQuestion = translate('modals.titles.finishAsk', {
+        article: 'este',
+        attribute: translate('entities.course')
+    });
+
+    const modalMsg = (selectedCourse.finished) ? startAgainCourseQuestion : finishCourseQuestion;
+
+    const confirmTextButton = (selectedCourse.finished)
+        ? translate('forms.actions.start').toUpperCase()
+        : translate('forms.actions.finish').toUpperCase();
 
     /**
      * HandleConfirm() is a function that calls the finishOrStartCourse() function and passes the
@@ -57,7 +69,7 @@ const FinishOrStartCourseModal: FC<ModalProps> = ({ isOpen, onClose }): JSX.Elem
                     </Text>
 
                     <ModalActions
-                        cancelButtonText="CANCELAR"
+                        cancelButtonText={ translate('forms.actions.cancel').toUpperCase() }
                         confirmTextButton={ confirmTextButton }
                         onCancel={ onClose }
                         onConfirm={ handleConfirm }
