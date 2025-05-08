@@ -75,7 +75,7 @@ export const CourseCard: FC<CourseCardProps> = ({ course, onActiveOrSuspend, onD
      *
      * @return {void} This function does not return any value.
      */
-    const handleAddClass = (): void => {
+    const handleaddLesson = (): void => {
         setIsOpen(false);
 
         setSelectedCourse(course);
@@ -205,7 +205,7 @@ export const CourseCard: FC<CourseCardProps> = ({ course, onActiveOrSuspend, onD
 
                         <MenuOption onSelect={ handleLessonList }>
                             <Text style={ themeStyles.menuItemText }>
-                                { translate('cards.courses.actions.classes') }
+                                { translate('cards.courses.actions.lessons') }
                             </Text>
                         </MenuOption>
 
@@ -213,9 +213,9 @@ export const CourseCard: FC<CourseCardProps> = ({ course, onActiveOrSuspend, onD
                         {/* It is not possible to finish or add lessons to the course if this is suspended */}
                         { (!course.suspended) && (
                             <>
-                                <MenuOption onSelect={ handleAddClass }>
+                                <MenuOption onSelect={ handleaddLesson }>
                                     <Text style={ themeStyles.menuItemText }>
-                                        { translate('cards.courses.actions.addClass') }
+                                        { translate('cards.courses.actions.addLesson') }
                                     </Text>
                                 </MenuOption>
 
