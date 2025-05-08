@@ -62,6 +62,6 @@ export class NotificationsService extends NotificationsServiceContract {
      */
     public async requestNotificationsPermission(): Promise<PermissionStatus> {
         const result = await OneSignal.Notifications.requestPermission(true);
-        return (result) ? 'granted' : 'denied';
+        return (result) ? permissionsStatus.GRANTED : permissionsStatus.DENIED;
     }
 }
