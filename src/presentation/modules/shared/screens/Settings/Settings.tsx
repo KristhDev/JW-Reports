@@ -5,10 +5,10 @@ import { useRouter } from 'expo-router';
 
 /* Config */
 import { env } from '@config/env';
-import { deviceInfoAdapter } from '@config/di';
+import { deviceInfoAdapter, themeService } from '@config/di';
 
 /* Constants */
-import { LANGUAGE_OPTIONS, THEME_OPTIONS } from '@application/constants/utils';
+import { LANGUAGE_OPTIONS } from '@application/constants/utils';
 
 /* Screens */
 import { LanguageModal } from '../LanguageModal';
@@ -32,6 +32,8 @@ import { version as appVersion } from '@package';
  * @return {JSX.Element} return jsx element to render the settings
  */
 const Settings = (): JSX.Element => {
+    const THEME_OPTIONS = themeService.THEME_OPTIONS;
+
     const [ showThemeModal, setShowThemeModal ] = useState<boolean>(false);
     const [ showLanguageModal, setShowLanguageModal ] = useState<boolean>(false);
 
