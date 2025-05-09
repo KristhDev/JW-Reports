@@ -14,6 +14,7 @@ import { InfoText, Link, Title } from '@ui/components';
 /* Hooks */
 import { useCourses } from '@courses/hooks';
 import { useLessons } from '../../hooks';
+import { useTranslation } from '@ui/hooks';
 
 /* Styles */
 import { themeStylesheet } from '@theme/styles';
@@ -31,9 +32,29 @@ const LessonDetail = (): JSX.Element => {
 
     const { state: { selectedCourse } } = useCourses();
     const { state: { selectedLesson } } = useLessons();
+    const { translate } = useTranslation();
 
-    const statusLessonText = (selectedLesson.done) ? 'Impartida' : 'Por impartir';
-    const nextVisit = TimeAdapter.format(selectedLesson.nextLesson, 'DD [de] MMMM [del] YYYY');
+    const title = translate('screens.lessons.titles.courseLessonWith', {
+        personName: selectedCourse.personName
+    }).toUpperCase();
+
+    const lessonStatus = (selectedLesson.done)
+        ? translate('screens.lessons.status.taught')
+        : translate('screens.lessons.status.toBeTaught');
+
+    const lessonStatusText = translate('screens.lessons.labels.lessonStatus', {
+        status: lessonStatus
+    });
+
+    const lessonStatusQuestion = (selectedLesson.done)
+        ? translate('screens.lessons.questions.finish')
+        : translate('screens.lessons.questions.reschedule');
+
+    const analyzedText = (selectedLesson.done)
+        ? translate('screens.lessons.labels.wasAnalyzed')
+        : translate('screens.lessons.labels.itllAnalyzed');
+
+    const nextVisit = TimeAdapter.format(selectedLesson.nextLesson, 'LL');
 
     return (
         <>
@@ -46,7 +67,7 @@ const LessonDetail = (): JSX.Element => {
                 {/* Title of detail */}
                 <Title
                     containerStyle={ themeStyles.titleContainer }
-                    text={ `CLASE DEL CURSO CON ${ selectedCourse.personName.toUpperCase() }` }
+                    text={ title }
                     textStyle={{ fontSize: fontSizes.md }}
                 />
 
@@ -63,15 +84,15 @@ const LessonDetail = (): JSX.Element => {
                         style={{ ...themeStyles.detailSubTitle, marginBottom: 0 }}
                         testID="lesson-detail-status-text"
                     >
-                        Estado de la clase: { statusLessonText }
-                    </Text>
+                        { lessonStatusText }
+                    </Text >
 
                     <Link
                         onPress={ () => setShowFSModal(true) }
                         testID="lesson-detail-status-text-touchable"
                         textStyle={ themeStyles.sectionTextSize }
                     >
-                        { (!selectedLesson.done) ? '¿Terminar clase?' : '¿Reprogramar?' }
+                        { lessonStatusQuestion }
                     </Link>
                 </View>
 
@@ -81,7 +102,7 @@ const LessonDetail = (): JSX.Element => {
                         style={ themeStyles.detailSubTitle }
                         testID="lesson-detail-description-subtitle"
                     >
-                        { (selectedLesson.done) ? 'Se analizo:' : 'Se analizará:' }
+                        { analyzedText }
                     </Text>
 
                     <Text
@@ -95,14 +116,14 @@ const LessonDetail = (): JSX.Element => {
                 {/* Lesson create date */}
                 <View style={ themeStyles.detailSection }>
                     <Text style={ themeStyles.detailSubTitle }>
-                        Fecha:
+                        { translate('forms.labels.date') }
                     </Text>
 
                     <Text
                         style={ themeStyles.detailText }
                         testID="lesson-detail-next-visit-text"
                     >
-                        { `${ nextVisit }` }
+                        { nextVisit }
                     </Text>
                 </View>
 
