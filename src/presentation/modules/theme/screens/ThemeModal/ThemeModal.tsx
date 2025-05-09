@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
 
-/* Constants */
-import { THEME_OPTIONS } from '@application/constants/utils';
+/* DI */
+import { themeService } from '@config/di';
 
 /* Context */
 import { Theme } from '@application/context';
@@ -11,6 +11,7 @@ import { OptionsModal } from '@ui/screens';
 
 /* Hooks */
 import { useTheme } from '../../hooks';
+import { useTranslation } from '@ui/hooks';
 
 /* Interfaces */
 import { ModalProps } from '@ui/interfaces';
@@ -22,7 +23,9 @@ import { ModalProps } from '@ui/interfaces';
  * @return {JSX.Element} Return jsx element to render modal of theme
  */
 const ThemeModal: FC<ModalProps> = ({ isOpen, onClose }): JSX.Element => {
+    const THEME_OPTIONS = themeService.THEME_OPTIONS;
     const { state: { selectedTheme }, setTheme } = useTheme();
+    const { translate } = useTranslation();
 
     return (
         <OptionsModal
@@ -30,7 +33,7 @@ const ThemeModal: FC<ModalProps> = ({ isOpen, onClose }): JSX.Element => {
             items={ THEME_OPTIONS }
             onCancel={ onClose }
             onChangeValue={ (value) => setTheme(value as Theme) }
-            title="Apariencia"
+            title={ translate('modals.theme.titles.appearance') }
             value={ selectedTheme }
         />
     );
