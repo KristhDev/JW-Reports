@@ -22,7 +22,8 @@ import {
     PreachingReportServiceContract,
     PreachingServiceContract,
     PublisherServiceContract,
-    RevisitsServiceContract
+    RevisitsServiceContract,
+    ThemeServiceContract
 } from '@domain/contracts/services';
 
 import {
@@ -50,7 +51,8 @@ import {
     RevisitsService,
     PlaceholdersService
 } from '@infrastructure/services';
-import { NotificationsService } from '@services';
+
+import { NotificationsService, ThemeService } from '@services';
 
 export const internalStorageAdapter: InternalStorageAdapterContract = new InternalStorageAdapter();
 export const deviceInfoAdapter: DeviceInfoAdapterContract = new DeviceInfoAdapter();
@@ -61,6 +63,7 @@ export const translationAdapter: TranslationAdapterContract = new TranslationAda
 export const authService: AuthServiceContract = new AuthService();
 export const cloudService: CloudServiceContract = new CloudService();
 export const coursesService: CoursesServiceContract = new CoursesService();
+export const themeService: ThemeServiceContract = new ThemeService(translationAdapter);
 export const deviceImageService: DeviceImageServiceContract = new DeviceImageService();
 export const emailService: EmailServiceContract = new EmailService();
 export const lessonsService: LessonsServiceContract = new LessonsService();
