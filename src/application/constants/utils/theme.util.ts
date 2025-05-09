@@ -1,10 +1,7 @@
-import { ItemOption } from '@infrastructure/interfaces';
+import { Theme } from '@application/context';
 
-/**
- * The theme options to select
- */
-export const THEME_OPTIONS: ItemOption[] = [
-    { label: 'Modo predeterminado', value: 'default' },
-    { label: 'Modo claro', value: 'light' },
-    { label: 'Modo oscuro', value: 'dark' }
-];
+export const themes: Record<Uppercase<Theme | 'default'>, Theme | 'default'> = {
+    DARK: 'dark',
+    DEFAULT: 'default',
+    LIGHT: 'light'
+}
