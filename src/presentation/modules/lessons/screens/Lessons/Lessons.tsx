@@ -26,7 +26,7 @@ const Lessons = (): JSX.Element => {
     const { styles: themeStyles, theme: { colors, fontSizes } } = useStyles(themeStylesheet);
     const router = useRouter();
 
-    const { state: { selectedLesson }, setSelectedLesson } = useLessons();
+    const { setSelectedLesson } = useLessons();
 
     /**
      * I want to set the selectedLesson to the INIT_LESSON, but I want to change the next_lesson
