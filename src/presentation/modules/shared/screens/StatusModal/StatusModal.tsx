@@ -27,7 +27,7 @@ const StatusModal = (): JSX.Element => {
     const { state: { msg }, clearStatus } = useStatus();
     const { translate } = useTranslation();
 
-    const configMsg = 'Para realizar está acción necesita permisos del dispositivo, por favor abra la configuración de su dispositivo y active los permisos de la aplicación.';
+    const configMsg = translate('messages.permissions.request');
 
     const btnText = (msg === configMsg)
         ? translate('forms.actions.settings').toUpperCase()
@@ -60,7 +60,7 @@ const StatusModal = (): JSX.Element => {
                     confirmTextButton={ btnText }
                     onCancel={ clearStatus }
                     onConfirm={ handleClose }
-                    showCancelButton={ (msg === configMsg) as any }
+                    showCancelButton={ (msg === configMsg) }
                     showConfirmButton
                 />
             </View>
