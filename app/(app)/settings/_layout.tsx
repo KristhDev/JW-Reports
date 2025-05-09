@@ -3,8 +3,11 @@ import { useStyles } from 'react-native-unistyles';
 
 import { Header } from '@ui/components';
 
+import { useTranslation } from '@ui/hooks';
+
 export default function SettingsLayout(): JSX.Element {
     const { theme: { colors } } = useStyles();
+    const { translate } = useTranslation();
 
     return (
         <Stack
@@ -29,27 +32,27 @@ export default function SettingsLayout(): JSX.Element {
 
             <Stack.Screen
                 name="profile"
-                options={{ title: 'Perfil' }}
+                options={{ title: translate('navigation.titles.profile') }}
             />
 
             <Stack.Screen
                 name="credentials"
-                options={{ title: 'Credenciales' }}
+                options={{ title: translate('navigation.titles.credentials') }}
             />
 
             <Stack.Screen
                 name="export-data"
-                options={{ title: 'Exportar Información' }}
+                options={{ title: translate('navigation.titles.exportInfo') }}
             />
 
             <Stack.Screen
                 name="feedback"
-                options={{ title: 'Sugerencias' }}
+                options={{ title: translate('navigation.titles.feedback') }}
             />
 
             <Stack.Screen
                 name="report-errors"
-                options={{ title: 'Reportar Error' }}
+                options={{ title: translate('navigation.titles.reportAnError') }}
             />
         </Stack>
     );
