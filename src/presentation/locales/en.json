@@ -10,7 +10,12 @@
             "preaching": "{{action}} preaching",
             "revisit": "{{action}} revisit",
             "revisits": "Revisits",
-            "revisitTo": "Revisit {{name}}"
+            "revisitTo": "Revisit {{name}}",
+            "profile": "Profile",
+            "credentials": "Credentials",
+            "exportInfo": "Export Information",
+            "feedback": "Feedback",
+            "reportAnError": "Report An Error"
         }
     },
 
@@ -195,6 +200,12 @@
             "titles": {
                 "appearance": "Appearance"
             }
+        },
+
+        "ui": {
+            "titles": {
+                "language": "Language"
+            }
         }
     },
 
@@ -284,6 +295,10 @@
             "links": {
                 "lessons": "View all lessons",
                 "addLesson": "Add lesson"
+            },
+
+            "actions": {
+                "exportCourses": "Export Bible courses"
             }
         },
 
@@ -321,6 +336,10 @@
                 "emptyLastLesson": "You have not added any lessons for a Bible course.",
                 "emptyLastRevisit": "You have not added any revisits.",
                 "reportEmpty": "You have not added any preaching days for this month's report."
+            },
+
+            "actions": {
+                "exportPreaching": "Export preaching information"
             }
         },
 
@@ -349,7 +368,11 @@
                 "visited": "visited"
             },
 
-            "photoPlaceholder": "The photo is to help you remember {{person}}'s place of residence."
+            "photoPlaceholder": "The photo is to help you remember {{person}}'s place of residence.",
+
+            "actions": {
+                "exportRevisits": "Export revisits"
+            }
         },
 
         "settings": {
@@ -432,7 +455,18 @@
 
         "ui": {
             "titles": {
-                "last": "LAST {{attribute}}"
+                "last": "LAST {{attribute}}",
+                "exportData": "EXPORT INFORMATION",
+                "feedback": "FEEDBACK",
+                "reportAnError": "REPORT AN ERROR"
+            },
+
+            "descriptions": {
+                "exportData": "Here you can export your information from the application in pdf, both preaching reports, revisits and Bible courses."
+            },
+
+            "actions": {
+                "exportAll": "Export all"
             }
         }
     },

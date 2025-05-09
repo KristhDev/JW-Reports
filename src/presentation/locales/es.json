@@ -10,7 +10,12 @@
             "preaching": "{{action}} predicación",
             "revisit": "{{action}} revisita",
             "revisits": "Revisitas",
-            "revisitTo": "Revisita {{name}}"
+            "revisitTo": "Revisita {{name}}",
+            "profile": "Perfil",
+            "credentials": "Credenciales",
+            "exportInfo": "Exportar Información",
+            "feedback": "Sugerencias",
+            "reportAnError": "Reportar Error"
         }
     },
 
@@ -194,6 +199,12 @@
             "titles": {
                 "appearance": "Apariencia"
             }
+        },
+
+        "ui": {
+            "titles": {
+                "language": "Language"
+            }
         }
     },
 
@@ -283,6 +294,10 @@
             "links": {
                 "lessons": "Ver todas las clases",
                 "addLesson": "Agregar clase"
+            },
+
+            "actions": {
+                "exportCourses": "Exportar cursos bíblicos"
             }
         },
 
@@ -320,6 +335,10 @@
                 "emptyLastLesson": "No has agregado ninguna lección para un curso biblíco.",
                 "emptyLastRevisit": "No has agregado ninguna revisita.",
                 "reportEmpty": "No has agregado ningún día de predicación para el informe de este mes."
+            },
+
+            "actions": {
+                "exportPreaching": "Exportar info de predicación"
             }
         },
 
@@ -348,7 +367,11 @@
                 "visited": "visitada"
             },
 
-            "photoPlaceholder": "La foto es para ayudarle a recordar el lugar de residencia de {{person}}."
+            "photoPlaceholder": "La foto es para ayudarle a recordar el lugar de residencia de {{person}}.",
+
+            "actions": {
+                "exportRevisits": "Exportar revisitas"
+            }
         },
 
         "settings": {
@@ -431,7 +454,18 @@
 
         "ui": {
             "titles": {
-                "last": "ÚLTIMA {{attribute}}"
+                "last": "ÚLTIMA {{attribute}}",
+                "exportData": "EXPORTAR INFORMACIÓN",
+                "feedback": "SUGERENCIAS",
+                "reportAnError": "REPORTAR ERROR"
+            },
+
+            "descriptions": {
+                "exportData": "Aquí puede exportar su información de la aplicación en pdf, tanto informes de predicación, revisitas y cursos bíblicos."
+            },
+
+            "actions": {
+                "exportAll": "Exportar todo"
             }
         }
     },
