@@ -7,11 +7,15 @@ import { useStyles } from 'react-native-unistyles';
 import { FeedbackForm } from '../../components';
 import { Title } from '@ui/components';
 
+/* Hooks */
+import { useTranslation } from '@ui/hooks';
+
 /* Styles */
 import { themeStylesheet } from '@theme/styles';
 
 const FeedbackScreen = (): JSX.Element => {
     const { styles: themeStyles, theme: { fontSizes } } = useStyles(themeStylesheet);
+    const { translate } = useTranslation();
 
     return (
         <KeyboardAwareScrollView
@@ -20,7 +24,7 @@ const FeedbackScreen = (): JSX.Element => {
         >
             <View style={ themeStyles.screenContainer }>
                 <Title
-                    text="SUGERENCIAS"
+                    text={ translate('screens.ui.titles.feedback') }
                     textStyle={{ fontSize: fontSizes.md }}
                 />
 
