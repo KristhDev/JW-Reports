@@ -7,6 +7,7 @@ import { Button, Title } from '@ui/components';
 
 /* Hooks */
 import { useExportData } from '../../hooks';
+import { useTranslation } from '@ui/hooks';
 
 /* Theme */
 import { themeStylesheet } from '@theme/styles';
@@ -30,15 +31,19 @@ const ExportDataScreen = (): JSX.Element => {
         isRevisitsExporting
     } = useExportData();
 
+    const { translate } = useTranslation();
+
+    const title = translate('screens.ui.titles.exportData');
+
     return (
         <View style={ themeStyles.screenContainer }>
             <Title
-                text="EXPORTAR INFORMACIÓN"
+                text={ title }
                 textStyle={{ fontSize: fontSizes.md }}
             />
 
             <Text style={ themeStyles.detailText }>
-                Aquí puede exportar su información de la aplicación en pdf, tanto informes de predicación, revisitas y cursos bíblicos.
+                { translate('screens.ui.descriptions.exportData') }
             </Text>
 
             <View style={{ gap: margins.md, flex: 1, justifyContent: 'flex-end' }}>
@@ -51,7 +56,7 @@ const ExportDataScreen = (): JSX.Element => {
                         />
                     ) }
                     onPress={ exportPreachings }
-                    text="Exportar info de predicación"
+                    text={ translate('screens.preaching.actions.exportPreaching') }
                 />
 
                 <Button
@@ -63,7 +68,7 @@ const ExportDataScreen = (): JSX.Element => {
                         />
                     ) }
                     onPress={ exportRevisits }
-                    text="Exportar revisitas"
+                    text={ translate('screens.revisits.actions.exportRevisits') }
                 />
 
                 <Button
@@ -75,7 +80,7 @@ const ExportDataScreen = (): JSX.Element => {
                         />
                     ) }
                     onPress={ exportCourses }
-                    text="Exportar cursos bíblicos"
+                    text={ translate('screens.courses.actions.exportCourses') }
                 />
 
                 <Button
@@ -87,7 +92,7 @@ const ExportDataScreen = (): JSX.Element => {
                         />
                     ) }
                     onPress={ exportAllData }
-                    text="Exportar todo"
+                    text={ translate('screens.ui.actions.exportAll') }
                 />
             </View>
         </View>
