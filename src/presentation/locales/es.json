@@ -1,18 +1,27 @@
 {
     "navigation": {
         "titles": {
-            "home": "Inicio",
-            "revisits": "Revisitas",
+            "course": "{{action}} curso",
             "courses": "Cursos",
-            "preaching": "{{action}} predicación",
-            "lesson": "{{action}} lesson",
-            "revisit": "{{action}} revisit",
+            "home": "Inicio",
+            "lesson": "{{action}} clase",
+            "lessons": "Clases",
             "lessonWith": "Clase con {{name}}",
+            "preaching": "{{action}} predicación",
+            "revisit": "{{action}} revisita",
+            "revisits": "Revisitas",
             "revisitTo": "Revisita {{name}}"
         }
     },
 
     "topTabs": {
+        "courses": {
+            "all": "Todos",
+            "active": "Activos",
+            "suspended": "Suspendidos",
+            "finished": "Terminados"
+        },
+
         "revisits": {
             "all": "Todas",
             "visited": "Visitadas",
@@ -67,7 +76,11 @@
             "coursesExported": "Ha exportado sus cursos correctamente. El archivo se encuentra en la carpeta que ha seleccionado.",
             "unSuspendedFinishOrStart": "No puede terminar o comenzar de nuevo un curso suspendido.",
             "finishedSuspendOrRestart": "No puede suspender o renovar un curso terminado.",
-            "suspended": "Ha suspendido el curso correctamente."
+            "suspended": "Ha suspendido el curso correctamente.",
+            "notAdded": "No ha agregado ningún curso.",
+            "noActiveCourses": "No tiene ningún curso activo.",
+            "noSuspendedCourses": "No tiene ningú curso suspendido.",
+            "noFinishedCourses": "Ninguno de sus estudiantes ha terminado el curso."
         },
 
         "email": {
@@ -238,7 +251,11 @@
 
         "courses": {
             "titles": {
-                "course":"{{action}} CURSO"
+                "course":"{{action}} CURSO",
+                "allMyCourses": "TODOS MIS CURSOS",
+                "activeCourses": "CURSOS ACTIVOS",
+                "suspendedCourses": "CURSOS SUSPENDIDOS",
+                "finishedCourses": "CURSOS TERMINADOS"
             },
 
             "labels": {
@@ -260,6 +277,30 @@
             "links": {
                 "lessons": "Ver todas las clases",
                 "addLesson": "Agregar clase"
+            }
+        },
+
+        "lessons": {
+            "titles": {
+                "addLesson": "AGREGAR CLASE AL CURSO",
+                "editLesson": "EDITAR CLASE DEL CURSO",
+                "courseLessonWith": "CLASE DEL CURSO CON {{preson}}"
+            },
+
+            "labels": {
+                "lessonStatus": "Estado de la clase: {{status}}",
+                "wasAnalyzed": "Se analizó:",
+                "itllAnalyzed": "Se analizará:"
+            },
+
+            "status": {
+                "taught": "Impartida",
+                "toBeTaught": "Por impartir"
+            },
+
+            "questions": {
+                "finish": "¿Terminar la clase?",
+                "reschedule": "¿Reprogramar?"
             }
         },
 
@@ -406,26 +447,27 @@
             },
 
             "address": "Dirección:",
+            "comments": "Comentarios:",
             "confirmPassword": "Confirmar contraseña:",
+            "courses": "Cursos:",
+            "date": "Fecha:",
             "email": "Correo:",
+            "hours": "Horas:",
+            "hoursLDC": "Horas LDC:",
             "hoursRequirement": "Requerimiento de horas:",
+            "month": "Mes:",
             "name": "Nombre:",
             "newPassword": "Nueva contraseña:",
-            "password": "Contraseña:",
-            "personName": "Nombre de la persona:",
-            "personAbout": "Información de la persona:",
-            "photo": "Foto:",
             "nextVisit": "Próxima visita:",
+            "password": "Contraseña:",
+            "personAbout": "Información de la persona:",
+            "personName": "Nombre de la persona:",
+            "photo": "Foto:",
             "pioner": "Precursor:",
             "student": "Nombre del estudiante:",
             "studentInfo": "Información del estudiante:",
             "studyPublication": "Publicación de estudio:",
-            "surname": "Apellidos:",
-            "month": "Mes:",
-            "hours": "Horas:",
-            "hoursLDC": "Horas LDC:",
-            "courses": "Cursos:",
-            "comments": "Comentarios:"
+            "surname": "Apellidos:"
         },
 
         "checkboxes": {

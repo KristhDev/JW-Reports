@@ -1,18 +1,27 @@
 {
     "navigation": {
         "titles": {
-            "home": "Home",
-            "revisits": "Revisits",
+            "course": "{{action}} course",
             "courses": "Courses",
-            "preaching": "{{action}} preaching",
+            "home": "Home",
             "lesson": "{{action}} lesson",
-            "revisit": "{{action}} revisit",
+            "lessons": "Lessons",
             "lessonWith": "Lesson with {{name}}",
+            "preaching": "{{action}} preaching",
+            "revisit": "{{action}} revisit",
+            "revisits": "Revisits",
             "revisitTo": "Revisit {{name}}"
         }
     },
 
     "topTabs": {
+        "courses": {
+            "all": "All",
+            "active": "Active",
+            "suspended": "Suspended",
+            "finished": "Finished"
+        },
+
         "revisits": {
             "all": "All",
             "visited": "Visited",
@@ -68,7 +77,11 @@
             "coursesExported": "You have successfully exported your courses. The file is located in the folder you have selected.",
             "unSuspendedFinishOrStart": "You can't not finish or restart a suspended course.",
             "finishedSuspendOrRestart": "You can't suspended or restart a completed course.",
-            "suspended": "You have suspended the course successfully."
+            "suspended": "You have suspended the course successfully.",
+            "notAdded": "You have not added any courses.",
+            "noActiveCourses": "You don't have any active courses.",
+            "noSuspendedCourses": "You don't have any suspended courses.",
+            "noFinishedCourses": "None of your students have completed the course."
         },
 
         "email": {
@@ -239,7 +252,11 @@
 
         "courses": {
             "titles": {
-                "course":"{{action}} COURSE"
+                "course":"{{action}} COURSE",
+                "allMyCourses": "ALL MY COURSES",
+                "activeCourses": "ACTIVE COURSES",
+                "suspendedCourses": "SUSPENDED COURSES",
+                "finishedCourses": "FINISHED COURSES"
             },
 
             "labels": {
@@ -261,6 +278,30 @@
             "links": {
                 "lessons": "View all lessons",
                 "addLesson": "Add lesson"
+            }
+        },
+
+        "lessons": {
+            "titles": {
+                "addLesson": "ADD LESSON TO COURSE",
+                "editLesson": "EDIT LESSON OF THE COURSE",
+                "courseLessonWith": "COURSE LESSON WITH {{preson}}"
+            },
+
+            "labels": {
+                "lessonStatus": "Lesson status: {{status}}",
+                "wasAnalyzed": "Was analyzed:",
+                "itllAnalyzed": "It'll be analyzed:"
+            },
+
+            "status": {
+                "taught": "Taught",
+                "toBeTaught": "To be taught"
+            },
+
+            "questions": {
+                "finish": "Finish the lesson?",
+                "reschedule": "Reschedule?"
             }
         },
 
@@ -407,26 +448,27 @@
             },
 
             "address": "Address:",
+            "comments": "Comments:",
             "confirmPassword": "Confirm Password:",
+            "courses": "Courses:",
+            "date": "Date:",
             "email": "Email:",
+            "hours": "Hours:",
+            "hoursLDC": "Hours LDC:",
             "hoursRequirement": "Hours Requirement:",
+            "month": "Month:",
             "name": "Name:",
             "newPassword": "New Password:",
-            "password": "Password:",
-            "personName": "Person name:",
-            "personAbout": "Person information:",
-            "photo": "Photo:",
             "nextVisit": "Next visit:",
+            "password": "Password:",
+            "personAbout": "Person information:",
+            "personName": "Person name:",
+            "photo": "Photo:",
             "pioner": "Pioner:",
             "student": "Student name:",
             "studentInfo": "Student information:",
             "studyPublication": "Study Publication:",
-            "surname": "Surname:",
-            "month": "Month:",
-            "hours": "Hours:",
-            "hoursLDC": "Hours LDC:",
-            "courses": "Courses:",
-            "comments": "Comments:"
+            "surname": "Surname:"
         },
 
         "checkboxes": {
