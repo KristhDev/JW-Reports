@@ -10,6 +10,7 @@ import { coursesFilters } from '@application/constants/utils';
 
 /* Hooks */
 import { useCourses } from '@courses/hooks';
+import { useTranslation } from '@ui/hooks';
 
 const { Navigator } = createMaterialTopTabNavigator();
 
@@ -25,6 +26,7 @@ export default function CoursesTopTabsLauyout(): JSX.Element {
     const { theme: { colors } } = useStyles();
 
     const { state: { selectedCourse }, setSelectedCourse } = useCourses();
+    const { translate } = useTranslation();
 
     useFocusEffect(
         useCallback(() => {
@@ -60,42 +62,42 @@ export default function CoursesTopTabsLauyout(): JSX.Element {
         >
             <TopTabs.Screen
                 initialParams={{
-                    emptyMessage: 'No has agregado ningún curso.',
+                    emptyMessage: translate('messages.courses.notAdded'),
                     filter: coursesFilters.ALL,
-                    title: 'TODOS MIS CURSOS',
+                    title: translate('screens.courses.titles.allMyCourses')
                 }}
                 name="index"
-                options={{ title: 'Todos' }}
+                options={{ title: translate('topTabs.courses.all') }}
             />
 
             <TopTabs.Screen
                 initialParams={{
-                    emptyMessage: 'No tienes ningún curso activo.',
+                    emptyMessage: translate('messages.courses.noActiveCourses'),
                     filter: coursesFilters.ACTIVE,
-                    title: 'CURSOS ACTIVOS'
+                    title: translate('screens.courses.titles.activeCourses')
                 }}
                 name="active"
-                options={{ title: 'Activos' }}
+                options={{ title: translate('topTabs.courses.active') }}
             />
 
             <TopTabs.Screen
                 initialParams={{
-                    emptyMessage: 'No tienes ningún curso suspendido.',
+                    emptyMessage: translate('messages.courses.noSuspendedCourses'),
                     filter: coursesFilters.SUSPENDED,
-                    title: 'CURSOS SUSPENDIDOS'
+                    title: translate('screens.courses.titles.suspendedCourses')
                 }}
                 name="suspended"
-                options={{ title: 'Suspendidos' }}
+                options={{ title: translate('topTabs.courses.suspended') }}
             />
 
             <TopTabs.Screen
                 initialParams={{
-                    emptyMessage: 'Ninguno de tus estudiantes ha terminado el curso.',
+                    emptyMessage: translate('messages.courses.noFinishedCourses'),
                     filter: coursesFilters.FINISHED,
-                    title: 'CURSOS TERMINADOS'
+                    title: translate('screens.courses.titles.finishedCourses')
                 }}
                 name="finished"
-                options={{ title: 'Terminados' }}
+                options={{ title: translate('topTabs.courses.finished') }}
             />
         </TopTabs>
     );

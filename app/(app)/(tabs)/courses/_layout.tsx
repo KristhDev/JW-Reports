@@ -8,6 +8,7 @@ import { Header, HeaderButtons } from '@ui/components';
 /* Hooks */
 import { useCourses } from '@courses/hooks';
 import { useLessons } from '@lessons/hooks';
+import { useTranslation } from '@ui/hooks';
 
 export default function CoursesLayout(): JSX.Element {
     const [ showDeleteCourseModal, setShowDeleteCourseModal ] = useState<boolean>(false);
@@ -19,7 +20,35 @@ export default function CoursesLayout(): JSX.Element {
     const { state: { isCourseDeleting, selectedCourse }, deleteCourse } = useCourses();
     const { state: { selectedLesson, isLessonDeleting }, deleteLesson } = useLessons();
 
+    const { translate } = useTranslation();
+
     const courseDetailTitle = `Curso a ${ selectedCourse.personName }`;
+
+    const addOrEditCourseTitleNavigation = translate('navigation.titles.course', {
+        action: (selectedCourse.id !== '')
+            ? translate('forms.actions.edit')
+            : translate('forms.actions.add')
+    });
+
+    const addOrEditLessonTitleNavigation = translate('navigation.titles.lesson', {
+        action: (selectedCourse.id !== '')
+            ? translate('forms.actions.edit')
+            : translate('forms.actions.add')
+    });
+
+    const lessonDetailTitleNavigation = translate('navigation.titles.lessonWith', {
+        person: selectedCourse.personName
+    });
+
+    const deleteCourseModalTitle = translate('modals.titles.deleteAsk', {
+        article: 'este',
+        attribute: translate('entities.course')
+    });
+
+    const deleteLessonModalTitle = translate('modals.titles.deleteAsk', {
+        article: 'esta',
+        attribute: translate('entities.lesson')
+    });
 
     /**
      * When the user clicks the delete button, the deleteCourse function is called, which sets the
@@ -105,7 +134,7 @@ export default function CoursesLayout(): JSX.Element {
                         >
                             <HeaderButtons
                                 deleteButton={ true }
-                                deleteModalText="¿Está seguro de eliminar este curso?"
+                                deleteModalText={ deleteCourseModalTitle }
                                 isDeleteModalLoading={ isCourseDeleting }
                                 onCloseDeleteModal={ () => setShowDeleteCourseModal(false) }
                                 onConfirmDeleteModal={ () => handleDeleteCourse(handleGoBack) }
@@ -133,7 +162,7 @@ export default function CoursesLayout(): JSX.Element {
                         >
                             <HeaderButtons
                                 deleteButton={ selectedCourse.id !== '' }
-                                deleteModalText="¿Está seguro de eliminar este curso?"
+                                deleteModalText={ deleteCourseModalTitle }
                                 isDeleteModalLoading={ isCourseDeleting }
                                 onCloseDeleteModal={ () => setShowDeleteCourseModal(false) }
                                 onConfirmDeleteModal={ () => handleDeleteCourse(() => handleDismissTo('/(app)/(tabs)/courses/(tabs)')) }
@@ -142,7 +171,7 @@ export default function CoursesLayout(): JSX.Element {
                             />
                         </Header>
                     ),
-                    title: `${ selectedCourse.id !== '' ? 'Editar' : 'Agregar' } curso`
+                    title: addOrEditCourseTitleNavigation
                 }}
             />
 
@@ -158,7 +187,7 @@ export default function CoursesLayout(): JSX.Element {
                         >
                             <HeaderButtons
                                 deleteButton={ selectedLesson.id !== '' }
-                                deleteModalText="¿Está seguro de eliminar esta clase?"
+                                deleteModalText={ deleteLessonModalTitle }
                                 isDeleteModalLoading={ isLessonDeleting }
                                 onCloseDeleteModal={ () => setShowDeleteLessonModal(false) }
                                 onConfirmDeleteModal={ () => handleDeleteLesson(() => handleDismissTo('/(app)/(tabs)/courses/lessons')) }
@@ -167,7 +196,7 @@ export default function CoursesLayout(): JSX.Element {
                             />
                         </Header>
                     ),
-                    title: `${ selectedLesson.id !== '' ? 'Editar' : 'Agregar' } clase`
+                    title: addOrEditLessonTitleNavigation
                 }}
             />
 
@@ -181,7 +210,7 @@ export default function CoursesLayout(): JSX.Element {
                             title={ options.title }
                         />
                     ),
-                    title: 'Clases'
+                    title: translate('navigation.titles.lessons')
                 }}
             />
 
@@ -197,7 +226,7 @@ export default function CoursesLayout(): JSX.Element {
                         >
                             <HeaderButtons
                                 deleteButton={ true }
-                                deleteModalText="¿Está seguro de eliminar esta clase?"
+                                deleteModalText={ deleteLessonModalTitle }
                                 isDeleteModalLoading={ isLessonDeleting }
                                 onCloseDeleteModal={ () => setShowDeleteLessonModal(false) }
                                 onConfirmDeleteModal={ () => handleDeleteLesson(handleGoBack) }
@@ -209,7 +238,7 @@ export default function CoursesLayout(): JSX.Element {
                             />
                         </Header>
                     ),
-                    title: `Clase con ${ selectedCourse.personName }`
+                    title: lessonDetailTitleNavigation
                 }}
             />
         </Stack>
