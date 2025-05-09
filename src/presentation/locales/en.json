@@ -189,6 +189,12 @@
             "messages": {
                 "verifyInfo": "Please verify the following information."
             }
+        },
+
+        "theme": {
+            "titles": {
+                "appearance": "Appearance"
+            }
         }
     },
 
@@ -607,6 +613,14 @@
             "footers": {
                 "total": "Total"
             }
+        }
+    },
+
+    "theme": {
+        "options": {
+            "darkMode": "Dark mode",
+            "lightMode": "Light mode",
+            "defaultMode": "Default mode"
         }
     }
 }

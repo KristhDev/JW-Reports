@@ -188,6 +188,12 @@
             "messages": {
                 "verifyInfo": "Por favor verifique los siguientes datos."
             }
+        },
+
+        "theme": {
+            "titles": {
+                "appearance": "Apariencia"
+            }
         }
     },
 
@@ -606,6 +612,14 @@
             "footers": {
                 "total": "Total"
             }
+        }
+    },
+
+    "theme": {
+        "options": {
+            "darkMode": "Modo oscuro",
+            "lightMode": "Modo claro",
+            "defaultMode": "Modo predeterminado"
         }
     }
 }
