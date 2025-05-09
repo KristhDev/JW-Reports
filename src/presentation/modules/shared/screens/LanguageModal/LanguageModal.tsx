@@ -20,7 +20,7 @@ import { Languages } from '@infrastructure/interfaces';
  * @return {JSX.Element} Return jsx element to render modal of theme
  */
 const LanguageModal: FC<ModalProps> = ({ isOpen, onClose }): JSX.Element => {
-    const { changeLanguage } = useTranslation();
+    const { changeLanguage, translate } = useTranslation();
     const { state: { userInterface } } = useUI();
 
     return (
@@ -29,7 +29,7 @@ const LanguageModal: FC<ModalProps> = ({ isOpen, onClose }): JSX.Element => {
             items={ LANGUAGE_OPTIONS }
             onCancel={ onClose }
             onChangeValue={ (value) => changeLanguage(value as Languages) }
-            title="Idioma"
+            title={ translate('modals.ui.titles.language') }
             value={ userInterface.language }
         />
     );
