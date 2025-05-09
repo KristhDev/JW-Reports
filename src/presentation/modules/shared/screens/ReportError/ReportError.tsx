@@ -6,10 +6,13 @@ import { useStyles } from 'react-native-unistyles';
 import { ReportErrorForm } from '../../components';
 import { Title } from '@ui/components';
 
+import { useTranslation } from '@ui/hooks';
+
 import { themeStylesheet } from '@theme/styles';
 
 const ReportErrorScreen = (): JSX.Element => {
     const { styles: themeStyles, theme: { fontSizes } } = useStyles(themeStylesheet);
+    const { translate } = useTranslation();
 
     return (
         <KeyboardAwareScrollView
@@ -18,7 +21,7 @@ const ReportErrorScreen = (): JSX.Element => {
         >
             <View style={ themeStyles.screenContainer }>
                 <Title
-                    text="REPORTAR ERROR"
+                    text={ translate('screens.ui.titles.reportAnError') }
                     textStyle={{ fontSize: fontSizes.md }}
                 />
 
