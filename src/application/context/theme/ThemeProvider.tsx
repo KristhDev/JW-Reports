@@ -2,7 +2,7 @@ import React, { FC, PropsWithChildren, useEffect, useMemo, useState } from 'reac
 import { Appearance } from 'react-native';
 import { UnistylesRuntime, useStyles } from 'react-native-unistyles';
 
-import { storageKeys } from '@application/constants/utils';
+import { storageKeys, themes } from '@application/constants/utils';
 
 /* Adapters */
 import { storageAdapter } from '@infrastructure/adapters';
@@ -24,7 +24,7 @@ const ThemeProvider: FC<PropsWithChildren> = ({ children }) => {
     const { theme } = useStyles();
 
     const [ themeState, setThemeState ] = useState<Theme>(UnistylesRuntime.themeName);
-    const [ selectedTheme, setSelectedTheme ] = useState<Theme | 'default'>('default');
+    const [ selectedTheme, setSelectedTheme ] = useState<Theme | 'default'>(themes.DEFAULT);
 
     /**
      * Sets the theme for the application.
@@ -34,7 +34,7 @@ const ThemeProvider: FC<PropsWithChildren> = ({ children }) => {
      */
     const setTheme = async (theme: Theme | 'default'): Promise<void> => {
         let userTheme = theme;
-        if (userTheme === 'default') userTheme = UnistylesRuntime.colorScheme as any;
+        if (userTheme === themes.DEFAULT) userTheme = UnistylesRuntime.colorScheme as any;
 
         UnistylesRuntime.setTheme(userTheme as Theme);
         setThemeState(userTheme as Theme);
@@ -50,7 +50,7 @@ const ThemeProvider: FC<PropsWithChildren> = ({ children }) => {
 
     useEffect(() => {
         const unSubscribeTheme = Appearance.addChangeListener(({ colorScheme }) => {
-            if (selectedTheme === 'default') return;
+            if (selectedTheme === themes.DEFAULT) return;
             setTheme(colorScheme as Theme);
         });
 
@@ -61,7 +61,7 @@ const ThemeProvider: FC<PropsWithChildren> = ({ children }) => {
 
     useEffect(() => {
         const theme = storageAdapter.getItem(storageKeys.THEME);
-        setTheme(theme as Theme || 'default');
+        setTheme(theme as Theme || themes.DEFAULT);
     }, []);
 
     return (
