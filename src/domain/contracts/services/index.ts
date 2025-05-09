@@ -12,3 +12,4 @@ export * from './preaching-report.service.contract';
 export * from './preaching.service.contract';
 export * from './publisher.service.contract';
 export * from './revisits.service.contract';
+export * from './theme.service.contract';
