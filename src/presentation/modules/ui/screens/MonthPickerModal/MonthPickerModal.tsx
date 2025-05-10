@@ -10,6 +10,9 @@ import { TimeAdapter } from '@infrastructure/adapters';
 import { Button, ModalActions } from '../../components';
 import { Modal } from '../Modal';
 
+/* Hooks */
+import { useTranslation } from '@ui/hooks';
+
 /* Interfaces */
 import { MonthPickerModalProps } from './interfaces';
 
@@ -32,6 +35,7 @@ import { stylesheet } from './styles';
 const MonthPickerModal: FC<MonthPickerModalProps> = ({ isOpen, monthDate, onClose, onConfirm }): JSX.Element => {
     const { styles: themeStyles, theme: { colors, fontSizes } } = useStyles(themeStylesheet);
     const { styles } = useStyles(stylesheet);
+    const { translate } = useTranslation();
 
     const [ monthOfDate, setMonthOfDate ] = useState<{ label: string, value: number }>({
         label: TimeAdapter.getMonthName(TimeAdapter.getMonthOfDate(monthDate)),
@@ -180,8 +184,8 @@ const MonthPickerModal: FC<MonthPickerModalProps> = ({ isOpen, monthDate, onClos
                 </View>
 
                 <ModalActions
-                    cancelButtonText="Cancelar"
-                    confirmTextButton="Seleccionar"
+                    cancelButtonText={ translate('forms.actions.cancel').toUpperCase() }
+                    confirmTextButton={ translate('forms.actions.select').toUpperCase() }
                     onCancel={ handleClose }
                     onConfirm={ handleSelectMonthYear }
                     showCancelButton
