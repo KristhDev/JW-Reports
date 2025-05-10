@@ -12,6 +12,7 @@ import { Button, FormField, FormImage, FormImageRef } from '@ui/components';
 /* Hooks */
 import { useEmail, useStatus } from '../../hooks';
 import { useTheme } from '@theme/hooks';
+import { useTranslation } from '@ui/hooks';
 
 /* Schemas */
 import { generateReportErrorFormSchema } from './schemas';
@@ -39,6 +40,7 @@ export const ReportErrorForm = (): JSX.Element => {
     const { sendReportErrorEmail } = useEmail();
     const { setErrorForm } = useStatus();
     const { state: { theme } } = useTheme();
+    const { translate } = useTranslation();
 
     /**
      * Handles the send report error email functionality.
@@ -82,7 +84,7 @@ export const ReportErrorForm = (): JSX.Element => {
                 controlStyle={{ paddingVertical: margins.xs + 2 }}
                 editable={ !isSubmitting }
                 inputStyle={{ minHeight: margins.sm * 8 }}
-                label="Describa el error:"
+                label={ translate('forms.labels.shared.describeError') }
                 multiline
                 numberOfLines={ 8 }
                 onChangeText={ handleChange('message') }
@@ -92,8 +94,8 @@ export const ReportErrorForm = (): JSX.Element => {
             <FormImage
                 defaultImage={ reportErrorDefaultImgs[theme] }
                 disabled={ isSubmitting }
-                galleryButtonText="Añadir imagen"
-                label="Adjunte una imagen (opcional):"
+                galleryButtonText={ translate('forms.actions.addImage') }
+                label={ translate('forms.labels.shared.addImage') }
                 onSelectImage={ setImage }
                 ref={ formImageRef }
                 showGalleryButton
@@ -109,7 +111,7 @@ export const ReportErrorForm = (): JSX.Element => {
                     />
                 ) }
                 onPress={ handlePress }
-                text="Enviar"
+                text={ translate('forms.actions.send').toUpperCase() }
             />
         </View>
     );

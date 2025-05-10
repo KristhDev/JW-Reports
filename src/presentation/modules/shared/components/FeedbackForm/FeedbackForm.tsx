@@ -8,6 +8,7 @@ import { Button, FormField } from '@ui/components';
 
 /* Hooks */
 import { useEmail, useStatus } from '../../hooks';
+import { useTranslation } from '@ui/hooks';
 
 /* Interfaces */
 import { FormActions } from '../../interfaces';
@@ -29,6 +30,7 @@ export const FeedbackForm = (): JSX.Element => {
 
     const { sendFeedbackEmail } = useEmail();
     const { setErrorForm } = useStatus();
+    const { translate } = useTranslation();
 
     /**
      * Handles the send feedback email functionality.
@@ -68,7 +70,7 @@ export const FeedbackForm = (): JSX.Element => {
                 controlStyle={{ paddingVertical: margins.xs + 2 }}
                 editable={ !isSubmitting }
                 inputStyle={{ minHeight: margins.sm * 10 }}
-                label="Escriba su mensaje:"
+                label={ translate('forms.labels.shared.typeMessage') }
                 multiline
                 numberOfLines={ 10 }
                 onChangeText={ handleChange('message') }
@@ -85,7 +87,7 @@ export const FeedbackForm = (): JSX.Element => {
                     />
                 ) }
                 onPress={ handlePress }
-                text="Enviar"
+                text={ translate('forms.actions.send') }
             />
         </View>
     );
