@@ -2,6 +2,7 @@
     "navigation": {
         "titles": {
             "course": "{{action}} course",
+            "courseTo": "Course to {{name}}",
             "courses": "Courses",
             "home": "Home",
             "lesson": "{{action}} lesson",
@@ -278,6 +279,10 @@
                 "finishedCourses": "FINISHED COURSES"
             },
 
+            "messages": {
+                "hasntLastLesson": "You have not added any lessons for this Bible course."
+            },
+
             "labels": {
                 "stateOfCourse": "Course state: {{state}}",
                 "lastLesson": "Last lesson:"
@@ -308,7 +313,12 @@
             "titles": {
                 "addLesson": "ADD LESSON TO COURSE",
                 "editLesson": "EDIT LESSON OF THE COURSE",
-                "courseLessonWith": "COURSE LESSON WITH {{preson}}"
+                "courseLessonWith": "COURSE LESSON WITH {{person}}",
+                "courseLessonsWith": "COURSE LESSONS WITH {{person}}"
+            },
+
+            "messages": {
+                "theReNoLessons": "You have not added classes to this course."
             },
 
             "labels": {

@@ -2,6 +2,7 @@
     "navigation": {
         "titles": {
             "course": "{{action}} curso",
+            "courseTo": "Curso a {{name}}",
             "courses": "Cursos",
             "home": "Inicio",
             "lesson": "{{action}} clase",
@@ -277,6 +278,10 @@
                 "finishedCourses": "CURSOS TERMINADOS"
             },
 
+            "messages": {
+                "hasntLastLesson": "No ha agregado ninguna lección para un curso bíblico."
+            },
+
             "labels": {
                 "stateOfCourse": "Estado del curso: {{state}}",
                 "lastLesson": "Ultima clase:"
@@ -307,7 +312,12 @@
             "titles": {
                 "addLesson": "AGREGAR CLASE AL CURSO",
                 "editLesson": "EDITAR CLASE DEL CURSO",
-                "courseLessonWith": "CLASE DEL CURSO CON {{preson}}"
+                "courseLessonWith": "CLASE DEL CURSO CON {{person}}",
+                "courseLessonsWith": "CLASES DEL CURSO CON {{person}}"
+            },
+
+            "messages": {
+                "theReNoLessons": "No has agregado clases a este curso."
             },
 
             "labels": {
