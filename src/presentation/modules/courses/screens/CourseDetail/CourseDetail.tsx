@@ -65,7 +65,7 @@ const CourseDetail = (): JSX.Element => {
     const lastLessonTitle = (selectedCourse.lastLesson?.done) 
         ? translate('screens.courses.lastLessonTitles.lessonTaught') 
         : translate('screens.courses.lastLessonTitles.nextLesson', {
-            date: TimeAdapter.format(selectedCourse.lastLesson!.nextLesson, 'DD/MM/YYYY')
+            date: TimeAdapter.format(selectedCourse?.lastLesson?.nextLesson || new Date(), 'DD/MM/YYYY')
         });
 
     /**
@@ -180,7 +180,7 @@ const CourseDetail = (): JSX.Element => {
                     </Text>
 
                     {/* Card of last lesson */}
-                    { (selectedCourse?.lastLesson) && (
+                    { (selectedCourse?.lastLesson) ? (
                         <View style={ styles.cardContainer }>
                             <View style={{ backgroundColor: colors.header }}>
                                 <Text
@@ -198,6 +198,13 @@ const CourseDetail = (): JSX.Element => {
                                 { selectedCourse.lastLesson.description }
                             </Text>
                         </View>
+                    ) : (
+                        <Text
+                            style={ themeStyles.detailText }
+                            testID="course-detail-last-lesson-text"
+                        >
+                            { translate('screens.courses.messages.hasntLastLesson') }
+                        </Text>
                     ) }
 
                     <Link
