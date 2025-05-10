@@ -6,6 +6,9 @@ import { PersistConfig } from 'reduxjs-toolkit-persist/lib/types';
 /* Constants */
 import { storageKeys } from '@application/constants/utils';
 
+/* Persistor */
+import { storePersistor } from './persistor';
+
 /* Reducers */
 import { authReducer, AuthState } from '@application/features/auth';
 import { coursesReducer, CoursesState } from '@application/features/courses';
@@ -16,12 +19,8 @@ import { revisitsReducer, RevisitsState } from '@application/features/revisits';
 import { statusReducer, StatusState } from '@application/features/status';
 import { uiReducer, UIState } from '@application/features/ui';
 
-/* Adapters */
-import { storePersistor } from '@infrastructure/adapters';
-
 /* Debugger */
 import reactotron from '../../../ReactotronConfig';
-
 
 const permissionsPersistConfig: PersistConfig<PermissionsState> = {
     key: storageKeys.STORE_PERMISSIONS,
