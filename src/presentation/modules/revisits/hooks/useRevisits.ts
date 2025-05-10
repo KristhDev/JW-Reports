@@ -45,6 +45,7 @@ import { PdfRevisitsTemplate } from '@domain/templates';
 /* Hooks */
 import { useAuth } from '@auth/hooks';
 import { useImage, useNetwork, useStatus } from '@shared/hooks';
+import { useTranslation } from '@ui/hooks';
 
 /* Interfaces */
 import { loadRevisitsOptions, RevisitFilter, SaveRevisitOptions, UpdateRevisitOptions } from '../interfaces';
@@ -67,6 +68,7 @@ const useRevisits = () => {
     const { uploadImage, deleteImage } = useImage();
     const { setStatus, setError } = useStatus();
     const { hasWifiConnection } = useNetwork();
+    const { translate } = useTranslation();
 
     const addRevisit = (revisit: RevisitEntity) => dispatch(addRevisitAction({ revisit }));
     const addRevisits = (revisits: RevisitEntity[]) => dispatch(addRevisitsAction({ revisits }));
@@ -346,7 +348,7 @@ const useRevisits = () => {
 
             const successMsg = (back)
                 ? revisitsMessages.ADDED_SUCCESS
-                : `Has agregado correctamente a ${ revisit.personName } para volverla a visitar.`
+                : translate('messages.revisits.visitAgian', { person: revisit.personName });
 
             back && router.back();
             setStatus({ code: 201, msg: successMsg });
