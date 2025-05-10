@@ -4,6 +4,9 @@ import { useStyles } from 'react-native-unistyles';
 import { useFormik } from 'formik';
 import Ionicons from '@expo/vector-icons/Ionicons';
 
+/* DI */
+import { placeholdersService } from '@config/di';
+
 /* Adapters */
 import { TimeAdapter } from '@infrastructure/adapters';
 
@@ -12,7 +15,7 @@ import { Button, DatetimeField, FormCalendar, FormField } from '@ui/components';
 /* Hooks */
 import { useLessons } from '@lessons/hooks';
 import { useStatus } from '@shared/hooks';
-import { useUI } from '@ui/hooks';
+import { useTranslation, useUI } from '@ui/hooks';
 
 /* Schemas */
 import { generateLessonFormSchema } from './schemas';
@@ -30,11 +33,18 @@ import { themeStylesheet } from '@theme/styles';
  * @returns {JSX.Element} The lesson form component.
  */
 export const LessonForm = (): JSX.Element => {
+    const lessonPlaceholders = placeholdersService.lessonsPlaceholders;
+
     const { styles: themeStyles, theme: { colors, fontSizes, margins } } = useStyles(themeStylesheet);
 
     const { state: { isLessonLoading, selectedLesson }, saveLesson, updateLesson } = useLessons();
     const { setErrorForm } = useStatus();
     const { state: { activeFormField, recordedAudio, userInterface }, setActiveFormField } = useUI();
+    const { translate } = useTranslation();
+
+    const buttonText = (selectedLesson.id === '') 
+        ? translate('forms.actions.save') 
+        : translate('forms.actions.update');
 
     /**
      * If the selectedLesson.id is an empty string, then saveLesson, otherwise updateLesson.
@@ -85,12 +95,12 @@ export const LessonForm = (): JSX.Element => {
                 controlStyle={{ paddingVertical: margins.xs + 2 }}
                 editable={ !isLessonLoading }
                 inputStyle={{ minHeight: margins.sm * 9  }}
-                label="¿Qué verán la próxima clase?"
+                label={ translate('forms.labels.lessons.description') }
                 multiline
                 numberOfLines={ 9 }
                 onChangeText={ handleChange('description') }
                 onFocus={ () => setActiveFormField('description') }
-                placeholder="Ingrese el tema que se estudiará en la siguiente clase"
+                placeholder={ lessonPlaceholders.DESCRIPTION }
                 value={ values.description }
             />
 
@@ -106,9 +116,9 @@ export const LessonForm = (): JSX.Element => {
                         />
                     }
                     inputDateFormat="DD/MM/YYYY"
-                    label="Próxima clase:"
+                    label={ translate('forms.labels.lessons.nextLesson') }
                     mode="date"
-                    placeholder="Seleccione el día"
+                    placeholder={ lessonPlaceholders.SELECT_DAY }
                     style={{ marginBottom: margins.xl }}
                     onChangeDate={ (date) => setFieldValue('nextLesson', TimeAdapter.toDate(date)) }
                     value={ values.nextLesson.toISOString() }
@@ -124,7 +134,7 @@ export const LessonForm = (): JSX.Element => {
                         />
                     }
                     inputDateFormat="DD/MM/YYYY"
-                    label="Próxima clase:"
+                    label={ translate('forms.labels.lessons.nextLesson') }
                     onChangeDate={ (date) => setFieldValue('nextLesson', TimeAdapter.toDate(date)) }
                     style={{ marginBottom: margins.xl }}
                     value={ values.nextLesson.toISOString() }
@@ -143,7 +153,7 @@ export const LessonForm = (): JSX.Element => {
                     )
                 }
                 onPress={ handlePress }
-                text={ (selectedLesson.id !== '') ? 'Actualizar' : 'Guardar' }
+                text={ buttonText }
             />
 
             <View style={{ flex: 1 }} />
