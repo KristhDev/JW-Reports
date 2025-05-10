@@ -22,7 +22,9 @@ export default function CoursesLayout(): JSX.Element {
 
     const { translate } = useTranslation();
 
-    const courseDetailTitle = `Curso a ${ selectedCourse.personName }`;
+    const courseDetailTitle = translate('navigation.titles.courseTo', {
+        name: selectedCourse.personName
+    });
 
     const addOrEditCourseTitleNavigation = translate('navigation.titles.course', {
         action: (selectedCourse.id !== '')
@@ -31,7 +33,7 @@ export default function CoursesLayout(): JSX.Element {
     });
 
     const addOrEditLessonTitleNavigation = translate('navigation.titles.lesson', {
-        action: (selectedCourse.id !== '')
+        action: (selectedLesson.id !== '')
             ? translate('forms.actions.edit')
             : translate('forms.actions.add')
     });
@@ -119,7 +121,7 @@ export default function CoursesLayout(): JSX.Element {
         >
             <Stack.Screen
                 name="(tabs)"
-                options={{ title: 'Cursos' }}
+                options={{ title: translate('navigation.titles.courses') }}
             />
 
             <Stack.Screen
