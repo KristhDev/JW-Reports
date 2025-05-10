@@ -1,5 +1,7 @@
+/* Constants */
 import { themes } from '@application/constants/utils';
 
+/* Contracts */
 import { TranslationAdapterContract } from '@domain/contracts/adapters';
 import { ThemeServiceContract } from '@domain/contracts/services';
 
