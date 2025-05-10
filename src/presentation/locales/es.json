@@ -483,7 +483,15 @@
             },
 
             "lessons": {
-                "reprogramLesson": "Reprogramar clase:"
+                "reprogramLesson": "Reprogramar clase:",
+                "nextLesson": "Próxima clase:",
+                "description": "¿Qué verán la próxima clase?"
+            },
+
+            "shared": {
+                "describeError": "Describa el error:",
+                "addImage": "Adjunte una imagen (opcional):",
+                "typeMessage": "Escriba su mensaje:"
             },
 
             "address": "Dirección:",
@@ -520,6 +528,10 @@
         "placeholders": {
             "preaching": {
                 "hoursLDC": "Ingrese sus horas LDC completas"
+            },
+
+            "lessons": {
+                "content": "Ingrese el tema que se estudiará en la siguiente clase"
             },
 
             "search": "Buscar",
@@ -574,21 +586,23 @@
             },
 
             "accept": "Aceptar",
-            "start": "Comenzar",
-            "mark": "Marcar",
-            "camera": "Cámara",
-            "gallery": "Galería",
             "add": "Agregar",
+            "addImage": "Añadir imagen",
+            "camera": "Cámara",
             "cancel": "Cancelar",
-            "suspend": "Suspender",
             "delete": "Eliminar",
             "edit": "Editar",
-            "ok": "Esta bien",
-            "save": "Guardar",
             "finish": "Terminar",
+            "gallery": "Galería",
+            "mark": "Marcar",
+            "ok": "Esta bien",
             "reprogram": "Reprogramar",
+            "save": "Guardar",
             "select": "Seleccionar",
+            "send": "Enviar",
             "settings": "Configuración",
+            "start": "Comenzar",
+            "suspend": "Suspender",
             "update": "Actualizar"
         },
 

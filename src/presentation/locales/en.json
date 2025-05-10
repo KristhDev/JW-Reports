@@ -484,7 +484,15 @@
             },
 
             "lessons": {
-                "reprogramLesson": "Reprogram lesson:"
+                "reprogramLesson": "Reprogram lesson:",
+                "nextLesson": "Next lesson:",
+                "description": "What'll they see in the next lesson?"
+            },
+
+            "shared": {
+                "describeError": "Describe the error:",
+                "addImage": "Attach an image (optional):",
+                "typeMessage": "Type your message:"
             },
 
             "address": "Address:",
@@ -521,6 +529,10 @@
         "placeholders": {
             "preaching": {
                 "hoursLDC": "Enter your completed LDC hours"
+            },
+
+            "lessons": {
+                "content": "Enter the topic to be studied in the following lesson"
             },
 
             "search": "Search",
@@ -575,21 +587,23 @@
             },
 
             "accept": "Accept",
-            "start": "Start",
-            "mark": "Mark",
             "add": "Add",
+            "addImage": "Add image",
             "camera": "Camera",
-            "gallery": "Gallery",
             "cancel": "Cancel",
             "delete": "Delete",
             "edit": "Edit",
-            "ok": "Ok",
-            "suspend": "Suspend",
-            "save": "Save",
             "finish": "Finish",
+            "gallery": "Gallery",
+            "mark": "Mark",
+            "ok": "Ok",
             "reprogram": "Reprogram",
+            "save": "Save",
             "select": "Select",
+            "send": "Send",
             "settings": "Settings",
+            "start": "Start",
+            "suspend": "Suspend",
             "update": "Update"
         },
 
