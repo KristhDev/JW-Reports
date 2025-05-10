@@ -47,5 +47,6 @@ export interface LessonsMessages {
 }
 
 export interface LessonsPlaceholders {
+    DESCRIPTION: string;
     SELECT_DAY: string;
 }
