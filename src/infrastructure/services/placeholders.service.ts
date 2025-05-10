@@ -80,6 +80,8 @@ export class PlaceholdersService implements PlaceholdersServiceContract {
 
     public get lessonsPlaceholders(): LessonsPlaceholders {
         return {
+            DESCRIPTION: this.translationAdapter.translate('forms.placeholders.lessons.content'),
+
             SELECT_DAY: this.translationAdapter.translate('forms.placeholders.select', {
                 attribute: this.translationAdapter.translate('forms.fields.day'),
                 article: 'el'
