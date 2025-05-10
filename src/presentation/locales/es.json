@@ -240,7 +240,7 @@
             },
 
             "actions": {
-                "returnToVisit": "Return to revisit",
+                "returnToVisit": "Volver a visitar",
                 "markAsVisited": "Marcar como visitada",
                 "proceedToBibleCourse": "Pasar a curso bíblico"
             }
