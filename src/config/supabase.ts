@@ -1,16 +1,20 @@
 import { AppState } from 'react-native';
-import { createClient } from '@supabase/supabase-js';
+import { createClient, SupportedStorage } from '@supabase/supabase-js';
 
 /* Config */
 import { env } from './env';
+import { storageAdapter } from './di';
 
 /* Constants */
 import { storageKeys } from '@application/constants/utils/adapters.util';
 
-/* Adapters */
-import { storageAdapter } from '@infrastructure/adapters/storage.adapter';
-
 import 'react-native-url-polyfill/auto';
+
+const supabaseAuthStorage: SupportedStorage = {
+    getItem: (key: string) => storageAdapter.getItem(key),
+    setItem: (key: string, value: string) => storageAdapter.setItem(key, value),
+    removeItem: (key: string) => storageAdapter.removeItem(key)
+}
 
 /* Creating a client that will be used to connect to the database. */
 export const supabase = createClient(
@@ -20,7 +24,7 @@ export const supabase = createClient(
         auth: {
             autoRefreshToken: true,
             persistSession: true,
-            storage: storageAdapter,
+            storage: supabaseAuthStorage,
             storageKey: storageKeys.AUTH
         }
     }
