@@ -111,7 +111,7 @@ export const ReportErrorForm = (): JSX.Element => {
                     />
                 ) }
                 onPress={ handlePress }
-                text={ translate('forms.actions.send').toUpperCase() }
+                text={ translate('forms.actions.send') }
             />
         </View>
     );
