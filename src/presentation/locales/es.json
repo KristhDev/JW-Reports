@@ -116,7 +116,8 @@
             "revisitsExported": "Ha exportado sus revisitas correctamente. El archivo se encuentra en la carpeta que ha seleccionado.",
             "notAdded": "No ha agregado ninguna revisita.",
             "noMade": "No ha realizado ninguna revisita.",
-            "noVisit": "No tiene ninguna revisita por visitar."
+            "noVisit": "No tiene ninguna revisita por visitar.",
+            "visitAgian": "Has agregado correctamente a {{person}} para volverla a visitar."
         }
     },
 
@@ -160,7 +161,8 @@
         "preaching": {
             "titles": {
                 "preachingInfo": "Información de Predicación",
-                "preachingReport": "Informe de Predicación"
+                "preachingReport": "Informe de Predicación",
+                "selectMonth": "Seleccione el mes"
             },
 
             "subTitles": {

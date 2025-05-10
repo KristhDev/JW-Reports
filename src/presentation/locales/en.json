@@ -117,7 +117,8 @@
             "revisitsExported": "You have successfully exported your revisits. The file is located in the folder you have selected.",
             "notAdded": "You have not added any revisits.",
             "noMade": "No revisits have been made.",
-            "noVisit": "You do not have any revisits to visit"
+            "noVisit": "You do not have any revisits to visit",
+            "visitAgian": "You have successfully added {{person}} to revisit."
         }
     },
 
@@ -161,7 +162,8 @@
         "preaching": {
             "titles": {
                 "preachingInfo": "Preaching Information",
-                "preachingReport": "Preaching Report"
+                "preachingReport": "Preaching Report",
+                "selectMonth": "Select month"
             },
 
             "subTitles": {
