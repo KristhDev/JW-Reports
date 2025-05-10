@@ -22,6 +22,7 @@ import { LessonCard } from '../LessonCard';
 import { useCourses } from '@courses/hooks';
 import { useLessons } from '../../hooks';
 import { useNetwork } from '@shared/hooks';
+import { useTranslation } from '@ui/hooks';
 
 /* Theme */
 import { themeStylesheet } from '@theme/styles';
@@ -57,10 +58,24 @@ export const LessonsList = (): JSX.Element => {
     } = useLessons();
 
     const { wifi } = useNetwork();
+    const { translate } = useTranslation();
 
-    const emptyMsg = (searchTerm.trim().length > 0 && lessons.length === 0)
-        ? `No se encontraron resultados para: ${ searchTerm.trim() }`
-        : 'No has agregado clases a este curso.'
+    const title = translate('screens.lessons.titles.courseLessonsWith', {
+        person: selectedCourse.personName.toUpperCase()
+    });
+
+    const noFoundResultsMsg = translate('messages.noResults', {
+        attribute: translate('entities.lessons'),
+        search: searchTerm.trim()
+    });
+
+    const theReNoLessonsMsg = translate('screens.lessons.messages.theReNoLessons');
+    const emptyMsg = (searchTerm.trim().length > 0 && lessons.length === 0) ? noFoundResultsMsg : theReNoLessonsMsg
+
+    const deleteLessonModalTitle = translate('modals.titles.deleteAsk', {
+        article: 'esta',
+        attribute: translate('forms.fields.lesson')
+    });
 
     /**
      * When the user refreshes the page, reset the search term, reset the pagination, remove the
@@ -175,7 +190,7 @@ export const LessonsList = (): JSX.Element => {
                     <View style={{ paddingHorizontal: margins.xs, width: '100%' }}>
                         <Title
                             containerStyle={{ marginVertical: margins.xs }}
-                            text={ `CLASES DEL CURSO CON ${ selectedCourse.personName.toUpperCase() }` }
+                            text={ title }
                             textStyle={{ fontSize: fontSizes.md }}
                         />
 
@@ -226,7 +241,7 @@ export const LessonsList = (): JSX.Element => {
                 isOpen={ showDeleteModal }
                 onClose={ () => handleHideModal(setShowDeleteModal) }
                 onConfirm={ handleDeleteConfirm }
-                text="¿Está seguro de eliminar esta clase?"
+                text={ deleteLessonModalTitle }
             />
         </>
     );
