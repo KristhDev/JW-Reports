@@ -98,7 +98,7 @@ const MonthPickerModal: FC<MonthPickerModalProps> = ({ isOpen, monthDate, onClos
         <Modal isOpen={ isOpen }>
             <View style={ themeStyles.modalContainer }>
                 <Text style={ styles.modalTitle }>
-                    Seleccione el mes
+                    { translate('modals.preaching.titles.selectMonth') }
                 </Text>
 
                 <View style={ styles.modalContent }>
