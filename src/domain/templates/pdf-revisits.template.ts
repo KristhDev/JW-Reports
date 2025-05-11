@@ -150,7 +150,7 @@ export class PdfRevisitsTemplate {
             template += `
                     <div class="revisit-card__date">
                         <p>Fecha de próxima visita:</p>
-                        <span>${ timeAdapter.format(revisit.nextVisit, 'DD/MM/YYYY') }</span>
+                        <span>${ timeAdapter.format(revisit.nextVisit, timeAdapter.formats.DATE_ONLY) }</span>
                     </div>
                 </div>
             `;
