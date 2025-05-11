@@ -5,6 +5,7 @@ import {
     LocalizationAdapterContract,
     PDFAdapterContract,
     StorageAdapterContract,
+    TimeAdapterContract,
     TranslationAdapterContract,
     VoiceRecorderAdapterContract
 } from '@domain/contracts/adapters';
@@ -34,6 +35,7 @@ import {
     LocalizationAdapter,
     PDFAdapter,
     StorageAdapter,
+    TimeAdapter,
     TranslationAdapter,
     VoiceRecorderAdapter
 } from '@infrastructure/adapters';
@@ -61,6 +63,7 @@ export const internalStorageAdapter: InternalStorageAdapterContract = new Intern
 export const localizationAdapter: LocalizationAdapterContract = new LocalizationAdapter();
 export const pdfAdapter: PDFAdapterContract = new PDFAdapter(internalStorageAdapter);
 export const storageAdapter: StorageAdapterContract = new StorageAdapter();
+export const timeAdapter: TimeAdapterContract = new TimeAdapter();
 export const translationAdapter: TranslationAdapterContract = new TranslationAdapter();
 
 export const authService: AuthServiceContract = new AuthService();
@@ -75,8 +78,8 @@ export const publisherService: PublisherServiceContract = new PublisherService(t
 export const messagesService: MessagesServiceContract = new MessagesService(translationAdapter, publisherService);
 export const notificationsService: NotificationsServiceContract = new NotificationsService();
 export const placeholdersService: PlaceholdersServiceContract = new PlaceholdersService(translationAdapter);
-export const preachingReportService: PreachingReportServiceContract = new PreachingReportService();
-export const preachingService: PreachingServiceContract = new PreachingService();
+export const preachingReportService: PreachingReportServiceContract = new PreachingReportService(timeAdapter);
+export const preachingService: PreachingServiceContract = new PreachingService(timeAdapter);
 export const revisitsService: RevisitsServiceContract = new RevisitsService();
 
 export const externalStorageAdapter: ExternalStorageAdapterContract = new ExternalStorageAdapter(messagesService, internalStorageAdapter);
