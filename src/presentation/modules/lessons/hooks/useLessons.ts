@@ -1,5 +1,3 @@
-import { useRouter } from 'expo-router';
-
 /* Config */
 import { coursesService, lessonsService, messagesService } from '@config/di';
 
@@ -9,7 +7,6 @@ import { precursors } from '@application/constants/utils';
 /* Features */
 import { useAppDispatch, useAppSelector } from '@application/store';
 import {
-    addLastLesson as addLastLessonAction,
     addLesson as addLessonAction,
     addLessons as addLessonsAction,
     clearLessons as clearLessonsAction,
@@ -21,6 +18,7 @@ import {
     setIsLessonDeleting as setIsLessonDeletingAction,
     setIsLessonLoading as setIsLessonLoadingAction,
     setIsLessonsLoading as setIsLessonsLoadingAction,
+    setLastLesson as setLastLessonAction,
     setLessons as setLessonsAction,
     setLessonsPagination as setLessonsPaginationAction,
     setSelectedLesson as setSelectedLessonAction,
@@ -59,7 +57,6 @@ const useLessons = () => {
     const lessonsMessages = messagesService.lessonsMessages;
 
     const dispatch = useAppDispatch();
-    const router = useRouter();
     const { hasWifiConnection } = useNetwork();
 
     const state = useAppSelector(store => store.lessons);
@@ -69,7 +66,6 @@ const useLessons = () => {
     const { isAuthenticated } = useAuth();
     const { setError, setStatus } = useStatus();
 
-    const addLastLesson = (lesson: LessonWithCourseEntity) => dispatch(addLastLessonAction({ lesson }));
     const addLastLessonInCourse = (courseId: string, lastLesson: LessonEntity) => dispatch(addLastLessonInCourseAction({ courseId, lastLesson }));
     const addLesson = (lesson: LessonEntity) => dispatch(addLessonAction({ lesson }));
     const addLessons = (lessons: LessonEntity[]) => dispatch(addLessonsAction({ lessons }));
@@ -82,6 +78,7 @@ const useLessons = () => {
     const setIsLessonDeleting = (isDeleting: boolean) => dispatch(setIsLessonDeletingAction({ isDeleting }));
     const setIsLessonLoading = (isLoading: boolean) => dispatch(setIsLessonLoadingAction({ isLoading }));
     const setIsLessonsLoading = (isLoading: boolean) => dispatch(setIsLessonsLoadingAction({ isLoading }));
+    const setLastLesson = (lesson: LessonWithCourseEntity) => dispatch(setLastLessonAction({ lesson }));
     const setLessons = (lessons: LessonEntity[]) => dispatch(setLessonsAction({ lessons }));
     const setLessonsPagination = (pagination: Pagination) => dispatch(setLessonsPaginationAction({ pagination }));
     const setSelectedLesson = (lesson: LessonEntity) => dispatch(setSelectedLessonAction({ lesson }));
@@ -193,6 +190,7 @@ const useLessons = () => {
 
             onFinish && onFinish();
             removeLesson(state.selectedLesson.id);
+            setIsLessonDeleting(false);
             replaceLastLessonInCourse(state.selectedLesson.id, state.lessons[0]);
             onSuccess && onSuccess();
 
@@ -267,7 +265,7 @@ const useLessons = () => {
             const courseIds = await coursesService.getCourseIdsByUserId(user.id);
             const lastLesson = await lessonsService.getLastLessonByCoursesId(courseIds);
 
-            addLastLesson(lastLesson);
+            setLastLesson(lastLesson);
         }
         catch (error) {
             setError(error);
@@ -319,18 +317,21 @@ const useLessons = () => {
             (loadMore) ? addLessons(lessons) : setLessons(lessons);
         }
         catch (error) {
-            setIsLessonsLoading(false);
             setError(error);
+        }
+        finally {
+            setIsLessonsLoading(false);
         }
     }
 
     /**
      * This function saves a lesson to the database and then navigates to the LessonsScreen.
      *
-     * @param {LessonFormValues} lessonValues - This is a values for save lesson
+     * @param {LessonFormValues} values - This is a values for save lesson
+     * @param {UtilFunctions} utils - This is a utils for save lesson
      * @return {Promise<void>} This function does not return anything.
      */
-    const saveLesson = async (lessonValues: LessonFormValues): Promise<void> => {
+    const saveLesson = async (values: LessonFormValues, utils?: UtilFunctions): Promise<void> => {
         const wifiConnectionAvailable = hasWifiConnection();
         if (!wifiConnectionAvailable) return;
 
@@ -340,31 +341,35 @@ const useLessons = () => {
         setIsLessonLoading(true);
 
         try {
-            const createDto = CreateLessonDto.create({ ...lessonValues, courseId: selectedCourse.id });
+            const createDto = CreateLessonDto.create({ ...values, courseId: selectedCourse.id });
             const lesson = await lessonsService.create(createDto);
 
             addLastLessonInCourse(selectedCourse.id, lesson);
             if (user.precursor === precursors.NINGUNO) await loadLastLesson();
 
             if (state.lessons.length > 0) addLesson(lesson);
-            else setIsLessonLoading(false);
+            setIsLessonLoading(false);
 
-            router.back();
+            utils?.onSuccess?.() 
             setStatus({ code: 201, msg: lessonsMessages.ADDED_SUCCESS });
         }
         catch (error) {
             setIsLessonLoading(false);
             setError(error);
         }
+        finally {
+            utils?.onFinish?.()
+        }
     }
 
     /**
      * It updates a lesson in the database and then updates the state with the updated lesson.
      *
-     * @param {LessonFormValues} lessonValues - This is a values for update lesson
+     * @param {LessonFormValues} values - This is a values for update lesson
+     * @param {UtilFunctions} utils
      * @return {Promise<void>} This function does not return anything.
      */
-    const updateLesson = async (lessonValues: LessonFormValues): Promise<void> => {
+    const updateLesson = async (values: LessonFormValues, utils?: UtilFunctions): Promise<void> => {
         const wifiConnectionAvailable = hasWifiConnection();
         if (!wifiConnectionAvailable) return;
 
@@ -377,18 +382,25 @@ const useLessons = () => {
         setIsLessonLoading(true);
 
         try {
-            const updateDto = UpdateLessonDto.create(lessonValues);
+            const updateDto = UpdateLessonDto.create(values);
             const lesson = await lessonsService.update(state.selectedLesson.id, selectedCourse.id, updateDto);
 
             updateLessonActionState(lesson);
-            updateLastLessonInCourse(lesson);
+            if (lesson.id === state.selectedLesson.id) setSelectedLesson(lesson);
+            if (lesson.id === state.lastLesson.id) setLastLesson({ ...lesson, course: state.lastLesson.course });
 
-            router.back();
+            updateLastLessonInCourse(lesson);
+            setIsLessonLoading(false);
+
+            utils?.onSuccess?.();
             setStatus({ code: 200, msg: lessonsMessages.UPDATED_SUCCESS });
         }
         catch (error) {
             setIsLessonLoading(false);
             setError(error);
+        }
+        finally {
+            utils?.onFinish?.()
         }
     }
 

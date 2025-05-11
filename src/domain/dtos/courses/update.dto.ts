@@ -27,7 +27,7 @@ export class UpdateCourseDto {
             values.personAbout,
             values.personAddress,
             values.publication,
-            timeAdapter.format(new Date(), 'YYYY-MM-DD HH:mm:ss.SSSSSS')
+            timeAdapter.format(new Date(), timeAdapter.formats.SQL_DATETIME)
         );
     }
 }

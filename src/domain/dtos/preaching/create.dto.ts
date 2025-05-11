@@ -25,9 +25,9 @@ export class CreatePreachingDto {
     public static create(values: CreatePreachingDtoValues): CreatePreachingDto {
         return new CreatePreachingDto(
             values.userId,
-            timeAdapter.format(values.day, 'YYYY-MM-DD'),
-            timeAdapter.format(values.initHour, 'YYYY-MM-DD HH:mm:ss.SSSSSS'),
-            timeAdapter.format(values.finalHour, 'YYYY-MM-DD HH:mm:ss.SSSSSS')
+            timeAdapter.format(values.day, timeAdapter.formats.DATE_ONLY),
+            timeAdapter.format(values.initHour, timeAdapter.formats.SQL_DATETIME),
+            timeAdapter.format(values.finalHour, timeAdapter.formats.SQL_DATETIME)
         );
     }
 }

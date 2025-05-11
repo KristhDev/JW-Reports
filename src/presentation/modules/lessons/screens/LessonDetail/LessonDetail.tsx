@@ -54,7 +54,7 @@ const LessonDetail = (): JSX.Element => {
         ? translate('screens.lessons.labels.wasAnalyzed')
         : translate('screens.lessons.labels.itllAnalyzed');
 
-    const nextVisit = timeAdapter.format(selectedLesson.nextLesson, 'LL');
+    const nextVisit = timeAdapter.format(selectedLesson.nextLesson, timeAdapter.formats.LOCALE_LONG_DATE);
 
     return (
         <>
@@ -132,7 +132,7 @@ const LessonDetail = (): JSX.Element => {
                         style={ themeStyles.createdAtText }
                         testID="lesson-detail-date-created-text"
                     >
-                        { timeAdapter.format(selectedLesson.createdAt, 'DD/MM/YYYY') }
+                        { timeAdapter.format(selectedLesson.createdAt, timeAdapter.formats.LOCALE_SHORT_DATE) }
                     </Text>
                 </View>
             </ScrollView>

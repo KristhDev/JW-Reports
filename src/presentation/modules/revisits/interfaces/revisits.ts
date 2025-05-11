@@ -1,5 +1,6 @@
 /* Models */
 import { ImageModel } from '@domain/models';
+import { UtilFunctions } from '@shared/interfaces';
 
 /* Interfaces */
 import { LoadResourcesOptions } from '@ui/interfaces';
@@ -22,16 +23,11 @@ export interface RevisitFormValues {
 /**
  * Defining the structure of the SaveRevisitOptions object.
  *
- * @property {boolean | undefined} back - This is the back of the revisit.
- * @property {Image | undefined} image - This is the image of the revisit.
- * @property {() => void | undefined} onFinish - This is the finish of the revisit.
- * @property {RevisitFormValues} revisitValues - This is the revisit values to save.
+ * @property {RevisitFormValues & { image: ImageModel | null }} revisitValues - This is the revisit values to save.
  */
-export interface SaveRevisitOptions {
-    back?: boolean;
-    image: ImageModel | null;
-    onFinish?: () => void;
-    revisitValues: RevisitFormValues;
+export interface SaveRevisitOptions extends UtilFunctions {
+    revisitValues: RevisitFormValues & { image: ImageModel | null };
+    successMessage: string;
 }
 
 /**
@@ -40,7 +36,7 @@ export interface SaveRevisitOptions {
  * @property {Image | undefined} image - This is the image of the revisit.
  * @property {RevisitFormValues} revisitValues - This is the revisit values to update.
  */
-export type UpdateRevisitOptions = Pick<SaveRevisitOptions, 'image' | 'revisitValues'>;
+export type UpdateRevisitOptions = UtilFunctions & Pick<SaveRevisitOptions, 'revisitValues'>;
 
 /* Extending the LoadResourcesOptions interface. */
 export interface loadRevisitsOptions extends LoadResourcesOptions {

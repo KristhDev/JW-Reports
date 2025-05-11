@@ -78,17 +78,17 @@ export const PreachingTable = (): JSX.Element => {
                         />
 
                         <TableCell
-                            text={ timeAdapter.format(preaching.day, 'DD') }
+                            text={ timeAdapter.format(preaching.day, timeAdapter.formats.DAY) }
                             style={{ backgroundColor: colors.tableRow, width: cellWidth }}
                         />
 
                         <TableCell
-                            text={ timeAdapter.format(preaching.initHour, 'HH:mm') }
+                            text={ timeAdapter.format(preaching.initHour, timeAdapter.formats.HOURS_MINUTES) }
                             style={{ backgroundColor: colors.tableRow, width: cellWidthHours }}
                         />
 
                         <TableCell
-                            text={ timeAdapter.format(preaching.finalHour, 'HH:mm') }
+                            text={ timeAdapter.format(preaching.finalHour, timeAdapter.formats.HOURS_MINUTES) }
                             style={{ backgroundColor: colors.tableRow, width: cellWidthHours }}
                         />
                     </View>

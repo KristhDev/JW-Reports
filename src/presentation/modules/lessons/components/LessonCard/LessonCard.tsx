@@ -44,7 +44,7 @@ export const LessonCard: FC<LessonCardProps> = ({ lesson, onNavigateDetail, onNa
     const { setSelectedLesson } = useLessons();
     const { translate } = useTranslation();
 
-    const nextVisit = translate('dates.lessonTo', { date: timeAdapter.format(lesson.nextLesson, 'LL') });
+    const nextVisit = translate('dates.lessonTo', { date: timeAdapter.format(lesson.nextLesson, timeAdapter.formats.LOCALE_LONG_DATE) });
     const classTaught = translate('cards.lessons.status.taught');
 
     /**

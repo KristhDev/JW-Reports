@@ -22,8 +22,8 @@ export class FinishOrStartLessonDto {
     public static create(values: FinishOrStartDtoValues): FinishOrStartLessonDto {
         return new FinishOrStartLessonDto(
             values.done,
-            timeAdapter.format(values.nextLesson, 'YYYY-MM-DD HH:mm:ss.SSSSSS'),
-            timeAdapter.format(new Date(), 'YYYY-MM-DD HH:mm:ss.SSSSSS')
+            timeAdapter.format(values.nextLesson, timeAdapter.formats.SQL_DATETIME),
+            timeAdapter.format(new Date(), timeAdapter.formats.SQL_DATETIME)
         );
     }
 }

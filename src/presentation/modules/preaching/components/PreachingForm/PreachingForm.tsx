@@ -1,5 +1,6 @@
 import React from 'react';
 import { ActivityIndicator, View } from 'react-native';
+import { useRouter } from 'expo-router';
 import { useFormik } from 'formik';
 import { useStyles } from 'react-native-unistyles';
 import Ionicons from '@expo/vector-icons/Ionicons';
@@ -33,6 +34,7 @@ import { themeStylesheet } from '@theme/styles';
 export const PreachingForm = (): JSX.Element => {
     const preachingPlaceholders = placeholdersService.preachingPlaceholders;
 
+    const router = useRouter();
     const { styles: themeStyles, theme: { colors, fontSizes, margins } } = useStyles(themeStylesheet);
 
     const { state: { seletedPreaching }, savePreaching, updatePreaching } = usePreaching();
@@ -48,8 +50,8 @@ export const PreachingForm = (): JSX.Element => {
      */
     const handleSaveOrUpdate = async (formValues: PreachingFormValues): Promise<void> => {
         const action = (seletedPreaching.id === '') 
-            ? savePreaching(formValues) 
-            : updatePreaching(formValues);
+            ? savePreaching(formValues, { onSuccess: router.back }) 
+            : updatePreaching(formValues, { onSuccess: router.back });
 
         await Promise.resolve(action)
     }

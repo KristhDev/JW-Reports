@@ -17,7 +17,7 @@ export class FinishOrStartCourseDto {
     public static create(finished: boolean): FinishOrStartCourseDto {
         return new FinishOrStartCourseDto(
             finished,
-            timeAdapter.format(new Date(), 'YYYY-MM-DD HH:mm:ss.SSSSSS')
+            timeAdapter.format(new Date(), timeAdapter.formats.SQL_DATETIME)
         );
     }
 }

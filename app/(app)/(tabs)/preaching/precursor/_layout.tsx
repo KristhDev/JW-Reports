@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Redirect, Stack } from 'expo-router';
+import { Redirect, Stack, useRouter } from 'expo-router';
 import { useStyles } from 'react-native-unistyles';
 
 /* Constants */
@@ -18,9 +18,21 @@ export default function PrecursorLayout(): JSX.Element {
     const [ showDeletePreachingModal, setShowDeletePreachingModal ] = useState<boolean>(false);
 
     const { theme: { colors } } = useStyles();
+    const router = useRouter();
 
     const { state: { user } } = useAuth();
-    const { state: { isPreachingDeleting, selectedDate, seletedPreaching }, deletePreaching, loadPreachings, setSelectedDate } = usePreaching();
+
+    const { 
+        state: {
+            isPreachingDeleting,
+            selectedDate,
+            seletedPreaching
+        }, 
+        deletePreaching,
+        loadPreachings,
+        setSelectedDate
+    } = usePreaching();
+
     const { setNetworkError } = useStatus();
     const { wifi } = useNetwork();
     const { translate } = useTranslation();
@@ -43,7 +55,10 @@ export default function PrecursorLayout(): JSX.Element {
      * @return {void} This function does not return anything
      */
     const handleDeleteConfirm = (): void => {
-        deletePreaching(() => setShowDeletePreachingModal(false));
+        deletePreaching({
+            onFinish: () => setShowDeletePreachingModal(false),
+            onSuccess: router.back
+        });
     }
 
     useEffect(() => {

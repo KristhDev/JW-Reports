@@ -46,8 +46,8 @@ const Home = (): JSX.Element => {
     const { state: { selectedDate, preachings, isPreachingsLoading }, setSelectedPreaching, loadPreachings } = usePreaching();
     const { translate } = useTranslation();
 
-    const month = timeAdapter.format(selectedDate,'MMMM').toUpperCase();
-    const currentMonth = timeAdapter.format(new Date(), 'MMMM').toUpperCase();
+    const month = timeAdapter.format(selectedDate, timeAdapter.formats.MONTH_NAME).toUpperCase();
+    const currentMonth = timeAdapter.format(new Date(), timeAdapter.formats.MONTH_NAME).toUpperCase();
     const year = timeAdapter.getYearOfDate(selectedDate);
 
     const title = translate('screens.preaching.titles.report', { month, year });

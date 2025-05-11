@@ -48,7 +48,7 @@ export const RevisitCard: FC<RevisitCardProps> = ({
     const { setSelectedRevisit } = useRevisits();
     const { translate } = useTranslation();
 
-    const nextVisit = translate('dates.visit', { date: timeAdapter.format(revisit.nextVisit, 'LL') });
+    const nextVisit = translate('dates.visit', { date: timeAdapter.format(revisit.nextVisit, timeAdapter.formats.LOCALE_LONG_DATE) });
     const visitDone = translate('cards.revisits.status.done');
 
     /**

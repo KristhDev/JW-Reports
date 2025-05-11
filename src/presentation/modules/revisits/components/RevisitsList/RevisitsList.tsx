@@ -92,18 +92,18 @@ export const RevisitsList: FC<RevisitsListProps> = ({ emptyMessage, filter, titl
      * When the user refreshes the page, the search term is reset, the pagination is reset, the
      * revisits are removed, and the revisits are loaded.
      *
-     * @return {void} This function returns nothing
+     * @return {Promise<void>} This function returns nothing
      */
-    const handleRefreshing = (): void => {
+    const handleRefreshing = async (): Promise<void> => {
         if (isRevisitsLoading) return;
 
         setIsRefreshing(true);
         setSearchTerm('');
 
         if (wifi.hasConnection) {
-            setRevisitsPagination({ from: 0, to: 9 });
             removeRevisits();
-            loadRevisits({ filter, refresh: true });
+            setRevisitsPagination({ from: 0, to: 9 });
+            await loadRevisits({ filter, refresh: true });
         }
 
         setIsRefreshing(false);
@@ -114,16 +114,16 @@ export const RevisitsList: FC<RevisitsListProps> = ({ emptyMessage, filter, titl
      * and set the refreshing state to false.
      *
      * @param {string} search - string
-     * @return {void} This function does not return any value
+     * @return {Promise<void>} This function returns nothing
      */
-    const handleSearchRevisits = (search: string): void => {
+    const handleSearchRevisits = async (search: string): Promise<void> => {
         if (isRevisitsLoading) return;
         setSearchTerm(search);
 
         if (wifi.hasConnection) {
             setRevisitsPagination({ from: 0, to: 9 });
             removeRevisits();
-            loadRevisits({ filter, search, refresh: true });
+            await loadRevisits({ filter, search, refresh: true });
         }
     }
 
@@ -131,11 +131,11 @@ export const RevisitsList: FC<RevisitsListProps> = ({ emptyMessage, filter, titl
      * If there are no more revisits to load, or if revisits are already loading, return. Otherwise,
      * load more revisits.
      *
-     * @return {void} This function does not return any value
+     * @return {Promise<void>} This function does not return any value
      */
-    const handleEndReach = (): void => {
-        if (!hasMoreRevisits || isRevisitsLoading || !wifi.hasConnection) return;
-        // loadRevisits({ filter, search: searchTerm, loadMore: true });
+    const handleEndReach = async (): Promise<void> => {
+        if (!hasMoreRevisits || revisits.length === 0 || isRevisitsLoading || !wifi.hasConnection) return;
+        await loadRevisits({ filter, search: searchTerm, loadMore: true });
     }
 
     /**

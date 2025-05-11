@@ -81,14 +81,17 @@ const RevisitModal: FC<ModalProps> = ({ isOpen, onClose }): JSX.Element => {
         }
         else if (values?.nextVisit) {
             setRevisitPerson(false);
+
+            const revisitValues = {
+                ...values,
+                address: selectedRevisit.address,
+                personName: selectedRevisit.personName,
+                image: null 
+            }
+
             saveRevisit({
-                revisitValues: {
-                    ...values,
-                    address: selectedRevisit.address,
-                    personName: selectedRevisit.personName
-                },
-                image: null,
-                back: false,
+                revisitValues,
+                successMessage: translate('messages.revisits.visitAgian', { person: selectedRevisit.personName }),
                 onFinish: onClose
             });
         }

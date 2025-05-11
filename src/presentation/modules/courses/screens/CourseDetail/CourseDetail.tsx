@@ -65,7 +65,7 @@ const CourseDetail = (): JSX.Element => {
     const lastLessonTitle = (selectedCourse.lastLesson?.done) 
         ? translate('screens.courses.lastLessonTitles.lessonTaught') 
         : translate('screens.courses.lastLessonTitles.nextLesson', {
-            date: timeAdapter.format(selectedCourse?.lastLesson?.nextLesson || new Date(), 'DD/MM/YYYY')
+            date: timeAdapter.format(selectedCourse?.lastLesson?.nextLesson || new Date(), timeAdapter.formats.LOCALE_SHORT_DATE)
         });
 
     /**
@@ -232,7 +232,7 @@ const CourseDetail = (): JSX.Element => {
                         style={ themeStyles.createdAtText }
                         testID="course-detail-text-date"
                     >
-                        { timeAdapter.format(selectedCourse.createdAt, 'DD/MM/YYYY') }
+                        { timeAdapter.format(selectedCourse.createdAt, timeAdapter.formats.LOCALE_SHORT_DATE) }
                     </Text>
                 </View>
             </ScrollView>

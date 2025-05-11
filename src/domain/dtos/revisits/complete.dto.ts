@@ -14,6 +14,6 @@ export class CompleteRevisitDto {
      * @returns {CompleteRevisitDto} The new CompleteRevisitDto.
      */
     public static create(done: boolean): CompleteRevisitDto {
-        return new CompleteRevisitDto(done, timeAdapter.format(new Date(), 'YYYY-MM-DD HH:mm:ss.SSSSSS'));
+        return new CompleteRevisitDto(done, timeAdapter.format(new Date(), timeAdapter.formats.SQL_DATETIME));
     }
 }

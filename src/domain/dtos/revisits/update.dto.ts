@@ -29,9 +29,9 @@ export class UpdateRevisitDto {
             values.personName,
             values.about,
             values.address,
-            timeAdapter.format(values.nextVisit, 'YYYY-MM-DD HH:mm:ss.SSSSSS'),
+            timeAdapter.format(values.nextVisit, timeAdapter.formats.SQL_DATETIME),
             values?.photo || null,
-            timeAdapter.format(new Date(), 'YYYY-MM-DD HH:mm:ss.SSSSSS'),
+            timeAdapter.format(new Date(), timeAdapter.formats.SQL_DATETIME),
         );
     }
 }

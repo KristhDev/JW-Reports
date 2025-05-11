@@ -36,7 +36,7 @@ const RevisitDetail = (): JSX.Element => {
     const { state: { selectedRevisit } } = useRevisits();
     const { translate } = useTranslation();
 
-    const nextVisit = timeAdapter.format(selectedRevisit.nextVisit, 'LL');
+    const nextVisit = timeAdapter.format(selectedRevisit.nextVisit, timeAdapter.formats.LOCALE_LONG_DATE);
 
     const aboutLabel = translate('screens.revisits.labels.about', {
         person: selectedRevisit.personName
@@ -177,7 +177,7 @@ const RevisitDetail = (): JSX.Element => {
                         style={ themeStyles.createdAtText }
                         testID="revisit-detail-created-date"
                     >
-                        { timeAdapter.format(selectedRevisit.createdAt, 'DD/MM/YYYY') }
+                        { timeAdapter.format(selectedRevisit.createdAt, timeAdapter.formats.LOCALE_SHORT_DATE) }
                     </Text>
                 </View>
             </ScrollView>

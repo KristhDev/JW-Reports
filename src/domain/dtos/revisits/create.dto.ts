@@ -25,7 +25,7 @@ export class CreateRevisitDto {
             values.personName,
             values.about,
             values.address,
-            timeAdapter.format(values.nextVisit, 'YYYY-MM-DD HH:mm:ss.SSSSSS'),
+            timeAdapter.format(values.nextVisit, timeAdapter.formats.SQL_DATETIME),
             values?.photo || null
         );
     }

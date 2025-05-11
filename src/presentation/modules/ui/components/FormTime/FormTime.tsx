@@ -51,8 +51,8 @@ export const FormTime: FC<FormTimeProps> = ({
 
     const [ time, setTime ] = useState<string>(value);
 
-    const [ hour, setHour ] = useState<string>(timeAdapter.format(time, 'HH'));
-    const [ minutes, setMinutes ] = useState<string>(timeAdapter.format(time, 'mm'));
+    const [ hour, setHour ] = useState<string>(timeAdapter.format(time, timeAdapter.formats.HOURS));
+    const [ minutes, setMinutes ] = useState<string>(timeAdapter.format(time, timeAdapter.formats.MINUTES));
 
     const { translate } = useTranslation();
 
@@ -64,8 +64,8 @@ export const FormTime: FC<FormTimeProps> = ({
     const handleShowHourPicker = (): void => {
         setShowHourPicker(true);
 
-        setHour(timeAdapter.format(time, 'HH'));
-        setMinutes(timeAdapter.format(time, 'mm'));
+        setHour(timeAdapter.format(time, timeAdapter.formats.HOURS));
+        setMinutes(timeAdapter.format(time, timeAdapter.formats.MINUTES));
     }
 
     /**
@@ -116,8 +116,8 @@ export const FormTime: FC<FormTimeProps> = ({
         const date = timeAdapter.setHoursMinutesAndSecondsToDate(time, Number(hour), Number(minutes), 0);
 
         setTime(date);
-        setHour(timeAdapter.format(date, 'HH'));
-        setMinutes(timeAdapter.format(date, 'mm'));
+        setHour(timeAdapter.format(date, timeAdapter.formats.HOURS));
+        setMinutes(timeAdapter.format(date, timeAdapter.formats.MINUTES));
 
         onChangeTime(date);
         setShowHourPicker(false);

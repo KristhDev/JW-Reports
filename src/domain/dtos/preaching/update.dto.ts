@@ -23,10 +23,10 @@ export class UpdatePreachingDto {
      */
     public static create(values: UpdatePreachingDtoValues): UpdatePreachingDto {
         return new UpdatePreachingDto(
-            timeAdapter.format(values.day, 'YYYY-MM-DD'),
-            timeAdapter.format(values.initHour, 'YYYY-MM-DD HH:mm:ss.SSSSSS'),
-            timeAdapter.format(values.finalHour, 'YYYY-MM-DD HH:mm:ss.SSSSSS'),
-            timeAdapter.format(new Date(), 'YYYY-MM-DD HH:mm:ss.SSSSSS')
+            timeAdapter.format(values.day, timeAdapter.formats.DATE_ONLY),
+            timeAdapter.format(values.initHour, timeAdapter.formats.SQL_DATETIME),
+            timeAdapter.format(values.finalHour, timeAdapter.formats.SQL_DATETIME),
+            timeAdapter.format(new Date(), timeAdapter.formats.SQL_DATETIME)
         );
     }
 }

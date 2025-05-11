@@ -56,7 +56,7 @@ export const CourseForm = (): JSX.Element => {
     const handleSaveOrUpdate = (formValues: CourseFormValues): void => {
         (selectedCourse.id === '')
             ? saveCourse(formValues, { onSuccess: router.back })
-            : updateCourse(formValues);
+            : updateCourse(formValues, { onSuccess: router.back });
     }
 
     const { errors, handleChange, handleSubmit, isValid, setFieldValue, values } = useFormik({

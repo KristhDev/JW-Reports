@@ -25,7 +25,7 @@ export class CreateLessonDto {
         return new CreateLessonDto(
             values.courseId,
             values.description,
-            timeAdapter.format(values.nextLesson, 'YYYY-MM-DD HH:mm:ss.SSSSSS')
+            timeAdapter.format(values.nextLesson, timeAdapter.formats.SQL_DATETIME)
         );
     }
 }

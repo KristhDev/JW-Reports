@@ -85,7 +85,7 @@ const PublisherHome = (): JSX.Element => {
 
     const { translate } = useTranslation();
 
-    const month = timeAdapter.format(selectedDate, 'MMMM').toUpperCase();
+    const month = timeAdapter.format(selectedDate, timeAdapter.formats.MONTH_NAME).toUpperCase();
 
     const lastLessonTitle = translate('screens.ui.titles.last', { 
         attribute: translate('entities.lesson') 

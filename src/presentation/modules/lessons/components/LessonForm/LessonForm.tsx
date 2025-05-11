@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { ActivityIndicator, View } from 'react-native';
+import { useRouter } from 'expo-router';
 import { useStyles } from 'react-native-unistyles';
 import { useFormik } from 'formik';
 import Ionicons from '@expo/vector-icons/Ionicons';
@@ -33,6 +34,7 @@ import { themeStylesheet } from '@theme/styles';
 export const LessonForm = (): JSX.Element => {
     const lessonPlaceholders = placeholdersService.lessonsPlaceholders;
 
+    const router = useRouter();
     const { styles: themeStyles, theme: { colors, fontSizes, margins } } = useStyles(themeStylesheet);
 
     const { state: { isLessonLoading, selectedLesson }, saveLesson, updateLesson } = useLessons();
@@ -49,14 +51,16 @@ export const LessonForm = (): JSX.Element => {
      *
      * @param {LessonFormValues} formValues - LessonFormValues
      * @param {() => void} resetForm - Function to reset the form
-     * @return {Promise<void>} This function does not return any value.
+     * @return {void} This function does not return any value.
      */
-    const handleSaveOrUpdate = async (formValues: LessonFormValues, resetForm: () => void): Promise<void> => {
-        if (selectedLesson.id === '') {
-            await saveLesson(formValues);
+    const handleSaveOrUpdate = (formValues: LessonFormValues, resetForm: () => void): void => {
+        const handleSuccess = (): void => {
             resetForm();
+            router.back();
         }
-        else updateLesson(formValues);
+
+        if (selectedLesson.id === '') saveLesson(formValues, { onSuccess: handleSuccess });
+        else updateLesson(formValues, { onSuccess: router.back });
     }
 
     const { errors, handleChange, handleSubmit, setFieldValue, isValid, values } = useFormik({

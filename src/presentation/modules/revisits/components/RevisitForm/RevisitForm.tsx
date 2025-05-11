@@ -1,11 +1,12 @@
 import React, { FC, useEffect, useState } from 'react';
 import { ActivityIndicator, View } from 'react-native';
+import { useRouter } from 'expo-router';
 import { useStyles } from 'react-native-unistyles';
 import { useFormik } from 'formik';
 import Ionicons from '@expo/vector-icons/Ionicons';
 
 /* DI */
-import { timeAdapter, placeholdersService } from '@config/di';
+import { timeAdapter, placeholdersService, messagesService } from '@config/di';
 
 /* Models */
 import { ImageModel } from '@domain/models';
@@ -36,10 +37,12 @@ const defaultRevisit = require('@assets/revisit-default.jpg');
  * @return {JSX.Element} Rendered component form to create or edit a revisit
  */
 export const RevisitForm: FC = (): JSX.Element => {
+    const revisitsMessages = messagesService.revisitsMessages;
     const revisitsPlaceholders = placeholdersService.revisitsPlaceholders;
 
     const [ image, setImage ] = useState<ImageModel | null>(null);
 
+    const router = useRouter();
     const { styles: themeStyles, theme: { colors, fontSizes, margins } } = useStyles(themeStylesheet);
 
     const { state: { selectedRevisit, isRevisitLoading }, saveRevisit, updateRevisit } = useRevisits();
@@ -56,9 +59,16 @@ export const RevisitForm: FC = (): JSX.Element => {
      * @return {void} This function does not return anything.
      */
     const handleSaveOrUpdate = (revisitValues: RevisitFormValues): void => {
-        (selectedRevisit.id === '')
-            ? saveRevisit({ revisitValues, image })
-            : updateRevisit({ revisitValues, image });
+        const values = { ...revisitValues, image }
+
+        if (selectedRevisit.id === '') {
+            saveRevisit({
+                revisitValues: values,
+                successMessage: revisitsMessages.ADDED_SUCCESS,
+                onSuccess: router.back
+            });
+        }
+        else updateRevisit({ revisitValues: values, onSuccess: router.back });
     }
 
     const { errors, handleChange, handleSubmit, setFieldValue, isValid, values } = useFormik({
