@@ -46,3 +46,15 @@ export interface WriteFromHtmlOptions {
 }
 
 export type LocaleValue = 'en' | 'es';
+
+export interface Formats {
+    DATE_ONLY: string;
+    DAY: string;
+    HOURS_MINUTES: string;
+    HOURS: string;
+    LOCALE_LONG_DATE: string;
+    LOCALE_SHORT_DATE: string;
+    MINUTES: string;
+    MONTH_NAME: string;
+    SQL_DATETIME: string;
+}
