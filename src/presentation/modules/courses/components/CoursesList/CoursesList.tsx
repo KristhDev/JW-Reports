@@ -217,7 +217,7 @@ export const CoursesList: FC<CoursesListProps> = ({ emptyMessage, filter, title 
                 contentContainerStyle={ themeStyles.listContainer }
                 data={ courses }
                 estimatedItemSize={ 256 }
-                keyExtractor={ (item) => item.id }
+                keyExtractor={ (item) => `${ filter }-${ item.id }` }
                 ListFooterComponent={
                     <ListFooterComponent
                         marginTopPlus={ courses.length === 0 }
