@@ -1,4 +1,4 @@
-import dayjs, { Dayjs } from 'dayjs';
+import dayjs from 'dayjs';
 import localeEn from 'dayjs/locale/en';
 import localeEs from 'dayjs/locale/es';
 
@@ -7,9 +7,21 @@ import localizedFormat from 'dayjs/plugin/localizedFormat';
 
 import { TimeAdapterContract } from '@domain/contracts/adapters';
 
-import { LocaleValue } from '@infrastructure/interfaces';
+import { Formats, LocaleValue } from '@infrastructure/interfaces';
 
 export class TimeAdapter implements TimeAdapterContract {
+    public readonly formats: Formats = {
+        DATE_ONLY: 'YYYY-MM-DD',
+        DAY: 'DD',
+        HOURS: 'HH',
+        HOURS_MINUTES: 'HH:mm',
+        LOCALE_LONG_DATE: 'LL',
+        LOCALE_SHORT_DATE: 'L',
+        MINUTES: 'mm',
+        MONTH_NAME: 'MMMM',
+        SQL_DATETIME: 'YYYY-MM-DD HH:mm:ss.SSSSSS'
+    }
+
     constructor() {
         dayjs.extend(localizedFormat);
         dayjs.extend(weekday);
