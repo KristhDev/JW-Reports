@@ -22,10 +22,34 @@ import { uiReducer, UIState } from '@application/features/ui';
 /* Debugger */
 import reactotron from '../../../ReactotronConfig';
 
+const coursesPersistConfig: PersistConfig<CoursesState> = {
+    key: storageKeys.STORE_COURSES,
+    storage: storePersistor,
+    whitelist: [ 'courses' ]
+}
+
+const lessonsPersistConfig: PersistConfig<LessonsState> = {
+    key: storageKeys.STORE_LESSONS,
+    storage: storePersistor,
+    whitelist: [ 'lessons', 'lastLesson' ]
+}
+
 const permissionsPersistConfig: PersistConfig<PermissionsState> = {
     key: storageKeys.STORE_PERMISSIONS,
     storage: storePersistor,
     whitelist: [ 'isPermissionsRequested' ],
+}
+
+const preachingPersistConfig: PersistConfig<PreachingState> = {
+    key: storageKeys.STORE_PREACHING,
+    storage: storePersistor,
+    whitelist: [ 'preachings' ]
+}
+
+const revisitsPersistConfig: PersistConfig<RevisitsState> = {
+    key: storageKeys.STORE_REVISITS,
+    storage: storePersistor,
+    whitelist: [ 'revisits', 'lastRevisit' ]
 }
 
 const uiPersistConfig: PersistConfig<UIState> = {
@@ -37,11 +61,11 @@ const uiPersistConfig: PersistConfig<UIState> = {
 /* Combining all the reducers into one reducer. */
 const reducers = combineReducers({
     auth: authReducer,
-    courses: coursesReducer,
-    lessons: lessonsReducer,
+    courses: persistReducer(coursesPersistConfig, coursesReducer),
+    lessons: persistReducer(lessonsPersistConfig, lessonsReducer),
     permissions: persistReducer(permissionsPersistConfig, permissionsReducer),
-    preaching: preachingReducer,
-    revisits: revisitsReducer,
+    preaching: persistReducer(preachingPersistConfig, preachingReducer),
+    revisits: persistReducer(revisitsPersistConfig, revisitsReducer),
     status: statusReducer,
     ui: persistReducer(uiPersistConfig, uiReducer),
 });
@@ -50,7 +74,15 @@ const reducers = combineReducers({
 const persistConfig: PersistConfig<RootState> = {
     key: storageKeys.STORE,
     storage: storePersistor,
-    blacklist: [ 'permissions', 'status', 'ui' ]
+    blacklist: [
+        'courses',
+        'lessons',
+        'permissions',
+        'preaching',
+        'revisits',
+        'status',
+        'ui'
+    ]
 };
 
 const reducer = persistReducer(persistConfig, reducers);
