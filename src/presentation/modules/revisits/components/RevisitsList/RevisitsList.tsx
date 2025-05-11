@@ -135,7 +135,7 @@ export const RevisitsList: FC<RevisitsListProps> = ({ emptyMessage, filter, titl
      */
     const handleEndReach = (): void => {
         if (!hasMoreRevisits || isRevisitsLoading || !wifi.hasConnection) return;
-        loadRevisits({ filter, search: searchTerm, loadMore: true });
+        // loadRevisits({ filter, search: searchTerm, loadMore: true });
     }
 
     /**
@@ -210,7 +210,7 @@ export const RevisitsList: FC<RevisitsListProps> = ({ emptyMessage, filter, titl
                 contentContainerStyle={ themeStyles.listContainer }
                 data={ revisits }
                 estimatedItemSize={ 256 }
-                keyExtractor={ (item) => item.id }
+                keyExtractor={ (item) => `${ filter }-${ item.id }` }
                 ListFooterComponent={
                     <ListFooterComponent
                         marginTopPlus={ revisits.length === 0 }
