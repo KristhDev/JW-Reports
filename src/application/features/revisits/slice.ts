@@ -22,6 +22,7 @@ import {
 } from './types';
 
 import { RevisitFilter } from '@revisits/interfaces';
+import { FilterUtil, SorterUtil } from '@utils';
 
 /* Initial revisit */
 export const INIT_REVISIT: RevisitEntity = {
@@ -56,36 +57,20 @@ export const REVISITS_INITIAL_STATE: RevisitsState = {
     selectedRevisit: INIT_REVISIT
 }
 
-/**
- * It takes a list of revisits and a filter, and returns a filtered list of revisits
- * @param {RevisitEntity[]} revisits - RevisitEntity[]
- * @param {RevisitFilter} filter - RevisitFilter
- * @returns A function that returns the filtered revisits.
- */
-const filterRevisits = (revisits: RevisitEntity[], filter: RevisitFilter) => {
-    const revisitsFiltereds = {
-        all: () => revisits,
-        unvisited: () => revisits.filter(c => !c.done),
-        visited: () => revisits.filter(c => c.done),
-    }
-
-    return revisitsFiltereds[filter]();
-}
-
 /* Slice of management state */
 const revisitsSlice = createSlice({
     name: 'revisits',
     initialState: REVISITS_INITIAL_STATE,
     reducers: {
         addRevisit: (state, action: PayloadAction<RevisitPayload>) => {
-            state.revisits = filterRevisits([ action.payload.revisit, ...state.revisits ], state.revisitFilter);
-            state.revisits = state.revisits.sort((a, b) => new Date(b.nextVisit).getTime() - new Date(a.nextVisit).getTime());
-            state.isRevisitLoading = false;
+            const revisitsFiltered = FilterUtil.filterRevisitsBy([ action.payload.revisit, ...state.revisits ], state.revisitFilter);
+            const sortedRevisits = SorterUtil.sortRevisitsByNextVisit(revisitsFiltered);
+
+            state.revisits = sortedRevisits;
         },
 
         addRevisits: (state, action: PayloadAction<SetRevisitsPayload>) => {
             state.revisits = [ ...state.revisits, ...action.payload.revisits ];
-            state.isRevisitsLoading = false;
         },
 
         clearRevisits: (state) => {
@@ -103,7 +88,6 @@ const revisitsSlice = createSlice({
 
         removeRevisit: (state, action: PayloadAction<RemoveResourcePayload>) => {
             state.revisits = state.revisits.filter(r => r.id !== action.payload.id);
-            state.isRevisitDeleting = false;
         },
 
         removeRevisits: (state) => {
@@ -136,7 +120,6 @@ const revisitsSlice = createSlice({
 
         setLastRevisit: (state, action: PayloadAction<RevisitPayload>) => {
             state.lastRevisit = action.payload.revisit;
-            state.isLastRevisitLoading = false;
         },
 
         setRefreshRevisits: (state, action: PayloadAction<SetRefreshRevisitsPayload>) => {
@@ -149,7 +132,6 @@ const revisitsSlice = createSlice({
 
         setRevisits: (state, action: PayloadAction<SetRevisitsPayload>) => {
             state.revisits = [ ...action.payload.revisits ];
-            state.isRevisitsLoading = false;
         },
 
         setRevisitsPagination: (state, action: PayloadAction<PaginationPayload>) => {
@@ -162,23 +144,19 @@ const revisitsSlice = createSlice({
 
         setSelectedRevisit: (state, action: PayloadAction<RevisitPayload>) => {
             state.selectedRevisit = action.payload.revisit;
-            state.isRevisitLoading = false;
         },
 
         updateRevisit: (state, action: PayloadAction<RevisitPayload>) => {
-            state.revisits = filterRevisits(state.revisits.map(revisit =>
-                (revisit.id === action.payload.revisit.id)
+            const updatedRevists = state.revisits.map(
+                r => r.id === action.payload.revisit.id
                     ? action.payload.revisit
-                    : revisit
-            ), state.revisitFilter);
+                    : r
+            )
 
-            state.revisits = state.revisits.sort((a, b) => new Date(b.nextVisit).getTime() - new Date(a.nextVisit).getTime());
+            const filteredRevisits = FilterUtil.filterRevisitsBy(updatedRevists, state.revisitFilter);
+            const sortedRevisits = SorterUtil.sortRevisitsByNextVisit(filteredRevisits);
 
-            state.selectedRevisit = (state.selectedRevisit.id === action.payload.revisit.id)
-                ? action.payload.revisit
-                : state.selectedRevisit;
-
-            state.isRevisitLoading = false;
+            state.revisits = sortedRevisits;
         }
     }
 });

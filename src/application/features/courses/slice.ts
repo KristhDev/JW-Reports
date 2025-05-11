@@ -26,6 +26,8 @@ import {
 import { CourseFilter } from '@courses/interfaces';
 import { LessonPayload } from '../lessons/types';
 
+import { FilterUtil, SorterUtil } from '@utils';
+
 /* Initial course */
 export const INIT_COURSE: CourseEntity = {
     id: '',
@@ -59,37 +61,18 @@ export const COURSES_INITIAL_STATE: CoursesState = {
     selectedCourse: INIT_COURSE,
 }
 
-/**
- * It takes a list of courses and a filter, and returns a filtered list of courses
- * @param {CourseEntity[]} courses - CourseEntity[]
- * @param {CourseFilter} filter - CourseFilter = 'active' | 'all' | 'finished' | 'suspended'
- * @returns A function that returns the filtered courses.
- */
-const filterCoursesBy = (courses: CourseEntity[], filter: CourseFilter) => {
-    const coursesFiltereds = {
-        active: () => courses.filter(c => !c.suspended && !c.finished),
-        all: () => courses,
-        finished: () => courses.filter(c => !c.suspended && c.finished),
-        suspended: () => courses.filter(c => c.suspended && !c.finished)
-    }
-
-    return coursesFiltereds[filter]();
-}
-
 /* Slice of management state */
 const courseSlice = createSlice({
     name: 'courses',
     initialState: COURSES_INITIAL_STATE,
     reducers: {
         addCourse: (state, action: PayloadAction<CoursePayload>) => {
-            state.courses = [ action.payload.course, ...state.courses ];
-            state.courses = state.courses.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
-            state.isCourseLoading = false;
+            const sortedCourses = SorterUtil.sortCoursesByCreatedAt([ action.payload.course, ...state.courses ])
+            state.courses = sortedCourses;
         },
 
         addCourses: (state, action: PayloadAction<SetCoursesPayload>) => {
             state.courses = [ ...state.courses, ...action.payload.courses ];
-            state.isCoursesLoading = false;
         },
 
         addLastLessonInCourse: (state, action: PayloadAction<AddLastLessonInCoursePayload>) => {
@@ -131,7 +114,6 @@ const courseSlice = createSlice({
 
         removeCourse: (state, action: PayloadAction<RemoveResourcePayload>) => {
             state.courses = state.courses.filter(r => r.id !== action.payload.id);
-            state.isCourseDeleting = false;
         },
 
         removeCourses: (state) => {
@@ -144,7 +126,6 @@ const courseSlice = createSlice({
 
         setCourses: (state, action: PayloadAction<SetCoursesPayload>) => {
             state.courses = [ ...action.payload.courses ];
-            state.isCoursesLoading = false;
         },
 
         setCoursesPagination: (state, action: PayloadAction<PaginationPayload>) => {
@@ -181,23 +162,19 @@ const courseSlice = createSlice({
 
         setSelectedCourse: (state, action: PayloadAction<CoursePayload>) => {
             state.selectedCourse = action.payload.course;
-            state.isCourseLoading = false;
         },
 
         updateCourse: (state, action: PayloadAction<CoursePayload>) => {
-            state.courses = filterCoursesBy(state.courses.map(course =>
+            const updatedCourses = state.courses.map(course =>
                 (course.id === action.payload.course.id)
                     ? { ...action.payload.course, lastLesson: course.lastLesson }
                     : course
-            ), state.courseFilter);
+            );
 
-            state.courses = state.courses.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
+            const filteredCourses = FilterUtil.filterCoursesBy(updatedCourses, state.courseFilter);
+            const sortedCourses = SorterUtil.sortCoursesByCreatedAt(filteredCourses);
 
-            state.selectedCourse = (state.selectedCourse.id === action.payload.course.id)
-                ? { ...action.payload.course, lastLesson: state.selectedCourse.lastLesson }
-                : state.selectedCourse;
-
-            state.isCourseLoading = false;
+            state.courses = sortedCourses;
         },
 
         updateLastLessonInCourse: (state, action: PayloadAction<LessonPayload>) => {

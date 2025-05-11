@@ -16,6 +16,8 @@ import {
 import { LessonPayload, LessonsState, SetLessonsPayload, SetLessonWithCoursePayload } from './types';
 import { INIT_COURSE } from '../courses';
 
+import { SorterUtil } from '@utils';
+
 /* Initial lesson */
 export const INIT_LESSON: LessonEntity = {
     id: '',
@@ -54,20 +56,13 @@ const lessonsSlice = createSlice({
     reducers: {
         addLesson: (state, action: PayloadAction<LessonPayload>) => {
             const lessonsArr = new Set([ action.payload.lesson, ...state.lessons ]);
+            const sortedLessons = SorterUtil.sortLessonsByNextLesson([ ...lessonsArr ])
 
-            state.lessons = [ ...lessonsArr ];
-            state.lessons = state.lessons.sort((a, b) => new Date(b.nextLesson).getTime() - new Date(a.nextLesson).getTime());
-            state.isLessonLoading = false;
-        },
-
-        addLastLesson: (state, action: PayloadAction<SetLessonWithCoursePayload>) => {
-            state.lastLesson = action.payload.lesson;
-            state.isLastLessonLoading = false;
+            state.lessons = sortedLessons;
         },
 
         addLessons: (state, action: PayloadAction<SetLessonsPayload>) => {
             state.lessons = [ ...state.lessons, ...action.payload.lessons ];
-            state.isLessonsLoading = false;
         },
 
         clearLessons: (state) => {
@@ -83,16 +78,18 @@ const lessonsSlice = createSlice({
 
         removeLesson: (state, action: PayloadAction<RemoveResourcePayload>) => {
             state.lessons = state.lessons.filter(l => l.id !== action.payload.id);
-            state.isLessonDeleting = false;
         },
 
         removeLessons: (state) => {
             state.lessons = [];
         },
 
+        setLastLesson: (state, action: PayloadAction<SetLessonWithCoursePayload>) => {
+            state.lastLesson = action.payload.lesson;
+        },
+
         setLessons: (state, action: PayloadAction<SetLessonsPayload>) => {
             state.lessons = [ ...action.payload.lessons ];
-            state.isLessonsLoading = false;
         },
 
         setHasMoreLessons: (state, action: PayloadAction<HasMorePayload>) => {
@@ -125,33 +122,22 @@ const lessonsSlice = createSlice({
 
         setSelectedLesson: (state, action: PayloadAction<LessonPayload>) => {
             state.selectedLesson = action.payload.lesson;
-            state.isLessonLoading = false;
         },
 
         updateLesson: (state, action: PayloadAction<LessonPayload>) => {
-            state.lessons = state.lessons.map(lesson =>
-                (lesson.id === action.payload.lesson.id)
+            const updatedLessons = state.lessons.map(
+                lesson => (lesson.id === action.payload.lesson.id)
                     ? action.payload.lesson
                     : lesson
             );
 
-            state.lessons = state.lessons.sort((a, b) => new Date(b.nextLesson).getTime() - new Date(a.nextLesson).getTime());
-
-            state.selectedLesson = (state.selectedLesson.id === action.payload.lesson.id)
-                ? action.payload.lesson
-                : state.selectedLesson;
-
-            state.lastLesson = (state.lastLesson.id === action.payload.lesson.id)
-                ? { ...action.payload.lesson, course: state.lastLesson.course }
-                : state.lastLesson;
-
-            state.isLessonLoading = false;
+            const sortedLessons = SorterUtil.sortLessonsByNextLesson(updatedLessons);
+            state.lessons = sortedLessons;
         }
     }
 });
 
 export const {
-    addLastLesson,
     addLesson,
     addLessons,
     clearLessons,
@@ -162,6 +148,7 @@ export const {
     setIsLessonDeleting,
     setIsLessonLoading,
     setIsLessonsLoading,
+    setLastLesson,
     setLessons,
     setLessonsPagination,
     setRefreshLessons,

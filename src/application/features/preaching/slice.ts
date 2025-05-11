@@ -5,6 +5,9 @@ import { PreachingEntity } from '@domain/entities';
 import { RemoveResourcePayload, SetIsDeletingPayload, SetIsExportingPayload, SetIsLoadingPayload } from '../types';
 import { PreachingPayload, PreachingState, SetPreachingsPayload, SetSelectedDatePayload } from './types';
 
+/* Utils */
+import { SorterUtil } from '@utils';
+
 /* Initial preaching */
 export const INIT_PREACHING: PreachingEntity = {
     id: '',
@@ -32,8 +35,8 @@ const preachingSlice = createSlice({
     initialState: PREACHING_INITIAL_STATE,
     reducers: {
         addPreaching: (state, action: PayloadAction<PreachingPayload>) => {
-            state.preachings = [ ...state.preachings, action.payload.preaching ];
-            state.preachings = state.preachings.sort((a, b) => new Date(a.day).getTime() - new Date(b.day).getTime());
+            const sortedPreachings = SorterUtil.sortPreachingsByDay([ ...state.preachings, action.payload.preaching ]);
+            state.preachings = sortedPreachings;
         },
 
         clearPreaching: (state) => {
@@ -46,7 +49,6 @@ const preachingSlice = createSlice({
 
         removePreaching: (state, action: PayloadAction<RemoveResourcePayload>) => {
             state.preachings = state.preachings.filter(p => p.id !== action.payload.id);
-            state.isPreachingDeleting = false;
         },
 
         setIsPreachingDeleting: (state, action: PayloadAction<SetIsDeletingPayload>) => {
@@ -63,7 +65,6 @@ const preachingSlice = createSlice({
 
         setPreachings: (state, action: PayloadAction<SetPreachingsPayload>) => {
             state.preachings = action.payload.preachings;
-            state.isPreachingsLoading = false;
         },
 
         setSelectedDate: (state, action: PayloadAction<SetSelectedDatePayload>) => {
@@ -75,12 +76,14 @@ const preachingSlice = createSlice({
         },
 
         updatePreaching: (state, action: PayloadAction<PreachingPayload>) => {
-            state.preachings = state.preachings.map(preaching =>
+            const updatedPreachings = state.preachings.map(preaching =>
                 (preaching.id === action.payload.preaching.id)
                     ? action.payload.preaching
                     : preaching
             );
-            state.preachings = state.preachings.sort((a, b) => new Date(a.day).getTime() - new Date(b.day).getTime());
+
+            const sortedPreachings = SorterUtil.sortPreachingsByDay(updatedPreachings);
+            state.preachings = sortedPreachings;
         }
     }
 });
