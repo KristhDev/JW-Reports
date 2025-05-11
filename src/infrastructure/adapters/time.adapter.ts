@@ -5,16 +5,15 @@ import localeEs from 'dayjs/locale/es';
 import weekday from 'dayjs/plugin/weekday';
 import localizedFormat from 'dayjs/plugin/localizedFormat';
 
-export class TimeAdapter {
-    public static locale = {
-        en: localeEn,
-        es: localeEs
-    };
+import { TimeAdapterContract } from '@domain/contracts/adapters';
 
-    public static plugins = {
-        weekday,
-        localizedFormat
-    };
+import { LocaleValue } from '@infrastructure/interfaces';
+
+export class TimeAdapter implements TimeAdapterContract {
+    constructor() {
+        dayjs.extend(localizedFormat);
+        dayjs.extend(weekday);
+    }
 
     /**
      * Returns a string representation of the given date, formatted according to the specified format.
@@ -23,18 +22,8 @@ export class TimeAdapter {
      * @param {string} format - The format to be used.
      * @returns {string} The formatted date string.
      */
-    public static format(date: string | number | Date, format: string): string {
+    public format(date: string | number | Date, format: string): string {
         return dayjs(date).format(format);
-    }
-
-    /**
-     * Extends the functionality of the dayjs library with the specified plugin.
-     *
-     * @param {any} plugin - The plugin to extend dayjs with.
-     * @returns {void}
-     */
-    public static extend(plugin: any): void {
-        dayjs.extend(plugin);
     }
 
     /**
@@ -44,9 +33,9 @@ export class TimeAdapter {
      * @param {Array<T>} array - An array of objects to be filtered.
      * @returns {Array<T>} An array of objects where the 'day' property is within the current week.
      */
-    public static getArrayValuesOfWeek<T extends { day: string }>(array: T[]): Array<T> {
-        const firstDayOfWeek = TimeAdapter.getFirstDayOfCurrentWeek();
-        const lastDayOfWeek = TimeAdapter.getLastDayOfCurrentWeek();
+    public getArrayValuesOfWeek<T extends { day: string }>(array: T[]): Array<T> {
+        const firstDayOfWeek = this.getFirstDayOfCurrentWeek();
+        const lastDayOfWeek = this.getLastDayOfCurrentWeek();
 
         return array.filter(
             el => dayjs(el.day).isSame(firstDayOfWeek)
@@ -63,7 +52,7 @@ export class TimeAdapter {
      * @param {string|number|Date} date2
      * @returns {number} The difference in hours.
      */
-    public static getDiffBetweenDatesInHours(date1: string | number | Date, date2: string | number | Date): number {
+    public getDiffBetweenDatesInHours(date1: string | number | Date, date2: string | number | Date): number {
         return dayjs(date1).diff(dayjs(date2), 'hours');
     }
 
@@ -74,7 +63,7 @@ export class TimeAdapter {
      * @param {string|number|Date} date2 - The second date.
      * @returns {number} The difference in minutes.
      */
-    public static getDiffBetweenDatesInMinutes(date1: string | number | Date, date2: string | number | Date): number {
+    public getDiffBetweenDatesInMinutes(date1: string | number | Date, date2: string | number | Date): number {
         return dayjs(date1).diff(dayjs(date2), 'minutes');
     }
 
@@ -85,7 +74,7 @@ export class TimeAdapter {
      * @param {string} format - The desired format of the output date.
      * @returns {string} The first date of the month in the specified format.
      */
-    public static getFirstDateOfMonth(date: string | number | Date, format: string): string {
+    public getFirstDateOfMonth(date: string | number | Date, format: string): string {
         return dayjs(date).startOf('month').format(format);
     }
 
@@ -94,7 +83,7 @@ export class TimeAdapter {
      *
      * @returns {string} The first day of the current week in the format 'YYYY-MM-DD'.
      */
-    public static getFirstDayOfCurrentWeek(): string {
+    public getFirstDayOfCurrentWeek(): string {
         return dayjs().startOf('week').format('YYYY-MM-DD');
     }
 
@@ -105,7 +94,7 @@ export class TimeAdapter {
      * @param {string} format - The desired format of the output date.
      * @returns {string} The last date of the month in the specified format.
      */
-    public static getLastDateOfMonth(date: string | number | Date, format: string): string {
+    public getLastDateOfMonth(date: string | number | Date, format: string): string {
         return dayjs(date).endOf('month').format(format);
     }
 
@@ -114,7 +103,7 @@ export class TimeAdapter {
      *
      * @returns {string} The last day of the current week in the format 'YYYY-MM-DD'.
      */
-    public static getLastDayOfCurrentWeek(): string {
+    public getLastDayOfCurrentWeek(): string {
         return dayjs().endOf('week').format('YYYY-MM-DD');
     }
 
@@ -124,7 +113,7 @@ export class TimeAdapter {
      * @param {number} month - The month number (0-11).
      * @returns {string} The name of the month.
      */
-    public static getMonthName(month: number): string {
+    public getMonthName(month: number): string {
         return dayjs().month(month).format('MMMM');
     }
 
@@ -134,7 +123,7 @@ export class TimeAdapter {
      * @param {string|number|Date} date - The date for which the month is to be obtained.
      * @returns {number} The month number (0-11).
      */
-    public static getMonthOfDate(date: string | number | Date): number {
+    public getMonthOfDate(date: string | number | Date): number {
         return dayjs(date).get('month');
     }
 
@@ -144,8 +133,8 @@ export class TimeAdapter {
      * @param {Array<{init: string, finish: string}>} dates - An array of objects containing the start and end times.
      * @return {number} The total remaining minutes after calculating the difference for each date range.
      */
-    public static getRestMins(dates: { init: string, finish: string }[]): number {
-        const { restMins } = TimeAdapter.sumMins(dates);
+    public getRestMins(dates: { init: string, finish: string }[]): number {
+        const { restMins } = this.sumMins(dates);
         return restMins;
     }
 
@@ -155,7 +144,7 @@ export class TimeAdapter {
      * @param {string|number|Date} date - The date for which the year is to be obtained.
      * @returns {number} The year of the given date.
      */
-    public static getYearOfDate(date: string | number | Date): number {
+    public getYearOfDate(date: string | number | Date): number {
         return dayjs(date).get('year');
     }
 
@@ -166,7 +155,7 @@ export class TimeAdapter {
      * @param {string|number|Date} finalHour - The final hour to compare.
      * @returns {boolean} true if the initHour is before the finalHour, false otherwise.
      */
-    public static isBefore(initHour: string | number | Date, finalHour: string | number | Date): boolean {
+    public isBefore(initHour: string | number | Date, finalHour: string | number | Date): boolean {
         return dayjs(initHour).isBefore(dayjs(finalHour));
     }
 
@@ -179,17 +168,23 @@ export class TimeAdapter {
      * @param {number} seconds - The number of seconds to set.
      * @returns {string} The date with the hours, minutes, and seconds set in the ISO format.
      */
-    public static setHoursMinutesAndSecondsToDate(date: string | number | Date, hours: number, minutes: number, seconds: number): string {
+    public setHoursMinutesAndSecondsToDate(date: string | number | Date, hours: number, minutes: number, seconds: number): string {
         return dayjs(date).set('hours', hours).set('minutes', minutes).set('seconds', seconds).toISOString();
     }
 
     /**
      * Sets the locale of the dayjs library. The locale can be a string containing the locale code, or an ILocale object.
      *
-     * @param {string | ILocale} locale - The locale to set.
+     * @param {LocaleValue} locale - The locale to set.
      */
-    public static setLocale(locale: string | ILocale): void {
-        dayjs.locale(locale);
+    public setLocale(locale: LocaleValue): void {
+        const locales = {
+            en: localeEn,
+            es: localeEs
+        }
+
+        const localeSelected = locales[locale];
+        dayjs.locale(localeSelected);
     }
 
     /**
@@ -200,7 +195,7 @@ export class TimeAdapter {
      * @param {number} year - The year number to set.
      * @returns {string} The date with the month and year set in the ISO format.
      */
-    public static setMonthAndYearToDate(date: string | number | Date, month: number, year: number): string {
+    public setMonthAndYearToDate(date: string | number | Date, month: number, year: number): string {
         return dayjs(date).set('month', month).set('year', year).toISOString();
     }
 
@@ -211,7 +206,7 @@ export class TimeAdapter {
      * @param {number} seconds - The number of seconds to set.
      * @returns {string} The date with the seconds set in the ISO format.
      */
-    public static setSecondsToDate(date: string | number | Date, seconds: number): string {
+    public setSecondsToDate(date: string | number | Date, seconds: number): string {
         return dayjs(date).set('seconds', seconds).toISOString();
     }
 
@@ -221,7 +216,7 @@ export class TimeAdapter {
      * @param {Array<{init: string, finish: string}>} dates - An array of objects containing the start and end times.
      * @returns {number} The total hours after calculating the difference for each date range.
      */
-    public static sumHours(dates: { init: string, finish: string }[]): number {
+    public sumHours(dates: { init: string, finish: string }[]): number {
         const hours = dates.map(date => {
             const start = dayjs(date.init);
             const end = dayjs(date.finish);
@@ -229,11 +224,11 @@ export class TimeAdapter {
             return end.diff(start, 'hours');
         });
 
-        const { hours: minHours } = TimeAdapter.sumMins(dates);
+        const { hours: minHours } = this.sumMins(dates);
 
         return (minHours >= 1)
-            ? minHours + TimeAdapter.sumNumbers(hours)
-            : TimeAdapter.sumNumbers(hours);
+            ? minHours + this.sumNumbers(hours)
+            : this.sumNumbers(hours);
     }
 
     /**
@@ -242,7 +237,7 @@ export class TimeAdapter {
      * @param {Array<{init: string, finish: string}>} dates - An array of objects containing the start and end times.
      * @returns {{hours: number, restMins: number}} An object with the total hours and the remaining minutes.
      */
-    public static sumMins(dates: { init: string, finish: string }[]): { hours: number, restMins: number } {
+    public sumMins(dates: { init: string, finish: string }[]): { hours: number, restMins: number } {
         const mins = dates.map(date => {
             const start = dayjs(date.init, 'HH:mm');
             const end = dayjs(date.finish, 'HH:mm');
@@ -255,7 +250,7 @@ export class TimeAdapter {
             return restMins;
         });
 
-        const totalMins = TimeAdapter.sumNumbers(mins);
+        const totalMins = this.sumNumbers(mins);
         const restMins = totalMins % 60;
 
         return {
@@ -270,7 +265,7 @@ export class TimeAdapter {
      * @param {Array<number>} numbers - An array of numbers to be summed.
      * @returns {number} The sum of all the numbers in the array.
      */
-    public static sumNumbers(numbers: number[]): number {
+    public sumNumbers(numbers: number[]): number {
         return numbers.reduce((total, number) => total + number, 0);
     }
 
@@ -280,17 +275,17 @@ export class TimeAdapter {
      * @param {string | number} date - The date to be converted.
      * @returns {Date} The converted Date object.
      */
-    public static toDate(date: string | number): Date {
+    public toDate(date: string | number): Date {
         return dayjs(date).toDate();
     }
 
     /**
      * Converts a given date to its ISO string representation.
      *
-     * @param {string|number|Date|Dayjs|null|undefined} date - The date to be converted.
+     * @param {string|number|Date|null|undefined} date - The date to be converted.
      * @returns {string} The ISO string representation of the date.
      */
-    public static toISOString(date: string | number | Date | Dayjs | null | undefined): string {
+    public toISOString(date: string | number | Date | null | undefined): string {
         return dayjs(date).toISOString();
     }
 }

@@ -44,3 +44,5 @@ export interface WriteFromHtmlOptions {
     html: string;
     width?: number;
 }
+
+export type LocaleValue = 'en' | 'es';
