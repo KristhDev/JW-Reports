@@ -9,7 +9,11 @@ export const fileEncodings = {
 
 export const storageKeys = {
     AUTH: 'jwreports-auth',
+    STORE_COURSES: 'jwreports-courses',
+    STORE_LESSONS: 'jwreports-lessons',
+    STORE_PREACHING: 'jwreports-preaching',
     STORE_PERMISSIONS: 'jwreports-store-permissions',
+    STORE_REVISITS: 'jwreports-store-revisits',
     STORE_UI: 'jwreports-store-ui',
     STORE: 'jwreports-store',
     THEME: 'jwreports-theme'
