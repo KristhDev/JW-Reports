@@ -2,7 +2,7 @@ import { useTranslation as useTranslationI18Next } from 'react-i18next';
 
 import { TranslationKeys } from '@config/i18n';
 
-import { TimeAdapter } from '@infrastructure/adapters';
+import { timeAdapter } from '@config/di';
 
 import { Languages } from '@infrastructure/interfaces';
 
@@ -16,9 +16,7 @@ const useTranslation = () => {
         try {
             await i18n.changeLanguage(lang);
             setLanguage(lang);
-
-            const timerLocale = TimeAdapter.locale[lang as keyof typeof TimeAdapter.locale];
-            TimeAdapter.setLocale(timerLocale);
+            timeAdapter.setLocale(lang);
         } 
         catch (error) {
             console.error(error);

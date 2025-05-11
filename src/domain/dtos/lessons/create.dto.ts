@@ -1,5 +1,5 @@
-/* Adapters */
-import { TimeAdapter } from '@infrastructure/adapters';
+/* DI */
+import { timeAdapter } from '@config/di';
 
 /* Interfaces */
 import { LessonFormValues } from '@lessons/interfaces';
@@ -25,7 +25,7 @@ export class CreateLessonDto {
         return new CreateLessonDto(
             values.courseId,
             values.description,
-            TimeAdapter.format(values.nextLesson, 'YYYY-MM-DD HH:mm:ss.SSSSSS')
+            timeAdapter.format(values.nextLesson, 'YYYY-MM-DD HH:mm:ss.SSSSSS')
         );
     }
 }

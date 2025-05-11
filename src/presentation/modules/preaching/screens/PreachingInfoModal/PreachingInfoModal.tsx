@@ -1,16 +1,14 @@
-import React, { FC, useMemo } from 'react';
+import React, { FC } from 'react';
 import { Text, View } from 'react-native';
 import { useStyles } from 'react-native-unistyles';
 
-/* Config */
-import { messagesService, preachingReportService } from '@config/di';
+/* DI */
+import { timeAdapter, messagesService, preachingReportService } from '@config/di';
 
 /* Entities */
 import { PreachingEntity } from '@domain/entities';
 
-/* Adapters */
-import { TimeAdapter } from '@infrastructure/adapters';
-
+/* Screens */
 import { Modal } from '@ui/screens';
 
 /* Components */
@@ -44,7 +42,7 @@ const PreachingInfoModal: FC<ModalProps> = ({ isOpen, onClose }): JSX.Element =>
     const { state: { preachings } } = usePreaching();
     const { translate } = useTranslation();
 
-    const preachingsOfWeek = TimeAdapter.getArrayValuesOfWeek<PreachingEntity>(preachings);
+    const preachingsOfWeek = timeAdapter.getArrayValuesOfWeek<PreachingEntity>(preachings);
 
     const hoursRequirementByWeek = preachingReportService.getHoursRequirementByWeek(user.hoursRequirement);
     const hoursDoneByWeek = preachingReportService.getHoursDoneByWeek(preachingsOfWeek);

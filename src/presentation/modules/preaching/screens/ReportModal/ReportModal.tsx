@@ -2,14 +2,11 @@ import React, { Children, FC, useState } from 'react';
 import { View, Text, Share, TextInput } from 'react-native';
 import { useStyles } from 'react-native-unistyles';
 
-/* Config */
-import { placeholdersService, preachingReportService, publisherService } from '@config/di';
+/* DI */
+import { timeAdapter, placeholdersService, preachingReportService, publisherService } from '@config/di';
 
 /* Constants */
 import { precursors } from '@application/constants/utils';
-
-/* Adapters */
-import { TimeAdapter } from '@infrastructure/adapters';
 
 /* Interfaces */
 import { ParticipateInMinistry } from '@infrastructure/interfaces';
@@ -67,9 +64,9 @@ const ReportModal: FC<ReportModalProps> = ({ isOpen, month, onClose }): JSX.Elem
     const { translate } = useTranslation();
 
     const username = `${ user.name } ${ user.surname }`;
-    const totalHours = TimeAdapter.sumHours(preachings.map(p => ({ init: p.initHour, finish: p.finalHour })));
+    const totalHours = timeAdapter.sumHours(preachings.map(p => ({ init: p.initHour, finish: p.finalHour })));
     const totalCourses = courses.filter(c => !c.suspended && !c.finished)?.length;
-    const restMins = TimeAdapter.getRestMins(preachings.map(p => ({ init: p.initHour, finish: p.finalHour })));
+    const restMins = timeAdapter.getRestMins(preachings.map(p => ({ init: p.initHour, finish: p.finalHour })));
 
     /**
      * When the user clicks the button, the function will close the modal, create a report string, and

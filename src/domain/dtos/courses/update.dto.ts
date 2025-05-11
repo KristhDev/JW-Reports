@@ -1,5 +1,5 @@
-/* Adapters */
-import { TimeAdapter } from '@infrastructure/adapters';
+/* DI */
+import { timeAdapter } from '@config/di';
 
 /* Interfaces */
 import { CourseFormValues } from '@courses/interfaces';
@@ -27,7 +27,7 @@ export class UpdateCourseDto {
             values.personAbout,
             values.personAddress,
             values.publication,
-            TimeAdapter.format(new Date(), 'YYYY-MM-DD HH:mm:ss.SSSSSS')
+            timeAdapter.format(new Date(), 'YYYY-MM-DD HH:mm:ss.SSSSSS')
         );
     }
 }

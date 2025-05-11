@@ -1,5 +1,5 @@
-/* Adapters */
-import { TimeAdapter } from '@infrastructure/adapters';
+/* DI */
+import { timeAdapter } from '@config/di';
 
 /* Interfaces */
 import { CoursesTemplateOptions } from '@infrastructure/interfaces';
@@ -181,7 +181,7 @@ export class PdfCoursesTemplate {
                     <div class="lesson-card">
                         <div class="lesson-card__status">
                             <p class="lesson-card__status-text">Clase: <span>${ lesson.done ? 'Impartida' : 'Pendiente' }</span></p></p>
-                            <span>${ TimeAdapter.format(lesson.nextLesson, 'DD/MM/YYYY') }</span>
+                            <span>${ timeAdapter.format(lesson.nextLesson, 'DD/MM/YYYY') }</span>
                         </div>
 
                         <p class="lesson-card__content-text">${ lesson.description }</p>

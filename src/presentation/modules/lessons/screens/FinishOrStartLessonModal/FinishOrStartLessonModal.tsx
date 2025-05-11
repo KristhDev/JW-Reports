@@ -4,11 +4,8 @@ import { useFormik } from 'formik';
 import { useStyles } from 'react-native-unistyles';
 import Ionicons from '@expo/vector-icons/Ionicons';
 
-/* Config */
-import { placeholdersService } from '@config/di';
-
-/* Adapters */
-import { TimeAdapter } from '@infrastructure/adapters';
+/* DI */
+import { timeAdapter, placeholdersService } from '@config/di';
 
 /* Screens */
 import { Modal } from '@ui/screens';
@@ -143,7 +140,7 @@ const FinishOrStartLessonModal: FC<ModalProps> = ({ isOpen, onClose }) => {
                                     inputDateFormat="DD/MM/YYYY"
                                     label={ translate('forms.labels.lessons.reprogramLesson') }
                                     mode="date"
-                                    onChangeDate={ (date: string) => setFieldValue('nextLesson', TimeAdapter.toDate(date)) }
+                                    onChangeDate={ (date: string) => setFieldValue('nextLesson', timeAdapter.toDate(date)) }
                                     placeholder={ LESSONS_PLACEHOLDERS.SELECT_DAY }
                                     style={{ marginBottom: 0 }}
                                     value={ values.nextLesson.toString() }
@@ -160,7 +157,7 @@ const FinishOrStartLessonModal: FC<ModalProps> = ({ isOpen, onClose }) => {
                                     }
                                     inputDateFormat="DD/MM/YYYY"
                                     label={ translate('forms.labels.lessons.reprogramLesson') }
-                                    onChangeDate={ (date: string) => setFieldValue('nextLesson', TimeAdapter.toDate(date)) }
+                                    onChangeDate={ (date: string) => setFieldValue('nextLesson', timeAdapter.toDate(date)) }
                                     style={{ marginBottom: 0 }}
                                     value={ values.nextLesson.toString() }
                                 />

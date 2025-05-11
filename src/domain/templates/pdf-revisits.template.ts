@@ -1,8 +1,8 @@
 /* Config */
 import { deviceImageService } from '@config/di';
 
-/* Adapters */
-import { TimeAdapter } from '@infrastructure/adapters';
+/* DI */
+import { timeAdapter } from '@config/di';
 
 /* Interfaces */
 import { RevisitsTemplateOptions } from '@infrastructure/interfaces';
@@ -150,7 +150,7 @@ export class PdfRevisitsTemplate {
             template += `
                     <div class="revisit-card__date">
                         <p>Fecha de próxima visita:</p>
-                        <span>${ TimeAdapter.format(revisit.nextVisit, 'DD/MM/YYYY') }</span>
+                        <span>${ timeAdapter.format(revisit.nextVisit, 'DD/MM/YYYY') }</span>
                     </div>
                 </div>
             `;

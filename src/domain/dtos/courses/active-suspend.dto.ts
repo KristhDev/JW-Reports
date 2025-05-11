@@ -1,5 +1,5 @@
-/* Adapters */
-import { TimeAdapter } from '@infrastructure/adapters';
+/* DI */
+import { timeAdapter } from '@config/di';
 
 export class ActiveOrSuspendCourseDto {
     private constructor(
@@ -17,7 +17,7 @@ export class ActiveOrSuspendCourseDto {
     public static create(suspended: boolean): ActiveOrSuspendCourseDto {
         return new ActiveOrSuspendCourseDto(
             suspended,
-            TimeAdapter.format(new Date(), 'YYYY-MM-DD HH:mm:ss.SSSSSS')
+            timeAdapter.format(new Date(), 'YYYY-MM-DD HH:mm:ss.SSSSSS')
         );
     }
 }

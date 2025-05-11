@@ -1,5 +1,5 @@
-/* Adapters */
-import { TimeAdapter } from '@infrastructure/adapters';
+/* DI */
+import { timeAdapter } from '@config/di';
 
 export class FinishOrStartCourseDto {
     private constructor(
@@ -17,7 +17,7 @@ export class FinishOrStartCourseDto {
     public static create(finished: boolean): FinishOrStartCourseDto {
         return new FinishOrStartCourseDto(
             finished,
-            TimeAdapter.format(new Date(), 'YYYY-MM-DD HH:mm:ss.SSSSSS')
+            timeAdapter.format(new Date(), 'YYYY-MM-DD HH:mm:ss.SSSSSS')
         );
     }
 }

@@ -4,15 +4,15 @@ import { useRouter } from 'expo-router';
 import { useStyles } from 'react-native-unistyles';
 import Ionicons from '@expo/vector-icons/Ionicons';
 
+/* DI */
+import { timeAdapter } from '@config/di';
+
 /* Features */
 import { INIT_LESSON } from '@application/features/lessons';
 import { INIT_REVISIT } from '@application/features/revisits';
 
 /* Entities */
 import { LessonWithCourseEntity, RevisitEntity } from '@domain/entities';
-
-/* Adapters */
-import { TimeAdapter } from '@infrastructure/adapters';
 
 /* Screens */
 import { PassToCourseModal } from '@courses/screens';
@@ -85,7 +85,7 @@ const PublisherHome = (): JSX.Element => {
 
     const { translate } = useTranslation();
 
-    const month = TimeAdapter.format(selectedDate, 'MMMM').toUpperCase();
+    const month = timeAdapter.format(selectedDate, 'MMMM').toUpperCase();
 
     const lastLessonTitle = translate('screens.ui.titles.last', { 
         attribute: translate('entities.lesson') 

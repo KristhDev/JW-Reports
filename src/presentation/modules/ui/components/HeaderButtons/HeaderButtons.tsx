@@ -4,8 +4,8 @@ import { useStyles } from 'react-native-unistyles';
 import { useRouter } from 'expo-router';
 import Ionicons from '@expo/vector-icons/Ionicons';
 
-/* Adapters */
-import { TimeAdapter } from '@infrastructure/adapters';
+/* DI */
+import { timeAdapter } from '@config/di';
 
 /* Screens */
 import { DeleteModal, MonthPickerModal } from '../../screens';
@@ -72,7 +72,7 @@ export const HeaderButtons: FC<HeaderButtonsProps> = ({
      * @return {void} This function does not return anything.
      */
     const handleSelectMonthYear = (value: string): void => {
-        const newDate = TimeAdapter.toDate(value);
+        const newDate = timeAdapter.toDate(value);
 
         setSelectedDate(newDate);
         setShowMonthPicker(false);
@@ -160,7 +160,7 @@ export const HeaderButtons: FC<HeaderButtonsProps> = ({
 
             <MonthPickerModal
                 isOpen={ showMonthPicker }
-                monthDate={ TimeAdapter.toISOString(selectedDate) }
+                monthDate={ timeAdapter.toISOString(selectedDate) }
                 onClose={ () => setShowMonthPicker(false) }
                 onConfirm={ handleSelectMonthYear }
             />

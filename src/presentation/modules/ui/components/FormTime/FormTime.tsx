@@ -3,8 +3,8 @@ import { View, Text, TextInput } from 'react-native';
 import { useStyles } from 'react-native-unistyles';
 import Ionicons from '@expo/vector-icons/Ionicons';
 
-/* Adapters */
-import { TimeAdapter } from '@infrastructure/adapters';
+/* DI */
+import { timeAdapter } from '@config/di';
 
 /* Components */
 import { Button } from '../Button';
@@ -51,8 +51,8 @@ export const FormTime: FC<FormTimeProps> = ({
 
     const [ time, setTime ] = useState<string>(value);
 
-    const [ hour, setHour ] = useState<string>(TimeAdapter.format(time, 'HH'));
-    const [ minutes, setMinutes ] = useState<string>(TimeAdapter.format(time, 'mm'));
+    const [ hour, setHour ] = useState<string>(timeAdapter.format(time, 'HH'));
+    const [ minutes, setMinutes ] = useState<string>(timeAdapter.format(time, 'mm'));
 
     const { translate } = useTranslation();
 
@@ -64,8 +64,8 @@ export const FormTime: FC<FormTimeProps> = ({
     const handleShowHourPicker = (): void => {
         setShowHourPicker(true);
 
-        setHour(TimeAdapter.format(time, 'HH'));
-        setMinutes(TimeAdapter.format(time, 'mm'));
+        setHour(timeAdapter.format(time, 'HH'));
+        setMinutes(timeAdapter.format(time, 'mm'));
     }
 
     /**
@@ -113,11 +113,11 @@ export const FormTime: FC<FormTimeProps> = ({
      * @returns {void} This function does not return anything
      */
     const handleConfirm = (): void => {
-        const date = TimeAdapter.setHoursMinutesAndSecondsToDate(time, Number(hour), Number(minutes), 0);
+        const date = timeAdapter.setHoursMinutesAndSecondsToDate(time, Number(hour), Number(minutes), 0);
 
         setTime(date);
-        setHour(TimeAdapter.format(date, 'HH'));
-        setMinutes(TimeAdapter.format(date, 'mm'));
+        setHour(timeAdapter.format(date, 'HH'));
+        setMinutes(timeAdapter.format(date, 'mm'));
 
         onChangeTime(date);
         setShowHourPicker(false);
@@ -158,7 +158,7 @@ export const FormTime: FC<FormTimeProps> = ({
     }
 
     useEffect(() => {
-        const timeWithRestedSeconds = TimeAdapter.setSecondsToDate(time, 0);
+        const timeWithRestedSeconds = timeAdapter.setSecondsToDate(time, 0);
         onChangeTime(timeWithRestedSeconds);
         setTime(timeWithRestedSeconds);
     }, []);
@@ -186,7 +186,7 @@ export const FormTime: FC<FormTimeProps> = ({
                         selectionColor={ colors.linkText }
                         style={[ themeStyles.formInput ]}
                         testID="form-time-text-input"
-                        value={ TimeAdapter.format(value, inputDateFormat) }
+                        value={ timeAdapter.format(value, inputDateFormat) }
                     />
                 </View>
 

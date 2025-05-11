@@ -13,13 +13,15 @@ import { CreatePreachingDto, UpdatePreachingDto } from '@domain/dtos';
 /* Entities */
 import { PreachingEntity } from '@domain/entities';
 
-/* Adapters */
-import { TimeAdapter } from '@infrastructure/adapters';
-
 /* Interfaces */
 import { PreachingEndpoint } from '@infrastructure/interfaces';
+import { TimeAdapterContract } from '@domain/contracts/adapters';
 
 export class PreachingService implements PreachingServiceContract {
+    constructor(
+        private readonly timeAdapter: TimeAdapterContract
+    ) {}
+
     /**
      * Creates a new preaching and returns the created preaching.
      *
@@ -76,8 +78,8 @@ export class PreachingService implements PreachingServiceContract {
      * @throws {RequestError} If there is an error in fetching the preachings.
      */
     public async getByUserIdAndMonth(userId: string, month: Date): Promise<PreachingEntity[]> {
-        const init_date = TimeAdapter.getFirstDateOfMonth(month, 'YYYY-MM-DD');
-        const final_date = TimeAdapter.getLastDateOfMonth(month, 'YYYY-MM-DD');
+        const init_date = this.timeAdapter.getFirstDateOfMonth(month, 'YYYY-MM-DD');
+        const final_date = this.timeAdapter.getLastDateOfMonth(month, 'YYYY-MM-DD');
 
         const result = await supabase.from('preachings')
             .select<'*', PreachingEndpoint>()

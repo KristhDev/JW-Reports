@@ -3,8 +3,8 @@ import { View, Text, TextInput } from 'react-native';
 import { useStyles } from 'react-native-unistyles';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
 
-/* Adapters */
-import { TimeAdapter } from '@infrastructure/adapters';
+/* DI */
+import { timeAdapter } from '@config/di';
 
 /* Components */
 import { Button } from '../Button';
@@ -66,7 +66,7 @@ export const DatetimeField: FC<DatetimeFieldProps> = ({
      * @param {Date} date - The date that was selected
      */
     const handleConfirm = (date: Date) => {
-        onChangeDate(TimeAdapter.toISOString(date));
+        onChangeDate(timeAdapter.toISOString(date));
         setOpen(false);
     }
 
@@ -105,7 +105,7 @@ export const DatetimeField: FC<DatetimeFieldProps> = ({
                         selectionColor={ colors.linkText }
                         style={[ themeStyles.formInput, inputStyle ]}
                         testID="datetimefield-text-input"
-                        value={ TimeAdapter.format(value, inputDateFormat) }
+                        value={ timeAdapter.format(value, inputDateFormat) }
                         { ...rest }
                         editable={ false }
                     />
@@ -124,7 +124,7 @@ export const DatetimeField: FC<DatetimeFieldProps> = ({
             {/* Modal to pick datetime */}
             <DateTimePickerModal
                 accentColor={ colors.button }
-                date={ TimeAdapter.toDate(value) }
+                date={ timeAdapter.toDate(value) }
                 isVisible={ open }
                 mode={ mode }
                 negativeButton={{ textColor: colors.button, label: 'Cancelar' }}

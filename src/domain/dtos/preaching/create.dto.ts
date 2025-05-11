@@ -1,5 +1,5 @@
-/* Adapters */
-import { TimeAdapter } from '@infrastructure/adapters';
+/* DI */
+import { timeAdapter } from '@config/di';
 
 /* Interfaces */
 import { PreachingFormValues } from '@preaching/interfaces';
@@ -25,9 +25,9 @@ export class CreatePreachingDto {
     public static create(values: CreatePreachingDtoValues): CreatePreachingDto {
         return new CreatePreachingDto(
             values.userId,
-            TimeAdapter.format(values.day, 'YYYY-MM-DD'),
-            TimeAdapter.format(values.initHour, 'YYYY-MM-DD HH:mm:ss.SSSSSS'),
-            TimeAdapter.format(values.finalHour, 'YYYY-MM-DD HH:mm:ss.SSSSSS')
+            timeAdapter.format(values.day, 'YYYY-MM-DD'),
+            timeAdapter.format(values.initHour, 'YYYY-MM-DD HH:mm:ss.SSSSSS'),
+            timeAdapter.format(values.finalHour, 'YYYY-MM-DD HH:mm:ss.SSSSSS')
         );
     }
 }

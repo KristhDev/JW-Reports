@@ -1,7 +1,7 @@
 import { useRouter } from 'expo-router';
 
-/* Config */
-import { externalStorageAdapter, pdfAdapter, preachingService, preachingReportService, messagesService } from '@config/di';
+/* DI */
+import { externalStorageAdapter, pdfAdapter, timeAdapter, preachingService, preachingReportService, messagesService } from '@config/di';
 
 /* Features */
 import { useAppDispatch, useAppSelector } from '@application/store';
@@ -27,9 +27,6 @@ import { PreachingEntity } from '@domain/entities';
 
 /* Templates */
 import { PdfPreachingsTemplate } from '@domain/templates';
-
-/* Adapters */
-import { TimeAdapter } from '@infrastructure/adapters';
 
 /* Hooks */
 import { useAuth } from '@auth/hooks';
@@ -224,7 +221,7 @@ const usePreaching = () => {
             const createDto = CreatePreachingDto.create({ ...preachingValues, userId: user.id });
             const result = await preachingService.create(createDto);
 
-            if (TimeAdapter.format(result.day, 'MMMM') === TimeAdapter.format(state.selectedDate, 'MMMM')) addPreaching(result);
+            if (timeAdapter.format(result.day, 'MMMM') === timeAdapter.format(state.selectedDate, 'MMMM')) addPreaching(result);
 
             router.back();
             setStatus({ code: 201, msg: preachingMessages.ADDED_SUCCESS });

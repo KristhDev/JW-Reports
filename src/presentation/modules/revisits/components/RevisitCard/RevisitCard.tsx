@@ -4,8 +4,8 @@ import { useStyles } from 'react-native-unistyles';
 import { Menu, MenuOption, MenuOptions, MenuTrigger } from 'react-native-popup-menu';
 import Ionicons from '@expo/vector-icons/Ionicons';
 
-/* Adapters */
-import { TimeAdapter } from '@infrastructure/adapters';
+/* DI */
+import { timeAdapter } from '@config/di';
 
 /* Components */
 import { Fab } from '@ui/components';
@@ -48,7 +48,7 @@ export const RevisitCard: FC<RevisitCardProps> = ({
     const { setSelectedRevisit } = useRevisits();
     const { translate } = useTranslation();
 
-    const nextVisit = translate('dates.visit', { date: TimeAdapter.format(revisit.nextVisit, 'LL') });
+    const nextVisit = translate('dates.visit', { date: timeAdapter.format(revisit.nextVisit, 'LL') });
     const visitDone = translate('cards.revisits.status.done');
 
     /**

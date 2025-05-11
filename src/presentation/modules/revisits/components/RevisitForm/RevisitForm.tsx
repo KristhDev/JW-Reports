@@ -5,13 +5,10 @@ import { useFormik } from 'formik';
 import Ionicons from '@expo/vector-icons/Ionicons';
 
 /* DI */
-import { placeholdersService } from '@config/di';
+import { timeAdapter, placeholdersService } from '@config/di';
 
 /* Models */
 import { ImageModel } from '@domain/models';
-
-/* Adapters */
-import { TimeAdapter } from '@infrastructure/adapters';
 
 /* Components */
 import { Button, DatetimeField, FormCalendar, FormField, FormImage } from '@ui/components';
@@ -165,7 +162,7 @@ export const RevisitForm: FC = (): JSX.Element => {
                     inputDateFormat="DD/MM/YYYY"
                     label={ translate('forms.labels.nextVisit') }
                     mode="date"
-                    onChangeDate={ (date: string) => setFieldValue('nextVisit', TimeAdapter.toDate(date)) }
+                    onChangeDate={ (date: string) => setFieldValue('nextVisit', timeAdapter.toDate(date)) }
                     placeholder={ revisitsPlaceholders.NEXT_VISIT }
                     style={{ marginBottom: margins.xl }}
                     value={ values.nextVisit.toString() }
@@ -182,7 +179,7 @@ export const RevisitForm: FC = (): JSX.Element => {
                     }
                     inputDateFormat="DD/MM/YYYY"
                     label={ translate('forms.labels.nextVisit') }
-                    onChangeDate={ (date: string) => setFieldValue('nextVisit', TimeAdapter.toDate(date)) }
+                    onChangeDate={ (date: string) => setFieldValue('nextVisit', timeAdapter.toDate(date)) }
                     style={{ marginBottom: margins.xl }}
                     value={ values.nextVisit.toString() }
                 />

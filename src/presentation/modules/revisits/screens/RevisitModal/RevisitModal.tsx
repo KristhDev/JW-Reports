@@ -5,10 +5,7 @@ import { useFormik } from 'formik';
 import Ionicons from '@expo/vector-icons/Ionicons';
 
 /* DI */
-import { placeholdersService } from '@config/di';
-
-/* Adapters */
-import { TimeAdapter } from '@infrastructure/adapters';
+import { timeAdapter, placeholdersService } from '@config/di';
 
 /* Screens */
 import { Modal } from '@ui/screens';
@@ -201,7 +198,7 @@ const RevisitModal: FC<ModalProps> = ({ isOpen, onClose }): JSX.Element => {
                                         inputDateFormat="DD/MM/YYYY"
                                         label={ translate('forms.labels.nextVisit') }
                                         mode="date"
-                                        onChangeDate={ (date: string) => setFieldValue('nextVisit', TimeAdapter.toDate(date)) }
+                                        onChangeDate={ (date: string) => setFieldValue('nextVisit', timeAdapter.toDate(date)) }
                                         placeholder={ revisitsPlaceholders.NEXT_VISIT }
                                         style={{ marginBottom: 0 }}
                                         value={ values.nextVisit.toString() }
@@ -218,7 +215,7 @@ const RevisitModal: FC<ModalProps> = ({ isOpen, onClose }): JSX.Element => {
                                         }
                                         inputDateFormat="DD/MM/YYYY"
                                         label={ translate('forms.labels.nextVisit') }
-                                        onChangeDate={ (date: string) => setFieldValue('nextVisit', TimeAdapter.toDate(date)) }
+                                        onChangeDate={ (date: string) => setFieldValue('nextVisit', timeAdapter.toDate(date)) }
                                         style={{ marginBottom: 0 }}
                                         value={ values.nextVisit.toString() }
                                     />

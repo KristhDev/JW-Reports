@@ -4,13 +4,10 @@ import { useRouter } from 'expo-router';
 import { useStyles } from 'react-native-unistyles';
 
 /* Config */
-import { publisherService } from '@config/di';
+import { timeAdapter, publisherService } from '@config/di';
 
 /* Entities */
 import { PreachingEntity } from '@domain/entities';
-
-/* Adapters */
-import { TimeAdapter } from '@infrastructure/adapters';
 
 /* Components */
 import { TableCell } from '@ui/components';
@@ -81,17 +78,17 @@ export const PreachingTable = (): JSX.Element => {
                         />
 
                         <TableCell
-                            text={ TimeAdapter.format(preaching.day, 'DD') }
+                            text={ timeAdapter.format(preaching.day, 'DD') }
                             style={{ backgroundColor: colors.tableRow, width: cellWidth }}
                         />
 
                         <TableCell
-                            text={ TimeAdapter.format(preaching.initHour, 'HH:mm') }
+                            text={ timeAdapter.format(preaching.initHour, 'HH:mm') }
                             style={{ backgroundColor: colors.tableRow, width: cellWidthHours }}
                         />
 
                         <TableCell
-                            text={ TimeAdapter.format(preaching.finalHour, 'HH:mm') }
+                            text={ timeAdapter.format(preaching.finalHour, 'HH:mm') }
                             style={{ backgroundColor: colors.tableRow, width: cellWidthHours }}
                         />
                     </View>
@@ -106,7 +103,7 @@ export const PreachingTable = (): JSX.Element => {
                 />
 
                 <TableCell
-                    text={ `${ TimeAdapter.sumHours(preachings.map(p => ({ init: p.initHour, finish: p.finalHour }))) }H` }
+                    text={ `${ timeAdapter.sumHours(preachings.map(p => ({ init: p.initHour, finish: p.finalHour }))) }H` }
                     style={{ backgroundColor: colors.tableFooter, width: cellWidthHours * 2 }}
                 />
             </View>

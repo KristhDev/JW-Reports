@@ -8,9 +8,6 @@ import '@config/unistyles';
 /* Config */
 import { emailService, loggerService, notificationsService } from '@config/di';
 
-/* Adapters */
-import { TimeAdapter } from '@infrastructure/adapters';
-
 /* Providers */
 import { Provider } from '@providers';
 
@@ -26,10 +23,6 @@ import { useRevisits } from '@revisits/hooks';
 import { useNetwork, usePermissions } from '@shared/hooks';
 import { useTheme } from '@theme/hooks';
 import { useUI } from '@ui/hooks';
-
-/* Global config of time util */
-TimeAdapter.extend(TimeAdapter.plugins.weekday);
-TimeAdapter.extend(TimeAdapter.plugins.localizedFormat);
 
 if (__DEV__) require('../ReactotronConfig');
 

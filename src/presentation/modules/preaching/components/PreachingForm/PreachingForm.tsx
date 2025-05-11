@@ -5,10 +5,7 @@ import { useStyles } from 'react-native-unistyles';
 import Ionicons from '@expo/vector-icons/Ionicons';
 
 /* Config */
-import { placeholdersService } from '@config/di';
-
-/* Adapters */
-import { TimeAdapter } from '@infrastructure/adapters';
+import { timeAdapter, placeholdersService } from '@config/di';
 
 /* Components */
 import { Button, DatetimeField, FormCalendar, FormTime } from '@ui/components';
@@ -102,7 +99,7 @@ export const PreachingForm = (): JSX.Element => {
                     inputDateFormat="DD"
                     label={ translate('forms.labels.preaching.preachingDay') }
                     mode="date"
-                    onChangeDate={ (date) => setFieldValue('day', TimeAdapter.toDate(date)) }
+                    onChangeDate={ (date) => setFieldValue('day', timeAdapter.toDate(date)) }
                     placeholder={ preachingPlaceholders.DAY }
                     value={ values.day.toString() }
                 />
@@ -118,7 +115,7 @@ export const PreachingForm = (): JSX.Element => {
                     }
                     inputDateFormat="DD"
                     label={ translate('forms.labels.preaching.preachingDay') }
-                    onChangeDate={ (date) => setFieldValue('day', TimeAdapter.toDate(date)) }
+                    onChangeDate={ (date) => setFieldValue('day', timeAdapter.toDate(date)) }
                     value={ values.day.toString() }
                 />
             ) }
@@ -137,7 +134,7 @@ export const PreachingForm = (): JSX.Element => {
                     inputDateFormat="HH:mm"
                     label={ translate('forms.labels.preaching.initHour') }
                     mode="time"
-                    onChangeDate={ (date) => setFieldValue('initHour', TimeAdapter.toDate(date)) }
+                    onChangeDate={ (date) => setFieldValue('initHour', timeAdapter.toDate(date)) }
                     placeholder={ preachingPlaceholders.HOUR }
                     value={ values.initHour.toString() }
                 />
@@ -153,7 +150,7 @@ export const PreachingForm = (): JSX.Element => {
                     }
                     inputDateFormat="HH:mm"
                     label={ translate('forms.labels.preaching.initHour') }
-                    onChangeTime={ (date) => setFieldValue('initHour', TimeAdapter.toDate(date)) }
+                    onChangeTime={ (date) => setFieldValue('initHour', timeAdapter.toDate(date)) }
                     value={ values.initHour.toString() }
                 />
             ) }
@@ -172,7 +169,7 @@ export const PreachingForm = (): JSX.Element => {
                     inputDateFormat="HH:mm"
                     label={ translate('forms.labels.preaching.finalHour') }
                     mode="time"
-                    onChangeDate={ (date) => setFieldValue('finalHour', TimeAdapter.toDate(date)) }
+                    onChangeDate={ (date) => setFieldValue('finalHour', timeAdapter.toDate(date)) }
                     placeholder={ preachingPlaceholders.HOUR }
                     style={{ marginBottom: margins.xl }}
                     value={ values.finalHour.toString() }
@@ -189,7 +186,7 @@ export const PreachingForm = (): JSX.Element => {
                     }
                     inputDateFormat="HH:mm"
                     label={ translate('forms.labels.preaching.finalHour') }
-                    onChangeTime={ (date) => setFieldValue('finalHour', TimeAdapter.toDate(date)) }
+                    onChangeTime={ (date) => setFieldValue('finalHour', timeAdapter.toDate(date)) }
                     style={{ marginBottom: margins.xl }}
                     value={ values.finalHour.toString() }
                 />

@@ -6,9 +6,7 @@ import Ionicons from '@expo/vector-icons/Ionicons';
 
 /* Config */
 import { locales } from '@config/calendar';
-
-/* Adapters */
-import { TimeAdapter } from '@infrastructure/adapters';
+import { timeAdapter } from '@config/di';
 
 /* Components */
 import { Button } from '../Button';
@@ -80,7 +78,7 @@ export const FormCalendar: FC<FormCalendarProps> = ({
      * @return {void} This function does not return anything.
      */
     const handleChange = (dateValue: DateType): void => {
-        setDateValue(TimeAdapter.toISOString(dateValue as Date));
+        setDateValue(timeAdapter.toISOString(dateValue as Date));
     }
 
     /**
@@ -89,7 +87,7 @@ export const FormCalendar: FC<FormCalendarProps> = ({
      * @return {void} This function does not return anything.
      */
     const handleConfirm = (): void => {
-        onChangeDate && onChangeDate(TimeAdapter.toISOString(dateValue));
+        onChangeDate && onChangeDate(timeAdapter.toISOString(dateValue));
         setShowCalendarModal(false);
     }
 
@@ -116,7 +114,7 @@ export const FormCalendar: FC<FormCalendarProps> = ({
                         selectionColor={ colors.linkText }
                         style={[ themeStyles.formInput ]}
                         testID="form-calendar-text-input"
-                        value={ TimeAdapter.format(dateValue, inputDateFormat) }
+                        value={ timeAdapter.format(dateValue, inputDateFormat) }
                     />
                 </View>
 

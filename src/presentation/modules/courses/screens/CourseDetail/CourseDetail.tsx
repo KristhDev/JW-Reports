@@ -3,11 +3,11 @@ import { ScrollView, Text, View } from 'react-native';
 import { useStyles } from 'react-native-unistyles';
 import { useRouter } from 'expo-router';
 
+/* DI */
+import { timeAdapter } from '@config/di';
+
 /* Features */
 import { INIT_LESSON } from '@application/features/lessons';
-
-/* Adapters */
-import { TimeAdapter } from '@infrastructure/adapters';
 
 /* Screens */
 import { ActiveOrSuspendCourseModal } from '../ActiveOrSuspendCourseModal';
@@ -65,7 +65,7 @@ const CourseDetail = (): JSX.Element => {
     const lastLessonTitle = (selectedCourse.lastLesson?.done) 
         ? translate('screens.courses.lastLessonTitles.lessonTaught') 
         : translate('screens.courses.lastLessonTitles.nextLesson', {
-            date: TimeAdapter.format(selectedCourse?.lastLesson?.nextLesson || new Date(), 'DD/MM/YYYY')
+            date: timeAdapter.format(selectedCourse?.lastLesson?.nextLesson || new Date(), 'DD/MM/YYYY')
         });
 
     /**
@@ -232,7 +232,7 @@ const CourseDetail = (): JSX.Element => {
                         style={ themeStyles.createdAtText }
                         testID="course-detail-text-date"
                     >
-                        { TimeAdapter.format(selectedCourse.createdAt, 'DD/MM/YYYY') }
+                        { timeAdapter.format(selectedCourse.createdAt, 'DD/MM/YYYY') }
                     </Text>
                 </View>
             </ScrollView>

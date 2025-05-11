@@ -2,8 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { Image, ScrollView, Text, View, useWindowDimensions } from 'react-native';
 import { useStyles } from 'react-native-unistyles';
 
-/* Adapters */
-import { TimeAdapter } from '@infrastructure/adapters';
+/* DI */
+import { timeAdapter } from '@config/di';
 
 /* Screens */
 import { RevisitModal } from '@revisits/screens';
@@ -36,7 +36,7 @@ const RevisitDetail = (): JSX.Element => {
     const { state: { selectedRevisit } } = useRevisits();
     const { translate } = useTranslation();
 
-    const nextVisit = TimeAdapter.format(selectedRevisit.nextVisit, 'LL');
+    const nextVisit = timeAdapter.format(selectedRevisit.nextVisit, 'LL');
 
     const aboutLabel = translate('screens.revisits.labels.about', {
         person: selectedRevisit.personName
@@ -177,7 +177,7 @@ const RevisitDetail = (): JSX.Element => {
                         style={ themeStyles.createdAtText }
                         testID="revisit-detail-created-date"
                     >
-                        { TimeAdapter.format(selectedRevisit.createdAt, 'DD/MM/YYYY') }
+                        { timeAdapter.format(selectedRevisit.createdAt, 'DD/MM/YYYY') }
                     </Text>
                 </View>
             </ScrollView>

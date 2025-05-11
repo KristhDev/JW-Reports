@@ -4,11 +4,11 @@ import { useStyles } from 'react-native-unistyles';
 import { useRouter } from 'expo-router';
 import Ionicons from '@expo/vector-icons/Ionicons';
 
+/* DI */
+import { timeAdapter } from '@config/di';
+
 /* Features */
 import { INIT_PREACHING } from '@application/features/preaching';
-
-/* Adapters */
-import { TimeAdapter } from '@infrastructure/adapters';
 
 /* Screens */
 import { ReportModal } from '../ReportModal';
@@ -46,9 +46,9 @@ const Home = (): JSX.Element => {
     const { state: { selectedDate, preachings, isPreachingsLoading }, setSelectedPreaching, loadPreachings } = usePreaching();
     const { translate } = useTranslation();
 
-    const month = TimeAdapter.format(selectedDate,'MMMM').toUpperCase();
-    const currentMonth = TimeAdapter.format(new Date(), 'MMMM').toUpperCase();
-    const year = TimeAdapter.getYearOfDate(selectedDate);
+    const month = timeAdapter.format(selectedDate,'MMMM').toUpperCase();
+    const currentMonth = timeAdapter.format(new Date(), 'MMMM').toUpperCase();
+    const year = timeAdapter.getYearOfDate(selectedDate);
 
     const title = translate('screens.preaching.titles.report', { month, year });
 

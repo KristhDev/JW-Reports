@@ -1,5 +1,5 @@
-/* Adapters */
-import { TimeAdapter } from '@infrastructure/adapters';
+/* DI */
+import { timeAdapter } from '@config/di';
 
 /* Interfaces */
 import { RevisitFormValues } from '@revisits/interfaces';
@@ -29,9 +29,9 @@ export class UpdateRevisitDto {
             values.personName,
             values.about,
             values.address,
-            TimeAdapter.format(values.nextVisit, 'YYYY-MM-DD HH:mm:ss.SSSSSS'),
+            timeAdapter.format(values.nextVisit, 'YYYY-MM-DD HH:mm:ss.SSSSSS'),
             values?.photo || null,
-            TimeAdapter.format(new Date(), 'YYYY-MM-DD HH:mm:ss.SSSSSS'),
+            timeAdapter.format(new Date(), 'YYYY-MM-DD HH:mm:ss.SSSSSS'),
         );
     }
 }

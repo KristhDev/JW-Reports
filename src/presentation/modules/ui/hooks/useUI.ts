@@ -2,7 +2,7 @@ import { EmitterSubscription, Keyboard } from 'react-native';
 import { useTranslation as useTranslationI18Next } from 'react-i18next';
 
 /* DI */
-import { localizationAdapter } from '@config/di';
+import { localizationAdapter, timeAdapter } from '@config/di';
 
 /* Features */
 import { useAppDispatch, useAppSelector } from '@application/store';
@@ -22,9 +22,6 @@ import { languagesCodes, validLanguagesCodes } from '@application/constants/util
 
 /* Interfaces */
 import { Languages } from '@infrastructure/interfaces';
-
-/* Adapters */
-import { TimeAdapter } from '@infrastructure/adapters';
 
 const useUI = () => {
     const dispatch = useAppDispatch();
@@ -93,9 +90,7 @@ const useUI = () => {
 
         setLanguage(language);
         await i18n.changeLanguage(language);
-
-        const timeLocale = TimeAdapter.locale[language as keyof typeof TimeAdapter.locale];
-        TimeAdapter.setLocale(timeLocale);
+        timeAdapter.setLocale(language);
 
         setIsAppReady(true);
     }

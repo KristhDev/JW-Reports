@@ -4,8 +4,8 @@ import { useStyles } from 'react-native-unistyles';
 import { Menu, MenuOption, MenuOptions, MenuTrigger } from 'react-native-popup-menu';
 import Ionicons from '@expo/vector-icons/Ionicons';
 
-/* Adapters */
-import { TimeAdapter } from '@infrastructure/adapters';
+/* DI */
+import { timeAdapter } from '@config/di';
 
 /* Components */
 import { Fab } from '@ui/components';
@@ -44,7 +44,7 @@ export const LessonCard: FC<LessonCardProps> = ({ lesson, onNavigateDetail, onNa
     const { setSelectedLesson } = useLessons();
     const { translate } = useTranslation();
 
-    const nextVisit = translate('dates.lessonTo', { date: TimeAdapter.format(lesson.nextLesson, 'LL') });
+    const nextVisit = translate('dates.lessonTo', { date: timeAdapter.format(lesson.nextLesson, 'LL') });
     const classTaught = translate('cards.lessons.status.taught');
 
     /**

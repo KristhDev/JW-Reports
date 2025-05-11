@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import { ScrollView, Text, View } from 'react-native';
 import { useStyles } from 'react-native-unistyles';
 
-/* Adapters */
-import { TimeAdapter } from '@infrastructure/adapters';
+/* DI */
+import { timeAdapter } from '@config/di';
 
 /* Screens */
 import { FinishOrStartLessonModal } from '../FinishOrStartLessonModal';
@@ -54,7 +54,7 @@ const LessonDetail = (): JSX.Element => {
         ? translate('screens.lessons.labels.wasAnalyzed')
         : translate('screens.lessons.labels.itllAnalyzed');
 
-    const nextVisit = TimeAdapter.format(selectedLesson.nextLesson, 'LL');
+    const nextVisit = timeAdapter.format(selectedLesson.nextLesson, 'LL');
 
     return (
         <>
@@ -132,7 +132,7 @@ const LessonDetail = (): JSX.Element => {
                         style={ themeStyles.createdAtText }
                         testID="lesson-detail-date-created-text"
                     >
-                        { TimeAdapter.format(selectedLesson.createdAt, 'DD/MM/YYYY') }
+                        { timeAdapter.format(selectedLesson.createdAt, 'DD/MM/YYYY') }
                     </Text>
                 </View>
             </ScrollView>

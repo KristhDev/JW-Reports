@@ -1,5 +1,6 @@
 /* Constants */
 import { precursors } from '@application/constants/utils';
+import { TimeAdapterContract } from '@domain/contracts/adapters';
 
 /* Contracts */
 import { PreachingReportServiceContract } from '@domain/contracts/services';
@@ -8,9 +9,6 @@ import { PreachingReportServiceContract } from '@domain/contracts/services';
 import { PreachingEntity } from '@domain/entities';
 import { GroupedPreachingsModel, PreachingReportModel } from '@domain/models';
 
-/* Adapters */
-import { TimeAdapter } from '@infrastructure/adapters';
-
 /* Interfaces */
 import { RemainingHoursOfWeeklyRequirement, ReamainingOfHoursRequirement, PreachingReportOptions } from '@infrastructure/interfaces';
 
@@ -18,6 +16,10 @@ import { RemainingHoursOfWeeklyRequirement, ReamainingOfHoursRequirement, Preach
 import { Characters } from '@utils';
 
 export class PreachingReportService implements PreachingReportServiceContract {
+    constructor(
+        private readonly timeAdapter: TimeAdapterContract
+    ) {}
+
     /**
      * Generates a preaching report string given the required options.
      *
@@ -48,8 +50,8 @@ export class PreachingReportService implements PreachingReportServiceContract {
      * @return {PreachingReportModel} The preaching report.
      */
     public generatePreachingReportForExport({ month, year, preachings }: GroupedPreachingsModel): PreachingReportModel {
-        const hours = TimeAdapter.sumHours(preachings.map(p => ({ init: p.initHour, finish: p.finalHour })));
-        const restMins = TimeAdapter.getRestMins(preachings.map(p => ({ init: p.initHour, finish: p.finalHour })));
+        const hours = this.timeAdapter.sumHours(preachings.map(p => ({ init: p.initHour, finish: p.finalHour })));
+        const restMins = this.timeAdapter.getRestMins(preachings.map(p => ({ init: p.initHour, finish: p.finalHour })));
 
         return {
             hours,
@@ -66,8 +68,8 @@ export class PreachingReportService implements PreachingReportServiceContract {
      * @return {string} The total hours and minutes formatted as "hours:minutes".
      */
     public getHoursDoneByWeek(preachingsOfWeek: PreachingEntity[]): string {
-        const hours = TimeAdapter.sumHours(preachingsOfWeek.map(p => ({ init: p.initHour, finish: p.finalHour })));
-        const { restMins } = TimeAdapter.sumMins(preachingsOfWeek.map(p => ({ init: p.initHour, finish: p.finalHour })));
+        const hours = this.timeAdapter.sumHours(preachingsOfWeek.map(p => ({ init: p.initHour, finish: p.finalHour })));
+        const { restMins } = this.timeAdapter.sumMins(preachingsOfWeek.map(p => ({ init: p.initHour, finish: p.finalHour })));
 
         return `${ hours }:${ (restMins === 0) ? '00' : restMins }`;
     }
@@ -103,11 +105,11 @@ export class PreachingReportService implements PreachingReportServiceContract {
 
         const currentDate = new Date();
 
-        const hours = TimeAdapter.setHoursMinutesAndSecondsToDate(currentDate, Number(hoursDone), Number(minsDone), 0);
-        const hoursByWeek = TimeAdapter.setHoursMinutesAndSecondsToDate(currentDate, Number(hoursRequired), Number(minsRequired), 0);
+        const hours = this.timeAdapter.setHoursMinutesAndSecondsToDate(currentDate, Number(hoursDone), Number(minsDone), 0);
+        const hoursByWeek = this.timeAdapter.setHoursMinutesAndSecondsToDate(currentDate, Number(hoursRequired), Number(minsRequired), 0);
 
-        const hoursDiff = TimeAdapter.getDiffBetweenDatesInHours(hoursByWeek, hours);
-        const minsDiff = TimeAdapter.getDiffBetweenDatesInMinutes(hoursByWeek, hours) % 60;
+        const hoursDiff = this.timeAdapter.getDiffBetweenDatesInHours(hoursByWeek, hours);
+        const minsDiff = this.timeAdapter.getDiffBetweenDatesInMinutes(hoursByWeek, hours) % 60;
 
         const hoursToReturn = (hoursDiff < 0) ? hoursDiff * -1 : hoursDiff;
         const minsToReturn = (minsDiff < 0) ? minsDiff * -1 : minsDiff;
@@ -126,16 +128,16 @@ export class PreachingReportService implements PreachingReportServiceContract {
      * @return {ReamainingOfHoursRequirement} - An object containing the remaining hours of the requirement and a flag indicating if it is negative.
      */
     public getReamainingOfHoursRequirement(preachings: PreachingEntity[], hoursRequirement: number): ReamainingOfHoursRequirement {
-        const hours = TimeAdapter.sumHours(preachings.map(p => ({ init: p.initHour, finish: p.finalHour })));
-        const restMins = TimeAdapter.getRestMins(preachings.map(p => ({ init: p.initHour, finish: p.finalHour })));
+        const hours = this.timeAdapter.sumHours(preachings.map(p => ({ init: p.initHour, finish: p.finalHour })));
+        const restMins = this.timeAdapter.getRestMins(preachings.map(p => ({ init: p.initHour, finish: p.finalHour })));
 
         const currentDate = new Date()
 
-        const dateWithHoursRequirement = TimeAdapter.setHoursMinutesAndSecondsToDate(currentDate, hoursRequirement, 0, 0);
-        const dateWithHoursDone = TimeAdapter.setHoursMinutesAndSecondsToDate(currentDate, hours, restMins, 0);
+        const dateWithHoursRequirement = this.timeAdapter.setHoursMinutesAndSecondsToDate(currentDate, hoursRequirement, 0, 0);
+        const dateWithHoursDone = this.timeAdapter.setHoursMinutesAndSecondsToDate(currentDate, hours, restMins, 0);
 
-        const hoursDiff = TimeAdapter.getDiffBetweenDatesInHours(dateWithHoursRequirement, dateWithHoursDone);
-        const minsDiff = TimeAdapter.getDiffBetweenDatesInMinutes(dateWithHoursRequirement, dateWithHoursDone) % 60;
+        const hoursDiff = this.timeAdapter.getDiffBetweenDatesInHours(dateWithHoursRequirement, dateWithHoursDone);
+        const minsDiff = this.timeAdapter.getDiffBetweenDatesInMinutes(dateWithHoursRequirement, dateWithHoursDone) % 60;
 
         const hoursToReturn = (hoursDiff < 0) ? hoursDiff * -1 : hoursDiff;
         const minsToReturn = (minsDiff < 0) ? minsDiff * -1 : minsDiff;
@@ -154,10 +156,10 @@ export class PreachingReportService implements PreachingReportServiceContract {
      */
     public groupByMonthAndYear(preachings: PreachingEntity[]): GroupedPreachingsModel[] {
         return preachings.reduce((acc: GroupedPreachingsModel[], preaching) => {
-            const month = TimeAdapter.getMonthOfDate(preaching.day);
-            const monthName = TimeAdapter.getMonthName(month);
+            const month = this.timeAdapter.getMonthOfDate(preaching.day);
+            const monthName = this.timeAdapter.getMonthName(month);
 
-            const year = TimeAdapter.getYearOfDate(preaching.day);
+            const year = this.timeAdapter.getYearOfDate(preaching.day);
 
             let group = acc.find(g => g.month === monthName && g.year === year);
 

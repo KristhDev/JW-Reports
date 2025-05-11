@@ -3,15 +3,15 @@ import { Text, TextInput, View } from 'react-native';
 import { useStyles } from 'react-native-unistyles';
 import Ionicons from '@expo/vector-icons/Ionicons';
 
-/* Adapters */
-import { TimeAdapter } from '@infrastructure/adapters';
+/* DI */
+import { timeAdapter } from '@config/di';
 
 /* Components */
 import { Button, ModalActions } from '../../components';
 import { Modal } from '../Modal';
 
 /* Hooks */
-import { useTranslation } from '@ui/hooks';
+import { useTranslation, useUI } from '@ui/hooks';
 
 /* Interfaces */
 import { MonthPickerModalProps } from './interfaces';
@@ -36,14 +36,15 @@ const MonthPickerModal: FC<MonthPickerModalProps> = ({ isOpen, monthDate, onClos
     const { styles: themeStyles, theme: { colors, fontSizes } } = useStyles(themeStylesheet);
     const { styles } = useStyles(stylesheet);
     const { translate } = useTranslation();
+    const { state: { userInterface } } = useUI();
 
     const [ monthOfDate, setMonthOfDate ] = useState<{ label: string, value: number }>({
-        label: TimeAdapter.getMonthName(TimeAdapter.getMonthOfDate(monthDate)),
-        value: TimeAdapter.getMonthOfDate(monthDate)
+        label: timeAdapter.getMonthName(timeAdapter.getMonthOfDate(monthDate)),
+        value: timeAdapter.getMonthOfDate(monthDate)
     });
 
-    const [ monthNumber, setMonthNumber ] = useState<number>(TimeAdapter.getMonthOfDate(monthDate));
-    const [ year, setYear ] = useState<number>(TimeAdapter.getYearOfDate(monthDate));
+    const [ monthNumber, setMonthNumber ] = useState<number>(timeAdapter.getMonthOfDate(monthDate));
+    const [ year, setYear ] = useState<number>(timeAdapter.getYearOfDate(monthDate));
 
     /**
      * Handles the change in month number by adding the provided value and ensuring it stays within the valid range of 0-11.
@@ -66,7 +67,7 @@ const MonthPickerModal: FC<MonthPickerModalProps> = ({ isOpen, monthDate, onClos
      * @return {void} Nothing is returned, the onConfirm callback is called internally.
      */
     const handleSelectMonthYear = (): void => {
-        const selectedDateWithMonthAndYear = TimeAdapter.setMonthAndYearToDate(monthDate, monthNumber, year);
+        const selectedDateWithMonthAndYear = timeAdapter.setMonthAndYearToDate(monthDate, monthNumber, year);
         onConfirm(selectedDateWithMonthAndYear);
     }
 
@@ -77,22 +78,29 @@ const MonthPickerModal: FC<MonthPickerModalProps> = ({ isOpen, monthDate, onClos
      */
     const handleClose = (): void => {
         setMonthOfDate({
-            label: TimeAdapter.getMonthName(TimeAdapter.getMonthOfDate(monthDate)),
-            value: TimeAdapter.getMonthOfDate(monthDate)
+            label: timeAdapter.getMonthName(timeAdapter.getMonthOfDate(monthDate)),
+            value: timeAdapter.getMonthOfDate(monthDate)
         });
 
-        setYear(TimeAdapter.getYearOfDate(monthDate));
-        setMonthNumber(TimeAdapter.getMonthOfDate(monthDate));
+        setYear(timeAdapter.getYearOfDate(monthDate));
+        setMonthNumber(timeAdapter.getMonthOfDate(monthDate));
 
         onClose();
     }
 
     useEffect(() => {
         setMonthOfDate({
-            label: TimeAdapter.getMonthName(monthNumber),
+            label: timeAdapter.getMonthName(monthNumber),
             value: monthNumber
         });
     }, [ monthNumber ]);
+
+    useEffect(() => {
+        setMonthOfDate({
+            label: timeAdapter.getMonthName(timeAdapter.getMonthOfDate(monthDate)),
+            value: timeAdapter.getMonthOfDate(monthDate)
+        });
+    }, [ userInterface.language ])
 
     return (
         <Modal isOpen={ isOpen }>

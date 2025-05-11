@@ -1,5 +1,5 @@
-/* Adapters */
-import { TimeAdapter } from '@infrastructure/adapters';
+/* DI */
+import { timeAdapter } from '@config/di';
 
 export interface FinishOrStartDtoValues {
     done: boolean;
@@ -22,8 +22,8 @@ export class FinishOrStartLessonDto {
     public static create(values: FinishOrStartDtoValues): FinishOrStartLessonDto {
         return new FinishOrStartLessonDto(
             values.done,
-            TimeAdapter.format(values.nextLesson, 'YYYY-MM-DD HH:mm:ss.SSSSSS'),
-            TimeAdapter.format(new Date(), 'YYYY-MM-DD HH:mm:ss.SSSSSS')
+            timeAdapter.format(values.nextLesson, 'YYYY-MM-DD HH:mm:ss.SSSSSS'),
+            timeAdapter.format(new Date(), 'YYYY-MM-DD HH:mm:ss.SSSSSS')
         );
     }
 }
