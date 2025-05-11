@@ -1,5 +1,3 @@
-import { useRouter } from 'expo-router';
-
 /* DI */
 import { externalStorageAdapter, pdfAdapter, timeAdapter, preachingService, preachingReportService, messagesService } from '@config/di';
 
@@ -34,6 +32,7 @@ import { useNetwork, useStatus } from '@shared/hooks';
 
 /* Interfaces */
 import { PreachingFormValues } from '../interfaces';
+import { UtilFunctions } from '@shared/interfaces';
 
 /**
  * Hook to management preaching of store with state and actions
@@ -43,7 +42,6 @@ const usePreaching = () => {
     const preachingMessages = messagesService.preachingMessages;
 
     const dispatch = useAppDispatch();
-    const router = useRouter();
 
     const state = useAppSelector(store => store.preaching);
     const { user } = useAppSelector(store => store.auth);
@@ -110,14 +108,14 @@ const usePreaching = () => {
      * @param {Function} onFinish - This callback executed when the process is finished (success or failure)
      * @return {Promise<void>} This function does not return anything.
      */
-    const deletePreaching = async (onFinish?: () => void): Promise<void> => {
+    const deletePreaching = async (utils?: UtilFunctions): Promise<void> => {
         const wifiConnectionAvailable = hasWifiConnection();
         if (!wifiConnectionAvailable) return;
 
-        const isAuth = isAuthenticated(onFinish);
+        const isAuth = isAuthenticated(utils?.onFinish);
         if (!isAuth) return;
 
-        const canAlterate = canAlteratePreaching(preachingMessages.UNSELECTED_DELETE, onFinish);
+        const canAlterate = canAlteratePreaching(preachingMessages.UNSELECTED_DELETE, utils?.onFinish);
         if (!canAlterate) return;
 
         setIsPreachingDeleting(true);
@@ -129,14 +127,14 @@ const usePreaching = () => {
             resetSelectedPreaching();
             setIsPreachingDeleting(false);
 
-            onFinish && onFinish();
-            router.back();
+            utils?.onSuccess?.();
+            utils?.onFinish?.();
 
             setStatus({ code: 200, msg: preachingMessages.DELETED_SUCCESS });
         }
         catch (error) {
             setIsPreachingDeleting(false);
-            onFinish && onFinish();
+            utils?.onFinish?.();
 
             setError(error);
         }
@@ -199,18 +197,21 @@ const usePreaching = () => {
             setPreachings(preachings);
         }
         catch (error) {
-            setIsPreachingsLoading(false);
             setError(error);
+        }
+        finally {
+            setIsPreachingsLoading(false);
         }
     }
 
     /**
      * This function is to save the preaching day and return to the previous screen.
      *
-     * @param {PreachingFormValues} preachingValues - The values for save preaching day
+     * @param {PreachingFormValues} values - The values for save preaching day
+     * @param {UtilFunctions} utils - The utils functions
      * @return {Promise<void>} This function does not return anything.
      */
-    const savePreaching = async (preachingValues: PreachingFormValues): Promise<void> => {
+    const savePreaching = async (values: PreachingFormValues, utils?: UtilFunctions): Promise<void> => {
         const wifiConnectionAvailable = hasWifiConnection();
         if (!wifiConnectionAvailable) return;
 
@@ -218,26 +219,32 @@ const usePreaching = () => {
         if (!isAuth) return;
 
         try {
-            const createDto = CreatePreachingDto.create({ ...preachingValues, userId: user.id });
+            const createDto = CreatePreachingDto.create({ ...values, userId: user.id });
             const result = await preachingService.create(createDto);
 
-            if (timeAdapter.format(result.day, 'MMMM') === timeAdapter.format(state.selectedDate, 'MMMM')) addPreaching(result);
+            const preachingMonth = timeAdapter.format(result.day, timeAdapter.formats.MONTH_NAME);
+            const selectedDateMonth = timeAdapter.format(state.selectedDate, timeAdapter.formats.MONTH_NAME);
 
-            router.back();
+            if (preachingMonth === selectedDateMonth) addPreaching(result);
+
+            utils?.onSuccess?.();
             setStatus({ code: 201, msg: preachingMessages.ADDED_SUCCESS });
         }
         catch (error) {
             setError(error);
+        }
+        finally {
+            utils?.onFinish?.();
         }
     }
 
     /**
      * This function is to update the preaching day and return to the previous screen.
      *
-     * @param {PreachingFormValues} preachingValues - Values to update preaching day
+     * @param {PreachingFormValues} values - Values to update preaching day
      * @return {Promise<void>} This function does not return anything.
      */
-    const updatePreaching = async (preachingValues: PreachingFormValues): Promise<void> => {
+    const updatePreaching = async (values: PreachingFormValues, utils?: UtilFunctions): Promise<void> => {
         const wifi = hasWifiConnection();
         if (!wifi) return;
 
@@ -248,17 +255,20 @@ const usePreaching = () => {
         if (!canAlterate) return;
 
         try {
-            const updateDto = UpdatePreachingDto.create(preachingValues);
+            const updateDto = UpdatePreachingDto.create(values);
             const preaching = await preachingService.update(state.seletedPreaching.id, user.id, updateDto);
 
             updatePreachingState(preaching);
             resetSelectedPreaching();
 
-            router.back();
+            utils?.onSuccess?.();
             setStatus({ code: 200, msg: preachingMessages.UPDATED_SUCCESS });
         }
         catch (error) {
             setError(error);
+        }
+        finally {
+            utils?.onFinish?.();
         }
     }
 

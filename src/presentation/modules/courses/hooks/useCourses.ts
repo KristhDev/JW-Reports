@@ -1,5 +1,3 @@
-import { useRouter } from 'expo-router';
-
 /* Config */
 import { externalStorageAdapter, pdfAdapter, coursesService, lessonsService, messagesService } from '@config/di';
 
@@ -29,7 +27,7 @@ import {
     updateCourse as updateCourseAction
 } from '@application/features/courses';
 
-import { addLastLesson as addLastLessonAction } from '@application/features/lessons';
+import { setLastLesson as setLastLessonAction } from '@application/features/lessons';
 import { Pagination } from '@application/features/ui';
 
 /* DTOs */
@@ -57,7 +55,6 @@ const useCourses = () => {
     const coursesMessages = messagesService.coursesMessages;
 
     const dispatch = useAppDispatch();
-    const router = useRouter();
     const { hasWifiConnection } = useNetwork();
 
     const state = useAppSelector(store => store.courses);
@@ -70,7 +67,6 @@ const useCourses = () => {
 
     const addCourse = (course: CourseEntity) => dispatch(addCourseAction({ course }));
     const addCourses = (courses: CourseEntity[]) => dispatch(addCoursesAction({ courses }));
-    const addLastLesson = (lesson: LessonWithCourseEntity) => dispatch(addLastLessonAction({ lesson }));
     const clearCourses = () => dispatch(clearCoursesAction());
     const removeCourse = (id: string) => dispatch(removeCourseAction({ id }));
     const removeCourses = () => dispatch(removeCoursesAction());
@@ -80,12 +76,15 @@ const useCourses = () => {
     const setCoursesScreenHistory = (newScreen: string) => dispatch(setCoursesScreenHistoryAction({ newScreen }));
     const setHasMoreCourses = (hasMore: boolean) => dispatch(setHasMoreCoursesAction({ hasMore }));
     const setIsCourseDeleting = (isDeleting: boolean) => dispatch(setIsCourseDeletingAction({ isDeleting }));
-    const setIsCoursesExporting = (isExporting: boolean) => dispatch(setIsCoursesExportingAction({ isExporting }));
     const setIsCourseLoading = (isLoading: boolean) => dispatch(setIsCourseLoadingAction({ isLoading }));
+    const setIsCoursesExporting = (isExporting: boolean) => dispatch(setIsCoursesExportingAction({ isExporting }));
     const setIsCoursesLoading = (isLoading: boolean) => dispatch(setIsCoursesLoadingAction({ isLoading }));
+    const setLastLesson = (lesson: LessonWithCourseEntity) => dispatch(setLastLessonAction({ lesson }));
     const setRefreshCourses = (refresh: boolean) => dispatch(setRefreshCoursesAction({ refresh }));
     const setSelectedCourse = (course: CourseEntity) => dispatch(setSelectedCourseAction({ course }));
     const updateCourseActionState = (course: CourseEntity) => dispatch(updateCourseAction({ course }));
+
+    const instPrecursor = (user.precursor === precursors.NINGUNO);
 
     /**
      * Check if the course can be updated or not.
@@ -173,10 +172,11 @@ const useCourses = () => {
             const msg = (course.suspended) ? coursesMessages.SUSPENDED_SUCCESS : coursesMessages.RENEW_SUCCESS;
             updateCourseActionState(course);
 
-            if (user.precursor === precursors.NINGUNO && lastLesson.courseId === state.selectedCourse.id) {
-                addLastLesson({ ...lastLesson, course })
+            if (instPrecursor && lastLesson.courseId === state.selectedCourse.id) {
+                setLastLesson({ ...lastLesson, course })
             }
 
+            setIsCourseLoading(false);
             onFinish && onFinish();
             setStatus({ code: 200, msg });
         }
@@ -211,7 +211,7 @@ const useCourses = () => {
             await lessonsService.deleteLessonsByCourseId(state.selectedCourse.id);
             await coursesService.delete(state.selectedCourse.id, user.id);
 
-            if (user.precursor === precursors.NINGUNO && lastLesson.courseId === state.selectedCourse.id) {
+            if (instPrecursor && lastLesson.courseId === state.selectedCourse.id) {
                 await loadLastLesson();
             }
 
@@ -220,6 +220,7 @@ const useCourses = () => {
             onFinish && onFinish();
             onSuccess && onSuccess();
 
+            setIsCourseDeleting(false);
             setSelectedCourse(INIT_COURSE);
             setStatus({ code: 200, msg: coursesMessages.DELETED_SUCCESS });
         }
@@ -303,10 +304,11 @@ const useCourses = () => {
             const msg = (course.finished) ? coursesMessages.FINISHED_SUCCESS : coursesMessages.RESTARTED_SUCCESS;
             updateCourseActionState(course);
 
-            if (user.precursor === precursors.NINGUNO && lastLesson.courseId === state.selectedCourse.id) {
-                addLastLesson({ ...lastLesson, course });
+            if (instPrecursor && lastLesson.courseId === state.selectedCourse.id) {
+                setLastLesson({ ...lastLesson, course });
             }
 
+            setIsCourseLoading(false);
             onFinish && onFinish();
             setStatus({ code: 200, msg });
         }
@@ -361,8 +363,10 @@ const useCourses = () => {
             (loadMore) ? addCourses(courses) : setCourses(courses);
         }
         catch (error) {
-            setIsCoursesLoading(false);
             setError(error);
+        }
+        finally {
+            setIsCoursesLoading(false);
         }
     }
 
@@ -394,10 +398,10 @@ const useCourses = () => {
             setStatus({ code: 201, msg: coursesMessages.ADDED_SUCCESS });
         }
         catch (error) {
-            setIsCourseLoading(false);
             setError(error);
         }
         finally {
+            setIsCourseLoading(false);
             utils?.onFinish && utils.onFinish();
         }
     }
@@ -407,9 +411,10 @@ const useCourses = () => {
      * course.
      *
      * @param {CourseFormValues} courseValues - This is a values for update course
+     * @param {UtilFunctions} utils - This object contains optional functions to be executed
      * @return {Promise<void>} This function does not return anything.
      */
-    const updateCourse = async (courseValues: CourseFormValues): Promise<void> => {
+    const updateCourse = async (courseValues: CourseFormValues, utils?: UtilFunctions): Promise<void> => {
         const wifiConnectionAvailable = hasWifiConnection();
         if (!wifiConnectionAvailable) return;
 
@@ -428,17 +433,23 @@ const useCourses = () => {
             const course = await coursesService.update(state.selectedCourse.id, user.id, updateDto);
 
             updateCourseActionState(course);
+            if (course.id === state.selectedCourse.id) setSelectedCourse(course);
 
-            if (user.precursor === precursors.NINGUNO && lastLesson.courseId === state.selectedCourse.id) {
-                addLastLesson({ ...lastLesson, course });
+            const instPrecursor = (user.precursor === precursors.NINGUNO);
+
+            if (instPrecursor && lastLesson.courseId === state.selectedCourse.id) {
+                setLastLesson({ ...lastLesson, course });
             }
 
-            router.back();
+            utils?.onSuccess?.();
             setStatus({ code: 200, msg: coursesMessages.UPDATED_SUCCESS });
         }
         catch (error) {
-            setIsCourseLoading(false);
             setError(error);
+        }
+        finally {
+            setIsCourseLoading(false);
+            utils?.onFinish?.();
         }
     }
 

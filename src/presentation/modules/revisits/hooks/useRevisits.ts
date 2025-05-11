@@ -1,5 +1,3 @@
-import { useRouter } from 'expo-router';
-
 /* Config */
 import { env } from '@config/env';
 import { externalStorageAdapter, messagesService, pdfAdapter, revisitsService } from '@config/di';
@@ -45,7 +43,6 @@ import { PdfRevisitsTemplate } from '@domain/templates';
 /* Hooks */
 import { useAuth } from '@auth/hooks';
 import { useImage, useNetwork, useStatus } from '@shared/hooks';
-import { useTranslation } from '@ui/hooks';
 
 /* Interfaces */
 import { loadRevisitsOptions, RevisitFilter, SaveRevisitOptions, UpdateRevisitOptions } from '../interfaces';
@@ -59,7 +56,6 @@ const useRevisits = () => {
     const revisitsMessages = messagesService.revisitsMessages;
 
     const dispatch = useAppDispatch();
-    const router = useRouter();
 
     const state = useAppSelector(store => store.revisits);
     const { user } = useAppSelector(store => store.auth);
@@ -68,7 +64,6 @@ const useRevisits = () => {
     const { uploadImage, deleteImage } = useImage();
     const { setStatus, setError } = useStatus();
     const { hasWifiConnection } = useNetwork();
-    const { translate } = useTranslation();
 
     const addRevisit = (revisit: RevisitEntity) => dispatch(addRevisitAction({ revisit }));
     const addRevisits = (revisits: RevisitEntity[]) => dispatch(addRevisitsAction({ revisits }));
@@ -145,11 +140,12 @@ const useRevisits = () => {
             return revisitsMessages.COMPLETED_SUCCESS;
         }
         catch (error) {
-            setIsRevisitLoading(false);
             onError && onError();
-
             setError(error);
             return '';
+        }
+        finally {
+            setIsRevisitLoading(false);
         }
     }
 
@@ -258,8 +254,10 @@ const useRevisits = () => {
             setLastRevisit(lastRevisit);
         }
         catch (error) {
-            setIsLastRevisitLoading(false);
             setError(error);
+        }
+        finally {
+            setIsLastRevisitLoading(false);
         }
     }
 
@@ -308,23 +306,24 @@ const useRevisits = () => {
             (loadMore) ? addRevisits(revisits) : setRevisits(revisits);
         }
         catch (error) {
-            setIsRevisitsLoading(false);
             setError(error);
+        }
+        finally {
+            setIsRevisitsLoading(false);
         }
     }
 
     /**
      * This function is to save a revisit according to the options that are sent to you.
      *
-     * @param {SaveRevisitOptions} { revisitValues: RevisitFormValues, back: boolean, image: Image, onFinish: Function } - This
+     * @param {SaveRevisitOptions} { revisitValues: RevisitFormValues, onFinish: Function } - This
      * is a options for save revisit.
      * - revisitValues: This is a values for save revisits
-     * - back: This flag is used to navigate for previus screen, default is `true`
-     * - image: This is a image for upload and save uri in revisit, default is `undefined`
      * - onFinish: This callback executed when the process is finished (success or failure), default is `undefined`
+     * - onSuccess: This callback executed when the process is success, default is `undefined`
      * @return {Promise<void>} This function does not return anything.
      */
-    const saveRevisit = async ({ revisitValues, back = true, image, onFinish }: SaveRevisitOptions): Promise<void> => {
+    const saveRevisit = async ({ revisitValues, onFinish, onSuccess, successMessage }: SaveRevisitOptions): Promise<void> => {
         const wifiConnectionAvailable = hasWifiConnection();
         if (!wifiConnectionAvailable) return;
 
@@ -337,21 +336,16 @@ const useRevisits = () => {
             let photo = null;
 
             /* If image is other than undefined, an attempt is made to upload */
-            if (image) photo = await uploadImage(image, env.SUPABASE_REVISITS_FOLDER!);
+            if (!!revisitValues.image) photo = await uploadImage(revisitValues.image, env.SUPABASE_REVISITS_FOLDER!);
             const createDto = CreateRevisitDto.create({ ...revisitValues, userId: user.id, photo });
             const revisit = await revisitsService.create(createDto);
 
             addRevisit(revisit);
 
             setIsRevisitLoading(false);
+            onSuccess && onSuccess();
             onFinish && onFinish();
-
-            const successMsg = (back)
-                ? revisitsMessages.ADDED_SUCCESS
-                : translate('messages.revisits.visitAgian', { person: revisit.personName });
-
-            back && router.back();
-            setStatus({ code: 201, msg: successMsg });
+            setStatus({ code: 201, msg: successMessage });
 
             if (user.precursor === precursors.NINGUNO) await loadLastRevisit();
         }
@@ -366,12 +360,9 @@ const useRevisits = () => {
     /**
      * Updates a revisit with the given values and image.
      *
-     * @param {UpdateRevisitOptions} { image: Image, revisitValues: RevisitFormValues } - The options to update the revisit.
-     * - image: The image to be uploaded, default is `null`.
-     * - revisitValues: The values of the revisit to be updated.
      * @return {Promise<void>} This function does not return anything.
      */
-    const updateRevisit = async ({ image = null, revisitValues }: UpdateRevisitOptions): Promise<void> => {
+    const updateRevisit = async ({ revisitValues, onSuccess, onFinish }: UpdateRevisitOptions): Promise<void> => {
         const wifi = hasWifiConnection();
         if (!wifi) return;
 
@@ -383,29 +374,36 @@ const useRevisits = () => {
 
         setIsRevisitLoading(true);
 
+        const { image, ...values } = revisitValues
+
         try {
             let photo = state.selectedRevisit.photo;
 
             /* If image is other than undefined, an attempt is made to upload */
-            if (image) {
+            if (!!image) {
 
                 /* If revisit has an image you have to delete it to update it with the new one */
                 if (photo && photo.trim().length > 0) await deleteImage(photo, env.SUPABASE_REVISITS_FOLDER!);
                 photo = await uploadImage(image, env.SUPABASE_REVISITS_FOLDER!);
             }
 
-            const updateDto = UpdateRevisitDto.create({ ...revisitValues, photo });
+            const updateDto = UpdateRevisitDto.create({ ...values, photo });
             const revisit = await revisitsService.update(state.selectedRevisit.id, user.id, updateDto);
 
             if (user.precursor === precursors.NINGUNO) await loadLastRevisit();
-            updateRevisitActionState(revisit);
 
-            router.back();
+            updateRevisitActionState(revisit);
+            if (state.selectedRevisit.id === revisit.id) setSelectedRevisit(revisit);
+
+            onSuccess && onSuccess();
             setStatus({ code: 200, msg: revisitsMessages.UPDATED_SUCCESS });
         }
         catch (error) {
-            setIsRevisitLoading(false);
             setError(error);
+        }
+        finally {
+            onFinish && onFinish();
+            setIsRevisitLoading(false);
         }
     }
 
