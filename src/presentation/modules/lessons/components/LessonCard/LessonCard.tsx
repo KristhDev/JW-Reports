@@ -1,4 +1,4 @@
-import React, { FC, useState } from 'react';
+import React, { memo, useState } from 'react';
 import { Pressable, Text, View } from 'react-native';
 import { useStyles } from 'react-native-unistyles';
 import { Menu, MenuOption, MenuOptions, MenuTrigger } from 'react-native-popup-menu';
@@ -35,10 +35,10 @@ import { stylesheet } from './styles';
  * - onFinish: This is a function to finish the lesson
  * @return {JSX.Element} rendered component to show the lesson
  */
-export const LessonCard: FC<LessonCardProps> = ({ lesson, onNavigateDetail, onNavigateEdit, onClick, onDelete, onFinish }): JSX.Element => {
+export const LessonCard = memo<LessonCardProps>(({ lesson, onNavigateDetail, onNavigateEdit, onClick, onDelete, onFinish }): JSX.Element => {
     const [ isOpen, setIsOpen ] = useState<boolean>(false);
 
-    const { styles, theme: { colors, fontSizes, margins } } = useStyles(stylesheet);
+    const { styles, theme: { colors, fontSizes } } = useStyles(stylesheet);
     const { styles: themeStyles, } = useStyles(themeStylesheet);
 
     const { setSelectedLesson } = useLessons();
@@ -164,4 +164,4 @@ export const LessonCard: FC<LessonCardProps> = ({ lesson, onNavigateDetail, onNa
             </View>
         </Pressable>
     );
-}
+}); 
