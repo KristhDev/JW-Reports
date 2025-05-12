@@ -9,7 +9,6 @@ import { clearStatus as clearStatusAction, setStatus as setStatusAction, SetStat
 
 /* Errors */
 import {
-    AppErrors,
     CloudError,
     DtoError,
     EmailError,
@@ -27,13 +26,14 @@ import {
 const useStatus = () => {
     const appMessages = messagesService.appMessages;
     const authMessages = messagesService.authMessages;
+    const expoMessages = messagesService.expoMessages;
     const networkMessages = messagesService.networkMessages;
+    const supabaseMessages = messagesService.supabaseMessages;
 
     const dispatch = useAppDispatch();
     const state = useAppSelector(store => store.status);
 
     const router = useRouter();
-
     /**
      * Sets the status of the store and navigates to the modal page.
      *
@@ -66,22 +66,40 @@ const useStatus = () => {
         let status = 400;
 
         if (error instanceof RequestError) {
-            msg = AppErrors.getMessageFromCode(error.code);
+            const supabaseMsg = supabaseMessages.auth[error.code as keyof typeof supabaseMessages.auth]
+                || supabaseMessages.postgres[error.code as keyof typeof supabaseMessages.postgres]
+                || appMessages.UNEXPECTED_ERROR;
+
+            msg = supabaseMsg;
             status = error.status;
         }
 
         if (error instanceof CloudError) {
-            msg = AppErrors.getMessageFromCode(error.message);
+            const supabaseMsg = supabaseMessages.storage[error.message as keyof typeof supabaseMessages.storage]
+                || appMessages.UNEXPECTED_ERROR;
+
+            msg = supabaseMsg;
             status = error.status;
         }
 
         if (error instanceof DtoError) msg = error.message;
         if (error instanceof EmailError) msg = error.message;
         if (error instanceof ExternalStorageError) msg = error.message;
-        if (error instanceof ImageError) msg = AppErrors.getMessageFromCode(error?.code || 'NO_CODE');
+
+        if (error instanceof ImageError) {
+            msg = expoMessages.picker[error?.code as keyof typeof expoMessages.picker]
+                || appMessages.UNEXPECTED_ERROR;
+        }
+
         if (error instanceof InternalStorageError) msg = error.message;
         if (error instanceof PDFError) msg = error.message;
-        if (error instanceof VoiceRecorderError) msg = AppErrors.getMessageFromCode(error.code);
+
+        if (error instanceof VoiceRecorderError) {
+            msg = expoMessages.voiceRecorder[error?.code as keyof typeof expoMessages.voiceRecorder]
+                || appMessages.UNEXPECTED_ERROR;
+        }
+
+        if (msg.trim().length === 0) msg = appMessages.UNEXPECTED_ERROR;
 
         setStatus({ msg, code: status });
 
