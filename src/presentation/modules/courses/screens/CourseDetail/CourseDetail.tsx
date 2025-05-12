@@ -1,4 +1,3 @@
-import React, { useState } from 'react';
 import { ScrollView, Text, View } from 'react-native';
 import { useStyles } from 'react-native-unistyles';
 import { useRouter } from 'expo-router';
@@ -8,10 +7,6 @@ import { timeAdapter } from '@config/di';
 
 /* Features */
 import { INIT_LESSON } from '@application/features/lessons';
-
-/* Screens */
-import { ActiveOrSuspendCourseModal } from '../ActiveOrSuspendCourseModal';
-import { FinishOrStartCourseModal }  from '../FinishOrStartCourseModal';
 
 /* Components */
 import { InfoText, Link, Title } from '@ui/components';
@@ -32,9 +27,6 @@ import { stylesheet } from './styles';
  * @return {JSX.Element} rendered component to show course
  */
 const CourseDetail = (): JSX.Element => {
-    const [ showASModal, setShowASModal ] = useState<boolean>(false);
-    const [ showFSModal, setShowFSModal ] = useState<boolean>(false);
-
     const router = useRouter();
 
     const { styles: themeStyles, theme: { colors, fontSizes, margins } } = useStyles(themeStylesheet);
@@ -80,7 +72,7 @@ const CourseDetail = (): JSX.Element => {
             nextLesson: new Date().toString()
         });
 
-        router.navigate('/(app)/(tabs)/courses/add-or-edit-lesson');
+        router.navigate('/(app)/(tabs)/courses/lessons/add-or-edit');
     }
 
     /**
@@ -93,160 +85,148 @@ const CourseDetail = (): JSX.Element => {
     }
 
     return (
-        <>
-            <ScrollView
-                contentContainerStyle={ themeStyles.scrollView }
-                overScrollMode="never"
-                style={{ flex: 1 }}
-            >
+        <ScrollView
+            contentContainerStyle={ themeStyles.scrollView }
+            overScrollMode="never"
+            style={{ flex: 1 }}
+        >
 
-                {/* Title of detail */}
-                <Title
-                    containerStyle={ themeStyles.titleContainer }
-                    text={ selectedCourse.personName.toUpperCase() }
-                    textStyle={{ fontSize: fontSizes.md }}
-                />
+            {/* Title of detail */}
+            <Title
+                containerStyle={ themeStyles.titleContainer }
+                text={ selectedCourse.personName.toUpperCase() }
+                textStyle={{ fontSize: fontSizes.md }}
+            />
 
-                {/* Text publication */}
-                <InfoText
-                    containerStyle={ themeStyles.publicationTextContainer }
-                    text={ selectedCourse.publication.toUpperCase() }
-                    textStyle={ themeStyles.publicationText }
-                />
+            {/* Text publication */}
+            <InfoText
+                containerStyle={ themeStyles.publicationTextContainer }
+                text={ selectedCourse.publication.toUpperCase() }
+                textStyle={ themeStyles.publicationText }
+            />
 
-                {/* Course status */}
-                <View style={ themeStyles.detailSection }>
-                    <Text
-                        style={{ ...themeStyles.detailSubTitle, marginBottom: 0 }}
-                        testID="course-detail-status"
+            {/* Course status */}
+            <View style={ themeStyles.detailSection }>
+                <Text
+                    style={{ ...themeStyles.detailSubTitle, marginBottom: 0 }}
+                    testID="course-detail-status"
+                >
+                    { courseState }
+                </Text>
+
+                { (!selectedCourse.finished) ? (
+                    <Link
+                        onPress={ () => router.navigate('/(app)/(tabs)/courses/active-or-suspend-course-modal') }
+                        testID="course-detail-status-touchable"
+                        textStyle={ themeStyles.sectionTextSize }
                     >
-                        { courseState }
-                    </Text>
-
-                    { (!selectedCourse.finished) ? (
-                        <Link
-                            onPress={ () => setShowASModal(true) }
-                            testID="course-detail-status-touchable"
-                            textStyle={ themeStyles.sectionTextSize }
-                        >
-                            { continueOrSuspendCourseText }
-                        </Link>
-                    ) : (
-                        <Link
-                            onPress={ () => setShowFSModal(true) }
-                            testID="course-detail-status-touchable"
-                            textStyle={ themeStyles.sectionTextSize }
-                        >
-                            { translate('screens.courses.questions.startAgain') }
-                        </Link>
-                    ) }
-                </View>
-
-                {/* Text person about */}
-                <View style={ themeStyles.detailSection }>
-                    <Text
-                        style={ themeStyles.detailSubTitle }
-                        testID="course-detail-about-subtitle"
+                        { continueOrSuspendCourseText }
+                    </Link>
+                ) : (
+                    <Link
+                        onPress={ () => router.navigate('/(app)/(tabs)/courses/finish-or-start-course-modal') }
+                        testID="course-detail-status-touchable"
+                        textStyle={ themeStyles.sectionTextSize }
                     >
-                        { aboutPersonText }
-                    </Text>
+                        { translate('screens.courses.questions.startAgain') }
+                    </Link>
+                ) }
+            </View>
 
-                    <Text
-                        style={ themeStyles.detailText }
-                        testID="course-detail-about-text"
-                    >
-                        { selectedCourse.personAbout }
-                    </Text>
-                </View>
+            {/* Text person about */}
+            <View style={ themeStyles.detailSection }>
+                <Text
+                    style={ themeStyles.detailSubTitle }
+                    testID="course-detail-about-subtitle"
+                >
+                    { aboutPersonText }
+                </Text>
 
-                {/* Text person address */}
-                <View style={ themeStyles.detailSection }>
-                    <Text style={[ themeStyles.detailSubTitle, styles.sectionTextColor ]}>
-                        { translate('screens.revisits.labels.address') }
-                    </Text>
+                <Text
+                    style={ themeStyles.detailText }
+                    testID="course-detail-about-text"
+                >
+                    { selectedCourse.personAbout }
+                </Text>
+            </View>
 
-                    <Text
-                        style={ themeStyles.detailText }
-                        testID="course-detail-address-text"
-                    >
-                        { selectedCourse.personAddress }
-                    </Text>
-                </View>
+            {/* Text person address */}
+            <View style={ themeStyles.detailSection }>
+                <Text style={[ themeStyles.detailSubTitle, styles.sectionTextColor ]}>
+                    { translate('screens.revisits.labels.address') }
+                </Text>
 
-                {/* Course last lesson */}
-                <View style={ themeStyles.detailSection }>
-                    <Text style={ themeStyles.detailSubTitle }>
-                        { translate('screens.courses.labels.lastLesson') }
-                    </Text>
+                <Text
+                    style={ themeStyles.detailText }
+                    testID="course-detail-address-text"
+                >
+                    { selectedCourse.personAddress }
+                </Text>
+            </View>
 
-                    {/* Card of last lesson */}
-                    { (selectedCourse?.lastLesson) ? (
-                        <View style={ styles.cardContainer }>
-                            <View style={{ backgroundColor: colors.header }}>
-                                <Text
-                                    style={ styles.cardHeaderText }
-                                    testID="course-detail-last-lesson-status"
-                                >
-                                    { lastLessonTitle }
-                                </Text>
-                            </View>
+            {/* Course last lesson */}
+            <View style={ themeStyles.detailSection }>
+                <Text style={ themeStyles.detailSubTitle }>
+                    { translate('screens.courses.labels.lastLesson') }
+                </Text>
 
+                {/* Card of last lesson */}
+                { (selectedCourse?.lastLesson) ? (
+                    <View style={ styles.cardContainer }>
+                        <View style={{ backgroundColor: colors.header }}>
                             <Text
-                                style={ styles.cardContentText }
-                                testID="course-detail-last-lesson-description"
+                                style={ styles.cardHeaderText }
+                                testID="course-detail-last-lesson-status"
                             >
-                                { selectedCourse.lastLesson.description }
+                                { lastLessonTitle }
                             </Text>
                         </View>
-                    ) : (
+
                         <Text
-                            style={ themeStyles.detailText }
-                            testID="course-detail-last-lesson-text"
+                            style={ styles.cardContentText }
+                            testID="course-detail-last-lesson-description"
                         >
-                            { translate('screens.courses.messages.hasntLastLesson') }
+                            { selectedCourse.lastLesson.description }
                         </Text>
-                    ) }
-
-                    <Link
-                        onPress={ handleLessonsList }
-                        style={{ marginTop: margins.md }}
-                        testID="course-detail-lessons-touchable"
-                        textStyle={ themeStyles.sectionTextSize }
-                    >
-                        { translate('screens.courses.links.lessons') }
-                    </Link>
-
-                    <Link
-                        onPress={ handleAddLesson }
-                        style={{ marginTop: margins.xs }}
-                        testID="course-detail-add-lesson-touchable"
-                        textStyle={ themeStyles.sectionTextSize }
-                    >
-                        { translate('screens.courses.links.addLesson') }
-                    </Link>
-                </View>
-
-                {/* Date of create course */}
-                <View style={ themeStyles.createdAtContainer }>
+                    </View>
+                ) : (
                     <Text
-                        style={ themeStyles.createdAtText }
-                        testID="course-detail-text-date"
+                        style={ themeStyles.detailText }
+                        testID="course-detail-last-lesson-text"
                     >
-                        { timeAdapter.format(selectedCourse.createdAt, timeAdapter.formats.LOCALE_SHORT_DATE) }
+                        { translate('screens.courses.messages.hasntLastLesson') }
                     </Text>
-                </View>
-            </ScrollView>
+                ) }
 
-            <ActiveOrSuspendCourseModal
-                isOpen={ showASModal }
-                onClose={ () => setShowASModal(false) }
-            />
+                <Link
+                    onPress={ handleLessonsList }
+                    style={{ marginTop: margins.md }}
+                    testID="course-detail-lessons-touchable"
+                    textStyle={ themeStyles.sectionTextSize }
+                >
+                    { translate('screens.courses.links.lessons') }
+                </Link>
 
-            <FinishOrStartCourseModal
-                isOpen={ showFSModal }
-                onClose={ () => setShowFSModal(false) }
-            />
-        </>
+                <Link
+                    onPress={ handleAddLesson }
+                    style={{ marginTop: margins.xs }}
+                    testID="course-detail-add-lesson-touchable"
+                    textStyle={ themeStyles.sectionTextSize }
+                >
+                    { translate('screens.courses.links.addLesson') }
+                </Link>
+            </View>
+
+            {/* Date of create course */}
+            <View style={ themeStyles.createdAtContainer }>
+                <Text
+                    style={ themeStyles.createdAtText }
+                    testID="course-detail-text-date"
+                >
+                    { timeAdapter.format(selectedCourse.createdAt, timeAdapter.formats.LOCALE_SHORT_DATE) }
+                </Text>
+            </View>
+        </ScrollView>
     );
 }
 
