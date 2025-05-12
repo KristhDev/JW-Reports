@@ -682,5 +682,119 @@
             "lightMode": "Light mode",
             "defaultMode": "Default mode"
         }
+    },
+
+    "pdf": {
+        "titles": {
+            "revisits": "Revisits of {{name}}"
+        },
+
+        "lables": {
+            "revisits": {
+                "visitMade": "Visit made:",
+                "information": "Information:",
+                "address": "Address:",
+                "image": "Image:",
+                "dateNextVisit": "Date of next visit:"
+            }
+        },
+
+        "alts": {
+            "image": "Image providing more information from {{name}}."
+        }
+    },
+
+    "supabase": {
+        "errors": {
+            "auth": {
+                "badCodeVerifier": "The authorization code is incorrect.",
+                "badJson": "The information format is not valid.",
+                "badJwt": "Your session has expired.",
+                "emailAddressNotAuthorized": "This email address is not authorized.",
+                "emailConflictIdentityNotDeletable": "The email address is already registered.",
+                "emailExists": "The email address is already registered.",
+                "emailNotConfirmed": "The email address has not been confirmed.",
+                "emailProviderDisabled": "The email provider has been disabled.",
+                "flowStateExpired": "Your session has expired.",
+                "invalidCredentials": "The credentials are invalid.",
+                "noAuthorization": "You must log in to perform this action.",
+                "notAdmin": "This action cannot be performed.",
+                "samePassword": "You cannot use the current password as a new one.",
+                "sessionNotFound": "Your session does not exist.",
+                "smsSendFailed": "The verification email could not be sent, please contact the administrator.",
+                "userAlreadyExists": "The user already exists.",
+                "userBanned": "The user has been banned.",
+                "userNotFound": "The user does not exist.",
+                "validationFailed": "The information format is not valid."
+            },
+
+            "postgres": {
+                "pgrst003": "The request has taken too long to be processed, please try again.",
+                "pgrst100": "The request parameters are invalid.",
+                "pgrst102": "The request information is invalid.",
+                "pgrst103": "The pagination range is invalid.",
+                "pgrst108": "A filter was applied to a resource that was not selected.",
+                "pgrst112": "The status code must be a positive integer.",
+                "pgrst116": "More than one or no resource was returned in a singular response.",
+                "pgrst300": "Your session has expired.",
+                "pgrst301": "Your session has expired.",
+                "pgrst302": "Your session has expired."
+            },
+
+            "storage": {
+                "noSuchBucket": "The bucket does not exist.",
+                "noSuchUpload": "The upload does not exist.",
+                "invalidJWT": "Your session has expired.",
+                "invalidRequest": "The information format is not valid.",
+                "tenantNotFound": "The tenant does not exist.",
+                "entityTooLarge": "The file is too large.",
+                "resourceAlreadyExists": "The file already exists.",
+                "invalidBucketName": "The bucket does not exist.",
+                "invalidRange": "The range of bytes is invalid.",
+                "invalidMimeType": "The information format is not valid.",
+                "invalidUploadId": "The upload does not exist.",
+                "bucketAlreadyExists": "The bucket already exists.",
+                "invalidSignature": "The information format is not valid.",
+                "signatureDoesNotMatch": "The information format is not valid.",
+                "accessDenied": "Your session has expired.",
+                "resourceLocked": "The upload does not exist.",
+                "missingContentLength": "The field Content-Length is required.",
+                "missingParameter": "Missing parameter.",
+                "invalidUploadSignature": "The information format is not valid.",
+                "lockTimeout": "The upload does not exist.",
+                "missingPart": "Missing parameter.",
+                "slowDown": "Your session has expired."
+            }
+        }
+    },
+
+    "expo": {
+        "errors": {
+            "picker": {
+                "cameraIsNotAvailable": "The camera is not available.",
+                "cannotLaunchCamera": "The camera cannot be launched.",
+                "cannotProcessVideo": "The video cannot be processed.",
+                "cannotSaveImage": "The image cannot be saved.",
+                "errorWhileCleaningFiles": "An error occurred while cleaning files.",
+                "failedToOpenCamera": "An error occurred while opening the camera.",
+                "failedToShowPicker": "An error occurred while displaying the picker.",
+                "noCameraPermission": "You do not have permission to access the camera.",
+                "noImageDataFound": "The image contains no data.",
+                "noLibraryPermission": "You do not have permission to access the gallery.",
+                "pickerCancelled": "The user has cancelled the process."
+            },
+
+            "voiceRecorder": {
+                "aborted": "The recording has been aborted.",
+                "audioCapture": "An error occurred while capturing the audio.",
+                "badGrammar": "Please speak clearly and without noise to copy the text.",
+                "busy": "The device microphone is occupied.",
+                "languageNotSupported": "The language in which you are speaking is not supported.",
+                "network": "An error occurred while capturing the audio.",
+                "noSpeech": "No voice was detected.",
+                "notAllowed": "You do not have permission to access the microphone.",
+                "speechTimeout": "The recording time has expired."
+            }
+        }
     }
 }

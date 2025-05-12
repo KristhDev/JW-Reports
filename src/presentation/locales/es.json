@@ -681,5 +681,119 @@
             "lightMode": "Modo claro",
             "defaultMode": "Modo predeterminado"
         }
+    },
+
+    "pdf": {
+        "titles": {
+            "revisits": "Revisitas de {{name}}"
+        },
+
+        "lables": {
+            "revisits": {
+                "visitMade": "Visita realizada:",
+                "information": "Información:",
+                "address": "Dirección:",
+                "image": "Imagen:",
+                "dateNextVisit": "Fecha de próxima visita:"
+            }
+        },
+
+        "alts": {
+            "image": "Imagen que aporta más información de {{name}}."
+        }
+    },
+
+    "supabase": {
+        "errors": {
+            "auth": {
+                "badCodeVerifier": "El código de autorización es incorrecto.",
+                "badJson": "El formato de la información no es válido.",
+                "badJwt": "Su tiempo de sesión ha expirado.",
+                "emailAddressNotAuthorized": "Este correo electrónico no se encuentra autorizado.",
+                "emailConflictIdentityNotDeletable": "El correo electrónico ya se encuentra registrado.",
+                "emailExists": "El correo electrónico ya se encuentra registrado.",
+                "emailNotConfirmed": "El correo electrónico no ha sido confirmado.",
+                "emailProviderDisabled": "El proveedor de correo electrónico ha sido deshabilitado.",
+                "flowStateExpired": "Su tiempo de sesión ha expirado.",
+                "invalidCredentials": "Las credenciales son inválidas.",
+                "noAuthorization": "Debe iniciar sesión para realizar esta acción.",
+                "notAdmin": "No se puede realizar está acción",
+                "samePassword": "No puede utilizar la contraseña actual como nueva.",
+                "sessionNotFound": "Su sesión no existe.",
+                "smsSendFailed": "El correo de verificación no pudo ser enviado, por favor contacte al administrador.",
+                "userAlreadyExists": "El usuario ya existe.",
+                "userBanned": "El usuario ha sido baneado.",
+                "userNotFound": "El usuario no existe.",
+                "validationFailed": "El formato de la información no es válido."
+            },
+
+            "postgres": {
+                "pgrst003": "La petición ha tardado mucho tiempo en realizarse, por favor vuelva a intentarlo.",
+                "pgrst100": "Los parámetros de la petición son inválidos.",
+                "pgrst102": "La información de la petición no es válida.",
+                "pgrst103": "El rango para la paginación es inválido.",
+                "pgrst108": "Se aplico un filtro a un recurso que no se selecciono.",
+                "pgrst112": "El código de estado debe ser un entero positivo.",
+                "pgrst116": "Se ha devuelto más de un o ningún recurso en una respuesta singular.",
+                "pgrst300": "Su tiempo de sesión ha expirado.",
+                "pgrst301": "Su tiempo de sesión ha expirado.",
+                "pgrst302": "Su tiempo de sesión ha expirado."
+            },
+
+            "storage": {
+                "noSuchBucket": "El bucket no existe.",
+                "noSuchUpload": "El upload no existe.",
+                "invalidJWT": "Su sesión ha expirado.",
+                "invalidRequest": "El formato de la información no es válido.",
+                "tenantNotFound": "El tenant no existe.",
+                "entityTooLarge": "El archivo es demasiado grande.",
+                "resourceAlreadyExists": "El archivo ya existe.",
+                "invalidBucketName": "El bucket no existe.",
+                "invalidRange": "El rango de bytes es inválido.",
+                "invalidMimeType": "El formato de la información no es válido.",
+                "invalidUploadId": "El upload no existe.",
+                "bucketAlreadyExists": "El bucket ya existe.",
+                "invalidSignature": "El formato de la información no es válido.",
+                "signatureDoesNotMatch": "El formato de la información no es válido.",
+                "accessDenied": "Su sesión ha expirado.",
+                "resourceLocked": "El upload no existe.",
+                "missingContentLength": "El campo Content-Length es requerido.",
+                "missingParameter": "Falta el parámetro.",
+                "invalidUploadSignature": "El formato de la información no es válido.",
+                "lockTimeout": "El upload no existe.",
+                "missingPart": "Falta el parámetro.",
+                "slowDown": "Su sesión ha expirado."
+            }
+        }
+    },
+
+    "expo": {
+        "errors": {
+            "picker": {
+                "cameraIsNotAvailable": "La cámara no está disponible.",
+                "cannotLaunchCamera": "La cámara no puede ser lanzada.",
+                "cannotProcessVideo": "El video no puede ser procesado.",
+                "cannotSaveImage": "La imagen no puede ser guardada.",
+                "errorWhileCleaningFiles": "Ocurrió un error al limpiar los archivos.",
+                "failedToOpenCamera": "Ocurrió un error al abrir la cámara.",
+                "failedToShowPicker": "Ocurrió un error al mostrar el picker.",
+                "noCameraPermission": "No se tiene el permiso para acceder a la cámara.",
+                "noImageDataFound": "La imagen no contiene datos.",
+                "noLibraryPermission": "No se tiene el permiso para acceder a la galería.",
+                "pickerCancelled": "El usuario ha cancelado el proceso."
+            },
+
+            "voiceRecorder": {
+                "aborted": "La grabación ha sido abortada.",
+                "audioCapture": "Ocurrio un error al capturar el audio.",
+                "badGrammar": "Por favor hable de forma clara y sin ruido para copiar el texto.",
+                "busy": "El micrófono del dispositivo se encuentra ocupado.",
+                "languageNotSupported": "El idioma en el cuál se encuentra hablando no es soportado.",
+                "network": "Ocurrio un error de red.",
+                "noSpeech": "No se ha detectado ninguna voz.",
+                "notAllowed": "No se ha concedido el acceso al micrófono.",
+                "speechTimeout": "El tiempo de grabación se ha agotado."
+            }
+        }
     }
 }
