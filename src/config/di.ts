@@ -20,6 +20,9 @@ import {
     LoggerServiceContract,
     MessagesServiceContract,
     NotificationsServiceContract,
+    PdfCoursesTemplateServiceContract,
+    PdfPreachingsTemplateServiceContract,
+    PdfRevisitsTemplateServiceContract,
     PlaceholdersServiceContract,
     PreachingReportServiceContract,
     PreachingServiceContract,
@@ -44,16 +47,19 @@ import {
     AuthService,
     CloudService,
     CoursesService,
-    MessagesService,
-    PublisherService,
     DeviceImageService,
     EmailService,
     LessonsService,
     LoggerService,
+    MessagesService,
+    PdfCoursesTemplateService,
+    PdfPreachingsTemplateService,
+    PdfRevisitsTemplateService,
+    PlaceholdersService,
     PreachingReportService,
     PreachingService,
-    RevisitsService,
-    PlaceholdersService
+    PublisherService,
+    RevisitsService
 } from '@infrastructure/services';
 
 import { NotificationsService, ThemeService } from '@services';
@@ -69,18 +75,21 @@ export const translationAdapter: TranslationAdapterContract = new TranslationAda
 export const authService: AuthServiceContract = new AuthService();
 export const cloudService: CloudServiceContract = new CloudService();
 export const coursesService: CoursesServiceContract = new CoursesService();
-export const themeService: ThemeServiceContract = new ThemeService(translationAdapter);
 export const deviceImageService: DeviceImageServiceContract = new DeviceImageService();
 export const emailService: EmailServiceContract = new EmailService();
 export const lessonsService: LessonsServiceContract = new LessonsService();
 export const loggerService: LoggerServiceContract = new LoggerService();
-export const publisherService: PublisherServiceContract = new PublisherService(translationAdapter);
-export const messagesService: MessagesServiceContract = new MessagesService(translationAdapter, publisherService);
 export const notificationsService: NotificationsServiceContract = new NotificationsService();
+export const pdfCoursesTemplateService: PdfCoursesTemplateServiceContract = new PdfCoursesTemplateService(timeAdapter, translationAdapter);
+export const pdfPreachingsTemplateService: PdfPreachingsTemplateServiceContract = new PdfPreachingsTemplateService(translationAdapter);
+export const pdfRevisitsTemplateService: PdfRevisitsTemplateServiceContract = new PdfRevisitsTemplateService(deviceImageService, timeAdapter, translationAdapter);
 export const placeholdersService: PlaceholdersServiceContract = new PlaceholdersService(translationAdapter);
 export const preachingReportService: PreachingReportServiceContract = new PreachingReportService(timeAdapter);
 export const preachingService: PreachingServiceContract = new PreachingService(timeAdapter);
+export const publisherService: PublisherServiceContract = new PublisherService(translationAdapter);
+export const messagesService: MessagesServiceContract = new MessagesService(translationAdapter, publisherService);
 export const revisitsService: RevisitsServiceContract = new RevisitsService();
+export const themeService: ThemeServiceContract = new ThemeService(translationAdapter);
 
 export const externalStorageAdapter: ExternalStorageAdapterContract = new ExternalStorageAdapter(messagesService, internalStorageAdapter);
 export const voiceRecorderAdapter: VoiceRecorderAdapterContract = new VoiceRecorderAdapter(messagesService);
