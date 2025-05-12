@@ -1,18 +1,11 @@
 import React, { FC, useCallback, useEffect, useState } from 'react';
 import { RefreshControl, View } from 'react-native';
-import { useFocusEffect, useNavigation } from 'expo-router';
+import { Href, router, useNavigation } from 'expo-router';
 import { FlashList } from '@shopify/flash-list';
 import { useStyles } from 'react-native-unistyles';
 
-/* Features */
-import { INIT_COURSE } from '@application/features/courses';
-
 /* Entities */
 import { CourseEntity } from '@domain/entities';
-
-/* Screens */
-import { ActiveOrSuspendCourseModal, FinishOrStartCourseModal } from '../../screens';
-import { DeleteModal } from '@ui/screens';
 
 /* Components */
 import { CourseCard } from '../CourseCard';
@@ -45,9 +38,6 @@ import { themeStylesheet } from '@theme/styles';
 export const CoursesList: FC<CoursesListProps> = ({ emptyMessage, filter, title }): JSX.Element => {
     const [ searchTerm, setSearchTerm ] = useState<string>('');
     const [ isRefreshing, setIsRefreshing ] = useState<boolean>(false);
-    const [ showDeleteModal, setShowDeleteModal ] = useState<boolean>(false);
-    const [ showASModal, setShowASModal ] = useState<boolean>(false);
-    const [ showFSModal, setShowFSModal ] = useState<boolean>(false);
 
     const navigation = useNavigation();
     const navigationState = navigation.getState();
@@ -59,11 +49,9 @@ export const CoursesList: FC<CoursesListProps> = ({ emptyMessage, filter, title 
             courses,
             coursesScreenHistory,
             hasMoreCourses,
-            isCourseDeleting,
             isCoursesLoading,
             refreshCourses,
         },
-        deleteCourse,
         loadCourses,
         removeCourses,
         setCoursesPagination,
@@ -82,11 +70,6 @@ export const CoursesList: FC<CoursesListProps> = ({ emptyMessage, filter, title 
     });
 
     const emptyMsg = (searchTerm.trim().length > 0) ? noFoundResultsMsg : emptyMessage;
-
-    const deleteCourseModalTitle = translate('modals.titles.deleteAsk', {
-        article: 'este',
-        attribute: translate('forms.fields.course')
-    });
 
     /**
      * When the user refreshes the page, the search term is reset, the pagination is reset, the courses
@@ -134,7 +117,7 @@ export const CoursesList: FC<CoursesListProps> = ({ emptyMessage, filter, title 
      * @return {void} This function does not return any value.
      */
     const handleEndReach = (): void => {
-        if (!hasMoreCourses || isCoursesLoading || !wifi.hasConnection) return;
+        if (!hasMoreCourses || courses.length === 0 || isCoursesLoading || !wifi.hasConnection) return;
         loadCourses({ filter, search: searchTerm, loadMore: true });
     }
 
@@ -142,36 +125,13 @@ export const CoursesList: FC<CoursesListProps> = ({ emptyMessage, filter, title 
      * Sets the selected course and shows the modal.
      *
      * @param {CourseEntity} course - The course to be selected.
-     * @param {(value: boolean) => void} setShowModal - A function to set the modal visibility.
+     * @param {Href} href - The href to be passed to the modal.
      * @return {void}
      */
-    const handleShowModal = (course: CourseEntity, setShowModal: (value: boolean) => void): void => {
+    const handleShowModal = useCallback((course: CourseEntity, href: Href): void => {
         setSelectedCourse(course);
-        setShowModal(true);
-    }
-
-    /**
-     * HandleHideModal is a function that takes a function as an argument and returns a function that
-     * takes no arguments and returns nothing.
-     *
-     * @param {(value: boolean) => void} setShowModal - A function to set the modal visibility.
-     * @return {void} This function does not return any value.
-     */
-    const handleHideModal = (setShowModal: (value: boolean) => void): void => {
-        setShowModal(false);
-        setSelectedCourse(INIT_COURSE);
-    }
-
-    /**
-     * If the user confirms the delete, then delete the course and close the modal.
-     *
-     * @return {void} This function does not return any value.
-     */
-    const handleDeleteConfirm = (): void => {
-        deleteCourse({
-            onFinish: () => setShowDeleteModal(false)
-        });
-    }
+        router.navigate(href);
+    }, []);
 
     /**
      * Effect to load courses if isFocused is true and if
@@ -187,105 +147,87 @@ export const CoursesList: FC<CoursesListProps> = ({ emptyMessage, filter, title 
     /**
      * Effect to set refresh flag Courses using coursesScreenHistory
      */
-    useFocusEffect(
-        useCallback(() => {
+    useEffect(() => {
+        const focusUnsubscribe = navigation.addListener('focus', () => {
             if (!navigationState) return;
 
             const prevLast = coursesScreenHistory[coursesScreenHistory.length - 2];
             const last = navigationState.routeNames[navigationState.index];
 
             setRefreshCourses(prevLast !== last);
-        }, [ navigationState?.routeNames, navigationState?.index, coursesScreenHistory ])
-    );
+        })
+
+        return focusUnsubscribe;
+    }, []);
 
     /**
-     * Effect to remove lessons of selectedCourse
+     * Effect to set lessons pagination and remove lessons when the screen is focused
+     * and the lessons array is empty
      */
-    useFocusEffect(
-        useCallback(() => {
+    useEffect(() => {
+        const focusUnsubscribe = navigation.addListener('focus', () => {
             if (lessons.length === 0) return;
 
             setLessonsPagination({ from: 0, to: 9 });
             removeLessons();
-        }, [ lessons ])
-    );
+        })
+
+        return focusUnsubscribe;
+    }, []);
 
     return (
-        <>
-            <FlashList
-                centerContent
-                contentContainerStyle={ themeStyles.listContainer }
-                data={ courses }
-                estimatedItemSize={ 256 }
-                keyExtractor={ (item) => `${ filter }-${ item.id }` }
-                ListFooterComponent={
-                    <ListFooterComponent
-                        marginTopPlus={ courses.length === 0 }
-                        showLoader={ isCoursesLoading }
+        <FlashList
+            centerContent
+            contentContainerStyle={ themeStyles.listContainer }
+            data={ courses }
+            estimatedItemSize={ 256 }
+            keyExtractor={ (item) => `${ filter }-${ item.id }` }
+            ListFooterComponent={
+                <ListFooterComponent
+                    marginTopPlus={ courses.length === 0 }
+                    showLoader={ isCoursesLoading }
+                />
+            }
+            ListHeaderComponent={
+                <View style={{ paddingHorizontal: margins.xs, width: '100%' }}>
+                    <Title
+                        containerStyle={{ marginVertical: margins.xs }}
+                        text={ title }
+                        textStyle={{ fontSize: fontSizes.md }}
                     />
-                }
-                ListHeaderComponent={
-                    <View style={{ paddingHorizontal: margins.xs, width: '100%' }}>
-                        <Title
-                            containerStyle={{ marginVertical: margins.xs }}
-                            text={ title }
-                            textStyle={{ fontSize: fontSizes.md }}
-                        />
 
-                        <SearchInput
-                            onClean={ () => handleSearchCourses('') }
-                            onSearch={ handleSearchCourses }
-                            refreshing={ isRefreshing }
-                            searchTerm={ searchTerm }
-                        />
-                    </View>
-                }
-                ListEmptyComponent={
-                    <ListEmptyComponent
-                        msg={ emptyMsg }
-                        showMsg={ !isCoursesLoading && courses.length === 0 }
-                    />
-                }
-                ListHeaderComponentStyle={{ alignSelf: 'flex-start' }}
-                onEndReached={ handleEndReach }
-                onEndReachedThreshold={ 0.5 }
-                overScrollMode="never"
-                refreshControl={
-                    <RefreshControl
-                        onRefresh={ handleRefreshing }
+                    <SearchInput
+                        onClean={ () => handleSearchCourses('') }
+                        onSearch={ handleSearchCourses }
                         refreshing={ isRefreshing }
+                        searchTerm={ searchTerm }
                     />
-                }
-                renderItem={ ({ item }) => (
-                    <CourseCard
-                        course={ item }
-                        onActiveOrSuspend={ () => handleShowModal(item, setShowASModal) }
-                        onDelete={ () => handleShowModal(item, setShowDeleteModal) }
-                        onFinishOrStart={ () => handleShowModal(item, setShowFSModal) }
-                    />
-                ) }
-            />
-
-            {/* Modal to active or suspend course */}
-            <ActiveOrSuspendCourseModal
-                isOpen={ showASModal }
-                onClose={ () => handleHideModal(setShowASModal) }
-            />
-
-            {/* Modal to finish or start again course */}
-            <FinishOrStartCourseModal
-                isOpen={ showFSModal }
-                onClose={ () => handleHideModal(setShowFSModal) }
-            />
-
-            {/* Modal to delete course */}
-            <DeleteModal
-                isLoading={ isCourseDeleting }
-                isOpen={ showDeleteModal }
-                onClose={ () => handleHideModal(setShowDeleteModal) }
-                onConfirm={ handleDeleteConfirm }
-                text={ deleteCourseModalTitle }
-            />
-        </>
+                </View>
+            }
+            ListEmptyComponent={
+                <ListEmptyComponent
+                    msg={ emptyMsg }
+                    showMsg={ !isCoursesLoading && courses.length === 0 }
+                />
+            }
+            ListHeaderComponentStyle={{ alignSelf: 'flex-start' }}
+            onEndReached={ handleEndReach }
+            onEndReachedThreshold={ 0.5 }
+            overScrollMode="never"
+            refreshControl={
+                <RefreshControl
+                    onRefresh={ handleRefreshing }
+                    refreshing={ isRefreshing }
+                />
+            }
+            renderItem={ ({ item }) => (
+                <CourseCard
+                    course={ item }
+                    onActiveOrSuspend={ () => handleShowModal(item, '/(app)/(tabs)/courses/active-or-suspend-course-modal') }
+                    onDelete={ () => handleShowModal(item, '/(app)/(tabs)/courses/delete-course-modal') }
+                    onFinishOrStart={ () => handleShowModal(item, '/(app)/(tabs)/courses/finish-or-start-course-modal') }
+                />
+            ) }
+        />
     );
 }
