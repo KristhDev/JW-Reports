@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { Href, Stack, useRouter } from 'expo-router';
 import { useStyles } from 'react-native-unistyles';
 
@@ -10,12 +9,10 @@ import { useCourses } from '@courses/hooks';
 import { useTranslation } from '@ui/hooks';
 
 export default function CoursesLayout(): JSX.Element {
-    const [ showDeleteCourseModal, setShowDeleteCourseModal ] = useState<boolean>(false);
-
     const router = useRouter();
     const { theme: { colors } } = useStyles();
 
-    const { state: { isCourseDeleting, selectedCourse }, deleteCourse } = useCourses();
+    const { state: { selectedCourse } } = useCourses();
 
     const { translate } = useTranslation();
 
@@ -29,24 +26,6 @@ export default function CoursesLayout(): JSX.Element {
             : translate('forms.actions.add')
     });
 
-    const deleteCourseModalTitle = translate('modals.titles.deleteAsk', {
-        article: 'este',
-        attribute: translate('entities.course')
-    });
-
-    /**
-     * When the user clicks the delete button, the deleteCourse function is called, which sets the
-     * showDeleteCourseModal state to false.
-     *
-     * @return {void} This function does not return anything
-     */
-    const handleDeleteCourse = (onSuccess?: () => void): void => {
-        deleteCourse({
-            onFinish: () => setShowDeleteCourseModal(false),
-            onSuccess
-        });
-    }
-
     /**
      * Navigate to the route specified by the href parameter.
      *
@@ -56,26 +35,6 @@ export default function CoursesLayout(): JSX.Element {
      */
     const handleGoTo = (href: Href): void => {
         router.navigate(href);
-    }
-
-    /**
-     * Dismiss to the route specified by the href parameter.
-     *
-     * @param {Href} href - The route to dismiss to.
-     *
-     * @return {void} This function does not return anything
-     */
-    const handleDismissTo = (href: Href): void => {
-        router.dismissTo(href);
-    }
-
-    /**
-     * Go back to the previous screen in the navigation stack.
-     *
-     * @return {void} This function does not return anything
-     */
-    const handleGoBack = (): void => {
-        router.back();
     }
 
     return (
@@ -105,12 +64,7 @@ export default function CoursesLayout(): JSX.Element {
                         >
                             <HeaderButtons
                                 deleteButton={ true }
-                                deleteModalText={ deleteCourseModalTitle }
-                                isDeleteModalLoading={ isCourseDeleting }
-                                onCloseDeleteModal={ () => setShowDeleteCourseModal(false) }
-                                onConfirmDeleteModal={ () => handleDeleteCourse(handleGoBack) }
-                                onShowDeleteModal={ () => setShowDeleteCourseModal(true) }
-                                showDeleteModal={ showDeleteCourseModal }
+                                onPressDeleteButton={ () => handleGoTo('/(app)/(tabs)/courses/delete-course-modal') }
 
                                 editButton={ !selectedCourse.finished }
                                 onPressEditButton={ () => handleGoTo('/(app)/(tabs)/courses/add-or-edit') }
@@ -138,12 +92,7 @@ export default function CoursesLayout(): JSX.Element {
                         >
                             <HeaderButtons
                                 deleteButton={ selectedCourse.id !== '' }
-                                deleteModalText={ deleteCourseModalTitle }
-                                isDeleteModalLoading={ isCourseDeleting }
-                                onCloseDeleteModal={ () => setShowDeleteCourseModal(false) }
-                                onConfirmDeleteModal={ () => handleDeleteCourse(() => handleDismissTo('/(app)/(tabs)/courses/(tabs)')) }
-                                onShowDeleteModal={ () => setShowDeleteCourseModal(true) }
-                                showDeleteModal={ showDeleteCourseModal }
+                                onPressDeleteButton={ () => handleGoTo('/(app)/(tabs)/courses/delete-course-modal') }
                             />
                         </Header>
                     ),

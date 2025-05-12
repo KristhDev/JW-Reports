@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { Redirect, Stack, useRouter } from 'expo-router';
 import { useStyles } from 'react-native-unistyles';
 
@@ -15,24 +15,12 @@ import { useNetwork, useStatus } from '@shared/hooks';
 import { useTranslation } from '@ui/hooks';
 
 export default function PrecursorLayout(): JSX.Element {
-    const [ showDeletePreachingModal, setShowDeletePreachingModal ] = useState<boolean>(false);
-
-    const { theme: { colors } } = useStyles();
     const router = useRouter();
+    const { theme: { colors } } = useStyles();
 
     const { state: { user } } = useAuth();
 
-    const { 
-        state: {
-            isPreachingDeleting,
-            selectedDate,
-            seletedPreaching
-        }, 
-        deletePreaching,
-        loadPreachings,
-        setSelectedDate
-    } = usePreaching();
-
+    const { state: { selectedDate, seletedPreaching }, loadPreachings, setSelectedDate } = usePreaching();
     const { setNetworkError } = useStatus();
     const { wifi } = useNetwork();
     const { translate } = useTranslation();
@@ -42,24 +30,6 @@ export default function PrecursorLayout(): JSX.Element {
             ? translate('forms.actions.edit')
             : translate('forms.actions.add')
     });
-
-    const deletePreachingModalTitle = translate('modals.titles.deleteAsk', { 
-        article: 'este',
-        attribute: translate('forms.fields.preachingDay'),
-    });
-
-    /**
-     * If the user clicks the delete button, then show the delete modal, and if the user clicks the
-     * confirm button, then delete the preaching.
-     *
-     * @return {void} This function does not return anything
-     */
-    const handleDeleteConfirm = (): void => {
-        deletePreaching({
-            onFinish: () => setShowDeletePreachingModal(false),
-            onSuccess: router.back
-        });
-    }
 
     useEffect(() => {
         setSelectedDate(new Date());
@@ -121,16 +91,21 @@ export default function PrecursorLayout(): JSX.Element {
                         >
                             <HeaderButtons
                                 deleteButton={ seletedPreaching.id !== '' }
-                                deleteModalText={ deletePreachingModalTitle }
-                                isDeleteModalLoading={ isPreachingDeleting }
-                                onCloseDeleteModal={ () => setShowDeletePreachingModal(false) }
-                                onConfirmDeleteModal={ handleDeleteConfirm }
-                                onShowDeleteModal={ () => setShowDeletePreachingModal(true) }
-                                showDeleteModal={ showDeletePreachingModal }
+                                onPressDeleteButton={ () => router.navigate('/(app)/(tabs)/preaching/precursor/delete-preaching-modal') }
                             />
                         </Header>
                     ),
                     title: addOrEditPreachingTitle
+                }}
+            />
+
+            <Stack.Screen 
+                name="delete-preaching-modal"
+                options={{
+                    animation: 'fade',
+                    contentStyle: { backgroundColor: 'transparent' },
+                    headerShown: false,
+                    presentation: 'transparentModal'
                 }}
             />
         </Stack>

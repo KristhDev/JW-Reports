@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { Href, Stack, useRouter } from 'expo-router';
 import { useStyles } from 'react-native-unistyles';
 
@@ -10,12 +9,10 @@ import { useRevisits } from '@revisits/hooks';
 import { useTranslation } from '@ui/hooks';
 
 export default function RevisitsLayout(): JSX.Element {
-    const [ showDeleteModal, setShowDeleteModal ] = useState<boolean>(false);
-
     const router = useRouter();
     const { theme: { colors } } = useStyles();
 
-    const { state: { isRevisitDeleting, selectedRevisit }, deleteRevisit } = useRevisits();
+    const { state: { selectedRevisit } } = useRevisits();
     const { translate } = useTranslation();
 
     const addOrEditRevisitTitleNavigation = translate('navigation.titles.revisit', {
@@ -26,23 +23,6 @@ export default function RevisitsLayout(): JSX.Element {
 
     const revisitDetailTitle = translate('navigation.titles.revisitTo', { name: selectedRevisit.personName });
 
-    const deleteRevisitModalTitle = translate('modals.titles.deleteAsk', {
-        article: 'esta',
-        attribute: translate('forms.fields.revisit')
-    });
-
-    /**
-     * If the user confirms the delete, then delete the revisit and close the modal.
-     *
-     * @return {void} This function does not return anything
-     */
-    const handleDeleteConfirm = (onSuccess?: () => void): void => {
-        deleteRevisit({
-            onFinish: () => setShowDeleteModal(false),
-            onSuccess
-        });
-    }
-
     /**
      * Navigate to the route specified by the href parameter.
      *
@@ -52,26 +32,6 @@ export default function RevisitsLayout(): JSX.Element {
      */
     const handleGoTo = (href: Href): void => {
         router.navigate(href);
-    }
-
-    /**
-     * Dismiss to the route specified by the href parameter.
-     *
-     * @param {Href} href - The route to dismiss to.
-     *
-     * @return {void} This function does not return anything
-     */
-    const handleDismissTo = (href: Href): void => {
-        router.dismissTo(href);
-    }
-
-    /**
-     * Go back to the previous screen in the navigation stack.
-     *
-     * @return {void} This function does not return anything
-     */
-    const handleGoBack = (): void => {
-        router.back();
     }
 
     return (
@@ -101,12 +61,7 @@ export default function RevisitsLayout(): JSX.Element {
                         >
                             <HeaderButtons
                                 deleteButton={ true }
-                                deleteModalText={ deleteRevisitModalTitle }
-                                isDeleteModalLoading={ isRevisitDeleting }
-                                onCloseDeleteModal={ () => setShowDeleteModal(false) }
-                                onConfirmDeleteModal={ () => handleDeleteConfirm(handleGoBack) }
-                                onShowDeleteModal={ () => setShowDeleteModal(true) }
-                                showDeleteModal={ showDeleteModal }
+                                onPressDeleteButton={ () => handleGoTo('/(app)/(tabs)/revisits/delete-revisit-modal') }
 
                                 editButton={ true }
                                 onPressEditButton={ () => handleGoTo('/(app)/(tabs)/revisits/add-or-edit') }
@@ -129,12 +84,7 @@ export default function RevisitsLayout(): JSX.Element {
                         >
                             <HeaderButtons
                                 deleteButton={ selectedRevisit.id !== '' }
-                                deleteModalText={ deleteRevisitModalTitle }
-                                isDeleteModalLoading={ isRevisitDeleting }
-                                onCloseDeleteModal={ () => setShowDeleteModal(false) }
-                                onConfirmDeleteModal={ () => handleDeleteConfirm(() => handleDismissTo('/(app)/(tabs)/revisits/(tabs)')) }
-                                onShowDeleteModal={ () => setShowDeleteModal(true) }
-                                showDeleteModal={ showDeleteModal }
+                                onPressDeleteButton={ () => handleGoTo('/(app)/(tabs)/revisits/delete-revisit-modal') }
 
                                 editButton={ false }
                             />
