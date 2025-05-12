@@ -10,10 +10,5 @@ export interface HeaderButtonsProps {
 
     // Delete props
     deleteButton?: boolean;
-    deleteModalText?: string;
-    isDeleteModalLoading?: boolean;
-    showDeleteModal?: boolean;
-    onShowDeleteModal?: () => void;
-    onCloseDeleteModal?: () => void;
-    onConfirmDeleteModal?: () => void;
+    onPressDeleteButton?: () => void;
 }

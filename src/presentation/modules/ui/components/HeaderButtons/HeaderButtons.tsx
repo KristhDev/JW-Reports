@@ -8,7 +8,7 @@ import Ionicons from '@expo/vector-icons/Ionicons';
 import { timeAdapter } from '@config/di';
 
 /* Screens */
-import { DeleteModal, MonthPickerModal } from '../../screens';
+import { MonthPickerModal } from '../../screens';
 
 /* Components */
 import { Fab } from '../Fab';
@@ -50,12 +50,7 @@ export const HeaderButtons: FC<HeaderButtonsProps> = ({
     onPressEditButton = () => {},
 
     deleteButton = false,
-    deleteModalText = '',
-    isDeleteModalLoading = false,
-    onCloseDeleteModal = () => {},
-    onConfirmDeleteModal = () => {},
-    onShowDeleteModal = () => {},
-    showDeleteModal = false,
+    onPressDeleteButton = () => {},
 }): JSX.Element => {
     const [ showMonthPicker, setShowMonthPicker ] = useState<boolean>(false);
 
@@ -152,7 +147,7 @@ export const HeaderButtons: FC<HeaderButtonsProps> = ({
                                 size={ (fontSizes.lg - 2) }
                             />
                         }
-                        onPress={ onShowDeleteModal }
+                        onPress={ onPressDeleteButton }
                         touchColor={ colors.buttonTransparent }
                     />
                 ) }
@@ -163,14 +158,6 @@ export const HeaderButtons: FC<HeaderButtonsProps> = ({
                 monthDate={ timeAdapter.toISOString(selectedDate) }
                 onClose={ () => setShowMonthPicker(false) }
                 onConfirm={ handleSelectMonthYear }
-            />
-
-            <DeleteModal
-                isLoading={ isDeleteModalLoading }
-                isOpen={ showDeleteModal }
-                onClose={ onCloseDeleteModal }
-                onConfirm={ onConfirmDeleteModal }
-                text={ deleteModalText }
             />
         </>
     );
