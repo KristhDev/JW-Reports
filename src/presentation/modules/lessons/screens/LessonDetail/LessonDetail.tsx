@@ -1,12 +1,9 @@
-import React, { useState } from 'react';
 import { ScrollView, Text, View } from 'react-native';
+import { useRouter } from 'expo-router';
 import { useStyles } from 'react-native-unistyles';
 
 /* DI */
 import { timeAdapter } from '@config/di';
-
-/* Screens */
-import { FinishOrStartLessonModal } from '../FinishOrStartLessonModal';
 
 /* Components */
 import { InfoText, Link, Title } from '@ui/components';
@@ -26,8 +23,7 @@ import { themeStylesheet } from '@theme/styles';
  * @return {JSX.Element} rendered component to show detail of a lesson
  */
 const LessonDetail = (): JSX.Element => {
-    const [ showFSModal, setShowFSModal ] = useState<boolean>(false);
-
+    const router = useRouter();
     const { styles: themeStyles, theme: { fontSizes } } = useStyles(themeStylesheet);
 
     const { state: { selectedCourse } } = useCourses();
@@ -57,91 +53,84 @@ const LessonDetail = (): JSX.Element => {
     const nextVisit = timeAdapter.format(selectedLesson.nextLesson, timeAdapter.formats.LOCALE_LONG_DATE);
 
     return (
-        <>
-            <ScrollView
-                contentContainerStyle={ themeStyles.scrollView }
-                overScrollMode="never"
-                style={{ flex: 1 }}
-            >
+        <ScrollView
+            contentContainerStyle={ themeStyles.scrollView }
+            overScrollMode="never"
+            style={{ flex: 1 }}
+        >
 
-                {/* Title of detail */}
-                <Title
-                    containerStyle={ themeStyles.titleContainer }
-                    text={ title }
-                    textStyle={{ fontSize: fontSizes.md }}
-                />
-
-                {/* Text publication */}
-                <InfoText
-                    containerStyle={ themeStyles.publicationTextContainer }
-                    text={ selectedCourse.publication.toUpperCase() }
-                    textStyle={ themeStyles.publicationText }
-                />
-
-                {/* Lesson status */}
-                <View style={ themeStyles.detailSection }>
-                    <Text
-                        style={{ ...themeStyles.detailSubTitle, marginBottom: 0 }}
-                        testID="lesson-detail-status-text"
-                    >
-                        { lessonStatusText }
-                    </Text >
-
-                    <Link
-                        onPress={ () => setShowFSModal(true) }
-                        testID="lesson-detail-status-text-touchable"
-                        textStyle={ themeStyles.sectionTextSize }
-                    >
-                        { lessonStatusQuestion }
-                    </Link>
-                </View>
-
-                {/* Lesson description */}
-                <View style={ themeStyles.detailSection }>
-                    <Text
-                        style={ themeStyles.detailSubTitle }
-                        testID="lesson-detail-description-subtitle"
-                    >
-                        { analyzedText }
-                    </Text>
-
-                    <Text
-                        style={ themeStyles.detailText }
-                        testID="lesson-detail-description-text"
-                    >
-                        { selectedLesson.description }
-                    </Text>
-                </View>
-
-                {/* Lesson create date */}
-                <View style={ themeStyles.detailSection }>
-                    <Text style={ themeStyles.detailSubTitle }>
-                        { translate('forms.labels.date') }
-                    </Text>
-
-                    <Text
-                        style={ themeStyles.detailText }
-                        testID="lesson-detail-next-visit-text"
-                    >
-                        { nextVisit }
-                    </Text>
-                </View>
-
-                <View style={ themeStyles.createdAtContainer }>
-                    <Text
-                        style={ themeStyles.createdAtText }
-                        testID="lesson-detail-date-created-text"
-                    >
-                        { timeAdapter.format(selectedLesson.createdAt, timeAdapter.formats.LOCALE_SHORT_DATE) }
-                    </Text>
-                </View>
-            </ScrollView>
-
-            <FinishOrStartLessonModal
-                isOpen={ showFSModal }
-                onClose={ () => setShowFSModal(false) }
+            {/* Title of detail */}
+            <Title
+                containerStyle={ themeStyles.titleContainer }
+                text={ title }
+                textStyle={{ fontSize: fontSizes.md }}
             />
-        </>
+
+            {/* Text publication */}
+            <InfoText
+                containerStyle={ themeStyles.publicationTextContainer }
+                text={ selectedCourse.publication.toUpperCase() }
+                textStyle={ themeStyles.publicationText }
+            />
+
+            {/* Lesson status */}
+            <View style={ themeStyles.detailSection }>
+                <Text
+                    style={{ ...themeStyles.detailSubTitle, marginBottom: 0 }}
+                    testID="lesson-detail-status-text"
+                >
+                    { lessonStatusText }
+                </Text >
+
+                <Link
+                    onPress={ () => router.navigate('/(app)/(tabs)/courses/lessons/finish-or-start-lesson-modal') }
+                    testID="lesson-detail-status-text-touchable"
+                    textStyle={ themeStyles.sectionTextSize }
+                >
+                    { lessonStatusQuestion }
+                </Link>
+            </View>
+
+            {/* Lesson description */}
+            <View style={ themeStyles.detailSection }>
+                <Text
+                    style={ themeStyles.detailSubTitle }
+                    testID="lesson-detail-description-subtitle"
+                >
+                    { analyzedText }
+                </Text>
+
+                <Text
+                    style={ themeStyles.detailText }
+                    testID="lesson-detail-description-text"
+                >
+                    { selectedLesson.description }
+                </Text>
+            </View>
+
+            {/* Lesson create date */}
+            <View style={ themeStyles.detailSection }>
+                <Text style={ themeStyles.detailSubTitle }>
+                    { translate('forms.labels.date') }
+                </Text>
+
+                <Text
+                    style={ themeStyles.detailText }
+                    testID="lesson-detail-next-visit-text"
+                >
+                    { nextVisit }
+                </Text>
+            </View>
+
+            <View style={ themeStyles.createdAtContainer }>
+                <Text
+                    style={ themeStyles.createdAtText }
+                    testID="lesson-detail-date-created-text"
+                >
+                    { timeAdapter.format(selectedLesson.createdAt, timeAdapter.formats.LOCALE_SHORT_DATE) }
+                </Text>
+            </View>
+        </ScrollView>
     );
 }
 
