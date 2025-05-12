@@ -685,11 +685,38 @@
     },
 
     "pdf": {
+        "fileNames": {
+            "preaching": "Preaching_Reports_of_{{name}}",
+            "courses": "Courses_of_{{name}}",
+            "revisits": "Revisits_of_{{name}}"
+        },
+
         "titles": {
+            "preachings": "Preaching Reports of {{name}}",
+            "courses": "Courses of {{name}}",
             "revisits": "Revisits of {{name}}"
         },
 
+        "headers": {
+            "hoursCompleted": "Hours Completed",
+            "minutesRemaining": "Minutes Remaining",
+            "month": "Month",
+            "year": "Year"
+        },
+
         "lables": {
+            "courses": {
+                "status": "Status:",
+                "information": "Information:",
+                "address": "Address:",
+                "publication": "Publication:",
+                "lessons": "Lessons:"
+            },
+
+            "lessons": {
+                "lesson": "Lesson:"
+            },
+
             "revisits": {
                 "visitMade": "Visit made:",
                 "information": "Information:",
@@ -701,6 +728,11 @@
 
         "alts": {
             "image": "Image providing more information from {{name}}."
+        },
+
+        "status": {
+            "taught": "Taught",
+            "pending": "Pending"
         }
     },
 

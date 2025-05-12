@@ -684,11 +684,38 @@
     },
 
     "pdf": {
+        "fileNames": {
+            "preaching": "Informes_de_Predicación_de_{{name}}",
+            "courses": "Cursos_de_{{name}}",
+            "revisits": "Revisitas_de_{{name}}"
+        },
+
         "titles": {
+            "preachings": "Informes de Predicación de {{name}}",
+            "courses": "Cursos de {{name}}",
             "revisits": "Revisitas de {{name}}"
         },
 
+        "headers": {
+            "hoursCompleted": "Horas Completadas",
+            "minutesRemaining": "Minutos Sobrantes",
+            "month": "Mes",
+            "year": "Año"
+        },
+
         "lables": {
+            "courses": {
+                "status": "Estado:",
+                "information": "Información:",
+                "address": "Dirección:",
+                "publication": "Publicación:",
+                "lessons": "Clases:"
+            },
+
+            "lessons": {
+                "lesson": "Clase:"
+            },
+
             "revisits": {
                 "visitMade": "Visita realizada:",
                 "information": "Información:",
@@ -700,6 +727,11 @@
 
         "alts": {
             "image": "Imagen que aporta más información de {{name}}."
+        },
+
+        "status": {
+            "taught": "Impartida",
+            "pending": "Pendiente"
         }
     },
 
