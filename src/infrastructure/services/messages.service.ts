@@ -7,12 +7,14 @@ import {
     AuthMessages,
     CoursesMessages,
     EmailMessages,
+    ExpoMessages,
     LessonsMessages,
     NetworkMessages,
     PermissionsMessages,
     PreachingMessages,
     PrecursorMessages,
-    RevisitsMessages
+    RevisitsMessages,
+    SupabaseMessages
 } from '@infrastructure/interfaces';
 
 export class MessagesService implements MessagesServiceContract {
@@ -235,6 +237,36 @@ export class MessagesService implements MessagesServiceContract {
 
             REPORT_ERROR_FAILED: this.translationAdapter.translate('messages.email.reportErrorFailed'),
             REPORT_ERROR_SUCCESS: this.translationAdapter.translate('messages.email.reportErrorSuccess'),
+        }
+    }
+
+    public get expoMessages(): ExpoMessages {
+        return {
+            picker: {
+                E_CAMERA_IS_NOT_AVAILABLE: this.translationAdapter.translate('expo.errors.picker.cameraIsNotAvailable'),
+                E_CANNOT_LAUNCH_CAMERA: this.translationAdapter.translate('expo.errors.picker.cannotLaunchCamera'),
+                E_CANNOT_PROCESS_VIDEO: this.translationAdapter.translate('expo.errors.picker.cannotProcessVideo'),
+                E_CANNOT_SAVE_IMAGE: this.translationAdapter.translate('expo.errors.picker.cannotSaveImage'),
+                E_ERROR_WHILE_CLEANING_FILES: this.translationAdapter.translate('expo.errors.picker.errorWhileCleaningFiles'),
+                E_FAILED_TO_OPEN_CAMERA: this.translationAdapter.translate('expo.errors.picker.failedToOpenCamera'),
+                E_FAILED_TO_SHOW_PICKER: this.translationAdapter.translate('expo.errors.picker.failedToShowPicker'),
+                E_NO_CAMERA_PERMISSION: this.translationAdapter.translate('expo.errors.picker.noCameraPermission'),
+                E_NO_IMAGE_DATA_FOUND: this.translationAdapter.translate('expo.errors.picker.noImageDataFound'),
+                E_NO_LIBRARY_PERMISSION: this.translationAdapter.translate('expo.errors.picker.noLibraryPermission'),
+                E_PICKER_CANCELLED: this.translationAdapter.translate('expo.errors.picker.pickerCancelled'),
+            },
+
+            voiceRecorder: {
+                aborted: this.translationAdapter.translate('expo.errors.voiceRecorder.aborted'),
+                'audio-capture': this.translationAdapter.translate('expo.errors.voiceRecorder.audioCapture'),
+                'bad-grammar': this.translationAdapter.translate('expo.errors.voiceRecorder.badGrammar'),
+                busy: this.translationAdapter.translate('expo.errors.voiceRecorder.busy'),
+                'language-not-supported': this.translationAdapter.translate('expo.errors.voiceRecorder.languageNotSupported'),
+                network: this.translationAdapter.translate('expo.errors.voiceRecorder.network'),
+                'no-speech': this.translationAdapter.translate('expo.errors.voiceRecorder.noSpeech'),
+                'not-allowed': this.translationAdapter.translate('expo.errors.voiceRecorder.notAllowed'),
+                'speech-timeout': this.translationAdapter.translate('expo.errors.voiceRecorder.speechTimeout'),
+            },
         }
     }
 
@@ -478,6 +510,70 @@ export class MessagesService implements MessagesServiceContract {
                 attribute: this.translationAdapter.translate('forms.fields.revisit'),
                 article: 'la',
             }),
+        }
+    }
+
+    public get supabaseMessages(): SupabaseMessages {
+        return {
+            auth: {
+                'bad_code_verifier': this.translationAdapter.translate('supabase.errors.auth.badCodeVerifier'),
+                'bad_json': this.translationAdapter.translate('supabase.errors.auth.badJson'),
+                'bad_jwt': this.translationAdapter.translate('supabase.errors.auth.badJwt'),
+                'email_address_not_authorized': this.translationAdapter.translate('supabase.errors.auth.emailAddressNotAuthorized'),
+                'email_conflict_identity_not_deletable': this.translationAdapter.translate('supabase.errors.auth.emailConflictIdentityNotDeletable'),
+                'email_exists': this.translationAdapter.translate('supabase.errors.auth.emailExists'),
+                'email_not_confirmed': this.translationAdapter.translate('supabase.errors.auth.emailNotConfirmed'),
+                'email_provider_disabled': this.translationAdapter.translate('supabase.errors.auth.emailProviderDisabled'),
+                'flow_state_expired': this.translationAdapter.translate('supabase.errors.auth.flowStateExpired'),
+                'invalid_credentials': this.translationAdapter.translate('supabase.errors.auth.invalidCredentials'),
+                'no_authorization': this.translationAdapter.translate('supabase.errors.auth.noAuthorization'),
+                'not_admin': this.translationAdapter.translate('supabase.errors.auth.notAdmin'),
+                'same_password': this.translationAdapter.translate('supabase.errors.auth.samePassword'),
+                'session_not_found': this.translationAdapter.translate('supabase.errors.auth.sessionNotFound'),
+                'sms_send_failed': this.translationAdapter.translate('supabase.errors.auth.smsSendFailed'),
+                'user_already_exists': this.translationAdapter.translate('supabase.errors.auth.userAlreadyExists'),
+                'user_banned': this.translationAdapter.translate('supabase.errors.auth.userBanned'),
+                'user_not_found': this.translationAdapter.translate('supabase.errors.auth.userNotFound'),
+                'validation_failed': this.translationAdapter.translate('supabase.errors.auth.validationFailed'),
+            },
+
+            postgres: {
+                'PGRST003': this.translationAdapter.translate('supabase.errors.postgres.pgrst003'),
+                'PGRST100': this.translationAdapter.translate('supabase.errors.postgres.pgrst100'),
+                'PGRST102': this.translationAdapter.translate('supabase.errors.postgres.pgrst102'),
+                'PGRST103': this.translationAdapter.translate('supabase.errors.postgres.pgrst103'),
+                'PGRST108': this.translationAdapter.translate('supabase.errors.postgres.pgrst108'),
+                'PGRST112': this.translationAdapter.translate('supabase.errors.postgres.pgrst112'),
+                'PGRST116': this.translationAdapter.translate('supabase.errors.postgres.pgrst116'),
+                'PGRST300': this.translationAdapter.translate('supabase.errors.postgres.pgrst300'),
+                'PGRST301': this.translationAdapter.translate('supabase.errors.postgres.pgrst301'),
+                'PGRST302': this.translationAdapter.translate('supabase.errors.postgres.pgrst302'),
+            },
+
+            storage: {
+                'NoSuchBucket': this.translationAdapter.translate('supabase.errors.storage.noSuchBucket'),
+                'NoSuchUpload': this.translationAdapter.translate('supabase.errors.storage.noSuchUpload'),
+                'InvalidJWT': this.translationAdapter.translate('supabase.errors.storage.invalidJWT'),
+                'InvalidRequest': this.translationAdapter.translate('supabase.errors.storage.invalidRequest'),
+                'TenantNotFound': this.translationAdapter.translate('supabase.errors.storage.tenantNotFound'),
+                'EntityTooLarge': this.translationAdapter.translate('supabase.errors.storage.entityTooLarge'),
+                'ResourceAlreadyExists': this.translationAdapter.translate('supabase.errors.storage.resourceAlreadyExists'),
+                'InvalidBucketName': this.translationAdapter.translate('supabase.errors.storage.invalidBucketName'),
+                'InvalidRange': this.translationAdapter.translate('supabase.errors.storage.invalidRange'),
+                'InvalidMimeType': this.translationAdapter.translate('supabase.errors.storage.invalidMimeType'),
+                'InvalidUploadId': this.translationAdapter.translate('supabase.errors.storage.invalidUploadId'),
+                'BucketAlreadyExists': this.translationAdapter.translate('supabase.errors.storage.bucketAlreadyExists'),
+                'InvalidSignature': this.translationAdapter.translate('supabase.errors.storage.invalidSignature'),
+                'SignatureDoesNotMatch': this.translationAdapter.translate('supabase.errors.storage.signatureDoesNotMatch'),
+                'AccessDenied': this.translationAdapter.translate('supabase.errors.storage.accessDenied'),
+                'ResourceLocked': this.translationAdapter.translate('supabase.errors.storage.resourceLocked'),
+                'MissingContentLength': this.translationAdapter.translate('supabase.errors.storage.missingContentLength'),
+                'MissingParameter': this.translationAdapter.translate('supabase.errors.storage.missingParameter'),
+                'InvalidUploadSignature': this.translationAdapter.translate('supabase.errors.storage.invalidUploadSignature'),
+                'LockTimeout': this.translationAdapter.translate('supabase.errors.storage.lockTimeout'),
+                'MissingPart': this.translationAdapter.translate('supabase.errors.storage.missingPart'),
+                'SlowDown': this.translationAdapter.translate('supabase.errors.storage.slowDown'),
+            }
         }
     }
 }
