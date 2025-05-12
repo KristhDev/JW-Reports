@@ -102,8 +102,8 @@ const useAuth = () => {
             setUser(token, user);
         }
         catch (error) {
-            setError(error);
             handleClearStore();
+            setError(error);
         }
         finally {
             setIsAuthLoading(false);
