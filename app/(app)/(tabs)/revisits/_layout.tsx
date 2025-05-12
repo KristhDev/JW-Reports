@@ -143,6 +143,36 @@ export default function RevisitsLayout(): JSX.Element {
                     title: addOrEditRevisitTitleNavigation
                 }}
             />
+
+            <Stack.Screen 
+                name="revisit-modal"
+                options={{
+                    animation: 'fade',
+                    contentStyle: { backgroundColor: 'transparent' },
+                    headerShown: false,
+                    presentation: 'transparentModal'
+                }}
+            />
+
+            <Stack.Screen 
+                name="pass-to-course-modal"
+                options={{
+                    animation: 'fade',
+                    contentStyle: { backgroundColor: 'transparent' },
+                    headerShown: false,
+                    presentation: 'transparentModal'
+                }}
+            />
+
+            <Stack.Screen 
+                name="delete-revisit-modal"
+                options={{
+                    animation: 'fade',
+                    contentStyle: { backgroundColor: 'transparent' },
+                    headerShown: false,
+                    presentation: 'transparentModal'
+                }}
+            />
         </Stack>
     );
 }
