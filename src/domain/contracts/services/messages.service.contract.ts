@@ -3,12 +3,14 @@ import {
     AuthMessages,
     CoursesMessages,
     EmailMessages,
+    ExpoMessages,
     LessonsMessages,
     NetworkMessages,
     PermissionsMessages,
     PreachingMessages,
     PrecursorMessages,
-    RevisitsMessages
+    RevisitsMessages,
+    SupabaseMessages
 } from '@infrastructure/interfaces';
 
 export abstract class MessagesServiceContract {
@@ -16,10 +18,12 @@ export abstract class MessagesServiceContract {
     public abstract get authMessages(): AuthMessages;
     public abstract get coursesMessages(): CoursesMessages;
     public abstract get emailMessages(): EmailMessages;
+    public abstract get expoMessages(): ExpoMessages;
     public abstract get lessonsMessages(): LessonsMessages;
     public abstract get networkMessages(): NetworkMessages;
     public abstract get permissionsMessages(): PermissionsMessages;
     public abstract get preachingMessages(): PreachingMessages;
     public abstract get precursorMessages(): PrecursorMessages;
     public abstract get revisitsMessages(): RevisitsMessages;
+    public abstract get supabaseMessages(): SupabaseMessages;
 }
