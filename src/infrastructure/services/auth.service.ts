@@ -14,6 +14,9 @@ import { UserEntity } from '@domain/entities';
 /* Errors */
 import { RequestError } from '@domain/errors';
 
+/* Mappers */
+import { UserMapper } from '@domain/mappers';
+
 /* Interfaces */
 import { UserEndpoint } from '@infrastructure/interfaces';
 
@@ -36,7 +39,7 @@ export class AuthService implements AuthServiceContract {
             );
         }
 
-        const userEntity = UserEntity.fromEndpoint({
+        const userEntity = UserMapper.userEndpointToUserEntity({
             ...result.data.user!.user_metadata,
             id: result.data.user!.id,
             email: result.data.user!.email,
@@ -89,7 +92,7 @@ export class AuthService implements AuthServiceContract {
             );
         }
 
-        const user = UserEntity.fromEndpoint({
+        const user = UserMapper.userEndpointToUserEntity({
             ...result.data.user!.user_metadata!,
             id: result.data.user.id,
             email: result.data.user.email!,
@@ -206,7 +209,7 @@ export class AuthService implements AuthServiceContract {
 
         const userEndpoint = result.data.user;
 
-        const user = UserEntity.fromEndpoint({
+        const user = UserMapper.userEndpointToUserEntity({
             ...userEndpoint!.user_metadata!,
             id: userEndpoint.id,
             email: userEndpoint.email!,

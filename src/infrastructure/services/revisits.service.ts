@@ -16,6 +16,9 @@ import { RevisitEntity } from '@domain/entities';
 /* Errors */
 import { RequestError } from '@domain/errors';
 
+/* Mappers */
+import { RevisitMapper } from '@domain/mappers';
+
 /* Interfaces */
 import { PaginateOptions, RevisitEndpoint } from '@infrastructure/interfaces';
 import { RevisitFilter } from '@revisits/interfaces';
@@ -46,7 +49,7 @@ export class RevisitsService implements RevisitsServiceContract {
             );
         }
 
-        return RevisitEntity.fromEndpoint(result.data);
+        return RevisitMapper.revisitEndpointToRevisitEntity(result.data);
     }
 
     /**
@@ -69,7 +72,7 @@ export class RevisitsService implements RevisitsServiceContract {
             );
         }
 
-        return RevisitEntity.fromEndpoint(result.data);
+        return RevisitMapper.revisitEndpointToRevisitEntity(result.data);
     }
 
     /**
@@ -136,7 +139,7 @@ export class RevisitsService implements RevisitsServiceContract {
             );
         }
 
-        return result.data.map(RevisitEntity.fromEndpoint);
+        return result.data.map(RevisitMapper.revisitEndpointToRevisitEntity);
     }
 
     /**
@@ -161,7 +164,7 @@ export class RevisitsService implements RevisitsServiceContract {
             );
         }
 
-        return result.data.map(RevisitEntity.fromEndpoint);
+        return result.data.map(RevisitMapper.revisitEndpointToRevisitEntity);
     }
 
     /**
@@ -186,7 +189,9 @@ export class RevisitsService implements RevisitsServiceContract {
             );
         }
 
-        return (result.data && result.data?.length > 0) ? RevisitEntity.fromEndpoint(result.data[0]) : INIT_REVISIT;
+        return (result.data && result.data?.length > 0) 
+            ? RevisitMapper.revisitEndpointToRevisitEntity(result.data[0])
+            : INIT_REVISIT;
     }
 
     /**
@@ -213,6 +218,6 @@ export class RevisitsService implements RevisitsServiceContract {
             );
         }
 
-        return RevisitEntity.fromEndpoint(result.data);
+        return RevisitMapper.revisitEndpointToRevisitEntity(result.data);
     }
 }

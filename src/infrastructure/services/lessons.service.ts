@@ -17,6 +17,9 @@ import { LessonEntity, LessonWithCourseEntity } from '@domain/entities';
 /* Errors */
 import { RequestError } from '@domain/errors';
 
+/* Mappers */
+import { LessonMapper, LessonWithCourseMapper } from '@domain/mappers';
+
 /* Interfaces */
 import { PaginateOptions, LessonEndpoint, LessonWithCourseEndpoint } from '@infrastructure/interfaces';
 
@@ -40,7 +43,7 @@ export class LessonsService implements LessonsServiceContract {
             );
         }
 
-        return LessonEntity.fromEndpoint(result.data);
+        return LessonMapper.lessonEndpointToLessonEntity(result.data);
     }
 
     /**
@@ -104,7 +107,7 @@ export class LessonsService implements LessonsServiceContract {
             );
         }
 
-        return LessonEntity.fromEndpoint(result.data);
+        return LessonMapper.lessonEndpointToLessonEntity(result.data);
     }
 
     /**
@@ -135,7 +138,7 @@ export class LessonsService implements LessonsServiceContract {
             );
         }
 
-        return result.data.map(LessonEntity.fromEndpoint);
+        return result.data.map(LessonMapper.lessonEndpointToLessonEntity);
     }
 
     /**
@@ -159,7 +162,7 @@ export class LessonsService implements LessonsServiceContract {
         }
 
         return (result.data && result.data.length > 0)
-            ? LessonWithCourseEntity.fromEndpoint(result.data[0])
+            ? LessonWithCourseMapper.lessonWithCourseEndpointToLessonWithCourseEntity(result.data[0])
             : { ...INIT_LESSON, course: INIT_COURSE };
     }
 
@@ -186,6 +189,6 @@ export class LessonsService implements LessonsServiceContract {
             );
         }
 
-        return LessonEntity.fromEndpoint(result.data);
+        return LessonMapper.lessonEndpointToLessonEntity(result.data);
     }
 }

@@ -2,6 +2,7 @@
 import { supabase } from '@config/supabase';
 
 /* Contracts */
+import { TimeAdapterContract } from '@domain/contracts/adapters';
 import { PreachingServiceContract } from '@domain/contracts/services';
 
 /* Errors */
@@ -13,9 +14,11 @@ import { CreatePreachingDto, UpdatePreachingDto } from '@domain/dtos';
 /* Entities */
 import { PreachingEntity } from '@domain/entities';
 
+/* Mappers */
+import { PreachingMapper } from '@domain/mappers';
+
 /* Interfaces */
 import { PreachingEndpoint } from '@infrastructure/interfaces';
-import { TimeAdapterContract } from '@domain/contracts/adapters';
 
 export class PreachingService implements PreachingServiceContract {
     constructor(
@@ -43,7 +46,7 @@ export class PreachingService implements PreachingServiceContract {
             );
         }
 
-        return PreachingEntity.fromEndpoint(result.data);
+        return PreachingMapper.preachingEndpointToPreachingEntity(result.data);
     }
 
     /**
@@ -97,7 +100,7 @@ export class PreachingService implements PreachingServiceContract {
             );
         }
 
-        return result.data.map(PreachingEntity.fromEndpoint);
+        return result.data.map(PreachingMapper.preachingEndpointToPreachingEntity);
     }
 
     /**
@@ -122,7 +125,7 @@ export class PreachingService implements PreachingServiceContract {
             );
         }
 
-        return result.data.map(PreachingEntity.fromEndpoint);
+        return result.data.map(PreachingMapper.preachingEndpointToPreachingEntity);
     }
 
     /**
@@ -150,6 +153,6 @@ export class PreachingService implements PreachingServiceContract {
             );
         }
 
-        return PreachingEntity.fromEndpoint(result.data);
+        return PreachingMapper.preachingEndpointToPreachingEntity(result.data);
     }
 }

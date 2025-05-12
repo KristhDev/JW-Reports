@@ -13,6 +13,9 @@ import { CourseEntity, CourseWithLessonsEntity } from '@domain/entities';
 /* Errors */
 import { RequestError } from '@domain/errors';
 
+/* Mappers */
+import { CourseMapper, CourseWithLessonsMapper } from '@domain/mappers';
+
 /* Interfaces */
 import { CourseEndpoint, PaginateOptions } from '@infrastructure/interfaces';
 import { CourseFilter } from '@courses/interfaces';
@@ -42,7 +45,7 @@ export class CoursesService implements CoursesServiceContract {
             );
         }
 
-        return CourseEntity.fromEndpoint(result.data);
+        return CourseMapper.courseEndpointToCourseEntity(result.data);
     }
 
     /**
@@ -65,7 +68,7 @@ export class CoursesService implements CoursesServiceContract {
             );
         }
 
-        return CourseEntity.fromEndpoint(result.data);
+        return CourseMapper.courseEndpointToCourseEntity(result.data);
     }
 
     /**
@@ -115,7 +118,7 @@ export class CoursesService implements CoursesServiceContract {
             );
         }
 
-        return CourseEntity.fromEndpoint(result.data);
+        return CourseMapper.courseEndpointToCourseEntity(result.data);
     }
 
     /**
@@ -159,7 +162,7 @@ export class CoursesService implements CoursesServiceContract {
             );
         }
 
-        return result.data.map(CourseEntity.fromEndpoint);
+        return result.data.map(CourseMapper.courseEndpointToCourseEntity);
     }
 
     /**
@@ -184,7 +187,7 @@ export class CoursesService implements CoursesServiceContract {
             );
         }
 
-        return result.data.map(CourseWithLessonsEntity.fromEndpoint);
+        return result.data.map(CourseWithLessonsMapper.courseWithLessonsEndpointToCourseWithLessonsEntity);
     }
 
     /**
@@ -233,6 +236,6 @@ export class CoursesService implements CoursesServiceContract {
             );
         }
 
-        return CourseEntity.fromEndpoint(result.data);
+        return CourseMapper.courseEndpointToCourseEntity(result.data);
     }
 }
