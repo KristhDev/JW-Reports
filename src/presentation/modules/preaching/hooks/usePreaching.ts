@@ -1,5 +1,13 @@
 /* DI */
-import { externalStorageAdapter, pdfAdapter, timeAdapter, preachingService, preachingReportService, messagesService } from '@config/di';
+import {
+    externalStorageAdapter,
+    pdfAdapter,
+    timeAdapter,
+    preachingService,
+    preachingReportService,
+    messagesService,
+    pdfPreachingsTemplateService
+} from '@config/di';
 
 /* Features */
 import { useAppDispatch, useAppSelector } from '@application/store';
@@ -23,12 +31,10 @@ import { CreatePreachingDto, UpdatePreachingDto } from '@domain/dtos';
 /* Entities */
 import { PreachingEntity } from '@domain/entities';
 
-/* Templates */
-import { PdfPreachingsTemplate } from '@domain/templates';
-
 /* Hooks */
 import { useAuth } from '@auth/hooks';
 import { useNetwork, useStatus } from '@shared/hooks';
+import { useTranslation } from '@ui/hooks';
 
 /* Interfaces */
 import { PreachingFormValues } from '../interfaces';
@@ -49,6 +55,7 @@ const usePreaching = () => {
     const { isAuthenticated } = useAuth();
     const { setStatus, setError } = useStatus();
     const { hasWifiConnection } = useNetwork();
+    const { translate } = useTranslation();
 
     const addPreaching = (preaching: PreachingEntity) => dispatch(addPreachingAction({ preaching }));
     const removePreaching = (id: string) => dispatch(removePreachingAction({ id }));
@@ -161,8 +168,8 @@ const usePreaching = () => {
             const preachingsGrouped = preachingReportService.groupByMonthAndYear(allPreachings);
             const reportsPreaching = preachingsGrouped.map(preachingReportService.generatePreachingReportForExport);
 
-            const fileName = `Informes_de_Predicación_de_${ user.name }_${ user.surname }`;
-            const preachingsTemplate = PdfPreachingsTemplate.generate({ fullName: `${ user.name } ${ user.surname }`, reports: reportsPreaching });
+            const fileName = translate('pdf.fileNames.preaching', { name: `${ user.name }_${ user.surname }` });
+            const preachingsTemplate = pdfPreachingsTemplateService.generate({ fullName: `${ user.name } ${ user.surname }`, reports: reportsPreaching });
 
             const pdfPath = await pdfAdapter.writeFromHTML({ fileName, html: preachingsTemplate, width: 480 });
             await externalStorageAdapter.moveFileOfInternalExtorage({ filePath: pdfPath, mimeType: 'application/pdf' });

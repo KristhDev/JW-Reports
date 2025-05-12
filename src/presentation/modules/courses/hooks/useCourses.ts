@@ -1,5 +1,12 @@
 /* Config */
-import { externalStorageAdapter, pdfAdapter, coursesService, lessonsService, messagesService } from '@config/di';
+import {
+    externalStorageAdapter,
+    pdfAdapter,
+    coursesService,
+    lessonsService,
+    messagesService,
+    pdfCoursesTemplateService
+} from '@config/di';
 
 /* Constants */
 import { precursors } from '@application/constants/utils';
@@ -36,13 +43,11 @@ import { ActiveOrSuspendCourseDto, CreateCourseDto, FinishOrStartCourseDto, Upda
 /* Entities */
 import { CourseEntity, LessonWithCourseEntity } from '@domain/entities';
 
-/* Templates */
-import { PdfCoursesTemplate } from '@domain/templates';
-
 /* Hooks */
 import { useAuth } from '@auth/hooks';
 import { useLessons } from '@lessons/hooks';
 import { useStatus, useNetwork } from '@shared/hooks';
+import { useTranslation } from '@ui/hooks';
 
 /* Interfaces */
 import { CourseFilter, CourseFormValues, loadCoursesOptions } from '../interfaces';
@@ -64,6 +69,7 @@ const useCourses = () => {
     const { isAuthenticated } = useAuth();
     const { setStatus, setError } = useStatus();
     const { loadLastLesson } = useLessons();
+    const { translate } = useTranslation();
 
     const addCourse = (course: CourseEntity) => dispatch(addCourseAction({ course }));
     const addCourses = (courses: CourseEntity[]) => dispatch(addCoursesAction({ courses }));
@@ -251,12 +257,12 @@ const useCourses = () => {
         try {
             const allCourses = await coursesService.getAllByUserId(user.id);
 
-            const coursesTemplate = PdfCoursesTemplate.generate({
+            const coursesTemplate = pdfCoursesTemplateService.generate({
                 courses: allCourses,
                 fullName: `${ user.name } ${ user.surname }`,
             });
 
-            const fileName = `Cursos_de_${ user.name }_${ user.surname }`;
+            const fileName = translate('pdf.fileNames.courses', { name: `${ user.name }_${ user.surname }` });
             const pdfPath = await pdfAdapter.writeFromHTML({ fileName, html: coursesTemplate, width: 480 });
 
             await externalStorageAdapter.moveFileOfInternalExtorage({

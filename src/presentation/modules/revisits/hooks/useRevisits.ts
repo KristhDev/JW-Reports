@@ -1,6 +1,6 @@
 /* Config */
 import { env } from '@config/env';
-import { externalStorageAdapter, messagesService, pdfAdapter, revisitsService } from '@config/di';
+import { externalStorageAdapter, messagesService, pdfAdapter, revisitsService, pdfRevisitsTemplateService } from '@config/di';
 
 /* Constants */
 import { precursors } from '@application/constants/utils';
@@ -37,12 +37,10 @@ import { CompleteRevisitDto, CreateRevisitDto, UpdateRevisitDto } from '@domain/
 /* Entities */
 import { RevisitEntity } from '@domain/entities';
 
-/* Templates */
-import { PdfRevisitsTemplate } from '@domain/templates';
-
 /* Hooks */
 import { useAuth } from '@auth/hooks';
 import { useImage, useNetwork, useStatus } from '@shared/hooks';
+import { useTranslation } from '@ui/hooks';
 
 /* Interfaces */
 import { loadRevisitsOptions, RevisitFilter, SaveRevisitOptions, UpdateRevisitOptions } from '../interfaces';
@@ -64,6 +62,7 @@ const useRevisits = () => {
     const { uploadImage, deleteImage } = useImage();
     const { setStatus, setError } = useStatus();
     const { hasWifiConnection } = useNetwork();
+    const { translate } = useTranslation();
 
     const addRevisit = (revisit: RevisitEntity) => dispatch(addRevisitAction({ revisit }));
     const addRevisits = (revisits: RevisitEntity[]) => dispatch(addRevisitsAction({ revisits }));
@@ -212,12 +211,12 @@ const useRevisits = () => {
         try {
             const allRevisits = await revisitsService.getAllByUserId(user.id);
 
-            const revisitsTemplate = await PdfRevisitsTemplate.generate({
+            const revisitsTemplate = await pdfRevisitsTemplateService.generate({
                 fullName: `${ user.name } ${ user.surname }`,
                 revisits: allRevisits
             });
 
-            const fileName = `Revisitas_de_${ user.name }_${ user.surname }`;
+            const fileName = translate('pdf.fileNames.revisits', { name: `${ user.name }_${ user.surname }` });
             const pdfPath = await pdfAdapter.writeFromHTML({ fileName, html: revisitsTemplate, width: 480 });
 
             await externalStorageAdapter.moveFileOfInternalExtorage({
