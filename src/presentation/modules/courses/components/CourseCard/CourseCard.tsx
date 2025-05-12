@@ -1,4 +1,4 @@
-import React, { FC, useState } from 'react';
+import React, { FC, memo, useState } from 'react';
 import { Pressable, Text, View } from 'react-native';
 import { Menu, MenuOption, MenuOptions, MenuTrigger } from 'react-native-popup-menu';
 import { useRouter } from 'expo-router';
@@ -34,7 +34,7 @@ import { themeStylesheet } from '@theme/styles';
  * @param {() => void} props.onFinishOrStart The function to finish or start again the course
  * @return {JSX.Element} The JSX element representing the course card
  */
-export const CourseCard: FC<CourseCardProps> = ({ course, onActiveOrSuspend, onDelete, onFinishOrStart }): JSX.Element => {
+export const CourseCard = memo<CourseCardProps>(({ course, onActiveOrSuspend, onDelete, onFinishOrStart }): JSX.Element => {
     const [ isOpen, setIsOpen ] = useState<boolean>(false);
 
     const router = useRouter();
@@ -84,7 +84,7 @@ export const CourseCard: FC<CourseCardProps> = ({ course, onActiveOrSuspend, onD
             nextLesson: new Date().toString()
         });
 
-        router.navigate('/(app)/(tabs)/courses/add-or-edit-lesson');
+        router.navigate('/(app)/(tabs)/courses/lessons/add-or-edit');
     }
 
     /**
@@ -240,4 +240,4 @@ export const CourseCard: FC<CourseCardProps> = ({ course, onActiveOrSuspend, onD
             </View>
         </Pressable>
     );
-}
+});
