@@ -22,7 +22,7 @@ export class VoiceRecorderAdapter implements VoiceRecorderAdapterContract {
     constructor(
         private readonly messagesService: MessagesServiceContract
     ) {
-        this.appMessages = messagesService.appMessages;
+        this.appMessages = this.messagesService.appMessages;
     }
 
     /**
