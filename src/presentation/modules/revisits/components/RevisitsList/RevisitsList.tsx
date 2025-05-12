@@ -1,19 +1,11 @@
 import React, { FC, useCallback, useEffect, useState } from 'react';
 import { RefreshControl, View } from 'react-native';
 import { FlashList } from '@shopify/flash-list';
-import { useFocusEffect, useNavigation, useRouter } from 'expo-router';
+import { Href, useNavigation, useRouter } from 'expo-router';
 import { useStyles } from 'react-native-unistyles';
-
-/* Features */
-import { INIT_REVISIT } from '@application/features/revisits';
 
 /* Entities */
 import { RevisitEntity } from '@domain/entities';
-
-/* Screens */
-import { PassToCourseModal } from '@courses/screens';
-import { RevisitModal } from '@revisits/screens';
-import { DeleteModal } from '@ui/screens';
 
 /* Components */
 import { RevisitCard } from '@revisits/components';
@@ -46,10 +38,6 @@ export const RevisitsList: FC<RevisitsListProps> = ({ emptyMessage, filter, titl
     const [ searchTerm, setSearchTerm ] = useState<string>('');
     const [ isRefreshing, setIsRefreshing ] = useState<boolean>(false);
 
-    const [ showRevisitModal, setShowRevisitModal ] = useState<boolean>(false);
-    const [ showPassModal, setShowPassModal ] = useState<boolean>(false);
-    const [ showDeleteModal, setShowDeleteModal ] = useState<boolean>(false);
-
     const router = useRouter();
     const { styles: themeStyles, theme: { fontSizes, margins } } = useStyles(themeStylesheet);
 
@@ -59,13 +47,11 @@ export const RevisitsList: FC<RevisitsListProps> = ({ emptyMessage, filter, titl
     const {
         state: {
             hasMoreRevisits,
-            isRevisitDeleting,
             isRevisitsLoading,
             refreshRevisits,
             revisits,
             revisitsScreenHistory
         },
-        deleteRevisit,
         removeRevisits,
         setRefreshRevisits,
         setRevisitsPagination,
@@ -82,11 +68,6 @@ export const RevisitsList: FC<RevisitsListProps> = ({ emptyMessage, filter, titl
     });
 
     const emptyMsg = (searchTerm.trim().length > 0) ? noFoundResultsMsg : emptyMessage;
-
-    const deleteRevisitModalTitle = translate('modals.titles.deleteAsk', {
-        article: 'esta',
-        attribute: translate('forms.fields.revisit')
-    });
 
     /**
      * When the user refreshes the page, the search term is reset, the pagination is reset, the
@@ -147,36 +128,10 @@ export const RevisitsList: FC<RevisitsListProps> = ({ emptyMessage, filter, titl
      * @param {(setShowModal: (value: boolean) => void)} setShowModal - (value: boolean) => void
      * @return {void} This function does not return any value
      */
-    const handleShowModal = (revisit: RevisitEntity, setShowModal: (value: boolean) => void): void => {
+    const handleShowModal = useCallback((revisit: RevisitEntity, href: Href): void => {
         setSelectedRevisit(revisit);
-        setShowModal(true);
-    }
-
-    /**
-     * HandleHideModal is a function that takes a function as an argument and returns a function that
-     * takes no arguments and returns nothing.
-     *
-     * @param {(setShowModal: (value: boolean) => void)} setShowModal - (value: boolean) => void
-     * @return {void} This function does not return any value
-     */
-    const handleHideModal = (setShowModal: (value: boolean) => void): void => {
-        setShowModal(false);
-        setSelectedRevisit({
-            ...INIT_REVISIT,
-            nextVisit: new Date().toString()
-        });
-    }
-
-    /**
-     * If the user confirms the delete, then delete the revisit and close the modal.
-     *
-     * @return {void} - This function does not return any value
-     */
-    const handleDeleteConfirm = (): void => {
-        deleteRevisit({
-            onFinish: () => setShowDeleteModal(false)
-        });
-    }
+        router.navigate(href);
+    }, []);
 
     /**
      * Effect to refresh revisits if isFocused is true and if
@@ -192,95 +147,74 @@ export const RevisitsList: FC<RevisitsListProps> = ({ emptyMessage, filter, titl
     /**
      * Effect to set refresh flag Revisits using revisitsScreenHistory
      */
-    useFocusEffect(
-        useCallback(() => {
+    useEffect(() => {
+        const focusSubscription = navigation.addListener('focus', () => {
             if (!navigationState) return;
 
             const prevLast = revisitsScreenHistory[revisitsScreenHistory.length - 2];
             const last = navigationState.routeNames[navigationState.index];
 
             setRefreshRevisits(prevLast !== last);
-        }, [ navigationState?.routeNames, navigationState?.index, revisitsScreenHistory ])
-    );
+        })
+
+        return focusSubscription;
+    }, []);
 
     return (
-        <>
-            <FlashList
-                centerContent
-                contentContainerStyle={ themeStyles.listContainer }
-                data={ revisits }
-                estimatedItemSize={ 256 }
-                keyExtractor={ (item) => `${ filter }-${ item.id }` }
-                ListFooterComponent={
-                    <ListFooterComponent
-                        marginTopPlus={ revisits.length === 0 }
-                        showLoader={ isRevisitsLoading }
+        <FlashList
+            centerContent
+            contentContainerStyle={ themeStyles.listContainer }
+            data={ revisits }
+            estimatedItemSize={ 256 }
+            keyExtractor={ (item) => `${ filter }-${ item.id }` }
+            ListFooterComponent={
+                <ListFooterComponent
+                    marginTopPlus={ revisits.length === 0 }
+                    showLoader={ isRevisitsLoading }
+                />
+            }
+            ListHeaderComponent={
+                <View style={{ paddingHorizontal: margins.xs, width: '100%' }}>
+                    <Title
+                        containerStyle={{ marginVertical: margins.xs }}
+                        text={ title }
+                        textStyle={{ fontSize: fontSizes.md }}
                     />
-                }
-                ListHeaderComponent={
-                    <View style={{ paddingHorizontal: margins.xs, width: '100%' }}>
-                        <Title
-                            containerStyle={{ marginVertical: margins.xs }}
-                            text={ title }
-                            textStyle={{ fontSize: fontSizes.md }}
-                        />
 
-                        <SearchInput
-                            onClean={ () => handleSearchRevisits('') }
-                            onSearch={ handleSearchRevisits }
-                            searchTerm={ searchTerm }
-                            refreshing={ isRefreshing }
-                        />
-                    </View>
-                }
-                ListEmptyComponent={
-                    <ListEmptyComponent
-                        msg={ emptyMsg }
-                        showMsg={ !isRevisitsLoading && revisits.length === 0 }
-                    />
-                }
-                ListHeaderComponentStyle={{ alignSelf: 'flex-start' }}
-                onEndReached={ handleEndReach }
-                onEndReachedThreshold={ 0.5 }
-                overScrollMode="never"
-                refreshControl={
-                    <RefreshControl
-                        onRefresh={ handleRefreshing }
+                    <SearchInput
+                        onClean={ () => handleSearchRevisits('') }
+                        onSearch={ handleSearchRevisits }
+                        searchTerm={ searchTerm }
                         refreshing={ isRefreshing }
                     />
-                }
-                renderItem={ ({ item }) => (
-                    <RevisitCard
-                        onDelete={ () => handleShowModal(item, setShowDeleteModal) }
-                        onNavigateDetail={ () => router.navigate('/(app)/(tabs)/revisits/detail') }
-                        onNavigateEdit={ () => router.navigate('/(app)/(tabs)/revisits/add-or-edit') }
-                        onPass={ () => handleShowModal(item, setShowPassModal) }
-                        onRevisit={ () => handleShowModal(item, setShowRevisitModal) }
-                        revisit={ item }
-                    />
-                ) }
-            />
-
-            {/* Modal to complete revisit */}
-            <RevisitModal
-                isOpen={ showRevisitModal }
-                onClose={ () => handleHideModal(setShowRevisitModal) }
-            />
-
-            {/* Modal for pass revisit to course */}
-            <PassToCourseModal
-                isOpen={ showPassModal }
-                onClose={ () => handleHideModal(setShowPassModal) }
-            />
-
-            {/* Modal to delete revisit */}
-            <DeleteModal
-                isLoading={ isRevisitDeleting }
-                isOpen={ showDeleteModal }
-                onClose={ () => handleHideModal(setShowDeleteModal) }
-                onConfirm={ handleDeleteConfirm }
-                text={ deleteRevisitModalTitle }
-            />
-        </>
+                </View>
+            }
+            ListEmptyComponent={
+                <ListEmptyComponent
+                    msg={ emptyMsg }
+                    showMsg={ !isRevisitsLoading && revisits.length === 0 }
+                />
+            }
+            ListHeaderComponentStyle={{ alignSelf: 'flex-start' }}
+            onEndReached={ handleEndReach }
+            onEndReachedThreshold={ 0.5 }
+            overScrollMode="never"
+            refreshControl={
+                <RefreshControl
+                    onRefresh={ handleRefreshing }
+                    refreshing={ isRefreshing }
+                />
+            }
+            renderItem={ ({ item }) => (
+                <RevisitCard
+                    onDelete={ () => handleShowModal(item, '/(app)/(tabs)/revisits/delete-revisit-modal') }
+                    onNavigateDetail={ () => router.navigate('/(app)/(tabs)/revisits/detail') }
+                    onNavigateEdit={ () => router.navigate('/(app)/(tabs)/revisits/add-or-edit') }
+                    onPass={ () => handleShowModal(item, '/(app)/(tabs)/revisits/pass-to-course-modal') }
+                    onRevisit={ () => handleShowModal(item, '/(app)/(tabs)/revisits/revisit-modal') }
+                    revisit={ item }
+                />
+            ) }
+        />
     );
 }
