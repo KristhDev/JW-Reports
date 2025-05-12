@@ -35,7 +35,7 @@ const Lessons = (): JSX.Element => {
      * @return {void} This function does not return anything
      */
     const handleNavigate = (): void => {
-        router.navigate('/(app)/(tabs)/courses/add-or-edit-lesson');
+        router.navigate('/(app)/(tabs)/courses/lessons/add-or-edit');
     }
 
     useFocusEffect(
