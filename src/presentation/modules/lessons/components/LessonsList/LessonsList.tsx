@@ -2,17 +2,10 @@ import React, { useEffect, useState } from 'react';
 import { RefreshControl, View } from 'react-native';
 import { FlashList } from '@shopify/flash-list';
 import { useStyles } from 'react-native-unistyles';
-import { useRouter } from 'expo-router';
-
-/* Features */
-import { INIT_LESSON } from '@application/features/lessons';
+import { Href, useRouter } from 'expo-router';
 
 /* Entities */
 import { LessonEntity } from '@domain/entities';
-
-/* Screens */
-import { FinishOrStartLessonModal } from '../../screens';
-import { DeleteModal } from '@ui/screens';
 
 /* Components */
 import { ListEmptyComponent, ListFooterComponent, SearchInput, Title } from '@ui/components';
@@ -35,8 +28,6 @@ import { themeStylesheet } from '@theme/styles';
 export const LessonsList = (): JSX.Element => {
     const [ searchTerm, setSearchTerm ] = useState<string>('');
     const [ isRefreshing, setIsRefreshing ] = useState<boolean>(false);
-    const [ showDeleteModal, setShowDeleteModal ] = useState<boolean>(false);
-    const [ showFSModal, setShowFSModal ] = useState<boolean>(false);
 
     const router = useRouter();
     const { styles: themeStyles, theme: { fontSizes, margins } } = useStyles(themeStylesheet);
@@ -46,11 +37,9 @@ export const LessonsList = (): JSX.Element => {
     const {
         state: {
             hasMoreLessons,
-            isLessonDeleting,
             isLessonsLoading,
             lessons
         },
-        deleteLesson,
         removeLessons,
         setLessonsPagination,
         setSelectedLesson,
@@ -71,11 +60,6 @@ export const LessonsList = (): JSX.Element => {
 
     const theReNoLessonsMsg = translate('screens.lessons.messages.theReNoLessons');
     const emptyMsg = (searchTerm.trim().length > 0 && lessons.length === 0) ? noFoundResultsMsg : theReNoLessonsMsg
-
-    const deleteLessonModalTitle = translate('modals.titles.deleteAsk', {
-        article: 'esta',
-        attribute: translate('forms.fields.lesson')
-    });
 
     /**
      * When the user refreshes the page, reset the search term, reset the pagination, remove the
@@ -119,7 +103,7 @@ export const LessonsList = (): JSX.Element => {
      * @return {void} This function does not return any value.
      */
     const handleEndReach = (): void => {
-        if (!hasMoreLessons || isLessonsLoading || !wifi.hasConnection) return;
+        if (!hasMoreLessons || lessons.length === 0 || isLessonsLoading || !wifi.hasConnection) return;
         loadLessons({ search: searchTerm, loadMore: true });
     }
 
@@ -128,40 +112,12 @@ export const LessonsList = (): JSX.Element => {
      * returns nothing.
      *
      * @param {LessonEntity} lesson - LessonEntity - this is the lesson that was clicked on
-     * @param {(setShowModal: (value: boolean) => void)} setShowModal The function to set the modal visibility.
+     * @param {Href} href - Href - this is the href to navigate to
      * @return {void} This function does not return any value.
      */
-    const handleShowModal = (lesson: LessonEntity, setShowModal: (value: boolean) => void): void => {
+    const handleShowModal = (lesson: LessonEntity, href: Href): void => {
         setSelectedLesson(lesson);
-        setShowModal(true);
-    }
-
-    /**
-     * HandleHideModal is a function that takes a function as an argument and returns a function that
-     * takes no arguments and returns nothing.
-     *
-     * @param {(setShowModal: (value: boolean) => void)} setShowModal The function to set the modal visibility.
-     * @return {void} This function does not return any value.
-     */
-    const handleHideModal = (setShowModal: (value: boolean) => void): void => {
-        setShowModal(false);
-        setSelectedLesson({
-            ...INIT_LESSON,
-            nextLesson: new Date().toString()
-        });
-    }
-
-
-    /**
-     * Handles the delete confirmation by calling the deleteLesson function with a boolean value of false,
-     * and then hides the delete modal by calling setShowDeleteModal with a boolean value of false.
-     *
-     * @return {void} - This function does not return any value.
-     */
-    const handleDeleteConfirm = (): void => {
-        deleteLesson({
-            onFinish: () => setShowDeleteModal(false)
-        });
+        router.navigate(href);
     }
 
     /**
@@ -173,76 +129,59 @@ export const LessonsList = (): JSX.Element => {
     }, [ searchTerm ]);
 
     return (
-        <>
-            <FlashList
-                centerContent
-                contentContainerStyle={ themeStyles.listContainer }
-                data={ lessons }
-                estimatedItemSize={ 256 }
-                keyExtractor={ (item) => item.id }
-                ListFooterComponent={
-                    <ListFooterComponent
-                        marginTopPlus={ lessons.length === 0 }
-                        showLoader={ isLessonsLoading }
+        <FlashList
+            centerContent
+            contentContainerStyle={ themeStyles.listContainer }
+            data={ lessons }
+            estimatedItemSize={ 256 }
+            keyExtractor={ (item) => item.id }
+            ListFooterComponent={
+                <ListFooterComponent
+                    marginTopPlus={ lessons.length === 0 }
+                    showLoader={ isLessonsLoading }
+                />
+            }
+            ListHeaderComponent={
+                <View style={{ paddingHorizontal: margins.xs, width: '100%' }}>
+                    <Title
+                        containerStyle={{ marginVertical: margins.xs }}
+                        text={ title }
+                        textStyle={{ fontSize: fontSizes.md }}
                     />
-                }
-                ListHeaderComponent={
-                    <View style={{ paddingHorizontal: margins.xs, width: '100%' }}>
-                        <Title
-                            containerStyle={{ marginVertical: margins.xs }}
-                            text={ title }
-                            textStyle={{ fontSize: fontSizes.md }}
-                        />
 
-                        <SearchInput
-                            onClean={ () => setSearchTerm('') }
-                            onSearch={ setSearchTerm }
-                            refreshing={ isRefreshing }
-                            searchTerm={ searchTerm }
-                        />
-                    </View>
-                }
-                ListEmptyComponent={
-                    <ListEmptyComponent
-                        msg={ emptyMsg }
-                        showMsg={ !isLessonsLoading && lessons.length === 0 }
-                    />
-                }
-                ListHeaderComponentStyle={{ alignSelf: 'flex-start' }}
-                onEndReached={ handleEndReach }
-                onEndReachedThreshold={ 0.5 }
-                overScrollMode="never"
-                refreshControl={
-                    <RefreshControl
-                        onRefresh={ handleRefreshing }
+                    <SearchInput
+                        onClean={ () => setSearchTerm('') }
+                        onSearch={ setSearchTerm }
                         refreshing={ isRefreshing }
+                        searchTerm={ searchTerm }
                     />
-                }
-                renderItem={ ({ item }) => (
-                    <LessonCard
-                        lesson={ item }
-                        onDelete={ () => handleShowModal(item, setShowDeleteModal) }
-                        onFinish={ () => handleShowModal(item, setShowFSModal) }
-                        onNavigateDetail={ () => router.navigate('/(app)/(tabs)/courses/lesson-detail') }
-                        onNavigateEdit={ () => router.navigate('/(app)/(tabs)/courses/add-or-edit-lesson') }
-                    />
-                ) }
-            />
-
-            {/* Modal to finish or start again lesson */}
-            <FinishOrStartLessonModal
-                isOpen={ showFSModal }
-                onClose={ () => handleHideModal(setShowFSModal) }
-            />
-
-            {/* Modal to delete lesson */}
-            <DeleteModal
-                isLoading={ isLessonDeleting }
-                isOpen={ showDeleteModal }
-                onClose={ () => handleHideModal(setShowDeleteModal) }
-                onConfirm={ handleDeleteConfirm }
-                text={ deleteLessonModalTitle }
-            />
-        </>
+                </View>
+            }
+            ListEmptyComponent={
+                <ListEmptyComponent
+                    msg={ emptyMsg }
+                    showMsg={ !isLessonsLoading && lessons.length === 0 }
+                />
+            }
+            ListHeaderComponentStyle={{ alignSelf: 'flex-start' }}
+            onEndReached={ handleEndReach }
+            onEndReachedThreshold={ 0.5 }
+            overScrollMode="never"
+            refreshControl={
+                <RefreshControl
+                    onRefresh={ handleRefreshing }
+                    refreshing={ isRefreshing }
+                />
+            }
+            renderItem={ ({ item }) => (
+                <LessonCard
+                    lesson={ item }
+                    onDelete={ () => handleShowModal(item, '/(app)/(tabs)/courses/lessons/delete-lesson-modal') }
+                    onFinish={ () => handleShowModal(item, '/(app)/(tabs)/courses/lessons/finish-or-start-lesson-modal') }
+                    onNavigateDetail={ () => router.navigate('/(app)/(tabs)/courses/lessons/detail') }
+                    onNavigateEdit={ () => router.navigate('/(app)/(tabs)/courses/lessons/add-or-edit') }
+                />
+            ) }
+        />
     );
 }
