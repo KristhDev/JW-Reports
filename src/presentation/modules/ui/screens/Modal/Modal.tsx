@@ -28,7 +28,6 @@ const Modal: FC<ModalProps> = ({ children, isOpen }): JSX.Element => {
             <View style={ styles.container }>
                 <KeyboardAwareScrollView
                     contentContainerStyle={ styles.keyboardContent }
-                    overScrollMode="never"
                 >
                     { children }
                 </KeyboardAwareScrollView>
