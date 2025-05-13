@@ -5,9 +5,11 @@ export type HeaderProps = {
     onBackButtonPress?: () => void;
     showTitle?: boolean;
     title?: string;
+    subtitle?: string;
     showBackButton?: boolean;
     style?: StyleProp<ViewStyle>;
     titleStyle?: StyleProp<TextStyle>;
+    subtitleStyle?: StyleProp<TextStyle>;
 } | {
     backButtonColor?: string;
     onBackButtonPress?: () => void;
@@ -15,5 +17,7 @@ export type HeaderProps = {
     showTitle: true;
     style?: StyleProp<ViewStyle>;
     title: string;
+    subtitle?: string;
     titleStyle?: StyleProp<TextStyle>;
+    subtitleStyle?: StyleProp<TextStyle>;
 }

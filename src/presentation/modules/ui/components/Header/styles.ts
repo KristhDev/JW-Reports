@@ -15,11 +15,20 @@ export const stylesheet = createStyleSheet(({ colors, fontSizes, margins }) => (
         flexDirection: 'row',
     },
 
+    headerTitleTextContainer: {
+        flex: 1,
+        marginLeft: margins.xs,
+        maxWidth: '80%'
+    },
+
     headerTitle: {
         color: colors.text,
         fontSize: fontSizes.sm + 4,
         fontWeight: '500',
-        marginLeft: margins.xs,
-        maxWidth: '80%',
+    },
+
+    headerSubtitle: {
+        color: colors.modalText,
+        fontSize: fontSizes.sm - 2,
     },
 }));

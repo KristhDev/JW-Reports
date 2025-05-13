@@ -12,7 +12,18 @@ import { HeaderProps } from './interfaces';
 /* Styles */
 import { stylesheet } from './styles';
 
-export const Header: FC<PropsWithChildren<HeaderProps>> = ({ backButtonColor, children, onBackButtonPress, showBackButton, showTitle, style, title, titleStyle }): JSX.Element => {
+export const Header: FC<PropsWithChildren<HeaderProps>> = ({
+    backButtonColor,
+    children,
+    onBackButtonPress,
+    showBackButton,
+    showTitle,
+    style,
+    title,
+    titleStyle,
+    subtitle,
+    subtitleStyle
+}): JSX.Element => {
     const router = useRouter();
     const { styles } = useStyles(stylesheet);
 
@@ -32,12 +43,23 @@ export const Header: FC<PropsWithChildren<HeaderProps>> = ({ backButtonColor, ch
                 ) }
 
                 { (showTitle) && (
-                    <Text 
-                        numberOfLines={ 1 }
-                        style={[ styles.headerTitle, titleStyle ]}
-                    >
-                        { title }
-                    </Text>
+                    <View style={ styles.headerTitleTextContainer }>
+                        <Text 
+                            numberOfLines={ 1 }
+                            style={[ styles.headerTitle, titleStyle ]}
+                        >
+                            { title }
+                        </Text>
+
+                        { (subtitle) && (
+                            <Text
+                                style={[ styles.headerSubtitle, subtitleStyle ]}
+                                numberOfLines={ 1 }
+                            >
+                                { subtitle }
+                            </Text>
+                        ) }
+                    </View>
                 ) }
             </View>
 
