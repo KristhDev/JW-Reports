@@ -38,7 +38,7 @@ export default function RevisitsLayout(): JSX.Element {
         <Stack
             screenOptions={{
                 animation: 'ios_from_right',
-                contentStyle: { backgroundColor: colors.contentHeader },
+                contentStyle: { backgroundColor: colors.background },
                 headerShadowVisible: false,
                 headerStyle: { backgroundColor: colors.header },
                 headerTintColor: colors.headerText

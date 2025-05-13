@@ -1,7 +1,7 @@
-import { useCallback } from 'react';
+import { useEffect, useMemo } from 'react';
 import { createMaterialTopTabNavigator, MaterialTopTabNavigationEventMap, MaterialTopTabNavigationOptions } from '@react-navigation/material-top-tabs';
 import { ParamListBase, TabNavigationState } from '@react-navigation/native';
-import { useFocusEffect, withLayoutContext } from 'expo-router';
+import { useNavigation, withLayoutContext } from 'expo-router';
 import { useStyles } from 'react-native-unistyles';
 
 import { revisitsFilters } from '@application/constants/utils';
@@ -21,40 +21,49 @@ export const TopTabs = withLayoutContext<
 >(Navigator);
 
 export default function RevisitsTopTabsLauyout(): JSX.Element {
+    const navigation = useNavigation();
     const { theme: { colors } } = useStyles();
 
     const { setSelectedRevisit } = useRevisits();
     const { translate } = useTranslation();
 
-    useFocusEffect(
-        useCallback(() => {
+    const sceneStyle = useMemo(() => ({ backgroundColor: colors.background }), [ colors.background ]);
+
+    const tabBarStyle = useMemo(() => ({
+        backgroundColor: colors.contentHeader,
+        borderBottomWidth: 1,
+        borderBottomColor: colors.borderTopTab,
+        elevation: 0
+    }), [ colors.contentHeader, colors.borderTopTab ]);
+
+    const tabBarIndicatorStyle = useMemo(() => ({
+        backgroundColor: colors.button,
+        height: 4
+    }), [ colors.button ]);
+
+    useEffect(() => {
+        const focusUnsubscribe = navigation.addListener('focus', () => {
             setSelectedRevisit({
                 ...INIT_REVISIT,
                 nextVisit: new Date().toString(),
             });
-        }, [])
-    );
+        });
+
+        return focusUnsubscribe;
+    }, []);
 
     return (
         <TopTabs
-            overScrollMode="never"
             screenOptions={ ({ navigation }) => ({
-                sceneStyle: { backgroundColor: colors.contentHeader },
+                sceneStyle,
                 tabBarActiveTintColor: colors.button,
                 tabBarPressColor: (navigation.isFocused()) ? colors.buttonTranslucent : colors.buttonTransparent,
-                tabBarStyle: {
-                    backgroundColor: colors.contentHeader,
-                    borderBottomWidth: 1,
-                    borderBottomColor: colors.header
-                },
+                tabBarStyle,
                 tabBarLabelStyle: {
                     fontWeight: (navigation.isFocused()) ? 'bold' : 'normal'
                 },
                 tabBarInactiveTintColor: colors.headerText,
-                tabBarIndicatorStyle: {
-                    backgroundColor: colors.button,
-                    height: 3
-                }
+                tabBarIndicatorStyle
             }) }
         >
             <TopTabs.Screen

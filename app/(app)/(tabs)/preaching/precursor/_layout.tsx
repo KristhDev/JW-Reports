@@ -2,6 +2,9 @@ import { useEffect } from 'react';
 import { Redirect, Stack, useRouter } from 'expo-router';
 import { useStyles } from 'react-native-unistyles';
 
+/* Config */
+import { timeAdapter } from '@config/di';
+
 /* Constants */
 import { precursors } from '@application/constants/utils';
 
@@ -67,6 +70,7 @@ export default function PrecursorLayout(): JSX.Element {
                             showTitle
                             style={{ justifyContent: 'space-between' }}
                             title={ options.title }
+                            subtitle={ timeAdapter.format(selectedDate, timeAdapter.formats.MONTH_NAME) }
                         >
                             <HeaderButtons
                                 logoutButton

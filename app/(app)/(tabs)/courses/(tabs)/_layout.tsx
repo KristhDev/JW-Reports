@@ -1,8 +1,8 @@
 import { useWindowDimensions } from 'react-native';
-import { useCallback } from 'react';
+import { useEffect, useMemo } from 'react';
 import { createMaterialTopTabNavigator, MaterialTopTabNavigationEventMap, MaterialTopTabNavigationOptions } from '@react-navigation/material-top-tabs';
 import { ParamListBase, TabNavigationState } from '@react-navigation/native';
-import { useFocusEffect, withLayoutContext } from 'expo-router';
+import { useNavigation, withLayoutContext } from 'expo-router';
 import { useStyles } from 'react-native-unistyles';
 
 /* Constants */
@@ -23,41 +23,52 @@ export const TopTabs = withLayoutContext<
 
 export default function CoursesTopTabsLauyout(): JSX.Element {
     const { width } = useWindowDimensions();
+    const navigation = useNavigation();
     const { theme: { colors } } = useStyles();
 
     const { state: { selectedCourse }, setSelectedCourse } = useCourses();
     const { translate } = useTranslation();
 
-    useFocusEffect(
-        useCallback(() => {
+    const sceneStyle = useMemo(() => ({ backgroundColor: colors.background }), [ colors.background ]);
+
+    const tabBarStyle = useMemo(() => ({
+        backgroundColor: colors.contentHeader,
+        borderBottomWidth: 1,
+        borderBottomColor: colors.borderTopTab,
+        elevation: 0
+    }), [ colors.contentHeader, colors.borderTopTab ]);
+
+    const tabBarItemStyle = useMemo(() => ({
+        width: width / 3
+    }), [ width ]);
+
+    const tabBarIndicatorStyle = useMemo(() => ({
+        backgroundColor: colors.button,
+        height: 4
+    }), [ colors.button ]);
+
+    useEffect(() => {
+        const focusUnsubscribe = navigation.addListener('focus', () => {
             setSelectedCourse(selectedCourse);
-        }, [])
-    );
+        });
+
+        return focusUnsubscribe;
+    }, []);
 
     return (
         <TopTabs
-            overScrollMode="never"
             screenOptions={ ({ navigation }) => ({
-                sceneStyle: { backgroundColor: colors.contentHeader },
+                sceneStyle,
                 tabBarActiveTintColor: colors.button,
                 tabBarInactiveTintColor: colors.headerText,
-                tabBarIndicatorStyle: {
-                    backgroundColor: colors.button,
-                    height: 3
-                },
-                tabBarItemStyle: {
-                    width: width / 3
-                },
+                tabBarIndicatorStyle,
+                tabBarItemStyle,
                 tabBarLabelStyle: {
                     fontWeight: (navigation.isFocused()) ? 'bold' : 'normal'
                 },
                 tabBarPressColor: (navigation.isFocused()) ? colors.buttonTranslucent : colors.buttonTransparent,
                 tabBarScrollEnabled: true,
-                tabBarStyle: {
-                    backgroundColor: colors.contentHeader,
-                    borderBottomColor: colors.header,
-                    borderBottomWidth: 1
-                },
+                tabBarStyle
             }) }
         >
             <TopTabs.Screen

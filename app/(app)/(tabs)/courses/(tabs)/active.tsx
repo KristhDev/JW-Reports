@@ -3,7 +3,7 @@ import { useLocalSearchParams } from 'expo-router';
 /* Modules */
 import { Courses, CoursesProps } from '@courses/screens';
 
-export default function ActiveCoursesScreen({ segment }: { segment: string }): JSX.Element {
-    const params = useLocalSearchParams<CoursesProps>();
-    return (<Courses { ...params } segment={ segment } />);
+export default function ActiveCoursesScreen(): JSX.Element {
+    const params = useLocalSearchParams<Omit<CoursesProps, 'renderFab'>>();
+    return (<Courses { ...params } />);
 }

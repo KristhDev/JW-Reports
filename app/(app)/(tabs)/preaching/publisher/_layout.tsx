@@ -40,7 +40,7 @@ export default function PublisherLayout(): JSX.Element {
             : translate('forms.actions.add')
     });
 
-    const lessonDetailModalTitle = translate('navigation.titles.lessonWith', {
+    const lessonDetailSubtitleNavigation = translate('navigation.titles.courseTo', {
         name: selectedCourse.personName
     });
 
@@ -130,6 +130,7 @@ export default function PublisherLayout(): JSX.Element {
                             showTitle
                             style={{ justifyContent: 'space-between' }}
                             title={ options.title }
+                            subtitle={ lessonDetailSubtitleNavigation }
                         >
                             <HeaderButtons
                                 deleteButton={ true }
@@ -140,7 +141,7 @@ export default function PublisherLayout(): JSX.Element {
                             />
                         </Header>
                     ),
-                    title: lessonDetailModalTitle
+                    title: translate('navigation.titles.courseLesson')
                 }}
             />
 

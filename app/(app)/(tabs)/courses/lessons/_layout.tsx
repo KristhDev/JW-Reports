@@ -22,8 +22,8 @@ export default function LessonsStackLayout(): JSX.Element {
             : translate('forms.actions.add')
     });
 
-    const lessonDetailTitleNavigation = translate('navigation.titles.lessonWith', {
-        person: selectedCourse.personName
+    const lessonDetailSubtitleNavigation = translate('navigation.titles.courseTo', {
+        name: selectedCourse.personName
     });
 
     /**
@@ -41,7 +41,7 @@ export default function LessonsStackLayout(): JSX.Element {
         <Stack
             screenOptions={{
                 animation: 'ios_from_right',
-                contentStyle: { backgroundColor: colors.contentHeader },
+                contentStyle: { backgroundColor: colors.background },
                 headerShadowVisible: false,
                 headerStyle: { backgroundColor: colors.header },
                 headerTintColor: colors.headerText
@@ -55,6 +55,7 @@ export default function LessonsStackLayout(): JSX.Element {
                             showBackButton
                             showTitle
                             title={ options.title }
+                            subtitle={ lessonDetailSubtitleNavigation }
                         />
                     ),
                     title: translate('navigation.titles.lessons')
@@ -90,6 +91,7 @@ export default function LessonsStackLayout(): JSX.Element {
                             showTitle
                             style={{ justifyContent: 'space-between' }}
                             title={ options.title }
+                            subtitle={ lessonDetailSubtitleNavigation }
                         >
                             <HeaderButtons
                                 deleteButton={ true }
@@ -100,7 +102,7 @@ export default function LessonsStackLayout(): JSX.Element {
                             />
                         </Header>
                     ),
-                    title: lessonDetailTitleNavigation
+                    title: translate('navigation.titles.courseLesson'),
                 }}
             />
 
