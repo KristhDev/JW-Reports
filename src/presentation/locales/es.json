@@ -6,6 +6,7 @@
             "courses": "Cursos",
             "home": "Inicio",
             "lesson": "{{action}} clase",
+            "courseLesson": "Clase",
             "lessons": "Clases",
             "lessonWith": "Clase con {{name}}",
             "preaching": "{{action}} predicación",
@@ -22,16 +23,16 @@
 
     "topTabs": {
         "courses": {
-            "all": "Todos",
-            "active": "Activos",
-            "suspended": "Suspendidos",
-            "finished": "Terminados"
+            "all": "TODOS",
+            "active": "ACTIVOS",
+            "suspended": "SUSPENDIDOS",
+            "finished": "TERMINADOS"
         },
 
         "revisits": {
-            "all": "Todas",
-            "visited": "Visitadas",
-            "unvisited": "Por Visitar"
+            "all": "TODAS",
+            "visited": "VISITADAS",
+            "unvisited": "POR VISITAR"
         }
     },
 
@@ -312,8 +313,8 @@
             "titles": {
                 "addLesson": "AGREGAR CLASE AL CURSO",
                 "editLesson": "EDITAR CLASE DEL CURSO",
-                "courseLessonWith": "CLASE DEL CURSO CON {{person}}",
-                "courseLessonsWith": "CLASES DEL CURSO CON {{person}}"
+                "courseLessonWith": "CLASE CON {{person}}",
+                "courseLessonsWith": "CLASES CON {{person}}"
             },
 
             "messages": {

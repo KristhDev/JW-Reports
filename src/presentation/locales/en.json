@@ -4,6 +4,7 @@
             "course": "{{action}} course",
             "courseTo": "Course to {{name}}",
             "courses": "Courses",
+            "courseLesson": "Lesson",
             "home": "Home",
             "lesson": "{{action}} lesson",
             "lessons": "Lessons",
@@ -22,16 +23,16 @@
 
     "topTabs": {
         "courses": {
-            "all": "All",
-            "active": "Active",
-            "suspended": "Suspended",
-            "finished": "Finished"
+            "all": "ALL",
+            "active": "ACTIVE",
+            "suspended": "SUSPENDED",
+            "finished": "FINISHED"
         },
 
         "revisits": {
-            "all": "All",
-            "visited": "Visited",
-            "unvisited": "Unvisited"
+            "all": "ALL",
+            "visited": "VISITED",
+            "unvisited": "UNVISITED"
         }
     },
 
@@ -313,8 +314,8 @@
             "titles": {
                 "addLesson": "ADD LESSON TO COURSE",
                 "editLesson": "EDIT LESSON OF THE COURSE",
-                "courseLessonWith": "COURSE LESSON WITH {{person}}",
-                "courseLessonsWith": "COURSE LESSONS WITH {{person}}"
+                "courseLessonWith": "LESSON WITH {{person}}",
+                "courseLessonsWith": "LESSONS WITH {{person}}"
             },
 
             "messages": {
