@@ -55,6 +55,7 @@ export interface Formats {
     LOCALE_LONG_DATE: string;
     LOCALE_SHORT_DATE: string;
     MINUTES: string;
+    MONTH_AND_YEAR: string;
     MONTH_NAME: string;
     SQL_DATETIME: string;
 }

@@ -13,11 +13,12 @@ export class TimeAdapter implements TimeAdapterContract {
     public readonly formats: Formats = {
         DATE_ONLY: 'YYYY-MM-DD',
         DAY: 'DD',
-        HOURS: 'HH',
         HOURS_MINUTES: 'HH:mm',
+        HOURS: 'HH',
         LOCALE_LONG_DATE: 'LL',
         LOCALE_SHORT_DATE: 'L',
         MINUTES: 'mm',
+        MONTH_AND_YEAR: 'MMMM YYYY',
         MONTH_NAME: 'MMMM',
         SQL_DATETIME: 'YYYY-MM-DD HH:mm:ss.SSSSSS'
     }
