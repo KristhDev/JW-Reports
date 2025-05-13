@@ -285,7 +285,7 @@
 
             "labels": {
                 "stateOfCourse": "Estado del curso: {{state}}",
-                "lastLesson": "Ultima clase:"
+                "lastLesson": "Ultima clase"
             },
 
             "questions": {
@@ -323,8 +323,8 @@
 
             "labels": {
                 "lessonStatus": "Estado de la clase: {{status}}",
-                "wasAnalyzed": "Se analizó:",
-                "itllAnalyzed": "Se analizará:"
+                "wasAnalyzed": "Se analizó",
+                "itllAnalyzed": "Se analizará"
             },
 
             "status": {
@@ -364,10 +364,10 @@
             },
 
             "labels": {
-                "nextVisit": "Próxima visita:",
-                "about": "Información de {{person}}:",
-                "address": "Dirección:",
-                "photo": "Foto:",
+                "nextVisit": "Próxima visita",
+                "about": "Información de {{person}}",
+                "address": "Dirección",
+                "photo": "Foto",
                 "revisitDone": "Revisita realizada"
             },
 

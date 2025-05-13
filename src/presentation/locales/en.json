@@ -286,7 +286,7 @@
 
             "labels": {
                 "stateOfCourse": "Course state: {{state}}",
-                "lastLesson": "Last lesson:"
+                "lastLesson": "Last lesson"
             },
 
             "lastLessonTitles": {
@@ -324,8 +324,8 @@
 
             "labels": {
                 "lessonStatus": "Lesson status: {{status}}",
-                "wasAnalyzed": "Was analyzed:",
-                "itllAnalyzed": "It'll be analyzed:"
+                "wasAnalyzed": "Was analyzed",
+                "itllAnalyzed": "It'll be analyzed"
             },
 
             "status": {
@@ -365,10 +365,10 @@
             },
 
             "labels": {
-                "nextVisit": "Next visit:",
-                "about": "{{person}} information:",
-                "address": "Address:",
-                "photo": "Photo:",
+                "nextVisit": "Next visit",
+                "about": "{{person}} information",
+                "address": "Address",
+                "photo": "Photo",
                 "revisitDone": "Revisit done"
             },
 
