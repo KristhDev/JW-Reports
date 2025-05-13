@@ -1,6 +1,5 @@
 import { memo, useCallback, useState } from 'react';
 import { Pressable, Text, View } from 'react-native';
-import { Menu, MenuOption, MenuOptions, MenuTrigger } from 'react-native-popup-menu';
 import { useRouter } from 'expo-router';
 import { useStyles } from 'react-native-unistyles';
 import Ionicons from '@expo/vector-icons/Ionicons';
@@ -9,7 +8,7 @@ import Ionicons from '@expo/vector-icons/Ionicons';
 import { INIT_LESSON } from '@application/features/lessons';
 
 /* Components */
-import { Fab } from '@ui/components';
+import { DropdownMenu, DropdownMenuItem, Fab } from '@ui/components';
 
 /* Hooks */
 import { useCourses } from '../../hooks';
@@ -47,6 +46,14 @@ export const CourseCard = memo<CourseCardProps>(({ course, onActiveOrSuspend, on
     const { setSelectedCourse } = useCourses();
     const { setSelectedLesson } = useLessons();
     const { translate } = useTranslation();
+
+    const continueOrSuspendLabel = (course.suspended) 
+        ?  translate('cards.courses.actions.continue')
+        : translate('cards.courses.actions.suspended');
+
+    const startOrFinishLabel = (course.finished) 
+        ? translate('cards.courses.actions.startAgain')
+        : translate('cards.courses.actions.finish')
 
     /**
      * When the user clicks on a course, set the selected course to the course that was clicked on and
@@ -113,6 +120,30 @@ export const CourseCard = memo<CourseCardProps>(({ course, onActiveOrSuspend, on
         onSelect();
     }, []);
 
+    const generateMenuItems = (): DropdownMenuItem[] => {
+        let items: DropdownMenuItem[] = [];
+
+        if (!course.finished) {
+            items.push(
+                { label: translate('forms.actions.edit'), onPress: handleEdit },
+                { label: continueOrSuspendLabel, onPress: () => handleSelect(onActiveOrSuspend) }
+            );
+        }
+
+        items.push({ label: translate('cards.courses.actions.lessons'), onPress: handleLessonList });
+
+        if (!course.suspended) {
+            items.push(
+                { label: translate('cards.courses.actions.addLesson'), onPress: handleAddLesson },
+                { label: startOrFinishLabel, onPress: () => handleSelect(onFinishOrStart) }
+            );
+        }
+
+        items.push({ label: translate('cards.actions.delete'), onPress: () => handleSelect(onDelete) });
+
+        return items;
+    }
+
     return (
         <Pressable
             android_ripple={{
@@ -176,70 +207,11 @@ export const CourseCard = memo<CourseCardProps>(({ course, onActiveOrSuspend, on
                 />
 
                 {/* Context menu */}
-                <Menu
-                    onBackdropPress={ () => setIsOpen(false) }
-                    opened={ isOpen }
-                    style={ themeStyles.menuPosition }
-                >
-                    <MenuTrigger text="" />
-
-                    <MenuOptions optionsContainerStyle={ themeStyles.menuContainer(220) }>
-
-                        {/* Show menu options then course.finished is false */}
-                        {/* It is not possible edit, continue or suspend the course if this is finished */}
-                        { (!course.finished) && (
-                            <>
-                                <MenuOption onSelect={ handleEdit }>
-                                    <Text style={ themeStyles.menuItemText }>
-                                        { translate('cards.actions.edit') }
-                                    </Text>
-                                </MenuOption>
-
-                                <MenuOption onSelect={ () => handleSelect(onActiveOrSuspend) }>
-                                    <Text style={ themeStyles.menuItemText }>
-                                        { (course.suspended) 
-                                            ?  translate('cards.courses.actions.continue')
-                                            : translate('cards.courses.actions.suspended')
-                                        }
-                                    </Text>
-                                </MenuOption>
-                            </>
-                        ) }
-
-                        <MenuOption onSelect={ handleLessonList }>
-                            <Text style={ themeStyles.menuItemText }>
-                                { translate('cards.courses.actions.lessons') }
-                            </Text>
-                        </MenuOption>
-
-                        {/* Show menu options then course.suspended is false */}
-                        {/* It is not possible to finish or add lessons to the course if this is suspended */}
-                        { (!course.suspended) && (
-                            <>
-                                <MenuOption onSelect={ handleAddLesson }>
-                                    <Text style={ themeStyles.menuItemText }>
-                                        { translate('cards.courses.actions.addLesson') }
-                                    </Text>
-                                </MenuOption>
-
-                                <MenuOption onSelect={ () => handleSelect(onFinishOrStart) }>
-                                    <Text style={ themeStyles.menuItemText }>
-                                        { (course.finished) 
-                                            ? translate('cards.courses.actions.startAgain')
-                                            : translate('cards.courses.actions.finish')
-                                        }
-                                    </Text>
-                                </MenuOption>
-                            </>
-                        ) }
-
-                        <MenuOption onSelect={ () => handleSelect(onDelete) }>
-                            <Text style={ themeStyles.menuItemText }>
-                                { translate('cards.actions.delete') }
-                            </Text>
-                        </MenuOption>
-                    </MenuOptions>
-                </Menu>
+                <DropdownMenu 
+                    items={ generateMenuItems() }
+                    onClose={ () => setIsOpen(false) }
+                    open={ isOpen }
+                />
             </View>
         </Pressable>
     );

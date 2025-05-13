@@ -211,7 +211,7 @@ export const RevisitsList: FC<RevisitsListProps> = ({ emptyMessage, filter, titl
         })
 
         return focusSubscription;
-    }, []);
+    }, [ navigationState?.routeNames, navigationState?.index, revisitsScreenHistory ]);
 
     return (
         <FlashList

@@ -1,14 +1,13 @@
 import React, { memo, useState } from 'react';
 import { Pressable, Text, View } from 'react-native';
 import { useStyles } from 'react-native-unistyles';
-import { Menu, MenuOption, MenuOptions, MenuTrigger } from 'react-native-popup-menu';
 import Ionicons from '@expo/vector-icons/Ionicons';
 
 /* DI */
 import { timeAdapter } from '@config/di';
 
 /* Components */
-import { Fab } from '@ui/components';
+import { DropdownMenu, DropdownMenuItem, Fab } from '@ui/components';
 
 /* Hooks */
 import { useLessons } from '../../hooks';
@@ -47,6 +46,10 @@ export const LessonCard = memo<LessonCardProps>(({ lesson, onNavigateDetail, onN
     const nextVisit = translate('dates.lessonTo', { date: timeAdapter.format(lesson.nextLesson, timeAdapter.formats.LOCALE_LONG_DATE) });
     const classTaught = translate('cards.lessons.status.taught');
 
+    const reprogramOrFinish = (lesson.done) 
+        ? translate('cards.lessons.actions.reprogram') 
+        : translate('cards.lessons.actions.finishLesson');
+
     /**
      * When the user clicks on a lesson, the lesson is set as the selected lesson and the user is
      * navigated to the LessonDetailScreen.
@@ -80,6 +83,21 @@ export const LessonCard = memo<LessonCardProps>(({ lesson, onNavigateDetail, onN
     const handleSelect = (onSelect: () => void): void => {
         setIsOpen(false);
         onSelect();
+    }
+
+    const generateMenuItems = (): DropdownMenuItem[] => {
+        let items: DropdownMenuItem[] = [];
+
+        if (!lesson.done) {
+            items.push({ label: translate('forms.actions.edit'), onPress: handleEdit });
+        }
+
+        items.push(
+            { label: reprogramOrFinish, onPress: () => handleSelect(onFinish) },
+            { label: translate('forms.actions.delete'), onPress: () => handleSelect(onDelete) }
+        );
+
+        return items;
     }
 
     return (
@@ -125,42 +143,11 @@ export const LessonCard = memo<LessonCardProps>(({ lesson, onNavigateDetail, onN
                 />
 
                 {/* Menu context */}
-                <Menu
-                    onBackdropPress={ () => setIsOpen(false) }
-                    opened={ isOpen }
-                    style={ themeStyles.menuPosition }
-                >
-                    <MenuTrigger text="" />
-
-                    <MenuOptions optionsContainerStyle={ themeStyles.menuContainer(220) }>
-
-                        {/* Then lesson.done is false show this option */}
-                        {/* The lesson can only be edited if lesson.done is false */}
-                        { (!lesson.done) && (
-                            <MenuOption onSelect={ handleEdit }>
-                                <Text style={ themeStyles.menuItemText }>
-                                    { translate('forms.actions.edit') }
-                                </Text>
-                            </MenuOption>
-                        ) }
-
-                        <MenuOption onSelect={ () => handleSelect(onFinish) }>
-                            <Text style={ themeStyles.menuItemText }>
-                                { 
-                                    (lesson.done) 
-                                        ? translate('cards.lessons.actions.reprogram') 
-                                        : translate('cards.lessons.actions.finishLesson')
-                                }
-                            </Text>
-                        </MenuOption>
-
-                        <MenuOption onSelect={ () => handleSelect(onDelete) }>
-                            <Text style={ themeStyles.menuItemText }>
-                                { translate('forms.actions.delete') }
-                            </Text>
-                        </MenuOption>
-                    </MenuOptions>
-                </Menu>
+                <DropdownMenu 
+                    items={ generateMenuItems() }
+                    onClose={ () => setIsOpen(false) }
+                    open={ isOpen }
+                />
             </View>
         </Pressable>
     );

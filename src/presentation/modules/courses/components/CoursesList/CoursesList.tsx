@@ -207,7 +207,7 @@ export const CoursesList: FC<CoursesListProps> = ({ emptyMessage, filter, title 
         })
 
         return focusUnsubscribe;
-    }, []);
+    }, [ navigationState?.routeNames, navigationState?.index, coursesScreenHistory ]);
 
     /**
      * Effect to set lessons pagination and remove lessons when the screen is focused
