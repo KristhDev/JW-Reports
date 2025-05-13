@@ -3,6 +3,7 @@ export * from './Button';
 export * from './Checkbox';
 export * from './DashLoader';
 export * from './DatetimeField';
+export * from './DropdownMenu';
 export * from './EyeBtn';
 export * from './Fab';
 export * from './FormCalendar';
