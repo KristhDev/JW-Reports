@@ -1,4 +1,4 @@
-import React, { FC, useCallback, useEffect, useState } from 'react';
+import { FC, useCallback, useEffect, useMemo, useState } from 'react';
 import { RefreshControl, View } from 'react-native';
 import { Href, router, useNavigation } from 'expo-router';
 import { FlashList } from '@shopify/flash-list';
@@ -69,15 +69,18 @@ export const CoursesList: FC<CoursesListProps> = ({ emptyMessage, filter, title 
         search: searchTerm.trim()
     });
 
-    const emptyMsg = (searchTerm.trim().length > 0) ? noFoundResultsMsg : emptyMessage;
+    const emptyMsg = useMemo(
+        () => (searchTerm.trim().length > 0) ? noFoundResultsMsg : emptyMessage, 
+        [ searchTerm ]
+    );
 
     /**
      * When the user refreshes the page, the search term is reset, the pagination is reset, the courses
      * are removed, and the courses are loaded.
      *
-     * @return {void} This function does not return any value.
+     * @return {Promise<void>} This function does not return any value.
      */
-    const handleRefreshing = (): void => {
+    const handleRefreshing = useCallback(async (): Promise<void> => {
         if (isCoursesLoading) return;
 
         setIsRefreshing(true);
@@ -86,40 +89,40 @@ export const CoursesList: FC<CoursesListProps> = ({ emptyMessage, filter, title 
         if (wifi.hasConnection) {
             setCoursesPagination({ from: 0, to: 9 });
             removeCourses();
-            loadCourses({ filter, refresh: true });
+            await loadCourses({ filter, refresh: true });
         }
 
         setIsRefreshing(false);
-    }
+    }, [ isCoursesLoading, wifi.hasConnection, filter ]);
 
     /**
      * If the search string is empty and the courses array is empty, then set the courses pagination,
      * remove the courses, load the courses, and set the isRefreshing state to false.
      *
      * @param {string} search - string
-     * @return {void} This function does not return any value.
+     * @return {Promise<void>} This function does not return any value.
      */
-    const handleSearchCourses = (search: string): void => {
+    const handleSearchCourses = useCallback(async (search: string): Promise<void> => {
         if (isCoursesLoading) return;
         setSearchTerm(search);
 
         if (wifi.hasConnection) {
             setCoursesPagination({ from: 0, to: 9 });
             removeCourses();
-            loadCourses({ filter, search, refresh: true });
+            await loadCourses({ filter, search, refresh: true });
         }
-    }
+    }, [ isCoursesLoading, wifi.hasConnection, filter ]);
 
     /**
      * If there are no more courses to load, or if the courses are currently loading, then return.
      * Otherwise, load more courses.
      *
-     * @return {void} This function does not return any value.
+     * @return {Promise<void>} This function does not return any value.
      */
-    const handleEndReach = (): void => {
+    const handleEndReach = useCallback(async (): Promise<void> => {
         if (!hasMoreCourses || courses.length === 0 || isCoursesLoading || !wifi.hasConnection) return;
         loadCourses({ filter, search: searchTerm, loadMore: true });
-    }
+    }, [  hasMoreCourses, courses.length, isCoursesLoading, wifi.hasConnection, filter, searchTerm ]);
 
     /**
      * Sets the selected course and shows the modal.
@@ -131,6 +134,52 @@ export const CoursesList: FC<CoursesListProps> = ({ emptyMessage, filter, title 
     const handleShowModal = useCallback((course: CourseEntity, href: Href): void => {
         setSelectedCourse(course);
         router.navigate(href);
+    }, []);
+
+    const renderHeader = useCallback(() => (
+        <View style={{ paddingHorizontal: margins.xs, width: '100%' }}>
+            <Title
+                containerStyle={{ marginVertical: margins.xs }}
+                text={ title }
+                textStyle={{ fontSize: fontSizes.md }}
+            />
+
+            <SearchInput
+                onClean={ () => handleSearchCourses('') }
+                onSearch={ handleSearchCourses }
+                refreshing={ isRefreshing }
+                searchTerm={ searchTerm }
+            />
+        </View>
+    ), [ title, isRefreshing, searchTerm ]);
+
+    const renderListEmpty = useCallback(() => (
+        <ListEmptyComponent
+            msg={ emptyMsg }
+            showMsg={ !isCoursesLoading && courses.length === 0 }
+        />
+    ), [ emptyMsg, isCoursesLoading, courses.length ]);
+
+    const renderFooter = useCallback(() => (
+        <ListFooterComponent
+            marginTopPlus={ courses.length === 0 }
+            showLoader={ isCoursesLoading }
+        />
+    ), [ courses.length, isCoursesLoading ]);
+
+    const renderCourseItem = useCallback(({ item }: { item: CourseEntity }) => {
+        const handleActiveOrSuspend = () => handleShowModal(item, '/(app)/(tabs)/courses/active-or-suspend-course-modal');
+        const handleDelete = () => handleShowModal(item, '/(app)/(tabs)/courses/delete-course-modal');
+        const handleFinishOrStart = () => handleShowModal(item, '/(app)/(tabs)/courses/finish-or-start-course-modal');
+
+        return (
+            <CourseCard
+                course={ item }
+                onActiveOrSuspend={ handleActiveOrSuspend }
+                onDelete={ handleDelete }
+                onFinishOrStart={ handleFinishOrStart }
+            />
+        );
     }, []);
 
     /**
@@ -182,52 +231,19 @@ export const CoursesList: FC<CoursesListProps> = ({ emptyMessage, filter, title 
             data={ courses }
             estimatedItemSize={ 256 }
             keyExtractor={ (item) => `${ filter }-${ item.id }` }
-            ListFooterComponent={
-                <ListFooterComponent
-                    marginTopPlus={ courses.length === 0 }
-                    showLoader={ isCoursesLoading }
-                />
-            }
-            ListHeaderComponent={
-                <View style={{ paddingHorizontal: margins.xs, width: '100%' }}>
-                    <Title
-                        containerStyle={{ marginVertical: margins.xs }}
-                        text={ title }
-                        textStyle={{ fontSize: fontSizes.md }}
-                    />
-
-                    <SearchInput
-                        onClean={ () => handleSearchCourses('') }
-                        onSearch={ handleSearchCourses }
-                        refreshing={ isRefreshing }
-                        searchTerm={ searchTerm }
-                    />
-                </View>
-            }
-            ListEmptyComponent={
-                <ListEmptyComponent
-                    msg={ emptyMsg }
-                    showMsg={ !isCoursesLoading && courses.length === 0 }
-                />
-            }
+            ListEmptyComponent={ renderListEmpty }
+            ListFooterComponent={ renderFooter }
+            ListHeaderComponent={ renderHeader }
             ListHeaderComponentStyle={{ alignSelf: 'flex-start' }}
             onEndReached={ handleEndReach }
             onEndReachedThreshold={ 0.5 }
-            overScrollMode="never"
             refreshControl={
                 <RefreshControl
                     onRefresh={ handleRefreshing }
                     refreshing={ isRefreshing }
                 />
             }
-            renderItem={ ({ item }) => (
-                <CourseCard
-                    course={ item }
-                    onActiveOrSuspend={ () => handleShowModal(item, '/(app)/(tabs)/courses/active-or-suspend-course-modal') }
-                    onDelete={ () => handleShowModal(item, '/(app)/(tabs)/courses/delete-course-modal') }
-                    onFinishOrStart={ () => handleShowModal(item, '/(app)/(tabs)/courses/finish-or-start-course-modal') }
-                />
-            ) }
+            renderItem={ renderCourseItem }
         />
     );
 }

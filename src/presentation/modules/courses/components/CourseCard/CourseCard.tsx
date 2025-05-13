@@ -1,9 +1,12 @@
-import React, { FC, memo, useState } from 'react';
+import { memo, useCallback, useState } from 'react';
 import { Pressable, Text, View } from 'react-native';
 import { Menu, MenuOption, MenuOptions, MenuTrigger } from 'react-native-popup-menu';
 import { useRouter } from 'expo-router';
 import { useStyles } from 'react-native-unistyles';
 import Ionicons from '@expo/vector-icons/Ionicons';
+
+/* Features */
+import { INIT_LESSON } from '@application/features/lessons';
 
 /* Components */
 import { Fab } from '@ui/components';
@@ -42,7 +45,7 @@ export const CourseCard = memo<CourseCardProps>(({ course, onActiveOrSuspend, on
     const { styles, theme: { colors, fontSizes } } = useStyles(stylesheet);
 
     const { setSelectedCourse } = useCourses();
-    const { state: { selectedLesson }, setSelectedLesson } = useLessons();
+    const { setSelectedLesson } = useLessons();
     const { translate } = useTranslation();
 
     /**
@@ -51,10 +54,10 @@ export const CourseCard = memo<CourseCardProps>(({ course, onActiveOrSuspend, on
      *
      * @return {void} This function does not return any value.
      */
-    const handleCourseDetail = (): void => {
+    const handleCourseDetail = useCallback((): void => {
         setSelectedCourse(course);
         router.navigate('/(app)/(tabs)/courses/detail');
-    }
+    }, [ course ]);
 
     /**
      * When the user clicks the edit button, close the modal, set the selected course to the course
@@ -62,11 +65,11 @@ export const CourseCard = memo<CourseCardProps>(({ course, onActiveOrSuspend, on
      *
      * @return {void} This function does not return any value.
      */
-    const handleEdit = (): void => {
+    const handleEdit = useCallback((): void => {
         setIsOpen(false);
         setSelectedCourse(course);
         router.navigate('/(app)/(tabs)/courses/add-or-edit');
-    }
+    }, [ course ]);
 
     /**
      * When the user clicks the button, the modal closes, the selected course is set to the course that
@@ -75,17 +78,17 @@ export const CourseCard = memo<CourseCardProps>(({ course, onActiveOrSuspend, on
      *
      * @return {void} This function does not return any value.
      */
-    const handleaddLesson = (): void => {
+    const handleAddLesson = useCallback((): void => {
         setIsOpen(false);
 
         setSelectedCourse(course);
         setSelectedLesson({
-            ...selectedLesson,
+            ...INIT_LESSON,
             nextLesson: new Date().toString()
         });
 
         router.navigate('/(app)/(tabs)/courses/lessons/add-or-edit');
-    }
+    }, [ course ]);
 
     /**
      * When the user clicks on a course, the course is set as the selected course and the user is
@@ -93,11 +96,11 @@ export const CourseCard = memo<CourseCardProps>(({ course, onActiveOrSuspend, on
      *
      * @return {void} This function does not return any value.
      */
-    const handleLessonList = (): void => {
+    const handleLessonList = useCallback((): void => {
         setIsOpen(false);
         setSelectedCourse(course);
         router.navigate('/(app)/(tabs)/courses/lessons');
-    }
+    }, [ course ]);
 
     /**
      * The function takes a function as an argument and calls it.
@@ -105,10 +108,10 @@ export const CourseCard = memo<CourseCardProps>(({ course, onActiveOrSuspend, on
      * @param onSelect - () => void
      * @return {void} This function does not return any value.
      */
-    const handleSelect = (onSelect: () => void): void => {
+    const handleSelect = useCallback((onSelect: () => void): void => {
         setIsOpen(false);
         onSelect();
-    }
+    }, []);
 
     return (
         <Pressable
@@ -213,7 +216,7 @@ export const CourseCard = memo<CourseCardProps>(({ course, onActiveOrSuspend, on
                         {/* It is not possible to finish or add lessons to the course if this is suspended */}
                         { (!course.suspended) && (
                             <>
-                                <MenuOption onSelect={ handleaddLesson }>
+                                <MenuOption onSelect={ handleAddLesson }>
                                     <Text style={ themeStyles.menuItemText }>
                                         { translate('cards.courses.actions.addLesson') }
                                     </Text>

@@ -63,7 +63,7 @@ const Settings = (): JSX.Element => {
 
     return (
         <>
-            <ScrollView overScrollMode="never">
+            <ScrollView>
 
                 {/* Acount secction */}
                 <SectionContent title={ translate('screens.settings.sections.account.title') }>

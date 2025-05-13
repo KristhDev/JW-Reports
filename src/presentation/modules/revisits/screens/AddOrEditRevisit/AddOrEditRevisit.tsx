@@ -48,7 +48,6 @@ const AddOrEditRevisit = (): JSX.Element => {
             <KeyboardAwareScrollView
                 bottomOffset={ margins.xl }
                 contentContainerStyle={{ flexGrow: 1 }}
-                overScrollMode="never"
             >
                 <View style={[ themeStyles.screenContainer, { paddingBottom: margins.xxl } ]}>
                     <Title

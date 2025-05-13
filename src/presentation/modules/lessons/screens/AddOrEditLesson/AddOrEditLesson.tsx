@@ -45,7 +45,6 @@ const AddOrEditLesson = (): JSX.Element => {
         <>
             <KeyboardAwareScrollView
                 contentContainerStyle={{ flexGrow: 1 }}
-                overScrollMode="never"
             >
                 <View style={[ themeStyles.screenContainer, { paddingBottom: margins.xxl } ]}>
                     <Title

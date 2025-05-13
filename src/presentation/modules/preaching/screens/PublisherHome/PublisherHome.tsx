@@ -200,7 +200,6 @@ const PublisherHome = (): JSX.Element => {
         <>
             <ScrollView
                 contentContainerStyle={{ alignItems: 'center', paddingHorizontal: margins.xs, paddingTop: margins.md, paddingBottom: 100 }}
-                overScrollMode="never"
                 refreshControl={
                     <RefreshControl
                         colors={[ '#000' ]}

@@ -27,7 +27,6 @@ const Credentials = (): JSX.Element => {
         <KeyboardAwareScrollView
             bottomOffset={ margins.xl }
             contentContainerStyle={{ flexGrow: 1 }}
-            overScrollMode="never"
         >
             <View style={ themeStyles.screenContainer }>
                 <Title

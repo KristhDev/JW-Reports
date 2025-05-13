@@ -1,4 +1,4 @@
-import React, { FC, memo, useState } from 'react';
+import React, { memo, useCallback, useState } from 'react';
 import { Pressable, Text, View } from 'react-native';
 import { useStyles } from 'react-native-unistyles';
 import { Menu, MenuOption, MenuOptions, MenuTrigger } from 'react-native-popup-menu';
@@ -49,10 +49,10 @@ export const RevisitCard = memo<RevisitCardProps>(({
      *
      * @return {void} This function does not return any value.
      */
-    const handleRevisitDetail = (): void => {
+    const handleRevisitDetail = useCallback((): void => {
         setSelectedRevisit(revisit);
         onNavigateDetail();
-    }
+    }, [ revisit, onNavigateEdit ])
 
     /**
      * When the user clicks the edit button, the modal closes, the selected revisit is set to the
@@ -60,11 +60,11 @@ export const RevisitCard = memo<RevisitCardProps>(({
      *
      * @return {void} This function does not return any value.
      */
-    const handleEdit = (): void => {
+    const handleEdit = useCallback((): void => {
         setIsOpen(false);
         setSelectedRevisit(revisit);
         onNavigateEdit();
-    }
+    }, [ revisit, onNavigateEdit ]);
 
     /**
      * The function takes a function as an argument and returns a function that calls the argument
@@ -73,10 +73,10 @@ export const RevisitCard = memo<RevisitCardProps>(({
      * @param {() => void} onAction - The function to call when the user clicks the action button.
      * @return {void} This function does not return any value.
      */
-    const handleAction = (onAction: () => void): void => {
+    const handleAction = useCallback((onAction: () => void): void => {
         setIsOpen(false);
         onAction();
-    }
+    }, []);
 
     return (
         <Pressable

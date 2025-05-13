@@ -26,7 +26,6 @@ const Login = (): JSX.Element => {
     return (
         <KeyboardAwareScrollView
             contentContainerStyle={{ flexGrow: 1 }}
-            overScrollMode="never"
         >
             <View style={ themeStyles.screenContainer }>
                 <Title

@@ -1,5 +1,5 @@
-import React, { FC, useCallback } from 'react';
-import { useFocusEffect, useNavigation, useRouter } from 'expo-router';
+import React, { FC, useEffect } from 'react';
+import { useNavigation, useRouter } from 'expo-router';
 import { useStyles } from 'react-native-unistyles';
 import Ionicons from '@expo/vector-icons/Ionicons';
 
@@ -26,7 +26,7 @@ import { themeStylesheet } from '@theme/styles';
  * @param {RevisitsProps} { route: RouteProp } - This is a params of TopTabNavigation
  * @return {JSX.Element} rendered component to show list of revisits
  */
-const Revisits: FC<RevisitsProps> = ({ emptyMessage, filter, segment, title }): JSX.Element => {
+const Revisits: FC<RevisitsProps> = ({ emptyMessage, filter, renderFab, title }): JSX.Element => {
     const router = useRouter();
     const navigation = useNavigation();
     const { styles: themeStyles, theme: { colors, fontSizes } } = useStyles(themeStylesheet);
@@ -52,13 +52,15 @@ const Revisits: FC<RevisitsProps> = ({ emptyMessage, filter, segment, title }): 
      * Effect to set revisitsScreenHistory when call focus event
      * in screen.
      */
-    useFocusEffect(
-        useCallback(() => {
+    useEffect(() => {
+        const focusUnsubscribe = navigation.addListener('focus', () => {
             const navigationState = navigation.getState();
             if (!navigationState) return;
             setRevisitsScreenHistory(navigationState.routeNames[navigationState.index]);
-        }, [])
-    );
+        });
+
+        return focusUnsubscribe;
+    }, []);
 
     return (
         <>
@@ -68,7 +70,7 @@ const Revisits: FC<RevisitsProps> = ({ emptyMessage, filter, segment, title }): 
                 emptyMessage={ emptyMessage }
             />
 
-            { (segment === 'index') && (
+            { (!!renderFab) && (
                 <Fab
                     color={ colors.button }
                     icon={

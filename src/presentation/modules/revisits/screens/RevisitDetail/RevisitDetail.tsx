@@ -30,7 +30,7 @@ const RevisitDetail = (): JSX.Element => {
     const [ showModal, setShowModal ] = useState<boolean>(false);
     const { width: windowWidth } = useWindowDimensions();
 
-    const { styles: themeStyles, theme: { fontSizes, margins } } = useStyles(themeStylesheet);
+    const { styles: themeStyles, theme: { colors, fontSizes, margins } } = useStyles(themeStylesheet);
     const { styles } = useStyles(stylesheet);
 
     const { state: { selectedRevisit } } = useRevisits();
@@ -66,15 +66,14 @@ const RevisitDetail = (): JSX.Element => {
         <>
             <ScrollView
                 contentContainerStyle={ themeStyles.scrollView }
-                overScrollMode="never"
                 style={{ flex: 1 }}
             >
 
                 {/* Title of detail */}
                 <Title
-                    containerStyle={ themeStyles.titleContainer }
+                    containerStyle={{ ...themeStyles.titleContainer, marginBottom: margins.xs }}
                     text={ selectedRevisit.personName.toUpperCase() }
-                    textStyle={{ fontSize: fontSizes.md }}
+                    textStyle={{ color: colors.darkSkyBlue, fontSize: fontSizes.md }}
                 />
 
                 {/* Revisit status */}

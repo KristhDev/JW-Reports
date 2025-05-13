@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { RefreshControl, View } from 'react-native';
 import { FlashList } from '@shopify/flash-list';
 import { useStyles } from 'react-native-unistyles';
@@ -59,15 +59,19 @@ export const LessonsList = (): JSX.Element => {
     });
 
     const theReNoLessonsMsg = translate('screens.lessons.messages.theReNoLessons');
-    const emptyMsg = (searchTerm.trim().length > 0 && lessons.length === 0) ? noFoundResultsMsg : theReNoLessonsMsg
+
+    const emptyMsg = useMemo(
+        () => (searchTerm.trim().length > 0 && lessons.length === 0) ? noFoundResultsMsg : theReNoLessonsMsg,
+        [ searchTerm, lessons.length ]
+    ); 
 
     /**
      * When the user refreshes the page, reset the search term, reset the pagination, remove the
      * lessons from the state, and load the lessons again.
      *
-     * @return {void} This function does not return any value.
+     * @return {Promise<void>} This function does not return any value.
      */
-    const handleRefreshing = (): void => {
+    const handleRefreshing = useCallback(async (): Promise<void> => {
         if (isLessonsLoading) return;
 
         setIsRefreshing(true);
@@ -80,32 +84,32 @@ export const LessonsList = (): JSX.Element => {
         }
 
         setIsRefreshing(false);
-    }
+    }, [ isLessonsLoading, wifi.hasConnection ]);
 
     /**
      * When the user searches for lessons, reset the pagination, remove the lessons from the state,
      * and load the lessons again with the search term.
      *
-     * @return {void} This function does not return any value.
+     * @return {Promise<void>} This function does not return any value.
      */
-    const handleSearch = (): void => {
+    const handleSearch = useCallback(async (): Promise<void> => {
         if (!wifi.hasConnection || isLessonsLoading) return;
 
         setLessonsPagination({ from: 0, to: 9 });
         removeLessons();
         loadLessons({ search: searchTerm, refresh: true });
-    }
+    }, [ isLessonsLoading, wifi.hasConnection, searchTerm ]);
 
     /**
      * If there are no more lessons to load, or if the lessons are currently loading, then return.
      * Otherwise, load more lessons.
      *
-     * @return {void} This function does not return any value.
+     * @return {Promise<void>} This function does not return any value.
      */
-    const handleEndReach = (): void => {
+    const handleEndReach = useCallback(async (): Promise<void> => {
         if (!hasMoreLessons || lessons.length === 0 || isLessonsLoading || !wifi.hasConnection) return;
-        loadLessons({ search: searchTerm, loadMore: true });
-    }
+        await loadLessons({ search: searchTerm, loadMore: true });
+    }, [ hasMoreLessons, isLessonsLoading, lessons.length, wifi.hasConnection, searchTerm ]);
 
     /**
      * HandleShowModal is a function that takes a lesson and a setShowModal function as parameters and
@@ -115,10 +119,58 @@ export const LessonsList = (): JSX.Element => {
      * @param {Href} href - Href - this is the href to navigate to
      * @return {void} This function does not return any value.
      */
-    const handleShowModal = (lesson: LessonEntity, href: Href): void => {
+    const handleShowModal = useCallback((lesson: LessonEntity, href: Href): void => {
         setSelectedLesson(lesson);
         router.navigate(href);
-    }
+    }, []);
+
+    const renderHeader = useCallback(() => (
+        <View style={{ paddingHorizontal: margins.xs, width: '100%' }}>
+            <Title
+                containerStyle={{ marginVertical: margins.xs }}
+                text={ title }
+                textStyle={{ fontSize: fontSizes.md }}
+            />
+
+            <SearchInput
+                onClean={ () => setSearchTerm('') }
+                onSearch={ setSearchTerm }
+                refreshing={ isRefreshing }
+                searchTerm={ searchTerm }
+            />
+        </View>
+    ), [ title, searchTerm, isRefreshing ]);
+
+    const renderListEmpty = useCallback(() => (
+        <ListEmptyComponent
+            msg={ emptyMsg }
+            showMsg={ !isLessonsLoading && lessons.length === 0 }
+        />
+    ), [ emptyMsg, isLessonsLoading, lessons.length ]);
+
+    const renderFooter = useCallback(() => (
+        <ListFooterComponent
+            marginTopPlus={ lessons.length === 0 }
+            showLoader={ isLessonsLoading }
+        />
+    ), [ lessons.length, isLessonsLoading ]);
+
+    const renderLessonItem = useCallback(({ item }: { item: LessonEntity }) => {
+        const handleDelete = () => handleShowModal(item, '/(app)/(tabs)/courses/lessons/delete-lesson-modal');
+        const handleFinish = () => handleShowModal(item, '/(app)/(tabs)/courses/lessons/finish-or-start-lesson-modal');
+        const handleDetail = () => handleShowModal(item, '/(app)/(tabs)/courses/lessons/detail');
+        const handleEdit = () => handleShowModal(item, '/(app)/(tabs)/courses/lessons/add-or-edit');
+
+        return (
+            <LessonCard
+                lesson={ item }
+                onDelete={ handleDelete }
+                onFinish={ handleFinish }
+                onNavigateDetail={ handleDetail }
+                onNavigateEdit={ handleEdit }
+            />
+        );
+    }, []);
 
     /**
      * Effect to perform lesson search every time
@@ -135,53 +187,19 @@ export const LessonsList = (): JSX.Element => {
             data={ lessons }
             estimatedItemSize={ 256 }
             keyExtractor={ (item) => item.id }
-            ListFooterComponent={
-                <ListFooterComponent
-                    marginTopPlus={ lessons.length === 0 }
-                    showLoader={ isLessonsLoading }
-                />
-            }
-            ListHeaderComponent={
-                <View style={{ paddingHorizontal: margins.xs, width: '100%' }}>
-                    <Title
-                        containerStyle={{ marginVertical: margins.xs }}
-                        text={ title }
-                        textStyle={{ fontSize: fontSizes.md }}
-                    />
-
-                    <SearchInput
-                        onClean={ () => setSearchTerm('') }
-                        onSearch={ setSearchTerm }
-                        refreshing={ isRefreshing }
-                        searchTerm={ searchTerm }
-                    />
-                </View>
-            }
-            ListEmptyComponent={
-                <ListEmptyComponent
-                    msg={ emptyMsg }
-                    showMsg={ !isLessonsLoading && lessons.length === 0 }
-                />
-            }
+            ListEmptyComponent={ renderListEmpty }
+            ListFooterComponent={ renderFooter }
+            ListHeaderComponent={ renderHeader }
             ListHeaderComponentStyle={{ alignSelf: 'flex-start' }}
             onEndReached={ handleEndReach }
             onEndReachedThreshold={ 0.5 }
-            overScrollMode="never"
             refreshControl={
                 <RefreshControl
                     onRefresh={ handleRefreshing }
                     refreshing={ isRefreshing }
                 />
             }
-            renderItem={ ({ item }) => (
-                <LessonCard
-                    lesson={ item }
-                    onDelete={ () => handleShowModal(item, '/(app)/(tabs)/courses/lessons/delete-lesson-modal') }
-                    onFinish={ () => handleShowModal(item, '/(app)/(tabs)/courses/lessons/finish-or-start-lesson-modal') }
-                    onNavigateDetail={ () => router.navigate('/(app)/(tabs)/courses/lessons/detail') }
-                    onNavigateEdit={ () => router.navigate('/(app)/(tabs)/courses/lessons/add-or-edit') }
-                />
-            ) }
+            renderItem={ renderLessonItem }
         />
     );
 }

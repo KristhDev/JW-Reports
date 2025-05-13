@@ -1,6 +1,6 @@
-import React, { FC, useCallback } from 'react';
+import React, { FC, useEffect } from 'react';
 import { useStyles } from 'react-native-unistyles';
-import { useFocusEffect, useNavigation, useRouter } from 'expo-router';
+import { useNavigation, useRouter } from 'expo-router';
 import Ionicons from '@expo/vector-icons/Ionicons';
 
 /* Features */
@@ -26,7 +26,7 @@ import { themeStylesheet } from '@theme/styles';
  * @param {CoursesProps} { route: RouteProp } - This is a params of TopTabNavigation
  * @return {JSX.Element} rendered component to show list of courses
  */
-const Courses: FC<CoursesProps> = ({ emptyMessage, filter, segment, title }): JSX.Element => {
+const Courses: FC<CoursesProps> = ({ emptyMessage, filter, renderFab, title }): JSX.Element => {
     const navigation = useNavigation();
     const router = useRouter();
     const { styles: themeStyles, theme: { colors, fontSizes } } = useStyles(themeStylesheet);
@@ -49,13 +49,15 @@ const Courses: FC<CoursesProps> = ({ emptyMessage, filter, segment, title }): JS
      * Effect to set coursesScreenHistory when call focus event
      * in screen.
      */
-    useFocusEffect(
-        useCallback(() => {
+    useEffect(() => {
+        const focusUnsubscribe = navigation.addListener('focus', () => {
             const navigationState = navigation.getState();
             if (!navigationState) return;
             setCoursesScreenHistory(navigationState.routeNames[navigationState.index]);
-        }, [])
-    );
+        });
+
+        return focusUnsubscribe;
+    }, []);
 
     return (
         <>
@@ -65,7 +67,7 @@ const Courses: FC<CoursesProps> = ({ emptyMessage, filter, segment, title }): JS
                 emptyMessage={ emptyMessage }
             />
 
-            { (segment === 'index') && (
+            { (!!renderFab) && (
                 <Fab
                     color={ colors.button }
                     icon={

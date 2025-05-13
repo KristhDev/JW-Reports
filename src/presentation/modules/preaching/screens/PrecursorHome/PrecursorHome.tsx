@@ -84,7 +84,6 @@ const Home = (): JSX.Element => {
         <>
             <ScrollView
                 contentContainerStyle={{ alignItems: 'center', padding: margins.md, paddingBottom: 100 }}
-                overScrollMode="never"
                 refreshControl={
                     <RefreshControl
                         colors={[ '#000' ]}

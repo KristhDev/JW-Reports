@@ -1,5 +1,5 @@
-import React, { useCallback } from 'react';
-import { useFocusEffect, useRouter } from 'expo-router';
+import React, { useEffect } from 'react';
+import { useNavigation, useRouter } from 'expo-router';
 import { useStyles } from 'react-native-unistyles';
 import Ionicons from '@expo/vector-icons/Ionicons';
 
@@ -24,6 +24,7 @@ import { themeStylesheet } from '@theme/styles';
  */
 const Lessons = (): JSX.Element => {
     const { styles: themeStyles, theme: { colors, fontSizes } } = useStyles(themeStylesheet);
+    const navigation = useNavigation();
     const router = useRouter();
 
     const { setSelectedLesson } = useLessons();
@@ -38,14 +39,16 @@ const Lessons = (): JSX.Element => {
         router.navigate('/(app)/(tabs)/courses/lessons/add-or-edit');
     }
 
-    useFocusEffect(
-        useCallback(() => {
+    useEffect(() => {
+        const focusUnsubscribe = navigation.addListener('focus', () => {
             setSelectedLesson({
                 ...INIT_LESSON,
                 nextLesson: new Date().toString(),
             });
-        }, [])
-    );
+        });
+
+        return focusUnsubscribe;
+    }, []);
 
     return (
         <>

@@ -27,7 +27,6 @@ const Register = (): JSX.Element => {
         <KeyboardAwareScrollView
             bottomOffset={ margins.xl }
             contentContainerStyle={{ flexGrow: 1, paddingBottom: margins.sm }}
-            overScrollMode="never"
         >
             <View style={ themeStyles.screenContainer }>
                 <Title

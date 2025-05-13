@@ -1,4 +1,4 @@
-import React, { FC, useCallback, useEffect, useState } from 'react';
+import React, { FC, useCallback, useEffect, useMemo, useState } from 'react';
 import { RefreshControl, View } from 'react-native';
 import { FlashList } from '@shopify/flash-list';
 import { Href, useNavigation, useRouter } from 'expo-router';
@@ -67,7 +67,10 @@ export const RevisitsList: FC<RevisitsListProps> = ({ emptyMessage, filter, titl
         search: searchTerm.trim()
     });
 
-    const emptyMsg = (searchTerm.trim().length > 0) ? noFoundResultsMsg : emptyMessage;
+    const emptyMsg = useMemo(
+        () => (searchTerm.trim().length > 0) ? noFoundResultsMsg : emptyMessage,
+        [ searchTerm ]
+    );
 
     /**
      * When the user refreshes the page, the search term is reset, the pagination is reset, the
@@ -75,7 +78,7 @@ export const RevisitsList: FC<RevisitsListProps> = ({ emptyMessage, filter, titl
      *
      * @return {Promise<void>} This function returns nothing
      */
-    const handleRefreshing = async (): Promise<void> => {
+    const handleRefreshing = useCallback(async (): Promise<void> => {
         if (isRevisitsLoading) return;
 
         setIsRefreshing(true);
@@ -88,7 +91,7 @@ export const RevisitsList: FC<RevisitsListProps> = ({ emptyMessage, filter, titl
         }
 
         setIsRefreshing(false);
-    }
+    }, [ isRevisitsLoading, wifi.hasConnection, filter ]);
 
     /**
      * If the search string is not empty, reset the pagination, remove the revisits, load the revisits,
@@ -97,7 +100,7 @@ export const RevisitsList: FC<RevisitsListProps> = ({ emptyMessage, filter, titl
      * @param {string} search - string
      * @return {Promise<void>} This function returns nothing
      */
-    const handleSearchRevisits = async (search: string): Promise<void> => {
+    const handleSearchRevisits = useCallback(async (search: string): Promise<void> => {
         if (isRevisitsLoading) return;
         setSearchTerm(search);
 
@@ -106,7 +109,7 @@ export const RevisitsList: FC<RevisitsListProps> = ({ emptyMessage, filter, titl
             removeRevisits();
             await loadRevisits({ filter, search, refresh: true });
         }
-    }
+    }, [ isRevisitsLoading, wifi.hasConnection, filter ]);
 
     /**
      * If there are no more revisits to load, or if revisits are already loading, return. Otherwise,
@@ -114,10 +117,10 @@ export const RevisitsList: FC<RevisitsListProps> = ({ emptyMessage, filter, titl
      *
      * @return {Promise<void>} This function does not return any value
      */
-    const handleEndReach = async (): Promise<void> => {
+    const handleEndReach = useCallback( async (): Promise<void> => {
         if (!hasMoreRevisits || revisits.length === 0 || isRevisitsLoading || !wifi.hasConnection) return;
         await loadRevisits({ filter, search: searchTerm, loadMore: true });
-    }
+    }, [ hasMoreRevisits, revisits.length, isRevisitsLoading, wifi.hasConnection, filter, searchTerm ]);
 
     /**
      * HandleShowModal is a function that takes a revisit and a setShowModal function as parameters and
@@ -131,6 +134,56 @@ export const RevisitsList: FC<RevisitsListProps> = ({ emptyMessage, filter, titl
     const handleShowModal = useCallback((revisit: RevisitEntity, href: Href): void => {
         setSelectedRevisit(revisit);
         router.navigate(href);
+    }, []);
+
+    const renderHeader = useCallback(() => (
+        <View style={{ paddingHorizontal: margins.xs, width: '100%' }}>
+            <Title
+                containerStyle={{ marginVertical: margins.xs }}
+                text={ title }
+                textStyle={{ fontSize: fontSizes.md }}
+            />
+
+            <SearchInput
+                onClean={ () => setSearchTerm('') }
+                onSearch={ setSearchTerm }
+                refreshing={ isRefreshing }
+                searchTerm={ searchTerm }
+            />
+        </View>
+    ), [ title, searchTerm, isRefreshing ]);
+
+    const renderListEmpty = useCallback(() => (
+        <ListEmptyComponent
+            msg={ emptyMsg }
+            showMsg={ !isRevisitsLoading && revisits.length === 0 }
+        />
+    ), [ emptyMsg, isRevisitsLoading, revisits.length ]);
+
+    const renderFooter = useCallback(() => (
+        <ListFooterComponent
+            marginTopPlus={ revisits.length === 0 }
+            showLoader={ isRevisitsLoading }
+        />
+    ), [ revisits.length, isRevisitsLoading ]);
+
+    const renderRevisitItem = useCallback(({ item }: { item: RevisitEntity }) => {
+        const handleDelete = () => handleShowModal(item, '/(app)/(tabs)/revisits/delete-revisit-modal');
+        const handleDetail = () => router.navigate('/(app)/(tabs)/revisits/detail');
+        const handleEdit = () => router.navigate('/(app)/(tabs)/revisits/add-or-edit');
+        const handlePass = () => handleShowModal(item, '/(app)/(tabs)/revisits/pass-to-course-modal');
+        const handleRevisit = () => handleShowModal(item, '/(app)/(tabs)/revisits/revisit-modal');
+
+        return (
+            <RevisitCard
+                onDelete={ handleDelete }
+                onNavigateDetail={ handleDetail }
+                onNavigateEdit={ handleEdit }
+                onPass={ handlePass }
+                onRevisit={ handleRevisit }
+                revisit={ item }
+            />
+        );
     }, []);
 
     /**
@@ -167,54 +220,19 @@ export const RevisitsList: FC<RevisitsListProps> = ({ emptyMessage, filter, titl
             data={ revisits }
             estimatedItemSize={ 256 }
             keyExtractor={ (item) => `${ filter }-${ item.id }` }
-            ListFooterComponent={
-                <ListFooterComponent
-                    marginTopPlus={ revisits.length === 0 }
-                    showLoader={ isRevisitsLoading }
-                />
-            }
-            ListHeaderComponent={
-                <View style={{ paddingHorizontal: margins.xs, width: '100%' }}>
-                    <Title
-                        containerStyle={{ marginVertical: margins.xs }}
-                        text={ title }
-                        textStyle={{ fontSize: fontSizes.md }}
-                    />
-
-                    <SearchInput
-                        onClean={ () => handleSearchRevisits('') }
-                        onSearch={ handleSearchRevisits }
-                        searchTerm={ searchTerm }
-                        refreshing={ isRefreshing }
-                    />
-                </View>
-            }
-            ListEmptyComponent={
-                <ListEmptyComponent
-                    msg={ emptyMsg }
-                    showMsg={ !isRevisitsLoading && revisits.length === 0 }
-                />
-            }
+            ListEmptyComponent={ renderListEmpty }
+            ListFooterComponent={ renderFooter }
+            ListHeaderComponent={ renderHeader }
             ListHeaderComponentStyle={{ alignSelf: 'flex-start' }}
             onEndReached={ handleEndReach }
             onEndReachedThreshold={ 0.5 }
-            overScrollMode="never"
             refreshControl={
                 <RefreshControl
                     onRefresh={ handleRefreshing }
                     refreshing={ isRefreshing }
                 />
             }
-            renderItem={ ({ item }) => (
-                <RevisitCard
-                    onDelete={ () => handleShowModal(item, '/(app)/(tabs)/revisits/delete-revisit-modal') }
-                    onNavigateDetail={ () => router.navigate('/(app)/(tabs)/revisits/detail') }
-                    onNavigateEdit={ () => router.navigate('/(app)/(tabs)/revisits/add-or-edit') }
-                    onPass={ () => handleShowModal(item, '/(app)/(tabs)/revisits/pass-to-course-modal') }
-                    onRevisit={ () => handleShowModal(item, '/(app)/(tabs)/revisits/revisit-modal') }
-                    revisit={ item }
-                />
-            ) }
+            renderItem={ renderRevisitItem }
         />
     );
 }

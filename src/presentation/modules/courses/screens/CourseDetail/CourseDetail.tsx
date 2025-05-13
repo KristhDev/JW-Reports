@@ -87,15 +87,14 @@ const CourseDetail = (): JSX.Element => {
     return (
         <ScrollView
             contentContainerStyle={ themeStyles.scrollView }
-            overScrollMode="never"
             style={{ flex: 1 }}
         >
 
             {/* Title of detail */}
             <Title
-                containerStyle={ themeStyles.titleContainer }
+                containerStyle={{ ...themeStyles.titleContainer, marginBottom: margins.xs }}
                 text={ selectedCourse.personName.toUpperCase() }
-                textStyle={{ fontSize: fontSizes.md }}
+                textStyle={{ color: colors.darkSkyBlue, fontSize: fontSizes.md }}
             />
 
             {/* Text publication */}
@@ -175,7 +174,7 @@ const CourseDetail = (): JSX.Element => {
                     <View style={ styles.cardContainer }>
                         <View style={{ backgroundColor: colors.header }}>
                             <Text
-                                style={ styles.cardHeaderText }
+                                style={{ ...styles.cardHeaderText, color: colors.newYorkPink }}
                                 testID="course-detail-last-lesson-status"
                             >
                                 { lastLessonTitle }

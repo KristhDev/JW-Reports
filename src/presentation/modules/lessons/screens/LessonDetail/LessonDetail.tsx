@@ -24,14 +24,14 @@ import { themeStylesheet } from '@theme/styles';
  */
 const LessonDetail = (): JSX.Element => {
     const router = useRouter();
-    const { styles: themeStyles, theme: { fontSizes } } = useStyles(themeStylesheet);
+    const { styles: themeStyles, theme: { colors, fontSizes, margins } } = useStyles(themeStylesheet);
 
     const { state: { selectedCourse } } = useCourses();
     const { state: { selectedLesson } } = useLessons();
     const { translate } = useTranslation();
 
     const title = translate('screens.lessons.titles.courseLessonWith', {
-        personName: selectedCourse.personName
+        person: selectedCourse.personName
     }).toUpperCase();
 
     const lessonStatus = (selectedLesson.done)
@@ -55,15 +55,14 @@ const LessonDetail = (): JSX.Element => {
     return (
         <ScrollView
             contentContainerStyle={ themeStyles.scrollView }
-            overScrollMode="never"
             style={{ flex: 1 }}
         >
 
             {/* Title of detail */}
             <Title
-                containerStyle={ themeStyles.titleContainer }
+                containerStyle={{ ...themeStyles.titleContainer, marginBottom: margins.xs }}
                 text={ title }
-                textStyle={{ fontSize: fontSizes.md }}
+                textStyle={{ color: colors.darkSkyBlue, fontSize: fontSizes.md }}
             />
 
             {/* Text publication */}
