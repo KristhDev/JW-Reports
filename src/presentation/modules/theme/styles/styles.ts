@@ -9,8 +9,8 @@ export const themeStylesheet = createStyleSheet(({ borderRadius, colors, fontSiz
 
     createdAtContainer: {
         alignItems: 'flex-end',
+        justifyContent: 'flex-end',
         flex: 1,
-        marginTop: margins.md * 2,
         width: '100%'
     },
 
@@ -34,7 +34,7 @@ export const themeStylesheet = createStyleSheet(({ borderRadius, colors, fontSiz
         color: colors.text,
         fontSize: (fontSizes.sm + 3),
         fontWeight: 'bold',
-        marginBottom: margins.sm
+        marginBottom: margins.xs
     },
 
     detailText: {
@@ -139,7 +139,7 @@ export const themeStylesheet = createStyleSheet(({ borderRadius, colors, fontSiz
     },
 
     menuContainer: (width: number) => ({
-        backgroundColor: colors.contentHeader,
+        backgroundColor: colors.contextMenu,
         borderRadius: borderRadius.xs,
         elevation: 0,
         overflow: 'hidden',
@@ -203,8 +203,8 @@ export const themeStylesheet = createStyleSheet(({ borderRadius, colors, fontSiz
     },
 
     titleContainer: {
-        paddingBottom: 0,
-        paddingTop: margins.xs
+        marginBottom: margins.xl,
+        marginTop: margins.xs
     },
 
     titleContainerSpacingVertical: {

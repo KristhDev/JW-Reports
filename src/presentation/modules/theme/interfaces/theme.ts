@@ -3,12 +3,15 @@ import { breakpoints, darkTheme, lightTheme } from '../styles';
 /* Defining the interface for the Colors object. */
 export interface Colors {
     background: string;
+    borderTopTab: string;
     bottom: string;
     button: string;
     buttonTranslucent: string;
     buttonTransparent: string;
     card: string;
     contentHeader: string;
+    contextMenu: string;
+    darkSkyBlue: string;
     focus: string;
     header: string;
     headerText: string;
@@ -18,6 +21,7 @@ export interface Colors {
     modal: string;
     modalText: string;
     navbar: string;
+    newYorkPink: string;
     switchThumb: string;
     switchTrack: string;
     tableFooter: string;
