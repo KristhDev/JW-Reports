@@ -70,7 +70,7 @@ export default function PrecursorLayout(): JSX.Element {
                             showTitle
                             style={{ justifyContent: 'space-between' }}
                             title={ options.title }
-                            subtitle={ timeAdapter.format(selectedDate, timeAdapter.formats.MONTH_NAME) }
+                            subtitle={ timeAdapter.format(selectedDate, timeAdapter.formats.MONTH_AND_YEAR) }
                         >
                             <HeaderButtons
                                 logoutButton
