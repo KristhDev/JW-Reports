@@ -2,10 +2,10 @@ import React, { useState, FC } from 'react';
 import { View, Text, TextInput } from 'react-native';
 import { useStyles } from 'react-native-unistyles';
 import DateTimePicker, { DateType } from 'react-native-ui-datepicker';
+import { CalendarComponents, Styles } from 'react-native-ui-datepicker/lib/typescript/types';
 import Ionicons from '@expo/vector-icons/Ionicons';
 
 /* Config */
-import { locales } from '@config/calendar';
 import { timeAdapter } from '@config/di';
 
 /* Components */
@@ -21,6 +21,7 @@ import { FormCalendarProps } from './interfaces';
 
 /* Theme */
 import { themeStylesheet } from '@theme/styles';
+import { stylesheet } from './styles';
 
 /**
  * Renders a form calendar component.
@@ -50,13 +51,49 @@ export const FormCalendar: FC<FormCalendarProps> = ({
 }): JSX.Element => {
     const [ showCalendarModal, setShowCalendarModal ] = useState<boolean>(false);
 
-    const { styles: themeStyles, theme: { borderRadius, colors, fontSizes, margins } } = useStyles(themeStylesheet);
+    const { styles } = useStyles(stylesheet);
+    const { styles: themeStyles, theme: { colors, fontSizes, margins } } = useStyles(themeStylesheet);
     const [ dateValue, setDateValue ] = useState<string>(value);
 
     const { translate } = useTranslation();
     const { state: { userInterface } } = useUI();
 
-    const calendarLocale = locales[userInterface?.language as keyof typeof locales] || locales.en;
+    const calendarComponents: CalendarComponents = {
+        IconNext: (
+            <Ionicons
+                color={ colors.contentHeader }
+                name="chevron-forward"
+                size={ fontSizes.lg }
+            />
+        ),
+        IconPrev: (
+            <Ionicons
+                color={ colors.contentHeader }
+                name="chevron-back"
+                size={ fontSizes.lg }
+            />
+        )
+    }
+
+    const calendarStyles: Styles = {
+        button_next: styles.buttonNext,
+        button_prev: styles.buttonPrev,
+        day_cell: styles.dayCell,
+        day_label: styles.dayLabel,
+        month_label: styles.monthLabel,
+        month_selector_label: styles.monthSelectorLabel,
+        selected_label: styles.selectedLabel,
+        selected_month_label: styles.selectedMonthLabel,
+        selected_month: styles.selectedMonth,
+        selected_year_label: styles.selectedYearLabel,
+        selected_year: styles.selectedYear,
+        selected: styles.selected,
+        today_label: styles.todayLabel,
+        today: styles.today,
+        weekday_label: styles.weekdayLabel,
+        year_label: styles.yearLabel,
+        year_selector_label: styles.yearSelectorLabel
+    }
 
     /**
      * Handles the cancel action for the form calendar.
@@ -131,36 +168,15 @@ export const FormCalendar: FC<FormCalendarProps> = ({
             <Modal isOpen={ showCalendarModal }>
                 <View style={ themeStyles.modalContainer }>
                     <DateTimePicker
-                        buttonNextIcon={
-                            <Ionicons
-                                color={ colors.contentHeader }
-                                name="chevron-forward"
-                                size={ fontSizes.lg }
-                                style={{ backgroundColor: colors.button, borderRadius: borderRadius.xs, padding: 2 }}
-                            />
-                        }
-                        buttonPrevIcon={
-                            <Ionicons
-                                color={ colors.contentHeader }
-                                name="chevron-back"
-                                size={ fontSizes.lg }
-                                style={{ backgroundColor: colors.button, borderRadius: borderRadius.xs, padding: 2 }}
-                            />
-                        }
-                        calendarTextStyle={{ color: colors.text }}
+                        components={ calendarComponents }
                         date={ dateValue }
-                        dayContainerStyle={{ borderRadius: borderRadius.xs }}
-                        displayFullDays
-                        headerTextStyle={{ color: colors.text, fontSize: (fontSizes.sm + 4) }}
-                        locale={ calendarLocale }
+                        locale={ userInterface.language || 'en' }
                         minDate={ minDate }
                         mode="single"
-                        monthContainerStyle={{ borderColor: colors.button, backgroundColor: 'transparent' }}
                         onChange={ (params) => handleChange(params.date) }
-                        selectedItemColor={ colors.button }
-                        selectedTextStyle={{ color: colors.contentHeader, fontWeight: 'bold' }}
-                        weekDaysTextStyle={{ color: colors.button }}
-                        yearContainerStyle={{ borderColor: colors.button, backgroundColor: 'transparent' }}
+                        showOutsideDays
+                        styles={ calendarStyles }
+                        weekdaysFormat="short"
                     />
 
                     <ModalActions
