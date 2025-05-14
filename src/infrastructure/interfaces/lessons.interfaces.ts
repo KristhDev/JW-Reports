@@ -1,4 +1,3 @@
-import { string } from 'yup';
 import { CourseEndpoint } from './courses.interfaces';
 
 /**

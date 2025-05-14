@@ -117,7 +117,7 @@ const useStatus = () => {
      * @param {T} fromErrors - Object with error of forms
      * @return {void} This function does not return anything
      */
-    const setErrorForm = <T extends Object>(fromErrors: T): void => {
+    const setErrorForm = <T extends object>(fromErrors: T): void => {
         const values = Object.values(fromErrors) as string[];
         setStatus({ msg: values[0], code: 400 });
     }

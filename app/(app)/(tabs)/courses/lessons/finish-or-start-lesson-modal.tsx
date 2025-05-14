@@ -3,8 +3,6 @@ import { useRouter } from 'expo-router';
 
 import { FinishOrStartLessonModal } from '@lessons/screens';
 
-import { useLessons } from '@lessons/hooks';
-
 export default function FinishOrStartLessonModalScreen(): JSX.Element {
     const router = useRouter();
 

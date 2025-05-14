@@ -55,7 +55,7 @@ export const HeaderButtons: FC<HeaderButtonsProps> = ({
     const [ showMonthPicker, setShowMonthPicker ] = useState<boolean>(false);
 
     const router = useRouter();
-    const { theme: { colors, fontSizes, margins } } = useStyles();
+    const { theme: { colors, fontSizes } } = useStyles();
 
     const { signOut } = useAuth();
     const { setSelectedDate, state: { selectedDate } } = usePreaching();

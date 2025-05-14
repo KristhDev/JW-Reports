@@ -302,7 +302,9 @@ const useRevisits = () => {
             }
 
             setHasMoreRevisits(revisits.length >= 10);
-            (loadMore) ? addRevisits(revisits) : setRevisits(revisits);
+
+            if (loadMore) addRevisits(revisits);
+            else setRevisits(revisits);
         }
         catch (error) {
             setError(error);

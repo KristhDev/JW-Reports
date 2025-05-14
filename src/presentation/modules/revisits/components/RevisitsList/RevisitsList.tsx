@@ -146,7 +146,7 @@ export const RevisitsList: FC<RevisitsListProps> = ({ emptyMessage, filter, titl
 
             <SearchInput
                 onClean={ () => setSearchTerm('') }
-                onSearch={ setSearchTerm }
+                onSearch={ handleSearchRevisits }
                 refreshing={ isRefreshing }
                 searchTerm={ searchTerm }
             />

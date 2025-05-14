@@ -3,7 +3,7 @@ import { Formats, LocaleValue } from '@infrastructure/interfaces';
 export abstract class TimeAdapterContract {
     public abstract readonly formats: Formats;
     public abstract format(date: string | number | Date, format: string): string;
-    public abstract getArrayValuesOfWeek<T extends { day: string }>(array: T[]): Array<T>;
+    public abstract getArrayValuesOfWeek<T extends { day: string }>(array: T[]): T[];
     public abstract getDiffBetweenDatesInHours(date1: string | number | Date, date2: string | number | Date): number;
     public abstract getDiffBetweenDatesInMinutes(date1: string | number | Date, date2: string | number | Date): number;
     public abstract getFirstDateOfMonth(date: string | number | Date, format: string): string;

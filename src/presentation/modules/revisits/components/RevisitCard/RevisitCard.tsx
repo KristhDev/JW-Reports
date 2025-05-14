@@ -1,4 +1,4 @@
-import React, { memo, useCallback, useState } from 'react';
+import React, { FC, memo, useCallback, useState } from 'react';
 import { Pressable, Text, View } from 'react-native';
 import { useStyles } from 'react-native-unistyles';
 import Ionicons from '@expo/vector-icons/Ionicons';
@@ -23,14 +23,14 @@ import { Characters } from '@utils';
 import { stylesheet } from './styles';
 import { themeStylesheet } from '@theme/styles';
 
-export const RevisitCard = memo<RevisitCardProps>(({
+const RevisitCardComponent: FC<RevisitCardProps> = ({
     onDelete,
     onNavigateDetail,
     onNavigateEdit,
     onPass,
     onRevisit,
     revisit
-}) => {
+}): JSX.Element => {
     const [ isOpen, setIsOpen ] = useState<boolean>(false);
 
     const { styles: themeStyles } = useStyles(themeStylesheet);
@@ -152,4 +152,6 @@ export const RevisitCard = memo<RevisitCardProps>(({
             </View>
         </Pressable>
     );
-});
+}
+
+export const RevisitCard = memo(RevisitCardComponent);

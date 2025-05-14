@@ -1,4 +1,4 @@
-import React, { forwardRef, useEffect, useImperativeHandle, useState } from 'react';
+import React, { forwardRef, ForwardRefRenderFunction, useEffect, useImperativeHandle, useState } from 'react';
 import { Image, Text, useWindowDimensions, View } from 'react-native';
 import { useStyles } from 'react-native-unistyles';
 import Ionicons from '@expo/vector-icons/Ionicons';
@@ -31,7 +31,7 @@ import { stylesheet } from './styles';
  * @param {StyleProp<ViewStyle>} props.style - The style to apply to the component container.
  * @return {JSX.Element} The rendered form image component.
  */
-export const FormImage  = forwardRef<FormImageRef, FormImageProps>(({
+export const FormImageComponent: ForwardRefRenderFunction<FormImageRef, FormImageProps> = ({
     cameraButtonText,
     label,
     onSelectImage,
@@ -160,4 +160,6 @@ export const FormImage  = forwardRef<FormImageRef, FormImageProps>(({
             </View>
         </View>
     );
-});
+}
+
+export const FormImage  = forwardRef(FormImageComponent);

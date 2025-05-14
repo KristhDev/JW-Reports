@@ -314,7 +314,9 @@ const useLessons = () => {
             }
 
             setHasMoreLessons(lessons.length >= 10);
-            (loadMore) ? addLessons(lessons) : setLessons(lessons);
+
+            if (loadMore) addLessons(lessons);
+            else setLessons(lessons);
         }
         catch (error) {
             setError(error);

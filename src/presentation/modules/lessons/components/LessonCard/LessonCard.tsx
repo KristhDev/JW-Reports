@@ -1,4 +1,4 @@
-import React, { memo, useState } from 'react';
+import React, { FC, memo, useState } from 'react';
 import { Pressable, Text, View } from 'react-native';
 import { useStyles } from 'react-native-unistyles';
 import Ionicons from '@expo/vector-icons/Ionicons';
@@ -34,7 +34,14 @@ import { stylesheet } from './styles';
  * - onFinish: This is a function to finish the lesson
  * @return {JSX.Element} rendered component to show the lesson
  */
-export const LessonCard = memo<LessonCardProps>(({ lesson, onNavigateDetail, onNavigateEdit, onClick, onDelete, onFinish }): JSX.Element => {
+const LessonCardComponent: FC<LessonCardProps> = ({
+    lesson,
+    onNavigateDetail,
+    onNavigateEdit,
+    onClick,
+    onDelete,
+    onFinish
+}): JSX.Element => {
     const [ isOpen, setIsOpen ] = useState<boolean>(false);
 
     const { styles, theme: { colors, fontSizes } } = useStyles(stylesheet);
@@ -151,4 +158,6 @@ export const LessonCard = memo<LessonCardProps>(({ lesson, onNavigateDetail, onN
             </View>
         </Pressable>
     );
-}); 
+}
+
+export const LessonCard = memo(LessonCardComponent); 

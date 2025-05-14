@@ -1,4 +1,4 @@
-import { memo, useCallback, useState } from 'react';
+import { FC, memo, useCallback, useState } from 'react';
 import { Pressable, Text, View } from 'react-native';
 import { useRouter } from 'expo-router';
 import { useStyles } from 'react-native-unistyles';
@@ -36,7 +36,7 @@ import { themeStylesheet } from '@theme/styles';
  * @param {() => void} props.onFinishOrStart The function to finish or start again the course
  * @return {JSX.Element} The JSX element representing the course card
  */
-export const CourseCard = memo<CourseCardProps>(({ course, onActiveOrSuspend, onDelete, onFinishOrStart }): JSX.Element => {
+const CourseCardComponent: FC<CourseCardProps> = ({ course, onActiveOrSuspend, onDelete, onFinishOrStart }): JSX.Element => {
     const [ isOpen, setIsOpen ] = useState<boolean>(false);
 
     const router = useRouter();
@@ -215,4 +215,6 @@ export const CourseCard = memo<CourseCardProps>(({ course, onActiveOrSuspend, on
             </View>
         </Pressable>
     );
-});
+}
+
+export const CourseCard = memo(CourseCardComponent);

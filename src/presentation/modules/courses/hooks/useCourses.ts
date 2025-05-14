@@ -366,7 +366,9 @@ const useCourses = () => {
             }
 
             setHasMoreCourses(courses.length >= 10);
-            (loadMore) ? addCourses(courses) : setCourses(courses);
+
+            if (loadMore) addCourses(courses);
+            else setCourses(courses);
         }
         catch (error) {
             setError(error);

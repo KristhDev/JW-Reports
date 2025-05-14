@@ -4,7 +4,7 @@ import { timeAdapter } from '@config/di';
 /* Interfaces */
 import { CourseFormValues } from '@courses/interfaces';
 
-export interface UpdateCourseDtoValues extends CourseFormValues {}
+export type UpdateCourseDtoValues = CourseFormValues;
 
 export class UpdateCourseDto {
     private constructor(

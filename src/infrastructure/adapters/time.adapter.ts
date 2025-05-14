@@ -46,7 +46,7 @@ export class TimeAdapter implements TimeAdapterContract {
      * @param {Array<T>} array - An array of objects to be filtered.
      * @returns {Array<T>} An array of objects where the 'day' property is within the current week.
      */
-    public getArrayValuesOfWeek<T extends { day: string }>(array: T[]): Array<T> {
+    public getArrayValuesOfWeek<T extends { day: string }>(array: T[]): T[] {
         const firstDayOfWeek = this.getFirstDayOfCurrentWeek();
         const lastDayOfWeek = this.getLastDayOfCurrentWeek();
 

@@ -4,7 +4,7 @@ import { timeAdapter } from '@config/di';
 /* Interfaces */
 import { PreachingFormValues } from '@preaching/interfaces';
 
-export interface UpdatePreachingDtoValues extends PreachingFormValues {}
+export type UpdatePreachingDtoValues = PreachingFormValues;
 
 export class UpdatePreachingDto {
 

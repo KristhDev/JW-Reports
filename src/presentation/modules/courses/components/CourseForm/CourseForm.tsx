@@ -54,9 +54,8 @@ export const CourseForm = (): JSX.Element => {
      * @return {void} This function does not return any value.
      */
     const handleSaveOrUpdate = (formValues: CourseFormValues): void => {
-        (selectedCourse.id === '')
-            ? saveCourse(formValues, { onSuccess: router.back })
-            : updateCourse(formValues, { onSuccess: router.back });
+        if (selectedCourse.id === '') saveCourse(formValues, { onSuccess: router.back });
+        else updateCourse(formValues, { onSuccess: router.back });
     }
 
     const { errors, handleChange, handleSubmit, isValid, setFieldValue, values } = useFormik({

@@ -16,7 +16,7 @@ import { Fab } from '../Fab';
  * @return {JSX.Element} Return jsx element to render back button
  */
 export const BackButton: FC<{ color?: string, onPress?: () => void }> = ({ color, onPress }): JSX.Element => {
-    const { theme: { colors, fontSizes, margins } } = useStyles();
+    const { theme: { colors, fontSizes } } = useStyles();
 
     return (
         <Fab

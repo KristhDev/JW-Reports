@@ -50,7 +50,7 @@ export const CredentialsForm = (): JSX.Element => {
             password: '',
             confirmPassword: ''
         },
-        onSubmit: (values, { resetForm }) => updatePassword(values).then(() => resetForm()),
+        onSubmit: (values, { resetForm }) => excuteAsyncUpdatePassword(values).then(() => resetForm()),
         validateOnMount: true,
         validationSchema: generatePasswordFormSchema()
     });
