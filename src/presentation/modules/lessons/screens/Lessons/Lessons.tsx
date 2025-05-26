@@ -3,9 +3,6 @@ import { useNavigation, useRouter } from 'expo-router';
 import { useStyles } from 'react-native-unistyles';
 import Ionicons from '@expo/vector-icons/Ionicons';
 
-/* Features */
-import { INIT_LESSON } from '@application/features/lessons';
-
 /* Components */
 import { LessonsList } from '../../components';
 import { Fab } from '@ui/components';
@@ -27,11 +24,10 @@ const Lessons = (): JSX.Element => {
     const navigation = useNavigation();
     const router = useRouter();
 
-    const { setSelectedLesson } = useLessons();
+    const { clearSelectedLesson } = useLessons();
 
     /**
-     * I want to set the selectedLesson to the INIT_LESSON, but I want to change the next_lesson
-     * property to the current date.
+     * Navigate to the add or edit lesson screen.
      *
      * @return {void} This function does not return anything
      */
@@ -41,10 +37,7 @@ const Lessons = (): JSX.Element => {
 
     useEffect(() => {
         const focusUnsubscribe = navigation.addListener('focus', () => {
-            setSelectedLesson({
-                ...INIT_LESSON,
-                nextLesson: new Date().toString(),
-            });
+            clearSelectedLesson();
         });
 
         return focusUnsubscribe;
