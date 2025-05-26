@@ -3,9 +3,6 @@ import { useNavigation, useRouter } from 'expo-router';
 import { useStyles } from 'react-native-unistyles';
 import Ionicons from '@expo/vector-icons/Ionicons';
 
-/* Features */
-import { INIT_REVISIT } from '@application/features/revisits';
-
 /* Components */
 import { RevisitsList } from '../../components';
 import { Fab } from '@ui/components';
@@ -31,20 +28,15 @@ const Revisits: FC<RevisitsProps> = ({ emptyMessage, filter, renderFab, title })
     const navigation = useNavigation();
     const { styles: themeStyles, theme: { colors, fontSizes } } = useStyles(themeStylesheet);
 
-    const { setSelectedRevisit, setRevisitsScreenHistory } = useRevisits();
+    const { clearSelectedRevisit, setRevisitsScreenHistory } = useRevisits();
 
     /**
-     * I'm going to set the selectedRevisit to the INIT_REVISIT object, but I'm going to override the
-     * next_visit property with the current date.
+     * I'm going to clear the selectedRevisit and navigate to the add or edit screen.
      *
      * @return {void} This function does not return anything
      */
     const handleNavigate = (): void => {
-        setSelectedRevisit({
-            ...INIT_REVISIT,
-            nextVisit: new Date().toString()
-        });
-
+        clearSelectedRevisit();
         router.navigate('/(app)/(tabs)/revisits/add-or-edit');
     }
 
