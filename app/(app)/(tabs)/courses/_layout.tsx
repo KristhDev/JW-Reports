@@ -48,7 +48,7 @@ export default function CoursesLayout(): JSX.Element {
             }}
         >
             <Stack.Screen
-                name="(tabs)"
+                name="(top-tabs)"
                 options={{ title: translate('navigation.titles.courses') }}
             />
 
