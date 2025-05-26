@@ -31,8 +31,6 @@ import {
     updateLastLessonInCourse as updateLastLessonInCourseAction
 } from '@application/features/courses';
 
-import { Pagination } from '@application/features/ui';
-
 /* DTOs */
 import { CreateLessonDto, FinishOrStartLessonDto, UpdateLessonDto } from '@domain/dtos';
 
@@ -46,7 +44,7 @@ import { useNetwork, useStatus } from '@shared/hooks';
 /* Interfaces */
 import { LessonFormValues } from '../interfaces';
 import { UtilFunctions } from '@shared/interfaces';
-import { LoadResourcesOptions } from '@ui/interfaces';
+import { LoadResourcesOptions, Pagination } from '@ui/interfaces';
 
 /**
  * Hook to management lessons of store with state and actions
@@ -84,18 +82,6 @@ const useLessons = () => {
     const setSelectedLesson = (lesson: LessonEntity) => dispatch(setSelectedLessonAction({ lesson }));
     const updateLastLessonInCourse = (lesson: LessonEntity) => dispatch(updateLastLessonInCourseAction({ lesson }));
     const updateLessonActionState = (lesson: LessonEntity) => dispatch(updateLessonAction({ lesson }));
-
-    /**
-     * Resets the selected lesson to the initial state with the `nextLesson` date set to the current date.
-     *
-     * @return {void} This function does not return anything.
-     */
-    const resetSelectedLesson = (): void => {
-        setSelectedLesson({
-            ...INIT_LESSON,
-            nextLesson: new Date().toString()
-        });
-    }
 
     /**
      * Checks if the user can alterate a lesson. If the lesson is not selected or
@@ -162,6 +148,18 @@ const useLessons = () => {
     }
 
     /**
+     * Clears the selected lesson to the initial state with the `nextLesson` date set to the current date.
+     *
+     * @return {void} This function does not return anything.
+     */
+    const clearSelectedLesson = (): void => {
+        setSelectedLesson({
+            ...INIT_LESSON,
+            nextLesson: new Date().toString()
+        });
+    }
+
+    /**
      * Deletes the selected lesson and updates the state accordingly.
      *
      * @param {Object} options - Options for the delete operation.
@@ -194,7 +192,7 @@ const useLessons = () => {
             replaceLastLessonInCourse(state.selectedLesson.id, state.lessons[0]);
             onSuccess && onSuccess();
 
-            resetSelectedLesson();
+            clearSelectedLesson();
             setStatus({ code: 200, msg: lessonsMessages.DELETED_SUCCESS });
         }
         catch (error) {
@@ -416,6 +414,7 @@ const useLessons = () => {
         setSelectedLesson,
 
         // Functions
+        clearSelectedLesson,
         deleteLesson,
         finishOrStartLesson,
         loadLastLesson,
