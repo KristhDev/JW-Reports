@@ -1,4 +1,4 @@
-import { Pagination } from '@application/features/ui';
+import { Pagination } from '@ui/interfaces';
 
 export interface PaginateOptions<F = any> {
     filter?: F
