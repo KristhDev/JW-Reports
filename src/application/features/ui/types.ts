@@ -38,14 +38,3 @@ export type setRecordedAudioPayload = {
 export type SetKeyboardPayload = {
     keyboard: Keyboard;
 }
-
-/**
- * Defining an interface called Pagination.
- *
- * @property {number} from - The number of items to skip.
- * @property {number} to - The number of items to return.
- */
-export interface Pagination {
-    from: number;
-    to: number;
-}

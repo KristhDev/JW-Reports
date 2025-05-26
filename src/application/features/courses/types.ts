@@ -3,7 +3,7 @@ import { CourseEntity, LessonEntity } from '@domain/entities';
 
 /* Types */
 import { CourseFilter } from '@courses/interfaces';
-import { Pagination } from '../ui/types';
+import { Pagination } from '@ui/interfaces';
 
 /**
  * Defining the structure of the CoursesState object.

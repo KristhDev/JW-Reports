@@ -1,4 +1,4 @@
-import { Pagination } from './ui';
+import { Pagination } from '@ui/interfaces';
 
 /**
  * Payload for setting the exporting state.

@@ -1,5 +1,5 @@
 import { LessonEntity, LessonWithCourseEntity } from '@domain/entities';
-import { Pagination } from '../ui/types';
+import { Pagination } from '@ui/interfaces';
 
 /**
  * Defining the structure of the LessonsState object.
