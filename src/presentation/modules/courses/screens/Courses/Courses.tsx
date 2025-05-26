@@ -3,9 +3,6 @@ import { useStyles } from 'react-native-unistyles';
 import { useNavigation, useRouter } from 'expo-router';
 import Ionicons from '@expo/vector-icons/Ionicons';
 
-/* Features */
-import { INIT_COURSE } from '@application/features/courses';
-
 /* Components */
 import { CoursesList } from '../../components';
 import { Fab } from '@ui/components';
@@ -31,17 +28,16 @@ const Courses: FC<CoursesProps> = ({ emptyMessage, filter, renderFab, title }): 
     const router = useRouter();
     const { styles: themeStyles, theme: { colors, fontSizes } } = useStyles(themeStylesheet);
 
-    const { setCoursesScreenHistory, setSelectedCourse } = useCourses();
+    const { clearSelectedCourse, setCoursesScreenHistory } = useCourses();
 
     /**
-     * The function handleNavigate is a function that takes no parameters and returns nothing. It sets
-     * the selectedCourse to the INIT_COURSE constant and then navigates to the AddOrEditCourseScreen
-     * screen.
+     * The function handleNavigate is a function that takes no parameters and returns nothing.
+     * It calls the clearSelectedCourse function and then navigates to the add-or-edit screen.
      *
      * @return {void} This function does not return anything.
      */
     const handleNavigate = (): void => {
-        setSelectedCourse(INIT_COURSE);
+        clearSelectedCourse();
         router.navigate('/(app)/(tabs)/courses/add-or-edit');
     }
 
