@@ -53,3 +53,14 @@ export interface ModalProps {
     isOpen: boolean;
     onClose: () => void;
 }
+
+/**
+ * Defining an interface called Pagination.
+ *
+ * @property {number} from - The number of items to skip.
+ * @property {number} to - The number of items to return.
+ */
+export interface Pagination {
+    from: number;
+    to: number;
+}
