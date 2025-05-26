@@ -37,7 +37,7 @@ export const lightColors: Colors = {
 /* Exporting the object `darkColors` as a constant. */
 export const darkColors: Colors = {
     background: '#000000',
-    borderTopTab: '#A3A3A3',
+    borderTopTab: '#515151',
     bottom: '#292929',
     button: '#C0A7E1',
     buttonTranslucent: 'rgba(192, 167, 225, 0.50)',
