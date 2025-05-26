@@ -6,8 +6,6 @@ import { useStyles } from 'react-native-unistyles';
 
 import { revisitsFilters } from '@application/constants/utils';
 
-import { INIT_REVISIT } from '@application/features/revisits';
-
 import { useRevisits } from '@revisits/hooks';
 import { useTranslation } from '@ui/hooks';
 
@@ -24,7 +22,7 @@ export default function RevisitsTopTabsLauyout(): JSX.Element {
     const navigation = useNavigation();
     const { theme: { colors } } = useStyles();
 
-    const { setSelectedRevisit } = useRevisits();
+    const { clearSelectedRevisit } = useRevisits();
     const { translate } = useTranslation();
 
     const sceneStyle = useMemo(() => ({ backgroundColor: colors.background }), [ colors.background ]);
@@ -43,10 +41,7 @@ export default function RevisitsTopTabsLauyout(): JSX.Element {
 
     useEffect(() => {
         const focusUnsubscribe = navigation.addListener('focus', () => {
-            setSelectedRevisit({
-                ...INIT_REVISIT,
-                nextVisit: new Date().toString(),
-            });
+            clearSelectedRevisit();
         });
 
         return focusUnsubscribe;
