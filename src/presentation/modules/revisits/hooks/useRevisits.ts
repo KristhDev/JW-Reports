@@ -29,7 +29,6 @@ import {
     setSelectedRevisit as setSelectedRevisitAction,
     updateRevisit as updateRevisitAction
 } from '@application/features/revisits';
-import { Pagination } from '@application/features/ui';
 
 /* Dtos */
 import { CompleteRevisitDto, CreateRevisitDto, UpdateRevisitDto } from '@domain/dtos';
@@ -45,6 +44,7 @@ import { useTranslation } from '@ui/hooks';
 /* Interfaces */
 import { loadRevisitsOptions, RevisitFilter, SaveRevisitOptions, UpdateRevisitOptions } from '../interfaces';
 import { UtilFunctions } from '@shared/interfaces';
+import { Pagination } from '@ui/interfaces';
 
 /**
  * Hook to management revisits of store with state and actions
@@ -107,6 +107,13 @@ const useRevisits = () => {
         }
 
         return true;
+    }
+
+    const clearSelectedRevisit = (): void => {
+        setSelectedRevisit({
+            ...INIT_REVISIT,
+            nextVisit: new Date().toString(),
+        });
     }
 
     /**
@@ -420,6 +427,7 @@ const useRevisits = () => {
         setSelectedRevisit,
 
         // Functions
+        clearSelectedRevisit,
         completeRevisit,
         deleteRevisit,
         exportRevisits,
