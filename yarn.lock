@@ -7974,10 +7974,10 @@ react-native-onesignal@^5.2.9:
   dependencies:
     invariant "^2.2.2"
 
-react-native-pager-view@6.5.2:
-  version "6.5.2"
-  resolved "https://registry.yarnpkg.com/react-native-pager-view/-/react-native-pager-view-6.5.2.tgz#dee7b44a6a0cc354cfbbcca4286c1bb12a248992"
-  integrity sha512-7TstYJ9ERtlC8WNwHGI0ueJ2tgaT5VJwFk94qiYk7UZBXI0RPk5RtZCPyN7h7h1Mc/57wBw6HS6jWHlMYluhtQ==
+react-native-pager-view@6.5.1:
+  version "6.5.1"
+  resolved "https://registry.yarnpkg.com/react-native-pager-view/-/react-native-pager-view-6.5.1.tgz#e639e8c975f4c749aae1c3120dc4208265fce4cc"
+  integrity sha512-YdX7bP+rPYvATMU7HzlMq9JaG3ui/+cVRbFZFGW+QshDULANFg9ECR1BA7H7JTIcO/ZgWCwF+1aVmYG5yBA9Og==
 
 react-native-popup-menu@^0.17.0:
   version "0.17.0"
