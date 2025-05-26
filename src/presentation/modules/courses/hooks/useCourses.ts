@@ -35,7 +35,6 @@ import {
 } from '@application/features/courses';
 
 import { setLastLesson as setLastLessonAction } from '@application/features/lessons';
-import { Pagination } from '@application/features/ui';
 
 /* DTOs */
 import { ActiveOrSuspendCourseDto, CreateCourseDto, FinishOrStartCourseDto, UpdateCourseDto } from '@domain/dtos';
@@ -52,6 +51,7 @@ import { useTranslation } from '@ui/hooks';
 /* Interfaces */
 import { CourseFilter, CourseFormValues, loadCoursesOptions } from '../interfaces';
 import { UtilFunctions } from '@shared/interfaces';
+import { Pagination } from '@ui/interfaces';
 
 /**
  * Hook to management courses of store with state and actions
@@ -192,6 +192,10 @@ const useCourses = () => {
 
             setError(error);
         }
+    }
+
+    const clearSelectedCourse = (): void => {
+        setSelectedCourse({ ...INIT_COURSE });
     }
 
     /**
@@ -474,6 +478,7 @@ const useCourses = () => {
 
         // Functions
         activeOrSuspendCourse,
+        clearSelectedCourse,
         deleteCourse,
         exportCourses,
         finishOrStartCourse,
