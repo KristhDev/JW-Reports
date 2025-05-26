@@ -4,9 +4,6 @@ import { useRouter } from 'expo-router';
 import { useStyles } from 'react-native-unistyles';
 import Ionicons from '@expo/vector-icons/Ionicons';
 
-/* Features */
-import { INIT_LESSON } from '@application/features/lessons';
-
 /* Components */
 import { DropdownMenu, DropdownMenuItem, Fab } from '@ui/components';
 
@@ -44,7 +41,7 @@ const CourseCardComponent: FC<CourseCardProps> = ({ course, onActiveOrSuspend, o
     const { styles, theme: { colors, fontSizes } } = useStyles(stylesheet);
 
     const { setSelectedCourse } = useCourses();
-    const { setSelectedLesson } = useLessons();
+    const { clearSelectedLesson } = useLessons();
     const { translate } = useTranslation();
 
     const continueOrSuspendLabel = (course.suspended) 
@@ -89,10 +86,7 @@ const CourseCardComponent: FC<CourseCardProps> = ({ course, onActiveOrSuspend, o
         setIsOpen(false);
 
         setSelectedCourse(course);
-        setSelectedLesson({
-            ...INIT_LESSON,
-            nextLesson: new Date().toString()
-        });
+        clearSelectedLesson();
 
         router.navigate('/(app)/(tabs)/courses/lessons/add-or-edit');
     }, [ course ]);
