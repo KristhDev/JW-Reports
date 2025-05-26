@@ -7,10 +7,6 @@ import Ionicons from '@expo/vector-icons/Ionicons';
 /* DI */
 import { timeAdapter } from '@config/di';
 
-/* Features */
-import { INIT_LESSON } from '@application/features/lessons';
-import { INIT_REVISIT } from '@application/features/revisits';
-
 /* Entities */
 import { LessonWithCourseEntity, RevisitEntity } from '@domain/entities';
 
@@ -67,6 +63,7 @@ const PublisherHome = (): JSX.Element => {
             isLessonDeleting,
             lastLesson
         },
+        clearSelectedLesson,
         deleteLesson,
         loadLastLesson,
         setSelectedLesson
@@ -78,6 +75,7 @@ const PublisherHome = (): JSX.Element => {
             isRevisitDeleting,
             lastRevisit
         },
+        clearSelectedRevisit,
         deleteRevisit,
         setSelectedRevisit,
         loadLastRevisit
@@ -151,10 +149,7 @@ const PublisherHome = (): JSX.Element => {
      */
     const handleHideRevisitsModal = (setShowModal: (value: boolean) => void): void => {
         setShowModal(false);
-        setSelectedRevisit({
-            ...INIT_REVISIT,
-            nextVisit: new Date().toString()
-        });
+        clearSelectedRevisit();
     }
 
     /**
@@ -166,10 +161,7 @@ const PublisherHome = (): JSX.Element => {
      */
     const handleHideLessonsModal = (setShowModal: (value: boolean) => void): void => {
         setShowModal(false);
-        setSelectedLesson({
-            ...INIT_LESSON,
-            nextLesson: new Date().toString()
-        });
+        clearSelectedLesson();
     }
 
     /**
