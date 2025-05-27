@@ -23,7 +23,6 @@ import {
     setCourseFilter as setCourseFilterAction,
     setCourses as setCoursesAction,
     setCoursesPagination as setCoursesPaginationAction,
-    setCoursesScreenHistory as setCoursesScreenHistoryAction,
     setHasMoreCourses as setHasMoreCoursesAction,
     setIsCourseDeleting as setIsCourseDeletingAction,
     setIsCoursesExporting as setIsCoursesExportingAction,
@@ -79,7 +78,6 @@ const useCourses = () => {
     const setCourseFilter = (filter: CourseFilter) => dispatch(setCourseFilterAction({ filter }));
     const setCourses = (courses: CourseEntity[]) => dispatch(setCoursesAction({ courses }));
     const setCoursesPagination = (pagination: Pagination) => dispatch(setCoursesPaginationAction({ pagination }));
-    const setCoursesScreenHistory = (newScreen: string) => dispatch(setCoursesScreenHistoryAction({ newScreen }));
     const setHasMoreCourses = (hasMore: boolean) => dispatch(setHasMoreCoursesAction({ hasMore }));
     const setIsCourseDeleting = (isDeleting: boolean) => dispatch(setIsCourseDeletingAction({ isDeleting }));
     const setIsCourseLoading = (isLoading: boolean) => dispatch(setIsCourseLoadingAction({ isLoading }));
@@ -383,12 +381,10 @@ const useCourses = () => {
     }
 
     /**
-     * This function saves a course to the database and then navigates to the CoursesTopTabsNavigation
-     * screen.
+     * This function saves a course to the database.
      *
      * @param {CourseFormValues} courseValues - This is a values for save course
-     * @param {boolean} goBack - This parameter allows you to return to the previous screen, by default it is `false`
-     * @param {Function} onFinish - This callback executed when the process is finished (success or failure)
+     * @param {UtilFunctions} utils - 
      * @return {Promise<void>} This function does not return anything.
      */
     const saveCourse = async (courseValues: CourseFormValues, utils?: UtilFunctions): Promise<void> => {
@@ -472,7 +468,6 @@ const useCourses = () => {
         clearCourses,
         removeCourses,
         setCoursesPagination,
-        setCoursesScreenHistory,
         setRefreshCourses,
         setSelectedCourse,
 
