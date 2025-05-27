@@ -1,4 +1,4 @@
-import { FC, useCallback, useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect } from 'react';
 import { RefreshControl, View } from 'react-native';
 import { Href, router, useNavigation } from 'expo-router';
 import { FlashList } from '@shopify/flash-list';
@@ -9,16 +9,11 @@ import { CourseEntity } from '@domain/entities';
 
 /* Components */
 import { CourseCard } from '../CourseCard';
-import { ListEmptyComponent, ListFooterComponent, SearchInput, Title } from '@ui/components';
+import { Filters, ListEmptyComponent, ListFooterComponent, SearchInput } from '@ui/components';
 
 /* Hooks */
-import { useCourses } from '../../hooks';
+import { useCourses, useCoursesList } from '../../hooks';
 import { useLessons } from '@lessons/hooks';
-import { useNetwork } from '@shared/hooks';
-import { useTranslation } from '@ui/hooks';
-
-/* Interfaces */
-import { CoursesListProps } from './interfaces';
 
 /* Theme */
 import { themeStylesheet } from '@theme/styles';
@@ -35,94 +30,29 @@ import { themeStylesheet } from '@theme/styles';
  * - title: This string is a title of screen
  * @return {JSX.Element} rendered component to show the list of courses
  */
-export const CoursesList: FC<CoursesListProps> = ({ emptyMessage, filter, title }): JSX.Element => {
-    const [ searchTerm, setSearchTerm ] = useState<string>('');
-    const [ isRefreshing, setIsRefreshing ] = useState<boolean>(false);
-
+export const CoursesList = (): JSX.Element => {
     const navigation = useNavigation();
-    const navigationState = navigation.getState();
+    const { styles: themeStyles, theme: { margins } } = useStyles(themeStylesheet);
 
-    const { styles: themeStyles, theme: { fontSizes, margins } } = useStyles(themeStylesheet);
-
+    const { setSelectedCourse } = useCourses();
     const {
-        state: {
-            courses,
-            coursesScreenHistory,
-            hasMoreCourses,
-            isCoursesLoading,
-            refreshCourses,
-        },
-        loadCourses,
-        removeCourses,
-        setCoursesPagination,
-        setRefreshCourses,
-        setSelectedCourse,
-    } = useCourses();
+        emptyMsg,
+        isRefreshing,
+        isCoursesLoading,
+        courses,
+        coursesFiltersItems,
+        searchTerm,
+
+        filter,
+        setFilter,
+
+        onEndReach,
+        onMountCourses,
+        onRefreshingCourses,
+        onSearchCourses
+    } = useCoursesList();
 
     const { state: { lessons }, removeLessons, setLessonsPagination } = useLessons();
-
-    const { wifi } = useNetwork();
-    const { translate } = useTranslation();
-
-    const noFoundResultsMsg = translate('messages.noResults', {
-        attribute: translate('entities.courses'),
-        search: searchTerm.trim()
-    });
-
-    const emptyMsg = useMemo(
-        () => (searchTerm.trim().length > 0) ? noFoundResultsMsg : emptyMessage, 
-        [ searchTerm ]
-    );
-
-    /**
-     * When the user refreshes the page, the search term is reset, the pagination is reset, the courses
-     * are removed, and the courses are loaded.
-     *
-     * @return {Promise<void>} This function does not return any value.
-     */
-    const handleRefreshing = useCallback(async (): Promise<void> => {
-        if (isCoursesLoading) return;
-
-        setIsRefreshing(true);
-        setSearchTerm('');
-
-        if (wifi.hasConnection) {
-            setCoursesPagination({ from: 0, to: 9 });
-            removeCourses();
-            await loadCourses({ filter, refresh: true });
-        }
-
-        setIsRefreshing(false);
-    }, [ isCoursesLoading, wifi.hasConnection, filter ]);
-
-    /**
-     * If the search string is empty and the courses array is empty, then set the courses pagination,
-     * remove the courses, load the courses, and set the isRefreshing state to false.
-     *
-     * @param {string} search - string
-     * @return {Promise<void>} This function does not return any value.
-     */
-    const handleSearchCourses = useCallback(async (search: string): Promise<void> => {
-        if (isCoursesLoading) return;
-        setSearchTerm(search);
-
-        if (wifi.hasConnection) {
-            setCoursesPagination({ from: 0, to: 9 });
-            removeCourses();
-            await loadCourses({ filter, search, refresh: true });
-        }
-    }, [ isCoursesLoading, wifi.hasConnection, filter ]);
-
-    /**
-     * If there are no more courses to load, or if the courses are currently loading, then return.
-     * Otherwise, load more courses.
-     *
-     * @return {Promise<void>} This function does not return any value.
-     */
-    const handleEndReach = useCallback(async (): Promise<void> => {
-        if (!hasMoreCourses || courses.length === 0 || isCoursesLoading || !wifi.hasConnection) return;
-        loadCourses({ filter, search: searchTerm, loadMore: true });
-    }, [  hasMoreCourses, courses.length, isCoursesLoading, wifi.hasConnection, filter, searchTerm ]);
 
     /**
      * Sets the selected course and shows the modal.
@@ -137,21 +67,21 @@ export const CoursesList: FC<CoursesListProps> = ({ emptyMessage, filter, title 
     }, []);
 
     const renderHeader = useCallback(() => (
-        <View style={{ paddingHorizontal: margins.xs, width: '100%' }}>
-            <Title
-                containerStyle={{ marginVertical: margins.xs }}
-                text={ title }
-                textStyle={{ fontSize: fontSizes.md }}
-            />
-
+        <View style={ themeStyles.listHeaderContainer }>
             <SearchInput
-                onClean={ () => handleSearchCourses('') }
-                onSearch={ handleSearchCourses }
+                onClean={ () => onSearchCourses('') }
+                onSearch={ onSearchCourses }
                 refreshing={ isRefreshing }
                 searchTerm={ searchTerm }
             />
+
+            <Filters 
+                items={ coursesFiltersItems }
+                selectedFilter={ filter }
+                onFilterChange={ setFilter }
+            />
         </View>
-    ), [ title, isRefreshing, searchTerm ]);
+    ), [ isRefreshing, searchTerm, isCoursesLoading, coursesFiltersItems ]);
 
     const renderListEmpty = useCallback(() => (
         <ListEmptyComponent
@@ -173,12 +103,14 @@ export const CoursesList: FC<CoursesListProps> = ({ emptyMessage, filter, title 
         const handleFinishOrStart = () => handleShowModal(item, '/(app)/(tabs)/courses/finish-or-start-course-modal');
 
         return (
-            <CourseCard
-                course={ item }
-                onActiveOrSuspend={ handleActiveOrSuspend }
-                onDelete={ handleDelete }
-                onFinishOrStart={ handleFinishOrStart }
-            />
+            <View style={{ marginHorizontal: margins.xs }}>
+                <CourseCard
+                    course={ item }
+                    onActiveOrSuspend={ handleActiveOrSuspend }
+                    onDelete={ handleDelete }
+                    onFinishOrStart={ handleFinishOrStart }
+                />
+            </View>
         );
     }, []);
 
@@ -187,27 +119,8 @@ export const CoursesList: FC<CoursesListProps> = ({ emptyMessage, filter, title 
      * refreshCourses is true
      */
     useEffect(() => {
-        if (!navigation.isFocused() || !refreshCourses || !wifi.hasConnection) return;
-
-        removeCourses();
-        loadCourses({ filter, search: searchTerm, refresh: true });
-    }, [ refreshCourses, navigationState?.index ]);
-
-    /**
-     * Effect to set refresh flag Courses using coursesScreenHistory
-     */
-    useEffect(() => {
-        const focusUnsubscribe = navigation.addListener('focus', () => {
-            if (!navigationState) return;
-
-            const prevLast = coursesScreenHistory[coursesScreenHistory.length - 2];
-            const last = navigationState.routeNames[navigationState.index];
-
-            setRefreshCourses(prevLast !== last);
-        })
-
-        return focusUnsubscribe;
-    }, [ navigationState?.routeNames, navigationState?.index, coursesScreenHistory ]);
+        onMountCourses();
+    }, [ filter ]);
 
     /**
      * Effect to set lessons pagination and remove lessons when the screen is focused
@@ -227,19 +140,20 @@ export const CoursesList: FC<CoursesListProps> = ({ emptyMessage, filter, title 
     return (
         <FlashList
             centerContent
-            contentContainerStyle={ themeStyles.listContainer }
+            contentContainerStyle={{ paddingBottom: 100 }}
             data={ courses }
             estimatedItemSize={ 256 }
+            ItemSeparatorComponent={ () => <View style={{ height: margins.xs - 4 }} /> }
             keyExtractor={ (item) => `${ filter }-${ item.id }` }
             ListEmptyComponent={ renderListEmpty }
             ListFooterComponent={ renderFooter }
             ListHeaderComponent={ renderHeader }
             ListHeaderComponentStyle={{ alignSelf: 'flex-start' }}
-            onEndReached={ handleEndReach }
+            onEndReached={ onEndReach }
             onEndReachedThreshold={ 0.5 }
             refreshControl={
                 <RefreshControl
-                    onRefresh={ handleRefreshing }
+                    onRefresh={ onRefreshingCourses }
                     refreshing={ isRefreshing }
                 />
             }
