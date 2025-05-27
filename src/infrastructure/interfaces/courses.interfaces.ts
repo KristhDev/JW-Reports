@@ -1,3 +1,4 @@
+import { CourseFilter } from '@courses/interfaces';
 import { LessonEndpoint } from './lessons.interfaces';
 
 /**
@@ -88,4 +89,9 @@ export interface CoursesPlaceholders {
     PERSON_ADDRESS: string;
     PERSON_ABOUT: string;
     PUBLICATION: string;
+}
+
+export interface CourseFilterItem {
+    label: string;
+    value: CourseFilter;
 }
