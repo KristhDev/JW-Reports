@@ -8,7 +8,7 @@ import { EmailError } from '@domain/errors';
 /* Hooks */
 import { useAuth } from '@auth/hooks';
 import useImage from './useImage';
-import useStatus from './useStatus';
+import { useToaster } from '@ui/hooks';
 
 /* Interfaces */
 import { ReportErrorOptions, UtilFunctions } from '../interfaces';
@@ -18,7 +18,7 @@ const useEmail = () => {
 
     const { state: { user } } = useAuth();
     const { uploadImage } = useImage();
-    const { setStatus, setError } = useStatus();
+    const { showError, showToast } = useToaster();
 
     /**
      * Sends an email to the administrator with the message provided by the user.
@@ -35,12 +35,12 @@ const useEmail = () => {
                 templateId: env.EMAILJS_FEEDBACK_TEMPLATE_ID!
             });
 
-            setStatus({ code: 200, msg: emailMessages.FEEDBACK_SUCCESS });
+            showToast(emailMessages.FEEDBACK_SUCCESS);
             onSuccess && onSuccess();
         }
         catch (error) {
             console.error(error);
-            setStatus({ code: 400, msg: emailMessages.FEEDBACK_FAILED });
+            showToast(emailMessages.FEEDBACK_FAILED);
         }
         finally {
             onFinish && onFinish();
@@ -66,16 +66,16 @@ const useEmail = () => {
                 imageUrl
             });
 
-            setStatus({ code: 200, msg: emailMessages.REPORT_ERROR_SUCCESS });
+            showToast(emailMessages.REPORT_ERROR_SUCCESS);
             onSuccess && onSuccess();
         }
         catch (error) {
             if (error instanceof EmailError) {
-                setStatus({ code: 400, msg: emailMessages.REPORT_ERROR_FAILED });
+                showToast(emailMessages.REPORT_ERROR_FAILED);
                 return;
             }
 
-            setError(error);
+            showError(error);
         }
         finally {
             onFinish && onFinish();
