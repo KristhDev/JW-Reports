@@ -9,10 +9,12 @@ import Ionicons from '@expo/vector-icons/Ionicons';
 import { placeholdersService } from '@config/di';
 
 /* Components */
+import { MicrophoneBtn } from '@shared/components';
 import { Button, FormField } from '@ui/components';
 
 /* Hooks */
 import { useCourses } from '../../hooks';
+import { useVoiceRecorder } from '@shared/hooks';
 import { useToaster, useTranslation, useUI } from '@ui/hooks';
 
 /* Schemas */
@@ -37,9 +39,10 @@ export const CourseForm = (): JSX.Element => {
     const { styles: themeStyles, theme: { colors, fontSizes, margins } } = useStyles(themeStylesheet);
 
     const { state: { isCourseLoading, selectedCourse }, saveCourse, updateCourse } = useCourses();
+    const { hasRecord, isRecording, record, recordFormField } = useVoiceRecorder();
     const { showFormError } = useToaster();
-    const { state: { activeFormField, recordedAudio }, setActiveFormField } = useUI();
     const { translate } = useTranslation();
+    const { state: { activeFormField }, hasActiveFormField } = useUI();
 
     const buttonText = (selectedCourse.id === '') 
         ? translate('forms.actions.save')
@@ -81,15 +84,16 @@ export const CourseForm = (): JSX.Element => {
     }
 
     useEffect(() => {
-        if (recordedAudio.trim().length === 0 || activeFormField.length === 0) return;
-        setFieldValue(activeFormField, recordedAudio, true);
-    }, [ recordedAudio ]);
+        if (!hasRecord || !hasActiveFormField) return;
+        setFieldValue(activeFormField, record, true);
+    }, [ activeFormField, hasActiveFormField, hasRecord, record, setFieldValue ]);
 
     return (
         <View style={{ ...themeStyles.formContainer, paddingBottom: margins.xl }}>
 
             {/* Person name field */}
             <FormField
+                label={ translate('forms.labels.student') }
                 leftIcon={
                     <Ionicons
                         color={ colors.icon }
@@ -97,36 +101,53 @@ export const CourseForm = (): JSX.Element => {
                         size={ fontSizes.icon }
                     />
                 }
-                label={ translate('forms.labels.student') }
                 onChangeText={ handleChange('personName') }
-                onFocus={ () => setActiveFormField('personName') }
                 placeholder={ coursesPlaceholders.PERSON_NAME }
+                rightIcon={
+                    <MicrophoneBtn 
+                        disabled={ isCourseLoading || isRecording }
+                        isRecording={ isRecording && activeFormField === 'personName' }
+                        onPress={ () => recordFormField('personName') }
+                    />
+                }
                 value={ values.personName }
             />
 
             {/* Person about field */}
             <FormField
-                controlStyle={{ paddingVertical: margins.xs + 2 }}
+                controlStyle={{ alignItems: 'flex-end', paddingVertical: margins.xs + 2 }}
                 inputStyle={{ minHeight: margins.sm * 10  }}
                 label={ translate('forms.labels.studentInfo') }
                 multiline
                 numberOfLines={ 10 }
                 onChangeText={ handleChange('personAbout') }
-                onFocus={ () => setActiveFormField('personAbout') }
                 placeholder={ coursesPlaceholders.PERSON_ABOUT }
+                rightIcon={
+                    <MicrophoneBtn 
+                        disabled={ isCourseLoading || isRecording }
+                        isRecording={ isRecording && activeFormField === 'personAbout' }
+                        onPress={ () => recordFormField('personAbout') }
+                    />
+                }
                 value={ values.personAbout }
             />
 
             {/* Person address field */}
             <FormField
-                controlStyle={{ paddingVertical: margins.xs + 2 }}
+                controlStyle={{ alignItems: 'flex-end', paddingVertical: margins.xs + 2 }}
                 inputStyle={{ minHeight: margins.sm * 5  }}
                 label={ translate('forms.labels.address') }
                 multiline
                 numberOfLines={ 4 }
                 onChangeText={ handleChange('personAddress') }
-                onFocus={ () => setActiveFormField('personAddress') }
                 placeholder={ coursesPlaceholders.PERSON_ADDRESS }
+                rightIcon={
+                    <MicrophoneBtn 
+                        disabled={ isCourseLoading || isRecording }
+                        isRecording={ isRecording && activeFormField === 'personAddress' }
+                        onPress={ () => recordFormField('personAddress') }
+                    />
+                }
                 value={ values.personAddress }
             />
 
@@ -141,9 +162,15 @@ export const CourseForm = (): JSX.Element => {
                 }
                 label={ translate('forms.labels.studyPublication') }
                 onChangeText={ handleChange('publication') }
-                onFocus={ () => setActiveFormField('publication') }
                 placeholder={ coursesPlaceholders.PUBLICATION }
                 style={{ marginBottom: margins.xl }}
+                rightIcon={
+                    <MicrophoneBtn 
+                        disabled={ isCourseLoading || isRecording }
+                        isRecording={ isRecording && activeFormField === 'publication' }
+                        onPress={ () => recordFormField('publication') }
+                    />
+                }
                 value={ values.publication }
             />
 
