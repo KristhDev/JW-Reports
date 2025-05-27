@@ -3,9 +3,10 @@ import { ActiveOrSuspendCourseDto, CreateCourseDto, FinishOrStartCourseDto, Upda
 import { CourseEntity, CourseWithLessonsEntity } from '@domain/entities';
 
 import { CourseFilter } from '@courses/interfaces';
-import { PaginateOptions } from '@infrastructure/interfaces';
+import { CourseFilterItem, PaginateOptions } from '@infrastructure/interfaces';
 
 export abstract class CoursesServiceContract {
+    public abstract get coursesFiltersItems(): CourseFilterItem[];
     public abstract activeOrSuspend(id: string, userId: string, activeOrSuspendCourseDto: ActiveOrSuspendCourseDto): Promise<CourseEntity>;
     public abstract create(createCourseDto: CreateCourseDto): Promise<CourseEntity>;
     public abstract delete(id: string, userId: string): Promise<void>;
