@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 
 /* Config */
 import { messagesService, voiceRecorderAdapter } from '@config/di';
@@ -7,14 +7,17 @@ import { messagesService, voiceRecorderAdapter } from '@config/di';
 import { permissionsStatus } from '@application/constants/utils';
 
 /* Hooks */
-import useStatus from './useStatus';
 import usePermissions from './usePermissions';
+import { useToaster, useUI } from '@ui/hooks';
 
 const useVoiceRecorder = () => {
+    const appMessages = messagesService.appMessages;
     const permissionsMessages = messagesService.permissionsMessages;
 
     const [ isRecording, setIsRecording ] = useState<boolean>(false);
     const [ record, setRecord ] = useState<string>('');
+
+    const hasRecord = useMemo(() => record.trim().length > 0, [ record ]);
 
     const {
         state: { permissions },
@@ -24,7 +27,9 @@ const useVoiceRecorder = () => {
         isRecordAudioUnavailable,
         isRecordAudioUndetermined
     } = usePermissions();
-    const { setError, setStatus } = useStatus();
+
+    const { showError, showPermissionsToast, showToast } = useToaster();
+    const { setActiveFormField, hasActiveFormField } = useUI();
 
     /**
      * Starts a speech recognition session in the given language.
@@ -34,12 +39,12 @@ const useVoiceRecorder = () => {
      */
     const startRecording = async (lang: string): Promise<void> => {
         if (isRecordAudioUnavailable) {
-            setStatus({ msg: permissionsMessages.UNSUPPORTED, code: 418 });
+            showToast(permissionsMessages.UNSUPPORTED);
             return;
         }
 
         if (isRecordAudioBlocked) {
-            setStatus({ msg: permissionsMessages.REQUEST, code: 403 });
+            showPermissionsToast();
             return;
         }
 
@@ -51,7 +56,7 @@ const useVoiceRecorder = () => {
             voiceRecorderAdapter.startRecording(lang);
         }
         catch (error) {
-            setError(error);
+            showError(error);
         }
     }
 
@@ -65,8 +70,20 @@ const useVoiceRecorder = () => {
             voiceRecorderAdapter.stopRecording();
         }
         catch (error) {
-            setError(error);
+            showError(error);
         }
+    }
+
+    const recordFormField = (field: string): void => {
+        setActiveFormField(field);
+
+        if (!hasActiveFormField) {
+            showToast(appMessages.SELECT_FIELD_TO_RECORD);
+            return;
+        }
+
+        if (isRecording) stopRecording();
+        else startRecording('es-ES');
     }
 
     useEffect(() => {
@@ -76,7 +93,7 @@ const useVoiceRecorder = () => {
         voiceRecorderAdapter.onSpeechResults(value => setRecord(value || ''));
 
         voiceRecorderAdapter.onSpeechError(error => {
-            setError(error);
+            showError(error);
             setIsRecording(false);
         });
 
@@ -88,6 +105,9 @@ const useVoiceRecorder = () => {
     return {
         isRecording,
         record,
+        hasRecord,
+
+        recordFormField,
         startRecording,
         stopRecording
     }
