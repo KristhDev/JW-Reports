@@ -18,7 +18,6 @@ export {
     setRevisitFilter,
     setRevisits,
     setRevisitsPagination,
-    setRevisitsScreenHistory,
     setSelectedRevisit,
     updateRevisit
 } from './slice';

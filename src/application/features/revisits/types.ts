@@ -15,7 +15,6 @@ import { Pagination } from '@ui/interfaces';
  * @property {boolean} refreshRevisits - This indicates whether the revisits should be refreshed.
  * @property {RevisitFilter} revisitFilter - This is the filter for revisits.
  * @property {RevisitEntity[]} revisits - This is an array of revisits.
- * @property {string[]} revisitsScreenHistory - This is an array of screen history.
  * @property {Pagination} revisitsPagination - This is the pagination for revisits.
  * @property {RevisitEntity} selectedRevisit - This is the selected revisits.
  */
@@ -31,7 +30,6 @@ export interface RevisitsState {
     revisitFilter: RevisitFilter;
     revisits: RevisitEntity[];
     revisitsPagination: Pagination;
-    revisitsScreenHistory: string[];
     selectedRevisit: RevisitEntity;
 }
 

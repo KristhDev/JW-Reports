@@ -6,7 +6,6 @@ import { RevisitEntity } from '@domain/entities';
 /* Interfaces */
 import {
     HasMorePayload,
-    HistoryPayload,
     PaginationPayload,
     RemoveResourcePayload,
     SetIsDeletingPayload,
@@ -49,7 +48,6 @@ export const REVISITS_INITIAL_STATE: RevisitsState = {
     refreshRevisits: false,
     revisitFilter: 'all',
     revisits: [],
-    revisitsScreenHistory: [],
     revisitsPagination: {
         from: 0,
         to: 9
@@ -82,7 +80,6 @@ const revisitsSlice = createSlice({
             state.revisitFilter = REVISITS_INITIAL_STATE.revisitFilter;
             state.revisits = REVISITS_INITIAL_STATE.revisits;
             state.revisitsPagination = REVISITS_INITIAL_STATE.revisitsPagination;
-            state.revisitsScreenHistory = REVISITS_INITIAL_STATE.revisitsScreenHistory;
             state.selectedRevisit = REVISITS_INITIAL_STATE.selectedRevisit;
         },
 
@@ -138,10 +135,6 @@ const revisitsSlice = createSlice({
             state.revisitsPagination = action.payload.pagination;
         },
 
-        setRevisitsScreenHistory: (state, action: PayloadAction<HistoryPayload>) => {
-            state.revisitsScreenHistory = [ ...state.revisitsScreenHistory, action.payload.newScreen ]
-        },
-
         setSelectedRevisit: (state, action: PayloadAction<RevisitPayload>) => {
             state.selectedRevisit = action.payload.revisit;
         },
@@ -178,7 +171,6 @@ export const {
     setRevisitFilter,
     setRevisits,
     setRevisitsPagination,
-    setRevisitsScreenHistory,
     setSelectedRevisit,
     updateRevisit
 } = revisitsSlice.actions;
