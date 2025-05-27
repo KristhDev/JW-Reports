@@ -1,3 +1,4 @@
+import { useMemo } from 'react';
 import { EmitterSubscription, Keyboard } from 'react-native';
 import { useTranslation as useTranslationI18Next } from 'react-i18next';
 
@@ -35,6 +36,8 @@ const useUI = () => {
     const setKeyboard = (keyboard: KeyboardType) => dispatch(setIsKeyboardVisibleAction({ keyboard }));
     const setLanguage = (language: Languages) => dispatch(setLanguageAction({ language }));
     const setRecordedAudio = (recordedAudio: string) => dispatch(setRecordedAudioAction({ recordedAudio }));
+
+    const hasActiveFormField = useMemo(() => state.activeFormField.trim().length > 0, [ state.activeFormField ]);
 
     /**
      * Sets the oldDatetimePicker state to the provided boolean value,
@@ -97,6 +100,7 @@ const useUI = () => {
 
     return {
         state,
+        hasActiveFormField,
 
         setActiveFormField,
         setLanguage,
