@@ -1,3 +1,5 @@
+import { RevisitFilter } from '@revisits/interfaces';
+
 /**
  * Defining the structure of the Revisit Endpoint object.
  *
@@ -48,4 +50,9 @@ export interface RevisitsPlaceholders {
     ADDRESS: string;
     NEXT_VISIT: string;
     PERSON_NAME: string;
+}
+
+export interface RevisitFilterItem {
+    label: string;
+    value: RevisitFilter;
 }
