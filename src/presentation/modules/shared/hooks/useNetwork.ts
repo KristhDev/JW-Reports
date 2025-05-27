@@ -4,7 +4,7 @@ import { useContext } from 'react';
 import { NetworkContext, NetworkContextProps } from '@application/context';
 
 /* Hooks */
-import useStatus from './useStatus';
+import { useToaster } from '@ui/hooks';
 
 /**
  * A hook that returns the network context.
@@ -13,12 +13,12 @@ import useStatus from './useStatus';
  */
 const useNetwork = (): NetworkContextProps & { hasWifiConnection: (msg?: string) => boolean } => {
     const context = useContext(NetworkContext);
-    const { setNetworkError } = useStatus();
+    const { showNetworkError } = useToaster();
 
     const hasWifiConnection = (msg?: string): boolean => {
         const value = context.wifi.hasConnection;
 
-        if (!value) setNetworkError(msg);
+        if (!value) showNetworkError(msg);
         return value;
     }
 
