@@ -18,7 +18,10 @@ export default function DeletePreachingModalScreen(): JSX.Element {
     });
 
     const handleDeleteConfirm = () => {
-        deletePreaching({ onFinish: router.dismiss });
+        deletePreaching({
+            onFail: router.dismiss,
+            onSuccess: () => router.dismissTo('/(app)/(tabs)/preaching/precursor')
+        });
     }
 
     const handleHideModal = () => {
