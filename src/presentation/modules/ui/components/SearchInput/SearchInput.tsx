@@ -4,7 +4,7 @@ import { useStyles } from 'react-native-unistyles';
 import Ionicons from '@expo/vector-icons/Ionicons';
 
 /* Hooks */
-import { useTranslation } from '@ui/hooks';
+import { useTranslation, useUI } from '@ui/hooks';
 
 /* Interfaces */
 import { SearchInputProps } from './interfaces';
@@ -25,12 +25,14 @@ import { stylesheet } from './styles';
  * - searchTerm: This is the value of the search term
  * @return {JSX.Element} Return jsx element to render search input
  */
-export const SearchInput: FC<SearchInputProps> = ({ onClean, onSearch, refreshing, searchTerm }): JSX.Element => {
+export const SearchInput: FC<SearchInputProps> = ({ onClean, onSearch, refreshing, searchTerm, style }): JSX.Element => {
     const [ searchText, setSearchText ] = useState<string>(searchTerm);
     const [ isFocused, setIsFocused ] = useState<boolean>(false);
 
     const { styles: themeStyles, theme: { colors, fontSizes } } = useStyles(themeStylesheet);
     const { styles } = useStyles(stylesheet);
+
+    const { state: { keyboard } } = useUI();
     const { translate } = useTranslation();
 
     /**
@@ -52,53 +54,57 @@ export const SearchInput: FC<SearchInputProps> = ({ onClean, onSearch, refreshin
         if (refreshing) handleClearInput();
     }, [ refreshing ]);
 
+    useEffect(() => {
+        if (!keyboard.isVisible) setIsFocused(false);
+    }, [ keyboard ]);
+
     return (
-        <View style={ styles.searchInputContainer }>
-
-            {/* Search icon */}
-            <Ionicons
-                color={ colors.icon }
-                name="search-outline"
-                size={ fontSizes.icon }
-            />
-
-            {/* Input container */}
-            <View
-                style={ styles.inputContainer(isFocused) }
-                testID="search-input-text-input-container"
-            >
-
-                {/* Text input */}
-                <TextInput
-                    autoCorrect={ false }
-                    cursorColor={ colors.button }
-                    onBlur={ () => setIsFocused(false) }
-                    onChangeText={ setSearchText }
-                    onFocus={ () => setIsFocused(true) }
-                    onSubmitEditing={ () => onSearch(searchText) }
-                    placeholder={ translate('forms.placeholders.search') }
-                    placeholderTextColor={ colors.icon }
-                    returnKeyType="search"
-                    style={ themeStyles.formInput }
-                    testID="search-input-text-input"
-                    value={ searchText }
-                />
-
-                {/* Clear button */}
-                <View style={{ borderRadius: styles.cleanBtn.borderRadius, overflow: 'hidden' }}>
-                    <Pressable
-                        android_ripple={{ color: colors.buttonTransparent }}
-                        disabled={ searchText.length === 0}
-                        onPress={ handleClearInput }
-                        style={ styles.cleanBtn }
-                        testID="search-input-clear-btn"
+        <View style={[ styles.searchInputContainer, style ]}>
+            <View style={ themeStyles.focusExternalBorder(isFocused) }>
+                <View style={ themeStyles.defaultBorder(isFocused) }>
+                    <View
+                        style={[
+                            themeStyles.formControl,
+                            themeStyles.focusInternalBorder(isFocused)
+                        ]}
                     >
                         <Ionicons
-                            color={ (searchText.length === 0) ? 'transparent' : colors.icon }
-                            name="close-outline"
+                            color={ colors.icon }
+                            name="search-outline"
                             size={ fontSizes.icon }
                         />
-                    </Pressable>
+
+                        <TextInput
+                            autoCorrect={ false }
+                            cursorColor={ colors.button }
+                            onBlur={ () => setIsFocused(false) }
+                            onChangeText={ setSearchText }
+                            onFocus={ () => setIsFocused(true) }
+                            onSubmitEditing={ () => onSearch(searchText) }
+                            placeholder={ translate('forms.placeholders.search') }
+                            placeholderTextColor={ colors.icon }
+                            returnKeyType="search"
+                            style={ themeStyles.formInput }
+                            testID="search-input-text-input"
+                            value={ searchText }
+                        />
+
+                        <View style={{ borderRadius: styles.cleanBtn.borderRadius, overflow: 'hidden' }}>
+                            <Pressable
+                                android_ripple={{ color: colors.buttonTransparent }}
+                                disabled={ searchText.length === 0}
+                                onPress={ handleClearInput }
+                                style={ styles.cleanBtn }
+                                testID="search-input-clear-btn"
+                            >
+                                <Ionicons
+                                    color={ (searchText.length === 0) ? 'transparent' : colors.icon }
+                                    name="close-outline"
+                                    size={ fontSizes.icon }
+                                />
+                            </Pressable>
+                        </View>
+                    </View>
                 </View>
             </View>
         </View>
