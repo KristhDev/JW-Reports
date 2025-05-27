@@ -14,8 +14,8 @@ import { Header, HeaderButtons } from '@ui/components';
 /* Hooks */
 import { useAuth } from '@auth/hooks';
 import { usePreaching } from '@preaching/hooks';
-import { useNetwork, useStatus } from '@shared/hooks';
-import { useTranslation } from '@ui/hooks';
+import { useNetwork } from '@shared/hooks';
+import { useToaster, useTranslation } from '@ui/hooks';
 
 export default function PrecursorLayout(): JSX.Element {
     const router = useRouter();
@@ -24,7 +24,7 @@ export default function PrecursorLayout(): JSX.Element {
     const { state: { user } } = useAuth();
 
     const { state: { selectedDate, seletedPreaching }, loadPreachings, setSelectedDate } = usePreaching();
-    const { setNetworkError } = useStatus();
+    const { showNetworkError } = useToaster();
     const { wifi } = useNetwork();
     const { translate } = useTranslation();
 
@@ -43,7 +43,7 @@ export default function PrecursorLayout(): JSX.Element {
      */
     useEffect(() => {
         if (!wifi.hasConnection) {
-            setNetworkError();
+            showNetworkError();
             return;
         }
 
