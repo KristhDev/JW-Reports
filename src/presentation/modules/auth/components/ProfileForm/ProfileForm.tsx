@@ -16,8 +16,7 @@ import { Button, Checkbox, FormField, FormSelect } from '@ui/components';
 
 /* Hooks */
 import { useAuth } from '../../hooks';
-import { useStatus } from '@shared/hooks';
-import { useAsyncAction, useTranslation } from '@ui/hooks';
+import { useAsyncAction, useToaster, useTranslation } from '@ui/hooks';
 
 /* Schemas */
 import { generateProfileFormSchema } from './schemas';
@@ -39,7 +38,7 @@ export const ProfileForm = (): JSX.Element => {
     const { styles: themeStyles, theme: { colors, fontSizes, margins } } = useStyles(themeStylesheet);
 
     const { state: { user }, updateProfile } = useAuth();
-    const { setErrorForm } = useStatus();
+    const { showFormError } = useToaster();
     const { translate } = useTranslation();
     const { isLoading, excuteAsyncAction } = useAsyncAction(updateProfile);
 
@@ -82,7 +81,7 @@ export const ProfileForm = (): JSX.Element => {
      */
     const handlePress = (): void => {
         if (isValid) handleSubmit();
-        else setErrorForm(errors);
+        else showFormError(errors, { toastStyle: { bottom: margins.xs } });
     }
 
     return (

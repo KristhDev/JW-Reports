@@ -13,8 +13,7 @@ import { Button, EyeBtn, FormField, Link } from '@ui/components';
 
 /* Hooks */
 import { useAuth } from '../../hooks';
-import { useStatus } from '@shared/hooks';
-import { useAsyncAction, useTranslation } from '@ui/hooks';
+import { useAsyncAction, useToaster, useTranslation } from '@ui/hooks';
 
 /* Schemas */
 import { generateLoginFormSchema } from './schemas';
@@ -37,7 +36,7 @@ export const LoginForm = (): JSX.Element => {
     const { styles: themeStyles, theme: { colors, fontSizes, margins } } = useStyles(themeStylesheet);
 
     const { signIn } = useAuth();
-    const { setErrorForm } = useStatus();
+    const { showFormError } = useToaster();
     const { translate } = useTranslation();
     const { isLoading, excuteAsyncAction } = useAsyncAction(signIn);
 
@@ -59,7 +58,7 @@ export const LoginForm = (): JSX.Element => {
      */
     const handlePress = (): void => {
         if (isValid) handleSubmit();
-        else setErrorForm(errors);
+        else showFormError(errors);
     }
 
     return (

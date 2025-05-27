@@ -13,8 +13,7 @@ import { Button, FormField, Link } from '@ui/components';
 
 /* Hooks */
 import { useAuth } from '../../hooks';
-import { useStatus } from '@shared/hooks';
-import { useAsyncAction, useTranslation } from '@ui/hooks';
+import { useAsyncAction, useToaster, useTranslation } from '@ui/hooks';
 
 /* Schemas */
 import { generateForgotPasswordFormSchema } from './schemas';
@@ -35,7 +34,7 @@ export const ForgotPasswordForm = (): JSX.Element => {
     const { styles: themeStyles, theme: { colors, fontSizes, margins } } = useStyles(themeStylesheet);
 
     const { resetPassword } = useAuth();
-    const { setErrorForm } = useStatus();
+    const { showFormError } = useToaster();
     const { translate } = useTranslation();
     const { isLoading, excuteAsyncAction } = useAsyncAction(resetPassword);
 
@@ -54,7 +53,7 @@ export const ForgotPasswordForm = (): JSX.Element => {
      */
     const handlePress = (): void => {
         if (isValid) handleSubmit();
-        else setErrorForm(errors);
+        else showFormError(errors);
     }
 
     return (
