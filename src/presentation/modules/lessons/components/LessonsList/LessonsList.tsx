@@ -125,9 +125,9 @@ export const LessonsList = (): JSX.Element => {
     }, []);
 
     const renderHeader = useCallback(() => (
-        <View style={{ paddingHorizontal: margins.xs, width: '100%' }}>
+        <View style={{ paddingHorizontal: margins.xs, paddingBottom: margins.md, width: '100%' }}>
             <Title
-                containerStyle={{ marginVertical: margins.xs }}
+                containerStyle={{ marginBottom: margins.sm, marginTop: margins.xs }}
                 text={ title }
                 textStyle={{ fontSize: fontSizes.md }}
             />
@@ -186,6 +186,7 @@ export const LessonsList = (): JSX.Element => {
             contentContainerStyle={ themeStyles.listContainer }
             data={ lessons }
             estimatedItemSize={ 256 }
+            ItemSeparatorComponent={ () => <View style={{ height: margins.xs - 4 }} /> }
             keyExtractor={ (item) => item.id }
             ListEmptyComponent={ renderListEmpty }
             ListFooterComponent={ renderFooter }
