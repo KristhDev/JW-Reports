@@ -15,8 +15,7 @@ import { DatetimeField, FormCalendar, FormField, ModalActions } from '@ui/compon
 
 /* Hooks */
 import { useRevisits } from '../../hooks';
-import { useStatus } from '@shared/hooks';
-import { useTranslation, useUI } from '@ui/hooks';
+import { useToaster, useTranslation, useUI } from '@ui/hooks';
 
 /* Interfaces */
 import { ModalProps } from '@ui/interfaces';
@@ -43,7 +42,7 @@ const RevisitModal: FC<ModalProps> = ({ isOpen, onClose }): JSX.Element => {
     const { styles: themeStyles, theme: { colors, fontSizes, margins } } = useStyles(themeStylesheet);
 
     const { state: { selectedRevisit, isRevisitLoading }, completeRevisit, saveRevisit } = useRevisits();
-    const { setErrorForm } = useStatus();
+    const { showFormError } = useToaster();
     const { translate } = useTranslation();
     const { state: { userInterface } } = useUI();
 
@@ -124,7 +123,7 @@ const RevisitModal: FC<ModalProps> = ({ isOpen, onClose }): JSX.Element => {
      */
     const handlePress = (): void => {
         if (isValid) handleSubmit();
-        else setErrorForm(errors);
+        else showFormError(errors);
     }
 
     return (
