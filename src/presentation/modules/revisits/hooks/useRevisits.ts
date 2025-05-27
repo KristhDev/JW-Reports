@@ -8,10 +8,10 @@ import { precursors } from '@application/constants/utils';
 /* Features */
 import { useAppDispatch, useAppSelector } from '@application/store';
 import {
-    INIT_REVISIT,
     addRevisit as addRevisitAction,
     addRevisits as addRevisitsAction,
     clearRevisits as clearRevisitsAction,
+    INIT_REVISIT,
     removeRevisit as removeRevisitAction,
     removeRevisits as removeRevisitsAction,
     setHasMoreRevisits as setHasMoreRevisitsAction,
@@ -37,8 +37,8 @@ import { RevisitEntity } from '@domain/entities';
 
 /* Hooks */
 import { useAuth } from '@auth/hooks';
-import { useImage, useNetwork, useStatus } from '@shared/hooks';
-import { useTranslation } from '@ui/hooks';
+import { useImage, useNetwork } from '@shared/hooks';
+import { useToaster, useTranslation } from '@ui/hooks';
 
 /* Interfaces */
 import { loadRevisitsOptions, RevisitFilter, SaveRevisitOptions, UpdateRevisitOptions } from '../interfaces';
@@ -59,7 +59,7 @@ const useRevisits = () => {
 
     const { isAuthenticated } = useAuth();
     const { uploadImage, deleteImage } = useImage();
-    const { setStatus, setError } = useStatus();
+    const { showError, showToast } = useToaster();
     const { hasWifiConnection } = useNetwork();
     const { translate } = useTranslation();
 
@@ -92,14 +92,14 @@ const useRevisits = () => {
     const canAlterateRevisit = (unSelectedMsg: string, onError?: () => void): boolean => {
         if (state.selectedRevisit.id === '') {
             onError && onError();
-            setStatus({ code: 400, msg: unSelectedMsg });
+            showToast(unSelectedMsg);
 
             return false;
         }
 
         if (state.selectedRevisit.userId !== user.id) {
             onError && onError();
-            setStatus({ code: 400, msg: authMessages.UNAUTHORIZED });
+            showToast(authMessages.UNAUTHORIZED);
 
             return false;
         }
@@ -145,7 +145,7 @@ const useRevisits = () => {
         }
         catch (error) {
             onError && onError();
-            setError(error);
+            showError(error);
             return '';
         }
         finally {
@@ -161,14 +161,14 @@ const useRevisits = () => {
      * - onSuccess: This callback executed when the process is success, default is `undefined`
      * @return {Promise<void>} This function does not return anything.
      */
-    const deleteRevisit = async ({ onFinish, onSuccess }: UtilFunctions): Promise<void> => {
+    const deleteRevisit = async ({ onFail, onFinish, onSuccess }: UtilFunctions): Promise<void> => {
         const wifiConnectionAvailable = hasWifiConnection();
         if (!wifiConnectionAvailable) return;
 
-        const isAuth = isAuthenticated(onFinish);
+        const isAuth = isAuthenticated(onFail);
         if (!isAuth) return;
 
-        const canAlterate = canAlterateRevisit(revisitsMessages.UNSELECTED_DELETE, onFinish);
+        const canAlterate = canAlterateRevisit(revisitsMessages.UNSELECTED_DELETE, onFail);
         if (!canAlterate) return;
 
         setIsRevisitDeleting(true);
@@ -182,19 +182,20 @@ const useRevisits = () => {
                 await loadLastRevisit();
             }
 
-            onFinish && onFinish();
             removeRevisit(state.selectedRevisit.id);
-            setIsRevisitDeleting(false);
-            onSuccess && onSuccess();
 
             setSelectedRevisit(INIT_REVISIT);
-            setStatus({ code: 200, msg: revisitsMessages.DELETED_SUCCESS });
+            showToast(revisitsMessages.DELETED_SUCCESS);
+
+            onSuccess && onSuccess();
         }
         catch (error) {
+            showError(error);
+            onFail && onFail();
+        }
+        finally {
             setIsRevisitDeleting(false);
             onFinish && onFinish();
-
-            setError(error);
         }
     }
 
@@ -229,10 +230,10 @@ const useRevisits = () => {
                 mimeType: 'application/pdf',
             });
 
-            if (showStatusMessage) setStatus({ code: 200, msg: revisitsMessages.EXPORTED_SUCCESS });
+            if (showStatusMessage) showToast(revisitsMessages.EXPORTED_SUCCESS);
         }
         catch (error) {
-            setError(error);
+            showError(error);
         }
         finally {
             setIsRevisitsExporting(false);
@@ -258,7 +259,7 @@ const useRevisits = () => {
             setLastRevisit(lastRevisit);
         }
         catch (error) {
-            setError(error);
+            showError(error);
         }
         finally {
             setIsLastRevisitLoading(false);
@@ -312,7 +313,7 @@ const useRevisits = () => {
             else setRevisits(revisits);
         }
         catch (error) {
-            setError(error);
+            showError(error);
         }
         finally { 
             setIsRevisitsLoading(false);
@@ -351,7 +352,7 @@ const useRevisits = () => {
             setIsRevisitLoading(false);
             onSuccess && onSuccess();
             onFinish && onFinish();
-            setStatus({ code: 201, msg: successMessage });
+            showToast(successMessage);
 
             if (user.precursor === precursors.NINGUNO) await loadLastRevisit();
         }
@@ -359,7 +360,7 @@ const useRevisits = () => {
             setIsRevisitLoading(false);
             onFinish && onFinish();
 
-            setError(error);
+            showError(error);
         }
     }
 
@@ -402,10 +403,10 @@ const useRevisits = () => {
             if (state.selectedRevisit.id === revisit.id) setSelectedRevisit(revisit);
 
             onSuccess && onSuccess();
-            setStatus({ code: 200, msg: revisitsMessages.UPDATED_SUCCESS });
+            showToast(revisitsMessages.UPDATED_SUCCESS);
         }
         catch (error) {
-            setError(error);
+            showError(error);
         }
         finally {
             onFinish && onFinish();
