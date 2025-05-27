@@ -33,8 +33,8 @@ import { PreachingEntity } from '@domain/entities';
 
 /* Hooks */
 import { useAuth } from '@auth/hooks';
-import { useNetwork, useStatus } from '@shared/hooks';
-import { useTranslation } from '@ui/hooks';
+import { useNetwork } from '@shared/hooks';
+import { useToaster, useTranslation } from '@ui/hooks';
 
 /* Interfaces */
 import { PreachingFormValues } from '../interfaces';
@@ -53,7 +53,7 @@ const usePreaching = () => {
     const { user } = useAppSelector(store => store.auth);
 
     const { isAuthenticated } = useAuth();
-    const { setStatus, setError } = useStatus();
+    const { showError, showToast } = useToaster();
     const { hasWifiConnection } = useNetwork();
     const { translate } = useTranslation();
 
@@ -94,14 +94,14 @@ const usePreaching = () => {
     const canAlteratePreaching = (unSelectMsg: string, onFinish?: () => void): boolean => {
         if (state.seletedPreaching.id === '') {
             onFinish && onFinish();
-            setStatus({ code: 400, msg: unSelectMsg });
+            showToast(unSelectMsg);
 
             return false;
         }
 
         if (state.seletedPreaching.userId !== user.id) {
             onFinish && onFinish();
-            setStatus({ code: 400, msg: authMessages.UNAUTHORIZED });
+            showToast(authMessages.UNAUTHORIZED);
 
             return false;
         }
@@ -115,14 +115,14 @@ const usePreaching = () => {
      * @param {Function} onFinish - This callback executed when the process is finished (success or failure)
      * @return {Promise<void>} This function does not return anything.
      */
-    const deletePreaching = async (utils?: UtilFunctions): Promise<void> => {
+    const deletePreaching = async ({ onFail, onFinish, onSuccess }: UtilFunctions): Promise<void> => {
         const wifiConnectionAvailable = hasWifiConnection();
         if (!wifiConnectionAvailable) return;
 
-        const isAuth = isAuthenticated(utils?.onFinish);
+        const isAuth = isAuthenticated(onFail);
         if (!isAuth) return;
 
-        const canAlterate = canAlteratePreaching(preachingMessages.UNSELECTED_DELETE, utils?.onFinish);
+        const canAlterate = canAlteratePreaching(preachingMessages.UNSELECTED_DELETE, onFail);
         if (!canAlterate) return;
 
         setIsPreachingDeleting(true);
@@ -134,16 +134,16 @@ const usePreaching = () => {
             resetSelectedPreaching();
             setIsPreachingDeleting(false);
 
-            utils?.onSuccess?.();
-            utils?.onFinish?.();
-
-            setStatus({ code: 200, msg: preachingMessages.DELETED_SUCCESS });
+            showToast(preachingMessages.DELETED_SUCCESS);
+            onSuccess?.();
         }
         catch (error) {
             setIsPreachingDeleting(false);
-            utils?.onFinish?.();
-
-            setError(error);
+            showError(error);
+            onFail?.();
+        }
+        finally {
+            onFinish?.();
         }
     }
 
@@ -174,10 +174,10 @@ const usePreaching = () => {
             const pdfPath = await pdfAdapter.writeFromHTML({ fileName, html: preachingsTemplate, width: 480 });
             await externalStorageAdapter.moveFileOfInternalExtorage({ filePath: pdfPath, mimeType: 'application/pdf' });
 
-            if (showStatusMessage) setStatus({ code: 200, msg: preachingMessages.EXPORTED_SUCCESS });
+            if (showStatusMessage) showToast(preachingMessages.EXPORTED_SUCCESS);
         }
         catch (error) {
-            setError(error);
+            showError(error);
         }
         finally {
             setIsPreachingsExporting(false);
@@ -204,7 +204,7 @@ const usePreaching = () => {
             setPreachings(preachings);
         }
         catch (error) {
-            setError(error);
+            showError(error);
         }
         finally {
             setIsPreachingsLoading(false);
@@ -234,11 +234,11 @@ const usePreaching = () => {
 
             if (preachingMonth === selectedDateMonth) addPreaching(result);
 
+            showToast(preachingMessages.ADDED_SUCCESS);
             utils?.onSuccess?.();
-            setStatus({ code: 201, msg: preachingMessages.ADDED_SUCCESS });
         }
         catch (error) {
-            setError(error);
+            showError(error);
         }
         finally {
             utils?.onFinish?.();
@@ -268,11 +268,11 @@ const usePreaching = () => {
             updatePreachingState(preaching);
             resetSelectedPreaching();
 
+            showToast(preachingMessages.UPDATED_SUCCESS);
             utils?.onSuccess?.();
-            setStatus({ code: 200, msg: preachingMessages.UPDATED_SUCCESS });
         }
         catch (error) {
-            setError(error);
+            showError(error);
         }
         finally {
             utils?.onFinish?.();
