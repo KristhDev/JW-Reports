@@ -8,27 +8,32 @@ import { Toaster } from '@ui/components';
 const defaultOptions: ToastOptions = {
     autoClose: true,
     duration: 3000
-};
+}
+
+const generateOptions = (options?: ToastOptions): ToastOptions => {
+    return {
+        ...defaultOptions,
+        ...options
+    }
+}
 
 const ToasterProvider: FC<PropsWithChildren<ToasterProviderProps>> = ({
-    children,
     autoClose = true,
+    cancelAction: cancelActionProp,
+    children,
+    confirmAction: confirmActionProp,
     duration = 3000,
     toastStyle: toastStyleProp,
     toastTextStyle: toastTextStyleProp,
 }): JSX.Element => {
+    const [ cancelAction, setCancelAction ] = useState<ToastOptions['cancelAction']>(cancelActionProp);
+    const [ confirmAction, setConfirmAction ] = useState<ToastOptions['confirmAction']>(confirmActionProp);
+
     const [ toastStyle, setToastStyle ] = useState<ToastOptions['toastStyle'][]>([ toastStyleProp ]);
     const [ toastTextStyle, setToastTextStyle ] = useState<ToastOptions['toastTextStyle'][]>([ toastTextStyleProp ]);
 
     const [ showToaster, setShowToaster ] = useState(false);
     const [ message, setMessage ] = useState('');
-
-    const generateOptions = (options?: ToastOptions): ToastOptions => {
-        return {
-            ...defaultOptions,
-            ...options
-        };
-    }
 
     const hideToast = useCallback(() => {
         setShowToaster(false);
@@ -36,10 +41,20 @@ const ToasterProvider: FC<PropsWithChildren<ToasterProviderProps>> = ({
 
         setToastStyle([ toastStyleProp ]);
         setToastTextStyle([ toastTextStyleProp ]);
-    }, [ toastStyleProp, toastTextStyleProp ]);
+        setCancelAction(undefined);
+        setConfirmAction(undefined);
+    }, [ toastStyleProp, toastTextStyleProp, setCancelAction, setConfirmAction ]);
 
     const showToast = useCallback((message: string, options?: ToastOptions) => {
-        options = generateOptions(options);
+        options = generateOptions({ autoClose, duration, ...options });
+
+        if (options?.cancelAction) {
+            setCancelAction(options.cancelAction);
+        }
+
+        if (options?.confirmAction) {
+            setConfirmAction(options.confirmAction);
+        }
 
         if (options?.toastStyle) {
             setToastStyle(prev => [ ...prev, options.toastStyle ]);
@@ -52,12 +67,12 @@ const ToasterProvider: FC<PropsWithChildren<ToasterProviderProps>> = ({
         setMessage(message);
         setShowToaster(true);
 
-        if (!options?.autoClose || !autoClose) return;
+        if (!options?.autoClose) return;
 
         const timer = setTimeout(() => {
             hideToast();
             clearTimeout(timer);
-        }, options?.duration || duration);
+        }, options?.duration);
     }, [ autoClose, duration, hideToast ]);
 
     const value = useMemo<ToasterContextProps>(() => ({
@@ -76,12 +91,22 @@ const ToasterProvider: FC<PropsWithChildren<ToasterProviderProps>> = ({
         setToastTextStyle([ toastTextStyleProp ]);
     }, [ toastTextStyleProp ]);
 
+    useEffect(() => {
+        setCancelAction(cancelActionProp);
+    }, [ cancelActionProp ]);
+
+    useEffect(() => {
+        setConfirmAction(confirmActionProp);
+    }, [ confirmActionProp ]);
+
     return (
         <ToasterContext.Provider value={ value }>
             { children }
 
             { (showToaster) && (
                 <Toaster 
+                    cancelAction={ cancelAction }
+                    confirmAction={ confirmAction }
                     message={ message }
                     style={ toastStyle }
                     textStyle={ toastTextStyle }
