@@ -14,13 +14,16 @@ import { PermissionStatus } from '@application/features/permissions';
 import { ImageModel } from '@domain/models';
 
 /* Hooks */
-import { usePermissions, useStatus } from './';
+import { usePermissions } from './';
+import { useToaster } from '@ui/hooks';
 
 /**
  * This hook allows to group the functions and states in relation to the images.
  */
 const useImage = () => {
     const permissionsMessages = messagesService.permissionsMessages;
+
+    const [ image, setImage ] = useState<ImageModel | null>(null);
 
     const {
         askPermission,
@@ -38,8 +41,7 @@ const useImage = () => {
         isMediaLibraryUndetermined,
     } = usePermissions();
 
-    const { setStatus } = useStatus();
-    const [ image, setImage ] = useState<ImageModel | null>(null);
+    const { showPermissionsToast, showToast } = useToaster();
 
     /**
      * Clear the current image and delete it from the device
@@ -69,13 +71,13 @@ const useImage = () => {
 
         /* This is a message that is shown to the user when the media library permission is undetermined. */
         if (isMediaLibraryUnavailable) {
-            setStatus({ msg: permissionsMessages.UNSUPPORTED, code: 418 });
+            showToast(permissionsMessages.UNSUPPORTED);
             return;
         }
 
         /* Asking for the media library permission. */
         if (isMediaLibraryBlocked) {
-            setStatus({ msg: permissionsMessages.REQUEST, code: 401 });
+            showPermissionsToast();
             return;
         }
 
@@ -107,13 +109,13 @@ const useImage = () => {
 
         /* This is a message that is shown to the user when the camera permission is unavailable. */
         if (isCameraUnavailable) {
-            setStatus({ msg: permissionsMessages.UNSUPPORTED, code: 418 });
+            showToast(permissionsMessages.UNSUPPORTED);
             return;
         }
 
         /* This is a message that is shown to the user when the camera permission is blocked. */
         if (isCameraBlocked) {
-            setStatus({ msg: permissionsMessages.REQUEST, code: 401 });
+            showPermissionsToast();
             return;
         }
 
