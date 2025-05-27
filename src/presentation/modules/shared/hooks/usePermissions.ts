@@ -18,7 +18,7 @@ import {
 } from '@application/features/permissions';
 
 /* Hooks */
-import useStatus from './useStatus';
+import { useToaster } from '@ui/hooks';
 
 /**
  * Hook to management permissions of store
@@ -30,7 +30,7 @@ const usePermissions = () => {
     const dispatch = useAppDispatch();
 
     const state = useAppSelector(store => store.permissions);
-    const { setStatus } = useStatus();
+    const { showToast } = useToaster();
 
     const isCameraBlocked = state.permissions.camera === permissionsStatus.BLOCKED;
     const isCameraDenied = state.permissions.camera === permissionsStatus.DENIED;
@@ -92,7 +92,7 @@ const usePermissions = () => {
         const status: PermissionStatus = await askPermissions[permission]();
 
         const isPermissionUnavailable = status === permissionsStatus.UNAVAILABLE;
-        if (isPermissionUnavailable) setStatus({ msg: permissionsMessages.UNSUPPORTED, code: 418 });
+        if (isPermissionUnavailable) showToast(permissionsMessages.UNSUPPORTED);
 
         dispatch(setPermission({ key: permission, value: status }));
         return status;
