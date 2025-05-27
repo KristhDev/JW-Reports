@@ -6,6 +6,7 @@ export * from './DatetimeField';
 export * from './DropdownMenu';
 export * from './EyeBtn';
 export * from './Fab';
+export * from './Filters';
 export * from './FormCalendar';
 export * from './FormField';
 export * from './FormImage';
