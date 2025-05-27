@@ -37,15 +37,6 @@ export type RemoveResourcePayload = {
 }
 
 /**
- * Payload for navigating to a new screen in the history.
- *
- * @property {string} newScreen - The name of the screen
- */
-export type HistoryPayload = {
-    newScreen: string;
-}
-
-/**
  * Payload for setting the pagination state.
  *
  * @property {Pagination} pagination - The pagination
