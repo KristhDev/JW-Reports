@@ -13,8 +13,7 @@ import { Button, FormField } from '@ui/components';
 
 /* Hooks */
 import { useCourses } from '../../hooks';
-import { useStatus } from '@shared/hooks';
-import { useTranslation, useUI } from '@ui/hooks';
+import { useToaster, useTranslation, useUI } from '@ui/hooks';
 
 /* Schemas */
 import { generateCourseFormSchema } from './schemas';
@@ -38,7 +37,7 @@ export const CourseForm = (): JSX.Element => {
     const { styles: themeStyles, theme: { colors, fontSizes, margins } } = useStyles(themeStylesheet);
 
     const { state: { isCourseLoading, selectedCourse }, saveCourse, updateCourse } = useCourses();
-    const { setErrorForm } = useStatus();
+    const { showFormError } = useToaster();
     const { state: { activeFormField, recordedAudio }, setActiveFormField } = useUI();
     const { translate } = useTranslation();
 
@@ -78,7 +77,7 @@ export const CourseForm = (): JSX.Element => {
      */
     const handlePress = (): void => {
         if (isValid) handleSubmit();
-        else setErrorForm(errors);
+        else showFormError(errors);
     }
 
     useEffect(() => {
