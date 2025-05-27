@@ -45,7 +45,7 @@ export default function RevisitsLayout(): JSX.Element {
             }}
         >
             <Stack.Screen
-                name="(top-tabs)"
+                name="index"
                 options={{ title: translate('navigation.titles.revisits') }}
             />
 
