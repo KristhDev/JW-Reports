@@ -19,7 +19,10 @@ export default function DeleteRevisitModal(): JSX.Element {
     });
 
     const handleDeleteConfirm = () => {
-        deleteRevisit({ onFinish: router.dismiss });
+        deleteRevisit({
+            onFail: router.dismiss,
+            onSuccess: () => router.dismissTo('/(app)/(tabs)/revisits')
+        });
     }
 
     const handleHideModal = () => {
