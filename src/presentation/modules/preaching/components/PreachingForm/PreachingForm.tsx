@@ -13,8 +13,7 @@ import { Button, DatetimeField, FormCalendar, FormTime } from '@ui/components';
 
 /* Hooks */
 import { usePreaching } from '../../hooks';
-import { useStatus } from '@shared/hooks';
-import { useAsyncAction, useTranslation, useUI } from '@ui/hooks';
+import { useAsyncAction, useToaster, useTranslation, useUI } from '@ui/hooks';
 
 /* Schemas */
 import { generatePreachingFormSchema } from './schemas';
@@ -38,7 +37,7 @@ export const PreachingForm = (): JSX.Element => {
     const { styles: themeStyles, theme: { colors, fontSizes, margins } } = useStyles(themeStylesheet);
 
     const { state: { seletedPreaching }, savePreaching, updatePreaching } = usePreaching();
-    const { setErrorForm } = useStatus();
+    const { showFormError } = useToaster();
     const { translate } = useTranslation();
     const { state: { userInterface } } = useUI();
 
@@ -81,7 +80,7 @@ export const PreachingForm = (): JSX.Element => {
      */
     const handlePress = (): void => {
         if (isValid) handleSubmit();
-        else setErrorForm(errors);
+        else showFormError(errors, { toastStyle: { bottom: (margins.lg * 2) + margins.xs } });
     }
 
     return (
