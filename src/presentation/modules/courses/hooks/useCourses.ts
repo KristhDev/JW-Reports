@@ -44,8 +44,8 @@ import { CourseEntity, LessonWithCourseEntity } from '@domain/entities';
 /* Hooks */
 import { useAuth } from '@auth/hooks';
 import { useLessons } from '@lessons/hooks';
-import { useStatus, useNetwork } from '@shared/hooks';
-import { useTranslation } from '@ui/hooks';
+import { useNetwork } from '@shared/hooks';
+import { useToaster, useTranslation } from '@ui/hooks';
 
 /* Interfaces */
 import { CourseFilter, CourseFormValues, loadCoursesOptions } from '../interfaces';
@@ -66,7 +66,7 @@ const useCourses = () => {
     const { lastLesson } = useAppSelector(store => store.lessons);
 
     const { isAuthenticated } = useAuth();
-    const { setStatus, setError } = useStatus();
+    const { showError, showToast } = useToaster();
     const { loadLastLesson } = useLessons();
     const { translate } = useTranslation();
 
@@ -105,7 +105,7 @@ const useCourses = () => {
         /* Should not update if selectedCourse.id is an empty string */
         if (state.selectedCourse.id === '') {
             onError && onError();
-            setStatus({ code: 400, msg: unSelectedMsg });
+            showToast(unSelectedMsg);
 
             return false;
         }
@@ -113,7 +113,7 @@ const useCourses = () => {
         /* If the selectedCourse is finished it should not be updated */
         if (state.selectedCourse.finished) {
             onError && onError();
-            setStatus({ code: 400, msg: coursesMessages.FINISHED });
+            showToast(coursesMessages.FINISHED);
 
             return false;
         }
@@ -136,14 +136,14 @@ const useCourses = () => {
     const isSelectedCourseSuspended = (unSelectedMsg: string, suspendMsg: string, onError?: () => void): boolean => {
         if (state.selectedCourse.id === '') {
             onError && onError();
-            setStatus({ code: 400, msg: unSelectedMsg });
+            showToast(unSelectedMsg);
 
             return true;
         }
 
         if (state.selectedCourse.suspended) {
             onError && onError();
-            setStatus({ code: 400, msg: suspendMsg });
+            showToast(suspendMsg);
 
             return true;
         }
@@ -182,13 +182,13 @@ const useCourses = () => {
 
             setIsCourseLoading(false);
             onFinish && onFinish();
-            setStatus({ code: 200, msg });
+            showToast(msg);
         }
         catch (error) {
             setIsCourseLoading(false);
             onFinish && onFinish();
 
-            setError(error);
+            showError(error);
         }
     }
 
@@ -230,13 +230,13 @@ const useCourses = () => {
 
             setIsCourseDeleting(false);
             setSelectedCourse(INIT_COURSE);
-            setStatus({ code: 200, msg: coursesMessages.DELETED_SUCCESS });
+            showToast(coursesMessages.DELETED_SUCCESS);
         }
         catch (error) {
             setIsCourseDeleting(false);
             onFinish && onFinish();
 
-            setError(error);
+            showError(error);
         }
     }
 
@@ -272,10 +272,10 @@ const useCourses = () => {
                 mimeType: 'application/pdf'
             });
 
-            if (showStatusMessage) setStatus({ code: 200, msg: coursesMessages.EXPORTED_SUCCESS });
+            if (showStatusMessage) showToast(coursesMessages.EXPORTED_SUCCESS);
         }
         catch (error) {
-            setError(error);
+            showError(error);
         }
         finally {
             setIsCoursesExporting(false);
@@ -318,13 +318,13 @@ const useCourses = () => {
 
             setIsCourseLoading(false);
             onFinish && onFinish();
-            setStatus({ code: 200, msg });
+            showToast(msg);
         }
         catch (error) {
             setIsCourseLoading(false);
             onFinish && onFinish();
 
-            setError(error);
+            showError(error);
         }
     }
 
@@ -373,7 +373,7 @@ const useCourses = () => {
             else setCourses(courses);
         }
         catch (error) {
-            setError(error);
+            showError(error);
         }
         finally {
             setIsCoursesLoading(false);
@@ -403,10 +403,10 @@ const useCourses = () => {
             addCourse(course);
 
             utils?.onSuccess && utils.onSuccess();
-            setStatus({ code: 201, msg: coursesMessages.ADDED_SUCCESS });
+            showToast(coursesMessages.ADDED_SUCCESS);
         }
         catch (error) {
-            setError(error);
+            showError(error);
         }
         finally {
             setIsCourseLoading(false);
@@ -430,7 +430,7 @@ const useCourses = () => {
         if (!isAuth) return;
 
         if (state.selectedCourse.id === '') {
-            setStatus({ code: 400, msg: coursesMessages.UNSELECTED_UPDATE });
+            showToast(coursesMessages.UNSELECTED_UPDATE);
             return;
         }
 
@@ -450,10 +450,10 @@ const useCourses = () => {
             }
 
             utils?.onSuccess?.();
-            setStatus({ code: 200, msg: coursesMessages.UPDATED_SUCCESS });
+            showToast(coursesMessages.UPDATED_SUCCESS);
         }
         catch (error) {
-            setError(error);
+            showError(error);
         }
         finally {
             setIsCourseLoading(false);
