@@ -202,7 +202,7 @@ const PublisherHome = (): JSX.Element => {
                 style={{ flex: 1 }}
             >
                 <Title
-                    containerStyle={{ ...themeStyles.titleContainer, paddingHorizontal: margins.sm, marginBottom: margins.sm }}
+                    containerStyle={{ ...themeStyles.titleContainer, paddingHorizontal: margins.xs - 4, marginBottom: margins.sm }}
                     text={ lastLessonTitle }
                     textStyle={{ fontSize: fontSizes.md }}
                 />
@@ -237,7 +237,7 @@ const PublisherHome = (): JSX.Element => {
                 ) }
 
                 <Title
-                    containerStyle={{ ...themeStyles.titleContainer, paddingTop: margins.lg, paddingHorizontal: margins.sm, marginBottom: margins.sm }}
+                    containerStyle={{ ...themeStyles.titleContainer, paddingTop: margins.lg, paddingHorizontal: margins.xs - 4, marginBottom: margins.sm }}
                     text={ lastRevisitTitle }
                     textStyle={{ fontSize: fontSizes.md }}
                 />
