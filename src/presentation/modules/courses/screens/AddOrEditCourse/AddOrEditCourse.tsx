@@ -13,8 +13,7 @@ import { Title } from '@ui/components';
 
 /* Hooks */
 import { useCourses } from '../../hooks';
-import { useStatus } from '@shared/hooks';
-import { useTranslation, useUI } from '@ui/hooks';
+import { useToaster, useTranslation, useUI } from '@ui/hooks';
 
 /* Theme */
 import { themeStylesheet } from '@theme/styles';
@@ -30,12 +29,12 @@ const AddOrEditCourse = (): JSX.Element => {
     const { styles: themeStyles, theme: { fontSizes, margins } } = useStyles(themeStylesheet);
 
     const { state: { selectedCourse } } = useCourses();
-    const { setStatus } = useStatus();
+    const { showToast } = useToaster();
     const { translate } = useTranslation();
     const { state: { activeFormField }, setRecordedAudio } = useUI();
 
     const conditionForNotRecording = (activeFormField.trim().length === 0);
-    const handleNotRecording = () => setStatus({ code: 400, msg: appMessages.SELECT_FIELD_TO_RECORD });
+    const handleNotRecording = () => showToast(appMessages.SELECT_FIELD_TO_RECORD);
 
     const title = translate('screens.courses.titles.course', {
         action: (selectedCourse.id === '') 
