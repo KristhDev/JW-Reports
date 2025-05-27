@@ -9,10 +9,12 @@ import Ionicons from '@expo/vector-icons/Ionicons';
 import { timeAdapter, placeholdersService } from '@config/di';
 
 /* Components */
+import { MicrophoneBtn } from '@shared/components';
 import { Button, DatetimeField, FormCalendar, FormField } from '@ui/components';
 
 /* Hooks */
 import { useLessons } from '@lessons/hooks';
+import { useVoiceRecorder } from '@shared/hooks';
 import { useTranslation, useToaster, useUI } from '@ui/hooks';
 
 /* Schemas */
@@ -37,9 +39,10 @@ export const LessonForm = (): JSX.Element => {
     const { styles: themeStyles, theme: { colors, fontSizes, margins } } = useStyles(themeStylesheet);
 
     const { state: { isLessonLoading, selectedLesson }, saveLesson, updateLesson } = useLessons();
-    const { showFormError } = useToaster();
-    const { state: { activeFormField, recordedAudio, userInterface }, setActiveFormField } = useUI();
+    const { hasRecord, isRecording, record, recordFormField } = useVoiceRecorder();
     const { translate } = useTranslation();
+    const { showFormError } = useToaster();
+    const { state: { activeFormField, userInterface }, hasActiveFormField, setActiveFormField } = useUI();
 
     const buttonText = (selectedLesson.id === '') 
         ? translate('forms.actions.save') 
@@ -84,16 +87,16 @@ export const LessonForm = (): JSX.Element => {
     }
 
     useEffect(() => {
-        if (recordedAudio.trim().length === 0 || activeFormField.length === 0) return;
-        setFieldValue(activeFormField, recordedAudio, true);
-    }, [ recordedAudio ]);
+        if (!hasRecord || !hasActiveFormField) return;
+        setFieldValue(activeFormField, record, true);
+    }, [ activeFormField, hasActiveFormField, hasRecord, record, setFieldValue ]);
 
     return (
         <View style={{ ...themeStyles.formContainer, paddingBottom: margins.xl }}>
 
             {/* Description field */}
             <FormField
-                controlStyle={{ paddingVertical: margins.xs + 2 }}
+                controlStyle={{ alignItems: 'flex-end', paddingVertical: margins.xs + 2 }}
                 editable={ !isLessonLoading }
                 inputStyle={{ minHeight: margins.sm * 9  }}
                 label={ translate('forms.labels.lessons.description') }
@@ -102,6 +105,13 @@ export const LessonForm = (): JSX.Element => {
                 onChangeText={ handleChange('description') }
                 onFocus={ () => setActiveFormField('description') }
                 placeholder={ lessonPlaceholders.DESCRIPTION }
+                rightIcon={
+                    <MicrophoneBtn 
+                        disabled={ isLessonLoading || isRecording }
+                        isRecording={ isRecording && activeFormField === 'description' }
+                        onPress={ () => recordFormField('description') }
+                    />
+                }
                 value={ values.description }
             />
 
@@ -119,9 +129,9 @@ export const LessonForm = (): JSX.Element => {
                     inputDateFormat="DD/MM/YYYY"
                     label={ translate('forms.labels.lessons.nextLesson') }
                     mode="date"
+                    onChangeDate={ (date) => setFieldValue('nextLesson', timeAdapter.toDate(date)) }
                     placeholder={ lessonPlaceholders.SELECT_DAY }
                     style={{ marginBottom: margins.xl }}
-                    onChangeDate={ (date) => setFieldValue('nextLesson', timeAdapter.toDate(date)) }
                     value={ values.nextLesson.toISOString() }
                 />
             ) : (
