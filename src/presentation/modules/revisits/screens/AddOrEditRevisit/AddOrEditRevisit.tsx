@@ -12,9 +12,8 @@ import { MicrophoneBtn } from '@shared/components';
 import { Title } from '@ui/components';
 
 /* Hooks */
-import { useStatus } from '@shared/hooks';
 import { useRevisits } from '../../hooks';
-import { useTranslation, useUI } from '@ui/hooks';
+import { useToaster, useTranslation, useUI } from '@ui/hooks';
 
 /* Theme */
 import { themeStylesheet } from '@theme/styles';
@@ -30,12 +29,12 @@ const AddOrEditRevisit = (): JSX.Element => {
     const { styles: themeStyles, theme: { fontSizes, margins } } = useStyles(themeStylesheet);
 
     const { state: { selectedRevisit } } = useRevisits();
-    const { setStatus } = useStatus();
+    const { showToast } = useToaster();
     const { translate } = useTranslation();
     const { state: { activeFormField }, setRecordedAudio } = useUI();
 
     const conditionForNotRecording = (activeFormField.trim().length === 0);
-    const handleNotRecording = () => setStatus({ code: 400, msg: appMessages.SELECT_FIELD_TO_RECORD });
+    const handleNotRecording = () => showToast(appMessages.SELECT_FIELD_TO_RECORD);
 
     const title = translate('screens.revisits.titles.revisit', {
         action: (selectedRevisit.id === '') 
