@@ -10,9 +10,9 @@ import { ImageModel } from '@domain/models';
 import { Button, FormField, FormImage, FormImageRef } from '@ui/components';
 
 /* Hooks */
-import { useEmail, useStatus } from '../../hooks';
+import { useEmail } from '../../hooks';
 import { useTheme } from '@theme/hooks';
-import { useTranslation } from '@ui/hooks';
+import { useToaster, useTranslation } from '@ui/hooks';
 
 /* Schemas */
 import { generateReportErrorFormSchema } from './schemas';
@@ -38,7 +38,7 @@ export const ReportErrorForm = (): JSX.Element => {
     const { styles: themeStyles, theme: { colors, fontSizes, margins } } = useStyles(themeStylesheet);
 
     const { sendReportErrorEmail } = useEmail();
-    const { setErrorForm } = useStatus();
+    const { showFormError } = useToaster();
     const { state: { theme } } = useTheme();
     const { translate } = useTranslation();
 
@@ -75,7 +75,7 @@ export const ReportErrorForm = (): JSX.Element => {
      */
     const handlePress = (): void => {
         if (isValid) handleSubmit();
-        else setErrorForm(errors);
+        else showFormError(errors, { toastStyle: { bottom: margins.xs } });
     }
 
     return (
