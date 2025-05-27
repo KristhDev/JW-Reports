@@ -15,7 +15,7 @@ export class SorterUtil {
 
     public static sortPreachingsByDay(preachings: PreachingEntity[]): PreachingEntity[] {
         return preachings.sort(
-            (a, b) => new Date(b.day).getTime() - new Date(a.day).getTime()
+            (a, b) => new Date(a.day).getTime() - new Date(b.day).getTime()
         );
     }
 
