@@ -22,7 +22,8 @@ import { SignUpDto, UpdateEmailDto, UpdatePasswordDto, UpdateProfileDto } from '
 import { UserEntity } from '@domain/entities';
 
 /* Hooks */
-import { useNetwork, useStatus } from '@shared/hooks';
+import { useNetwork } from '@shared/hooks';
+import { useToaster } from '@ui/hooks';
 
 /* Interfaces */
 import { SignInData, ProfileData, SignUpData, EmailData, UpdatePasswordData } from '../interfaces';
@@ -36,7 +37,7 @@ const useAuth = () => {
 
     const dispatch = useAppDispatch();
 
-    const { setStatus, setError, setUnauthenticatedError } = useStatus();
+    const { showToast, showError, showUnauthenticatedError } = useToaster();
     const { hasWifiConnection, wifi } = useNetwork();
 
     const state = useAppSelector(store => store.auth);
@@ -73,7 +74,7 @@ const useAuth = () => {
      */
     const isAuthenticated = (onError?: () => void): boolean => {
         const value = state.isAuthenticated;
-        if (!value) setUnauthenticatedError(onError);
+        if (!value) showUnauthenticatedError(onError);
 
         return value;
     }
@@ -103,7 +104,7 @@ const useAuth = () => {
         }
         catch (error) {
             handleClearStore();
-            setError(error);
+            showError(error);
         }
         finally {
             setIsAuthLoading(false);
@@ -126,10 +127,10 @@ const useAuth = () => {
             let msg = `Hemos enviado un correo de restablecimiento de contraseña a ${ email }. `;
             msg += 'Por favor revísalo y sigue los pasos para recuperar tu cuenta.';
 
-            setStatus({ code: 200, msg });
+            showToast(msg);
         }
         catch (error) {
-            setError(error);
+            showError(error);
         }
     }
 
@@ -149,7 +150,7 @@ const useAuth = () => {
             setUser(token, user);
         }
         catch (error) {
-            setError(error);
+            showError(error);
             handleClearStore();
         }
     }
@@ -168,7 +169,7 @@ const useAuth = () => {
             handleClearStore();
         }
         catch (error) {
-            setError(error);
+            showError(error);
         }
     }
 
@@ -190,7 +191,7 @@ const useAuth = () => {
             const result = await authService.signUp(signUpDto);
 
             if (result.emailAlreadyExists) {
-                setStatus({ code: 400, msg: authMessages.EMAIL_ALREADY_REGISTERED });
+                showToast(authMessages.EMAIL_ALREADY_REGISTERED);
                 await authService.signOut();
 
                 return;
@@ -201,14 +202,14 @@ const useAuth = () => {
             let msg = `Hemos enviado un correo de confirmación a ${ data.email }. `
                 msg += 'Por favor, revíselo y siga los pasos que se le indiquen.';
 
-            setStatus({ code: 200, msg });
+            showToast(msg);
         }
         catch (error) {
             await authService.signOut();
             notificationsService.close();
             clearAuth();
 
-            setError(error);
+            showError(error);
         }
     }
 
@@ -230,10 +231,10 @@ const useAuth = () => {
             msg += `Por favor revísalo. Una vez confirmes ese correo se enviará otro a ${ email }. `
             msg += 'Ese también confírmalo para efectuar el cambio.'
 
-            setStatus({ code: 200, msg });
+            showToast(msg);
         }
         catch (error) {
-            setError(error);
+            showError(error);
         }
     }
 
@@ -251,10 +252,10 @@ const useAuth = () => {
             const updatePasswordDto = UpdatePasswordDto.create(password);
             await authService.updatePassword(updatePasswordDto);
 
-            setStatus({ code: 200, msg: authMessages.PASSWORD_UPDATED });
+            showToast(authMessages.PASSWORD_UPDATED);
         }
         catch (error) {
-            setError(error);
+            showError(error);
         }
     }
 
@@ -276,10 +277,10 @@ const useAuth = () => {
             const user = await authService.updateProfile(updateDto);
 
             updateUser({ ...state.user, ...user });
-            setStatus({ code: 200, msg: authMessages.PROFILE_UPDATED });
+            showToast(authMessages.PROFILE_UPDATED);
         }
         catch (error) {
-            setError(error);
+            showError(error);
         }
     }
 
