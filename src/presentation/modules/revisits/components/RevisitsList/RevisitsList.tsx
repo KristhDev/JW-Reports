@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect } from 'react';
+import { useCallback, useEffect } from 'react';
 import { RefreshControl, View } from 'react-native';
 import { FlashList } from '@shopify/flash-list';
 import { Href, useRouter } from 'expo-router';

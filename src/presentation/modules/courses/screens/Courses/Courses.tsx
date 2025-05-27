@@ -1,4 +1,3 @@
-import React, { FC } from 'react';
 import { useStyles } from 'react-native-unistyles';
 import { useRouter } from 'expo-router';
 import Ionicons from '@expo/vector-icons/Ionicons';
