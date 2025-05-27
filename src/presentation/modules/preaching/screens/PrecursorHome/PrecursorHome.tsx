@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ActivityIndicator, ScrollView, useWindowDimensions, RefreshControl } from 'react-native';
+import { ActivityIndicator, ScrollView, useWindowDimensions, RefreshControl, View } from 'react-native';
 import { useStyles } from 'react-native-unistyles';
 import { useRouter } from 'expo-router';
 import Ionicons from '@expo/vector-icons/Ionicons';
@@ -83,7 +83,7 @@ const Home = (): JSX.Element => {
     return (
         <>
             <ScrollView
-                contentContainerStyle={{ alignItems: 'center', padding: margins.md, paddingBottom: 100 }}
+                contentContainerStyle={{ alignItems: 'center', paddingHorizontal: margins.xs, paddingTop: margins.md, paddingBottom: 100 }}
                 refreshControl={
                     <RefreshControl
                         colors={[ '#000' ]}
@@ -96,7 +96,7 @@ const Home = (): JSX.Element => {
                 <Title
                     containerStyle={ themeStyles.titleContainer }
                     text={ title }
-                    textStyle={{ fontSize: fontSizes.md }}
+                    textStyle={{ fontSize: fontSizes.md, marginLeft: 4 }}
                 />
 
                 {/* If the preachings are loading, show a loading indicator */}
