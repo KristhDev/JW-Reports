@@ -25,7 +25,6 @@ import {
     setRevisitFilter as setRevisitFilterAction,
     setRevisits as setRevisitsAction,
     setRevisitsPagination as setRevisitsPaginationAction,
-    setRevisitsScreenHistory as setRevisitsScreenHistoryAction,
     setSelectedRevisit as setSelectedRevisitAction,
     updateRevisit as updateRevisitAction
 } from '@application/features/revisits';
@@ -80,7 +79,6 @@ const useRevisits = () => {
     const setRevisitFilter = (filter: RevisitFilter) => dispatch(setRevisitFilterAction({ filter }));
     const setRevisits = (revisits: RevisitEntity[]) => dispatch(setRevisitsAction({ revisits }));
     const setRevisitsPagination = (pagination: Pagination) => dispatch(setRevisitsPaginationAction({ pagination }));
-    const setRevisitsScreenHistory = (newScreen: string) => dispatch(setRevisitsScreenHistoryAction({ newScreen }));
     const setSelectedRevisit = (revisit: RevisitEntity) => dispatch(setSelectedRevisitAction({ revisit }));
     const updateRevisitActionState = (revisit: RevisitEntity) => dispatch(updateRevisitAction({ revisit }));
 
@@ -316,7 +314,7 @@ const useRevisits = () => {
         catch (error) {
             setError(error);
         }
-        finally {
+        finally { 
             setIsRevisitsLoading(false);
         }
     }
@@ -422,8 +420,8 @@ const useRevisits = () => {
         clearRevisits,
         removeRevisits,
         setRefreshRevisits,
+        setRevisitFilter,
         setRevisitsPagination,
-        setRevisitsScreenHistory,
         setSelectedRevisit,
 
         // Functions
