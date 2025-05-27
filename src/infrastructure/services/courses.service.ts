@@ -1,7 +1,10 @@
 /* Config */
 import { supabase } from '@config/supabase';
 
+import { coursesFilters } from '@application/constants/utils';
+
 /* Contracts */
+import { TranslationAdapterContract } from '@domain/contracts/adapters';
 import { CoursesServiceContract } from '@domain/contracts/services';
 
 /* DTOs */
@@ -17,10 +20,35 @@ import { RequestError } from '@domain/errors';
 import { CourseMapper, CourseWithLessonsMapper } from '@domain/mappers';
 
 /* Interfaces */
-import { CourseEndpoint, PaginateOptions } from '@infrastructure/interfaces';
+import { CourseEndpoint, CourseFilterItem, PaginateOptions } from '@infrastructure/interfaces';
 import { CourseFilter } from '@courses/interfaces';
 
 export class CoursesService implements CoursesServiceContract {
+    constructor(
+        private readonly translationAdapter: TranslationAdapterContract
+    ) {}
+
+    public get coursesFiltersItems(): CourseFilterItem[] {
+        return [
+            {
+                label: this.translationAdapter.translate('filters.courses.all'),
+                value: coursesFilters.ALL
+            },
+            {
+                label: this.translationAdapter.translate('filters.courses.active'),
+                value: coursesFilters.ACTIVE
+            },
+            {
+                label: this.translationAdapter.translate('filters.courses.suspended'),
+                value: coursesFilters.SUSPENDED
+            },
+            {
+                label: this.translationAdapter.translate('filters.courses.finished'),
+                value: coursesFilters.FINISHED
+            }
+        ];
+    }
+
     /**
      * This function is responsible for activating or suspending a course.
      *
