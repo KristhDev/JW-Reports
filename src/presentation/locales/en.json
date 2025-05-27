@@ -21,18 +21,18 @@
         }
     },
 
-    "topTabs": {
-        "courses": {
-            "all": "ALL",
-            "active": "ACTIVE",
-            "suspended": "SUSPENDED",
-            "finished": "FINISHED"
+    "filters": {
+        "revisits": {
+            "all": "All",
+            "visited": "Visited",
+            "unvisited": "Unvisited"
         },
 
-        "revisits": {
-            "all": "ALL",
-            "visited": "VISITED",
-            "unvisited": "UNVISITED"
+        "courses": {
+            "all": "All",
+            "active": "Active",
+            "suspended": "Suspended",
+            "finished": "Finished"
         }
     },
 
