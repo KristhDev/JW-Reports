@@ -29,3 +29,4 @@ export * from './TabBarBtn';
 export * from './TableCell';
 export * from './ThemeBtn';
 export * from './Title';
+export * from './Toaster';
