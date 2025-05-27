@@ -74,7 +74,7 @@ export const translationAdapter: TranslationAdapterContract = new TranslationAda
 
 export const authService: AuthServiceContract = new AuthService();
 export const cloudService: CloudServiceContract = new CloudService();
-export const coursesService: CoursesServiceContract = new CoursesService();
+export const coursesService: CoursesServiceContract = new CoursesService(translationAdapter);
 export const deviceImageService: DeviceImageServiceContract = new DeviceImageService();
 export const emailService: EmailServiceContract = new EmailService();
 export const lessonsService: LessonsServiceContract = new LessonsService();
@@ -88,7 +88,7 @@ export const preachingReportService: PreachingReportServiceContract = new Preach
 export const preachingService: PreachingServiceContract = new PreachingService(timeAdapter);
 export const publisherService: PublisherServiceContract = new PublisherService(translationAdapter);
 export const messagesService: MessagesServiceContract = new MessagesService(translationAdapter, publisherService);
-export const revisitsService: RevisitsServiceContract = new RevisitsService();
+export const revisitsService: RevisitsServiceContract = new RevisitsService(translationAdapter);
 export const themeService: ThemeServiceContract = new ThemeService(translationAdapter);
 
 export const externalStorageAdapter: ExternalStorageAdapterContract = new ExternalStorageAdapter(messagesService, internalStorageAdapter);
