@@ -1,4 +1,5 @@
 import { useContext } from 'react';
+import { Linking } from 'react-native';
 
 import { loggerService, messagesService } from '@config/di';
 
@@ -16,14 +17,19 @@ import {
     VoiceRecorderError
 } from '@domain/errors';
 
+import useTranslation from './useTranslation';
+
 const useToaster = () => {
     const appMessages = messagesService.appMessages;
     const authMessages = messagesService.authMessages;
     const expoMessages = messagesService.expoMessages;
     const networkMessages = messagesService.networkMessages;
+    const permissionsMessages = messagesService.permissionsMessages;
     const supabaseMessages = messagesService.supabaseMessages;
 
     const { showToast, hideToast } = useContext(ToasterContext);
+
+    const { translate } = useTranslation();
 
     /**
      * This function is to set errors in status of store
@@ -95,6 +101,23 @@ const useToaster = () => {
         showToast(msg || networkMessages.WIFI_HASNT_CONNEC_EXPLAIN);
     }
 
+    const showPermissionsToast = (): void => {
+        showToast(permissionsMessages.REQUEST, {
+            autoClose: false,
+            cancelAction: {
+                label: translate('forms.actions.cancel'),
+                onPress: hideToast
+            },
+            confirmAction: {
+                label: translate('forms.actions.settings'),
+                onPress: () => {
+                    Linking.openSettings()
+                    hideToast()
+                }
+            }
+        });
+    }
+
     /**
      * This function is to show an unauthenticated error
      *
@@ -114,6 +137,7 @@ const useToaster = () => {
         showError,
         showFormError,
         showNetworkError,
+        showPermissionsToast,
         showUnauthenticatedError
     }
 }
