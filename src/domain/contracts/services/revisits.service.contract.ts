@@ -2,10 +2,11 @@ import { CompleteRevisitDto, CreateRevisitDto, UpdateRevisitDto } from '@domain/
 
 import { RevisitEntity } from '@domain/entities';
 
-import { PaginateOptions } from '@infrastructure/interfaces';
+import { PaginateOptions, RevisitFilterItem } from '@infrastructure/interfaces';
 import { RevisitFilter } from '@revisits/interfaces';
 
 export abstract class RevisitsServiceContract {
+    public abstract get revisitsFiltersItems(): RevisitFilterItem[];
     public abstract complete(id: string, userId: string, completeRevisitDto: CompleteRevisitDto): Promise<RevisitEntity>;
     public abstract create(createRevisitDto: CreateRevisitDto): Promise<RevisitEntity>;
     public abstract delete(id: string, userId: string): Promise<void>;
