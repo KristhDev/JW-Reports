@@ -1,5 +1,5 @@
-import React, { FC, useEffect } from 'react';
-import { useNavigation, useRouter } from 'expo-router';
+import React from 'react';
+import { useRouter } from 'expo-router';
 import { useStyles } from 'react-native-unistyles';
 import Ionicons from '@expo/vector-icons/Ionicons';
 
@@ -9,9 +9,6 @@ import { Fab } from '@ui/components';
 
 /* Hooks */
 import { useRevisits } from '../../hooks';
-
-/* Interfaces */
-import { RevisitsProps } from './interfaces';
 
 /* Theme */
 import { themeStylesheet } from '@theme/styles';
@@ -23,12 +20,11 @@ import { themeStylesheet } from '@theme/styles';
  * @param {RevisitsProps} { route: RouteProp } - This is a params of TopTabNavigation
  * @return {JSX.Element} rendered component to show list of revisits
  */
-const Revisits: FC<RevisitsProps> = ({ emptyMessage, filter, renderFab, title }): JSX.Element => {
+const Revisits = (): JSX.Element => {
     const router = useRouter();
-    const navigation = useNavigation();
     const { styles: themeStyles, theme: { colors, fontSizes } } = useStyles(themeStylesheet);
 
-    const { clearSelectedRevisit, setRevisitsScreenHistory } = useRevisits();
+    const { clearSelectedRevisit } = useRevisits();
 
     /**
      * I'm going to clear the selectedRevisit and navigate to the add or edit screen.
@@ -40,43 +36,23 @@ const Revisits: FC<RevisitsProps> = ({ emptyMessage, filter, renderFab, title })
         router.navigate('/(app)/(tabs)/revisits/add-or-edit');
     }
 
-    /**
-     * Effect to set revisitsScreenHistory when call focus event
-     * in screen.
-     */
-    useEffect(() => {
-        const focusUnsubscribe = navigation.addListener('focus', () => {
-            const navigationState = navigation.getState();
-            if (!navigationState) return;
-            setRevisitsScreenHistory(navigationState.routeNames[navigationState.index]);
-        });
-
-        return focusUnsubscribe;
-    }, []);
-
     return (
         <>
-            <RevisitsList
-                filter={ filter }
-                title={ title }
-                emptyMessage={ emptyMessage }
-            />
+            <RevisitsList />
 
-            { (!!renderFab) && (
-                <Fab
-                    color={ colors.button }
-                    icon={
-                        <Ionicons
-                            color={ colors.contentHeader }
-                            name="add-circle-outline"
-                            size={ fontSizes.xl }
-                        />
-                    }
-                    onPress={ handleNavigate }
-                    style={ themeStyles.fabBottomRight }
-                    touchColor="rgba(0, 0, 0, 0.15)"
-                />
-            ) }
+            <Fab
+                color={ colors.button }
+                icon={
+                    <Ionicons
+                        color={ colors.contentHeader }
+                        name="add-circle-outline"
+                        size={ fontSizes.xl }
+                    />
+                }
+                onPress={ handleNavigate }
+                style={ themeStyles.fabBottomRight }
+                touchColor="rgba(0, 0, 0, 0.15)"
+            />
         </>
     );
 }
