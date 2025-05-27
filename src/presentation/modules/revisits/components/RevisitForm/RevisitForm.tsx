@@ -16,8 +16,7 @@ import { Button, DatetimeField, FormCalendar, FormField, FormImage } from '@ui/c
 
 /* Hooks */
 import { useRevisits } from '../../hooks';
-import { useStatus } from '@shared/hooks';
-import { useTranslation, useUI } from '@ui/hooks';
+import { useToaster, useTranslation, useUI } from '@ui/hooks';
 
 /* Schemas */
 import { generateRevisitFormSchema } from './schemas';
@@ -46,8 +45,8 @@ export const RevisitForm: FC = (): JSX.Element => {
     const { styles: themeStyles, theme: { colors, fontSizes, margins } } = useStyles(themeStylesheet);
 
     const { state: { selectedRevisit, isRevisitLoading }, saveRevisit, updateRevisit } = useRevisits();
-    const { setErrorForm } = useStatus();
     const { translate } = useTranslation();
+    const { showFormError } = useToaster();
     const { state: { activeFormField, recordedAudio, userInterface }, setActiveFormField } = useUI();
 
     const btnText = selectedRevisit.id === '' ? translate('forms.actions.save') : translate('forms.actions.update');
@@ -91,7 +90,7 @@ export const RevisitForm: FC = (): JSX.Element => {
      */
     const handlePress = (): void => {
         if (isValid) handleSubmit();
-        else setErrorForm(errors);
+        else showFormError(errors);
     }
 
     useEffect(() => {
