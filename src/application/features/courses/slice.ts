@@ -6,7 +6,6 @@ import { CourseEntity } from '@domain/entities';
 /* Interfaces */
 import {
     HasMorePayload,
-    HistoryPayload,
     PaginationPayload,
     RefreshPayload,
     RemoveResourcePayload,
@@ -51,7 +50,6 @@ export const COURSES_INITIAL_STATE: CoursesState = {
         from: 0,
         to: 9
     },
-    coursesScreenHistory: [],
     hasMoreCourses: true,
     isCourseDeleting: false,
     isCourseLoading: false,
@@ -91,7 +89,6 @@ const courseSlice = createSlice({
             state.courseFilter = COURSES_INITIAL_STATE.courseFilter;
             state.courses = COURSES_INITIAL_STATE.courses;
             state.coursesPagination = COURSES_INITIAL_STATE.coursesPagination;
-            state.coursesScreenHistory = COURSES_INITIAL_STATE.coursesScreenHistory;
             state.hasMoreCourses = COURSES_INITIAL_STATE.hasMoreCourses;
             state.isCourseDeleting = COURSES_INITIAL_STATE.isCourseDeleting;
             state.isCourseLoading = COURSES_INITIAL_STATE.isCourseLoading;
@@ -130,10 +127,6 @@ const courseSlice = createSlice({
 
         setCoursesPagination: (state, action: PayloadAction<PaginationPayload>) => {
             state.coursesPagination = action.payload.pagination;
-        },
-
-        setCoursesScreenHistory: (state, action: PayloadAction<HistoryPayload>) => {
-            state.coursesScreenHistory = [ ...state.coursesScreenHistory, action.payload.newScreen ]
         },
 
         setHasMoreCourses: (state, action: PayloadAction<HasMorePayload>) => {
@@ -202,7 +195,6 @@ export const {
     setCourseFilter,
     setCourses,
     setCoursesPagination,
-    setCoursesScreenHistory,
     setHasMoreCourses,
     setIsCourseDeleting,
     setIsCourseLoading,

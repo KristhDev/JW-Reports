@@ -11,7 +11,6 @@ import { Pagination } from '@ui/interfaces';
  * @property {CourseFilter} courseFilter - The filter for the courses
  * @property {CourseEntity[]} courses - The courses to be displayed
  * @property {Pagination} coursesPagination - The pagination for the courses
- * @property {string[]} coursesScreenHistory - The history of the courses
  * @property {boolean} hasMoreCourses - Whether there are more courses to load
  * @property {boolean} isCourseDeleting - Whether a course is being deleted
  * @property {boolean} isCourseLoading - Whether the courses are being loaded
@@ -24,7 +23,6 @@ export interface CoursesState {
     courseFilter: CourseFilter;
     courses: CourseEntity[];
     coursesPagination: Pagination;
-    coursesScreenHistory: string[];
     hasMoreCourses: boolean;
     isCourseDeleting: boolean;
     isCourseLoading: boolean;

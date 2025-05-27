@@ -12,7 +12,6 @@ export {
     setCourseFilter,
     setCourses,
     setCoursesPagination,
-    setCoursesScreenHistory,
     setHasMoreCourses,
     setIsCourseDeleting,
     setIsCourseLoading,
