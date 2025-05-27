@@ -5,8 +5,7 @@ import { messagesService } from '@config/di';
 import { useCourses } from '@courses/hooks';
 import { usePreaching } from '@preaching/hooks';
 import { useRevisits } from '@revisits/hooks';
-import useStatus from './useStatus';
-import { useUI } from '@ui/hooks';
+import { useToaster, useUI } from '@ui/hooks';
 
 const useExportData = () => {
     const appMessages = messagesService.appMessages;
@@ -14,7 +13,7 @@ const useExportData = () => {
     const { state: { isCoursesExporting }, exportCourses } = useCourses();
     const { state: { isPreachingsExporting }, exportPreachings } = usePreaching();
     const { state: { isRevisitsExporting }, exportRevisits } = useRevisits();
-    const { setStatus } = useStatus();
+    const { showToast } = useToaster();
     const { state: { isDataExporting }, setIsDataExporting } = useUI();
 
     /**
@@ -30,7 +29,7 @@ const useExportData = () => {
             await exportRevisits(false);
             await exportCourses(false);
 
-            setStatus({ code: 200, msg: appMessages.DATA_EXPORTED_SUCCESS });
+            showToast(appMessages.DATA_EXPORTED_SUCCESS);
         }
         catch (error) {
             console.error(error);
