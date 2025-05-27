@@ -124,6 +124,18 @@ export const themeStylesheet = createStyleSheet(({ borderRadius, colors, fontSiz
         marginRight: (margins.xs + 2)
     },
 
+    listHeaderContainer: {
+        backgroundColor: colors.contentHeader,
+        borderBottomColor: colors.borderTopTab,
+        borderBottomWidth: 1,
+        gap: margins.sm,
+        marginBottom: margins.xs,
+        padding: margins.xs,
+        paddingBottom: margins.sm, 
+        paddingTop: margins.md,
+        width: '100%'
+    },
+
     listContainer: {
         paddingBottom: 100,
         paddingHorizontal: margins.xs,
