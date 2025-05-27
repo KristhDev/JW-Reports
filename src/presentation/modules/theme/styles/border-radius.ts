@@ -7,4 +7,4 @@ export const borderRadius = {
     xxl: 48,
 
     rounded: 999
-}
+} as const;

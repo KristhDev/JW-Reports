@@ -7,4 +7,4 @@ export const fontSizes = {
     xxl: 48,
 
     icon: 25
-}
+} as const;

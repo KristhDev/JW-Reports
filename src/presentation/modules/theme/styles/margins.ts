@@ -6,4 +6,4 @@ export const margins = {
     xl: 40,
     xxl: 48,
     xxxl: 56
-}
+} as const;
