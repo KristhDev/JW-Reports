@@ -5,6 +5,7 @@ import { supabase } from '@config/supabase';
 import { INIT_REVISIT } from '@application/features/revisits';
 
 /* Contracts */
+import { TranslationAdapterContract } from '@domain/contracts/adapters';
 import { RevisitsServiceContract } from '@domain/contracts/services';
 
 /* DTOs */
@@ -20,10 +21,31 @@ import { RequestError } from '@domain/errors';
 import { RevisitMapper } from '@domain/mappers';
 
 /* Interfaces */
-import { PaginateOptions, RevisitEndpoint } from '@infrastructure/interfaces';
+import { PaginateOptions, RevisitEndpoint, RevisitFilterItem } from '@infrastructure/interfaces';
 import { RevisitFilter } from '@revisits/interfaces';
 
 export class RevisitsService implements RevisitsServiceContract {
+    constructor (
+        private readonly translationAdapter: TranslationAdapterContract
+    ) {}
+
+    public get revisitsFiltersItems(): RevisitFilterItem[] {
+        return [
+            {
+                label: this.translationAdapter.translate('filters.revisits.all'),
+                value: 'all'
+            },
+            {
+                label: this.translationAdapter.translate('filters.revisits.visited'),
+                value: 'visited'
+            },
+            {
+                label: this.translationAdapter.translate('filters.revisits.unvisited'),
+                value: 'unvisited'
+            }
+        ];
+    }
+
     /**
      * Completes a revisit by updating the given fields.
      *
