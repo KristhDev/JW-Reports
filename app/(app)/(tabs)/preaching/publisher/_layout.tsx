@@ -13,8 +13,8 @@ import { useAuth } from '@auth/hooks';
 import { useCourses } from '@courses/hooks';
 import { useLessons } from '@lessons/hooks';
 import { useRevisits } from '@revisits/hooks';
-import { useNetwork, useStatus } from '@shared/hooks';
-import { useTranslation } from '@ui/hooks';
+import { useNetwork } from '@shared/hooks';
+import { useToaster, useTranslation } from '@ui/hooks';
 
 export default function PublisherLayout(): JSX.Element {
     const router = useRouter();
@@ -25,7 +25,7 @@ export default function PublisherLayout(): JSX.Element {
     const { state: { selectedLesson }, loadLastLesson } = useLessons();
     const { state: { selectedRevisit }, loadLastRevisit } = useRevisits();
     const { wifi } = useNetwork();
-    const { setNetworkError } = useStatus();
+    const { showNetworkError } = useToaster();
     const { translate } = useTranslation();
 
     const addOrEditLessonTitleNavigation = translate('navigation.titles.lesson', {
@@ -61,7 +61,7 @@ export default function PublisherLayout(): JSX.Element {
 
     useEffect(() => {
         if (!wifi.hasConnection) {
-            setNetworkError();
+            showNetworkError();
             return;
         }
 
