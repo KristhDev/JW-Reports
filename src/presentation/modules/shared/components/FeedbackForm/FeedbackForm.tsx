@@ -7,8 +7,8 @@ import { useStyles } from 'react-native-unistyles';
 import { Button, FormField } from '@ui/components';
 
 /* Hooks */
-import { useEmail, useStatus } from '../../hooks';
-import { useTranslation } from '@ui/hooks';
+import { useEmail } from '../../hooks';
+import { useToaster, useTranslation } from '@ui/hooks';
 
 /* Interfaces */
 import { FormActions } from '../../interfaces';
@@ -29,7 +29,7 @@ export const FeedbackForm = (): JSX.Element => {
     const { styles: themeStyles, theme: { colors, fontSizes, margins } } = useStyles(themeStylesheet);
 
     const { sendFeedbackEmail } = useEmail();
-    const { setErrorForm } = useStatus();
+    const { showFormError } = useToaster();
     const { translate } = useTranslation();
 
     /**
@@ -61,7 +61,7 @@ export const FeedbackForm = (): JSX.Element => {
      */
     const handlePress = (): void => {
         if (isValid) handleSubmit();
-        else setErrorForm(errors);
+        else showFormError(errors, { toastStyle: { bottom: margins.xs } });
     }
 
     return (
