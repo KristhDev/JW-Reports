@@ -12,10 +12,12 @@ import { timeAdapter, placeholdersService, messagesService } from '@config/di';
 import { ImageModel } from '@domain/models';
 
 /* Components */
+import { MicrophoneBtn } from '@shared/components';
 import { Button, DatetimeField, FormCalendar, FormField, FormImage } from '@ui/components';
 
 /* Hooks */
 import { useRevisits } from '../../hooks';
+import { useVoiceRecorder } from '@shared/hooks';
 import { useToaster, useTranslation, useUI } from '@ui/hooks';
 
 /* Schemas */
@@ -47,7 +49,8 @@ export const RevisitForm: FC = (): JSX.Element => {
     const { state: { selectedRevisit, isRevisitLoading }, saveRevisit, updateRevisit } = useRevisits();
     const { translate } = useTranslation();
     const { showFormError } = useToaster();
-    const { state: { activeFormField, recordedAudio, userInterface }, setActiveFormField } = useUI();
+    const { isRecording, record, hasRecord, recordFormField } = useVoiceRecorder();
+    const { state: { activeFormField, userInterface }, hasActiveFormField } = useUI();
 
     const btnText = selectedRevisit.id === '' ? translate('forms.actions.save') : translate('forms.actions.update');
 
@@ -94,9 +97,9 @@ export const RevisitForm: FC = (): JSX.Element => {
     }
 
     useEffect(() => {
-        if (recordedAudio.trim().length === 0 || activeFormField.length === 0) return;
-        setFieldValue(activeFormField, recordedAudio, true);
-    }, [ recordedAudio ]);
+        if (!hasRecord || !hasActiveFormField) return;
+        setFieldValue(activeFormField, record, true);
+    }, [ activeFormField, hasActiveFormField, hasRecord, record, setFieldValue ]);
 
     return (
         <View style={{ ...themeStyles.formContainer, paddingBottom: margins.xl }}>
@@ -104,6 +107,7 @@ export const RevisitForm: FC = (): JSX.Element => {
             {/* Person name field */}
             <FormField
                 editable={ !isRevisitLoading }
+                label={ translate('forms.labels.personName') }
                 leftIcon={
                     <Ionicons
                         color={ colors.icon }
@@ -111,38 +115,55 @@ export const RevisitForm: FC = (): JSX.Element => {
                         size={ fontSizes.icon }
                     />
                 }
-                label={ translate('forms.labels.personName') }
                 onChangeText={ handleChange('personName') }
-                onFocus={ () => setActiveFormField('personName') }
                 placeholder={ revisitsPlaceholders.PERSON_NAME }
+                rightIcon={
+                    <MicrophoneBtn 
+                        disabled={ isRevisitLoading || isRecording }
+                        isRecording={ isRecording && activeFormField === 'personName' }
+                        onPress={ () => recordFormField('personName') }
+                    />
+                }
                 value={ values.personName }
             />
 
             {/* About field */}
             <FormField
-                controlStyle={{ paddingVertical: margins.xs + 2 }}
+                controlStyle={{ paddingVertical: margins.xs + 2, alignItems: 'flex-end' }}
                 editable={ !isRevisitLoading }
                 inputStyle={{ minHeight: margins.sm * 9 }}
                 label={ translate('forms.labels.personAbout') }
                 multiline
-                numberOfLines={ 9 }
+                numberOfLines={ 7 }
                 onChangeText={ handleChange('about') }
-                onFocus={ () => setActiveFormField('about') }
                 placeholder={ revisitsPlaceholders.ABOUT }
+                rightIcon={
+                    <MicrophoneBtn 
+                        disabled={ isRevisitLoading || isRecording }
+                        isRecording={ isRecording && activeFormField === 'about' }
+                        onPress={ () => recordFormField('about') }
+                    />
+                }
                 value={ values.about }
             />
 
             {/* Address field */}
             <FormField
-                controlStyle={{ paddingVertical: margins.xs + 2 }}
+                controlStyle={{ paddingVertical: margins.xs + 2, alignItems: 'flex-end' }}
                 editable={ !isRevisitLoading }
                 inputStyle={{ minHeight: margins.sm * 6 }}
                 label={ translate('forms.labels.address') }
                 multiline
                 numberOfLines={ 3 }
                 onChangeText={ handleChange('address') }
-                onFocus={ () => setActiveFormField('address') }
                 placeholder={ revisitsPlaceholders.ADDRESS }
+                rightIcon={
+                    <MicrophoneBtn 
+                        disabled={ isRevisitLoading || isRecording }
+                        isRecording={ isRecording && activeFormField === 'address' }
+                        onPress={ () => recordFormField('address') }
+                    />
+                }
                 value={ values.address }
             />
 
