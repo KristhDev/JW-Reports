@@ -1,15 +1,36 @@
-import React, { FC, PropsWithChildren } from 'react';
+import React, { FC, PropsWithChildren, useMemo } from 'react';
 import { Provider as ReduxProvider } from 'react-redux';
-import { UnistylesProvider } from 'react-native-unistyles';
 import { KeyboardProvider } from 'react-native-keyboard-controller';
-import { PersistGate } from 'reduxjs-toolkit-persist/lib/integration/react';
+import { UnistylesProvider, useStyles } from 'react-native-unistyles';
 import { MenuProvider } from 'react-native-popup-menu';
+import { PersistGate } from 'reduxjs-toolkit-persist/lib/integration/react';
 
 /* Features */
 import { store, persistor } from '@application/store';
 
 /* Context */
-import { NetworkProvider, ThemeProvider } from '@application/context';
+import { NetworkProvider, ThemeProvider, ToasterProvider, ToasterProviderProps } from '@application/context';
+
+/* Hooks */
+import { useAuth } from '@auth/hooks';
+
+const Toaster: FC<PropsWithChildren> = ({ children }): JSX.Element => {
+    const { state: { isAuthenticated } } = useAuth();
+    const { theme: { colors, margins } } = useStyles();
+
+    const toastStyle = useMemo<ToasterProviderProps['toastStyle']>(() => ({
+        backgroundColor: (isAuthenticated) ? colors.contentHeader : colors.background,
+        bottom: (isAuthenticated) ? (margins.lg * 2) + margins.xs : margins.xs,
+    }), [ isAuthenticated, colors, margins ]);
+
+    return (
+        <ToasterProvider
+            toastStyle={ toastStyle }
+        >
+            { children }
+        </ToasterProvider>
+    );
+}
 
 /**
  * A React functional component that wraps its children with various providers.
@@ -27,7 +48,9 @@ const Provider: FC<PropsWithChildren> = ({ children }): JSX.Element => {
                         <MenuProvider>
                             <ReduxProvider store={ store }>
                                 <PersistGate loading={ null } persistor={ persistor }>
-                                    { children }
+                                    <Toaster>
+                                        { children }
+                                    </Toaster>
                                 </PersistGate>
                             </ReduxProvider>
                         </MenuProvider>
