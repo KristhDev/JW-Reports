@@ -1,6 +1,7 @@
 export interface UtilFunctions {
+    onFail?: () => void
+    onFinish?: () => void,
     onSuccess?: () => void,
-    onFinish?: () => void
 }
 
 export interface FormActions {
