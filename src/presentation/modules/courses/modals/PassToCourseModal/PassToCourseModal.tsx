@@ -16,8 +16,7 @@ import { FormField, ModalActions } from '@ui/components';
 /* Hooks */
 import { useCourses } from '../../hooks';
 import { useRevisits } from '@revisits/hooks';
-import { useStatus } from '@shared/hooks';
-import { useTranslation } from '@ui/hooks';
+import { useToaster, useTranslation } from '@ui/hooks';
 
 /* Interfaces */
 import { ModalProps } from '@ui/interfaces';
@@ -41,7 +40,7 @@ const PassToCourseModal: FC<ModalProps> = ({ isOpen, onClose }): JSX.Element => 
 
     const { state: { selectedRevisit } } = useRevisits();
     const { state: { isCourseLoading }, saveCourse } = useCourses();
-    const { setStatus } = useStatus();
+    const { showToast } = useToaster();
     const { translate } = useTranslation();
 
     const startCourseTitle = translate('modals.courses.titles.startCourse', { person: selectedRevisit.personName });
@@ -60,7 +59,7 @@ const PassToCourseModal: FC<ModalProps> = ({ isOpen, onClose }): JSX.Element => 
         }
 
         if (!values?.publication || values?.publication.length === 0) {
-            setStatus({ code: 400, msg: coursesMessages.PUBLICATION_MIN_LENGTH });
+            showToast(coursesMessages.PUBLICATION_MIN_LENGTH);
             onClose();
             setStartCourse(false);
 
