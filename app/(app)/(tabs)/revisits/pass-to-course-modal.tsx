@@ -1,7 +1,7 @@
 import React, { JSX } from 'react';
 import { useRouter } from 'expo-router';
 
-import { PassToCourseModal } from '@courses/screens';
+import { PassToCourseModal } from '@courses/modals';
 
 import { useRevisits } from '@revisits/hooks';
 

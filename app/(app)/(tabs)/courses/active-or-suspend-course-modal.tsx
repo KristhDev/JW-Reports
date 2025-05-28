@@ -1,7 +1,7 @@
 import React, { JSX } from 'react';
 import { useRouter } from 'expo-router';
 
-import { ActiveOrSuspendCourseModal } from '@courses/screens';
+import { ActiveOrSuspendCourseModal } from '@courses/modals';
 
 import { useCourses } from '@courses/hooks';
 

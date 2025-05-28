@@ -1,41 +1,9 @@
-import React, { JSX } from 'react';
+import { JSX } from 'react';
 
-import { useRouter } from 'expo-router';
+import { DeleteRevisitModal } from '@revisits/modals';
 
-import { DeleteModal } from '@ui/screens';
-
-import { useRevisits } from '@revisits/hooks';
-import { useTranslation } from '@ui/hooks';
-
-export default function DeleteRevisitModal(): JSX.Element {
-    const router = useRouter();
-
-    const { state: { isRevisitDeleting }, deleteRevisit } = useRevisits();
-    const { translate } = useTranslation();
-
-    const deleteRevisitModalTitle = translate('modals.titles.deleteAsk', {
-        article: 'esta',
-        attribute: translate('forms.fields.revisit')
-    });
-
-    const handleDeleteConfirm = () => {
-        deleteRevisit({
-            onFail: router.dismiss,
-            onSuccess: () => router.dismissTo('/(app)/(tabs)/preaching/publisher')
-        });
-    }
-
-    const handleHideModal = () => {
-        router.dismiss();
-    }
-
+export default function DeleteRevisitModalScreen(): JSX.Element {
     return (
-        <DeleteModal
-            isLoading={ isRevisitDeleting }
-            isOpen
-            onClose={ handleHideModal }
-            onConfirm={ handleDeleteConfirm }
-            text={ deleteRevisitModalTitle }
-        />
+        <DeleteRevisitModal successDismissPath="/(app)/(tabs)/preaching/publisher" />
     );
 }
