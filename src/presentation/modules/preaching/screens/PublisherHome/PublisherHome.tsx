@@ -11,10 +11,13 @@ import { timeAdapter } from '@config/di';
 import { LessonWithCourseEntity, RevisitEntity } from '@domain/entities';
 
 /* Screens */
-import { PassToCourseModal } from '@courses/screens';
 import { FinishOrStartLessonModal } from '@lessons/screens';
-import { RevisitModal } from '@revisits/screens';
 import { DeleteModal } from '@ui/screens';
+
+// TODO: Remove modals from this screen
+/* Modals */
+import { PassToCourseModal } from '@courses/modals';
+import { RevisitModal } from '@revisits/modals';
 
 /* Components */
 import { LessonCard } from '@lessons/components';
