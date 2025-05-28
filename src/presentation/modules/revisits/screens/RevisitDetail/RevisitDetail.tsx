@@ -5,8 +5,9 @@ import { useStyles } from 'react-native-unistyles';
 /* DI */
 import { timeAdapter } from '@config/di';
 
-/* Screens */
-import { RevisitModal } from '@revisits/screens';
+// TODO: Remove this modal from the screen
+/* Modals */
+import { RevisitModal } from '@revisits/modals';
 
 /* Components */
 import { Link, Title } from '@ui/components';
