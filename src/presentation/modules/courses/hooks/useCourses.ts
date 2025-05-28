@@ -199,18 +199,19 @@ const useCourses = () => {
     /**
      * It deletes a course and all its lessons from the database.
      *
-     * @param {Function} onFinish - This callback executed when the process is finished (success or failure)
-     * @param {Function} onSuccess - This callback executed when the process is finished (success)
+     * @param {UtilFunctions} onFail - This callback executed when the process fails
+     * @param {UtilFunctions} onFinish - This callback executed when the process is finished (success or failure)
+     * @param {UtilFunctions} onSuccess - This callback executed when the process is finished (success)
      * @return {Promise<void>} This function does not return anything.
      */
-    const deleteCourse = async ({ onFinish, onSuccess }: UtilFunctions): Promise<void> => {
+    const deleteCourse = async ({ onFail, onFinish, onSuccess }: UtilFunctions): Promise<void> => {
         const wifi = hasWifiConnection();
         if (!wifi) return;
 
-        const isAuth = isAuthenticated(onFinish);
+        const isAuth = isAuthenticated(onFail);
         if (!isAuth) return;
 
-        const canAlterate = canAlterateCourse(coursesMessages.UNSELECTED_DELETE, onFinish);
+        const canAlterate = canAlterateCourse(coursesMessages.UNSELECTED_DELETE, onFail);
         if (!canAlterate) return;
 
         setIsCourseDeleting(true);
@@ -224,19 +225,18 @@ const useCourses = () => {
             }
 
             removeCourse(state.selectedCourse.id);
+            clearSelectedCourse();
 
-            onFinish && onFinish();
-            onSuccess && onSuccess();
-
-            setIsCourseDeleting(false);
-            setSelectedCourse(INIT_COURSE);
             showToast(coursesMessages.DELETED_SUCCESS);
+            onSuccess && onSuccess();
         }
         catch (error) {
+            showError(error);
+            onFail && onFail();
+        }
+        finally {
             setIsCourseDeleting(false);
             onFinish && onFinish();
-
-            showError(error);
         }
     }
 
@@ -272,7 +272,7 @@ const useCourses = () => {
                 mimeType: 'application/pdf'
             });
 
-            if (showStatusMessage) showToast(coursesMessages.EXPORTED_SUCCESS);
+            if (showStatusMessage) showToast(coursesMessages.EXPORTED_SUCCESS, { toastStyle: { bottom: 8 } });
         }
         catch (error) {
             showError(error);
