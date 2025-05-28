@@ -2,11 +2,26 @@ import React, { JSX, useCallback } from 'react';
 import { StyleProp, TextStyle, View, ViewStyle } from 'react-native';
 import { useStyles } from 'react-native-unistyles';
 
+/* Components */
 import { Button } from '../Button';
+
+/* Interfaces */
 import { FilterItem, FiltersProps } from './interfaces';
 
+/* Styles */
 import { stylesheet } from './styles';
 
+/**
+ * A component that renders a set of filters. The filters are represented by a row of buttons.
+ * Each button corresponds to a filter item. The component will call the onFilterChange callback
+ * when the user selects a filter item. The callback will receive the value of the selected filter
+ * item as an argument.
+ *
+ * @param {FiltersProps<FilterValue>} items - An array of filter items. Each item should contain a label and a value.
+ * @param {(filter: FilterValue) => void} onFilterChange - A callback that will be called when the user selects a filter item.
+ * @param {FilterValue} selectedFilter - The value of the currently selected filter item.
+ * @returns A JSX element that renders the filters.
+ */
 export const Filters = <FilterValue, >({
     items,
     onFilterChange,
