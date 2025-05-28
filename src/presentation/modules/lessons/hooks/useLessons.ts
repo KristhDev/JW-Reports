@@ -164,18 +164,19 @@ const useLessons = () => {
      * Deletes the selected lesson and updates the state accordingly.
      *
      * @param {Object} options - Options for the delete operation.
+     * @param {Function} options.onFail - Callback executed when the deletion fails.
      * @param {Function} options.onFinish - Callback executed when the process is finished (success or failure).
      * @param {Function} options.onSuccess - Callback executed on successful deletion.
      * @return {Promise<void>} This function does not return anything.
      */
-    const deleteLesson = async ({ onFinish, onSuccess }: UtilFunctions): Promise<void> => {
+    const deleteLesson = async ({ onFail, onFinish, onSuccess }: UtilFunctions): Promise<void> => {
         const wifiConnectionAvailable = hasWifiConnection();
         if (!wifiConnectionAvailable) return;
 
-        const isAuth = isAuthenticated(onFinish);
+        const isAuth = isAuthenticated(onFail);
         if (!isAuth) return;
 
-        const canAlterate = canAlterateLesson(lessonsMessages.UNSELECTED_DELETE, onFinish);
+        const canAlterate = canAlterateLesson(lessonsMessages.UNSELECTED_DELETE, onFail);
         if (!canAlterate) return;
 
         setIsLessonDeleting(true);
@@ -187,20 +188,20 @@ const useLessons = () => {
                 await loadLastLesson();
             }
 
-            onFinish && onFinish();
             removeLesson(state.selectedLesson.id);
-            setIsLessonDeleting(false);
             replaceLastLessonInCourse(state.selectedLesson.id, state.lessons[0]);
-            onSuccess && onSuccess();
 
             clearSelectedLesson();
             showToast(lessonsMessages.DELETED_SUCCESS);
+            onSuccess && onSuccess();
         }
         catch (error) {
+            showError(error);
+            onFail && onFail();
+        }
+        finally {
             setIsLessonDeleting(false);
             onFinish && onFinish();
-
-            showError(error);
         }
     }
 
