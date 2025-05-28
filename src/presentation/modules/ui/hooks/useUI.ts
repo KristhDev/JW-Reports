@@ -81,6 +81,14 @@ const useUI = () => {
         });
     }
 
+    /**
+     * Loads the application settings by determining the appropriate language
+     * for the user interface based on device settings or stored preferences.
+     * Sets the language in the state, updates the locale for internationalization,
+     * and marks the application as ready.
+     *
+     * @return {Promise<void>} A promise that resolves when the settings are loaded and applied.
+     */
     const loadSettings = async (): Promise<void> => {
         const deviceLangue = localizationAdapter.getCurrentLanguageCode();
 
