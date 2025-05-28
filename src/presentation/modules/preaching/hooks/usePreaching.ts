@@ -166,7 +166,7 @@ const usePreaching = () => {
             const allPreachings = await preachingService.getAllByUserId(user.id);
 
             const preachingsGrouped = preachingReportService.groupByMonthAndYear(allPreachings);
-            const reportsPreaching = preachingsGrouped.map(preachingReportService.generatePreachingReportForExport);
+            const reportsPreaching = preachingsGrouped.map(group => preachingReportService.generatePreachingReportForExport(group));
 
             const fileName = translate('pdf.fileNames.preaching', { name: `${ user.name }_${ user.surname }` });
             const preachingsTemplate = pdfPreachingsTemplateService.generate({ fullName: `${ user.name } ${ user.surname }`, reports: reportsPreaching });
@@ -174,7 +174,7 @@ const usePreaching = () => {
             const pdfPath = await pdfAdapter.writeFromHTML({ fileName, html: preachingsTemplate, width: 480 });
             await externalStorageAdapter.moveFileOfInternalExtorage({ filePath: pdfPath, mimeType: 'application/pdf' });
 
-            if (showStatusMessage) showToast(preachingMessages.EXPORTED_SUCCESS);
+            if (showStatusMessage) showToast(preachingMessages.EXPORTED_SUCCESS, { toastStyle: { bottom: 8 } });
         }
         catch (error) {
             showError(error);
