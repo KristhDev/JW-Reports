@@ -230,7 +230,7 @@ const useRevisits = () => {
                 mimeType: 'application/pdf',
             });
 
-            if (showStatusMessage) showToast(revisitsMessages.EXPORTED_SUCCESS);
+            if (showStatusMessage) showToast(revisitsMessages.EXPORTED_SUCCESS, { toastStyle: { bottom: 8 } });
         }
         catch (error) {
             showError(error);
