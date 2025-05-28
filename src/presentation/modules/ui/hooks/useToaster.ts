@@ -1,10 +1,13 @@
 import { useContext } from 'react';
 import { Linking } from 'react-native';
 
+/* DI */
 import { loggerService, messagesService } from '@config/di';
 
+/* Context */
 import { ToasterContext, ToastOptions } from '@application/context';
 
+/* Errors */
 import {
     CloudError,
     DtoError,
@@ -17,6 +20,7 @@ import {
     VoiceRecorderError
 } from '@domain/errors';
 
+/* Hooks */
 import useTranslation from './useTranslation';
 
 const useToaster = () => {
@@ -84,6 +88,14 @@ const useToaster = () => {
         loggerService.error(errorData);
     }
 
+    /**
+     * This function is to show a form error
+     *
+     * @template {object} T
+     * @param {T} fromErrors - The errors object
+     * @param {ToastOptions} [options] - An optional object to be passed to the toast
+     * @return {void} This function does not return anything
+     */
     const showFormError = <T extends object>(fromErrors: T, options?: ToastOptions): void => {
         const values = Object.values(fromErrors) as string[];
         showToast(values[0], options);
@@ -101,6 +113,11 @@ const useToaster = () => {
         showToast(msg || networkMessages.WIFI_HASNT_CONNEC_EXPLAIN);
     }
 
+    /**
+     * Shows a toast asking the user to grant permissions.
+     *
+     * @return {void} This function does not return anything
+     */
     const showPermissionsToast = (): void => {
         showToast(permissionsMessages.REQUEST, {
             autoClose: false,
