@@ -1,14 +1,10 @@
 import { FC, JSX } from 'react';
 import { Pressable, Text, useWindowDimensions, View } from 'react-native';
 import { useStyles } from 'react-native-unistyles';
-import Animated, { FadeInDown, FadeOutDown } from 'react-native-reanimated';
 import Ionicons from '@expo/vector-icons/Ionicons';
 
 /* Components */
 import { Link } from '../Link';
-
-/* Hooks */
-import { useToaster } from '@ui/hooks';
 
 /* Interfaces */
 import { ToasterProps } from './interfaces';
@@ -28,17 +24,13 @@ import { stylesheet } from './styles';
  * @param {StyleProp<TextStyle>} [props.textStyle] - The style to be applied to the toaster text.
  * @returns {JSX.Element} The rendered toaster component.
  */
-export const Toaster: FC<ToasterProps> = ({ cancelAction, confirmAction, message, style, textStyle }): JSX.Element => {
+export const Toaster: FC<ToasterProps> = ({ cancelAction, confirmAction, onClose, message, style, textStyle }): JSX.Element => {
     const { width } = useWindowDimensions();
     const { styles, theme: { colors, fontSizes } } = useStyles(stylesheet);
 
-    const { hideToast } = useToaster();
-
     return (
-        <Animated.View 
+        <View 
             style={[ styles.toasterContainer(width), style ]}
-            entering={ FadeInDown.delay(300) }
-            exiting={ FadeOutDown }
         >
             <View style={[ styles.toasterContent ]}>
                 <Text style={[ styles.toasterText, textStyle ]}>
@@ -47,7 +39,7 @@ export const Toaster: FC<ToasterProps> = ({ cancelAction, confirmAction, message
 
                 <View style={[ styles.toasterCloseButton ]}>
                     <Pressable
-                        onPress={ hideToast }
+                        onPress={ onClose }
                         android_ripple={{ color: colors.buttonTransparent }}
                     >
                         <Ionicons 
@@ -82,6 +74,6 @@ export const Toaster: FC<ToasterProps> = ({ cancelAction, confirmAction, message
                     ) }
                 </View>
             ) }
-        </Animated.View>
+        </View>
     );
 }
