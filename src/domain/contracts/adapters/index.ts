@@ -5,5 +5,6 @@ export * from './localization.adapter.contract';
 export * from './pdf.adapter.contract';
 export * from './storage.adapter.contract';
 export * from './time.adapter.contract';
+export * from './toaster.adapter.contract';
 export * from './translation.adapter.contract';
 export * from './voice-recorder.adapter.contract';
