@@ -6,6 +6,7 @@ import {
     PDFAdapterContract,
     StorageAdapterContract,
     TimeAdapterContract,
+    ToasterAdapterContract,
     TranslationAdapterContract,
     VoiceRecorderAdapterContract
 } from '@domain/contracts/adapters';
@@ -39,6 +40,7 @@ import {
     PDFAdapter,
     StorageAdapter,
     TimeAdapter,
+    ToasterAdapter,
     TranslationAdapter,
     VoiceRecorderAdapter
 } from '@infrastructure/adapters';
@@ -92,4 +94,5 @@ export const revisitsService: RevisitsServiceContract = new RevisitsService(tran
 export const themeService: ThemeServiceContract = new ThemeService(translationAdapter);
 
 export const externalStorageAdapter: ExternalStorageAdapterContract = new ExternalStorageAdapter(messagesService, internalStorageAdapter);
+export const toasterAdapter: ToasterAdapterContract = new ToasterAdapter(translationAdapter, loggerService, messagesService);
 export const voiceRecorderAdapter: VoiceRecorderAdapterContract = new VoiceRecorderAdapter(messagesService);
