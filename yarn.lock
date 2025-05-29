@@ -8021,6 +8021,11 @@ react-native-tab-view@^4.0.10, react-native-tab-view@^4.1.0:
   dependencies:
     use-latest-callback "^0.2.3"
 
+react-native-toast-message@^2.3.0:
+  version "2.3.0"
+  resolved "https://registry.yarnpkg.com/react-native-toast-message/-/react-native-toast-message-2.3.0.tgz#c25fb40d7af4388f6a798efbfca479d53916ed00"
+  integrity sha512-d7LldTK1ei1Bl7RFhoOYw8hVQ4oKPQHORYI//xR9Pyz3HxSlFlvQbueE5X3KLoemRRgBrOUg3zY6DxXnxrVLRg==
+
 react-native-ui-datepicker@^3.1.2:
   version "3.1.2"
   resolved "https://registry.yarnpkg.com/react-native-ui-datepicker/-/react-native-ui-datepicker-3.1.2.tgz#d86bd77913862570a45caf9fcb46bd23b99ca475"
