@@ -9,16 +9,10 @@ export interface ToastAction {
 
 export interface ToastOptions {
     autoClose?: boolean;
+    bottomOffset?: number;
     cancelAction?: ToastAction;
     confirmAction?: ToastAction;
     duration?: number;
     toastStyle?: StyleProp<ViewStyle>;
     toastTextStyle?: StyleProp<TextStyle>;
 }
-
-export interface ToasterContextProps {
-    hideToast: () => void;
-    showToast: (message: string, options?: ToastOptions) => void;
-}
-
-export interface ToasterProviderProps extends ToastOptions {}
