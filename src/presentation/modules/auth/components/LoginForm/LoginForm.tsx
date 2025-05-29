@@ -6,14 +6,14 @@ import { useFormik } from 'formik';
 import Ionicons from '@expo/vector-icons/Ionicons';
 
 /* Config */
-import { placeholdersService } from '@config/di';
+import { placeholdersService, toasterAdapter } from '@config/di';
 
 /* Components */
 import { Button, EyeBtn, FormField, Link } from '@ui/components';
 
 /* Hooks */
 import { useAuth } from '../../hooks';
-import { useAsyncAction, useToaster, useTranslation } from '@ui/hooks';
+import { useAsyncAction, useTranslation } from '@ui/hooks';
 
 /* Schemas */
 import { generateLoginFormSchema } from './schemas';
@@ -36,7 +36,6 @@ export const LoginForm = (): JSX.Element => {
     const { styles: themeStyles, theme: { colors, fontSizes, margins } } = useStyles(themeStylesheet);
 
     const { signIn } = useAuth();
-    const { showFormError } = useToaster();
     const { translate } = useTranslation();
     const { isLoading, excuteAsyncAction } = useAsyncAction(signIn);
 
@@ -58,7 +57,7 @@ export const LoginForm = (): JSX.Element => {
      */
     const handlePress = (): void => {
         if (isValid) handleSubmit();
-        else showFormError(errors);
+        else toasterAdapter.showFormError(errors);
     }
 
     return (

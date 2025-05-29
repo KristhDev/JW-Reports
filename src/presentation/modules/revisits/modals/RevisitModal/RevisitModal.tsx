@@ -5,7 +5,7 @@ import { useFormik } from 'formik';
 import Ionicons from '@expo/vector-icons/Ionicons';
 
 /* DI */
-import { timeAdapter, placeholdersService } from '@config/di';
+import { timeAdapter, placeholdersService, toasterAdapter } from '@config/di';
 
 /* Screens */
 import { Modal } from '@ui/screens';
@@ -15,7 +15,7 @@ import { DatetimeField, FormCalendar, FormField, ModalActions } from '@ui/compon
 
 /* Hooks */
 import { useRevisits } from '../../hooks';
-import { useToaster, useTranslation, useUI } from '@ui/hooks';
+import { useTranslation, useUI } from '@ui/hooks';
 
 /* Interfaces */
 import { ModalProps } from '@ui/interfaces';
@@ -42,7 +42,6 @@ const RevisitModal: FC<ModalProps> = ({ isOpen, onClose }): JSX.Element => {
     const { styles: themeStyles, theme: { colors, fontSizes, margins } } = useStyles(themeStylesheet);
 
     const { state: { selectedRevisit, isRevisitLoading }, completeRevisit, saveRevisit } = useRevisits();
-    const { showFormError } = useToaster();
     const { translate } = useTranslation();
     const { state: { userInterface } } = useUI();
 
@@ -123,7 +122,7 @@ const RevisitModal: FC<ModalProps> = ({ isOpen, onClose }): JSX.Element => {
      */
     const handlePress = (): void => {
         if (isValid) handleSubmit();
-        else showFormError(errors);
+        else toasterAdapter.showFormError(errors);
     }
 
     return (

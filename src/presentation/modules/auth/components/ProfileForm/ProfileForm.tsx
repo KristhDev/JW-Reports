@@ -6,7 +6,7 @@ import { useStyles } from 'react-native-unistyles';
 import Ionicons from '@expo/vector-icons/Ionicons';
 
 /* Config */
-import { publisherService, placeholdersService } from '@config/di';
+import { publisherService, placeholdersService, toasterAdapter } from '@config/di';
 
 /* Constants */
 import { HOURS_REQUIREMENTS, precursors } from '@application/constants/utils';
@@ -16,7 +16,7 @@ import { Button, Checkbox, FormField, FormSelect } from '@ui/components';
 
 /* Hooks */
 import { useAuth } from '../../hooks';
-import { useAsyncAction, useToaster, useTranslation } from '@ui/hooks';
+import { useAsyncAction, useTranslation } from '@ui/hooks';
 
 /* Schemas */
 import { generateProfileFormSchema } from './schemas';
@@ -38,7 +38,6 @@ export const ProfileForm = (): JSX.Element => {
     const { styles: themeStyles, theme: { colors, fontSizes, margins } } = useStyles(themeStylesheet);
 
     const { state: { user }, updateProfile } = useAuth();
-    const { showFormError } = useToaster();
     const { translate } = useTranslation();
     const { isLoading, excuteAsyncAction } = useAsyncAction(updateProfile);
 
@@ -81,7 +80,7 @@ export const ProfileForm = (): JSX.Element => {
      */
     const handlePress = (): void => {
         if (isValid) handleSubmit();
-        else showFormError(errors, { toastStyle: { bottom: margins.xs } });
+        else toasterAdapter.showFormError(errors, { bottomOffset: margins.xs });
     }
 
     return (

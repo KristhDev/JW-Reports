@@ -1,7 +1,7 @@
 import { AppState, NativeEventSubscription } from 'react-native';
 
 /* DI */
-import { notificationsService, deviceImageService, voiceRecorderAdapter, messagesService } from '@config/di';
+import { notificationsService, deviceImageService, voiceRecorderAdapter, messagesService, toasterAdapter } from '@config/di';
 
 /* Constants */
 import { permissionsStatus } from '@application/constants/utils';
@@ -17,9 +17,6 @@ import {
     PermissionStatus
 } from '@application/features/permissions';
 
-/* Hooks */
-import { useToaster } from '@ui/hooks';
-
 /**
  * Hook to management permissions of store
  * with state, actions and thunks
@@ -30,7 +27,6 @@ const usePermissions = () => {
     const dispatch = useAppDispatch();
 
     const state = useAppSelector(store => store.permissions);
-    const { showToast } = useToaster();
 
     const isCameraBlocked = state.permissions.camera === permissionsStatus.BLOCKED;
     const isCameraDenied = state.permissions.camera === permissionsStatus.DENIED;
@@ -92,7 +88,7 @@ const usePermissions = () => {
         const status: PermissionStatus = await askPermissions[permission]();
 
         const isPermissionUnavailable = status === permissionsStatus.UNAVAILABLE;
-        if (isPermissionUnavailable) showToast(permissionsMessages.UNSUPPORTED);
+        if (isPermissionUnavailable) toasterAdapter.showToast(permissionsMessages.UNSUPPORTED);
 
         dispatch(setPermission({ key: permission, value: status }));
         return status;

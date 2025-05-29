@@ -1,5 +1,5 @@
 /* Config */
-import { authService, notificationsService, messagesService } from '@config/di';
+import { authService, notificationsService, messagesService, toasterAdapter } from '@config/di';
 
 /* Features */
 import { useAppDispatch, useAppSelector } from '@application/store';
@@ -23,7 +23,6 @@ import { UserEntity } from '@domain/entities';
 
 /* Hooks */
 import { useNetwork } from '@shared/hooks';
-import { useToaster } from '@ui/hooks';
 
 /* Interfaces */
 import { SignInData, ProfileData, SignUpData, EmailData, UpdatePasswordData } from '../interfaces';
@@ -37,7 +36,6 @@ const useAuth = () => {
 
     const dispatch = useAppDispatch();
 
-    const { showToast, showError, showUnauthenticatedError } = useToaster();
     const { hasWifiConnection, wifi } = useNetwork();
 
     const state = useAppSelector(store => store.auth);
@@ -74,7 +72,7 @@ const useAuth = () => {
      */
     const isAuthenticated = (onError?: () => void): boolean => {
         const value = state.isAuthenticated;
-        if (!value) showUnauthenticatedError(onError);
+        if (!value) toasterAdapter.showUnauthenticatedError(onError);
 
         return value;
     }
@@ -104,7 +102,7 @@ const useAuth = () => {
         }
         catch (error) {
             handleClearStore();
-            showError(error);
+            toasterAdapter.showError(error);
         }
         finally {
             setIsAuthLoading(false);
@@ -127,10 +125,10 @@ const useAuth = () => {
             let msg = `Hemos enviado un correo de restablecimiento de contraseña a ${ email }. `;
             msg += 'Por favor revísalo y sigue los pasos para recuperar tu cuenta.';
 
-            showToast(msg);
+            toasterAdapter.showToast(msg);
         }
         catch (error) {
-            showError(error);
+            toasterAdapter.showError(error);
         }
     }
 
@@ -150,7 +148,7 @@ const useAuth = () => {
             setUser(token, user);
         }
         catch (error) {
-            showError(error);
+            toasterAdapter.showError(error);
             handleClearStore();
         }
     }
@@ -169,7 +167,7 @@ const useAuth = () => {
             handleClearStore();
         }
         catch (error) {
-            showError(error);
+            toasterAdapter.showError(error);
         }
     }
 
@@ -191,7 +189,7 @@ const useAuth = () => {
             const result = await authService.signUp(signUpDto);
 
             if (result.emailAlreadyExists) {
-                showToast(authMessages.EMAIL_ALREADY_REGISTERED);
+                toasterAdapter.showToast(authMessages.EMAIL_ALREADY_REGISTERED);
                 await authService.signOut();
 
                 return;
@@ -202,14 +200,14 @@ const useAuth = () => {
             let msg = `Hemos enviado un correo de confirmación a ${ data.email }. `
                 msg += 'Por favor, revíselo y siga los pasos que se le indiquen.';
 
-            showToast(msg);
+            toasterAdapter.showToast(msg);
         }
         catch (error) {
             await authService.signOut();
             notificationsService.close();
             clearAuth();
 
-            showError(error);
+            toasterAdapter.showError(error);
         }
     }
 
@@ -231,10 +229,10 @@ const useAuth = () => {
             msg += `Por favor revísalo. Una vez confirmes ese correo se enviará otro a ${ email }. `
             msg += 'Ese también confírmalo para efectuar el cambio.'
 
-            showToast(msg);
+            toasterAdapter.showToast(msg, { bottomOffset: 8 });
         }
         catch (error) {
-            showError(error);
+            toasterAdapter.showError(error, { bottomOffset: 8 });
         }
     }
 
@@ -252,10 +250,10 @@ const useAuth = () => {
             const updatePasswordDto = UpdatePasswordDto.create(password);
             await authService.updatePassword(updatePasswordDto);
 
-            showToast(authMessages.PASSWORD_UPDATED);
+            toasterAdapter.showToast(authMessages.PASSWORD_UPDATED, { bottomOffset: 8 });
         }
         catch (error) {
-            showError(error);
+            toasterAdapter.showError(error, { bottomOffset: 8 });
         }
     }
 
@@ -277,10 +275,10 @@ const useAuth = () => {
             const user = await authService.updateProfile(updateDto);
 
             updateUser({ ...state.user, ...user });
-            showToast(authMessages.PROFILE_UPDATED);
+            toasterAdapter.showToast(authMessages.PROFILE_UPDATED, { bottomOffset: 8 });
         }
         catch (error) {
-            showError(error);
+            toasterAdapter.showError(error, { bottomOffset: 8 });
         }
     }
 

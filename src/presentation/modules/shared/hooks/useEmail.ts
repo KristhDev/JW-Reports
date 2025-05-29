@@ -1,6 +1,6 @@
 /* Config */
 import { env } from '@config/env';
-import { emailService, messagesService } from '@config/di';
+import { emailService, messagesService, toasterAdapter } from '@config/di';
 
 /* Errors */
 import { EmailError } from '@domain/errors';
@@ -8,7 +8,6 @@ import { EmailError } from '@domain/errors';
 /* Hooks */
 import { useAuth } from '@auth/hooks';
 import useImage from './useImage';
-import { useToaster } from '@ui/hooks';
 
 /* Interfaces */
 import { ReportErrorOptions, UtilFunctions } from '../interfaces';
@@ -18,7 +17,6 @@ const useEmail = () => {
 
     const { state: { user } } = useAuth();
     const { uploadImage } = useImage();
-    const { showError, showToast } = useToaster();
 
     /**
      * Sends an email to the administrator with the message provided by the user.
@@ -35,12 +33,12 @@ const useEmail = () => {
                 templateId: env.EMAILJS_FEEDBACK_TEMPLATE_ID!
             });
 
-            showToast(emailMessages.FEEDBACK_SUCCESS);
+            toasterAdapter.showToast(emailMessages.FEEDBACK_SUCCESS, { bottomOffset: 8 });
             onSuccess && onSuccess();
         }
         catch (error) {
             console.error(error);
-            showToast(emailMessages.FEEDBACK_FAILED);
+            toasterAdapter.showToast(emailMessages.FEEDBACK_FAILED, { bottomOffset: 8 });
         }
         finally {
             onFinish && onFinish();
@@ -66,16 +64,16 @@ const useEmail = () => {
                 imageUrl
             });
 
-            showToast(emailMessages.REPORT_ERROR_SUCCESS);
+            toasterAdapter.showToast(emailMessages.REPORT_ERROR_SUCCESS, { bottomOffset: 8 });
             onSuccess && onSuccess();
         }
         catch (error) {
             if (error instanceof EmailError) {
-                showToast(emailMessages.REPORT_ERROR_FAILED);
+                toasterAdapter.showToast(emailMessages.REPORT_ERROR_FAILED, { bottomOffset: 8 });
                 return;
             }
 
-            showError(error);
+            toasterAdapter.showError(error, { bottomOffset: 8 });
         }
         finally {
             onFinish && onFinish();

@@ -5,7 +5,8 @@ import {
     coursesService,
     lessonsService,
     messagesService,
-    pdfCoursesTemplateService
+    pdfCoursesTemplateService,
+    toasterAdapter
 } from '@config/di';
 
 /* Constants */
@@ -45,7 +46,7 @@ import { CourseEntity, LessonWithCourseEntity } from '@domain/entities';
 import { useAuth } from '@auth/hooks';
 import { useLessons } from '@lessons/hooks';
 import { useNetwork } from '@shared/hooks';
-import { useToaster, useTranslation } from '@ui/hooks';
+import { useTranslation } from '@ui/hooks';
 
 /* Interfaces */
 import { CourseFilter, CourseFormValues, loadCoursesOptions } from '../interfaces';
@@ -66,7 +67,6 @@ const useCourses = () => {
     const { lastLesson } = useAppSelector(store => store.lessons);
 
     const { isAuthenticated } = useAuth();
-    const { showError, showToast } = useToaster();
     const { loadLastLesson } = useLessons();
     const { translate } = useTranslation();
 
@@ -105,7 +105,7 @@ const useCourses = () => {
         /* Should not update if selectedCourse.id is an empty string */
         if (state.selectedCourse.id === '') {
             onError && onError();
-            showToast(unSelectedMsg);
+            toasterAdapter.showToast(unSelectedMsg);
 
             return false;
         }
@@ -113,7 +113,7 @@ const useCourses = () => {
         /* If the selectedCourse is finished it should not be updated */
         if (state.selectedCourse.finished) {
             onError && onError();
-            showToast(coursesMessages.FINISHED);
+            toasterAdapter.showToast(coursesMessages.FINISHED);
 
             return false;
         }
@@ -136,14 +136,14 @@ const useCourses = () => {
     const isSelectedCourseSuspended = (unSelectedMsg: string, suspendMsg: string, onError?: () => void): boolean => {
         if (state.selectedCourse.id === '') {
             onError && onError();
-            showToast(unSelectedMsg);
+            toasterAdapter.showToast(unSelectedMsg);
 
             return true;
         }
 
         if (state.selectedCourse.suspended) {
             onError && onError();
-            showToast(suspendMsg);
+            toasterAdapter.showToast(suspendMsg);
 
             return true;
         }
@@ -182,13 +182,13 @@ const useCourses = () => {
 
             setIsCourseLoading(false);
             onFinish && onFinish();
-            showToast(msg);
+            toasterAdapter.showToast(msg);
         }
         catch (error) {
             setIsCourseLoading(false);
             onFinish && onFinish();
 
-            showError(error);
+            toasterAdapter.showError(error);
         }
     }
 
@@ -227,11 +227,11 @@ const useCourses = () => {
             removeCourse(state.selectedCourse.id);
             clearSelectedCourse();
 
-            showToast(coursesMessages.DELETED_SUCCESS);
+            toasterAdapter.showToast(coursesMessages.DELETED_SUCCESS);
             onSuccess && onSuccess();
         }
         catch (error) {
-            showError(error);
+            toasterAdapter.showError(error);
             onFail && onFail();
         }
         finally {
@@ -272,10 +272,10 @@ const useCourses = () => {
                 mimeType: 'application/pdf'
             });
 
-            if (showStatusMessage) showToast(coursesMessages.EXPORTED_SUCCESS, { toastStyle: { bottom: 8 } });
+            if (showStatusMessage) toasterAdapter.showToast(coursesMessages.EXPORTED_SUCCESS, { toastStyle: { bottom: 8 } });
         }
         catch (error) {
-            showError(error);
+            toasterAdapter.showError(error);
         }
         finally {
             setIsCoursesExporting(false);
@@ -318,13 +318,13 @@ const useCourses = () => {
 
             setIsCourseLoading(false);
             onFinish && onFinish();
-            showToast(msg);
+            toasterAdapter.showToast(msg);
         }
         catch (error) {
             setIsCourseLoading(false);
             onFinish && onFinish();
 
-            showError(error);
+            toasterAdapter.showError(error);
         }
     }
 
@@ -373,7 +373,7 @@ const useCourses = () => {
             else setCourses(courses);
         }
         catch (error) {
-            showError(error);
+            toasterAdapter.showError(error);
         }
         finally {
             setIsCoursesLoading(false);
@@ -403,10 +403,10 @@ const useCourses = () => {
             addCourse(course);
 
             utils?.onSuccess && utils.onSuccess();
-            showToast(coursesMessages.ADDED_SUCCESS);
+            toasterAdapter.showToast(coursesMessages.ADDED_SUCCESS);
         }
         catch (error) {
-            showError(error);
+            toasterAdapter.showError(error);
         }
         finally {
             setIsCourseLoading(false);
@@ -430,7 +430,7 @@ const useCourses = () => {
         if (!isAuth) return;
 
         if (state.selectedCourse.id === '') {
-            showToast(coursesMessages.UNSELECTED_UPDATE);
+            toasterAdapter.showToast(coursesMessages.UNSELECTED_UPDATE);
             return;
         }
 
@@ -450,10 +450,10 @@ const useCourses = () => {
             }
 
             utils?.onSuccess?.();
-            showToast(coursesMessages.UPDATED_SUCCESS);
+            toasterAdapter.showToast(coursesMessages.UPDATED_SUCCESS);
         }
         catch (error) {
-            showError(error);
+            toasterAdapter.showError(error);
         }
         finally {
             setIsCourseLoading(false);

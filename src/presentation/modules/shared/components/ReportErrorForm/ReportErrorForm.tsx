@@ -3,6 +3,9 @@ import { ActivityIndicator, View } from 'react-native';
 import { useFormik } from 'formik';
 import { useStyles } from 'react-native-unistyles';
 
+/* DI */
+import { toasterAdapter } from '@config/di';
+
 /* Models */
 import { ImageModel } from '@domain/models';
 
@@ -12,7 +15,7 @@ import { Button, FormField, FormImage, FormImageRef } from '@ui/components';
 /* Hooks */
 import { useEmail } from '../../hooks';
 import { useTheme } from '@theme/hooks';
-import { useToaster, useTranslation } from '@ui/hooks';
+import { useTranslation } from '@ui/hooks';
 
 /* Schemas */
 import { generateReportErrorFormSchema } from './schemas';
@@ -38,7 +41,6 @@ export const ReportErrorForm = (): JSX.Element => {
     const { styles: themeStyles, theme: { colors, fontSizes, margins } } = useStyles(themeStylesheet);
 
     const { sendReportErrorEmail } = useEmail();
-    const { showFormError } = useToaster();
     const { state: { theme } } = useTheme();
     const { translate } = useTranslation();
 
@@ -75,7 +77,7 @@ export const ReportErrorForm = (): JSX.Element => {
      */
     const handlePress = (): void => {
         if (isValid) handleSubmit();
-        else showFormError(errors, { toastStyle: { bottom: margins.xs } });
+        else toasterAdapter.showFormError(errors, { bottomOffset: margins.xs });
     }
 
     return (

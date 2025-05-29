@@ -6,14 +6,14 @@ import { useStyles } from 'react-native-unistyles';
 import Ionicons from '@expo/vector-icons/Ionicons';
 
 /* Config */
-import { placeholdersService } from '@config/di';
+import { placeholdersService, toasterAdapter } from '@config/di';
 
 /* Components */
 import { Button, EyeBtn, FormField, Link } from '@ui/components';
 
 /* Hooks */
 import { useAuth } from '../../hooks';
-import { useAsyncAction, useToaster, useTranslation } from '@ui/hooks';
+import { useAsyncAction, useTranslation } from '@ui/hooks';
 
 /* Schemas */
 import { generateRegisterFormSchema } from './schemas';
@@ -37,7 +37,6 @@ export const RegisterForm = (): JSX.Element => {
     const { styles: themeStyles, theme: { colors, fontSizes, margins } } = useStyles(themeStylesheet);
 
     const { signUp } = useAuth();
-    const { showFormError } = useToaster();
     const { translate } = useTranslation();
     const { isLoading, excuteAsyncAction } = useAsyncAction(signUp);
 
@@ -62,7 +61,7 @@ export const RegisterForm = (): JSX.Element => {
      */
     const handlePress = (): void => {
         if (isValid) handleSubmit();
-        else showFormError(errors);
+        else toasterAdapter.showFormError(errors);
     }
 
     return (

@@ -6,7 +6,7 @@ import { useFormik } from 'formik';
 import Ionicons from '@expo/vector-icons/Ionicons';
 
 /* DI */
-import { timeAdapter, placeholdersService } from '@config/di';
+import { timeAdapter, placeholdersService, toasterAdapter } from '@config/di';
 
 /* Components */
 import { MicrophoneBtn } from '@shared/components';
@@ -15,7 +15,7 @@ import { Button, DatetimeField, FormCalendar, FormField } from '@ui/components';
 /* Hooks */
 import { useLessons } from '@lessons/hooks';
 import { useVoiceRecorder } from '@shared/hooks';
-import { useTranslation, useToaster, useUI } from '@ui/hooks';
+import { useTranslation, useUI } from '@ui/hooks';
 
 /* Schemas */
 import { generateLessonFormSchema } from './schemas';
@@ -41,7 +41,6 @@ export const LessonForm = (): JSX.Element => {
     const { state: { isLessonLoading, selectedLesson }, saveLesson, updateLesson } = useLessons();
     const { hasRecord, isRecording, record, recordFormField } = useVoiceRecorder();
     const { translate } = useTranslation();
-    const { showFormError } = useToaster();
     const { state: { activeFormField, userInterface }, hasActiveFormField, setActiveFormField } = useUI();
 
     const buttonText = (selectedLesson.id === '') 
@@ -83,7 +82,7 @@ export const LessonForm = (): JSX.Element => {
      */
     const handlePress = (): void => {
         if (isValid) handleSubmit();
-        else showFormError(errors);
+        else toasterAdapter.showFormError(errors);
     }
 
     useEffect(() => {

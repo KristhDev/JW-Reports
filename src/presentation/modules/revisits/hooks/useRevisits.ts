@@ -1,6 +1,6 @@
 /* Config */
 import { env } from '@config/env';
-import { externalStorageAdapter, messagesService, pdfAdapter, revisitsService, pdfRevisitsTemplateService } from '@config/di';
+import { externalStorageAdapter, messagesService, pdfAdapter, revisitsService, pdfRevisitsTemplateService, toasterAdapter } from '@config/di';
 
 /* Constants */
 import { precursors } from '@application/constants/utils';
@@ -38,7 +38,7 @@ import { RevisitEntity } from '@domain/entities';
 /* Hooks */
 import { useAuth } from '@auth/hooks';
 import { useImage, useNetwork } from '@shared/hooks';
-import { useToaster, useTranslation } from '@ui/hooks';
+import { useTranslation } from '@ui/hooks';
 
 /* Interfaces */
 import { loadRevisitsOptions, RevisitFilter, SaveRevisitOptions, UpdateRevisitOptions } from '../interfaces';
@@ -59,7 +59,6 @@ const useRevisits = () => {
 
     const { isAuthenticated } = useAuth();
     const { uploadImage, deleteImage } = useImage();
-    const { showError, showToast } = useToaster();
     const { hasWifiConnection } = useNetwork();
     const { translate } = useTranslation();
 
@@ -92,14 +91,14 @@ const useRevisits = () => {
     const canAlterateRevisit = (unSelectedMsg: string, onError?: () => void): boolean => {
         if (state.selectedRevisit.id === '') {
             onError && onError();
-            showToast(unSelectedMsg);
+            toasterAdapter.showToast(unSelectedMsg);
 
             return false;
         }
 
         if (state.selectedRevisit.userId !== user.id) {
             onError && onError();
-            showToast(authMessages.UNAUTHORIZED);
+            toasterAdapter.showToast(authMessages.UNAUTHORIZED);
 
             return false;
         }
@@ -145,7 +144,7 @@ const useRevisits = () => {
         }
         catch (error) {
             onError && onError();
-            showError(error);
+            toasterAdapter.showError(error);
             return '';
         }
         finally {
@@ -185,12 +184,12 @@ const useRevisits = () => {
             removeRevisit(state.selectedRevisit.id);
 
             setSelectedRevisit(INIT_REVISIT);
-            showToast(revisitsMessages.DELETED_SUCCESS);
+            toasterAdapter.showToast(revisitsMessages.DELETED_SUCCESS);
 
             onSuccess && onSuccess();
         }
         catch (error) {
-            showError(error);
+            toasterAdapter.showError(error);
             onFail && onFail();
         }
         finally {
@@ -230,10 +229,10 @@ const useRevisits = () => {
                 mimeType: 'application/pdf',
             });
 
-            if (showStatusMessage) showToast(revisitsMessages.EXPORTED_SUCCESS, { toastStyle: { bottom: 8 } });
+            if (showStatusMessage) toasterAdapter.showToast(revisitsMessages.EXPORTED_SUCCESS, { toastStyle: { bottom: 8 } });
         }
         catch (error) {
-            showError(error);
+            toasterAdapter.showError(error);
         }
         finally {
             setIsRevisitsExporting(false);
@@ -259,7 +258,7 @@ const useRevisits = () => {
             setLastRevisit(lastRevisit);
         }
         catch (error) {
-            showError(error);
+            toasterAdapter.showError(error);
         }
         finally {
             setIsLastRevisitLoading(false);
@@ -313,7 +312,7 @@ const useRevisits = () => {
             else setRevisits(revisits);
         }
         catch (error) {
-            showError(error);
+            toasterAdapter.showError(error);
         }
         finally { 
             setIsRevisitsLoading(false);
@@ -352,7 +351,7 @@ const useRevisits = () => {
             setIsRevisitLoading(false);
             onSuccess && onSuccess();
             onFinish && onFinish();
-            showToast(successMessage);
+            toasterAdapter.showToast(successMessage);
 
             if (user.precursor === precursors.NINGUNO) await loadLastRevisit();
         }
@@ -360,7 +359,7 @@ const useRevisits = () => {
             setIsRevisitLoading(false);
             onFinish && onFinish();
 
-            showError(error);
+            toasterAdapter.showError(error);
         }
     }
 
@@ -403,10 +402,10 @@ const useRevisits = () => {
             if (state.selectedRevisit.id === revisit.id) setSelectedRevisit(revisit);
 
             onSuccess && onSuccess();
-            showToast(revisitsMessages.UPDATED_SUCCESS);
+            toasterAdapter.showToast(revisitsMessages.UPDATED_SUCCESS);
         }
         catch (error) {
-            showError(error);
+            toasterAdapter.showError(error);
         }
         finally {
             onFinish && onFinish();

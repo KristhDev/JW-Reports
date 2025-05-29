@@ -6,7 +6,7 @@ import { useFormik } from 'formik';
 import Ionicons from '@expo/vector-icons/Ionicons';
 
 /* DI */
-import { timeAdapter, placeholdersService, messagesService } from '@config/di';
+import { timeAdapter, placeholdersService, messagesService, toasterAdapter } from '@config/di';
 
 /* Models */
 import { ImageModel } from '@domain/models';
@@ -18,7 +18,7 @@ import { Button, DatetimeField, FormCalendar, FormField, FormImage } from '@ui/c
 /* Hooks */
 import { useRevisits } from '../../hooks';
 import { useVoiceRecorder } from '@shared/hooks';
-import { useToaster, useTranslation, useUI } from '@ui/hooks';
+import { useTranslation, useUI } from '@ui/hooks';
 
 /* Schemas */
 import { generateRevisitFormSchema } from './schemas';
@@ -48,7 +48,6 @@ export const RevisitForm: FC = (): JSX.Element => {
 
     const { state: { selectedRevisit, isRevisitLoading }, saveRevisit, updateRevisit } = useRevisits();
     const { translate } = useTranslation();
-    const { showFormError } = useToaster();
     const { isRecording, record, hasRecord, recordFormField } = useVoiceRecorder();
     const { state: { activeFormField, userInterface }, hasActiveFormField } = useUI();
 
@@ -93,7 +92,7 @@ export const RevisitForm: FC = (): JSX.Element => {
      */
     const handlePress = (): void => {
         if (isValid) handleSubmit();
-        else showFormError(errors);
+        else toasterAdapter.showFormError(errors);
     }
 
     useEffect(() => {

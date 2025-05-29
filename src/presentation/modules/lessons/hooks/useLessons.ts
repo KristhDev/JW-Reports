@@ -1,5 +1,5 @@
 /* Config */
-import { coursesService, lessonsService, messagesService } from '@config/di';
+import { coursesService, lessonsService, messagesService, toasterAdapter } from '@config/di';
 
 /* Constants */
 import { precursors } from '@application/constants/utils';
@@ -40,7 +40,6 @@ import { LessonEntity, LessonWithCourseEntity } from '@domain/entities';
 /* Hooks */
 import { useAuth } from '@auth/hooks';
 import { useNetwork } from '@shared/hooks';
-import { useToaster } from '@ui/hooks';
 
 /* Interfaces */
 import { LessonFormValues } from '../interfaces';
@@ -63,7 +62,6 @@ const useLessons = () => {
     const { selectedCourse } = useAppSelector(store => store.courses);
 
     const { isAuthenticated } = useAuth();
-    const { showError, showToast } = useToaster();
 
     const addLastLessonInCourse = (courseId: string, lastLesson: LessonEntity) => dispatch(addLastLessonInCourseAction({ courseId, lastLesson }));
     const addLesson = (lesson: LessonEntity) => dispatch(addLessonAction({ lesson }));
@@ -97,14 +95,14 @@ const useLessons = () => {
     const canAlterateLesson = (unSelectedMsg: string, onError?: () => void): boolean => {
         if (state.selectedLesson.id === '') {
             onError && onError();
-            showToast(unSelectedMsg);
+            toasterAdapter.showToast(unSelectedMsg);
 
             return false;
         }
 
         if (selectedCourse.userId !== user.id) {
             onError && onError();
-            showToast(authMessages.UNAUTHORIZED);
+            toasterAdapter.showToast(authMessages.UNAUTHORIZED);
 
             return false;
         }
@@ -122,7 +120,7 @@ const useLessons = () => {
     const isSelectedCourseSuspendedOrFinished = (onError?: () => void): boolean => {
         if (selectedCourse.suspended || selectedCourse.finished) {
             onError && onError();
-            showToast(lessonsMessages.SUSPENDED_OR_FINISHED);
+            toasterAdapter.showToast(lessonsMessages.SUSPENDED_OR_FINISHED);
 
             return true;
         }
@@ -140,7 +138,7 @@ const useLessons = () => {
     const isSelectedCourseEmpty = (onError?: () => void): boolean => {
         if (selectedCourse.id === '') {
             onError && onError();
-            showToast(coursesMessages.UNSELECTED);
+            toasterAdapter.showToast(coursesMessages.UNSELECTED);
 
             return true;
         }
@@ -192,11 +190,11 @@ const useLessons = () => {
             replaceLastLessonInCourse(state.selectedLesson.id, state.lessons[0]);
 
             clearSelectedLesson();
-            showToast(lessonsMessages.DELETED_SUCCESS);
+            toasterAdapter.showToast(lessonsMessages.DELETED_SUCCESS);
             onSuccess && onSuccess();
         }
         catch (error) {
-            showError(error);
+            toasterAdapter.showError(error);
             onFail && onFail();
         }
         finally {
@@ -237,13 +235,13 @@ const useLessons = () => {
 
             onFinish && onFinish();
             const msg = (lesson.done) ? lessonsMessages.FINISHED_SUCCESS : lessonsMessages.REPROGRAMMED_SUCCESS;
-            showToast(msg);
+            toasterAdapter.showToast(msg);
         }
         catch (error) {
             setIsLessonLoading(false);
             onFinish && onFinish();
 
-            showError(error);
+            toasterAdapter.showError(error);
         }
     }
 
@@ -268,7 +266,7 @@ const useLessons = () => {
             setLastLesson(lastLesson);
         }
         catch (error) {
-            showError(error);
+            toasterAdapter.showError(error);
         }
         finally {
             setIsLastLessonLoading(false);
@@ -319,7 +317,7 @@ const useLessons = () => {
             else setLessons(lessons);
         }
         catch (error) {
-            showError(error);
+            toasterAdapter.showError(error);
         }
         finally {
             setIsLessonsLoading(false);
@@ -352,12 +350,12 @@ const useLessons = () => {
             if (state.lessons.length > 0) addLesson(lesson);
             setIsLessonLoading(false);
 
-            showToast(lessonsMessages.ADDED_SUCCESS);
+            toasterAdapter.showToast(lessonsMessages.ADDED_SUCCESS);
             utils?.onSuccess?.() 
         }
         catch (error) {
             setIsLessonLoading(false);
-            showError(error);
+            toasterAdapter.showError(error);
         }
         finally {
             utils?.onFinish?.()
@@ -394,12 +392,12 @@ const useLessons = () => {
             updateLastLessonInCourse(lesson);
             setIsLessonLoading(false);
 
-            showToast(lessonsMessages.UPDATED_SUCCESS);
+            toasterAdapter.showToast(lessonsMessages.UPDATED_SUCCESS);
             utils?.onSuccess?.();
         }
         catch (error) {
             setIsLessonLoading(false);
-            showError(error);
+            toasterAdapter.showError(error);
         }
         finally {
             utils?.onFinish?.()

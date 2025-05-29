@@ -5,7 +5,7 @@ import { useFormik } from 'formik';
 import Ionicons from '@expo/vector-icons/Ionicons';
 
 /* DI */
-import { messagesService, placeholdersService } from '@config/di';
+import { messagesService, placeholdersService, toasterAdapter } from '@config/di';
 
 /* Screens */
 import { Modal } from '@ui/screens';
@@ -16,7 +16,7 @@ import { FormField, ModalActions } from '@ui/components';
 /* Hooks */
 import { useCourses } from '../../hooks';
 import { useRevisits } from '@revisits/hooks';
-import { useToaster, useTranslation } from '@ui/hooks';
+import { useTranslation } from '@ui/hooks';
 
 /* Interfaces */
 import { ModalProps } from '@ui/interfaces';
@@ -40,7 +40,6 @@ const PassToCourseModal: FC<ModalProps> = ({ isOpen, onClose }): JSX.Element => 
 
     const { state: { selectedRevisit } } = useRevisits();
     const { state: { isCourseLoading }, saveCourse } = useCourses();
-    const { showToast } = useToaster();
     const { translate } = useTranslation();
 
     const startCourseTitle = translate('modals.courses.titles.startCourse', { person: selectedRevisit.personName });
@@ -59,7 +58,7 @@ const PassToCourseModal: FC<ModalProps> = ({ isOpen, onClose }): JSX.Element => 
         }
 
         if (!values?.publication || values?.publication.length === 0) {
-            showToast(coursesMessages.PUBLICATION_MIN_LENGTH);
+            toasterAdapter.showToast(coursesMessages.PUBLICATION_MIN_LENGTH);
             onClose();
             setStartCourse(false);
 

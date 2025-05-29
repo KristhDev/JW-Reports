@@ -1,14 +1,14 @@
 import { useEffect, useMemo, useState } from 'react';
 
 /* Config */
-import { messagesService, voiceRecorderAdapter } from '@config/di';
+import { messagesService, toasterAdapter, voiceRecorderAdapter } from '@config/di';
 
 /* Constants */
 import { permissionsStatus } from '@application/constants/utils';
 
 /* Hooks */
 import usePermissions from './usePermissions';
-import { useToaster, useUI } from '@ui/hooks';
+import { useUI } from '@ui/hooks';
 
 const useVoiceRecorder = () => {
     const appMessages = messagesService.appMessages;
@@ -28,7 +28,6 @@ const useVoiceRecorder = () => {
         isRecordAudioUndetermined
     } = usePermissions();
 
-    const { showError, showPermissionsToast, showToast } = useToaster();
     const { setActiveFormField, hasActiveFormField } = useUI();
 
     /**
@@ -39,12 +38,12 @@ const useVoiceRecorder = () => {
      */
     const startRecording = async (lang: string): Promise<void> => {
         if (isRecordAudioUnavailable) {
-            showToast(permissionsMessages.UNSUPPORTED);
+            toasterAdapter.showToast(permissionsMessages.UNSUPPORTED);
             return;
         }
 
         if (isRecordAudioBlocked) {
-            showPermissionsToast();
+            toasterAdapter.showPermissionsToast();
             return;
         }
 
@@ -56,7 +55,7 @@ const useVoiceRecorder = () => {
             voiceRecorderAdapter.startRecording(lang);
         }
         catch (error) {
-            showError(error);
+            toasterAdapter.showError(error);
         }
     }
 
@@ -70,7 +69,7 @@ const useVoiceRecorder = () => {
             voiceRecorderAdapter.stopRecording();
         }
         catch (error) {
-            showError(error);
+            toasterAdapter.showError(error);
         }
     }
 
@@ -78,7 +77,7 @@ const useVoiceRecorder = () => {
         setActiveFormField(field);
 
         if (!hasActiveFormField) {
-            showToast(appMessages.SELECT_FIELD_TO_RECORD);
+            toasterAdapter.showToast(appMessages.SELECT_FIELD_TO_RECORD);
             return;
         }
 
@@ -93,7 +92,7 @@ const useVoiceRecorder = () => {
         voiceRecorderAdapter.onSpeechResults(value => setRecord(value || ''));
 
         voiceRecorderAdapter.onSpeechError(error => {
-            showError(error);
+            toasterAdapter.showError(error);
             setIsRecording(false);
         });
 

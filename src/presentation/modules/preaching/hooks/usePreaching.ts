@@ -6,7 +6,8 @@ import {
     preachingService,
     preachingReportService,
     messagesService,
-    pdfPreachingsTemplateService
+    pdfPreachingsTemplateService,
+    toasterAdapter
 } from '@config/di';
 
 /* Features */
@@ -34,7 +35,7 @@ import { PreachingEntity } from '@domain/entities';
 /* Hooks */
 import { useAuth } from '@auth/hooks';
 import { useNetwork } from '@shared/hooks';
-import { useToaster, useTranslation } from '@ui/hooks';
+import { useTranslation } from '@ui/hooks';
 
 /* Interfaces */
 import { PreachingFormValues } from '../interfaces';
@@ -53,7 +54,6 @@ const usePreaching = () => {
     const { user } = useAppSelector(store => store.auth);
 
     const { isAuthenticated } = useAuth();
-    const { showError, showToast } = useToaster();
     const { hasWifiConnection } = useNetwork();
     const { translate } = useTranslation();
 
@@ -94,14 +94,14 @@ const usePreaching = () => {
     const canAlteratePreaching = (unSelectMsg: string, onFinish?: () => void): boolean => {
         if (state.seletedPreaching.id === '') {
             onFinish && onFinish();
-            showToast(unSelectMsg);
+            toasterAdapter.showToast(unSelectMsg);
 
             return false;
         }
 
         if (state.seletedPreaching.userId !== user.id) {
             onFinish && onFinish();
-            showToast(authMessages.UNAUTHORIZED);
+            toasterAdapter.showToast(authMessages.UNAUTHORIZED);
 
             return false;
         }
@@ -134,12 +134,12 @@ const usePreaching = () => {
             resetSelectedPreaching();
             setIsPreachingDeleting(false);
 
-            showToast(preachingMessages.DELETED_SUCCESS);
+            toasterAdapter.showToast(preachingMessages.DELETED_SUCCESS);
             onSuccess?.();
         }
         catch (error) {
             setIsPreachingDeleting(false);
-            showError(error);
+            toasterAdapter.showError(error);
             onFail?.();
         }
         finally {
@@ -174,10 +174,10 @@ const usePreaching = () => {
             const pdfPath = await pdfAdapter.writeFromHTML({ fileName, html: preachingsTemplate, width: 480 });
             await externalStorageAdapter.moveFileOfInternalExtorage({ filePath: pdfPath, mimeType: 'application/pdf' });
 
-            if (showStatusMessage) showToast(preachingMessages.EXPORTED_SUCCESS, { toastStyle: { bottom: 8 } });
+            if (showStatusMessage) toasterAdapter.showToast(preachingMessages.EXPORTED_SUCCESS, { toastStyle: { bottom: 8 } });
         }
         catch (error) {
-            showError(error);
+            toasterAdapter.showError(error);
         }
         finally {
             setIsPreachingsExporting(false);
@@ -204,7 +204,7 @@ const usePreaching = () => {
             setPreachings(preachings);
         }
         catch (error) {
-            showError(error);
+            toasterAdapter.showError(error);
         }
         finally {
             setIsPreachingsLoading(false);
@@ -234,11 +234,11 @@ const usePreaching = () => {
 
             if (preachingMonth === selectedDateMonth) addPreaching(result);
 
-            showToast(preachingMessages.ADDED_SUCCESS);
+            toasterAdapter.showToast(preachingMessages.ADDED_SUCCESS);
             utils?.onSuccess?.();
         }
         catch (error) {
-            showError(error);
+            toasterAdapter.showError(error);
         }
         finally {
             utils?.onFinish?.();
@@ -268,11 +268,11 @@ const usePreaching = () => {
             updatePreachingState(preaching);
             resetSelectedPreaching();
 
-            showToast(preachingMessages.UPDATED_SUCCESS);
+            toasterAdapter.showToast(preachingMessages.UPDATED_SUCCESS);
             utils?.onSuccess?.();
         }
         catch (error) {
-            showError(error);
+            toasterAdapter.showError(error);
         }
         finally {
             utils?.onFinish?.();

@@ -6,7 +6,7 @@ import { useStyles } from 'react-native-unistyles';
 import Ionicons from '@expo/vector-icons/Ionicons';
 
 /* Config */
-import { placeholdersService } from '@config/di';
+import { placeholdersService, toasterAdapter } from '@config/di';
 
 /* Components */
 import { MicrophoneBtn } from '@shared/components';
@@ -15,7 +15,7 @@ import { Button, FormField } from '@ui/components';
 /* Hooks */
 import { useCourses } from '../../hooks';
 import { useVoiceRecorder } from '@shared/hooks';
-import { useToaster, useTranslation, useUI } from '@ui/hooks';
+import { useTranslation, useUI } from '@ui/hooks';
 
 /* Schemas */
 import { generateCourseFormSchema } from './schemas';
@@ -40,7 +40,6 @@ export const CourseForm = (): JSX.Element => {
 
     const { state: { isCourseLoading, selectedCourse }, saveCourse, updateCourse } = useCourses();
     const { hasRecord, isRecording, record, recordFormField } = useVoiceRecorder();
-    const { showFormError } = useToaster();
     const { translate } = useTranslation();
     const { state: { activeFormField }, hasActiveFormField } = useUI();
 
@@ -80,7 +79,7 @@ export const CourseForm = (): JSX.Element => {
      */
     const handlePress = (): void => {
         if (isValid) handleSubmit();
-        else showFormError(errors);
+        else toasterAdapter.showFormError(errors);
     }
 
     useEffect(() => {

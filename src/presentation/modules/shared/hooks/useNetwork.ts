@@ -1,10 +1,10 @@
 import { useContext } from 'react';
 
+/* DI */
+import { toasterAdapter } from '@config/di';
+
 /* Context */
 import { NetworkContext, NetworkContextProps } from '@application/context';
-
-/* Hooks */
-import { useToaster } from '@ui/hooks';
 
 /**
  * A hook that returns the network context.
@@ -13,12 +13,11 @@ import { useToaster } from '@ui/hooks';
  */
 const useNetwork = (): NetworkContextProps & { hasWifiConnection: (msg?: string) => boolean } => {
     const context = useContext(NetworkContext);
-    const { showNetworkError } = useToaster();
 
     const hasWifiConnection = (msg?: string): boolean => {
         const value = context.wifi.hasConnection;
 
-        if (!value) showNetworkError(msg);
+        if (!value) toasterAdapter.showNetworkError(msg);
         return value;
     }
 

@@ -8,7 +8,7 @@ import { Button, FormField } from '@ui/components';
 
 /* Hooks */
 import { useEmail } from '../../hooks';
-import { useToaster, useTranslation } from '@ui/hooks';
+import { useTranslation } from '@ui/hooks';
 
 /* Interfaces */
 import { FormActions } from '../../interfaces';
@@ -18,6 +18,7 @@ import { generateFeedbackFormSchema } from './schemas';
 
 /* Styles */
 import { themeStylesheet } from '@theme/styles';
+import { toasterAdapter } from '@config/di';
 
 /**
  * This component is responsible for rendering the fields to send a feedback
@@ -29,7 +30,6 @@ export const FeedbackForm = (): JSX.Element => {
     const { styles: themeStyles, theme: { colors, fontSizes, margins } } = useStyles(themeStylesheet);
 
     const { sendFeedbackEmail } = useEmail();
-    const { showFormError } = useToaster();
     const { translate } = useTranslation();
 
     /**
@@ -61,7 +61,7 @@ export const FeedbackForm = (): JSX.Element => {
      */
     const handlePress = (): void => {
         if (isValid) handleSubmit();
-        else showFormError(errors, { toastStyle: { bottom: margins.xs } });
+        else toasterAdapter.showFormError(errors, { bottomOffset: margins.xs });
     }
 
     return (

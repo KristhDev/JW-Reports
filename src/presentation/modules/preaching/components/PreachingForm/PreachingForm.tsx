@@ -6,14 +6,14 @@ import { useStyles } from 'react-native-unistyles';
 import Ionicons from '@expo/vector-icons/Ionicons';
 
 /* Config */
-import { timeAdapter, placeholdersService } from '@config/di';
+import { timeAdapter, placeholdersService, toasterAdapter } from '@config/di';
 
 /* Components */
 import { Button, DatetimeField, FormCalendar, FormTime } from '@ui/components';
 
 /* Hooks */
 import { usePreaching } from '../../hooks';
-import { useAsyncAction, useToaster, useTranslation, useUI } from '@ui/hooks';
+import { useAsyncAction, useTranslation, useUI } from '@ui/hooks';
 
 /* Schemas */
 import { generatePreachingFormSchema } from './schemas';
@@ -37,7 +37,6 @@ export const PreachingForm = (): JSX.Element => {
     const { styles: themeStyles, theme: { colors, fontSizes, margins } } = useStyles(themeStylesheet);
 
     const { state: { seletedPreaching }, savePreaching, updatePreaching } = usePreaching();
-    const { showFormError } = useToaster();
     const { translate } = useTranslation();
     const { state: { userInterface } } = useUI();
 
@@ -80,7 +79,7 @@ export const PreachingForm = (): JSX.Element => {
      */
     const handlePress = (): void => {
         if (isValid) handleSubmit();
-        else showFormError(errors, { toastStyle: { bottom: (margins.lg * 2) + margins.xs } });
+        else toasterAdapter.showFormError(errors)
     }
 
     return (

@@ -3,7 +3,7 @@ import { Redirect, Stack, useRouter } from 'expo-router';
 import { useStyles } from 'react-native-unistyles';
 
 /* Config */
-import { timeAdapter } from '@config/di';
+import { timeAdapter, toasterAdapter } from '@config/di';
 
 /* Constants */
 import { precursors } from '@application/constants/utils';
@@ -15,7 +15,7 @@ import { Header, HeaderButtons } from '@ui/components';
 import { useAuth } from '@auth/hooks';
 import { usePreaching } from '@preaching/hooks';
 import { useNetwork } from '@shared/hooks';
-import { useToaster, useTranslation } from '@ui/hooks';
+import { useTranslation } from '@ui/hooks';
 
 export default function PrecursorLayout(): JSX.Element {
     const router = useRouter();
@@ -24,7 +24,6 @@ export default function PrecursorLayout(): JSX.Element {
     const { state: { user } } = useAuth();
 
     const { state: { selectedDate, seletedPreaching }, loadPreachings, setSelectedDate } = usePreaching();
-    const { showNetworkError } = useToaster();
     const { wifi } = useNetwork();
     const { translate } = useTranslation();
 
@@ -43,7 +42,7 @@ export default function PrecursorLayout(): JSX.Element {
      */
     useEffect(() => {
         if (!wifi.hasConnection) {
-            showNetworkError();
+            toasterAdapter.showNetworkError();
             return;
         }
 

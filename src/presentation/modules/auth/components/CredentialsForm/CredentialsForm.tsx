@@ -5,14 +5,14 @@ import { useFormik } from 'formik';
 import Ionicons from '@expo/vector-icons/Ionicons';
 
 /* Config */
-import { placeholdersService } from '@config/di';
+import { placeholdersService, toasterAdapter } from '@config/di';
 
 /* Components */
 import { Button, EyeBtn, FormField } from '@ui/components';
 
 /* Hooks */
 import { useAuth } from '../../hooks';
-import { useAsyncAction, useToaster, useTranslation } from '@ui/hooks';
+import { useAsyncAction, useTranslation } from '@ui/hooks';
 
 /* Schemas */
 import { generateEmailFormSchema, generatePasswordFormSchema } from './schemas';
@@ -34,7 +34,6 @@ export const CredentialsForm = (): JSX.Element => {
     const { state: { user }, updateEmail, updatePassword } = useAuth();
     const { isLoading: isLoadingUpdateEmail, excuteAsyncAction: excuteAsyncUpdateEmail } = useAsyncAction(updateEmail);
     const { isLoading: isLoadingUpdatePassword, excuteAsyncAction: excuteAsyncUpdatePassword } = useAsyncAction(updatePassword);
-    const { showFormError } = useToaster();
     const { translate } = useTranslation();
 
     const formikUpdateEmail = useFormik({
@@ -64,7 +63,7 @@ export const CredentialsForm = (): JSX.Element => {
      */
     const handleSubmitUpdateEmail = (): void => {
         if (formikUpdateEmail.isValid) formikUpdateEmail.handleSubmit();
-        else showFormError(formikUpdateEmail.errors, { toastStyle: { bottom: margins.xs } });
+        else toasterAdapter.showFormError(formikUpdateEmail.errors, { bottomOffset: margins.xs });
     }
 
     /**
@@ -77,7 +76,7 @@ export const CredentialsForm = (): JSX.Element => {
      */
     const handleSubmitUpdatePassword = (): void => {
         if (formikUpdatePassword.isValid) formikUpdatePassword.handleSubmit();
-        else showFormError(formikUpdatePassword.errors, { toastStyle: { bottom: margins.xs } });
+        else toasterAdapter.showFormError(formikUpdatePassword.errors, { bottomOffset: margins.xs });
     }
 
     return (

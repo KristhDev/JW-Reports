@@ -2,7 +2,7 @@ import { useState } from 'react';
 
 /* Config */
 import { env } from '@config/env';
-import { cloudService, deviceImageService, messagesService } from '@config/di';
+import { cloudService, deviceImageService, messagesService, toasterAdapter } from '@config/di';
 
 /* Constants */
 import { permissionsStatus } from '@application/constants/utils';
@@ -15,7 +15,6 @@ import { ImageModel } from '@domain/models';
 
 /* Hooks */
 import { usePermissions } from './';
-import { useToaster } from '@ui/hooks';
 
 /**
  * This hook allows to group the functions and states in relation to the images.
@@ -41,7 +40,6 @@ const useImage = () => {
         isMediaLibraryUndetermined,
     } = usePermissions();
 
-    const { showPermissionsToast, showToast } = useToaster();
 
     /**
      * Clear the current image and delete it from the device
@@ -71,13 +69,13 @@ const useImage = () => {
 
         /* This is a message that is shown to the user when the media library permission is undetermined. */
         if (isMediaLibraryUnavailable) {
-            showToast(permissionsMessages.UNSUPPORTED);
+            toasterAdapter.showToast(permissionsMessages.UNSUPPORTED);
             return;
         }
 
         /* Asking for the media library permission. */
         if (isMediaLibraryBlocked) {
-            showPermissionsToast();
+            toasterAdapter.showPermissionsToast();
             return;
         }
 
@@ -109,13 +107,13 @@ const useImage = () => {
 
         /* This is a message that is shown to the user when the camera permission is unavailable. */
         if (isCameraUnavailable) {
-            showToast(permissionsMessages.UNSUPPORTED);
+            toasterAdapter.showToast(permissionsMessages.UNSUPPORTED);
             return;
         }
 
         /* This is a message that is shown to the user when the camera permission is blocked. */
         if (isCameraBlocked) {
-            showPermissionsToast();
+            toasterAdapter.showPermissionsToast();
             return;
         }
 
