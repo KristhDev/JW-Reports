@@ -6,6 +6,9 @@ import { messagesService, toasterAdapter, voiceRecorderAdapter } from '@config/d
 /* Constants */
 import { permissionsStatus } from '@application/constants/utils';
 
+/* Interfaces */
+import { SpeakerLanguageKey } from '@infrastructure/interfaces';
+
 /* Hooks */
 import usePermissions from './usePermissions';
 import { useUI } from '@ui/hooks';
@@ -28,15 +31,15 @@ const useVoiceRecorder = () => {
         isRecordAudioUndetermined
     } = usePermissions();
 
-    const { setActiveFormField, hasActiveFormField } = useUI();
+    const { state: { userInterface }, setActiveFormField, hasActiveFormField } = useUI();
 
     /**
      * Starts a speech recognition session in the given language.
      *
-     * @param {string} lang - The language code to use for the speech recognition session.
+     * @param {SpeakerLanguageKey} lang - The language key for the speech recognition session.
      * @returns {Promise<void>} A promise that resolves when the speech recognition session is started.
      */
-    const startRecording = async (lang: string): Promise<void> => {
+    const startRecording = async (lang: SpeakerLanguageKey): Promise<void> => {
         if (isRecordAudioUnavailable) {
             toasterAdapter.showToast(permissionsMessages.UNSUPPORTED);
             return;
@@ -82,7 +85,7 @@ const useVoiceRecorder = () => {
         }
 
         if (isRecording) stopRecording();
-        else startRecording('es-ES');
+        else startRecording(userInterface?.language || 'es');
     }
 
     useEffect(() => {
