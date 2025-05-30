@@ -1,4 +1,5 @@
 import { fileEncodings } from '@application/constants/utils';
+import { Languages } from './ui.interfaces';
 
 /**
  * Interface representing the options for moving a file from InternalStorage to ExternalStorage.
@@ -149,3 +150,6 @@ export interface SupabaseMessages {
         'SlowDown': string;
     },
 }
+
+export type SpeakerLanguages = Record<Languages, string>;
+export type SpeakerLanguageKey = keyof SpeakerLanguages;
