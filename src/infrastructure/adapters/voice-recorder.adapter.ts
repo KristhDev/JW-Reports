@@ -14,9 +14,14 @@ import { MessagesServiceContract } from '@domain/contracts/services';
 import { VoiceRecorderError } from '@domain/errors';
 
 /* Interfaces */
-import { AppMessages } from '@infrastructure/interfaces';
+import { AppMessages, SpeakerLanguageKey, SpeakerLanguages } from '@infrastructure/interfaces';
 
 export class VoiceRecorderAdapter implements VoiceRecorderAdapterContract {
+    public readonly speakerLanguages: SpeakerLanguages = {
+        en: 'en-US',
+        es: 'es-ES',
+    }
+
     private readonly appMessages: AppMessages;
 
     constructor(
@@ -128,12 +133,13 @@ export class VoiceRecorderAdapter implements VoiceRecorderAdapterContract {
     /**
      * Starts a speech recognition session in the specified language.
      *
-     * @param {string} lang - The language code for the speech recognition session.
+     * @param {SpeakerLanguageKey} lang - The language key for the speech recognition session.
      * @throws {VoiceRecorderError} If an error occurs while starting the session.
      */
-    public startRecording(lang: string): void {
+    public startRecording(lang: SpeakerLanguageKey): void {
         try {
-            ExpoSpeechRecognitionModule.start({ lang });
+            const language = this.speakerLanguages[lang];
+            ExpoSpeechRecognitionModule.start({ lang: language });
         }
         catch (error) {
             console.error(error);
