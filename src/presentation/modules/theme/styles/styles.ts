@@ -39,8 +39,7 @@ export const themeStylesheet = createStyleSheet(({ borderRadius, colors, fontSiz
 
     detailText: {
         color: colors.text,
-        fontSize: (fontSizes.sm + 3),
-        width: '100%'
+        fontSize: (fontSizes.sm + 3)
     },
 
     fabBottomRight: {
