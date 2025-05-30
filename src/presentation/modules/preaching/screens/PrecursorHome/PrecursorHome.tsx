@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ActivityIndicator, ScrollView, useWindowDimensions, RefreshControl, View } from 'react-native';
+import { ActivityIndicator, ScrollView, useWindowDimensions, RefreshControl } from 'react-native';
 import { useStyles } from 'react-native-unistyles';
 import { useRouter } from 'expo-router';
 import Ionicons from '@expo/vector-icons/Ionicons';
@@ -9,10 +9,6 @@ import { timeAdapter } from '@config/di';
 
 /* Features */
 import { INIT_PREACHING } from '@application/features/preaching';
-
-/* Screens */
-import { ReportModal } from '../ReportModal';
-import { PreachingInfoModal } from '../PreachingInfoModal';
 
 /* Components */
 import { PreachingTable } from '../../components';
@@ -35,8 +31,6 @@ import { themeStylesheet } from '@theme/styles';
  */
 const Home = (): JSX.Element => {
     const [ isRefreshing, setIsRefreshing ] = useState<boolean>(false);
-    const [ showReportModal, setShowReportModal ] = useState<boolean>(false);
-    const [ showPreachingInfoModal, setShowPreachingInfoModal ] = useState<boolean>(false);
     const { height } = useWindowDimensions();
 
     const router = useRouter();
@@ -133,7 +127,7 @@ const Home = (): JSX.Element => {
                             size={ (fontSizes.xl + 1) }
                         />
                     }
-                    onPress={ () => setShowPreachingInfoModal(true) }
+                    onPress={ () => router.navigate('/(app)/(tabs)/preaching/precursor/preaching-info-modal') }
                     style={{ ...themeStyles.fabBottomRight, bottom: 150 }}
                     touchColor="rgba(0, 0, 0, 0.15)"
                 />
@@ -148,7 +142,7 @@ const Home = (): JSX.Element => {
                         size={ fontSizes.xl }
                     />
                 }
-                onPress={ () => setShowReportModal(true) }
+                onPress={ () => router.navigate('/(app)/(tabs)/preaching/precursor/report-modal') }
                 style={{ ...themeStyles.fabBottomRight, bottom: 84 }}
                 touchColor="rgba(0, 0, 0, 0.15)"
             />
@@ -165,18 +159,6 @@ const Home = (): JSX.Element => {
                 onPress={ handleNavigate }
                 style={ themeStyles.fabBottomRight }
                 touchColor="rgba(0, 0, 0, 0.15)"
-            />
-
-            <PreachingInfoModal
-                isOpen={ showPreachingInfoModal }
-                onClose={ () => setShowPreachingInfoModal(false) }
-            />
-
-            {/* Modal for show report */}
-            <ReportModal
-                isOpen={ showReportModal }
-                month={ month.toLowerCase() }
-                onClose={ () => setShowReportModal(false) }
             />
         </>
     );
