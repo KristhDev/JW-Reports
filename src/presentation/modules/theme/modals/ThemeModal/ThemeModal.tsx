@@ -27,12 +27,24 @@ const ThemeModal: FC<ModalProps> = ({ isOpen, onClose }): JSX.Element => {
     const { state: { selectedTheme }, setTheme } = useTheme();
     const { translate } = useTranslation();
 
+    /**
+     * When the user clicks on a button, the value of the button is set to the value of the input
+     * field, and the modal is hidden.
+     *
+     * @param {string} value - string - the value of the input
+     * @return {void} This function returns nothing
+     */
+    const handleChangeValue = (value: string): void => {
+        setTheme(value as Theme);
+        onClose();
+    }
+
     return (
         <OptionsModal
             isOpen={ isOpen }
             items={ THEME_OPTIONS }
             onCancel={ onClose }
-            onChangeValue={ (value) => setTheme(value as Theme) }
+            onChangeValue={ handleChangeValue }
             title={ translate('modals.theme.titles.appearance') }
             value={ selectedTheme }
         />
