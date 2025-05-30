@@ -192,7 +192,17 @@ export default function PublisherLayout(): JSX.Element {
             />
 
             <Stack.Screen 
-                name="delete-revisit-modal"
+                name="report-modal"
+                options={{
+                    animation: 'fade',
+                    contentStyle: { backgroundColor: 'transparent' },
+                    headerShown: false,
+                    presentation: 'transparentModal'
+                }}
+            />
+
+            <Stack.Screen 
+                name="finish-or-start-lesson-modal"
                 options={{
                     animation: 'fade',
                     contentStyle: { backgroundColor: 'transparent' },
@@ -203,6 +213,36 @@ export default function PublisherLayout(): JSX.Element {
 
             <Stack.Screen 
                 name="delete-lesson-modal"
+                options={{
+                    animation: 'fade',
+                    contentStyle: { backgroundColor: 'transparent' },
+                    headerShown: false,
+                    presentation: 'transparentModal'
+                }}
+            />
+
+            <Stack.Screen 
+                name="revisit-modal"
+                options={{
+                    animation: 'fade',
+                    contentStyle: { backgroundColor: 'transparent' },
+                    headerShown: false,
+                    presentation: 'transparentModal'
+                }}
+            />
+
+            <Stack.Screen 
+                name="pass-to-course-modal"
+                options={{
+                    animation: 'fade',
+                    contentStyle: { backgroundColor: 'transparent' },
+                    headerShown: false,
+                    presentation: 'transparentModal'
+                }}
+            />
+
+            <Stack.Screen 
+                name="delete-revisit-modal"
                 options={{
                     animation: 'fade',
                     contentStyle: { backgroundColor: 'transparent' },

@@ -103,6 +103,26 @@ export default function PrecursorLayout(): JSX.Element {
             />
 
             <Stack.Screen 
+                name="report-modal"
+                options={{
+                    animation: 'fade',
+                    contentStyle: { backgroundColor: 'transparent' },
+                    headerShown: false,
+                    presentation: 'transparentModal'
+                }}
+            />
+
+            <Stack.Screen 
+                name="preaching-info-modal"
+                options={{
+                    animation: 'fade',
+                    contentStyle: { backgroundColor: 'transparent' },
+                    headerShown: false,
+                    presentation: 'transparentModal'
+                }}
+            />
+
+            <Stack.Screen 
                 name="delete-preaching-modal"
                 options={{
                     animation: 'fade',
