@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { JSX } from 'react';
 import { Linking, ScrollView, Text } from 'react-native';
 import { useStyles } from 'react-native-unistyles';
 import { useRouter } from 'expo-router';
@@ -9,10 +9,6 @@ import { deviceInfoAdapter, themeService } from '@config/di';
 
 /* Constants */
 import { LANGUAGE_OPTIONS } from '@application/constants/utils';
-
-/* Screens */
-import { LanguageModal } from '../LanguageModal';
-import { ThemeModal } from '@theme/screens';
 
 /* Components */
 import { SectionBtn, SectionContent, Switch } from '@ui/components';
@@ -33,9 +29,6 @@ import { version as appVersion } from '@package';
  */
 const Settings = (): JSX.Element => {
     const THEME_OPTIONS = themeService.THEME_OPTIONS;
-
-    const [ showThemeModal, setShowThemeModal ] = useState<boolean>(false);
-    const [ showLanguageModal, setShowLanguageModal ] = useState<boolean>(false);
 
     const router = useRouter();
     const { theme: { colors, fontSizes, margins } } = useStyles();
@@ -62,122 +55,110 @@ const Settings = (): JSX.Element => {
     }
 
     return (
-        <>
-            <ScrollView>
+        <ScrollView>
 
-                {/* Acount secction */}
-                <SectionContent title={ translate('screens.settings.sections.account.title') }>
-                    <SectionBtn
-                        onPress={ () => router.navigate('/(app)/settings/profile') }
-                        subText={ translate('screens.settings.sections.account.subTexts.profile') }
-                        text={ translate('screens.settings.sections.account.texts.profile') }
-                    />
+            {/* Acount secction */}
+            <SectionContent title={ translate('screens.settings.sections.account.title') }>
+                <SectionBtn
+                    onPress={ () => router.navigate('/(app)/settings/profile') }
+                    subText={ translate('screens.settings.sections.account.subTexts.profile') }
+                    text={ translate('screens.settings.sections.account.texts.profile') }
+                />
 
-                    <SectionBtn
-                        onPress={ () => router.navigate('/(app)/settings/credentials') }
-                        subText={ translate('screens.settings.sections.account.subTexts.credentials') }
-                        text={ translate('screens.settings.sections.account.texts.credentials') }
-                    />
+                <SectionBtn
+                    onPress={ () => router.navigate('/(app)/settings/credentials') }
+                    subText={ translate('screens.settings.sections.account.subTexts.credentials') }
+                    text={ translate('screens.settings.sections.account.texts.credentials') }
+                />
 
-                    <SectionBtn
-                        onPress={ () => router.navigate('/(app)/settings/export-data') }
-                        subText={ translate('screens.settings.sections.account.subTexts.exportInfo') }
-                        text={ translate('screens.settings.sections.account.texts.exportInfo') }
-                    />
-                </SectionContent>
+                <SectionBtn
+                    onPress={ () => router.navigate('/(app)/settings/export-data') }
+                    subText={ translate('screens.settings.sections.account.subTexts.exportInfo') }
+                    text={ translate('screens.settings.sections.account.texts.exportInfo') }
+                />
+            </SectionContent>
 
-                {/* UI section */}
-                <SectionContent title={ translate('screens.settings.sections.ui.title') }>
-                    <SectionBtn
-                        onPress={ () => setShowThemeModal(true) }
-                        subText={ THEME_OPTIONS.find(t => t.value === selectedTheme)?.label || '' }
-                        text={ translate('screens.settings.sections.ui.texts.appearance') }
-                    />
+            {/* UI section */}
+            <SectionContent title={ translate('screens.settings.sections.ui.title') }>
+                <SectionBtn
+                    onPress={ () => router.navigate('/(app)/settings/theme-modal') }
+                    subText={ THEME_OPTIONS.find(t => t.value === selectedTheme)?.label || '' }
+                    text={ translate('screens.settings.sections.ui.texts.appearance') }
+                />
 
-                    <SectionBtn
-                        onPress={ () => setShowLanguageModal(true) }
-                        subText={ LANGUAGE_OPTIONS.find(t => t.value === userInterface.language)?.label || '' }
-                        text={ translate('screens.settings.sections.ui.texts.language') }
-                    />
+                <SectionBtn
+                    onPress={ () => router.navigate('/(app)/settings/language-modal') }
+                    subText={ LANGUAGE_OPTIONS.find(t => t.value === userInterface.language)?.label || '' }
+                    text={ translate('screens.settings.sections.ui.texts.language') }
+                />
 
-                    <SectionBtn
-                        onPress={ () => setOldDatetimePicker(!userInterface.oldDatetimePicker) }
-                        subText={ translate('screens.settings.sections.ui.subTexts.datetimeSelectors') }
-                        text={ translate('screens.settings.sections.ui.texts.datetimeSelectors') }
-                    >
-                        <Switch
-                            onChange={ () => setOldDatetimePicker(!userInterface.oldDatetimePicker) }
-                            value={ userInterface.oldDatetimePicker }
-                        />
-                    </SectionBtn>
-                </SectionContent>
-
-                {/* Privacy section */}
-                <SectionContent title={ translate('screens.settings.sections.privacy.title') }>
-                    <SectionBtn
-                        onPress={ () => Linking.openSettings() }
-                        subText={ translate('screens.settings.sections.privacy.subTexts.permissions') }
-                        text={ translate('screens.settings.sections.privacy.texts.permissions') }
-                    />
-                </SectionContent>
-
-                <SectionContent title={ translate('screens.settings.sections.comments.title') }>
-                    <SectionBtn
-                        onPress={ () => router.navigate('/(app)/settings/feedback') }
-                        subText={ translate('screens.settings.sections.comments.subTexts.feedback') }
-                        text={ translate('screens.settings.sections.comments.texts.feedback') }
-                    />
-
-                    <SectionBtn
-                        onPress={ () => router.navigate('/(app)/settings/report-errors') }
-                        subText={ translate('screens.settings.sections.comments.subTexts.reportError') }
-                        text={ translate('screens.settings.sections.comments.texts.reportError') }
-                    />
-                </SectionContent>
-
-                {/* About section */}
-                <SectionContent
-                    containerStyle={{ borderBottomWidth: 0 }}
-                    title={ translate('screens.settings.sections.about.title') }
+                <SectionBtn
+                    onPress={ () => setOldDatetimePicker(!userInterface.oldDatetimePicker) }
+                    subText={ translate('screens.settings.sections.ui.subTexts.datetimeSelectors') }
+                    text={ translate('screens.settings.sections.ui.texts.datetimeSelectors') }
                 >
-                    <SectionBtn
-                        onPress={ () => {} }
-                        subText={ `${ appVersion } (${ buildVersion })` }
-                        text={ translate('screens.settings.sections.about.texts.version') }
+                    <Switch
+                        onChange={ () => setOldDatetimePicker(!userInterface.oldDatetimePicker) }
+                        value={ userInterface.oldDatetimePicker }
                     />
+                </SectionBtn>
+            </SectionContent>
 
-                    <SectionBtn
-                        onPress={ () => Linking.openURL(env.REPOSITORY_URL!) }
-                        subText={ translate('screens.settings.sections.about.subTexts.repository') }
-                        text={ translate('screens.settings.sections.about.texts.repository') }
-                    />
+            {/* Privacy section */}
+            <SectionContent title={ translate('screens.settings.sections.privacy.title') }>
+                <SectionBtn
+                    onPress={ () => Linking.openSettings() }
+                    subText={ translate('screens.settings.sections.privacy.subTexts.permissions') }
+                    text={ translate('screens.settings.sections.privacy.texts.permissions') }
+                />
+            </SectionContent>
 
-                    <SectionBtn
-                        onPress={ handleMoreInfo }
-                        subText={ translate('screens.settings.sections.about.subTexts.moreInfo') }
-                        text={ translate('screens.settings.sections.about.texts.moreInfo') }
-                    />
-                </SectionContent>
+            <SectionContent title={ translate('screens.settings.sections.comments.title') }>
+                <SectionBtn
+                    onPress={ () => router.navigate('/(app)/settings/feedback') }
+                    subText={ translate('screens.settings.sections.comments.subTexts.feedback') }
+                    text={ translate('screens.settings.sections.comments.texts.feedback') }
+                />
 
-                {/* Copyright text */}
-                <Text
-                    style={{ color: colors.icon, fontSize: (fontSizes.sm - 2), padding: margins.sm }}
-                    testID="settings-copyright-text"
-                >
-                    Copyright © { new Date().getFullYear() }
-                </Text>
-            </ScrollView>
+                <SectionBtn
+                    onPress={ () => router.navigate('/(app)/settings/report-errors') }
+                    subText={ translate('screens.settings.sections.comments.subTexts.reportError') }
+                    text={ translate('screens.settings.sections.comments.texts.reportError') }
+                />
+            </SectionContent>
 
-            <ThemeModal
-                isOpen={ showThemeModal }
-                onClose={ () => setShowThemeModal(false) }
-            />
+            {/* About section */}
+            <SectionContent
+                containerStyle={{ borderBottomWidth: 0 }}
+                title={ translate('screens.settings.sections.about.title') }
+            >
+                <SectionBtn
+                    onPress={ () => {} }
+                    subText={ `${ appVersion } (${ buildVersion })` }
+                    text={ translate('screens.settings.sections.about.texts.version') }
+                />
 
-            <LanguageModal 
-                isOpen={ showLanguageModal }
-                onClose={ () => setShowLanguageModal(false) }
-            />
-        </>
+                <SectionBtn
+                    onPress={ () => Linking.openURL(env.REPOSITORY_URL!) }
+                    subText={ translate('screens.settings.sections.about.subTexts.repository') }
+                    text={ translate('screens.settings.sections.about.texts.repository') }
+                />
+
+                <SectionBtn
+                    onPress={ handleMoreInfo }
+                    subText={ translate('screens.settings.sections.about.subTexts.moreInfo') }
+                    text={ translate('screens.settings.sections.about.texts.moreInfo') }
+                />
+            </SectionContent>
+
+            {/* Copyright text */}
+            <Text
+                style={{ color: colors.icon, fontSize: (fontSizes.sm - 2), padding: margins.sm }}
+                testID="settings-copyright-text"
+            >
+                Copyright © { new Date().getFullYear() }
+            </Text>
+        </ScrollView>
     );
 }
 

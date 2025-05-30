@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import { FC } from 'react';
 
 /* Constants */
 import { LANGUAGE_OPTIONS } from '@application/constants/utils';
@@ -23,12 +23,17 @@ const LanguageModal: FC<ModalProps> = ({ isOpen, onClose }): JSX.Element => {
     const { changeLanguage, translate } = useTranslation();
     const { state: { userInterface } } = useUI();
 
+    const handleChangeLanguage = (value: Languages): void => {
+        changeLanguage(value);
+        onClose();
+    }
+
     return (
         <OptionsModal
             isOpen={ isOpen }
             items={ LANGUAGE_OPTIONS }
             onCancel={ onClose }
-            onChangeValue={ (value) => changeLanguage(value as Languages) }
+            onChangeValue={ handleChangeLanguage }
             title={ translate('modals.ui.titles.language') }
             value={ userInterface.language }
         />
