@@ -54,6 +54,26 @@ export default function SettingsLayout(): JSX.Element {
                 name="report-errors"
                 options={{ title: translate('navigation.titles.reportAnError') }}
             />
+
+            <Stack.Screen 
+                name="theme-modal"
+                options={{
+                    animation: 'fade',
+                    contentStyle: { backgroundColor: 'transparent' },
+                    headerShown: false,
+                    presentation: 'transparentModal'
+                }}
+            />
+
+            <Stack.Screen 
+                name="language-modal"
+                options={{
+                    animation: 'fade',
+                    contentStyle: { backgroundColor: 'transparent' },
+                    headerShown: false,
+                    presentation: 'transparentModal'
+                }}
+            />
         </Stack>
     );
 }
