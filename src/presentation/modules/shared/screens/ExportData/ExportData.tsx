@@ -42,7 +42,7 @@ const ExportDataScreen = (): JSX.Element => {
                 textStyle={{ fontSize: fontSizes.md }}
             />
 
-            <Text style={ themeStyles.detailText }>
+            <Text style={[ themeStyles.detailText, { width: '100%' } ]}>
                 { translate('screens.ui.descriptions.exportData') }
             </Text>
 
