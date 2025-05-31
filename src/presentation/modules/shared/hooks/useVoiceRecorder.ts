@@ -31,7 +31,7 @@ const useVoiceRecorder = () => {
         isRecordAudioUndetermined
     } = usePermissions();
 
-    const { state: { userInterface }, setActiveFormField, hasActiveFormField } = useUI();
+    const { state: { userInterface }, setActiveFormField } = useUI();
 
     /**
      * Starts a speech recognition session in the given language.
@@ -78,8 +78,9 @@ const useVoiceRecorder = () => {
 
     const recordFormField = (field: string): void => {
         setActiveFormField(field);
+        const hasField = field.trim().length > 0;
 
-        if (!hasActiveFormField) {
+        if (!hasField) {
             toasterAdapter.showToast(appMessages.SELECT_FIELD_TO_RECORD);
             return;
         }
