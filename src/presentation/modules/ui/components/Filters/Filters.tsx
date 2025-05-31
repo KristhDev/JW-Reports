@@ -1,5 +1,5 @@
 import React, { JSX, useCallback } from 'react';
-import { StyleProp, TextStyle, View, ViewStyle } from 'react-native';
+import { ScrollView, StyleProp, TextStyle, View, ViewStyle } from 'react-native';
 import { useStyles } from 'react-native-unistyles';
 
 /* Components */
@@ -48,7 +48,11 @@ export const Filters = <FilterValue, >({
     }, [ selectedFilter ]);
 
     return (
-        <View style={[ styles.filtersContainer ]}>
+        <ScrollView 
+            contentContainerStyle={[ styles.filtersContainer ]}
+            horizontal
+            showsHorizontalScrollIndicator={ false }
+        >
             { items.map((item, index) => (
                 <Button 
                     containerStyle={[ styles.filterItemContainer ]}
@@ -60,6 +64,6 @@ export const Filters = <FilterValue, >({
                     underlayColor={ underlayColor(item) }
                 />
             )) }
-        </View>
+        </ScrollView>
     );
 }

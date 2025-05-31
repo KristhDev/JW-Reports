@@ -2,9 +2,8 @@ import { createStyleSheet } from 'react-native-unistyles';
 
 export const stylesheet = createStyleSheet(({ colors, fontSizes, margins }) => ({
     filtersContainer: {
-        flexDirection: 'row',
-        gap: margins.xs,
-        width: '100%'
+        flexGrow: 1,
+        gap: margins.xs
     },
 
     filterItemPressable: {
