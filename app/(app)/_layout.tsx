@@ -31,7 +31,7 @@ export default function AppLayout(): JSX.Element {
     useEffect(() => {
         if (!user.id || !isNotificationsGranted) return;
         notificationsService.listenNotificationsByUser(user.id);
-    }, [ user.id ]);
+    }, [ user.id, isNotificationsGranted ]);
 
     if (!isAuthenticated) return (<Redirect href="/auth/login" />);
 
