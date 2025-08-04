@@ -41,9 +41,8 @@ const Settings = (): JSX.Element => {
     const buildVersion = deviceInfoAdapter.getBuildVersion();
 
     /**
-     * When the user clicks the button, set the status to a new object with a code of 200 and a msg of
-     * 'Para más información o dejar sus comentarios acerca de la aplicación, escriba al correo:
-     * kristhdev@gmail.com'.
+     * When the user clicks the button, set the status to a new object with a code 
+     * of 200 and a msg.
      *
      * @return {void} This function returns nothing
      */
