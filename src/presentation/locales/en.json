@@ -50,6 +50,18 @@
         "visit": "Visit on {{date}}"
     },
 
+    "reports": {
+        "title": "Preaching Report",
+        "name": "Name: {{name}}",
+        "month": "Month: {{month}}",
+        "participated": "Participated in the ministry: {{participated}}",
+        "hours": "Hours: {{hours}}",
+        "hoursLDC": "Hours LDC: {{hoursLDC}}",
+        "courses": "Courses: {{courses}}",
+        "comments": "Comments:",
+        "noComments": "None"
+    },
+
     "messages": {
         "success": {
             "added": "You have added the {{attribute}} successfully.",

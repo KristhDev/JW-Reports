@@ -50,6 +50,18 @@
         "visit": "Visitar el {{date}}"
     },
 
+    "reports": {
+        "title": "Informe De Predicación",
+        "name": "Nombre: {{name}}",
+        "month": "Mes: {{month}}",
+        "participated": "Participo en el ministerio: {{participated}}",
+        "hours": "Horas: {{hours}}",
+        "hoursLDC": "Horas LDC: {{hoursLDC}}",
+        "courses": "Cursos: {{courses}}",
+        "comments": "Comentarios:",
+        "noComments": "Ninguno"
+    },
+
     "messages": {
         "success": {
             "added": "Ha agregado {{article}} {{attribute}} correctamente.",
