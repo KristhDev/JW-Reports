@@ -16,6 +16,7 @@ import { useAuth } from '@auth/hooks';
 import { usePreaching } from '@preaching/hooks';
 import { useNetwork } from '@shared/hooks';
 import { useTranslation } from '@ui/hooks';
+import { Characters } from '@utils';
 
 export default function PrecursorLayout(): JSX.Element {
     const router = useRouter();
@@ -69,7 +70,7 @@ export default function PrecursorLayout(): JSX.Element {
                             showTitle
                             style={{ justifyContent: 'space-between' }}
                             title={ options.title }
-                            subtitle={ timeAdapter.format(selectedDate, timeAdapter.formats.MONTH_AND_YEAR) }
+                            subtitle={ Characters.capitalize(timeAdapter.format(selectedDate, timeAdapter.formats.MONTH_AND_YEAR)) }
                         >
                             <HeaderButtons
                                 logoutButton
