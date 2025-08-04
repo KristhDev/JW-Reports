@@ -91,6 +91,12 @@
         "noResults": "No {{attribute}} found with the search: {{search}}",
         "selectFieldToRecord": "Please select a field to record the audio.",
 
+        "auth": {
+            "resetPassword": "We've sent a password reset email to {{email}}. Please check it and follow the steps to recover your account.",
+            "signUp": "We've sent a confirmation email to {{email}}. Please check it and follow the instructions provided.",
+            "updateEmail": "We've sent a confirmation email to {{oldEmail}}. Please check it. Once you confirm it, another email will be sent to {{newEmail}}. Make sure to confirm that one as well to complete the change."
+        },
+
         "courses": {
             "completed": "You have marked your revisit as complete.",
             "coursesExported": "You have successfully exported your courses. The file is located in the folder you have selected.",

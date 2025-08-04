@@ -90,6 +90,12 @@
         "noResults": "No se encontraron {{attribute}} con la busqueda: {{search}}",
         "selectFieldToRecord": "Por favor seleccione un campo para grabar el audio.",
 
+        "auth": {
+            "resetPassword": "Hemos enviado un correo de restablecimiento de contraseña a {{email}}. Por favor, revíselo y siga los pasos para recuperar su cuenta.",
+            "signUp": "Hemos enviado un correo de confirmación a {{email}}. Por favor, revíselo y siga los pasos que se le indiquen.",
+            "updateEmail": "Hemos mandado un correo de confirmación a {{oldEmail}}. Por favor revíselo. Una vez lo confirme ese correo se enviará otro a {{newEmail}}. Ese también confírmelo para efectuar el cambio."
+        },
+
         "courses": {
             "completed": "Ha marcado como completa su revisita correctamente.",
             "coursesExported": "Ha exportado sus cursos correctamente. El archivo se encuentra en la carpeta que ha seleccionado.",
