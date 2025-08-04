@@ -23,6 +23,7 @@ import { UserEntity } from '@domain/entities';
 
 /* Hooks */
 import { useNetwork } from '@shared/hooks';
+import { useTranslation } from '@ui/hooks';
 
 /* Interfaces */
 import { SignInData, ProfileData, SignUpData, EmailData, UpdatePasswordData } from '../interfaces';
@@ -37,6 +38,7 @@ const useAuth = () => {
     const dispatch = useAppDispatch();
 
     const { hasWifiConnection, wifi } = useNetwork();
+    const { translate } = useTranslation();
 
     const state = useAppSelector(store => store.auth);
 
@@ -122,10 +124,8 @@ const useAuth = () => {
         try {
             await authService.resetPassword(email);
 
-            let msg = `Hemos enviado un correo de restablecimiento de contraseña a ${ email }. `;
-            msg += 'Por favor revísalo y sigue los pasos para recuperar tu cuenta.';
-
-            toasterAdapter.showToast(msg);
+            const message = translate('messages.auth.resetPassword', { email });
+            toasterAdapter.showToast(message);
         }
         catch (error) {
             toasterAdapter.showError(error);
@@ -197,10 +197,8 @@ const useAuth = () => {
 
             await authService.signOut();
 
-            let msg = `Hemos enviado un correo de confirmación a ${ data.email }. `
-                msg += 'Por favor, revíselo y siga los pasos que se le indiquen.';
-
-            toasterAdapter.showToast(msg);
+            const message = translate('messages.auth.signUp', { email: data.email });
+            toasterAdapter.showToast(message);
         }
         catch (error) {
             await authService.signOut();
@@ -225,11 +223,8 @@ const useAuth = () => {
             const updateEmailDto = UpdateEmailDto.create(email, state.user.email);
             await authService.updateEmail(updateEmailDto);
 
-            let msg = `Hemos mandado un correo de confirmación a ${ state.user.email }. `;
-            msg += `Por favor revísalo. Una vez confirmes ese correo se enviará otro a ${ email }. `
-            msg += 'Ese también confírmalo para efectuar el cambio.'
-
-            toasterAdapter.showToast(msg, { bottomOffset: 8 });
+            const message = translate('messages.auth.updateEmail', { oldEmail: state.user.email, newEmail: email });
+            toasterAdapter.showToast(message, { bottomOffset: 8 });
         }
         catch (error) {
             toasterAdapter.showError(error, { bottomOffset: 8 });
