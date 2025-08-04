@@ -7,12 +7,14 @@ import { ReportModal } from '@preaching/modals';
 
 import { usePreaching } from '@preaching/hooks';
 
+import { Characters } from '@utils';
+
 export default function ReportModalScreen(): JSX.Element {
     const router = useRouter();
 
     const { state: { selectedDate } } = usePreaching();
 
-    const month = timeAdapter.format(selectedDate, timeAdapter.formats.MONTH_NAME).toUpperCase();
+    const month = Characters.capitalize(timeAdapter.format(selectedDate, timeAdapter.formats.MONTH_NAME));
 
     const handleHideModal = () => {
         router.dismiss();
