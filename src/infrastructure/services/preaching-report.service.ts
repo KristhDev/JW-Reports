@@ -1,6 +1,6 @@
 /* Constants */
 import { precursors } from '@application/constants/utils';
-import { TimeAdapterContract } from '@domain/contracts/adapters';
+import { TimeAdapterContract, TranslationAdapterContract } from '@domain/contracts/adapters';
 
 /* Contracts */
 import { PreachingReportServiceContract } from '@domain/contracts/services';
@@ -17,7 +17,8 @@ import { Characters } from '@utils';
 
 export class PreachingReportService implements PreachingReportServiceContract {
     constructor(
-        private readonly timeAdapter: TimeAdapterContract
+        private readonly timeAdapter: TimeAdapterContract,
+        private readonly translationAdapter: TranslationAdapterContract
     ) {}
 
     /**
@@ -27,18 +28,18 @@ export class PreachingReportService implements PreachingReportServiceContract {
      * @return {string} The preaching report string.
      */
     public generatePrechingReportString({ comment, courses, hours, hoursLDC, month, participated, precursor, username }: PreachingReportOptions): string {
-        let report = '*Informe De Predicación* \n \n';
-        report += `Nombre: ${ username }\n`;
-        report += `Mes: ${ Characters.capitalize(month) }\n`;
+        let report = `*${ this.translationAdapter.translate('reports.title') }* \n \n`;
+        report += `${ this.translationAdapter.translate('reports.name', { name: username }) }\n`;
+        report += `${ this.translationAdapter.translate('reports.month', { month: Characters.capitalize(month) }) }\n`;
 
-        if (precursor !== precursors.NINGUNO) report += `Horas: ${ hours }\n`;
-        else report += `Participo en el ministerio: ${ participated }`;
+        if (precursor !== precursors.NINGUNO) report += `${ this.translationAdapter.translate('reports.hours', { hours }) }\n`;
+        else report += `${ this.translationAdapter.translate('reports.participated', { participated }) }\n`;
 
-        if (precursor !== precursors.NINGUNO && hoursLDC > 0) report += `Horas LDC: ${ hoursLDC }\n`;
+        if (precursor !== precursors.NINGUNO && hoursLDC > 0) report += `${ this.translationAdapter.translate('reports.hoursLDC', { hoursLDC }) }\n`;
 
-        report += `Cursos: ${ courses } \n`;
-        report += 'Comentarios: \n';
-        report += `${ (comment.trim().length > 0) ? comment : 'Ninguno' }`;
+        report += `${ this.translationAdapter.translate('reports.courses', { courses }) } \n`;
+        report += `${ this.translationAdapter.translate('reports.comments') } \n`;
+        report += (comment.trim().length > 0) ? comment : this.translationAdapter.translate('reports.noComments');
 
         return report;
     }
