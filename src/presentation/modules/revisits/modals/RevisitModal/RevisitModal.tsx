@@ -21,7 +21,7 @@ import { useTranslation, useUI } from '@ui/hooks';
 import { ModalProps } from '@ui/interfaces';
 
 /* Scahemas */
-import { newRevisitFormSchema } from './schemas';
+import { generateNewRevisitFormSchema } from './schemas';
 
 /* Styles */
 import { themeStylesheet } from '@theme/styles';
@@ -102,14 +102,15 @@ const RevisitModal: FC<ModalProps> = ({ isOpen, onClose }): JSX.Element => {
         },
         onSubmit: handleConfirm,
         validateOnMount: true,
-        validationSchema: newRevisitFormSchema
+        validationSchema: generateNewRevisitFormSchema()
     });
 
     /**
-     * When the user clicks the close button, the modal will close and the revisitPerson state will be
-     * set to false.
+     * Closes the modal and sets the revisitPerson state to false.
+     *
+     * @return {void} This function does not return anything.
      */
-    const handleClose = () => {
+    const handleClose = (): void => {
         setRevisitPerson(false);
         onClose();
     }

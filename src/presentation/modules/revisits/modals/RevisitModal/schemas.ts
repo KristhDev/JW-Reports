@@ -1,11 +1,17 @@
 import { date, object, string } from 'yup';
 
-/* Validation schema for revisit */
-export const newRevisitFormSchema = object().shape({
-    about: string()
-        .min(10, 'La información de la persona debe tener al menos 10 caracteres.')
-        .required('La información de la persona es requerida.'),
+/* Dependencies */
+import { messagesService } from '@config/di';
 
-    nextVisit: date()
-        .required('La fecha de la próxima visita no puede estar vacía'),
-});
+export const generateNewRevisitFormSchema = () => {
+    const revisitsMessages = messagesService.revisitsMessages;
+
+    return object().shape({
+        about: string()
+            .min(10, revisitsMessages.ABOUT_MIN_LENGTH)
+            .required(revisitsMessages.ABOUT_REQUIRED),
+
+        nextVisit: date()
+            .required(revisitsMessages.NEXT_VISIT_REQUIRED),
+    });
+}
