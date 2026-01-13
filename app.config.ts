@@ -1,13 +1,15 @@
-import 'ts-node/register';
 import { ExpoConfig, ConfigContext } from 'expo/config';
-
-/* Theme */
-import { darkColors, lightColors } from './src/presentation/modules/theme/styles/colors';
 
 /* Package */
 import { version } from './package.json';
 
 const appId = 'com.kristhdev.jwreports';
+
+const colors = {
+    androidIconBGColor: '#5B3C88',
+    lightSplashScreenBGColor: '#FFFFFF',
+    darkSplashScreenBGColor: '#121212'
+}
 
 const config = ({ config }: ConfigContext): ExpoConfig => ({
     ...config,
@@ -27,7 +29,7 @@ const config = ({ config }: ConfigContext): ExpoConfig => ({
     android: {
         adaptiveIcon: {
             foregroundImage: './assets/images/adaptive-icon.png',
-            backgroundColor: lightColors.button
+            backgroundColor: colors.androidIconBGColor
         },
         package: appId
     },
@@ -42,11 +44,11 @@ const config = ({ config }: ConfigContext): ExpoConfig => ({
         [
             'expo-splash-screen',
             {
-                backgroundColor: lightColors.contentHeader,
+                backgroundColor: colors.lightSplashScreenBGColor,
                 image: './assets/images/splash-icon.png',
                 imageWidth: 200,
                 dark: {
-                    backgroundColor: darkColors.contentHeader
+                    backgroundColor: colors.darkSplashScreenBGColor
                 }
             }
         ],
